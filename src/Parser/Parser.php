@@ -12,10 +12,10 @@ interface Parser
      * @return Node\Stmt[]
      * @throws ParserErrorsException
      */
-    public function parseFile(string $file) : array;
+    public function parseFile(string $file): array;
     /**
      * @return Node\Stmt[]
      * @throws ParserErrorsException
      */
-    public function parseString(string $sourceCode) : array;
+    public function parseString(string $sourceCode): array;
 }

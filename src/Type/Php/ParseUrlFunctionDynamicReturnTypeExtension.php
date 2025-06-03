@@ -44,11 +44,11 @@ final class ParseUrlFunctionDynamicReturnTypeExtension implements DynamicFunctio
     private ?array $componentTypesPairedStringsForLowercaseString = null;
     private ?Type $allComponentsTogetherType = null;
     private ?Type $allComponentsTogetherTypeForLowercaseString = null;
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'parse_url';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;
@@ -88,7 +88,7 @@ final class ParseUrlFunctionDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $this->componentTypesPairedConstants[$componentType->getValue()] ?? new ConstantBooleanType(\false);
     }
-    private function createAllComponentsReturnType(bool $urlIsLowercase) : Type
+    private function createAllComponentsReturnType(bool $urlIsLowercase): Type
     {
         if ($urlIsLowercase) {
             if ($this->allComponentsTogetherTypeForLowercaseString === null) {
@@ -103,7 +103,7 @@ final class ParseUrlFunctionDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $this->allComponentsTogetherType;
     }
-    private function createComponentsArray(bool $urlIsLowercase) : Type
+    private function createComponentsArray(bool $urlIsLowercase): Type
     {
         $builder = ConstantArrayTypeBuilder::createEmpty();
         if ($urlIsLowercase) {
@@ -123,7 +123,7 @@ final class ParseUrlFunctionDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $builder->getArray();
     }
-    private function cacheReturnTypes() : void
+    private function cacheReturnTypes(): void
     {
         if ($this->componentTypesPairedConstants !== null) {
             return;

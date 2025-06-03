@@ -17,11 +17,11 @@ final class MethodTagTraitUseRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InTraitNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->check->checkInTraitUseContext($scope, $node->getTraitReflection(), $node->getImplementingClassReflection(), $node->getOriginalNode());
     }

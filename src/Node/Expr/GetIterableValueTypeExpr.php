@@ -13,18 +13,18 @@ final class GetIterableValueTypeExpr extends Expr implements VirtualNode
         $this->expr = $expr;
         parent::__construct([]);
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_GetIterableValueTypeExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

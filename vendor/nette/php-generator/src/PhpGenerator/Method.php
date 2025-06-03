@@ -32,11 +32,11 @@ final class Method
     /**
      * @param  string|array  $method
      */
-    public static function from($method) : self
+    public static function from($method): self
     {
         return (new Factory())->fromMethodReflection(Nette\Utils\Callback::toReflection($method));
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return (new Printer())->printMethod($this);
@@ -49,49 +49,49 @@ final class Method
         }
     }
     /** @return static */
-    public function setBody(?string $code, ?array $args = null) : self
+    public function setBody(?string $code, ?array $args = null): self
     {
         $this->body = $args === null || $code === null ? $code : (new Dumper())->format($code, ...$args);
         return $this;
     }
-    public function getBody() : ?string
+    public function getBody(): ?string
     {
         return $this->body;
     }
     /** @return static */
-    public function setStatic(bool $state = \true) : self
+    public function setStatic(bool $state = \true): self
     {
         $this->static = $state;
         return $this;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->static;
     }
     /** @return static */
-    public function setFinal(bool $state = \true) : self
+    public function setFinal(bool $state = \true): self
     {
         $this->final = $state;
         return $this;
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->final;
     }
     /** @return static */
-    public function setAbstract(bool $state = \true) : self
+    public function setAbstract(bool $state = \true): self
     {
         $this->abstract = $state;
         return $this;
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->abstract;
     }
     /**
      * @param  string  $name without $
      */
-    public function addPromotedParameter(string $name, $defaultValue = null) : PromotedParameter
+    public function addPromotedParameter(string $name, $defaultValue = null): PromotedParameter
     {
         $param = new PromotedParameter($name);
         if (\func_num_args() > 1) {
@@ -100,7 +100,7 @@ final class Method
         return $this->parameters[$name] = $param;
     }
     /** @throws Nette\InvalidStateException */
-    public function validate() : void
+    public function validate(): void
     {
         if ($this->abstract && ($this->final || $this->visibility === ClassType::VisibilityPrivate)) {
             throw new Nette\InvalidStateException("Method {$this->name}() cannot be abstract and final or private at the same time.");

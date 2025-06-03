@@ -25,7 +25,7 @@ final class BuilderHelpers
      *
      * @return Node The normalized node
      */
-    public static function normalizeNode($node) : \PhpParser\Node
+    public static function normalizeNode($node): \PhpParser\Node
     {
         if ($node instanceof \PhpParser\Builder) {
             return $node->getNode();
@@ -44,7 +44,7 @@ final class BuilderHelpers
      *
      * @return Stmt The normalized statement node
      */
-    public static function normalizeStmt($node) : Stmt
+    public static function normalizeStmt($node): Stmt
     {
         $node = self::normalizeNode($node);
         if ($node instanceof Stmt) {
@@ -62,7 +62,7 @@ final class BuilderHelpers
      *
      * @return Identifier The normalized identifier
      */
-    public static function normalizeIdentifier($name) : Identifier
+    public static function normalizeIdentifier($name): Identifier
     {
         if ($name instanceof Identifier) {
             return $name;
@@ -70,7 +70,7 @@ final class BuilderHelpers
         if (\is_string($name)) {
             return new Identifier($name);
         }
-        throw new \LogicException('_PHPStan_checksum\\Expected string or instance of Node\\Identifier');
+        throw new \LogicException('_PHPStan_checksum\Expected string or instance of Node\Identifier');
     }
     /**
      * Normalizes strings to Identifier, also allowing expressions.
@@ -87,7 +87,7 @@ final class BuilderHelpers
         if (\is_string($name)) {
             return new Identifier($name);
         }
-        throw new \LogicException('_PHPStan_checksum\\Expected string or instance of Node\\Identifier or Node\\Expr');
+        throw new \LogicException('_PHPStan_checksum\Expected string or instance of Node\Identifier or Node\Expr');
     }
     /**
      * Normalizes a name: Converts string names to Name nodes.
@@ -96,7 +96,7 @@ final class BuilderHelpers
      *
      * @return Name The normalized name
      */
-    public static function normalizeName($name) : Name
+    public static function normalizeName($name): Name
     {
         if ($name instanceof Name) {
             return $name;
@@ -113,7 +113,7 @@ final class BuilderHelpers
             }
             return new Name($name);
         }
-        throw new \LogicException('_PHPStan_checksum\\Name must be a string or an instance of Node\\Name');
+        throw new \LogicException('_PHPStan_checksum\Name must be a string or an instance of Node\Name');
     }
     /**
      * Normalizes a name: Converts string names to Name nodes, while also allowing expressions.
@@ -128,7 +128,7 @@ final class BuilderHelpers
             return $name;
         }
         if (!\is_string($name) && !$name instanceof Name) {
-            throw new \LogicException('_PHPStan_checksum\\Name must be a string or an instance of Node\\Name or Node\\Expr');
+            throw new \LogicException('_PHPStan_checksum\Name must be a string or an instance of Node\Name or Node\Expr');
         }
         return self::normalizeName($name);
     }
@@ -176,7 +176,7 @@ final class BuilderHelpers
      *
      * @return Expr The normalized value
      */
-    public static function normalizeValue($value) : Expr
+    public static function normalizeValue($value): Expr
     {
         if ($value instanceof \PhpParser\Node\Expr) {
             return $value;
@@ -222,7 +222,7 @@ final class BuilderHelpers
      *
      * @return Comment\Doc The normalized doc comment
      */
-    public static function normalizeDocComment($docComment) : \PhpParser\Comment\Doc
+    public static function normalizeDocComment($docComment): \PhpParser\Comment\Doc
     {
         if ($docComment instanceof \PhpParser\Comment\Doc) {
             return $docComment;
@@ -230,7 +230,7 @@ final class BuilderHelpers
         if (\is_string($docComment)) {
             return new \PhpParser\Comment\Doc($docComment);
         }
-        throw new \LogicException('Doc comment must be a string or an instance of PhpParser\\Comment\\Doc');
+        throw new \LogicException('Doc comment must be a string or an instance of PhpParser\Comment\Doc');
     }
     /**
      * Normalizes a attribute: Converts attribute to the Attribute Group if needed.
@@ -239,13 +239,13 @@ final class BuilderHelpers
      *
      * @return Node\AttributeGroup The Attribute Group
      */
-    public static function normalizeAttribute($attribute) : \PhpParser\Node\AttributeGroup
+    public static function normalizeAttribute($attribute): \PhpParser\Node\AttributeGroup
     {
         if ($attribute instanceof \PhpParser\Node\AttributeGroup) {
             return $attribute;
         }
         if (!$attribute instanceof \PhpParser\Node\Attribute) {
-            throw new \LogicException('Attribute must be an instance of PhpParser\\Node\\Attribute or PhpParser\\Node\\AttributeGroup');
+            throw new \LogicException('Attribute must be an instance of PhpParser\Node\Attribute or PhpParser\Node\AttributeGroup');
         }
         return new \PhpParser\Node\AttributeGroup([$attribute]);
     }
@@ -257,7 +257,7 @@ final class BuilderHelpers
      *
      * @return int New modifiers
      */
-    public static function addModifier(int $modifiers, int $modifier) : int
+    public static function addModifier(int $modifiers, int $modifier): int
     {
         \PhpParser\Modifiers::verifyModifier($modifiers, $modifier);
         return $modifiers | $modifier;
@@ -266,7 +266,7 @@ final class BuilderHelpers
      * Adds a modifier and returns new modifier bitmask.
      * @return int New modifiers
      */
-    public static function addClassModifier(int $existingModifiers, int $modifierToSet) : int
+    public static function addClassModifier(int $existingModifiers, int $modifierToSet): int
     {
         \PhpParser\Modifiers::verifyClassModifier($existingModifiers, $modifierToSet);
         return $existingModifiers | $modifierToSet;

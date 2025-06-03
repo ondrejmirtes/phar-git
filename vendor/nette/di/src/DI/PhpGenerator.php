@@ -29,7 +29,7 @@ class PhpGenerator
     /**
      * Generates PHP classes. First class is the container.
      */
-    public function generate(string $className) : Php\ClassType
+    public function generate(string $className): Php\ClassType
     {
         $this->className = $className;
         $class = new Php\ClassType($this->className);
@@ -47,7 +47,7 @@ class PhpGenerator
         $class->addMethod('initialize')->setReturnType('void');
         return $class;
     }
-    public function toString(Php\ClassType $class) : string
+    public function toString(Php\ClassType $class): string
     {
         return '/** @noinspection PhpParamsInspection,PhpMethodMayBeStaticInspection */
 
@@ -55,14 +55,14 @@ declare(strict_types=1);
 
 ' . $class->__toString();
     }
-    public function addInitialization(Php\ClassType $class, CompilerExtension $extension) : void
+    public function addInitialization(Php\ClassType $class, CompilerExtension $extension): void
     {
         $closure = $extension->getInitialization();
         if ($closure->getBody()) {
             $class->getMethod('initialize')->addBody('// ' . $extension->prefix(''))->addBody("({$closure})();");
         }
     }
-    public function generateMethod(Definitions\Definition $def) : Php\Method
+    public function generateMethod(Definitions\Definition $def): Php\Method
     {
         $name = $def->getName();
         try {
@@ -78,7 +78,7 @@ declare(strict_types=1);
     /**
      * Formats PHP code for class instantiating, function calling or property setting in PHP.
      */
-    public function formatStatement(Statement $statement) : string
+    public function formatStatement(Statement $statement): string
     {
         $entity = $statement->getEntity();
         $arguments = $statement->arguments;
@@ -121,13 +121,13 @@ declare(strict_types=1);
      * Formats PHP statement.
      * @internal
      */
-    public function formatPhp(string $statement, array $args) : string
+    public function formatPhp(string $statement, array $args): string
     {
         return (new Php\Dumper())->format($statement, ...$this->convertArguments($args));
     }
-    public function convertArguments(array $args) : array
+    public function convertArguments(array $args): array
     {
-        \array_walk_recursive($args, function (&$val) : void {
+        \array_walk_recursive($args, function (&$val): void {
             if ($val instanceof Statement) {
                 $val = new Php\Literal($this->formatStatement($val));
             } elseif ($val instanceof Reference) {
@@ -147,7 +147,7 @@ declare(strict_types=1);
      * Converts parameters from Definition to PhpGenerator.
      * @return Php\Parameter[]
      */
-    public function convertParameters(array $parameters) : array
+    public function convertParameters(array $parameters): array
     {
         $res = [];
         foreach ($parameters as $k => $v) {
@@ -162,7 +162,7 @@ declare(strict_types=1);
         }
         return $res;
     }
-    public function getClassName() : ?string
+    public function getClassName(): ?string
     {
         return $this->className;
     }

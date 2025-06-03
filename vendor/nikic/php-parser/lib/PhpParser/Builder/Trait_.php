@@ -69,7 +69,7 @@ class Trait_ extends \PhpParser\Builder\Declaration
      *
      * @return Stmt\Trait_ The built interface node
      */
-    public function getNode() : PhpParser\Node
+    public function getNode(): PhpParser\Node
     {
         return new Stmt\Trait_($this->name, ['stmts' => \array_merge($this->uses, $this->constants, $this->properties, $this->methods), 'attrGroups' => $this->attributeGroups], $this->attributes);
     }

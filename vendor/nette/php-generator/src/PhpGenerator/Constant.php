@@ -23,7 +23,7 @@ final class Constant
     /** @var bool */
     private $final = \false;
     /** @return static */
-    public function setValue($val) : self
+    public function setValue($val): self
     {
         $this->value = $val;
         return $this;
@@ -33,12 +33,12 @@ final class Constant
         return $this->value;
     }
     /** @return static */
-    public function setFinal(bool $state = \true) : self
+    public function setFinal(bool $state = \true): self
     {
         $this->final = $state;
         return $this;
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->final;
     }

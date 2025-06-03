@@ -29,15 +29,15 @@ final class DateTimeModifyReturnTypeExtension implements DynamicMethodReturnType
         $this->phpVersion = $phpVersion;
         $this->dateTimeClass = $dateTimeClass;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return $this->dateTimeClass;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'modify';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) < 1) {
             return null;

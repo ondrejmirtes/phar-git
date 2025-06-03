@@ -18,12 +18,12 @@ final class ReflectionParameterStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionParameter $parameterReflection) : string
+    public static function toString(ReflectionParameter $parameterReflection): string
     {
         return sprintf('Parameter #%d [ %s %s%s%s$%s%s ]', $parameterReflection->getPosition(), $parameterReflection->isOptional() ? '<optional>' : '<required>', self::typeToString($parameterReflection), $parameterReflection->isVariadic() ? '...' : '', $parameterReflection->isPassedByReference() ? '&' : '', $parameterReflection->getName(), self::valueToString($parameterReflection));
     }
     /** @psalm-pure */
-    private static function typeToString(ReflectionParameter $parameterReflection) : string
+    private static function typeToString(ReflectionParameter $parameterReflection): string
     {
         $type = $parameterReflection->getType();
         if ($type === null) {
@@ -32,7 +32,7 @@ final class ReflectionParameterStringCast
         return \PHPStan\BetterReflection\Reflection\StringCast\ReflectionTypeStringCast::toString($type) . ' ';
     }
     /** @psalm-pure */
-    private static function valueToString(ReflectionParameter $parameterReflection) : string
+    private static function valueToString(ReflectionParameter $parameterReflection): string
     {
         if (!($parameterReflection->isOptional() && $parameterReflection->isDefaultValueAvailable())) {
             return '';

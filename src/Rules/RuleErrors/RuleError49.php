@@ -15,18 +15,18 @@ final class RuleError49 implements RuleError, IdentifierRuleError, MetadataRuleE
     public string $identifier;
     /** @var mixed[] */
     public array $metadata;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

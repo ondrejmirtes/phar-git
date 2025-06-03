@@ -22,25 +22,25 @@ final class DoWhileLoopConditionNode extends NodeAbstract implements \PHPStan\No
         $this->exitPoints = $exitPoints;
         parent::__construct($cond->getAttributes());
     }
-    public function getCond() : Expr
+    public function getCond(): Expr
     {
         return $this->cond;
     }
     /**
      * @return StatementExitPoint[]
      */
-    public function getExitPoints() : array
+    public function getExitPoints(): array
     {
         return $this->exitPoints;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClosureReturnStatementsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

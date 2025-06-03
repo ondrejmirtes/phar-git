@@ -16,7 +16,7 @@ trait AttributeAware
     /** @var Attribute[] */
     private $attributes = [];
     /** @return static */
-    public function addAttribute(string $name, array $args = []) : self
+    public function addAttribute(string $name, array $args = []): self
     {
         $this->attributes[] = new Attribute($name, $args);
         return $this;
@@ -25,7 +25,7 @@ trait AttributeAware
      * @param  Attribute[]  $attrs
      * @return static
      */
-    public function setAttributes(array $attrs) : self
+    public function setAttributes(array $attrs): self
     {
         (function (Attribute ...$attrs) {
         })(...$attrs);
@@ -33,7 +33,7 @@ trait AttributeAware
         return $this;
     }
     /** @return Attribute[] */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

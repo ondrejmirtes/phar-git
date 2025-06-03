@@ -35,11 +35,11 @@ final class FunctionCallableRule implements Rule
         $this->checkFunctionNameCase = $checkFunctionNameCase;
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionCallableNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$this->phpVersion->supportsFirstClassCallables()) {
             return [RuleErrorBuilder::message('First-class callables are supported only on PHP 8.1 and later.')->nonIgnorable()->identifier('callable.notSupported')->build()];

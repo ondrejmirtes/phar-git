@@ -28,7 +28,7 @@ final class TemplateTypeFactory
     /**
      * @param non-empty-string $name
      */
-    public static function create(\PHPStan\Type\Generic\TemplateTypeScope $scope, string $name, ?Type $bound, \PHPStan\Type\Generic\TemplateTypeVariance $variance, ?\PHPStan\Type\Generic\TemplateTypeStrategy $strategy = null, ?Type $default = null) : \PHPStan\Type\Generic\TemplateType
+    public static function create(\PHPStan\Type\Generic\TemplateTypeScope $scope, string $name, ?Type $bound, \PHPStan\Type\Generic\TemplateTypeVariance $variance, ?\PHPStan\Type\Generic\TemplateTypeStrategy $strategy = null, ?Type $default = null): \PHPStan\Type\Generic\TemplateType
     {
         $strategy ??= new \PHPStan\Type\Generic\TemplateTypeParameterStrategy();
         if ($bound === null) {
@@ -93,7 +93,7 @@ final class TemplateTypeFactory
         }
         return new \PHPStan\Type\Generic\TemplateMixedType($scope, $strategy, $variance, $name, new MixedType(\true), $default);
     }
-    public static function fromTemplateTag(\PHPStan\Type\Generic\TemplateTypeScope $scope, TemplateTag $tag) : \PHPStan\Type\Generic\TemplateType
+    public static function fromTemplateTag(\PHPStan\Type\Generic\TemplateTypeScope $scope, TemplateTag $tag): \PHPStan\Type\Generic\TemplateType
     {
         return self::create($scope, $tag->getName(), $tag->getBound(), $tag->getVariance(), null, $tag->getDefault());
     }

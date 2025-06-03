@@ -6,5 +6,5 @@ namespace PHPStan\File;
 /** @api */
 interface RelativePathHelper
 {
-    public function getRelativePath(string $filename) : string;
+    public function getRelativePath(string $filename): string;
 }

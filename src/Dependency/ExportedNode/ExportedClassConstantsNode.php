@@ -30,7 +30,7 @@ final class ExportedClassConstantsNode implements ExportedNode, JsonSerializable
         $this->final = $final;
         $this->phpDoc = $phpDoc;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -59,16 +59,16 @@ final class ExportedClassConstantsNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['constants'], $properties['public'], $properties['private'], $properties['final'], $properties['phpDoc']);
     }
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
-        return new self(array_map(static function (array $constantData) : \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode {
+        return new self(array_map(static function (array $constantData): \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode {
             if ($constantData['type'] !== \PHPStan\Dependency\ExportedNode\ExportedClassConstantNode::class) {
                 throw new ShouldNotHappenException();
             }

@@ -47,11 +47,11 @@ final class MethodSignatureRule implements Rule
         $this->reportMaybes = $reportMaybes;
         $this->reportStatic = $reportStatic;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         $methodName = $method->getName();
@@ -110,7 +110,7 @@ final class MethodSignatureRule implements Rule
     /**
      * @return list<array{ExtendedMethodReflection, ClassReflection}>
      */
-    private function collectParentMethods(string $methodName, ClassReflection $class) : array
+    private function collectParentMethods(string $methodName, ClassReflection $class): array
     {
         $parentMethods = [];
         $parentClass = $class->getParentClass();
@@ -145,7 +145,7 @@ final class MethodSignatureRule implements Rule
     /**
      * @return array{TrinaryLogic, Type, Type}
      */
-    private function checkReturnTypeCompatibility(ClassReflection $declaringClass, ExtendedParametersAcceptor $currentVariant, ExtendedParametersAcceptor $parentVariant) : array
+    private function checkReturnTypeCompatibility(ClassReflection $declaringClass, ExtendedParametersAcceptor $currentVariant, ExtendedParametersAcceptor $parentVariant): array
     {
         $returnType = TypehintHelper::decideType($currentVariant->getNativeReturnType(), TemplateTypeHelper::resolveToBounds($currentVariant->getPhpDocReturnType()));
         $originalParentReturnType = TypehintHelper::decideType($parentVariant->getNativeReturnType(), TemplateTypeHelper::resolveToBounds($parentVariant->getPhpDocReturnType()));
@@ -165,7 +165,7 @@ final class MethodSignatureRule implements Rule
      * @param ExtendedParameterReflection[] $parentParameters
      * @return array<int, array{TrinaryLogic, Type, Type}>
      */
-    private function checkParameterTypeCompatibility(ClassReflection $declaringClass, array $parameters, array $parentParameters) : array
+    private function checkParameterTypeCompatibility(ClassReflection $declaringClass, array $parameters, array $parentParameters): array
     {
         $parameterResults = [];
         $numberOfParameters = min(count($parameters), count($parentParameters));
@@ -179,9 +179,9 @@ final class MethodSignatureRule implements Rule
         }
         return $parameterResults;
     }
-    private function transformStaticType(ClassReflection $declaringClass, Type $type) : Type
+    private function transformStaticType(ClassReflection $declaringClass, Type $type): Type
     {
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use($declaringClass) : Type {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use ($declaringClass): Type {
             if ($type instanceof GenericStaticType) {
                 if ($declaringClass->isFinal()) {
                     $changedType = $type->changeBaseClass($declaringClass)->getStaticObjectType();

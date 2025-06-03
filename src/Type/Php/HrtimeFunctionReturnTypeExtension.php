@@ -20,11 +20,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class HrtimeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'hrtime';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $arrayType = new ConstantArrayType([new ConstantIntegerType(0), new ConstantIntegerType(1)], [new IntegerType(), new IntegerType()], [2], [], TrinaryLogic::createYes());
         $numberType = TypeUtils::toBenevolentUnion(TypeCombinator::union(new IntegerType(), new FloatType()));

@@ -27,11 +27,11 @@ final class DoWhileLoopConstantConditionRule implements Rule
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return DoWhileLoopConditionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $exprType = $this->helper->getBooleanType($scope, $node->getCond());
         if ($exprType instanceof ConstantBooleanType) {
@@ -59,7 +59,7 @@ final class DoWhileLoopConstantConditionRule implements Rule
                     }
                 }
             }
-            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }

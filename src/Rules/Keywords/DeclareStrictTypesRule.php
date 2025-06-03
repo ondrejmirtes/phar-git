@@ -25,11 +25,11 @@ final class DeclareStrictTypesRule implements Rule
     {
         $this->exprPrinter = $exprPrinter;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Stmt\Declare_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $declaresStrictTypes = \false;
         foreach ($node->declares as $declare) {

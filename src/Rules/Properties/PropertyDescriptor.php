@@ -16,7 +16,7 @@ final class PropertyDescriptor
     /**
      * @param Node\Expr\PropertyFetch|Node\Expr\StaticPropertyFetch $propertyFetch
      */
-    public function describeProperty(PropertyReflection $property, Scope $scope, $propertyFetch) : string
+    public function describeProperty(PropertyReflection $property, Scope $scope, $propertyFetch): string
     {
         if ($propertyFetch instanceof Node\Expr\PropertyFetch) {
             $fetchedOnType = $scope->getType($propertyFetch->var);

@@ -27,11 +27,11 @@ final class GetParentClassDynamicFunctionReturnTypeExtension implements DynamicF
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_parent_class';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) === 0) {
             if ($scope->isInTrait()) {
@@ -56,7 +56,7 @@ final class GetParentClassDynamicFunctionReturnTypeExtension implements DynamicF
         }
         return null;
     }
-    private function findParentClassNameType(string $className) : Type
+    private function findParentClassNameType(string $className): Type
     {
         if (!$this->reflectionProvider->hasClass($className)) {
             return new UnionType([new ClassStringType(), new ConstantBooleanType(\false)]);
@@ -67,7 +67,7 @@ final class GetParentClassDynamicFunctionReturnTypeExtension implements DynamicF
         }
         return $this->findParentClassType($classReflection);
     }
-    private function findParentClassType(ClassReflection $classReflection) : Type
+    private function findParentClassType(ClassReflection $classReflection): Type
     {
         $parentClass = $classReflection->getParentClass();
         if ($parentClass === null) {

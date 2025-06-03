@@ -113,15 +113,15 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         $this->attributes = $attributes;
         $this->functionLike = $functionLike;
     }
-    protected function getFunctionLike() : FunctionLike
+    protected function getFunctionLike(): FunctionLike
     {
         return $this->functionLike;
     }
-    public function getFileName() : string
+    public function getFileName(): string
     {
         return $this->fileName;
     }
-    public function getName() : string
+    public function getName(): string
     {
         if ($this->functionLike instanceof ClassMethod) {
             return $this->functionLike->name->name;
@@ -135,33 +135,33 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         }
         return (string) $this->functionLike->namespacedName;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         if ($this->variants === null) {
             $this->variants = [new ExtendedFunctionVariant($this->getTemplateTypeMap(), $this->getResolvedTemplateTypeMap(), $this->getParameters(), $this->isVariadic(), $this->getReturnType(), $this->getPhpDocReturnType(), $this->getNativeReturnType())];
         }
         return $this->variants;
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this;
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->templateTypeMap;
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return TemplateTypeMap::createEmpty();
     }
     /**
      * @return list<ExtendedParameterReflection>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         $parameters = [];
         $isOptional = \true;
@@ -187,7 +187,7 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         }
         return array_reverse($parameters);
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         foreach ($this->functionLike->getParams() as $parameter) {
             if ($parameter->variadic) {
@@ -196,42 +196,42 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         }
         return \false;
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return TypehintHelper::decideType($this->realReturnType, $this->phpDocReturnType);
     }
-    public function getPhpDocReturnType() : Type
+    public function getPhpDocReturnType(): Type
     {
         return $this->phpDocReturnType ?? new MixedType();
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->realReturnType;
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return TemplateTypeVarianceMap::createEmpty();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated) {
             return $this->deprecatedDescription;
         }
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated);
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isInternal);
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->throwType;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         if ($this->getReturnType()->isVoid()->yes()) {
             return TrinaryLogic::createYes();
@@ -241,19 +241,19 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return \false;
     }
-    public function isGenerator() : bool
+    public function isGenerator(): bool
     {
         return $this->nodeIsOrContainsYield($this->functionLike);
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->acceptsNamedArguments);
     }
-    private function nodeIsOrContainsYield(Node $node) : bool
+    private function nodeIsOrContainsYield(Node $node): bool
     {
         if ($node instanceof Node\Expr\Yield_) {
             return \true;
@@ -277,26 +277,26 @@ class PhpFunctionFromParserNodeReflection implements FunctionReflection, Extende
         }
         return \false;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->assertions;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->phpDocComment;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->functionLike->returnsByRef());
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         if ($this->isPure === null) {
             return TrinaryLogic::createMaybe();
         }
         return TrinaryLogic::createFromBoolean($this->isPure);
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

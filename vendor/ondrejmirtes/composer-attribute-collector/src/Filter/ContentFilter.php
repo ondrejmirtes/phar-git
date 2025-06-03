@@ -11,7 +11,7 @@ use function preg_match;
 use function str_contains;
 final class ContentFilter implements Filter
 {
-    public function filter(string $filepath, string $class, IOInterface $io) : bool
+    public function filter(string $filepath, string $class, IOInterface $io): bool
     {
         $content = file_get_contents($filepath);
         assert(is_string($content));
@@ -20,7 +20,7 @@ final class ContentFilter implements Filter
             return \false;
         }
         // Hint of an attribute class.
-        if (preg_match('/#\\[\\\\?Attribute[\\]\\(]/', $content)) {
+        if (preg_match('/#\[\\\\?Attribute[\]\(]/', $content)) {
             $io->debug("Discarding '{$class}' because it looks like an attribute");
             return \false;
         }

@@ -32,11 +32,11 @@ final class ArrayCombineFunctionReturnTypeExtension implements DynamicFunctionRe
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_combine';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 2) {
             return null;
@@ -94,7 +94,7 @@ final class ArrayCombineFunctionReturnTypeExtension implements DynamicFunctionRe
      *
      * @return array<int, ConstantIntegerType|ConstantStringType>|null
      */
-    private function sanitizeConstantArrayKeyTypes(array $types) : ?array
+    private function sanitizeConstantArrayKeyTypes(array $types): ?array
     {
         $sanitizedTypes = [];
         foreach ($types as $type) {

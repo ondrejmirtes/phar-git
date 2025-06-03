@@ -31,18 +31,18 @@ final class FunctionCallableNode extends Expr implements \PHPStan\Node\VirtualNo
     {
         return $this->name;
     }
-    public function getOriginalNode() : Expr\FuncCall
+    public function getOriginalNode(): Expr\FuncCall
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_FunctionCallableNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

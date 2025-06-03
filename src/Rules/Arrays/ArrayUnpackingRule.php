@@ -27,11 +27,11 @@ final class ArrayUnpackingRule implements Rule
         $this->phpVersion = $phpVersion;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ArrayItem::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->unpack === \false || $this->phpVersion->supportsArrayUnpackingWithStringKeys()) {
             return [];

@@ -25,12 +25,12 @@ final class FileHelper
     {
         $this->workingDirectory = $this->normalizePath($workingDirectory);
     }
-    public function getWorkingDirectory() : string
+    public function getWorkingDirectory(): string
     {
         return $this->workingDirectory;
     }
     /** @api */
-    public function absolutizePath(string $path) : string
+    public function absolutizePath(string $path): string
     {
         if (DIRECTORY_SEPARATOR === '/') {
             if (str_starts_with($path, '/')) {
@@ -39,13 +39,13 @@ final class FileHelper
         } elseif (substr($path, 1, 1) === ':') {
             return $path;
         }
-        if (preg_match('~^[a-z0-9+\\-.]+://~i', $path) === 1) {
+        if (preg_match('~^[a-z0-9+\-.]+://~i', $path) === 1) {
             return $path;
         }
         return rtrim($this->getWorkingDirectory(), '/\\') . DIRECTORY_SEPARATOR . ltrim($path, '/\\');
     }
     /** @api */
-    public function normalizePath(string $originalPath, string $directorySeparator = DIRECTORY_SEPARATOR) : string
+    public function normalizePath(string $originalPath, string $directorySeparator = DIRECTORY_SEPARATOR): string
     {
         $isLocalPath = \false;
         if ($originalPath !== '') {
@@ -58,7 +58,7 @@ final class FileHelper
         }
         $matches = null;
         if (!$isLocalPath) {
-            $matches = Strings::match($originalPath, '~^([a-z0-9+\\-.]+)://(.+)$~is');
+            $matches = Strings::match($originalPath, '~^([a-z0-9+\-.]+)://(.+)$~is');
         }
         if ($matches !== null) {
             [, $scheme, $path] = $matches;

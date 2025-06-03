@@ -43,7 +43,7 @@ class MemoizeClassMapGenerator
      * @return array<class-string, non-empty-string>
      *     Where _key_ is a class and _value_ its path.
      */
-    public function getMap() : array
+    public function getMap(): array
     {
         /**
          * Paths might have been removed, we need to filter according to the paths provided during {@link scanPaths()}
@@ -66,7 +66,7 @@ class MemoizeClassMapGenerator
      *
      * @throws RuntimeException When the path is neither an existing file nor directory
      */
-    public function scanPaths(string $path, ?string $excluded = null) : void
+    public function scanPaths(string $path, ?string $excluded = null): void
     {
         $this->paths[$path] = \true;
         [$timestamp] = $this->state[$path] ?? [0];
@@ -78,7 +78,7 @@ class MemoizeClassMapGenerator
             $this->state[$path] = [time(), $map];
         }
     }
-    private function shouldUpdate(int $timestamp, string $path) : bool
+    private function shouldUpdate(int $timestamp, string $path): bool
     {
         if (!$timestamp) {
             return \true;

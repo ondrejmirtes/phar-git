@@ -95,15 +95,15 @@ class Sender
             $request = $request->withHeader('Authorization', 'Basic ' . \base64_encode($request->getUri()->getUserInfo()));
         }
         $requestStream = $this->http->request($request);
-        $deferred = new Deferred(function ($_, $reject) use($requestStream) {
+        $deferred = new Deferred(function ($_, $reject) use ($requestStream) {
             // close request stream if request is cancelled
             $reject(new \RuntimeException('Request cancelled'));
             $requestStream->close();
         });
-        $requestStream->on('error', function ($error) use($deferred) {
+        $requestStream->on('error', function ($error) use ($deferred) {
             $deferred->reject($error);
         });
-        $requestStream->on('response', function (ResponseInterface $response) use($deferred, $request) {
+        $requestStream->on('response', function (ResponseInterface $response) use ($deferred, $request) {
             $deferred->resolve($response);
         });
         if ($body instanceof ReadableStreamInterface) {
@@ -116,16 +116,16 @@ class Sender
                 // add dummy write to immediately start request even if body does not emit any data yet
                 $body->pipe($requestStream);
                 $requestStream->write('');
-                $body->on('close', $close = function () use($deferred, $requestStream) {
+                $body->on('close', $close = function () use ($deferred, $requestStream) {
                     $deferred->reject(new \RuntimeException('Request failed because request body closed unexpectedly'));
                     $requestStream->close();
                 });
-                $body->on('error', function ($e) use($deferred, $requestStream, $close, $body) {
+                $body->on('error', function ($e) use ($deferred, $requestStream, $close, $body) {
                     $body->removeListener('close', $close);
                     $deferred->reject(new \RuntimeException('Request failed because request body reported an error', 0, $e));
                     $requestStream->close();
                 });
-                $body->on('end', function () use($close, $body) {
+                $body->on('end', function () use ($close, $body) {
                     $body->removeListener('close', $close);
                 });
             } else {

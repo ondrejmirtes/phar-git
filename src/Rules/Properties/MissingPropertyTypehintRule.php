@@ -22,11 +22,11 @@ final class MissingPropertyTypehintRule implements Rule
     {
         $this->missingTypehintCheck = $missingTypehintCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $propertyReflection = $node->getClassReflection()->getNativeProperty($node->getName());
         if ($propertyReflection->isPromoted()) {

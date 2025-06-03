@@ -31,15 +31,15 @@ final class PropertyExistsTypeSpecifyingExtension implements FunctionTypeSpecify
     {
         $this->propertyReflectionFinder = $propertyReflectionFinder;
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return $functionReflection->getName() === 'property_exists' && $context->true() && count($node->getArgs()) >= 2;
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $propertyNameType = $scope->getType($node->getArgs()[1]->value);
         if (!$propertyNameType instanceof ConstantStringType) {

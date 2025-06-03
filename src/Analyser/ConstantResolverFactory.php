@@ -17,7 +17,7 @@ final class ConstantResolverFactory
         $this->reflectionProviderProvider = $reflectionProviderProvider;
         $this->container = $container;
     }
-    public function create() : \PHPStan\Analyser\ConstantResolver
+    public function create(): \PHPStan\Analyser\ConstantResolver
     {
         $composerFactory = $this->container->getByType(ComposerPhpVersionFactory::class);
         return new \PHPStan\Analyser\ConstantResolver($this->reflectionProviderProvider, $this->container->getParameter('dynamicConstantNames'), $this->container->getParameter('phpVersion'), $composerFactory);

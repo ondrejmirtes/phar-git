@@ -25,11 +25,11 @@ final class UnsetRule implements Rule
         $this->propertyReflectionFinder = $propertyReflectionFinder;
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Unset_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $functionArguments = $node->vars;
         $errors = [];
@@ -65,7 +65,7 @@ final class UnsetRule implements Rule
         }
         return $errors;
     }
-    private function canBeUnset(Node $node, Scope $scope) : ?IdentifierRuleError
+    private function canBeUnset(Node $node, Scope $scope): ?IdentifierRuleError
     {
         if ($node instanceof Node\Expr\Variable && is_string($node->name)) {
             $hasVariable = $scope->hasVariableType($node->name);

@@ -30,11 +30,11 @@ final class InvalidBinaryOperationRule implements Rule
         $this->exprPrinter = $exprPrinter;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\BinaryOp && !$node instanceof Node\Expr\AssignOp) {
             return [];

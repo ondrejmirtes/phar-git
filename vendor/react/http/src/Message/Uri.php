@@ -46,7 +46,7 @@ final class Uri implements UriInterface
             $parts = \parse_url($uri);
         }
         // @codeCoverageIgnoreEnd
-        if ($parts === \false || isset($parts['scheme']) && !\preg_match('#^[a-z]+$#i', $parts['scheme']) || isset($parts['host']) && \preg_match('#[\\s_%+]#', $parts['host'])) {
+        if ($parts === \false || isset($parts['scheme']) && !\preg_match('#^[a-z]+$#i', $parts['scheme']) || isset($parts['host']) && \preg_match('#[\s_%+]#', $parts['host'])) {
             throw new \InvalidArgumentException('Invalid URI given');
         }
         if (isset($parts['scheme'])) {
@@ -138,7 +138,7 @@ final class Uri implements UriInterface
         if ($host === $this->host) {
             return $this;
         }
-        if (\preg_match('#[\\s_%+]#', $host) || $host !== '' && \parse_url('http://' . $host, \PHP_URL_HOST) !== $host) {
+        if (\preg_match('#[\s_%+]#', $host) || $host !== '' && \parse_url('http://' . $host, \PHP_URL_HOST) !== $host) {
             throw new \InvalidArgumentException('Invalid URI host given');
         }
         $new = clone $this;
@@ -223,7 +223,7 @@ final class Uri implements UriInterface
      */
     private function encode($part, $component)
     {
-        return \preg_replace_callback('/(?:[^a-z0-9_\\-\\.~!\\$&\'\\(\\)\\*\\+,;=' . ($component === \PHP_URL_PATH ? ':@\\/' : ($component === \PHP_URL_QUERY || $component === \PHP_URL_FRAGMENT ? ':@\\/\\?' : '')) . '%]++|%(?![a-f0-9]{2}))/i', function (array $match) {
+        return \preg_replace_callback('/(?:[^a-z0-9_\-\.~!\$&\'\(\)\*\+,;=' . ($component === \PHP_URL_PATH ? ':@\/' : ($component === \PHP_URL_QUERY || $component === \PHP_URL_FRAGMENT ? ':@\/\?' : '')) . '%]++|%(?![a-f0-9]{2}))/i', function (array $match) {
             return \rawurlencode($match[0]);
         }, $part);
     }

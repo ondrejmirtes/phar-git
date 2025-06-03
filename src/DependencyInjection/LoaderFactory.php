@@ -27,7 +27,7 @@ final class LoaderFactory
         $this->generateBaselineFile = $generateBaselineFile;
         $this->expandRelativePaths = $expandRelativePaths;
     }
-    public function createLoader() : Loader
+    public function createLoader(): Loader
     {
         $neonAdapter = new \PHPStan\DependencyInjection\NeonAdapter($this->expandRelativePaths);
         $loader = new \PHPStan\DependencyInjection\NeonLoader($this->fileHelper, $this->generateBaselineFile);

@@ -97,11 +97,11 @@ final class PhpFunctionReflection implements FunctionReflection
         $this->phpDocParameterClosureThisTypes = $phpDocParameterClosureThisTypes;
         $this->attributes = $attributes;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         if ($this->filename === null) {
             return null;
@@ -111,27 +111,27 @@ final class PhpFunctionReflection implements FunctionReflection
         }
         return $this->filename;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         if ($this->variants === null) {
             $this->variants = [new ExtendedFunctionVariant($this->templateTypeMap, null, $this->getParameters(), $this->isVariadic(), $this->getReturnType(), $this->getPhpDocReturnType(), $this->getNativeReturnType())];
         }
         return $this->variants;
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
     /**
      * @return list<ExtendedParameterReflection>
      */
-    private function getParameters() : array
+    private function getParameters(): array
     {
-        return array_map(function (ReflectionParameter $reflection) : \PHPStan\Reflection\Php\PhpParameterReflection {
+        return array_map(function (ReflectionParameter $reflection): \PHPStan\Reflection\Php\PhpParameterReflection {
             if (array_key_exists($reflection->getName(), $this->phpDocParameterImmediatelyInvokedCallable)) {
                 $immediatelyInvokedCallable = TrinaryLogic::createFromBoolean($this->phpDocParameterImmediatelyInvokedCallable[$reflection->getName()]);
             } else {
@@ -140,7 +140,7 @@ final class PhpFunctionReflection implements FunctionReflection
             return new \PHPStan\Reflection\Php\PhpParameterReflection($this->initializerExprTypeResolver, $reflection, $this->phpDocParameterTypes[$reflection->getName()] ?? null, null, $this->phpDocParameterOutTypes[$reflection->getName()] ?? null, $immediatelyInvokedCallable, $this->phpDocParameterClosureThisTypes[$reflection->getName()] ?? null, $this->attributeReflectionFactory->fromNativeReflection($reflection->getAttributes(), InitializerExprContext::fromReflectionParameter($reflection)));
         }, $this->reflection->getParameters());
     }
-    private function isVariadic() : bool
+    private function isVariadic(): bool
     {
         $isNativelyVariadic = $this->reflection->isVariadic();
         if (!$isNativelyVariadic && $this->reflection->getFileName() !== \false && !$this->isBuiltin()) {
@@ -162,22 +162,22 @@ final class PhpFunctionReflection implements FunctionReflection
         }
         return $isNativelyVariadic;
     }
-    private function getReturnType() : Type
+    private function getReturnType(): Type
     {
         return TypehintHelper::decideTypeFromReflection($this->reflection->getReturnType(), $this->phpDocReturnType);
     }
-    private function getPhpDocReturnType() : Type
+    private function getPhpDocReturnType(): Type
     {
         if ($this->phpDocReturnType !== null) {
             return $this->phpDocReturnType;
         }
         return new MixedType();
     }
-    private function getNativeReturnType() : Type
+    private function getNativeReturnType(): Type
     {
         return TypehintHelper::decideTypeFromReflection($this->reflection->getReturnType());
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated) {
             return $this->deprecatedDescription;
@@ -188,19 +188,19 @@ final class PhpFunctionReflection implements FunctionReflection
         }
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated || $this->reflection->isDeprecated());
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isInternal);
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->phpDocThrowType;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         if ($this->getReturnType()->isVoid()->yes()) {
             return TrinaryLogic::createYes();
@@ -210,34 +210,34 @@ final class PhpFunctionReflection implements FunctionReflection
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         if ($this->isPure === null) {
             return TrinaryLogic::createMaybe();
         }
         return TrinaryLogic::createFromBoolean($this->isPure);
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return $this->reflection->isInternal();
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->asserts;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->phpDocComment;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->returnsReference());
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->acceptsNamedArguments);
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

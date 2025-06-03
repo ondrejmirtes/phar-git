@@ -16,7 +16,7 @@ final class ExprPrinter
     {
         $this->printer = $printer;
     }
-    public function printExpr(Expr $expr) : string
+    public function printExpr(Expr $expr): string
     {
         /** @var string|null $exprString */
         $exprString = $expr->getAttribute('phpstan_cache_printer');

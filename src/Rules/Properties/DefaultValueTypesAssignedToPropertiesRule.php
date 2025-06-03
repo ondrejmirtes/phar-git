@@ -21,11 +21,11 @@ final class DefaultValueTypesAssignedToPropertiesRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $default = $node->getDefault();
         if ($default === null) {

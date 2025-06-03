@@ -12,36 +12,36 @@ final class FakeReflectionAttribute
     {
         $this->betterReflectionAttribute = $betterReflectionAttribute;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionAttribute->getName();
     }
-    public function getTarget() : int
+    public function getTarget(): int
     {
         return $this->betterReflectionAttribute->getTarget();
     }
-    public function isRepeated() : bool
+    public function isRepeated(): bool
     {
         return $this->betterReflectionAttribute->isRepeated();
     }
     /**
      * @return array<int|string, mixed>
      */
-    public function getArguments() : array
+    public function getArguments(): array
     {
         return $this->betterReflectionAttribute->getArguments();
     }
     /** @return array<int|string, Expr> */
-    public function getArgumentsExpressions() : array
+    public function getArgumentsExpressions(): array
     {
         return $this->betterReflectionAttribute->getArgumentsExpressions();
     }
-    public function newInstance() : object
+    public function newInstance(): object
     {
         $class = $this->getName();
         return new $class(...$this->getArguments());
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionAttribute->__toString();
     }

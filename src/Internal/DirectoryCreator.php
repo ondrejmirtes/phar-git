@@ -11,7 +11,7 @@ final class DirectoryCreator
     /**
      * @throws DirectoryCreatorException if unable to create directory.
      */
-    public static function ensureDirectoryExists(string $directory, int $mode = 0755, bool $recursive = \true) : void
+    public static function ensureDirectoryExists(string $directory, int $mode = 0755, bool $recursive = \true): void
     {
         if (is_dir($directory)) {
             return;

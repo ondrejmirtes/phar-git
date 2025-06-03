@@ -48,67 +48,67 @@ final class ResolvedFunctionVariantWithCallable implements \PHPStan\Reflection\R
         $this->usedVariables = $usedVariables;
         $this->acceptsNamedArguments = $acceptsNamedArguments;
     }
-    public function getOriginalParametersAcceptor() : \PHPStan\Reflection\ParametersAcceptor
+    public function getOriginalParametersAcceptor(): \PHPStan\Reflection\ParametersAcceptor
     {
         return $this->parametersAcceptor->getOriginalParametersAcceptor();
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->parametersAcceptor->getTemplateTypeMap();
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return $this->parametersAcceptor->getResolvedTemplateTypeMap();
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return $this->parametersAcceptor->getCallSiteVarianceMap();
     }
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parametersAcceptor->getParameters();
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->parametersAcceptor->isVariadic();
     }
-    public function getReturnTypeWithUnresolvableTemplateTypes() : Type
+    public function getReturnTypeWithUnresolvableTemplateTypes(): Type
     {
         return $this->parametersAcceptor->getReturnTypeWithUnresolvableTemplateTypes();
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return $this->parametersAcceptor->getReturnType();
     }
-    public function getPhpDocReturnType() : Type
+    public function getPhpDocReturnType(): Type
     {
         return $this->parametersAcceptor->getPhpDocReturnType();
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->parametersAcceptor->getNativeReturnType();
     }
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return $this->throwPoints;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->isPure;
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return $this->invalidateExpressions;
     }
-    public function getUsedVariables() : array
+    public function getUsedVariables(): array
     {
         return $this->usedVariables;
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->acceptsNamedArguments;
     }

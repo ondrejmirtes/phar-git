@@ -11,5 +11,5 @@ interface Registry
      * @param class-string<TNodeType> $nodeType
      * @return array<Rule<TNodeType>>
      */
-    public function getRules(string $nodeType) : array;
+    public function getRules(string $nodeType): array;
 }

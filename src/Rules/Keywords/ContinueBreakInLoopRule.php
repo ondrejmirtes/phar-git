@@ -16,11 +16,11 @@ use function sprintf;
  */
 final class ContinueBreakInLoopRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Stmt::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Stmt\Continue_ && !$node instanceof Stmt\Break_) {
             return [];

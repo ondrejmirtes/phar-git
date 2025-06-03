@@ -36,19 +36,19 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
         $this->phpVersion = $phpVersion;
         $this->stricterFunctionMap = $stricterFunctionMap;
     }
-    public function hasMethodSignature(string $className, string $methodName) : bool
+    public function hasMethodSignature(string $className, string $methodName): bool
     {
         return $this->hasFunctionSignature(sprintf('%s::%s', $className, $methodName));
     }
-    public function hasFunctionSignature(string $name) : bool
+    public function hasFunctionSignature(string $name): bool
     {
         return array_key_exists(strtolower($name), $this->getSignatureMap());
     }
-    public function getMethodSignatures(string $className, string $methodName, ?ReflectionMethod $reflectionMethod) : array
+    public function getMethodSignatures(string $className, string $methodName, ?ReflectionMethod $reflectionMethod): array
     {
         return $this->getFunctionSignatures(sprintf('%s::%s', $className, $methodName), $className, $reflectionMethod);
     }
-    public function getFunctionSignatures(string $functionName, ?string $className, ?ReflectionFunctionAbstract $reflectionFunction) : array
+    public function getFunctionSignatures(string $functionName, ?string $className, ?ReflectionFunctionAbstract $reflectionFunction): array
     {
         $functionName = strtolower($functionName);
         $signatures = [$this->createSignature($functionName, $className, $reflectionFunction)];
@@ -61,7 +61,7 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
         }
         return ['positional' => $signatures, 'named' => null];
     }
-    private function createSignature(string $functionName, ?string $className, ?ReflectionFunctionAbstract $reflectionFunction) : \PHPStan\Reflection\SignatureMap\FunctionSignature
+    private function createSignature(string $functionName, ?string $className, ?ReflectionFunctionAbstract $reflectionFunction): \PHPStan\Reflection\SignatureMap\FunctionSignature
     {
         if (!$reflectionFunction instanceof ReflectionMethod && !$reflectionFunction instanceof ReflectionFunction && $reflectionFunction !== null) {
             throw new ShouldNotHappenException();
@@ -88,11 +88,11 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
         }
         return new \PHPStan\Reflection\SignatureMap\FunctionSignature($parameters, $signature->getReturnType(), $nativeReturnType, $signature->isVariadic());
     }
-    public function hasMethodMetadata(string $className, string $methodName) : bool
+    public function hasMethodMetadata(string $className, string $methodName): bool
     {
         return $this->hasFunctionMetadata(sprintf('%s::%s', $className, $methodName));
     }
-    public function hasFunctionMetadata(string $name) : bool
+    public function hasFunctionMetadata(string $name): bool
     {
         $signatureMap = self::getFunctionMetadataMap();
         return array_key_exists(strtolower($name), $signatureMap);
@@ -100,14 +100,14 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
     /**
      * @return array{hasSideEffects: bool}
      */
-    public function getMethodMetadata(string $className, string $methodName) : array
+    public function getMethodMetadata(string $className, string $methodName): array
     {
         return $this->getFunctionMetadata(sprintf('%s::%s', $className, $methodName));
     }
     /**
      * @return array{hasSideEffects: bool}
      */
-    public function getFunctionMetadata(string $functionName) : array
+    public function getFunctionMetadata(string $functionName): array
     {
         $functionName = strtolower($functionName);
         if (!$this->hasFunctionMetadata($functionName)) {
@@ -118,11 +118,11 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
     /**
      * @return array<string, array{hasSideEffects: bool}>
      */
-    private static function getFunctionMetadataMap() : array
+    private static function getFunctionMetadataMap(): array
     {
         if (self::$functionMetadata === null) {
             /** @var array<string, array{hasSideEffects: bool}> $metadata */
-            $metadata = (require __DIR__ . '/../../../resources/functionMetadata.php');
+            $metadata = require __DIR__ . '/../../../resources/functionMetadata.php';
             self::$functionMetadata = array_change_key_case($metadata, CASE_LOWER);
         }
         return self::$functionMetadata;
@@ -130,13 +130,13 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
     /**
      * @return mixed[]
      */
-    public function getSignatureMap() : array
+    public function getSignatureMap(): array
     {
         $cacheKey = sprintf('%d-%d', $this->phpVersion->getVersionId(), $this->stricterFunctionMap ? 1 : 0);
         if (array_key_exists($cacheKey, self::$signatureMaps)) {
             return self::$signatureMaps[$cacheKey];
         }
-        $signatureMap = (require __DIR__ . '/../../../resources/functionMap.php');
+        $signatureMap = require __DIR__ . '/../../../resources/functionMap.php';
         if (!is_array($signatureMap)) {
             throw new ShouldNotHappenException('Signature map could not be loaded.');
         }
@@ -171,9 +171,9 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
      * @param array<string, mixed> $signatureMap
      * @return array<string, mixed>
      */
-    private function computeSignatureMapFile(array $signatureMap, string $file) : array
+    private function computeSignatureMapFile(array $signatureMap, string $file): array
     {
-        $signatureMapDelta = (include $file);
+        $signatureMapDelta = include $file;
         if (!is_array($signatureMapDelta)) {
             throw new ShouldNotHappenException(sprintf('Signature map file "%s" could not be loaded.', $file));
         }
@@ -184,7 +184,7 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
      * @param array<string, array<string, mixed>> $delta
      * @return array<string, mixed>
      */
-    private function computeSignatureMap(array $signatureMap, array $delta) : array
+    private function computeSignatureMap(array $signatureMap, array $delta): array
     {
         foreach (array_keys($delta['old']) as $key) {
             unset($signatureMap[strtolower($key)]);
@@ -194,11 +194,11 @@ final class FunctionSignatureMapProvider implements \PHPStan\Reflection\Signatur
         }
         return $signatureMap;
     }
-    public function hasClassConstantMetadata(string $className, string $constantName) : bool
+    public function hasClassConstantMetadata(string $className, string $constantName): bool
     {
         return \false;
     }
-    public function getClassConstantMetadata(string $className, string $constantName) : array
+    public function getClassConstantMetadata(string $className, string $constantName): array
     {
         throw new ShouldNotHappenException();
     }

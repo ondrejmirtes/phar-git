@@ -39,7 +39,7 @@ final class CompleteCommand extends Command
         $this->completionOutputs = $completionOutputs + ['bash' => BashCompletionOutput::class];
         parent::__construct();
     }
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->addOption('shell', 's', InputOption::VALUE_REQUIRED, 'The shell type ("' . \implode('", "', \array_keys($this->completionOutputs)) . '")')->addOption('input', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'An array of input tokens (e.g. COMP_WORDS or argv)')->addOption('current', 'c', InputOption::VALUE_REQUIRED, 'The index of the "input" array that the cursor is in (e.g. COMP_CWORD)')->addOption('symfony', 'S', InputOption::VALUE_REQUIRED, 'The version of the completion script');
     }
@@ -47,7 +47,7 @@ final class CompleteCommand extends Command
     {
         $this->isDebug = \filter_var(\getenv('SYMFONY_COMPLETION_DEBUG'), \FILTER_VALIDATE_BOOLEAN);
     }
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {
             // uncomment when a bugfix or BC break has been introduced in the shell completion scripts
@@ -62,7 +62,7 @@ final class CompleteCommand extends Command
             if (!$shell) {
                 throw new \RuntimeException('The "--shell" option must be set.');
             }
-            if (!($completionOutput = $this->completionOutputs[$shell] ?? \false)) {
+            if (!$completionOutput = $this->completionOutputs[$shell] ?? \false) {
                 throw new \RuntimeException(\sprintf('Shell completion is not supported for your shell: "%s" (supported: "%s").', $shell, \implode('", "', \array_keys($this->completionOutputs))));
             }
             $completionInput = $this->createCompletionInput($input);
@@ -84,7 +84,7 @@ final class CompleteCommand extends Command
                     $suggestions->suggestOptions($command->getDefinition()->getOptions());
                 } else {
                     $this->log(['  Completing using the <comment>' . \get_class($command instanceof LazyCommand ? $command->getCommand() : $command) . '</> class.', '  Completing <comment>' . $completionInput->getCompletionType() . '</> for <comment>' . $completionInput->getCompletionName() . '</>']);
-                    if (null !== ($compval = $completionInput->getCompletionValue())) {
+                    if (null !== $compval = $completionInput->getCompletionValue()) {
                         $this->log('  Current value: <comment>' . $compval . '</>');
                     }
                     $command->complete($completionInput, $suggestions);
@@ -112,7 +112,7 @@ final class CompleteCommand extends Command
         }
         return 0;
     }
-    private function createCompletionInput(InputInterface $input) : CompletionInput
+    private function createCompletionInput(InputInterface $input): CompletionInput
     {
         $currentIndex = $input->getOption('current');
         if (!$currentIndex || !\ctype_digit($currentIndex)) {
@@ -125,7 +125,7 @@ final class CompleteCommand extends Command
         }
         return $completionInput;
     }
-    private function findCommand(CompletionInput $completionInput, OutputInterface $output) : ?Command
+    private function findCommand(CompletionInput $completionInput, OutputInterface $output): ?Command
     {
         try {
             $inputName = $completionInput->getFirstArgument();
@@ -137,7 +137,7 @@ final class CompleteCommand extends Command
         }
         return null;
     }
-    private function log($messages) : void
+    private function log($messages): void
     {
         if (!$this->isDebug) {
             return;

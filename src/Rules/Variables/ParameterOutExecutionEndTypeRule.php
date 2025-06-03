@@ -30,11 +30,11 @@ final class ParameterOutExecutionEndTypeRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ExecutionEndNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $inFunction = $scope->getFunction();
         if ($inFunction === null) {
@@ -67,7 +67,7 @@ final class ParameterOutExecutionEndTypeRule implements Rule
      * @return list<IdentifierRuleError>
      * @param \PHPStan\Reflection\FunctionReflection|\PHPStan\Reflection\ExtendedMethodReflection $inFunction
      */
-    private function processSingleParameter(Scope $scope, $inFunction, ExtendedParameterReflection $parameter) : array
+    private function processSingleParameter(Scope $scope, $inFunction, ExtendedParameterReflection $parameter): array
     {
         $outType = $parameter->getOutType();
         if ($outType === null) {

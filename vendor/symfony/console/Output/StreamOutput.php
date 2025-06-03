@@ -94,7 +94,7 @@ class StreamOutput extends Output
         if ('Hyper' === \getenv('TERM_PROGRAM') || \false !== \getenv('COLORTERM') || \false !== \getenv('ANSICON') || 'ON' === \getenv('ConEmuANSI')) {
             return \true;
         }
-        if ('dumb' === ($term = (string) \getenv('TERM'))) {
+        if ('dumb' === $term = (string) \getenv('TERM')) {
             return \false;
         }
         // See https://github.com/chalk/supports-color/blob/d4f413efaf8da045c5ab440ed418ef02dbb28bf1/index.js#L157

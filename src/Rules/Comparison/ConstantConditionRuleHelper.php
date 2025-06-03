@@ -17,7 +17,7 @@ final class ConstantConditionRuleHelper
         $this->impossibleCheckTypeHelper = $impossibleCheckTypeHelper;
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
     }
-    public function shouldSkip(Scope $scope, Expr $expr) : bool
+    public function shouldSkip(Scope $scope, Expr $expr): bool
     {
         if ($expr instanceof Expr\BinaryOp\Equal || $expr instanceof Expr\BinaryOp\NotEqual) {
             return \true;
@@ -34,7 +34,7 @@ final class ConstantConditionRuleHelper
         }
         return \false;
     }
-    public function getBooleanType(Scope $scope, Expr $expr) : BooleanType
+    public function getBooleanType(Scope $scope, Expr $expr): BooleanType
     {
         if ($this->shouldSkip($scope, $expr)) {
             return new BooleanType();
@@ -44,7 +44,7 @@ final class ConstantConditionRuleHelper
         }
         return $scope->getNativeType($expr)->toBoolean();
     }
-    public function getNativeBooleanType(Scope $scope, Expr $expr) : BooleanType
+    public function getNativeBooleanType(Scope $scope, Expr $expr): BooleanType
     {
         if ($this->shouldSkip($scope, $expr)) {
             return new BooleanType();

@@ -62,27 +62,27 @@ final class NativeMethodReflection implements ExtendedMethodReflection
         $this->phpDocComment = $phpDocComment;
         $this->attributes = $attributes;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isAbstract());
     }
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         try {
             $prototypeMethod = $this->reflection->getPrototype();
@@ -102,15 +102,15 @@ final class NativeMethodReflection implements ExtendedMethodReflection
             return $this;
         }
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         return $this->variants;
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         $variants = $this->getVariants();
         if (count($variants) !== 1) {
@@ -118,39 +118,39 @@ final class NativeMethodReflection implements ExtendedMethodReflection
         }
         return $variants[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return $this->namedArgumentsVariants;
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isDeprecated());
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isInternal());
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isFinal());
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->isFinal();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->throwType;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         $name = strtolower($this->getName());
         $isVoid = $this->isVoid();
@@ -159,14 +159,14 @@ final class NativeMethodReflection implements ExtendedMethodReflection
         }
         return $this->hasSideEffects;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         if ($this->hasSideEffects()->yes()) {
             return TrinaryLogic::createNo();
         }
         return $this->hasSideEffects->negate();
     }
-    private function isVoid() : bool
+    private function isVoid(): bool
     {
         foreach ($this->variants as $variant) {
             if (!$variant->getReturnType()->isVoid()->yes()) {
@@ -175,27 +175,27 @@ final class NativeMethodReflection implements ExtendedMethodReflection
         }
         return \true;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->phpDocComment;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->assertions;
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->declaringClass->acceptsNamedArguments() && $this->acceptsNamedArguments);
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return $this->selfOutType;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->returnsReference());
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

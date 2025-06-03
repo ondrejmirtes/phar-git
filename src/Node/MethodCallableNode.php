@@ -26,7 +26,7 @@ final class MethodCallableNode extends Expr implements \PHPStan\Node\VirtualNode
         $this->originalNode = $originalNode;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getVar() : Expr
+    public function getVar(): Expr
     {
         return $this->var;
     }
@@ -37,18 +37,18 @@ final class MethodCallableNode extends Expr implements \PHPStan\Node\VirtualNode
     {
         return $this->name;
     }
-    public function getOriginalNode() : Expr\MethodCall
+    public function getOriginalNode(): Expr\MethodCall
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_MethodCallableNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

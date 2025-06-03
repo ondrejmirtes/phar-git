@@ -6,5 +6,5 @@ namespace PHPStan\Rules;
 /** @api */
 interface RuleError
 {
-    public function getMessage() : string;
+    public function getMessage(): string;
 }

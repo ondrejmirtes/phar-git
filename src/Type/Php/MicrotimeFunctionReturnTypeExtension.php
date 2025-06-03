@@ -18,11 +18,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class MicrotimeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'microtime';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return new StringType();

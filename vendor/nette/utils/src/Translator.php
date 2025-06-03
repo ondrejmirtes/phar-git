@@ -17,6 +17,6 @@ interface Translator
      * @param  mixed  $message
      * @param  mixed  ...$parameters
      */
-    function translate($message, ...$parameters) : string;
+    function translate($message, ...$parameters): string;
 }
 \interface_exists(ITranslator::class);

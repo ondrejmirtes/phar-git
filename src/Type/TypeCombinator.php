@@ -46,7 +46,7 @@ use const PHP_INT_MIN;
  */
 final class TypeCombinator
 {
-    public static function addNull(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function addNull(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         $nullType = new \PHPStan\Type\NullType();
         if ($nullType->isSuperTypeOf($type)->no()) {
@@ -54,7 +54,7 @@ final class TypeCombinator
         }
         return $type;
     }
-    public static function remove(\PHPStan\Type\Type $fromType, \PHPStan\Type\Type $typeToRemove) : \PHPStan\Type\Type
+    public static function remove(\PHPStan\Type\Type $fromType, \PHPStan\Type\Type $typeToRemove): \PHPStan\Type\Type
     {
         if ($typeToRemove instanceof \PHPStan\Type\UnionType) {
             foreach ($typeToRemove->getTypes() as $unionTypeToRemove) {
@@ -104,14 +104,14 @@ final class TypeCombinator
         }
         return $fromType;
     }
-    public static function removeNull(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function removeNull(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if (self::containsNull($type)) {
             return self::remove($type, new \PHPStan\Type\NullType());
         }
         return $type;
     }
-    public static function containsNull(\PHPStan\Type\Type $type) : bool
+    public static function containsNull(\PHPStan\Type\Type $type): bool
     {
         if ($type instanceof \PHPStan\Type\UnionType) {
             foreach ($type->getTypes() as $innerType) {
@@ -123,7 +123,7 @@ final class TypeCombinator
         }
         return $type instanceof \PHPStan\Type\NullType;
     }
-    public static function union(\PHPStan\Type\Type ...$types) : \PHPStan\Type\Type
+    public static function union(\PHPStan\Type\Type ...$types): \PHPStan\Type\Type
     {
         $typesCount = count($types);
         if ($typesCount === 0) {
@@ -334,7 +334,7 @@ final class TypeCombinator
     /**
      * @return array{Type, null}|array{null, Type}|null
      */
-    private static function compareTypesInUnion(\PHPStan\Type\Type $a, \PHPStan\Type\Type $b) : ?array
+    private static function compareTypesInUnion(\PHPStan\Type\Type $a, \PHPStan\Type\Type $b): ?array
     {
         if ($a instanceof \PHPStan\Type\IntegerRangeType) {
             $type = $a->tryUnion($b);
@@ -412,7 +412,7 @@ final class TypeCombinator
     /**
      * @return array<Type>
      */
-    private static function getAccessoryCaseStringTypes(\PHPStan\Type\Type $type) : array
+    private static function getAccessoryCaseStringTypes(\PHPStan\Type\Type $type): array
     {
         $accessory = [];
         if ($type->isLowercaseString()->yes()) {
@@ -423,7 +423,7 @@ final class TypeCombinator
         }
         return $accessory;
     }
-    private static function unionWithSubtractedType(\PHPStan\Type\Type $type, ?\PHPStan\Type\Type $subtractedType) : \PHPStan\Type\Type
+    private static function unionWithSubtractedType(\PHPStan\Type\Type $type, ?\PHPStan\Type\Type $subtractedType): \PHPStan\Type\Type
     {
         if ($subtractedType === null) {
             return $type;
@@ -440,7 +440,7 @@ final class TypeCombinator
         }
         return self::remove($type, $subtractedType);
     }
-    private static function intersectWithSubtractedType(\PHPStan\Type\SubtractableType $a, \PHPStan\Type\Type $b) : \PHPStan\Type\Type
+    private static function intersectWithSubtractedType(\PHPStan\Type\SubtractableType $a, \PHPStan\Type\Type $b): \PHPStan\Type\Type
     {
         if ($a->getSubtractedType() === null) {
             return $a;
@@ -500,7 +500,7 @@ final class TypeCombinator
      * @param Type[] $arrayTypes
      * @return Type[]
      */
-    private static function processArrayAccessoryTypes(array $arrayTypes) : array
+    private static function processArrayAccessoryTypes(array $arrayTypes): array
     {
         $isIterableAtLeastOnce = [];
         $accessoryTypes = [];
@@ -568,7 +568,7 @@ final class TypeCombinator
      * @param list<Type> $arrayTypes
      * @return Type[]
      */
-    private static function processArrayTypes(array $arrayTypes) : array
+    private static function processArrayTypes(array $arrayTypes): array
     {
         if ($arrayTypes === []) {
             return [];
@@ -647,7 +647,7 @@ final class TypeCombinator
      * @param Type[] $types
      * @return Type[]
      */
-    private static function optimizeConstantArrays(array $types) : array
+    private static function optimizeConstantArrays(array $types): array
     {
         $constantArrayValuesCount = self::countConstantArrayValueTypes($types);
         if ($constantArrayValuesCount <= ConstantArrayTypeBuilder::ARRAY_COUNT_LIMIT) {
@@ -657,7 +657,7 @@ final class TypeCombinator
         $eachIsOversized = \true;
         foreach ($types as $type) {
             $isOversized = \false;
-            $result = \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use(&$isOversized) : \PHPStan\Type\Type {
+            $result = \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use (&$isOversized): \PHPStan\Type\Type {
                 if (!$type instanceof ConstantArrayType) {
                     return $traverse($type);
                 }
@@ -681,7 +681,7 @@ final class TypeCombinator
                     $generalizedKeyType = $innerKeyType->generalize(\PHPStan\Type\GeneralizePrecision::moreSpecific());
                     $keyTypes[$generalizedKeyType->describe(\PHPStan\Type\VerbosityLevel::precise())] = $generalizedKeyType;
                     $innerValueType = $type->getValueTypes()[$i];
-                    $generalizedValueType = \PHPStan\Type\TypeTraverser::map($innerValueType, static function (\PHPStan\Type\Type $type) use($traverse) : \PHPStan\Type\Type {
+                    $generalizedValueType = \PHPStan\Type\TypeTraverser::map($innerValueType, static function (\PHPStan\Type\Type $type) use ($traverse): \PHPStan\Type\Type {
                         if ($type instanceof \PHPStan\Type\ArrayType || $type instanceof ConstantArrayType) {
                             return \PHPStan\Type\TypeCombinator::intersect($type, new OversizedArrayType());
                         }
@@ -733,11 +733,11 @@ final class TypeCombinator
     /**
      * @param Type[] $types
      */
-    public static function countConstantArrayValueTypes(array $types) : int
+    public static function countConstantArrayValueTypes(array $types): int
     {
         $constantArrayValuesCount = 0;
         foreach ($types as $type) {
-            \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use(&$constantArrayValuesCount) : \PHPStan\Type\Type {
+            \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use (&$constantArrayValuesCount): \PHPStan\Type\Type {
                 if ($type instanceof ConstantArrayType) {
                     $constantArrayValuesCount += count($type->getValueTypes());
                 }
@@ -750,7 +750,7 @@ final class TypeCombinator
      * @param list<Type> $constantArrays
      * @return list<Type>
      */
-    private static function reduceArrays(array $constantArrays, bool $preserveTaggedUnions) : array
+    private static function reduceArrays(array $constantArrays, bool $preserveTaggedUnions): array
     {
         $newArrays = [];
         $arraysToProcess = [];
@@ -816,7 +816,7 @@ final class TypeCombinator
         }
         return array_merge($newArrays, $arraysToProcess);
     }
-    public static function intersect(\PHPStan\Type\Type ...$types) : \PHPStan\Type\Type
+    public static function intersect(\PHPStan\Type\Type ...$types): \PHPStan\Type\Type
     {
         $types = array_values($types);
         $typesCount = count($types);
@@ -826,7 +826,7 @@ final class TypeCombinator
         if ($typesCount === 1) {
             return $types[0];
         }
-        $sortTypes = static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b) : int {
+        $sortTypes = static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b): int {
             if (!$a instanceof \PHPStan\Type\UnionType || !$b instanceof \PHPStan\Type\UnionType) {
                 return 0;
             }
@@ -894,7 +894,7 @@ final class TypeCombinator
             $types = $newTypes;
             $typesCount = count($types);
         }
-        usort($types, static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b) : int {
+        usort($types, static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b): int {
             // move subtractables with subtracts before those without to avoid loosing them in the union logic
             if ($a instanceof \PHPStan\Type\SubtractableType && $a->getSubtractedType() !== null) {
                 return -1;
@@ -1109,11 +1109,11 @@ final class TypeCombinator
         }
         return new \PHPStan\Type\IntersectionType($types);
     }
-    public static function removeFalsey(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function removeFalsey(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         return self::remove($type, \PHPStan\Type\StaticTypeFactory::falsey());
     }
-    public static function removeTruthy(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function removeTruthy(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         return self::remove($type, \PHPStan\Type\StaticTypeFactory::truthy());
     }

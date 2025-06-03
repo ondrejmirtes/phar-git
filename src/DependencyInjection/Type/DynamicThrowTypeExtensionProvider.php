@@ -9,9 +9,9 @@ use PHPStan\Type\DynamicStaticMethodThrowTypeExtension;
 interface DynamicThrowTypeExtensionProvider
 {
     /** @return DynamicFunctionThrowTypeExtension[] */
-    public function getDynamicFunctionThrowTypeExtensions() : array;
+    public function getDynamicFunctionThrowTypeExtensions(): array;
     /** @return DynamicMethodThrowTypeExtension[] */
-    public function getDynamicMethodThrowTypeExtensions() : array;
+    public function getDynamicMethodThrowTypeExtensions(): array;
     /** @return DynamicStaticMethodThrowTypeExtension[] */
-    public function getDynamicStaticMethodThrowTypeExtensions() : array;
+    public function getDynamicStaticMethodThrowTypeExtensions(): array;
 }

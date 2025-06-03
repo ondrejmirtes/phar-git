@@ -10,7 +10,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 final class ArrayFilterArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isArrayFilterArg';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\FuncCall && $node->name instanceof Node\Name) {
             $functionName = $node->name->toLowerString();

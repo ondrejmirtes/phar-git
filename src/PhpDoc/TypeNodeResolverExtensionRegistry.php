@@ -8,5 +8,5 @@ interface TypeNodeResolverExtensionRegistry
     /**
      * @return TypeNodeResolverExtension[]
      */
-    public function getExtensions() : array;
+    public function getExtensions(): array;
 }

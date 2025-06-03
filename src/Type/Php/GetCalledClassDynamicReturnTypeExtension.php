@@ -15,11 +15,11 @@ use PHPStan\Type\Type;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GetCalledClassDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_called_class';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if ($scope->isInClass()) {
             return $scope->getType(new ClassConstFetch(new Name('static'), 'class'));

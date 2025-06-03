@@ -12,7 +12,7 @@ use function count;
 final class ArrayMapArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'arrayMapArgs';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\FuncCall && $node->name instanceof Node\Name && !$node->isFirstClassCallable()) {
             $functionName = $node->name->toLowerString();

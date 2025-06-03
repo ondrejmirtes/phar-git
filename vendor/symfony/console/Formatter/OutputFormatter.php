@@ -45,7 +45,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
      *
      * @internal
      */
-    public static function escapeTrailingBackslash(string $text) : string
+    public static function escapeTrailingBackslash(string $text): string
     {
         if (\str_ends_with($text, '\\')) {
             $len = \strlen($text);
@@ -149,7 +149,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
             if (!$open && !$tag) {
                 // </>
                 $this->styleStack->pop();
-            } elseif (null === ($style = $this->createStyleFromString($tag))) {
+            } elseif (null === $style = $this->createStyleFromString($tag)) {
                 $output .= $this->applyCurrentStyle($text, $output, $width, $currentLineLength);
             } elseif ($open) {
                 $this->styleStack->push($style);
@@ -158,7 +158,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
             }
         }
         $output .= $this->applyCurrentStyle(\substr($message, $offset), $output, $width, $currentLineLength);
-        return \strtr($output, ["\x00" => '\\', '\\<' => '<', '\\>' => '>']);
+        return \strtr($output, ["\x00" => '\\', '\<' => '<', '\>' => '>']);
     }
     /**
      * @return OutputFormatterStyleStack
@@ -170,7 +170,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * Tries to create new style instance from string.
      */
-    private function createStyleFromString(string $string) : ?OutputFormatterStyleInterface
+    private function createStyleFromString(string $string): ?OutputFormatterStyleInterface
     {
         if (isset($this->styles[$string])) {
             return $this->styles[$string];
@@ -204,7 +204,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * Applies current style from stack to text, if must be applied.
      */
-    private function applyCurrentStyle(string $text, string $current, int $width, int &$currentLineLength) : string
+    private function applyCurrentStyle(string $text, string $current, int $width, int &$currentLineLength): string
     {
         if ('' === $text) {
             return '';
@@ -221,7 +221,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
         } else {
             $prefix = '';
         }
-        \preg_match('~(\\n)$~', $text, $matches);
+        \preg_match('~(\n)$~', $text, $matches);
         $text = $prefix . $this->addLineBreaks($text, $width);
         $text = \rtrim($text, "\n") . ($matches[1] ?? '');
         if (!$currentLineLength && '' !== $current && "\n" !== \substr($current, -1)) {
@@ -241,7 +241,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
         }
         return \implode("\n", $lines);
     }
-    private function addLineBreaks(string $text, int $width) : string
+    private function addLineBreaks(string $text, int $width): string
     {
         $encoding = \mb_detect_encoding($text, null, \true) ?: 'UTF-8';
         return b($text)->toCodePointString($encoding)->wordwrap($width, "\n", \true)->toByteString($encoding);

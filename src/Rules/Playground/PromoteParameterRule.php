@@ -46,14 +46,14 @@ final class PromoteParameterRule implements Rule
         $this->parameterValue = $parameterValue;
         $this->parameterName = $parameterName;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return $this->nodeType;
     }
     /**
      * @return Rule<TNodeType>|null
      */
-    private function getOriginalRule() : ?Rule
+    private function getOriginalRule(): ?Rule
     {
         if ($this->originalRule === \false) {
             return null;
@@ -86,7 +86,7 @@ final class PromoteParameterRule implements Rule
         }
         return $this->originalRule = $originalRule;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($this->parameterValue) {
             return [];

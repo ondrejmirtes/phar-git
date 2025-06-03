@@ -47,7 +47,7 @@ final class SpecifiedTypes
      *
      * @api
      */
-    public function setAlwaysOverwriteTypes() : self
+    public function setAlwaysOverwriteTypes(): self
     {
         $self = new self($this->sureTypes, $this->sureNotTypes);
         $self->overwrite = \true;
@@ -58,7 +58,7 @@ final class SpecifiedTypes
     /**
      * @api
      */
-    public function setRootExpr(?Expr $rootExpr) : self
+    public function setRootExpr(?Expr $rootExpr): self
     {
         $self = new self($this->sureTypes, $this->sureNotTypes);
         $self->overwrite = $this->overwrite;
@@ -69,7 +69,7 @@ final class SpecifiedTypes
     /**
      * @param array<string, ConditionalExpressionHolder[]> $newConditionalExpressionHolders
      */
-    public function setNewConditionalExpressionHolders(array $newConditionalExpressionHolders) : self
+    public function setNewConditionalExpressionHolders(array $newConditionalExpressionHolders): self
     {
         $self = new self($this->sureTypes, $this->sureNotTypes);
         $self->overwrite = $this->overwrite;
@@ -81,7 +81,7 @@ final class SpecifiedTypes
      * @api
      * @return array<string, array{Expr, Type}>
      */
-    public function getSureTypes() : array
+    public function getSureTypes(): array
     {
         return $this->sureTypes;
     }
@@ -89,27 +89,27 @@ final class SpecifiedTypes
      * @api
      * @return array<string, array{Expr, Type}>
      */
-    public function getSureNotTypes() : array
+    public function getSureNotTypes(): array
     {
         return $this->sureNotTypes;
     }
-    public function shouldOverwrite() : bool
+    public function shouldOverwrite(): bool
     {
         return $this->overwrite;
     }
     /**
      * @return array<string, ConditionalExpressionHolder[]>
      */
-    public function getNewConditionalExpressionHolders() : array
+    public function getNewConditionalExpressionHolders(): array
     {
         return $this->newConditionalExpressionHolders;
     }
-    public function getRootExpr() : ?Expr
+    public function getRootExpr(): ?Expr
     {
         return $this->rootExpr;
     }
     /** @api */
-    public function intersectWith(\PHPStan\Analyser\SpecifiedTypes $other) : self
+    public function intersectWith(\PHPStan\Analyser\SpecifiedTypes $other): self
     {
         $sureTypeUnion = [];
         $sureNotTypeUnion = [];
@@ -133,7 +133,7 @@ final class SpecifiedTypes
         return $result->setRootExpr($rootExpr);
     }
     /** @api */
-    public function unionWith(\PHPStan\Analyser\SpecifiedTypes $other) : self
+    public function unionWith(\PHPStan\Analyser\SpecifiedTypes $other): self
     {
         $sureTypeUnion = $this->sureTypes + $other->sureTypes;
         $sureNotTypeUnion = $this->sureNotTypes + $other->sureNotTypes;
@@ -156,7 +156,7 @@ final class SpecifiedTypes
         }
         return $result->setRootExpr($rootExpr);
     }
-    public function normalize(\PHPStan\Analyser\Scope $scope) : self
+    public function normalize(\PHPStan\Analyser\Scope $scope): self
     {
         $sureTypes = $this->sureTypes;
         foreach ($this->sureNotTypes as $exprString => [$exprNode, $sureNotType]) {
@@ -172,7 +172,7 @@ final class SpecifiedTypes
         }
         return $result->setRootExpr($this->rootExpr);
     }
-    private function mergeRootExpr(?Expr $rootExprA, ?Expr $rootExprB) : ?Expr
+    private function mergeRootExpr(?Expr $rootExprA, ?Expr $rootExprB): ?Expr
     {
         if ($rootExprA === $rootExprB) {
             return $rootExprA;

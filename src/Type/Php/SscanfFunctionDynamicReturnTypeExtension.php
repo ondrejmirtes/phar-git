@@ -25,11 +25,11 @@ use function preg_match_all;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SscanfFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['sscanf', 'fscanf'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) !== 2) {
@@ -39,7 +39,7 @@ final class SscanfFunctionDynamicReturnTypeExtension implements DynamicFunctionR
         if (!$formatType instanceof ConstantStringType) {
             return null;
         }
-        if (preg_match_all('/%(\\d*)(\\[[^\\]]+\\]|[cdeEfosux]{1})/', $formatType->getValue(), $matches) > 0) {
+        if (preg_match_all('/%(\d*)(\[[^\]]+\]|[cdeEfosux]{1})/', $formatType->getValue(), $matches) > 0) {
             $arrayBuilder = ConstantArrayTypeBuilder::createEmpty();
             for ($i = 0; $i < count($matches[0]); $i++) {
                 $length = $matches[1][$i];

@@ -16,11 +16,11 @@ use function sprintf;
  */
 final class TooWideArrowFunctionReturnTypehintRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InArrowFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $arrowFunction = $node->getOriginalNode();
         if ($arrowFunction->returnType === null) {

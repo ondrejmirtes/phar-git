@@ -15,11 +15,11 @@ use function strtolower;
  */
 final class NotAnalysedTraitRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return CollectedDataNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->isOnlyFilesAnalysis()) {
             return [];

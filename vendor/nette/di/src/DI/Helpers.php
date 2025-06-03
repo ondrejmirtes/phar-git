@@ -41,7 +41,7 @@ final class Helpers
         } elseif (!\is_string($var)) {
             return $var;
         }
-        $parts = \preg_split('#%([\\w.-]*)%#i', $var, -1, \PREG_SPLIT_DELIM_CAPTURE);
+        $parts = \preg_split('#%([\w.-]*)%#i', $var, -1, \PREG_SPLIT_DELIM_CAPTURE);
         $res = [];
         $php = \false;
         foreach ($parts as $n => $part) {
@@ -77,10 +77,10 @@ final class Helpers
             }
         }
         if ($php) {
-            $res = \array_filter($res, function ($val) : bool {
+            $res = \array_filter($res, function ($val): bool {
                 return $val !== '';
             });
-            $res = \array_map(function ($val) : string {
+            $res = \array_map(function ($val): string {
                 return $val instanceof DynamicParameter ? "({$val})" : \var_export((string) $val, \true);
             }, $res);
             return new DynamicParameter(\implode(' . ', $res));
@@ -109,14 +109,14 @@ final class Helpers
     /**
      * Process constants recursively.
      */
-    public static function filterArguments(array $args) : array
+    public static function filterArguments(array $args): array
     {
         foreach ($args as $k => $v) {
-            if (\PHP_VERSION_ID >= 80100 && \is_string($v) && \preg_match('#^([\\w\\\\]+)::\\w+$#D', $v, $m) && \enum_exists($m[1])) {
+            if (\PHP_VERSION_ID >= 80100 && \is_string($v) && \preg_match('#^([\w\\\\]+)::\w+$#D', $v, $m) && \enum_exists($m[1])) {
                 $args[$k] = new Nette\PhpGenerator\PhpLiteral($v);
-            } elseif (\is_string($v) && \preg_match('#^[\\w\\\\]*::[A-Z][a-zA-Z0-9_]*$#D', $v)) {
+            } elseif (\is_string($v) && \preg_match('#^[\w\\\\]*::[A-Z][a-zA-Z0-9_]*$#D', $v)) {
                 $args[$k] = new Nette\PhpGenerator\PhpLiteral(\ltrim($v, ':'));
-            } elseif (\is_string($v) && \preg_match('#^@[\\w\\\\]+$#D', $v)) {
+            } elseif (\is_string($v) && \preg_match('#^@[\w\\\\]+$#D', $v)) {
                 $args[$k] = new Reference(\substr($v, 1));
             } elseif (\is_array($v)) {
                 $args[$k] = self::filterArguments($v);
@@ -155,20 +155,20 @@ final class Helpers
      * Returns an annotation value.
      * @param  \ReflectionFunctionAbstract|\ReflectionProperty|\ReflectionClass  $ref
      */
-    public static function parseAnnotation(\Reflector $ref, string $name) : ?string
+    public static function parseAnnotation(\Reflector $ref, string $name): ?string
     {
         if (!Reflection::areCommentsAvailable()) {
             throw new Nette\InvalidStateException('You have to enable phpDoc comments in opcode cache.');
         }
-        $re = '#[\\s*]@' . \preg_quote($name, '#') . '(?=\\s|$)(?:[ \\t]+([^@\\s]\\S*))?#';
+        $re = '#[\s*]@' . \preg_quote($name, '#') . '(?=\s|$)(?:[ \t]+([^@\s]\S*))?#';
         if ($ref->getDocComment() && \preg_match($re, \trim($ref->getDocComment(), '/*'), $m)) {
             return $m[1] ?? '';
         }
         return null;
     }
-    public static function getReturnTypeAnnotation(\ReflectionFunctionAbstract $func) : ?Type
+    public static function getReturnTypeAnnotation(\ReflectionFunctionAbstract $func): ?Type
     {
-        $type = \preg_replace('#[|\\s].*#', '', (string) self::parseAnnotation($func, 'return'));
+        $type = \preg_replace('#[|\s].*#', '', (string) self::parseAnnotation($func, 'return'));
         if (!$type || $type === 'object' || $type === 'mixed') {
             return null;
         } elseif ($func instanceof \ReflectionMethod) {
@@ -177,7 +177,7 @@ final class Helpers
         }
         return Type::fromString($type);
     }
-    public static function ensureClassType(?Type $type, string $hint, bool $allowNullable = \false) : string
+    public static function ensureClassType(?Type $type, string $hint, bool $allowNullable = \false): string
     {
         if (!$type) {
             throw new ServiceCreationException(\sprintf('%s is not declared.', \ucfirst($hint)));
@@ -190,7 +190,7 @@ final class Helpers
         }
         return $class;
     }
-    public static function normalizeClass(string $type) : string
+    public static function normalizeClass(string $type): string
     {
         return \class_exists($type) || \interface_exists($type) ? (new \ReflectionClass($type))->name : $type;
     }
@@ -205,7 +205,7 @@ final class Helpers
         if (\is_scalar($value)) {
             $norm = $value === \false ? '0' : (string) $value;
             if ($type === 'float') {
-                $norm = \preg_replace('#\\.0*$#D', '', $norm);
+                $norm = \preg_replace('#\.0*$#D', '', $norm);
             }
             $orig = $norm;
             \settype($norm, $type);

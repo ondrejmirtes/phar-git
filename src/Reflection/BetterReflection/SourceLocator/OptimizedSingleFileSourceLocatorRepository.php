@@ -15,7 +15,7 @@ final class OptimizedSingleFileSourceLocatorRepository
     {
         $this->factory = $factory;
     }
-    public function getOrCreate(string $fileName) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedSingleFileSourceLocator
+    public function getOrCreate(string $fileName): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedSingleFileSourceLocator
     {
         if (array_key_exists($fileName, $this->locators)) {
             return $this->locators[$fileName];

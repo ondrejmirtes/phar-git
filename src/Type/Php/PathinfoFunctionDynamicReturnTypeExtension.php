@@ -26,11 +26,11 @@ final class PathinfoFunctionDynamicReturnTypeExtension implements DynamicFunctio
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'pathinfo';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, Node\Expr\FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, Node\Expr\FuncCall $functionCall, Scope $scope): ?Type
     {
         $argsCount = count($functionCall->getArgs());
         if ($argsCount === 0) {
@@ -68,7 +68,7 @@ final class PathinfoFunctionDynamicReturnTypeExtension implements DynamicFunctio
     /**
      * @param non-empty-string $constantName
      */
-    private function getConstant(string $constantName) : ?int
+    private function getConstant(string $constantName): ?int
     {
         if (!$this->reflectionProvider->hasConstant(new Node\Name($constantName), null)) {
             return null;

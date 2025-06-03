@@ -13,7 +13,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 trait ConstantNumericComparisonTypeTrait
 {
-    public function getSmallerType(PhpVersion $phpVersion) : Type
+    public function getSmallerType(PhpVersion $phpVersion): Type
     {
         $subtractedTypes = [new ConstantBooleanType(\true), IntegerRangeType::createAllGreaterThanOrEqualTo($this->value)];
         if (!(bool) $this->value) {
@@ -24,7 +24,7 @@ trait ConstantNumericComparisonTypeTrait
         }
         return TypeCombinator::remove(new MixedType(), TypeCombinator::union(...$subtractedTypes));
     }
-    public function getSmallerOrEqualType(PhpVersion $phpVersion) : Type
+    public function getSmallerOrEqualType(PhpVersion $phpVersion): Type
     {
         $subtractedTypes = [IntegerRangeType::createAllGreaterThan($this->value)];
         if (!(bool) $this->value) {
@@ -32,7 +32,7 @@ trait ConstantNumericComparisonTypeTrait
         }
         return TypeCombinator::remove(new MixedType(), TypeCombinator::union(...$subtractedTypes));
     }
-    public function getGreaterType(PhpVersion $phpVersion) : Type
+    public function getGreaterType(PhpVersion $phpVersion): Type
     {
         $subtractedTypes = [
             new NullType(),
@@ -46,7 +46,7 @@ trait ConstantNumericComparisonTypeTrait
         }
         return TypeCombinator::remove(new MixedType(), TypeCombinator::union(...$subtractedTypes));
     }
-    public function getGreaterOrEqualType(PhpVersion $phpVersion) : Type
+    public function getGreaterOrEqualType(PhpVersion $phpVersion): Type
     {
         $subtractedTypes = [IntegerRangeType::createAllSmallerThan($this->value)];
         if ((bool) $this->value) {

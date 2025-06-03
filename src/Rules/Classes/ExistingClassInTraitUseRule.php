@@ -28,11 +28,11 @@ final class ExistingClassInTraitUseRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\TraitUse::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();
@@ -48,12 +48,10 @@ final class ExistingClassInTraitUseRule implements Rule
         } else {
             if ($scope->isInTrait()) {
                 $currentName = sprintf('Trait %s', $scope->getTraitReflection()->getName());
+            } else if ($classReflection->isAnonymous()) {
+                $currentName = 'Anonymous class';
             } else {
-                if ($classReflection->isAnonymous()) {
-                    $currentName = 'Anonymous class';
-                } else {
-                    $currentName = sprintf('Class %s', $classReflection->getName());
-                }
+                $currentName = sprintf('Class %s', $classReflection->getName());
             }
             foreach ($node->traits as $trait) {
                 $traitName = (string) $trait;

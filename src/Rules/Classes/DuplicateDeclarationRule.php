@@ -20,11 +20,11 @@ use function strtolower;
  */
 final class DuplicateDeclarationRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $identifierType = strtolower($classReflection->getClassTypeDescription());

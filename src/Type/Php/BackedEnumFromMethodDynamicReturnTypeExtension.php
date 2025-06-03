@@ -18,15 +18,15 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class BackedEnumFromMethodDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return BackedEnum::class;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return in_array($methodReflection->getName(), ['from', 'tryFrom'], \true);
     }
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         if (!$methodReflection->getDeclaringClass()->isBackedEnum()) {
             return null;

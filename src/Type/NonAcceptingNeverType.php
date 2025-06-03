@@ -11,7 +11,7 @@ class NonAcceptingNeverType extends \PHPStan\Type\NeverType
     {
         parent::__construct(\true);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return \PHPStan\Type\IsSuperTypeOfResult::createYes();
@@ -21,14 +21,14 @@ class NonAcceptingNeverType extends \PHPStan\Type\NeverType
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\NeverType) {
             return \PHPStan\Type\AcceptsResult::createYes();
         }
         return \PHPStan\Type\AcceptsResult::createNo();
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return 'never';
     }

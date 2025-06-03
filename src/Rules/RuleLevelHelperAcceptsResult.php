@@ -26,14 +26,14 @@ final class RuleLevelHelperAcceptsResult
         $this->result = $result;
         $this->reasons = $reasons;
     }
-    public function and(self $other) : self
+    public function and(self $other): self
     {
         return new self($this->result && $other->result, array_merge($this->reasons, $other->reasons));
     }
     /**
      * @param callable(string): string $cb
      */
-    public function decorateReasons(callable $cb) : self
+    public function decorateReasons(callable $cb): self
     {
         $reasons = [];
         foreach ($this->reasons as $reason) {

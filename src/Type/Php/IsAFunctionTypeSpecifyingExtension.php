@@ -25,11 +25,11 @@ final class IsAFunctionTypeSpecifyingExtension implements FunctionTypeSpecifying
     {
         $this->isAFunctionTypeSpecifyingHelper = $isAFunctionTypeSpecifyingHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return strtolower($functionReflection->getName()) === 'is_a' && !$context->null();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         if (count($node->getArgs()) < 2) {
             return new SpecifiedTypes();
@@ -48,7 +48,7 @@ final class IsAFunctionTypeSpecifyingExtension implements FunctionTypeSpecifying
         }
         return $this->typeSpecifier->create($node->getArgs()[0]->value, $resultType, $context, $scope);
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

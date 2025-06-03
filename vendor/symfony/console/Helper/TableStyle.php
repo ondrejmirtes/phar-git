@@ -83,7 +83,7 @@ class TableStyle
      *
      * @return $this
      */
-    public function setHorizontalBorderChars(string $outside, ?string $inside = null) : self
+    public function setHorizontalBorderChars(string $outside, ?string $inside = null): self
     {
         $this->horizontalOutsideBorderChar = $outside;
         $this->horizontalInsideBorderChar = $inside ?? $outside;
@@ -106,7 +106,7 @@ class TableStyle
      *
      * @return $this
      */
-    public function setVerticalBorderChars(string $outside, ?string $inside = null) : self
+    public function setVerticalBorderChars(string $outside, ?string $inside = null): self
     {
         $this->verticalOutsideBorderChar = $outside;
         $this->verticalInsideBorderChar = $inside ?? $outside;
@@ -117,7 +117,7 @@ class TableStyle
      *
      * @internal
      */
-    public function getBorderChars() : array
+    public function getBorderChars(): array
     {
         return [$this->horizontalOutsideBorderChar, $this->verticalOutsideBorderChar, $this->horizontalInsideBorderChar, $this->verticalInsideBorderChar];
     }
@@ -152,7 +152,7 @@ class TableStyle
      *
      * @return $this
      */
-    public function setCrossingChars(string $cross, string $topLeft, string $topMid, string $topRight, string $midRight, string $bottomRight, string $bottomMid, string $bottomLeft, string $midLeft, ?string $topLeftBottom = null, ?string $topMidBottom = null, ?string $topRightBottom = null) : self
+    public function setCrossingChars(string $cross, string $topLeft, string $topMid, string $topRight, string $midRight, string $bottomRight, string $bottomMid, string $bottomLeft, string $midLeft, ?string $topLeftBottom = null, ?string $topMidBottom = null, ?string $topRightBottom = null): self
     {
         $this->crossingChar = $cross;
         $this->crossingTopLeftChar = $topLeft;
@@ -173,7 +173,7 @@ class TableStyle
      *
      * @see {@link setCrossingChars()} for setting each crossing individually.
      */
-    public function setDefaultCrossingChar(string $char) : self
+    public function setDefaultCrossingChar(string $char): self
     {
         return $this->setCrossingChars($char, $char, $char, $char, $char, $char, $char, $char, $char);
     }
@@ -191,7 +191,7 @@ class TableStyle
      *
      * @internal
      */
-    public function getCrossingChars() : array
+    public function getCrossingChars(): array
     {
         return [$this->crossingChar, $this->crossingTopLeftChar, $this->crossingTopMidChar, $this->crossingTopRightChar, $this->crossingMidRightChar, $this->crossingBottomRightChar, $this->crossingBottomMidChar, $this->crossingBottomLeftChar, $this->crossingMidLeftChar, $this->crossingTopLeftBottomChar, $this->crossingTopMidBottomChar, $this->crossingTopRightBottomChar];
     }
@@ -293,26 +293,26 @@ class TableStyle
     {
         return $this->padType;
     }
-    public function getHeaderTitleFormat() : string
+    public function getHeaderTitleFormat(): string
     {
         return $this->headerTitleFormat;
     }
     /**
      * @return $this
      */
-    public function setHeaderTitleFormat(string $format) : self
+    public function setHeaderTitleFormat(string $format): self
     {
         $this->headerTitleFormat = $format;
         return $this;
     }
-    public function getFooterTitleFormat() : string
+    public function getFooterTitleFormat(): string
     {
         return $this->footerTitleFormat;
     }
     /**
      * @return $this
      */
-    public function setFooterTitleFormat(string $format) : self
+    public function setFooterTitleFormat(string $format): self
     {
         $this->footerTitleFormat = $format;
         return $this;

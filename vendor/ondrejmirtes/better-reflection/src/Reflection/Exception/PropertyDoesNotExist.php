@@ -7,7 +7,7 @@ use RuntimeException;
 use function sprintf;
 class PropertyDoesNotExist extends RuntimeException
 {
-    public static function fromName(string $propertyName) : self
+    public static function fromName(string $propertyName): self
     {
         return new self(sprintf('Property "%s" does not exist', $propertyName));
     }

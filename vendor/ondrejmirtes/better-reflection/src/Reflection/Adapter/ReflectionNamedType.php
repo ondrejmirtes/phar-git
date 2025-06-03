@@ -36,12 +36,12 @@ final class ReflectionNamedType extends CoreReflectionNamedType
         }
     }
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->nameType;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         $normalizedType = strtolower($this->nameType);
         if (!$this->allowsNull || $normalizedType === 'mixed' || $normalizedType === 'null') {
@@ -49,15 +49,15 @@ final class ReflectionNamedType extends CoreReflectionNamedType
         }
         return '?' . $this->toString;
     }
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->allowsNull;
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return $this->isBuiltin;
     }
-    private static function computeIsBuiltin(string $namedType, bool $isBuiltin) : bool
+    private static function computeIsBuiltin(string $namedType, bool $isBuiltin): bool
     {
         $normalizedType = strtolower($namedType);
         if ($normalizedType === 'self' || $normalizedType === 'parent' || $normalizedType === 'static') {
@@ -65,7 +65,7 @@ final class ReflectionNamedType extends CoreReflectionNamedType
         }
         return $isBuiltin;
     }
-    public function isIdentifier() : bool
+    public function isIdentifier(): bool
     {
         if (\is_string($this->type)) {
             return \true;

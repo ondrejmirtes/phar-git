@@ -44,11 +44,11 @@ final class RequestBodyBufferMiddleware
         }
         /** @var ?\Closure $closer */
         $closer = null;
-        return new Promise(function ($resolve, $reject) use($body, &$closer, $sizeLimit, $request, $next) {
+        return new Promise(function ($resolve, $reject) use ($body, &$closer, $sizeLimit, $request, $next) {
             // buffer request body data in memory, discard but keep buffering if limit is reached
             $buffer = '';
             $bufferer = null;
-            $body->on('data', $bufferer = function ($data) use(&$buffer, $sizeLimit, $body, &$bufferer) {
+            $body->on('data', $bufferer = function ($data) use (&$buffer, $sizeLimit, $body, &$bufferer) {
                 $buffer .= $data;
                 // On buffer overflow keep the request body stream in,
                 // but ignore the contents and wait for the close event
@@ -61,7 +61,7 @@ final class RequestBodyBufferMiddleware
                 }
             });
             // call $next with current buffer and resolve or reject with its results
-            $body->on('close', $closer = function () use(&$buffer, $request, $resolve, $reject, $next) {
+            $body->on('close', $closer = function () use (&$buffer, $request, $resolve, $reject, $next) {
                 try {
                     // resolve with result of next handler
                     $resolve($next($request->withBody(new BufferedBody($buffer))));
@@ -75,14 +75,14 @@ final class RequestBodyBufferMiddleware
                 }
             });
             // reject buffering if body emits error
-            $body->on('error', function (\Exception $e) use($reject, $body, $closer) {
+            $body->on('error', function (\Exception $e) use ($reject, $body, $closer) {
                 // remove close handler to avoid resolving, then close and reject
                 \assert($closer instanceof \Closure);
                 $body->removeListener('close', $closer);
                 $body->close();
                 $reject(new \RuntimeException('Error while buffering request body: ' . $e->getMessage(), $e->getCode(), $e));
             });
-        }, function () use($body, &$closer) {
+        }, function () use ($body, &$closer) {
             // cancelled buffering: remove close handler to avoid resolving, then close and reject
             \assert($closer instanceof \Closure);
             $body->removeListener('close', $closer);

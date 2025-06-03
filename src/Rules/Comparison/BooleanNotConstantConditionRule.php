@@ -26,15 +26,15 @@ final class BooleanNotConstantConditionRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\BooleanNot::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $exprType = $this->helper->getBooleanType($scope, $node->expr);
         if ($exprType instanceof ConstantBooleanType) {
-            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }

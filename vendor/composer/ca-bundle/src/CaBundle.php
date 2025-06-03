@@ -131,7 +131,7 @@ class CaBundle
                 throw new \RuntimeException('Could not create a temporary file to store the bundled CA file');
             }
             \file_put_contents($tempCaBundleFile, \file_get_contents($caBundleFile));
-            \register_shutdown_function(function () use($tempCaBundleFile) {
+            \register_shutdown_function(function () use ($tempCaBundleFile) {
                 @\unlink($tempCaBundleFile);
             });
             $caBundleFile = $tempCaBundleFile;

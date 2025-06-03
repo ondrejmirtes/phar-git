@@ -65,16 +65,16 @@ final class ParametersExtension extends Nette\DI\CompilerExtension
         $method->addBody('return parent::getParameters();');
         foreach ($this->dynamicValidators as [$param, $expected]) {
             if (!$param instanceof Nette\DI\Definitions\Statement) {
-                $this->initialization->addBody('Nette\\Utils\\Validators::assert(?, ?, ?);', [$param, $expected, 'dynamic parameter']);
+                $this->initialization->addBody('Nette\Utils\Validators::assert(?, ?, ?);', [$param, $expected, 'dynamic parameter']);
             }
         }
     }
-    private function collectDynamicParams(array $params) : array
+    private function collectDynamicParams(array $params): array
     {
         $keys = $this->dynamicParams;
         foreach ($params as $key => $value) {
             $tmp = [$value];
-            \array_walk_recursive($tmp, function ($val) use(&$keys, $key) : void {
+            \array_walk_recursive($tmp, function ($val) use (&$keys, $key): void {
                 if ($val instanceof DynamicParameter || $val instanceof Nette\DI\Definitions\Statement) {
                     $keys[] = $key;
                 }

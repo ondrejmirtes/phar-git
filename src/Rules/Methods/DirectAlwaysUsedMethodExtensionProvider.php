@@ -16,7 +16,7 @@ final class DirectAlwaysUsedMethodExtensionProvider implements \PHPStan\Rules\Me
     {
         $this->extensions = $extensions;
     }
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->extensions;
     }

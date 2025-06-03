@@ -21,7 +21,7 @@ final class OptimizedPsrAutoloaderLocator implements SourceLocator
         $this->mapping = $mapping;
         $this->optimizedSingleFileSourceLocatorRepository = $optimizedSingleFileSourceLocatorRepository;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         foreach ($this->locators as $locator) {
             $reflection = $locator->locateIdentifier($reflector, $identifier);
@@ -47,7 +47,7 @@ final class OptimizedPsrAutoloaderLocator implements SourceLocator
     /**
      * @return list<Reflection>
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return [];
     }

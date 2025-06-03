@@ -18,15 +18,15 @@ use function extension_loaded;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SimpleXMLElementXpathMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return SimpleXMLElement::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return extension_loaded('simplexml') && $methodReflection->getName() === 'xpath';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if (!isset($methodCall->getArgs()[0])) {
             return null;

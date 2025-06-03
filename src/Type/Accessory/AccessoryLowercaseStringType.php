@@ -46,30 +46,30 @@ class AccessoryLowercaseStringType implements CompoundType, \PHPStan\Type\Access
     public function __construct()
     {
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return new AcceptsResult($type->isLowercaseString(), []);
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof CompoundType) {
             return $type->isSubTypeOf($this);
@@ -79,45 +79,45 @@ class AccessoryLowercaseStringType implements CompoundType, \PHPStan\Type\Access
         }
         return new IsSuperTypeOfResult($type->isLowercaseString(), []);
     }
-    public function isSubTypeOf(Type $otherType) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $otherType): IsSuperTypeOfResult
     {
         if ($otherType instanceof UnionType || $otherType instanceof IntersectionType) {
             return $otherType->isSuperTypeOf($this);
         }
         return (new IsSuperTypeOfResult($otherType->isLowercaseString(), []))->and($otherType instanceof self ? IsSuperTypeOfResult::createYes() : IsSuperTypeOfResult::createMaybe());
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return 'lowercase-string';
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function hasOffsetValueType(Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(Type $offsetType): TrinaryLogic
     {
         return $offsetType->isInteger()->and(TrinaryLogic::createMaybe());
     }
-    public function getOffsetValueType(Type $offsetType) : Type
+    public function getOffsetValueType(Type $offsetType): Type
     {
         if ($this->hasOffsetValueType($offsetType)->no()) {
             return new ErrorType();
         }
         return new IntersectionType([new StringType(), new \PHPStan\Type\Accessory\AccessoryLowercaseStringType()]);
     }
-    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true) : Type
+    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true): Type
     {
         $stringOffset = (new StringType())->setOffsetValueType($offsetType, $valueType, $unionValues);
         if ($stringOffset instanceof ErrorType) {
@@ -128,173 +128,173 @@ class AccessoryLowercaseStringType implements CompoundType, \PHPStan\Type\Access
         }
         return new StringType();
     }
-    public function setExistingOffsetValueType(Type $offsetType, Type $valueType) : Type
+    public function setExistingOffsetValueType(Type $offsetType, Type $valueType): Type
     {
         return $this;
     }
-    public function unsetOffset(Type $offsetType) : Type
+    public function unsetOffset(Type $offsetType): Type
     {
         return new ErrorType();
     }
-    public function toNumber() : Type
+    public function toNumber(): Type
     {
         return new ErrorType();
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return new ErrorType();
     }
-    public function toInteger() : Type
+    public function toInteger(): Type
     {
         return new IntegerType();
     }
-    public function toFloat() : Type
+    public function toFloat(): Type
     {
         return new FloatType();
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return $this;
     }
-    public function toBoolean() : BooleanType
+    public function toBoolean(): BooleanType
     {
         return new BooleanType();
     }
-    public function toArray() : Type
+    public function toArray(): Type
     {
         return new ConstantArrayType([new ConstantIntegerType(0)], [$this], [1], [], TrinaryLogic::createYes());
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return $this;
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         if (!$strictTypes) {
             return TypeCombinator::union($this->toInteger(), $this->toFloat(), $this, $this->toBoolean());
         }
         return $this;
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [];
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getClassStringObjectType() : Type
+    public function getClassStringObjectType(): Type
     {
         return new ObjectWithoutClassType();
     }
-    public function getObjectTypeOrClassStringObjectType() : Type
+    public function getObjectTypeOrClassStringObjectType(): Type
     {
         return new ObjectWithoutClassType();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function looseCompare(Type $type, PhpVersion $phpVersion) : BooleanType
+    public function looseCompare(Type $type, PhpVersion $phpVersion): BooleanType
     {
         if ($type->isString()->yes() && $type->isLowercaseString()->no() && ($type->isNumericString()->no() || $this->isNumericString()->no())) {
             return new ConstantBooleanType(\false);
         }
         return new BooleanType();
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         return $this;
     }
-    public function generalize(GeneralizePrecision $precision) : Type
+    public function generalize(GeneralizePrecision $precision): Type
     {
         return new StringType();
     }
-    public function exponentiate(Type $exponent) : Type
+    public function exponentiate(Type $exponent): Type
     {
         return new BenevolentUnionType([new FloatType(), new IntegerType()]);
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('lowercase-string');
     }

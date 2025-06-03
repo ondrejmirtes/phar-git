@@ -18,7 +18,7 @@ final class ParserNodeTypeToPHPStanType
     /**
      * @param Node\Name|Node\Identifier|Node\ComplexType|null $type
      */
-    public static function resolve($type, ?ClassReflection $classReflection) : \PHPStan\Type\Type
+    public static function resolve($type, ?ClassReflection $classReflection): \PHPStan\Type\Type
     {
         if ($type === null) {
             return new \PHPStan\Type\MixedType();

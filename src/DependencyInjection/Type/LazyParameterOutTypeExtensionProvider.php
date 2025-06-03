@@ -14,15 +14,15 @@ final class LazyParameterOutTypeExtensionProvider implements \PHPStan\Dependency
     {
         $this->container = $container;
     }
-    public function getFunctionParameterOutTypeExtensions() : array
+    public function getFunctionParameterOutTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::FUNCTION_TAG);
     }
-    public function getMethodParameterOutTypeExtensions() : array
+    public function getMethodParameterOutTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::METHOD_TAG);
     }
-    public function getStaticMethodParameterOutTypeExtensions() : array
+    public function getStaticMethodParameterOutTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::STATIC_METHOD_TAG);
     }

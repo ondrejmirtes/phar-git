@@ -24,20 +24,20 @@ interface ExtendedMethodReflection extends \PHPStan\Reflection\MethodReflection
     /**
      * @return list<ExtendedParametersAcceptor>
      */
-    public function getVariants() : array;
+    public function getVariants(): array;
     /**
      * @internal
      */
-    public function getOnlyVariant() : \PHPStan\Reflection\ExtendedParametersAcceptor;
+    public function getOnlyVariant(): \PHPStan\Reflection\ExtendedParametersAcceptor;
     /**
      * @return list<ExtendedParametersAcceptor>|null
      */
-    public function getNamedArgumentsVariants() : ?array;
-    public function acceptsNamedArguments() : TrinaryLogic;
-    public function getAsserts() : \PHPStan\Reflection\Assertions;
-    public function getSelfOutType() : ?Type;
-    public function returnsByReference() : TrinaryLogic;
-    public function isFinalByKeyword() : TrinaryLogic;
+    public function getNamedArgumentsVariants(): ?array;
+    public function acceptsNamedArguments(): TrinaryLogic;
+    public function getAsserts(): \PHPStan\Reflection\Assertions;
+    public function getSelfOutType(): ?Type;
+    public function returnsByReference(): TrinaryLogic;
+    public function isFinalByKeyword(): TrinaryLogic;
     /**
      * @return \PHPStan\TrinaryLogic|bool
      */
@@ -53,9 +53,9 @@ interface ExtendedMethodReflection extends \PHPStan\Reflection\MethodReflection
      * In most cases asking hasSideEffects() is much more practical
      * as it also accounts for void return type (method being always impure).
      */
-    public function isPure() : TrinaryLogic;
+    public function isPure(): TrinaryLogic;
     /**
      * @return list<AttributeReflection>
      */
-    public function getAttributes() : array;
+    public function getAttributes(): array;
 }

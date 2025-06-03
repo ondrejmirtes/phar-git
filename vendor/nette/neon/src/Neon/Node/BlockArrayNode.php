@@ -16,7 +16,7 @@ final class BlockArrayNode extends ArrayNode
     {
         $this->indentation = $indentation;
     }
-    public function toString() : string
+    public function toString(): string
     {
         if (\count($this->items) === 0) {
             return '[]';

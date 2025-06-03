@@ -10,7 +10,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 final class ImmediatelyInvokedClosureVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isImmediatelyInvokedClosure';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\FuncCall && $node->name instanceof Node\Expr\Closure) {
             $node->name->setAttribute(self::ATTRIBUTE_NAME, \true);

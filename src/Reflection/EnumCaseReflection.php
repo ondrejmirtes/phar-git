@@ -49,30 +49,30 @@ final class EnumCaseReflection
             $this->deprecatedDescription = null;
         }
     }
-    public function getDeclaringEnum() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringEnum(): \PHPStan\Reflection\ClassReflection
     {
         return $this->declaringEnum;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getBackingValueType() : ?Type
+    public function getBackingValueType(): ?Type
     {
         return $this->backingValueType;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated);
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->deprecatedDescription;
     }
     /**
      * @return list<AttributeReflection>
      */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

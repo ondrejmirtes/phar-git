@@ -31,11 +31,11 @@ final class InvalidIncDecOperationRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\PreInc && !$node instanceof Node\Expr\PostInc && !$node instanceof Node\Expr\PreDec && !$node instanceof Node\Expr\PostDec) {
             return [];

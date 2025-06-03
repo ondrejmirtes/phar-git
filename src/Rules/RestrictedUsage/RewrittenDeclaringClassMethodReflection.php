@@ -19,55 +19,55 @@ final class RewrittenDeclaringClassMethodReflection implements ExtendedMethodRef
         $this->declaringClass = $declaringClass;
         $this->methodReflection = $methodReflection;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->methodReflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->methodReflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->methodReflection->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->methodReflection->getDocComment();
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         return $this->methodReflection->getVariants();
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->methodReflection->getOnlyVariant();
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return $this->methodReflection->getNamedArgumentsVariants();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->methodReflection->acceptsNamedArguments();
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->methodReflection->getAsserts();
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return $this->methodReflection->getSelfOutType();
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return $this->methodReflection->returnsByReference();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->methodReflection->isFinalByKeyword();
     }
@@ -85,43 +85,43 @@ final class RewrittenDeclaringClassMethodReflection implements ExtendedMethodRef
     {
         return $this->methodReflection->isBuiltin();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->methodReflection->isPure();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->methodReflection->getAttributes();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->methodReflection->getName();
     }
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         return $this->methodReflection->getPrototype();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->methodReflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->methodReflection->getDeprecatedDescription();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->methodReflection->isFinal();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->methodReflection->isInternal();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->methodReflection->getThrowType();
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return $this->methodReflection->hasSideEffects();
     }

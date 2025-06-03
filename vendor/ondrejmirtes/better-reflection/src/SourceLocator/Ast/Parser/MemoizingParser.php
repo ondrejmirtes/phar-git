@@ -25,7 +25,7 @@ final class MemoizingParser implements Parser
     {
         $this->wrappedParser = $wrappedParser;
     }
-    public function parse(string $code, ?\PhpParser\ErrorHandler $errorHandler = null) : ?array
+    public function parse(string $code, ?\PhpParser\ErrorHandler $errorHandler = null): ?array
     {
         // note: this code is mathematically buggy by default, as we are using a hash to identify
         //       cache entries. The string length is added to further reduce likeliness (although
@@ -46,7 +46,7 @@ final class MemoizingParser implements Parser
         return $ast;
     }
     /** @return Token[] */
-    public function getTokens() : array
+    public function getTokens(): array
     {
         return $this->lastTokens;
     }

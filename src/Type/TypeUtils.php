@@ -19,21 +19,21 @@ final class TypeUtils
     /**
      * @return list<ConstantIntegerType>
      */
-    public static function getConstantIntegers(\PHPStan\Type\Type $type) : array
+    public static function getConstantIntegers(\PHPStan\Type\Type $type): array
     {
         return self::map(ConstantIntegerType::class, $type, \false);
     }
     /**
      * @return list<IntegerRangeType>
      */
-    public static function getIntegerRanges(\PHPStan\Type\Type $type) : array
+    public static function getIntegerRanges(\PHPStan\Type\Type $type): array
     {
         return self::map(\PHPStan\Type\IntegerRangeType::class, $type, \false);
     }
     /**
      * @return list<mixed>
      */
-    private static function map(string $typeClass, \PHPStan\Type\Type $type, bool $inspectIntersections, bool $stopOnUnmatched = \true) : array
+    private static function map(string $typeClass, \PHPStan\Type\Type $type, bool $inspectIntersections, bool $stopOnUnmatched = \true): array
     {
         if ($type instanceof $typeClass) {
             return [$type];
@@ -69,7 +69,7 @@ final class TypeUtils
         }
         return [];
     }
-    public static function toBenevolentUnion(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function toBenevolentUnion(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if ($type instanceof \PHPStan\Type\BenevolentUnionType) {
             return $type;
@@ -82,7 +82,7 @@ final class TypeUtils
     /**
      * @return ($type is UnionType ? UnionType : Type)
      */
-    public static function toStrictUnion(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public static function toStrictUnion(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if ($type instanceof TemplateBenevolentUnionType) {
             return new TemplateUnionType($type->getScope(), $type->getStrategy(), $type->getVariance(), $type->getName(), static::toStrictUnion($type->getBound()), $type->getDefault());
@@ -95,7 +95,7 @@ final class TypeUtils
     /**
      * @return Type[]
      */
-    public static function flattenTypes(\PHPStan\Type\Type $type) : array
+    public static function flattenTypes(\PHPStan\Type\Type $type): array
     {
         if ($type instanceof ConstantArrayType) {
             return $type->getAllArrays();
@@ -115,7 +115,7 @@ final class TypeUtils
         }
         return [$type];
     }
-    public static function findThisType(\PHPStan\Type\Type $type) : ?\PHPStan\Type\ThisType
+    public static function findThisType(\PHPStan\Type\Type $type): ?\PHPStan\Type\ThisType
     {
         if ($type instanceof \PHPStan\Type\ThisType) {
             return $type;
@@ -133,7 +133,7 @@ final class TypeUtils
     /**
      * @return HasPropertyType[]
      */
-    public static function getHasPropertyTypes(\PHPStan\Type\Type $type) : array
+    public static function getHasPropertyTypes(\PHPStan\Type\Type $type): array
     {
         if ($type instanceof HasPropertyType) {
             return [$type];
@@ -150,14 +150,14 @@ final class TypeUtils
     /**
      * @return AccessoryType[]
      */
-    public static function getAccessoryTypes(\PHPStan\Type\Type $type) : array
+    public static function getAccessoryTypes(\PHPStan\Type\Type $type): array
     {
         return self::map(AccessoryType::class, $type, \true, \false);
     }
-    public static function containsTemplateType(\PHPStan\Type\Type $type) : bool
+    public static function containsTemplateType(\PHPStan\Type\Type $type): bool
     {
         $containsTemplateType = \false;
-        \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use(&$containsTemplateType) : \PHPStan\Type\Type {
+        \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use (&$containsTemplateType): \PHPStan\Type\Type {
             if ($type instanceof TemplateType) {
                 $containsTemplateType = \true;
             }
@@ -165,11 +165,11 @@ final class TypeUtils
         });
         return $containsTemplateType;
     }
-    public static function resolveLateResolvableTypes(\PHPStan\Type\Type $type, bool $resolveUnresolvableTypes = \true) : \PHPStan\Type\Type
+    public static function resolveLateResolvableTypes(\PHPStan\Type\Type $type, bool $resolveUnresolvableTypes = \true): \PHPStan\Type\Type
     {
         /** @var int $ignoreResolveUnresolvableTypesLevel */
         $ignoreResolveUnresolvableTypesLevel = 0;
-        return \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use($resolveUnresolvableTypes, &$ignoreResolveUnresolvableTypesLevel) : \PHPStan\Type\Type {
+        return \PHPStan\Type\TypeTraverser::map($type, static function (\PHPStan\Type\Type $type, callable $traverse) use ($resolveUnresolvableTypes, &$ignoreResolveUnresolvableTypesLevel): \PHPStan\Type\Type {
             while ($type instanceof \PHPStan\Type\LateResolvableType && ($resolveUnresolvableTypes && $ignoreResolveUnresolvableTypesLevel === 0 || $type->isResolvable())) {
                 $type = $type->resolve();
             }

@@ -34,18 +34,18 @@ final class ParserErrorsException extends Exception
     /**
      * @return Error[]
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
-    public function getParsedFile() : ?string
+    public function getParsedFile(): ?string
     {
         return $this->parsedFile;
     }
     /**
      * @return mixed[]
      */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

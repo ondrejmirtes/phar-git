@@ -67,7 +67,7 @@ class DescriptorHelper extends Helper
     {
         return 'descriptor';
     }
-    public function getFormats() : array
+    public function getFormats(): array
     {
         return \array_keys($this->descriptors);
     }

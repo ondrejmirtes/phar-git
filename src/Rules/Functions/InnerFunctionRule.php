@@ -13,11 +13,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class InnerFunctionRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Function_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($scope->getFunction() === null) {
             return [];

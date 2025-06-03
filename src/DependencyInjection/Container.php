@@ -6,7 +6,7 @@ namespace PHPStan\DependencyInjection;
 /** @api */
 interface Container
 {
-    public function hasService(string $serviceName) : bool;
+    public function hasService(string $serviceName): bool;
     /**
      * @return mixed
      * @throws MissingServiceException
@@ -23,16 +23,16 @@ interface Container
      * @param class-string $className
      * @return string[]
      */
-    public function findServiceNamesByType(string $className) : array;
+    public function findServiceNamesByType(string $className): array;
     /**
      * @return mixed[]
      */
-    public function getServicesByTag(string $tagName) : array;
+    public function getServicesByTag(string $tagName): array;
     /**
      * @return mixed[]
      */
-    public function getParameters() : array;
-    public function hasParameter(string $parameterName) : bool;
+    public function getParameters(): array;
+    public function hasParameter(string $parameterName): bool;
     /**
      * @return mixed
      * @throws ParameterNotFoundException

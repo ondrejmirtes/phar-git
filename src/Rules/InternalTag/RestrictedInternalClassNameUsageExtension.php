@@ -17,7 +17,7 @@ final class RestrictedInternalClassNameUsageExtension implements RestrictedClass
     {
         $this->helper = $helper;
     }
-    public function isRestrictedClassNameUsage(ClassReflection $classReflection, Scope $scope, ClassNameUsageLocation $location) : ?RestrictedUsage
+    public function isRestrictedClassNameUsage(ClassReflection $classReflection, Scope $scope, ClassNameUsageLocation $location): ?RestrictedUsage
     {
         if (!$classReflection->isInternal()) {
             return null;

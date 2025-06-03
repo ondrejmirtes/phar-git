@@ -50,7 +50,7 @@ class Analyzer
     /**
      * PP lexemes.
      */
-    protected static $_ppLexemes = ['default' => ['skip' => '\\s', 'or' => '\\|', 'zero_or_one' => '\\?', 'one_or_more' => '\\+', 'zero_or_more' => '\\*', 'n_to_m' => '\\{[0-9]+,[0-9]+\\}', 'zero_to_m' => '\\{,[0-9]+\\}', 'n_or_more' => '\\{[0-9]+,\\}', 'exactly_n' => '\\{[0-9]+\\}', 'skipped' => '::[a-zA-Z_][a-zA-Z0-9_]*(\\[\\d+\\])?::', 'kept' => '<[a-zA-Z_][a-zA-Z0-9_]*(\\[\\d+\\])?>', 'named' => '[a-zA-Z_][a-zA-Z0-9_]*\\(\\)', 'node' => '#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', 'capturing_' => '\\(', '_capturing' => '\\)']];
+    protected static $_ppLexemes = ['default' => ['skip' => '\s', 'or' => '\|', 'zero_or_one' => '\?', 'one_or_more' => '\+', 'zero_or_more' => '\*', 'n_to_m' => '\{[0-9]+,[0-9]+\}', 'zero_to_m' => '\{,[0-9]+\}', 'n_or_more' => '\{[0-9]+,\}', 'exactly_n' => '\{[0-9]+\}', 'skipped' => '::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::', 'kept' => '<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>', 'named' => '[a-zA-Z_][a-zA-Z0-9_]*\(\)', 'node' => '#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', 'capturing_' => '\(', '_capturing' => '\)']];
     /**
      * Lexer iterator.
      *
@@ -203,7 +203,7 @@ class Analyzer
         $children[] = $rule;
         $others = \false;
         // … repetition()*
-        while (null !== ($r1 = $this->repetition($pNodeId))) {
+        while (null !== $r1 = $this->repetition($pNodeId)) {
             $children[] = $r1;
             $others = \true;
         }

@@ -129,7 +129,7 @@ class ReflectionProperty
      * @throws IdentifierNotFound
      * @throws OutOfBoundsException
      */
-    public static function createFromInstance(object $instance, string $propertyName) : self
+    public static function createFromInstance(object $instance, string $propertyName): self
     {
         $property = \PHPStan\BetterReflection\Reflection\ReflectionClass::createFromInstance($instance)->getProperty($propertyName);
         if ($property === null) {
@@ -138,7 +138,7 @@ class ReflectionProperty
         return $property;
     }
     /** @internal */
-    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass) : self
+    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass): self
     {
         $clone = clone $this;
         $clone->implementingClass = $implementingClass;
@@ -150,7 +150,7 @@ class ReflectionProperty
         return $clone;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionPropertyStringCast::toString($this);
     }
@@ -159,7 +159,7 @@ class ReflectionProperty
      *
      * @param PropertyNode $node Node has to be processed by the PhpParser\NodeVisitor\NameResolver
      */
-    public static function createFromNode(Reflector $reflector, PropertyNode $node, Node\PropertyItem $propertyProperty, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, bool $isPromoted = \false, bool $declaredAtCompileTime = \true) : self
+    public static function createFromNode(Reflector $reflector, PropertyNode $node, Node\PropertyItem $propertyProperty, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, bool $isPromoted = \false, bool $declaredAtCompileTime = \true): self
     {
         return new self($reflector, $node, $propertyProperty, $declaringClass, $implementingClass, $isPromoted, $declaredAtCompileTime);
     }
@@ -170,11 +170,11 @@ class ReflectionProperty
      * true, because we are unable to reflect instances of classes, therefore
      * we can be sure that all properties are always declared at compile-time.
      */
-    public function isDefault() : bool
+    public function isDefault(): bool
     {
         return $this->declaredAtCompileTime;
     }
-    public function isDynamic() : bool
+    public function isDynamic(): bool
     {
         return !$this->isDefault();
     }
@@ -183,7 +183,7 @@ class ReflectionProperty
      *
      * @return int-mask-of<ReflectionPropertyAdapter::IS_*>
      */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         /** @var int-mask-of<ReflectionPropertyAdapter::IS_*> $modifiers */
         $modifiers = $this->modifiers + ($this->isVirtual() ? ReflectionPropertyAdapter::IS_VIRTUAL_COMPATIBILITY : 0);
@@ -194,59 +194,59 @@ class ReflectionProperty
      *
      * @return non-empty-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
     /**
      * Is the property private?
      */
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionProperty::IS_PRIVATE);
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return (bool) ($this->modifiers & ReflectionPropertyAdapter::IS_PRIVATE_SET_COMPATIBILITY);
     }
     /**
      * Is the property protected?
      */
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionProperty::IS_PROTECTED);
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return (bool) ($this->modifiers & ReflectionPropertyAdapter::IS_PROTECTED_SET_COMPATIBILITY);
     }
     /**
      * Is the property public?
      */
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionProperty::IS_PUBLIC);
     }
     /**
      * Is the property static?
      */
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionProperty::IS_STATIC);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return (bool) ($this->modifiers & ReflectionPropertyAdapter::IS_FINAL_COMPATIBILITY);
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return (bool) ($this->modifiers & ReflectionPropertyAdapter::IS_ABSTRACT_COMPATIBILITY) || $this->declaringClass->isInterface();
     }
-    public function isPromoted() : bool
+    public function isPromoted(): bool
     {
         return $this->isPromoted;
     }
-    public function isInitialized(?object $object = null) : bool
+    public function isInitialized(?object $object = null): bool
     {
         if ($object === null && $this->isStatic()) {
             return !$this->hasType() || $this->hasDefaultValue();
@@ -262,28 +262,28 @@ class ReflectionProperty
             throw $e;
         }
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->modifiers & ReflectionPropertyAdapter::IS_READONLY_COMPATIBILITY || $this->getDeclaringClass()->isReadOnly();
     }
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->declaringClass;
     }
-    public function getImplementingClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getImplementingClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->implementingClass;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
-    public function hasDefaultValue() : bool
+    public function hasDefaultValue(): bool
     {
         return !$this->hasType() || $this->default !== null;
     }
-    public function getDefaultValueExpression() : ?\PhpParser\Node\Expr
+    public function getDefaultValueExpression(): ?\PhpParser\Node\Expr
     {
         return $this->default;
     }
@@ -304,7 +304,7 @@ class ReflectionProperty
         $value = $this->compiledDefaultValue->value;
         return $value;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return DeprecatedHelper::isDeprecated($this);
     }
@@ -315,7 +315,7 @@ class ReflectionProperty
      *
      * @throws CodeLocationMissing
      */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         if ($this->startLine === null) {
             throw CodeLocationMissing::create(sprintf('Was looking for property "$%s" in "%s".', $this->name, $this->implementingClass->getName()));
@@ -329,7 +329,7 @@ class ReflectionProperty
      *
      * @throws CodeLocationMissing
      */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         if ($this->endLine === null) {
             throw CodeLocationMissing::create(sprintf('Was looking for property "$%s" in "%s".', $this->name, $this->implementingClass->getName()));
@@ -341,7 +341,7 @@ class ReflectionProperty
      *
      * @throws CodeLocationMissing
      */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         if ($this->startColumn === null) {
             throw CodeLocationMissing::create(sprintf('Was looking for property "$%s" in "%s".', $this->name, $this->implementingClass->getName()));
@@ -353,7 +353,7 @@ class ReflectionProperty
      *
      * @throws CodeLocationMissing
      */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         if ($this->endColumn === null) {
             throw CodeLocationMissing::create(sprintf('Was looking for property "$%s" in "%s".', $this->name, $this->implementingClass->getName()));
@@ -361,12 +361,12 @@ class ReflectionProperty
         return $this->endColumn;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return ReflectionAttributeHelper::filterAttributesByName($this->getAttributes(), $name);
     }
@@ -375,7 +375,7 @@ class ReflectionProperty
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return ReflectionAttributeHelper::filterAttributesByInstance($this->getAttributes(), $className);
     }
@@ -409,12 +409,12 @@ class ReflectionProperty
      * @param mixed $object
      * @param mixed $value
      */
-    public function setValue($object, $value = null) : void
+    public function setValue($object, $value = null): void
     {
         $implementingClassName = $this->getImplementingClass()->getName();
         if ($this->isStatic()) {
             $this->assertClassExist($implementingClassName);
-            $closure = Closure::bind(function (string $_implementingClassName, string $_propertyName, $value) : void {
+            $closure = Closure::bind(function (string $_implementingClassName, string $_propertyName, $value): void {
                 /** @psalm-suppress MixedAssignment */
                 $_implementingClassName::${$_propertyName} = $value;
             }, null, $implementingClassName);
@@ -424,7 +424,7 @@ class ReflectionProperty
             return;
         }
         $instance = $this->assertObject($object);
-        $closure = Closure::bind(function (object $instance, string $propertyName, $value) : void {
+        $closure = Closure::bind(function (object $instance, string $propertyName, $value): void {
             $instance->{$propertyName} = $value;
         }, $instance, $implementingClassName);
         /** @phpstan-ignore function.alreadyNarrowedType, instanceof.alwaysTrue */
@@ -434,7 +434,7 @@ class ReflectionProperty
     /**
      * Does this property allow null?
      */
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->type === null || $this->type->allowsNull();
     }
@@ -466,35 +466,35 @@ class ReflectionProperty
      *
      * (note: this has nothing to do with DocBlocks).
      */
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return $this->type !== null;
     }
-    public function isVirtual() : bool
+    public function isVirtual(): bool
     {
         $this->cachedVirtual ??= $this->createCachedVirtual();
         return $this->cachedVirtual;
     }
-    public function hasHooks() : bool
+    public function hasHooks(): bool
     {
         return $this->getHooks() !== [];
     }
     /**
      * @param ReflectionPropertyHookType::* $hookType
      */
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         return isset($this->getHooks()[$hookType]);
     }
     /**
      * @param ReflectionPropertyHookType::* $hookType
      */
-    public function getHook(string $hookType) : ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
+    public function getHook(string $hookType): ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
     {
         return $this->getHooks()[$hookType] ?? null;
     }
     /** @return array{get?: ReflectionMethod, set?: ReflectionMethod} */
-    public function getHooks() : array
+    public function getHooks(): array
     {
         $this->cachedHooks ??= $this->createCachedHooks();
         return $this->cachedHooks;
@@ -504,7 +504,7 @@ class ReflectionProperty
      *
      * @throws ClassDoesNotExist
      */
-    private function assertClassExist(string $className) : void
+    private function assertClassExist(string $className): void
     {
         if (!ClassExistenceChecker::classExists($className, \true) && !ClassExistenceChecker::traitExists($className, \true)) {
             throw new ClassDoesNotExist('Property cannot be retrieved as the class does not exist');
@@ -518,7 +518,7 @@ class ReflectionProperty
      * @psalm-assert object $object
      * @param mixed $object
      */
-    private function assertObject($object) : object
+    private function assertObject($object): object
     {
         if ($object === null) {
             throw NoObjectProvided::create();
@@ -533,7 +533,7 @@ class ReflectionProperty
         return $object;
     }
     /** @return int-mask-of<ReflectionPropertyAdapter::IS_*> */
-    private function computeModifiers(PropertyNode $node) : int
+    private function computeModifiers(PropertyNode $node): int
     {
         $modifiers = $node->isReadonly() ? ReflectionPropertyAdapter::IS_READONLY_COMPATIBILITY : 0;
         $modifiers += $node->isStatic() ? CoreReflectionProperty::IS_STATIC : 0;
@@ -553,7 +553,7 @@ class ReflectionProperty
         /** @phpstan-ignore return.type */
         return $modifiers;
     }
-    private function computeImmediateVirtual(PropertyNode $node) : bool
+    private function computeImmediateVirtual(PropertyNode $node): bool
     {
         if ($node->hooks === []) {
             return \false;
@@ -575,7 +575,7 @@ class ReflectionProperty
         }
         return $this->computeImmediateVirtualBasedOnHook($getHook);
     }
-    private function computeImmediateVirtualBasedOnHook(Node\PropertyHook $hook) : bool
+    private function computeImmediateVirtualBasedOnHook(Node\PropertyHook $hook): bool
     {
         $hookBody = $hook->getStmts();
         // Abstract property or property in interface
@@ -594,7 +594,7 @@ class ReflectionProperty
         return \true;
     }
     /** @return array{get?: ReflectionMethod, set?: ReflectionMethod} */
-    private function createImmediateHooks(PropertyNode $node) : array
+    private function createImmediateHooks(PropertyNode $node): array
     {
         $hooks = [];
         foreach ($node->hooks as $hook) {
@@ -606,7 +606,7 @@ class ReflectionProperty
         }
         return $hooks;
     }
-    private function createCachedVirtual() : bool
+    private function createCachedVirtual(): bool
     {
         if (!$this->immediateVirtual) {
             return \false;
@@ -614,7 +614,7 @@ class ReflectionProperty
         return (($nullsafeVariable1 = $this->getParentProperty()) ? $nullsafeVariable1->isVirtual() : null) ?? \true;
     }
     /** @return array{get?: ReflectionMethod, set?: ReflectionMethod} */
-    private function createCachedHooks() : array
+    private function createCachedHooks(): array
     {
         $hooks = $this->immediateHooks;
         // Just optimization - we don't need to check parent property when both hooks are defined in this class
@@ -630,7 +630,7 @@ class ReflectionProperty
         }
         return $hooks;
     }
-    private function getParentProperty() : ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
+    private function getParentProperty(): ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
     {
         return ($nullsafeVariable3 = $this->getDeclaringClass()->getParentClass()) ? $nullsafeVariable3->getProperty($this->name) : null;
     }

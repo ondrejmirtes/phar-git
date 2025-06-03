@@ -10,7 +10,7 @@ final class DirectTypeNodeResolverExtensionRegistryProvider implements \PHPStan\
     {
         $this->registry = $registry;
     }
-    public function getRegistry() : \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry
+    public function getRegistry(): \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry
     {
         return $this->registry;
     }

@@ -19,19 +19,19 @@ final class EnsuredNonNullabilityResultExpression
         $this->originalNativeType = $originalNativeType;
         $this->certainty = $certainty;
     }
-    public function getExpression() : Expr
+    public function getExpression(): Expr
     {
         return $this->expression;
     }
-    public function getOriginalType() : Type
+    public function getOriginalType(): Type
     {
         return $this->originalType;
     }
-    public function getOriginalNativeType() : Type
+    public function getOriginalNativeType(): Type
     {
         return $this->originalNativeType;
     }
-    public function getCertainty() : TrinaryLogic
+    public function getCertainty(): TrinaryLogic
     {
         return $this->certainty;
     }

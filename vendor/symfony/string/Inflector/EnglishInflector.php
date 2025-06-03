@@ -297,7 +297,7 @@ final class EnglishInflector implements InflectorInterface
         // hardware
         'erawdrah',
     ];
-    public function singularize(string $plural) : array
+    public function singularize(string $plural): array
     {
         $pluralRev = \strrev($plural);
         $lowerPluralRev = \strtolower($pluralRev);
@@ -358,7 +358,7 @@ final class EnglishInflector implements InflectorInterface
         // Assume that plural and singular is identical
         return [$plural];
     }
-    public function pluralize(string $singular) : array
+    public function pluralize(string $singular): array
     {
         $singularRev = \strrev($singular);
         $lowerSingularRev = \strtolower($singularRev);

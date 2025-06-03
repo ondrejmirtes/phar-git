@@ -26,7 +26,7 @@ final class IgnoreLexer
     /**
      * @return list<array{string, self::TOKEN_*, int}>
      */
-    public function tokenize(string $input) : array
+    public function tokenize(string $input): array
     {
         if ($this->regexp === null) {
             $this->regexp = $this->generateRegexp();
@@ -52,21 +52,21 @@ final class IgnoreLexer
     /**
      * @param self::TOKEN_* $type
      */
-    public function getLabel(int $type) : string
+    public function getLabel(int $type): string
     {
         return self::LABELS[$type];
     }
-    private function generateRegexp() : string
+    private function generateRegexp(): string
     {
         $patterns = [
-            self::TOKEN_WHITESPACE => '[\\x09\\x20]++',
-            self::TOKEN_END => '(\\r?+\\n[\\x09\\x20]*+(?:\\*(?!/)\\x20?+)?|\\*/)',
+            self::TOKEN_WHITESPACE => '[\x09\x20]++',
+            self::TOKEN_END => '(\r?+\n[\x09\x20]*+(?:\*(?!/)\x20?+)?|\*/)',
             self::TOKEN_IDENTIFIER => Error::PATTERN_IDENTIFIER,
             self::TOKEN_COMMA => ',',
-            self::TOKEN_OPEN_PARENTHESIS => '\\(',
-            self::TOKEN_CLOSE_PARENTHESIS => '\\)',
+            self::TOKEN_OPEN_PARENTHESIS => '\(',
+            self::TOKEN_CLOSE_PARENTHESIS => '\)',
             // everything except whitespaces and parentheses
-            self::TOKEN_OTHER => '([^\\s\\)\\(])++',
+            self::TOKEN_OTHER => '([^\s\)\(])++',
         ];
         foreach ($patterns as $type => &$pattern) {
             $pattern = '(?:' . $pattern . ')(*MARK:' . $type . ')';

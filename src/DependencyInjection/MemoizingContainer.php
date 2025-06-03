@@ -13,7 +13,7 @@ final class MemoizingContainer implements \PHPStan\DependencyInjection\Container
     {
         $this->originalContainer = $originalContainer;
     }
-    public function hasService(string $serviceName) : bool
+    public function hasService(string $serviceName): bool
     {
         return $this->originalContainer->hasService($serviceName);
     }
@@ -30,19 +30,19 @@ final class MemoizingContainer implements \PHPStan\DependencyInjection\Container
         $this->servicesByType[$className] = $service;
         return $service;
     }
-    public function findServiceNamesByType(string $className) : array
+    public function findServiceNamesByType(string $className): array
     {
         return $this->originalContainer->findServiceNamesByType($className);
     }
-    public function getServicesByTag(string $tagName) : array
+    public function getServicesByTag(string $tagName): array
     {
         return $this->originalContainer->getServicesByTag($tagName);
     }
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->originalContainer->getParameters();
     }
-    public function hasParameter(string $parameterName) : bool
+    public function hasParameter(string $parameterName): bool
     {
         return $this->originalContainer->hasParameter($parameterName);
     }

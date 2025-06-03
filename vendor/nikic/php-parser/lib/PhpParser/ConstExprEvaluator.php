@@ -133,7 +133,7 @@ class ConstExprEvaluator
         }
         return ($this->fallbackEvaluator)($expr);
     }
-    private function evaluateArray(Expr\Array_ $expr) : array
+    private function evaluateArray(Expr\Array_ $expr): array
     {
         $array = [];
         foreach ($expr->items as $item) {

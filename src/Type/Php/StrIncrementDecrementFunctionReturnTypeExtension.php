@@ -27,11 +27,11 @@ use function stripos;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class StrIncrementDecrementFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['str_increment', 'str_decrement'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $fnName = $functionReflection->getName();
         $args = $functionCall->getArgs();
@@ -48,7 +48,7 @@ final class StrIncrementDecrementFunctionReturnTypeExtension implements DynamicF
                 continue;
             }
             $string = (string) $value;
-            if (preg_match('/\\A(?:0|[1-9A-Za-z][0-9A-Za-z]*)+\\z/', $string) < 1) {
+            if (preg_match('/\A(?:0|[1-9A-Za-z][0-9A-Za-z]*)+\z/', $string) < 1) {
                 continue;
             }
             $result = null;
@@ -64,7 +64,7 @@ final class StrIncrementDecrementFunctionReturnTypeExtension implements DynamicF
         }
         return count($types) === 0 ? new ErrorType() : TypeCombinator::union(...$types);
     }
-    private function increment(string $s) : string
+    private function increment(string $s): string
     {
         if (is_numeric($s)) {
             $offset = stripos($s, 'e');
@@ -81,7 +81,7 @@ final class StrIncrementDecrementFunctionReturnTypeExtension implements DynamicF
         }
         return (string) ++$s;
     }
-    private function decrement(string $s) : ?string
+    private function decrement(string $s): ?string
     {
         if (in_array($s, ['a', 'A', '0'], \true)) {
             return null;

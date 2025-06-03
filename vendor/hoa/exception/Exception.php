@@ -81,4 +81,4 @@ class Exception extends \Hoa\Exception\Idle implements Event\Source
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Exception\\Exception');
+Consistency::flexEntity('Hoa\Exception\Exception');

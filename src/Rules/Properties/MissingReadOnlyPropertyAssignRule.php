@@ -20,11 +20,11 @@ final class MissingReadOnlyPropertyAssignRule implements Rule
     {
         $this->constructorsHelper = $constructorsHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertiesNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         [$properties, $prematureAccess, $additionalAssigns] = $node->getUninitializedProperties($scope, $this->constructorsHelper->getConstructors($classReflection));

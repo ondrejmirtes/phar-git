@@ -36,7 +36,7 @@ final class FindReflectionsInTree
      *
      * @return list<ReflectionClass|ReflectionFunction|ReflectionConstant>
      */
-    public function __invoke(Reflector $reflector, array $ast, IdentifierType $identifierType, LocatedSource $locatedSource) : array
+    public function __invoke(Reflector $reflector, array $ast, IdentifierType $identifierType, LocatedSource $locatedSource): array
     {
         $nodeVisitor = new class($reflector, $identifierType, $locatedSource, $this->astConversionStrategy) extends NodeVisitorAbstract
         {
@@ -118,7 +118,7 @@ final class FindReflectionsInTree
                 return null;
             }
             /** @return list<ReflectionClass|ReflectionFunction|ReflectionConstant> */
-            public function getReflections() : array
+            public function getReflections(): array
             {
                 return $this->reflections;
             }

@@ -24,11 +24,11 @@ final class TemplateBenevolentUnionType extends BenevolentUnionType implements \
         $this->default = $default;
     }
     /** @param Type[] $types */
-    public function withTypes(array $types) : self
+    public function withTypes(array $types): self
     {
         return new self($this->scope, $this->strategy, $this->variance, $this->name, new BenevolentUnionType($types), $this->default);
     }
-    public function filterTypes(callable $filterCb) : Type
+    public function filterTypes(callable $filterCb): Type
     {
         $result = parent::filterTypes($filterCb);
         if (!$result instanceof \PHPStan\Type\Generic\TemplateType) {

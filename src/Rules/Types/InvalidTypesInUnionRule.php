@@ -18,11 +18,11 @@ use function sprintf;
 final class InvalidTypesInUnionRule implements Rule
 {
     private const ONLY_STANDALONE_TYPES = ['mixed', 'never', 'void'];
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\FunctionLike && !$node instanceof ClassPropertyNode) {
             return [];
@@ -35,7 +35,7 @@ final class InvalidTypesInUnionRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processFunctionLikeNode(Node\FunctionLike $functionLike) : array
+    private function processFunctionLikeNode(Node\FunctionLike $functionLike): array
     {
         $errors = [];
         foreach ($functionLike->getParams() as $param) {
@@ -52,7 +52,7 @@ final class InvalidTypesInUnionRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processClassPropertyNode(ClassPropertyNode $classPropertyNode) : array
+    private function processClassPropertyNode(ClassPropertyNode $classPropertyNode): array
     {
         if (!$classPropertyNode->getNativeTypeNode() instanceof Node\ComplexType) {
             return [];
@@ -62,7 +62,7 @@ final class InvalidTypesInUnionRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processComplexType(Node\ComplexType $complexType) : array
+    private function processComplexType(Node\ComplexType $complexType): array
     {
         if (!$complexType instanceof Node\UnionType && !$complexType instanceof Node\NullableType) {
             return [];

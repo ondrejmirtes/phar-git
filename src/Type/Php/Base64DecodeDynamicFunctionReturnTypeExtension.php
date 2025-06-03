@@ -17,11 +17,11 @@ use PHPStan\Type\UnionType;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class Base64DecodeDynamicFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'base64_decode';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if (!isset($functionCall->getArgs()[1])) {
             return new StringType();

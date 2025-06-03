@@ -46,37 +46,37 @@ final class ClassType
     private $methods = [];
     /** @var EnumCase[] name => EnumCase */
     private $cases = [];
-    public static function class(?string $name) : self
+    public static function class(?string $name): self
     {
         return new self($name);
     }
-    public static function interface(string $name) : self
+    public static function interface(string $name): self
     {
         return (new self($name))->setType(self::TYPE_INTERFACE);
     }
-    public static function trait(string $name) : self
+    public static function trait(string $name): self
     {
         return (new self($name))->setType(self::TYPE_TRAIT);
     }
-    public static function enum(string $name) : self
+    public static function enum(string $name): self
     {
         return (new self($name))->setType(self::TYPE_ENUM);
     }
     /**
      * @param  string|object  $class
      */
-    public static function from($class, bool $withBodies = \false, bool $materializeTraits = \true) : self
+    public static function from($class, bool $withBodies = \false, bool $materializeTraits = \true): self
     {
         return (new Factory())->fromClassReflection(new \ReflectionClass($class), $withBodies, $materializeTraits);
     }
     /**
      * @param  string|object  $class
      */
-    public static function withBodiesFrom($class) : self
+    public static function withBodiesFrom($class): self
     {
         return (new Factory())->fromClassReflection(new \ReflectionClass($class), \true);
     }
-    public static function fromCode(string $code) : self
+    public static function fromCode(string $code): self
     {
         return (new Factory())->fromClassCode($code);
     }
@@ -85,7 +85,7 @@ final class ClassType
         $this->setName($name);
         $this->namespace = $namespace;
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return (new Printer())->printClass($this, $this->namespace);
@@ -98,12 +98,12 @@ final class ClassType
         }
     }
     /** @deprecated  an object can be in multiple namespaces */
-    public function getNamespace() : ?PhpNamespace
+    public function getNamespace(): ?PhpNamespace
     {
         return $this->namespace;
     }
     /** @return static */
-    public function setName(?string $name) : self
+    public function setName(?string $name): self
     {
         if ($name !== null && (!Helpers::isIdentifier($name) || isset(Helpers::Keywords[\strtolower($name)]))) {
             throw new Nette\InvalidArgumentException("Value '{$name}' is not valid class name.");
@@ -111,46 +111,46 @@ final class ClassType
         $this->name = $name;
         return $this;
     }
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
     /** @deprecated */
-    public function setClass() : self
+    public function setClass(): self
     {
         $this->type = self::TYPE_CLASS;
         return $this;
     }
-    public function isClass() : bool
+    public function isClass(): bool
     {
         return $this->type === self::TYPE_CLASS;
     }
     /** @return static */
-    public function setInterface() : self
+    public function setInterface(): self
     {
         $this->type = self::TYPE_INTERFACE;
         return $this;
     }
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->type === self::TYPE_INTERFACE;
     }
     /** @return static */
-    public function setTrait() : self
+    public function setTrait(): self
     {
         $this->type = self::TYPE_TRAIT;
         return $this;
     }
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->type === self::TYPE_TRAIT;
     }
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->type === self::TYPE_ENUM;
     }
     /** @return static */
-    public function setType(string $type) : self
+    public function setType(string $type): self
     {
         if (!\in_array($type, [self::TYPE_CLASS, self::TYPE_INTERFACE, self::TYPE_TRAIT, self::TYPE_ENUM], \true)) {
             throw new Nette\InvalidArgumentException('Argument must be class|interface|trait|enum.');
@@ -158,27 +158,27 @@ final class ClassType
         $this->type = $type;
         return $this;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
     /** @return static */
-    public function setFinal(bool $state = \true) : self
+    public function setFinal(bool $state = \true): self
     {
         $this->final = $state;
         return $this;
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->final;
     }
     /** @return static */
-    public function setAbstract(bool $state = \true) : self
+    public function setAbstract(bool $state = \true): self
     {
         $this->abstract = $state;
         return $this;
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->abstract;
     }
@@ -186,7 +186,7 @@ final class ClassType
      * @param  string|string[]  $names
      * @return static
      */
-    public function setExtends($names) : self
+    public function setExtends($names): self
     {
         if (!\is_string($names) && !\is_array($names)) {
             throw new Nette\InvalidArgumentException('Argument must be string or string[].');
@@ -201,7 +201,7 @@ final class ClassType
         return $this->extends;
     }
     /** @return static */
-    public function addExtend(string $name) : self
+    public function addExtend(string $name): self
     {
         $this->validateNames([$name]);
         $this->extends = (array) $this->extends;
@@ -212,26 +212,26 @@ final class ClassType
      * @param  string[]  $names
      * @return static
      */
-    public function setImplements(array $names) : self
+    public function setImplements(array $names): self
     {
         $this->validateNames($names);
         $this->implements = $names;
         return $this;
     }
     /** @return string[] */
-    public function getImplements() : array
+    public function getImplements(): array
     {
         return $this->implements;
     }
     /** @return static */
-    public function addImplement(string $name) : self
+    public function addImplement(string $name): self
     {
         $this->validateNames([$name]);
         $this->implements[] = $name;
         return $this;
     }
     /** @return static */
-    public function removeImplement(string $name) : self
+    public function removeImplement(string $name): self
     {
         $this->implements = \array_diff($this->implements, [$name]);
         return $this;
@@ -240,7 +240,7 @@ final class ClassType
      * @param  string[]|TraitUse[]  $traits
      * @return static
      */
-    public function setTraits(array $traits) : self
+    public function setTraits(array $traits): self
     {
         $this->traits = [];
         foreach ($traits as $trait) {
@@ -252,12 +252,12 @@ final class ClassType
         return $this;
     }
     /** @return string[] */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         return \array_keys($this->traits);
     }
     /** @internal */
-    public function getTraitResolutions() : array
+    public function getTraitResolutions(): array
     {
         return $this->traits;
     }
@@ -271,13 +271,13 @@ final class ClassType
         if ($resolutions === \true) {
             return $trait;
         }
-        \array_map(function ($item) use($trait) {
+        \array_map(function ($item) use ($trait) {
             $trait->addResolution($item);
         }, $resolutions);
         return $this;
     }
     /** @return static */
-    public function removeTrait(string $name) : self
+    public function removeTrait(string $name): self
     {
         unset($this->traits[$name]);
         return $this;
@@ -286,7 +286,7 @@ final class ClassType
      * @param  Method|Property|Constant|EnumCase|TraitUse  $member
      * @return static
      */
-    public function addMember($member) : self
+    public function addMember($member): self
     {
         if ($member instanceof Method) {
             if ($this->isInterface()) {
@@ -310,7 +310,7 @@ final class ClassType
      * @param  Constant[]|mixed[]  $consts
      * @return static
      */
-    public function setConstants(array $consts) : self
+    public function setConstants(array $consts): self
     {
         $this->consts = [];
         foreach ($consts as $k => $const) {
@@ -322,16 +322,16 @@ final class ClassType
         return $this;
     }
     /** @return Constant[] */
-    public function getConstants() : array
+    public function getConstants(): array
     {
         return $this->consts;
     }
-    public function addConstant(string $name, $value) : Constant
+    public function addConstant(string $name, $value): Constant
     {
         return $this->consts[$name] = (new Constant($name))->setValue($value)->setPublic();
     }
     /** @return static */
-    public function removeConstant(string $name) : self
+    public function removeConstant(string $name): self
     {
         unset($this->consts[$name]);
         return $this;
@@ -341,7 +341,7 @@ final class ClassType
      * @param  EnumCase[]  $cases
      * @return static
      */
-    public function setCases(array $cases) : self
+    public function setCases(array $cases): self
     {
         (function (EnumCase ...$cases) {
         })(...\array_values($cases));
@@ -352,17 +352,17 @@ final class ClassType
         return $this;
     }
     /** @return EnumCase[] */
-    public function getCases() : array
+    public function getCases(): array
     {
         return $this->cases;
     }
     /** Adds case to enum */
-    public function addCase(string $name, $value = null) : EnumCase
+    public function addCase(string $name, $value = null): EnumCase
     {
         return $this->cases[$name] = (new EnumCase($name))->setValue($value);
     }
     /** @return static */
-    public function removeCase(string $name) : self
+    public function removeCase(string $name): self
     {
         unset($this->cases[$name]);
         return $this;
@@ -371,7 +371,7 @@ final class ClassType
      * @param  Property[]  $props
      * @return static
      */
-    public function setProperties(array $props) : self
+    public function setProperties(array $props): self
     {
         (function (Property ...$props) {
         })(...\array_values($props));
@@ -382,11 +382,11 @@ final class ClassType
         return $this;
     }
     /** @return Property[] */
-    public function getProperties() : array
+    public function getProperties(): array
     {
         return $this->properties;
     }
-    public function getProperty(string $name) : Property
+    public function getProperty(string $name): Property
     {
         if (!isset($this->properties[$name])) {
             throw new Nette\InvalidArgumentException("Property '{$name}' not found.");
@@ -396,7 +396,7 @@ final class ClassType
     /**
      * @param  string  $name  without $
      */
-    public function addProperty(string $name, $value = null) : Property
+    public function addProperty(string $name, $value = null): Property
     {
         return $this->properties[$name] = \func_num_args() > 1 ? (new Property($name))->setValue($value) : new Property($name);
     }
@@ -404,12 +404,12 @@ final class ClassType
      * @param  string  $name without $
      * @return static
      */
-    public function removeProperty(string $name) : self
+    public function removeProperty(string $name): self
     {
         unset($this->properties[$name]);
         return $this;
     }
-    public function hasProperty(string $name) : bool
+    public function hasProperty(string $name): bool
     {
         return isset($this->properties[$name]);
     }
@@ -417,7 +417,7 @@ final class ClassType
      * @param  Method[]  $methods
      * @return static
      */
-    public function setMethods(array $methods) : self
+    public function setMethods(array $methods): self
     {
         (function (Method ...$methods) {
         })(...\array_values($methods));
@@ -428,7 +428,7 @@ final class ClassType
         return $this;
     }
     /** @return Method[] */
-    public function getMethods() : array
+    public function getMethods(): array
     {
         $res = [];
         foreach ($this->methods as $m) {
@@ -436,7 +436,7 @@ final class ClassType
         }
         return $res;
     }
-    public function getMethod(string $name) : Method
+    public function getMethod(string $name): Method
     {
         $m = $this->methods[\strtolower($name)] ?? null;
         if (!$m) {
@@ -444,7 +444,7 @@ final class ClassType
         }
         return $m;
     }
-    public function addMethod(string $name) : Method
+    public function addMethod(string $name): Method
     {
         $method = new Method($name);
         if ($this->isInterface()) {
@@ -455,17 +455,17 @@ final class ClassType
         return $this->methods[\strtolower($name)] = $method;
     }
     /** @return static */
-    public function removeMethod(string $name) : self
+    public function removeMethod(string $name): self
     {
         unset($this->methods[\strtolower($name)]);
         return $this;
     }
-    public function hasMethod(string $name) : bool
+    public function hasMethod(string $name): bool
     {
         return isset($this->methods[\strtolower($name)]);
     }
     /** @throws Nette\InvalidStateException */
-    public function validate() : void
+    public function validate(): void
     {
         if ($this->isEnum() && ($this->abstract || $this->final || $this->extends || $this->properties)) {
             throw new Nette\InvalidStateException("Enum '{$this->name}' cannot be abstract or final or extends class or have properties.");
@@ -475,7 +475,7 @@ final class ClassType
             throw new Nette\InvalidStateException("Class '{$this->name}' cannot be abstract and final at the same time.");
         }
     }
-    private function validateNames(array $names) : void
+    private function validateNames(array $names): void
     {
         foreach ($names as $name) {
             if (!Helpers::isNamespaceIdentifier($name, \true)) {

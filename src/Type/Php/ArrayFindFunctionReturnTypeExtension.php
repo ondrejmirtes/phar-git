@@ -20,11 +20,11 @@ final class ArrayFindFunctionReturnTypeExtension implements DynamicFunctionRetur
     {
         $this->arrayFilterFunctionReturnTypeHelper = $arrayFilterFunctionReturnTypeHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_find';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 2) {
             return null;

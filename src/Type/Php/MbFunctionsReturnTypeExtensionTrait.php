@@ -17,12 +17,12 @@ trait MbFunctionsReturnTypeExtensionTrait
 {
     /** @var string[]|null */
     private ?array $supportedEncodings = null;
-    private function isSupportedEncoding(string $encoding) : bool
+    private function isSupportedEncoding(string $encoding): bool
     {
         return in_array(strtoupper($encoding), $this->getSupportedEncodings(), \true);
     }
     /** @return string[] */
-    private function getSupportedEncodings() : array
+    private function getSupportedEncodings(): array
     {
         if (!is_null($this->supportedEncodings)) {
             return $this->supportedEncodings;

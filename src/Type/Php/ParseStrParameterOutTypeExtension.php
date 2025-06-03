@@ -24,11 +24,11 @@ use function strtolower;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ParseStrParameterOutTypeExtension implements FunctionParameterOutTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool
     {
         return in_array(strtolower($functionReflection->getName()), ['parse_str', 'mb_parse_str'], \true) && $parameter->getName() === 'result';
     }
-    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope) : ?Type
+    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
         $args = $funcCall->getArgs();
         if (count($args) < 1) {

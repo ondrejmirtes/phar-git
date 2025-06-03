@@ -62,7 +62,7 @@ final class AutoloadSourceLocator implements SourceLocator
         $this->fileNodesFetcher = $fileNodesFetcher;
         $this->executeAutoloadersInFileReadTrap = $executeAutoloadersInFileReadTrap;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if ($identifier->isFunction()) {
             $functionName = $identifier->getName();
@@ -128,7 +128,7 @@ final class AutoloadSourceLocator implements SourceLocator
         }
         return null;
     }
-    private function findReflection(Reflector $reflector, string $file, Identifier $identifier, ?int $startLine) : ?Reflection
+    private function findReflection(Reflector $reflector, string $file, Identifier $identifier, ?int $startLine): ?Reflection
     {
         $result = $this->fileNodesFetcher->fetchNodes($file);
         if (!array_key_exists($file, $this->scannedFiles)) {
@@ -210,14 +210,14 @@ final class AutoloadSourceLocator implements SourceLocator
         }
         return null;
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return [];
     }
     /**
      * @return ReflectionClass<object>|null
      */
-    private function getReflectionClass(string $className) : ?ReflectionClass
+    private function getReflectionClass(string $className): ?ReflectionClass
     {
         if (class_exists($className, \false) || interface_exists($className, \false) || trait_exists($className, \false)) {
             return new ReflectionClass($className);
@@ -239,7 +239,7 @@ final class AutoloadSourceLocator implements SourceLocator
      *
      * @return array{string[], string, int|null}|null
      */
-    private function locateClassByName(string $className) : ?array
+    private function locateClassByName(string $className): ?array
     {
         $reflection = $this->getReflectionClass($className);
         if ($reflection !== null) {
@@ -257,7 +257,7 @@ final class AutoloadSourceLocator implements SourceLocator
         }
         $this->silenceErrors();
         try {
-            $result = \PHPStan\Reflection\BetterReflection\SourceLocator\FileReadTrapStreamWrapper::withStreamWrapperOverride(static function () use($className) : ?array {
+            $result = \PHPStan\Reflection\BetterReflection\SourceLocator\FileReadTrapStreamWrapper::withStreamWrapperOverride(static function () use ($className): ?array {
                 $functions = spl_autoload_functions();
                 if ($functions === \false) {
                     return null;
@@ -290,7 +290,7 @@ final class AutoloadSourceLocator implements SourceLocator
             restore_error_handler();
         }
     }
-    private function silenceErrors() : void
+    private function silenceErrors(): void
     {
         set_error_handler(static fn(): bool => \true);
     }

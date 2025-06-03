@@ -25,6 +25,6 @@ use PHPStan\Reflection\FunctionReflection;
  */
 interface DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool;
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool;
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?\PHPStan\Type\Type;
 }

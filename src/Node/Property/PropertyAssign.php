@@ -17,11 +17,11 @@ final class PropertyAssign
         $this->assign = $assign;
         $this->scope = $scope;
     }
-    public function getAssign() : PropertyAssignNode
+    public function getAssign(): PropertyAssignNode
     {
         return $this->assign;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }

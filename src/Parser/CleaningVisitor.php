@@ -16,7 +16,7 @@ final class CleaningVisitor extends NodeVisitorAbstract
     {
         $this->nodeFinder = new NodeFinder();
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Function_) {
             $node->stmts = $this->keepVariadicsAndYields($node->stmts, null);
@@ -43,9 +43,9 @@ final class CleaningVisitor extends NodeVisitorAbstract
      * @param Node\Stmt[] $stmts
      * @return Node\Stmt[]
      */
-    private function keepVariadicsAndYields(array $stmts, ?string $hookedPropertyName) : array
+    private function keepVariadicsAndYields(array $stmts, ?string $hookedPropertyName): array
     {
-        $results = $this->nodeFinder->find($stmts, static function (Node $node) use($hookedPropertyName) : bool {
+        $results = $this->nodeFinder->find($stmts, static function (Node $node) use ($hookedPropertyName): bool {
             if ($node instanceof Node\Expr\YieldFrom || $node instanceof Node\Expr\Yield_) {
                 return \true;
             }

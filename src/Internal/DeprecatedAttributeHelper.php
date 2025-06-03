@@ -12,7 +12,7 @@ final class DeprecatedAttributeHelper
     /**
      * @param list<ReflectionAttribute> $attributes
      */
-    public static function getDeprecatedDescription(array $attributes) : ?string
+    public static function getDeprecatedDescription(array $attributes): ?string
     {
         $deprecated = ReflectionAttributeHelper::filterAttributesByName($attributes, 'Deprecated');
         foreach ($deprecated as $attr) {

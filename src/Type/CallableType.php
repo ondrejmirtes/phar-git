@@ -84,15 +84,15 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
     /**
      * @return array<non-empty-string, TemplateTag>
      */
-    public function getTemplateTags() : array
+    public function getTemplateTags(): array
     {
         return $this->templateTags;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->isPure;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         $classes = [];
         foreach ($this->parameters as $parameter) {
@@ -100,33 +100,33 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return array_merge($classes, $this->returnType->getReferencedClasses());
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType && !$type instanceof self) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return $this->isSuperTypeOfInternal($type, \true)->toAcceptsResult();
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType && !$type instanceof self) {
             return $type->isSubTypeOf($this);
         }
         return $this->isSuperTypeOfInternal($type, \false);
     }
-    private function isSuperTypeOfInternal(\PHPStan\Type\Type $type, bool $treatMixedAsAny) : \PHPStan\Type\IsSuperTypeOfResult
+    private function isSuperTypeOfInternal(\PHPStan\Type\Type $type, bool $treatMixedAsAny): \PHPStan\Type\IsSuperTypeOfResult
     {
         $isCallable = new \PHPStan\Type\IsSuperTypeOfResult($type->isCallable(), []);
         if ($isCallable->no()) {
@@ -165,45 +165,45 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return $isCallable->and($variantsResult);
     }
-    public function isSubTypeOf(\PHPStan\Type\Type $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSubTypeOf(\PHPStan\Type\Type $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($otherType instanceof \PHPStan\Type\IntersectionType || $otherType instanceof \PHPStan\Type\UnionType) {
             return $otherType->isSuperTypeOf($this);
         }
         return (new \PHPStan\Type\IsSuperTypeOfResult($otherType->isCallable(), []))->and($otherType instanceof self ? \PHPStan\Type\IsSuperTypeOfResult::createYes() : \PHPStan\Type\IsSuperTypeOfResult::createMaybe());
     }
-    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
         }
         return $this->describe(\PHPStan\Type\VerbosityLevel::precise()) === $type->describe(\PHPStan\Type\VerbosityLevel::precise());
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
-        return $level->handle(static fn(): string => 'callable', function () : string {
+        return $level->handle(static fn(): string => 'callable', function (): string {
             $printer = new Printer();
             $selfWithoutParameterNames = new self(array_map(static fn(ParameterReflection $p): ParameterReflection => new DummyParameter('', $p->getType(), $p->isOptional() && !$p->isVariadic(), PassedByReference::createNo(), $p->isVariadic(), $p->getDefaultValue()), $this->parameters), $this->returnType, $this->variadic, $this->templateTypeMap, $this->resolvedTemplateTypeMap, $this->templateTags, $this->isPure);
             return $printer->print($selfWithoutParameterNames->toPhpDocNode());
         });
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return [$this];
     }
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return [SimpleThrowPoint::createImplicit()];
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         $pure = $this->isPure();
         if ($pure->yes()) {
@@ -211,82 +211,82 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return [new SimpleImpurePoint('functionCall', 'call to a callable', $pure->no())];
     }
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return [];
     }
-    public function getUsedVariables() : array
+    public function getUsedVariables(): array
     {
         return [];
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ArrayType(new \PHPStan\Type\MixedType(), new \PHPStan\Type\MixedType());
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union($this, \PHPStan\Type\TypeCombinator::intersect(new \PHPStan\Type\StringType(), new AccessoryNonEmptyStringType()), new \PHPStan\Type\ArrayType(new \PHPStan\Type\MixedType(\true), new \PHPStan\Type\MixedType(\true)), new \PHPStan\Type\ObjectType(Closure::class));
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->templateTypeMap;
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return $this->resolvedTemplateTypeMap;
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return TemplateTypeVarianceMap::createEmpty();
     }
     /**
      * @return list<ParameterReflection>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
-    public function getReturnType() : \PHPStan\Type\Type
+    public function getReturnType(): \PHPStan\Type\Type
     {
         return $this->returnType;
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         if ($receivedType instanceof \PHPStan\Type\UnionType || $receivedType instanceof \PHPStan\Type\IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -301,7 +301,7 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return $typeMap;
     }
-    private function inferTemplateTypesOnParametersAcceptor(ParametersAcceptor $parametersAcceptor) : TemplateTypeMap
+    private function inferTemplateTypesOnParametersAcceptor(ParametersAcceptor $parametersAcceptor): TemplateTypeMap
     {
         $parameterTypes = array_map(static fn($parameter) => $parameter->getType(), $this->getParameters());
         $parametersAcceptor = ParametersAcceptorSelector::selectFromTypes($parameterTypes, [$parametersAcceptor], \false);
@@ -321,7 +321,7 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return $typeMap->union($this->getReturnType()->inferTemplateTypes($returnType));
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         $references = $this->getReturnType()->getReferencedTemplateTypes($positionVariance->compose(TemplateTypeVariance::createCovariant()));
         $paramVariance = $positionVariance->compose(TemplateTypeVariance::createContravariant());
@@ -332,18 +332,18 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return $references;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         if ($this->isCommonCallable) {
             return $this;
         }
-        $parameters = array_map(static function (ParameterReflection $param) use($cb) : NativeParameterReflection {
+        $parameters = array_map(static function (ParameterReflection $param) use ($cb): NativeParameterReflection {
             $defaultValue = $param->getDefaultValue();
             return new NativeParameterReflection($param->getName(), $param->isOptional(), $cb($param->getType()), $param->passedByReference(), $param->isVariadic(), $defaultValue !== null ? $cb($defaultValue) : null);
         }, $this->getParameters());
         return new self($parameters, $cb($this->getReturnType()), $this->isVariadic(), $this->templateTypeMap, $this->resolvedTemplateTypeMap, $this->templateTags, $this->isPure);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if ($this->isCommonCallable) {
             return $this;
@@ -372,119 +372,119 @@ class CallableType implements \PHPStan\Type\CompoundType, CallableParametersAcce
         }
         return new self($parameters, $cb($this->getReturnType(), $rightAcceptors[0]->getReturnType()), $this->isVariadic(), $this->templateTypeMap, $this->resolvedTemplateTypeMap, $this->templateTags, $this->isPure);
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [];
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         return new \PHPStan\Type\BooleanType();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function isCommonCallable() : bool
+    public function isCommonCallable(): bool
     {
         return $this->isCommonCallable;
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         if ($this->isCommonCallable) {
             return new IdentifierTypeNode($this->isPure()->yes() ? 'pure-callable' : 'callable');

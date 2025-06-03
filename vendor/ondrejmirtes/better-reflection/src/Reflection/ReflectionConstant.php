@@ -91,7 +91,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      * @param Node\Stmt\Const_|Node\Expr\FuncCall $node      Node has to be processed by the PhpParser\NodeVisitor\NameResolver
      * @param non-empty-string|null               $namespace
      */
-    public static function createFromNode(Reflector $reflector, Node $node, LocatedSource $locatedSource, ?string $namespace = null, ?int $positionInNode = null) : self
+    public static function createFromNode(Reflector $reflector, Node $node, LocatedSource $locatedSource, ?string $namespace = null, ?int $positionInNode = null): self
     {
         if ($node instanceof Node\Stmt\Const_) {
             assert(is_int($positionInNode));
@@ -100,12 +100,12 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
         return self::createFromDefineFunctionCall($reflector, $node, $locatedSource);
     }
     /** @param non-empty-string|null $namespace */
-    private static function createFromConstKeyword(Reflector $reflector, Node\Stmt\Const_ $node, LocatedSource $locatedSource, ?string $namespace, int $positionInNode) : self
+    private static function createFromConstKeyword(Reflector $reflector, Node\Stmt\Const_ $node, LocatedSource $locatedSource, ?string $namespace, int $positionInNode): self
     {
         return new self($reflector, $node, $locatedSource, $namespace, $positionInNode);
     }
     /** @throws InvalidConstantNode */
-    private static function createFromDefineFunctionCall(Reflector $reflector, Node\Expr\FuncCall $node, LocatedSource $locatedSource) : self
+    private static function createFromDefineFunctionCall(Reflector $reflector, Node\Expr\FuncCall $node, LocatedSource $locatedSource): self
     {
         ConstantNodeChecker::assertValidDefineFunctionCall($node);
         return new self($reflector, $node, $locatedSource);
@@ -116,7 +116,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return non-empty-string
      */
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->shortName;
     }
@@ -126,7 +126,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return non-empty-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -136,7 +136,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return non-empty-string|null
      */
-    public function getNamespaceName() : ?string
+    public function getNamespaceName(): ?string
     {
         return $this->namespace;
     }
@@ -144,19 +144,19 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      * Decide if this constant is part of a namespace. Returns false if the constant
      * is in the global namespace or does not have a specified namespace.
      */
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->namespace !== null;
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->locatedSource->getExtensionName();
     }
     /**
      * Is this an internal constant?
      */
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->locatedSource->isInternal();
     }
@@ -164,15 +164,15 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      * Is this a user-defined function (will always return the opposite of
      * whatever isInternal returns).
      */
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return !$this->isInternal();
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return AnnotationHelper::isDeprecated($this->getDocComment());
     }
-    public function getValueExpression() : Node\Expr
+    public function getValueExpression(): Node\Expr
     {
         return $this->value;
     }
@@ -187,11 +187,11 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
         return $this->compiledValue->value;
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->locatedSource->getFileName();
     }
-    public function getLocatedSource() : LocatedSource
+    public function getLocatedSource(): LocatedSource
     {
         return $this->locatedSource;
     }
@@ -200,7 +200,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return positive-int
      */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
@@ -209,34 +209,34 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return positive-int
      */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
     /** @return positive-int */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         return $this->startColumn;
     }
     /** @return positive-int */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         return $this->endColumn;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionConstantStringCast::toString($this);
     }
     /**
      * @param \PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall $node
      */
-    private function setNamesFromNode($node, ?int $positionInNode) : void
+    private function setNamesFromNode($node, ?int $positionInNode): void
     {
         if ($node instanceof Node\Expr\FuncCall) {
             $name = $this->getNameFromDefineFunctionCall($node);
@@ -258,7 +258,7 @@ class ReflectionConstant implements \PHPStan\BetterReflection\Reflection\Reflect
         $this->shortName = $shortName;
     }
     /** @return non-empty-string */
-    private function getNameFromDefineFunctionCall(Node\Expr\FuncCall $node) : string
+    private function getNameFromDefineFunctionCall(Node\Expr\FuncCall $node): string
     {
         $argumentNameNode = $node->args[0];
         assert($argumentNameNode instanceof Node\Arg);

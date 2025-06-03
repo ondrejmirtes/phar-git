@@ -77,7 +77,7 @@ final class GitMerge extends AbstractMergeBase implements PhpMergeInterface
      * {@inheritdoc}
      * @phpstan-impure
      */
-    public function merge(string $base, string $remote, string $local) : string
+    public function merge(string $base, string $remote, string $local): string
     {
         // Skip merging if there is nothing to do.
         if ($merged = AbstractMergeBase::simpleMerge($base, $remote, $local)) {
@@ -116,7 +116,7 @@ final class GitMerge extends AbstractMergeBase implements PhpMergeInterface
      * @return string
      *   The merged text.
      */
-    protected function mergeFile(string $file, string $base, string $remote, string $local) : string
+    protected function mergeFile(string $file, string $base, string $remote, string $local): string
     {
         \file_put_contents($file, $base);
         $this->git->add($file);
@@ -243,15 +243,11 @@ final class GitMerge extends AbstractMergeBase implements PhpMergeInterface
                                 $newLine += \count($r->getAddedLines());
                                 $lineIterator->seek($newLine + $skipedLines - 1);
                                 $remoteIterator->next();
+                            } else if ($r->getType() === Hunk::ADDED && $l->getType() === Hunk::ADDED) {
+                                $addingConflict = \true;
                             } else {
-                                // If the conflict occurs on added lines, the
-                                // next line in the merge will deal with it.
-                                if ($r->getType() === Hunk::ADDED && $l->getType() === Hunk::ADDED) {
-                                    $addingConflict = \true;
-                                } else {
-                                    $lineNumber++;
-                                    $newLine++;
-                                }
+                                $lineNumber++;
+                                $newLine++;
                             }
                         } elseif (!\is_null($l) && $l->getStart() === $lineNumber) {
                             if (!$l->hasIntersection($r)) {
@@ -296,7 +292,7 @@ final class GitMerge extends AbstractMergeBase implements PhpMergeInterface
      *
      * @return array
      */
-    protected static function fixLastLine(array $lines, array $all) : array
+    protected static function fixLastLine(array $lines, array $all): array
     {
         $last = \end($all);
         $lastLine = \end($lines);

@@ -51,11 +51,11 @@ final class WorkerCommand extends Command
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
         parent::__construct();
     }
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName(self::NAME)->setDescription('(Internal) Support for parallel analysis.')->setDefinition([new InputArgument('paths', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Paths with source code to run analysis on'), new InputOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Path to project configuration file'), new InputOption(\PHPStan\Command\AnalyseCommand::OPTION_LEVEL, 'l', InputOption::VALUE_REQUIRED, 'Level of rule options - the higher the stricter'), new InputOption('autoload-file', 'a', InputOption::VALUE_REQUIRED, 'Project\'s additional autoload file path'), new InputOption('memory-limit', null, InputOption::VALUE_REQUIRED, 'Memory limit for analysis'), new InputOption('xdebug', null, InputOption::VALUE_NONE, 'Allow running with Xdebug for debugging purposes'), new InputOption('port', null, InputOption::VALUE_REQUIRED), new InputOption('identifier', null, InputOption::VALUE_REQUIRED), new InputOption('tmp-file', null, InputOption::VALUE_REQUIRED), new InputOption('instead-of', null, InputOption::VALUE_REQUIRED)])->setHidden(\true);
     }
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $paths = $input->getArgument('paths');
         $memoryLimit = $input->getOption('memory-limit');
@@ -90,7 +90,7 @@ final class WorkerCommand extends Command
         $nodeScopeResolver->setAnalysedFiles($analysedFiles);
         $analysedFiles = array_fill_keys($analysedFiles, \true);
         $tcpConnector = new TcpConnector($loop);
-        $tcpConnector->connect(sprintf('127.0.0.1:%d', $port))->then(function (ConnectionInterface $connection) use($container, $identifier, $output, $analysedFiles, $tmpFile, $insteadOfFile) : void {
+        $tcpConnector->connect(sprintf('127.0.0.1:%d', $port))->then(function (ConnectionInterface $connection) use ($container, $identifier, $output, $analysedFiles, $tmpFile, $insteadOfFile): void {
             // phpcs:disable SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
             $jsonInvalidUtf8Ignore = defined('JSON_INVALID_UTF8_IGNORE') ? \JSON_INVALID_UTF8_IGNORE : 0;
             // phpcs:enable
@@ -108,9 +108,9 @@ final class WorkerCommand extends Command
     /**
      * @param array<string, true> $analysedFiles
      */
-    private function runWorker(Container $container, WritableStreamInterface $out, ReadableStreamInterface $in, OutputInterface $output, array $analysedFiles, ?string $tmpFile, ?string $insteadOfFile) : void
+    private function runWorker(Container $container, WritableStreamInterface $out, ReadableStreamInterface $in, OutputInterface $output, array $analysedFiles, ?string $tmpFile, ?string $insteadOfFile): void
     {
-        $handleError = function (Throwable $error) use($out, $output) : void {
+        $handleError = function (Throwable $error) use ($out, $output): void {
             $this->errorCount++;
             $output->writeln(sprintf('Error: %s', $error->getMessage()));
             $out->write(['action' => 'result', 'result' => ['errors' => [], 'internalErrors' => [new InternalError($error->getMessage(), 'communicating with main process in parallel worker', InternalError::prepareTrace($error), $error->getTraceAsString(), \true)], 'filteredPhpErrors' => [], 'allPhpErrors' => [], 'locallyIgnoredErrors' => [], 'linesToIgnore' => [], 'unmatchedLineIgnores' => [], 'collectedData' => [], 'memoryUsage' => memory_get_peak_usage(\true), 'dependencies' => [], 'exportedNodes' => [], 'files' => [], 'internalErrorsCount' => 1]]);
@@ -120,7 +120,7 @@ final class WorkerCommand extends Command
         $fileAnalyser = $container->getByType(FileAnalyser::class);
         $ruleRegistry = $container->getByType(RuleRegistry::class);
         $collectorRegistry = $container->getByType(CollectorRegistry::class);
-        $in->on('data', static function (array $json) use($fileAnalyser, $ruleRegistry, $collectorRegistry, $out, $analysedFiles, $tmpFile, $insteadOfFile) : void {
+        $in->on('data', static function (array $json) use ($fileAnalyser, $ruleRegistry, $collectorRegistry, $out, $analysedFiles, $tmpFile, $insteadOfFile): void {
             $action = $json['action'];
             if ($action !== 'analyse') {
                 return;
@@ -178,7 +178,7 @@ final class WorkerCommand extends Command
      * @param string[] $analysedFiles
      * @return string[]
      */
-    private function switchTmpFile(array $analysedFiles, ?string $insteadOfFile, ?string $tmpFile) : array
+    private function switchTmpFile(array $analysedFiles, ?string $insteadOfFile, ?string $tmpFile): array
     {
         if ($insteadOfFile === null) {
             return $analysedFiles;

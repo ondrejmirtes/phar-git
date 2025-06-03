@@ -45,11 +45,11 @@ final class FactoryDefinition extends Definition
         }
         return parent::setType($interface);
     }
-    public function getImplement() : ?string
+    public function getImplement(): ?string
     {
         return $this->getType();
     }
-    public final function getResultType() : ?string
+    final public function getResultType(): ?string
     {
         return $this->resultDefinition->getType();
     }
@@ -60,7 +60,7 @@ final class FactoryDefinition extends Definition
         return $this;
     }
     /** @return ServiceDefinition */
-    public function getResultDefinition() : Definition
+    public function getResultDefinition(): Definition
     {
         return $this->resultDefinition;
     }
@@ -80,11 +80,11 @@ final class FactoryDefinition extends Definition
         return $this;
     }
     /** @deprecated */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
-    public function resolveType(Nette\DI\Resolver $resolver) : void
+    public function resolveType(Nette\DI\Resolver $resolver): void
     {
         $interface = $this->getType();
         if (!$interface) {
@@ -106,7 +106,7 @@ final class FactoryDefinition extends Definition
             throw new ServiceCreationException(\sprintf('Factory for %s cannot create incompatible %s type.', $type, $resultDef->getType()));
         }
     }
-    public function complete(Nette\DI\Resolver $resolver) : void
+    public function complete(Nette\DI\Resolver $resolver): void
     {
         $resultDef = $this->resultDefinition;
         if ($resultDef instanceof ServiceDefinition) {
@@ -127,12 +127,12 @@ final class FactoryDefinition extends Definition
         }
         $resolver->completeDefinition($resultDef);
     }
-    private function completeParameters(Nette\DI\Resolver $resolver) : void
+    private function completeParameters(Nette\DI\Resolver $resolver): void
     {
         $interface = $this->getType();
         $method = new \ReflectionMethod($interface, self::MethodCreate);
         $ctorParams = [];
-        if (($class = $resolver->resolveEntityType($this->resultDefinition->getCreator())) && ($ctor = (new \ReflectionClass($class))->getConstructor())) {
+        if (($class = $resolver->resolveEntityType($this->resultDefinition->getCreator())) && $ctor = (new \ReflectionClass($class))->getConstructor()) {
             foreach ($ctor->getParameters() as $param) {
                 $ctorParams[$param->name] = $param;
             }
@@ -148,7 +148,7 @@ final class FactoryDefinition extends Definition
                 $this->resultDefinition->getCreator()->arguments[$ctorParam->getPosition()] = new Php\Literal('$' . $ctorParam->name);
             } elseif (!$this->resultDefinition->getSetup()) {
                 // [param1, param2] => '$param1, $param2'
-                $stringifyParams = function (array $params) : string {
+                $stringifyParams = function (array $params): string {
                     return \implode(', ', \array_map(function (string $param) {
                         return '$' . $param;
                     }, $params));
@@ -167,7 +167,7 @@ final class FactoryDefinition extends Definition
             }
         }
     }
-    public function convertArguments(array &$args) : void
+    public function convertArguments(array &$args): void
     {
         foreach ($args as &$v) {
             if (\is_string($v) && $v && $v[0] === '$') {
@@ -175,7 +175,7 @@ final class FactoryDefinition extends Definition
             }
         }
     }
-    public function generateMethod(Php\Method $method, Nette\DI\PhpGenerator $generator) : void
+    public function generateMethod(Php\Method $method, Nette\DI\PhpGenerator $generator): void
     {
         $class = (new Php\ClassType())->addImplement($this->getType());
         $class->addProperty('container')->setPrivate();

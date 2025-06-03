@@ -26,11 +26,11 @@ final class ThrowsVoidPropertyHookWithExplicitThrowPointRule implements Rule
         $this->exceptionTypeResolver = $exceptionTypeResolver;
         $this->missingCheckedExceptionInThrows = $missingCheckedExceptionInThrows;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyHookReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $statementResult = $node->getStatementResult();
         $hookReflection = $node->getHookReflection();

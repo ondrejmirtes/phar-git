@@ -18,15 +18,15 @@ final class IssetRule implements Rule
     {
         $this->issetCheck = $issetCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Isset_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $messages = [];
         foreach ($node->vars as $var) {
-            $error = $this->issetCheck->check($var, $scope, 'in isset()', 'isset', static function (Type $type) : ?string {
+            $error = $this->issetCheck->check($var, $scope, 'in isset()', 'isset', static function (Type $type): ?string {
                 $isNull = $type->isNull();
                 if ($isNull->maybe()) {
                     return null;

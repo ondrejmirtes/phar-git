@@ -6,7 +6,7 @@ namespace PHPStan\Type;
 use PHPStan\Reflection\ReflectionProviderStaticAccessor;
 class StringAlwaysAcceptingObjectWithToStringType extends \PHPStan\Type\StringType
 {
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isSubTypeOf($this);
@@ -26,7 +26,7 @@ class StringAlwaysAcceptingObjectWithToStringType extends \PHPStan\Type\StringTy
         }
         return $result;
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         $thatClassNames = $type->getObjectClassNames();
         if ($thatClassNames === []) {

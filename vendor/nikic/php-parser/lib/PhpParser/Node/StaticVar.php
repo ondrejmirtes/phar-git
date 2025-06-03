@@ -24,11 +24,11 @@ class StaticVar extends NodeAbstract
         $this->var = $var;
         $this->default = $default;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['var', 'default'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'StaticVar';
     }

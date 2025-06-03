@@ -6,5 +6,5 @@ namespace PHPStan\DependencyInjection\Type;
 use PHPStan\Type\OperatorTypeSpecifyingExtensionRegistry;
 interface OperatorTypeSpecifyingExtensionRegistryProvider
 {
-    public function getRegistry() : OperatorTypeSpecifyingExtensionRegistry;
+    public function getRegistry(): OperatorTypeSpecifyingExtensionRegistry;
 }

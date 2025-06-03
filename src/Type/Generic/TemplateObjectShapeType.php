@@ -25,7 +25,7 @@ final class TemplateObjectShapeType extends ObjectShapeType implements \PHPStan\
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

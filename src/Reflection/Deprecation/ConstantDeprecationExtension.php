@@ -22,5 +22,5 @@ use PHPStan\BetterReflection\Reflection\ReflectionConstant;
 interface ConstantDeprecationExtension
 {
     public const CONSTANT_EXTENSION_TAG = 'phpstan.constantDeprecationExtension';
-    public function getConstantDeprecation(ReflectionConstant $reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation;
+    public function getConstantDeprecation(ReflectionConstant $reflection): ?\PHPStan\Reflection\Deprecation\Deprecation;
 }

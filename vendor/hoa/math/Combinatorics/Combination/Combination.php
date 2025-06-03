@@ -89,4 +89,4 @@ class Combination
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Math\\Combinatorics\\Combination\\Combination');
+Consistency::flexEntity('Hoa\Math\Combinatorics\Combination\Combination');

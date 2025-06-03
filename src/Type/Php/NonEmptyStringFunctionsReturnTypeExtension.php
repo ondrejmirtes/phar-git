@@ -21,11 +21,11 @@ use const ENT_SUBSTITUTE;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class NonEmptyStringFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['addslashes', 'addcslashes', 'escapeshellarg', 'escapeshellcmd', 'htmlspecialchars', 'htmlentities', 'urlencode', 'urldecode', 'preg_quote', 'rawurlencode', 'rawurldecode'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) === 0) {
@@ -48,7 +48,7 @@ final class NonEmptyStringFunctionsReturnTypeExtension implements DynamicFunctio
     /**
      * @param Arg[] $args
      */
-    private function isSubstituteFlagSet(array $args, Scope $scope) : bool
+    private function isSubstituteFlagSet(array $args, Scope $scope): bool
     {
         if (!isset($args[1])) {
             return \true;

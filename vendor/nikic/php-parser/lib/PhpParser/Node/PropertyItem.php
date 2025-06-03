@@ -24,11 +24,11 @@ class PropertyItem extends NodeAbstract
         $this->name = \is_string($name) ? new Node\VarLikeIdentifier($name) : $name;
         $this->default = $default;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['name', 'default'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PropertyItem';
     }

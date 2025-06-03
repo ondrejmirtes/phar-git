@@ -20,15 +20,15 @@ final class GlobalFunction
     use Traits\NameAware;
     use Traits\CommentAware;
     use Traits\AttributeAware;
-    public static function from(string $function, bool $withBody = \false) : self
+    public static function from(string $function, bool $withBody = \false): self
     {
         return (new Factory())->fromFunctionReflection(new \ReflectionFunction($function), $withBody);
     }
-    public static function withBodyFrom(string $function) : self
+    public static function withBodyFrom(string $function): self
     {
         return (new Factory())->fromFunctionReflection(new \ReflectionFunction($function), \true);
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return (new Printer())->printFunction($this);

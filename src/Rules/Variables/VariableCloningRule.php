@@ -25,11 +25,11 @@ final class VariableCloningRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Clone_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $node->expr, 'Cloning object of an unknown class %s.', static fn(Type $type): bool => $type->isCloneable()->yes());
         $type = $typeResult->getType();

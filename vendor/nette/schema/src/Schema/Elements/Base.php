@@ -25,34 +25,34 @@ trait Base
     private $transforms = [];
     /** @var string|null */
     private $deprecated;
-    public function default($value) : self
+    public function default($value): self
     {
         $this->default = $value;
         return $this;
     }
-    public function required(bool $state = \true) : self
+    public function required(bool $state = \true): self
     {
         $this->required = $state;
         return $this;
     }
-    public function before(callable $handler) : self
+    public function before(callable $handler): self
     {
         $this->before = $handler;
         return $this;
     }
-    public function castTo(string $type) : self
+    public function castTo(string $type): self
     {
         return $this->transform(Helpers::getCastStrategy($type));
     }
-    public function transform(callable $handler) : self
+    public function transform(callable $handler): self
     {
         $this->transforms[] = $handler;
         return $this;
     }
-    public function assert(callable $handler, ?string $description = null) : self
+    public function assert(callable $handler, ?string $description = null): self
     {
         $expected = $description ?: (\is_string($handler) ? "{$handler}()" : '#' . \count($this->transforms));
-        return $this->transform(function ($value, Context $context) use($handler, $description, $expected) {
+        return $this->transform(function ($value, Context $context) use ($handler, $description, $expected) {
             if ($handler($value)) {
                 return $value;
             }
@@ -60,7 +60,7 @@ trait Base
         });
     }
     /** Marks as deprecated */
-    public function deprecated(string $message = 'The item %path% is deprecated.') : self
+    public function deprecated(string $message = 'The item %path% is deprecated.'): self
     {
         $this->deprecated = $message;
         return $this;
@@ -80,7 +80,7 @@ trait Base
         }
         return $value;
     }
-    private function doDeprecation(Context $context) : void
+    private function doDeprecation(Context $context): void
     {
         if ($this->deprecated !== null) {
             $context->addWarning($this->deprecated, Nette\Schema\Message::Deprecated);
@@ -98,14 +98,14 @@ trait Base
         return $value;
     }
     /** @deprecated use Nette\Schema\Validators::validateType() */
-    private function doValidate($value, string $expected, Context $context) : bool
+    private function doValidate($value, string $expected, Context $context): bool
     {
         $isOk = $context->createChecker();
         Helpers::validateType($value, $expected, $context);
         return $isOk();
     }
     /** @deprecated use Nette\Schema\Validators::validateRange() */
-    private static function doValidateRange($value, array $range, Context $context, string $types = '') : bool
+    private static function doValidateRange($value, array $range, Context $context, string $types = ''): bool
     {
         $isOk = $context->createChecker();
         Helpers::validateRange($value, $range, $context, $types);

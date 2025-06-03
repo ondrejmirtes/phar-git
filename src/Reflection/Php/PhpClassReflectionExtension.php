@@ -110,7 +110,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         $this->attributeReflectionFactory = $attributeReflectionFactory;
         $this->inferPrivatePropertyTypeFromConstructor = $inferPrivatePropertyTypeFromConstructor;
     }
-    public function evictPrivateSymbols(string $classCacheKey) : void
+    public function evictPrivateSymbols(string $classCacheKey): void
     {
         foreach ($this->propertiesIncludingAnnotations as $key => $properties) {
             if ($key !== $classCacheKey) {
@@ -157,18 +157,18 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
             }
         }
     }
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         return $classReflection->getNativeReflection()->hasProperty($propertyName);
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : ExtendedPropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): ExtendedPropertyReflection
     {
         if (!isset($this->propertiesIncludingAnnotations[$classReflection->getCacheKey()][$propertyName])) {
             $this->propertiesIncludingAnnotations[$classReflection->getCacheKey()][$propertyName] = $this->createProperty($classReflection, $propertyName, \true);
         }
         return $this->propertiesIncludingAnnotations[$classReflection->getCacheKey()][$propertyName];
     }
-    public function getNativeProperty(ClassReflection $classReflection, string $propertyName) : \PHPStan\Reflection\Php\PhpPropertyReflection
+    public function getNativeProperty(ClassReflection $classReflection, string $propertyName): \PHPStan\Reflection\Php\PhpPropertyReflection
     {
         if (!isset($this->nativeProperties[$classReflection->getCacheKey()][$propertyName])) {
             /** @var PhpPropertyReflection $property */
@@ -177,7 +177,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return $this->nativeProperties[$classReflection->getCacheKey()][$propertyName];
     }
-    private function createProperty(ClassReflection $classReflection, string $propertyName, bool $includingAnnotations) : ExtendedPropertyReflection
+    private function createProperty(ClassReflection $classReflection, string $propertyName, bool $includingAnnotations): ExtendedPropertyReflection
     {
         $propertyReflection = $classReflection->getNativeReflection()->getProperty($propertyName);
         $propertyName = $propertyReflection->getName();
@@ -326,11 +326,11 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return new \PHPStan\Reflection\Php\PhpPropertyReflection($declaringClassReflection, $declaringTrait, $nativeType, $phpDocType, $propertyReflection, $getHook, $setHook, $deprecatedDescription, $isDeprecated, $isInternal, $isReadOnlyByPhpDoc, $isAllowedPrivateMutation, $this->attributeReflectionFactory->fromNativeReflection($propertyReflection->getAttributes(), InitializerExprContext::fromClass($declaringClassReflection->getName(), $declaringClassReflection->getFileName())), $isFinal);
     }
-    public function hasMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $classReflection->getNativeReflection()->hasMethod($methodName);
     }
-    public function getMethod(ClassReflection $classReflection, string $methodName) : ExtendedMethodReflection
+    public function getMethod(ClassReflection $classReflection, string $methodName): ExtendedMethodReflection
     {
         if (isset($this->methodsIncludingAnnotations[$classReflection->getCacheKey()][$methodName])) {
             return $this->methodsIncludingAnnotations[$classReflection->getCacheKey()][$methodName];
@@ -345,11 +345,11 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return $this->methodsIncludingAnnotations[$classReflection->getCacheKey()][$nativeMethodReflection->getName()];
     }
-    public function hasNativeMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasNativeMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $this->hasMethod($classReflection, $methodName);
     }
-    public function getNativeMethod(ClassReflection $classReflection, string $methodName) : ExtendedMethodReflection
+    public function getNativeMethod(ClassReflection $classReflection, string $methodName): ExtendedMethodReflection
     {
         if (isset($this->nativeMethods[$classReflection->getCacheKey()][$methodName])) {
             return $this->nativeMethods[$classReflection->getCacheKey()][$methodName];
@@ -364,7 +364,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return $this->nativeMethods[$classReflection->getCacheKey()][$nativeMethodReflection->getName()];
     }
-    private function createMethod(ClassReflection $classReflection, ReflectionMethod $methodReflection, bool $includingAnnotations) : ExtendedMethodReflection
+    private function createMethod(ClassReflection $classReflection, ReflectionMethod $methodReflection, bool $includingAnnotations): ExtendedMethodReflection
     {
         if ($includingAnnotations && $this->annotationsMethodsClassReflectionExtension->hasMethod($classReflection, $methodReflection->getName())) {
             $hierarchyDistances = $classReflection->getClassHierarchyDistances();
@@ -509,7 +509,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return $this->createUserlandMethodReflection($declaringClass, $declaringClass, $methodReflection, $this->findMethodTrait($methodReflection));
     }
-    public function createUserlandMethodReflection(ClassReflection $fileDeclaringClass, ClassReflection $actualDeclaringClass, ReflectionMethod $methodReflection, ?string $declaringTraitName) : \PHPStan\Reflection\Php\PhpMethodReflection
+    public function createUserlandMethodReflection(ClassReflection $fileDeclaringClass, ClassReflection $actualDeclaringClass, ReflectionMethod $methodReflection, ?string $declaringTraitName): \PHPStan\Reflection\Php\PhpMethodReflection
     {
         $deprecation = $this->deprecationProvider->getMethodDeprecation($methodReflection);
         $deprecatedDescription = $deprecation === null ? null : $deprecation->getDescription();
@@ -612,7 +612,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
      * @param array<string, Type> $stubClosureThisParameters
      * @param array<string, Type> $closureThisParameters
      */
-    private function createNativeMethodVariant(FunctionSignature $methodSignature, array $stubPhpDocParameterTypes, array $stubPhpDocParameterVariadicity, ?Type $stubPhpDocReturnType, array $phpDocParameterTypes, ?Type $phpDocReturnType, array $phpDocParameterNameMapping, array $stubPhpDocParameterOutTypes, array $phpDocParameterOutTypes, array $stubImmediatelyInvokedCallableParameters, array $immediatelyInvokedCallableParameters, array $stubClosureThisParameters, array $closureThisParameters, bool $usePhpDocParameterNames) : ExtendedFunctionVariant
+    private function createNativeMethodVariant(FunctionSignature $methodSignature, array $stubPhpDocParameterTypes, array $stubPhpDocParameterVariadicity, ?Type $stubPhpDocReturnType, array $phpDocParameterTypes, ?Type $phpDocReturnType, array $phpDocParameterNameMapping, array $stubPhpDocParameterOutTypes, array $phpDocParameterOutTypes, array $stubImmediatelyInvokedCallableParameters, array $immediatelyInvokedCallableParameters, array $stubClosureThisParameters, array $closureThisParameters, bool $usePhpDocParameterNames): ExtendedFunctionVariant
     {
         $parameters = [];
         foreach ($methodSignature->getParameters() as $parameterSignature) {
@@ -654,7 +654,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return new ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), null, $parameters, $methodSignature->isVariadic(), $returnType, $phpDocReturnType ?? new MixedType(), $methodSignature->getNativeReturnType());
     }
-    private function findPropertyTrait(ReflectionProperty $propertyReflection) : ?string
+    private function findPropertyTrait(ReflectionProperty $propertyReflection): ?string
     {
         $declaringClass = $propertyReflection->getBetterReflection()->getDeclaringClass();
         if ($declaringClass->isTrait()) {
@@ -665,7 +665,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return null;
     }
-    private function findMethodTrait(ReflectionMethod $methodReflection) : ?string
+    private function findMethodTrait(ReflectionMethod $methodReflection): ?string
     {
         $declaringClass = $methodReflection->getBetterReflection()->getDeclaringClass();
         if ($declaringClass->isTrait()) {
@@ -676,7 +676,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return null;
     }
-    private function inferPrivatePropertyType(string $propertyName, MethodReflection $constructor) : ?Type
+    private function inferPrivatePropertyType(string $propertyName, MethodReflection $constructor): ?Type
     {
         $declaringClassName = $constructor->getDeclaringClass()->getName();
         if (isset($this->inferClassConstructorPropertyTypesInProcess[$declaringClassName])) {
@@ -693,7 +693,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
     /**
      * @return array<string, Type>
      */
-    private function inferAndCachePropertyTypes(MethodReflection $constructor) : array
+    private function inferAndCachePropertyTypes(MethodReflection $constructor): array
     {
         $declaringClass = $constructor->getDeclaringClass();
         if (isset($this->propertyTypesCache[$declaringClass->getName()])) {
@@ -755,7 +755,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
     /**
      * @param Node[] $nodes
      */
-    private function findClassNode(string $className, array $nodes) : ?Class_
+    private function findClassNode(string $className, array $nodes): ?Class_
     {
         foreach ($nodes as $node) {
             if ($node instanceof Class_ && $node->namespacedName !== null && $node->namespacedName->toString() === $className) {
@@ -782,7 +782,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
     /**
      * @param Node\Stmt[] $classStatements
      */
-    private function findConstructorNode(string $methodName, array $classStatements) : ?ClassMethod
+    private function findConstructorNode(string $methodName, array $classStatements): ?ClassMethod
     {
         foreach ($classStatements as $statement) {
             if ($statement instanceof ClassMethod && $statement->name->toString() === $methodName) {
@@ -791,7 +791,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
         }
         return null;
     }
-    private function getPhpDocReturnType(ClassReflection $phpDocBlockClassReflection, ResolvedPhpDocBlock $resolvedPhpDoc, Type $nativeReturnType) : ?Type
+    private function getPhpDocReturnType(ClassReflection $phpDocBlockClassReflection, ResolvedPhpDocBlock $resolvedPhpDoc, Type $nativeReturnType): ?Type
     {
         $returnTag = $resolvedPhpDoc->getReturnTag();
         if ($returnTag === null) {
@@ -808,7 +808,7 @@ final class PhpClassReflectionExtension implements PropertiesClassReflectionExte
      * @param array<int, string> $positionalParameterNames
      * @return array{ResolvedPhpDocBlock, ClassReflection}|null
      */
-    private function findMethodPhpDocIncludingAncestors(ClassReflection $declaringClass, ClassReflection $implementingClass, string $methodName, array $positionalParameterNames) : ?array
+    private function findMethodPhpDocIncludingAncestors(ClassReflection $declaringClass, ClassReflection $implementingClass, string $methodName, array $positionalParameterNames): ?array
     {
         $declaringClassName = $declaringClass->getName();
         $resolved = $this->stubPhpDocProvider->findMethodPhpDoc($declaringClassName, $implementingClass->getName(), $methodName, $positionalParameterNames);

@@ -31,5 +31,5 @@ use PHPStan\Rules\ClassNameUsageLocation;
 interface RestrictedClassNameUsageExtension
 {
     public const CLASS_NAME_EXTENSION_TAG = 'phpstan.restrictedClassNameUsageExtension';
-    public function isRestrictedClassNameUsage(ClassReflection $classReflection, Scope $scope, ClassNameUsageLocation $location) : ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+    public function isRestrictedClassNameUsage(ClassReflection $classReflection, Scope $scope, ClassNameUsageLocation $location): ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
 }

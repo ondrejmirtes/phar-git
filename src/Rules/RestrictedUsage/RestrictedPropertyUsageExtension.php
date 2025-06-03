@@ -28,5 +28,5 @@ use PHPStan\Reflection\ExtendedPropertyReflection;
 interface RestrictedPropertyUsageExtension
 {
     public const PROPERTY_EXTENSION_TAG = 'phpstan.restrictedPropertyUsageExtension';
-    public function isRestrictedPropertyUsage(ExtendedPropertyReflection $propertyReflection, Scope $scope) : ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+    public function isRestrictedPropertyUsage(ExtendedPropertyReflection $propertyReflection, Scope $scope): ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
 }

@@ -9,7 +9,7 @@ final class TraitCollectingVisitor extends NodeVisitorAbstract
 {
     /** @var list<Node\Stmt\Trait_> */
     public array $traits = [];
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt\Trait_) {
             return null;

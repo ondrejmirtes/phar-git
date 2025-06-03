@@ -21,11 +21,11 @@ use function substr;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class OpenSslEncryptParameterOutTypeExtension implements FunctionParameterOutTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool
     {
         return $functionReflection->getName() === 'openssl_encrypt' && $parameter->getName() === 'tag';
     }
-    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope) : ?Type
+    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
         $args = $funcCall->getArgs();
         $cipherArg = $args[1] ?? null;

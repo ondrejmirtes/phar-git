@@ -27,11 +27,11 @@ final class InvalidThrowsPhpDocValueRule implements Rule
     {
         $this->fileTypeMapper = $fileTypeMapper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NodeAbstract::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node instanceof Node\Stmt) {
             if ($node instanceof Node\Stmt\Function_ || $node instanceof Node\Stmt\ClassMethod) {
@@ -62,7 +62,7 @@ final class InvalidThrowsPhpDocValueRule implements Rule
         }
         return [RuleErrorBuilder::message(sprintf('PHPDoc tag @throws with type %s is not subtype of Throwable', $phpDocThrowsType->describe(VerbosityLevel::typeOnly())))->identifier('throws.notThrowable')->build()];
     }
-    private function isThrowsValid(Type $phpDocThrowsType) : bool
+    private function isThrowsValid(Type $phpDocThrowsType): bool
     {
         $throwType = new ObjectType(Throwable::class);
         if ($phpDocThrowsType instanceof UnionType) {

@@ -22,5 +22,5 @@ use PHPStan\BetterReflection\Reflection\Adapter\ReflectionFunction;
 interface FunctionDeprecationExtension
 {
     public const FUNCTION_EXTENSION_TAG = 'phpstan.functionDeprecationExtension';
-    public function getFunctionDeprecation(ReflectionFunction $reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation;
+    public function getFunctionDeprecation(ReflectionFunction $reflection): ?\PHPStan\Reflection\Deprecation\Deprecation;
 }

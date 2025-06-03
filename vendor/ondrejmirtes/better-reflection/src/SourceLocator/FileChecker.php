@@ -14,7 +14,7 @@ class FileChecker
      *
      * @throws InvalidFileLocation
      */
-    public static function assertReadableFile(string $filename) : void
+    public static function assertReadableFile(string $filename): void
     {
         if (!is_file($filename)) {
             throw new InvalidFileLocation(sprintf('"%s" is not a file', $filename));

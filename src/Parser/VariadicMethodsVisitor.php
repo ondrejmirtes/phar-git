@@ -28,7 +28,7 @@ final class VariadicMethodsVisitor extends NodeVisitorAbstract
     public static array $cache = [];
     /** @var array<string, array<string, bool>> */
     private array $variadicMethods = [];
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->topNode = null;
         $this->variadicMethods = [];
@@ -37,7 +37,7 @@ final class VariadicMethodsVisitor extends NodeVisitorAbstract
         $this->inMethod = null;
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($this->topNode === null) {
             $this->topNode = $node;
@@ -67,7 +67,7 @@ final class VariadicMethodsVisitor extends NodeVisitorAbstract
         }
         return null;
     }
-    public function leaveNode(Node $node) : ?Node
+    public function leaveNode(Node $node): ?Node
     {
         if ($node instanceof ClassMethod) {
             $lastClass = $this->classStack[count($this->classStack) - 1] ?? null;
@@ -84,7 +84,7 @@ final class VariadicMethodsVisitor extends NodeVisitorAbstract
         }
         return null;
     }
-    public function afterTraverse(array $nodes) : ?array
+    public function afterTraverse(array $nodes): ?array
     {
         if ($this->topNode !== null && $this->variadicMethods !== []) {
             $filteredMethods = [];

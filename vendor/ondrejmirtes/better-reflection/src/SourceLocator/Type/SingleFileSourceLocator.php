@@ -42,7 +42,7 @@ class SingleFileSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Ty
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         $fileContents = file_get_contents($this->fileName);
         assert($fileContents !== \false);

@@ -32,26 +32,26 @@ trait TemplateTypeTrait
     private Type $bound;
     private ?Type $default;
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getScope() : \PHPStan\Type\Generic\TemplateTypeScope
+    public function getScope(): \PHPStan\Type\Generic\TemplateTypeScope
     {
         return $this->scope;
     }
     /** @return TBound */
-    public function getBound() : Type
+    public function getBound(): Type
     {
         return $this->bound;
     }
-    public function getDefault() : ?Type
+    public function getDefault(): ?Type
     {
         return $this->default;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
-        $basicDescription = function () use($level) : string {
+        $basicDescription = function () use ($level): string {
             // @phpstan-ignore booleanAnd.alwaysFalse, instanceof.alwaysFalse, booleanAnd.alwaysFalse, instanceof.alwaysFalse, instanceof.alwaysTrue
             if ($this->bound instanceof MixedType && $this->bound->getSubtractedType() === null && !$this->bound instanceof \PHPStan\Type\Generic\TemplateMixedType) {
                 $boundDescription = '';
@@ -63,24 +63,24 @@ trait TemplateTypeTrait
         };
         return $level->handle($basicDescription, $basicDescription, fn(): string => sprintf('%s (%s, %s)', $basicDescription(), $this->scope->describe(), $this->isArgument() ? 'argument' : 'parameter'));
     }
-    public function isArgument() : bool
+    public function isArgument(): bool
     {
         return $this->strategy->isArgument();
     }
-    public function toArgument() : \PHPStan\Type\Generic\TemplateType
+    public function toArgument(): \PHPStan\Type\Generic\TemplateType
     {
         return new self($this->scope, new \PHPStan\Type\Generic\TemplateTypeArgumentStrategy(), $this->variance, $this->name, \PHPStan\Type\Generic\TemplateTypeHelper::toArgument($this->getBound()), $this->default !== null ? \PHPStan\Type\Generic\TemplateTypeHelper::toArgument($this->default) : null);
     }
-    public function isValidVariance(Type $a, Type $b) : IsSuperTypeOfResult
+    public function isValidVariance(Type $a, Type $b): IsSuperTypeOfResult
     {
         return $this->variance->isValidVariance($this, $a, $b);
     }
-    public function subtract(Type $typeToRemove) : Type
+    public function subtract(Type $typeToRemove): Type
     {
         $removedBound = TypeCombinator::remove($this->getBound(), $typeToRemove);
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $removedBound, $this->getVariance(), $this->getStrategy(), $this->getDefault());
     }
-    public function getTypeWithoutSubtractedType() : Type
+    public function getTypeWithoutSubtractedType(): Type
     {
         $bound = $this->getBound();
         if (!$bound instanceof SubtractableType) {
@@ -89,7 +89,7 @@ trait TemplateTypeTrait
         }
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $bound->getTypeWithoutSubtractedType(), $this->getVariance(), $this->getStrategy(), $this->getDefault());
     }
-    public function changeSubtractedType(?Type $subtractedType) : Type
+    public function changeSubtractedType(?Type $subtractedType): Type
     {
         $bound = $this->getBound();
         if (!$bound instanceof SubtractableType) {
@@ -98,7 +98,7 @@ trait TemplateTypeTrait
         }
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $bound->changeSubtractedType($subtractedType), $this->getVariance(), $this->getStrategy(), $this->getDefault());
     }
-    public function getSubtractedType() : ?Type
+    public function getSubtractedType(): ?Type
     {
         $bound = $this->getBound();
         if (!$bound instanceof SubtractableType) {
@@ -107,11 +107,11 @@ trait TemplateTypeTrait
         }
         return $bound->getSubtractedType();
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && $type->scope->equals($this->scope) && $type->name === $this->name && $this->bound->equals($type->bound) && ($this->default === null && $type->default === null || $this->default !== null && $type->default !== null && $this->default->equals($type->default));
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         /** @var TBound $bound */
         $bound = $this->getBound();
@@ -126,11 +126,11 @@ trait TemplateTypeTrait
         }
         return $acceptingType->getBound()->accepts($this->getBound(), $strictTypes)->and(new AcceptsResult(TrinaryLogic::createMaybe(), []));
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         return $this->strategy->accepts($this, $type, $strictTypes);
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\Generic\TemplateType || $type instanceof IntersectionType) {
             return $type->isSubTypeOf($this);
@@ -140,7 +140,7 @@ trait TemplateTypeTrait
         }
         return $this->getBound()->isSuperTypeOf($type)->and(IsSuperTypeOfResult::createMaybe());
     }
-    public function isSubTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $type): IsSuperTypeOfResult
     {
         /** @var TBound $bound */
         $bound = $this->getBound();
@@ -155,15 +155,15 @@ trait TemplateTypeTrait
         }
         return $type->getBound()->isSuperTypeOf($this->getBound())->and(IsSuperTypeOfResult::createMaybe());
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return $this;
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         return $this;
     }
-    public function inferTemplateTypes(Type $receivedType) : \PHPStan\Type\Generic\TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): \PHPStan\Type\Generic\TemplateTypeMap
     {
         if ($receivedType instanceof \PHPStan\Type\Generic\TemplateType && $this->getBound()->isSuperTypeOf($receivedType->getBound())->yes()) {
             return new \PHPStan\Type\Generic\TemplateTypeMap([$this->name => $receivedType]);
@@ -175,19 +175,19 @@ trait TemplateTypeTrait
         }
         return $map;
     }
-    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance): array
     {
         return [new \PHPStan\Type\Generic\TemplateTypeReference($this, $positionVariance)];
     }
-    public function getVariance() : \PHPStan\Type\Generic\TemplateTypeVariance
+    public function getVariance(): \PHPStan\Type\Generic\TemplateTypeVariance
     {
         return $this->variance;
     }
-    public function getStrategy() : \PHPStan\Type\Generic\TemplateTypeStrategy
+    public function getStrategy(): \PHPStan\Type\Generic\TemplateTypeStrategy
     {
         return $this->strategy;
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         $bound = $cb($this->getBound());
         $default = $this->getDefault() !== null ? $cb($this->getDefault()) : null;
@@ -196,7 +196,7 @@ trait TemplateTypeTrait
         }
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $bound, $this->getVariance(), $this->getStrategy(), $default);
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         if (!$right instanceof \PHPStan\Type\Generic\TemplateType) {
             return $this;
@@ -208,7 +208,7 @@ trait TemplateTypeTrait
         }
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $bound, $this->getVariance(), $this->getStrategy(), $default);
     }
-    public function tryRemove(Type $typeToRemove) : ?Type
+    public function tryRemove(Type $typeToRemove): ?Type
     {
         $bound = TypeCombinator::remove($this->getBound(), $typeToRemove);
         if ($this->getBound() === $bound) {
@@ -216,7 +216,7 @@ trait TemplateTypeTrait
         }
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $bound, $this->getVariance(), $this->getStrategy(), $this->getDefault());
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode($this->name);
     }

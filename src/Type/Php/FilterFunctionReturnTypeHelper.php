@@ -53,7 +53,7 @@ final class FilterFunctionReturnTypeHelper
         $this->phpVersion = $phpVersion;
         $this->flagsString = new ConstantStringType('flags');
     }
-    public function getOffsetValueType(Type $inputType, Type $offsetType, ?Type $filterType, ?Type $flagsType) : Type
+    public function getOffsetValueType(Type $inputType, Type $offsetType, ?Type $filterType, ?Type $flagsType): Type
     {
         $inexistentOffsetType = $this->hasFlag($this->getConstant('FILTER_NULL_ON_FAILURE'), $flagsType) ? new ConstantBooleanType(\false) : new NullType();
         $hasOffsetValueType = $inputType->hasOffsetValueType($offsetType);
@@ -63,7 +63,7 @@ final class FilterFunctionReturnTypeHelper
         $filteredType = $this->getType($inputType->getOffsetValueType($offsetType), $filterType, $flagsType);
         return $hasOffsetValueType->maybe() ? TypeCombinator::union($filteredType, $inexistentOffsetType) : $filteredType;
     }
-    public function getInputType(Type $typeType, Type $varNameType, ?Type $filterType, ?Type $flagsType) : Type
+    public function getInputType(Type $typeType, Type $varNameType, ?Type $filterType, ?Type $flagsType): Type
     {
         $this->supportedFilterInputTypes ??= TypeCombinator::union($this->reflectionProvider->getConstant(new Node\Name('INPUT_GET'), null)->getValueType(), $this->reflectionProvider->getConstant(new Node\Name('INPUT_POST'), null)->getValueType(), $this->reflectionProvider->getConstant(new Node\Name('INPUT_COOKIE'), null)->getValueType(), $this->reflectionProvider->getConstant(new Node\Name('INPUT_SERVER'), null)->getValueType(), $this->reflectionProvider->getConstant(new Node\Name('INPUT_ENV'), null)->getValueType());
         if (!$typeType->isInteger()->yes() || $this->supportedFilterInputTypes->isSuperTypeOf($typeType)->no()) {
@@ -80,7 +80,7 @@ final class FilterFunctionReturnTypeHelper
         }
         return $this->getOffsetValueType($inputType, $varNameType, $filterType, $flagsType);
     }
-    public function getType(Type $inputType, ?Type $filterType, ?Type $flagsType) : Type
+    public function getType(Type $inputType, ?Type $filterType, ?Type $flagsType): Type
     {
         $mixedType = new MixedType();
         if ($filterType === null) {
@@ -136,7 +136,7 @@ final class FilterFunctionReturnTypeHelper
     /**
      * @return array<int, Type>
      */
-    private function getFilterTypeMap() : array
+    private function getFilterTypeMap(): array
     {
         if ($this->filterTypeMap !== null) {
             return $this->filterTypeMap;
@@ -158,7 +158,7 @@ final class FilterFunctionReturnTypeHelper
     /**
      * @return array<int, list<string>>
      */
-    private function getFilterTypeOptions() : array
+    private function getFilterTypeOptions(): array
     {
         if ($this->filterTypeOptions !== null) {
             return $this->filterTypeOptions;
@@ -169,7 +169,7 @@ final class FilterFunctionReturnTypeHelper
     /**
      * @param non-empty-string $constantName
      */
-    private function getConstant(string $constantName) : int
+    private function getConstant(string $constantName): int
     {
         $constant = $this->reflectionProvider->getConstant(new Node\Name($constantName), null);
         $valueType = $constant->getValueType();
@@ -178,7 +178,7 @@ final class FilterFunctionReturnTypeHelper
         }
         return $valueType->getValue();
     }
-    private function determineExactType(Type $in, int $filterValue, Type $defaultType, ?Type $flagsType) : ?Type
+    private function determineExactType(Type $in, int $filterValue, Type $defaultType, ?Type $flagsType): ?Type
     {
         if ($filterValue === $this->getConstant('FILTER_VALIDATE_BOOLEAN')) {
             if ($in->isBoolean()->yes()) {
@@ -219,15 +219,15 @@ final class FilterFunctionReturnTypeHelper
                 $value = $in->getValue();
                 $allowOctal = $this->hasFlag($this->getConstant('FILTER_FLAG_ALLOW_OCTAL'), $flagsType);
                 $allowHex = $this->hasFlag($this->getConstant('FILTER_FLAG_ALLOW_HEX'), $flagsType);
-                if ($allowOctal && preg_match('/\\A0[oO][0-7]+\\z/', $value) === 1) {
+                if ($allowOctal && preg_match('/\A0[oO][0-7]+\z/', $value) === 1) {
                     $octalValue = octdec($value);
                     return is_int($octalValue) ? new ConstantIntegerType($octalValue) : $defaultType;
                 }
-                if ($allowHex && preg_match('/\\A0[xX][0-9A-Fa-f]+\\z/', $value) === 1) {
+                if ($allowHex && preg_match('/\A0[xX][0-9A-Fa-f]+\z/', $value) === 1) {
                     $hexValue = hexdec($value);
                     return is_int($hexValue) ? new ConstantIntegerType($hexValue) : $defaultType;
                 }
-                return preg_match('/\\A[+-]?(?:0|[1-9][0-9]*)\\z/', $value) === 1 ? $in->toInteger() : $defaultType;
+                return preg_match('/\A[+-]?(?:0|[1-9][0-9]*)\z/', $value) === 1 ? $in->toInteger() : $defaultType;
             }
         }
         if ($filterValue === $this->getConstant('FILTER_DEFAULT')) {
@@ -241,7 +241,7 @@ final class FilterFunctionReturnTypeHelper
         return null;
     }
     /** @param array<string, ?Type> $typeOptions */
-    private function applyRangeOptions(Type $type, array $typeOptions, Type $defaultType) : Type
+    private function applyRangeOptions(Type $type, array $typeOptions, Type $defaultType): Type
     {
         if (!$type->isInteger()->yes()) {
             return $type;
@@ -283,12 +283,12 @@ final class FilterFunctionReturnTypeHelper
         }
         return $type;
     }
-    private function hasOptions(Type $flagsType) : TrinaryLogic
+    private function hasOptions(Type $flagsType): TrinaryLogic
     {
         return $flagsType->isArray()->and($flagsType->hasOffsetValueType(new ConstantStringType('options')));
     }
     /** @return array<string, ?Type> */
-    private function getOptions(Type $flagsType, int $filterValue) : array
+    private function getOptions(Type $flagsType, int $filterValue): array
     {
         $options = [];
         $optionsType = $flagsType->getOffsetValueType(new ConstantStringType('options'));
@@ -306,7 +306,7 @@ final class FilterFunctionReturnTypeHelper
         }
         return $options;
     }
-    private function hasFlag(int $flag, ?Type $flagsType) : bool
+    private function hasFlag(int $flag, ?Type $flagsType): bool
     {
         if ($flagsType === null) {
             return \false;
@@ -314,14 +314,14 @@ final class FilterFunctionReturnTypeHelper
         $type = $this->getFlagsValue($flagsType);
         return $type instanceof ConstantIntegerType && ($type->getValue() & $flag) === $flag;
     }
-    private function getFlagsValue(Type $exprType) : Type
+    private function getFlagsValue(Type $exprType): Type
     {
         if (!$exprType->isConstantArray()->yes()) {
             return $exprType;
         }
         return $exprType->getOffsetValueType($this->flagsString);
     }
-    private function canStringBeSanitized(int $filterValue, ?Type $flagsType) : bool
+    private function canStringBeSanitized(int $filterValue, ?Type $flagsType): bool
     {
         // If it is a validation filter, the string will not be changed
         if (($filterValue & self::VALIDATION_FILTER_BITMASK) !== 0) {

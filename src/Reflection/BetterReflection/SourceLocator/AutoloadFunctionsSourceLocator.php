@@ -21,7 +21,7 @@ final class AutoloadFunctionsSourceLocator implements SourceLocator
         $this->autoloadSourceLocator = $autoloadSourceLocator;
         $this->reflectionClassSourceLocator = $reflectionClassSourceLocator;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if (!$identifier->isClass()) {
             return null;
@@ -44,7 +44,7 @@ final class AutoloadFunctionsSourceLocator implements SourceLocator
         }
         return null;
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return [];
     }

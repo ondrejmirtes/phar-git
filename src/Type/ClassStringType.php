@@ -14,65 +14,65 @@ class ClassStringType extends \PHPStan\Type\StringType
     {
         parent::__construct();
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return 'class-string';
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return new \PHPStan\Type\AcceptsResult($type->isClassString(), []);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isSubTypeOf($this);
         }
         return new \PHPStan\Type\IsSuperTypeOfResult($type->isClassString(), []);
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('class-string');
     }

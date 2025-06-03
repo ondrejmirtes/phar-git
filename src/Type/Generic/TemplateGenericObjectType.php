@@ -24,7 +24,7 @@ final class TemplateGenericObjectType extends \PHPStan\Type\Generic\GenericObjec
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function recreate(string $className, array $types, ?Type $subtractedType, array $variances = []) : \PHPStan\Type\Generic\GenericObjectType
+    protected function recreate(string $className, array $types, ?Type $subtractedType, array $variances = []): \PHPStan\Type\Generic\GenericObjectType
     {
         return new self($this->scope, $this->strategy, $this->variance, $this->name, $this->getBound(), $this->default);
     }

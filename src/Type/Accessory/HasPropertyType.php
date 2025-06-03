@@ -35,38 +35,38 @@ class HasPropertyType implements \PHPStan\Type\Accessory\AccessoryType, Compound
     {
         $this->propertyName = $propertyName;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function getPropertyName() : string
+    public function getPropertyName(): string
     {
         return $this->propertyName;
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return AcceptsResult::createFromBoolean($this->equals($type));
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         return new IsSuperTypeOfResult($type->hasProperty($this->propertyName), []);
     }
-    public function isSubTypeOf(Type $otherType) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $otherType): IsSuperTypeOfResult
     {
         if ($otherType instanceof UnionType || $otherType instanceof IntersectionType) {
             return $otherType->isSuperTypeOf($this);
@@ -78,54 +78,54 @@ class HasPropertyType implements \PHPStan\Type\Accessory\AccessoryType, Compound
         }
         return $limit->and(new IsSuperTypeOfResult($otherType->hasProperty($this->propertyName), []));
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && $this->propertyName === $type->propertyName;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return sprintf('hasProperty(%s)', $this->propertyName);
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         if ($this->propertyName === $propertyName) {
             return TrinaryLogic::createYes();
         }
         return TrinaryLogic::createMaybe();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return [new TrivialParametersAcceptor()];
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         return $this;
     }
-    public function exponentiate(Type $exponent) : Type
+    public function exponentiate(Type $exponent): Type
     {
         return new ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('');
         // no PHPDoc representation

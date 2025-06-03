@@ -51,52 +51,52 @@ final class InceptionResult
      * @throws PathNotFoundException
      * @return array{string[], bool}
      */
-    public function getFiles() : array
+    public function getFiles(): array
     {
         $callback = $this->filesCallback;
         /** @throws InceptionNotSuccessfulException|PathNotFoundException */
         return $callback();
     }
-    public function getStdOutput() : \PHPStan\Command\Output
+    public function getStdOutput(): \PHPStan\Command\Output
     {
         return $this->stdOutput;
     }
-    public function getErrorOutput() : \PHPStan\Command\Output
+    public function getErrorOutput(): \PHPStan\Command\Output
     {
         return $this->errorOutput;
     }
-    public function getContainer() : Container
+    public function getContainer(): Container
     {
         return $this->container;
     }
-    public function isDefaultLevelUsed() : bool
+    public function isDefaultLevelUsed(): bool
     {
         return $this->isDefaultLevelUsed;
     }
-    public function getProjectConfigFile() : ?string
+    public function getProjectConfigFile(): ?string
     {
         return $this->projectConfigFile;
     }
     /**
      * @return mixed[]|null
      */
-    public function getProjectConfigArray() : ?array
+    public function getProjectConfigArray(): ?array
     {
         return $this->projectConfigArray;
     }
-    public function getGenerateBaselineFile() : ?string
+    public function getGenerateBaselineFile(): ?string
     {
         return $this->generateBaselineFile;
     }
-    public function getEditorModeTmpFile() : ?string
+    public function getEditorModeTmpFile(): ?string
     {
         return $this->editorModeTmpFile;
     }
-    public function getEditorModeInsteadOfFile() : ?string
+    public function getEditorModeInsteadOfFile(): ?string
     {
         return $this->editorModeInsteadOfFile;
     }
-    public function handleReturn(int $exitCode, ?int $peakMemoryUsageBytes, float $analysisStartTime) : int
+    public function handleReturn(int $exitCode, ?int $peakMemoryUsageBytes, float $analysisStartTime): int
     {
         if ($this->getErrorOutput()->isVerbose()) {
             $elapsedTime = round(microtime(\true) - $analysisStartTime, 2);
@@ -112,7 +112,7 @@ final class InceptionResult
         }
         return $exitCode;
     }
-    private function formatDuration(int $seconds) : string
+    private function formatDuration(int $seconds): string
     {
         $minutes = (int) floor($seconds / 60);
         $remainingSeconds = $seconds % 60;

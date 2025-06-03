@@ -10,7 +10,7 @@ namespace PHPStan\BetterReflection\SourceLocator\Located;
  */
 class EvaledLocatedSource extends \PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
 {
-    public function isEvaled() : bool
+    public function isEvaled(): bool
     {
         return \true;
     }

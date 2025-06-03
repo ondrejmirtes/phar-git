@@ -25,11 +25,11 @@ final class TooWideMethodReturnTypehintRule implements Rule
     {
         $this->checkProtectedAndPublicMethods = $checkProtectedAndPublicMethods;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MethodReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($scope->isInTrait()) {
             return [];

@@ -18,14 +18,14 @@ final class EnsuredNonNullabilityResult
         $this->scope = $scope;
         $this->specifiedExpressions = $specifiedExpressions;
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }
     /**
      * @return EnsuredNonNullabilityResultExpression[]
      */
-    public function getSpecifiedExpressions() : array
+    public function getSpecifiedExpressions(): array
     {
         return $this->specifiedExpressions;
     }

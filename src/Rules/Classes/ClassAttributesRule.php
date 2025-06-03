@@ -22,11 +22,11 @@ final class ClassAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classLikeNode = $node->getOriginalNode();
         $errors = $this->attributesCheck->check($scope, $classLikeNode->attrGroups, Attribute::TARGET_CLASS, 'class');

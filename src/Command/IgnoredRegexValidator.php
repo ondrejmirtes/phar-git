@@ -24,7 +24,7 @@ final class IgnoredRegexValidator
         $this->parser = $parser;
         $this->typeStringResolver = $typeStringResolver;
     }
-    public function validate(string $regex) : \PHPStan\Command\IgnoredRegexValidatorResult
+    public function validate(string $regex): \PHPStan\Command\IgnoredRegexValidatorResult
     {
         $regex = $this->removeDelimiters($regex);
         try {
@@ -33,18 +33,18 @@ final class IgnoredRegexValidator
         } catch (Exception $e) {
             return new \PHPStan\Command\IgnoredRegexValidatorResult([], \false, \false);
         }
-        if (Strings::match($regex, '~(?<!\\\\)(?:\\\\\\\\)*\\|\\|~')) {
-            return new \PHPStan\Command\IgnoredRegexValidatorResult([], \false, \true, '||', '\\|\\|');
+        if (Strings::match($regex, '~(?<!\\\\)(?:\\\\\\\\)*\|\|~')) {
+            return new \PHPStan\Command\IgnoredRegexValidatorResult([], \false, \true, '||', '\|\|');
         }
-        if (Strings::match($regex, '~(?<!\\\\)(?:\\\\\\\\)*\\(\\)~')) {
-            return new \PHPStan\Command\IgnoredRegexValidatorResult([], \false, \true, '()', '\\(\\)');
+        if (Strings::match($regex, '~(?<!\\\\)(?:\\\\\\\\)*\(\)~')) {
+            return new \PHPStan\Command\IgnoredRegexValidatorResult([], \false, \true, '()', '\(\)');
         }
         return new \PHPStan\Command\IgnoredRegexValidatorResult($this->getIgnoredTypes($ast), $this->hasAnchorsInTheMiddle($ast), \false);
     }
     /**
      * @return array<string, string>
      */
-    private function getIgnoredTypes(TreeNode $ast) : array
+    private function getIgnoredTypes(TreeNode $ast): array
     {
         /** @var TreeNode|null $alternation */
         $alternation = $ast->getChild(0);
@@ -60,7 +60,7 @@ final class IgnoredRegexValidator
             if ($text === null) {
                 continue;
             }
-            $matches = Strings::match($text, '#^([a-zA-Z0-9]+)[,]?\\s*#');
+            $matches = Strings::match($text, '#^([a-zA-Z0-9]+)[,]?\s*#');
             if ($matches === null) {
                 continue;
             }
@@ -80,7 +80,7 @@ final class IgnoredRegexValidator
         }
         return $types;
     }
-    private function removeDelimiters(string $regex) : string
+    private function removeDelimiters(string $regex): string
     {
         $delimiter = substr($regex, 0, 1);
         $endDelimiterPosition = strrpos($regex, $delimiter);
@@ -89,7 +89,7 @@ final class IgnoredRegexValidator
         }
         return substr($regex, 1, $endDelimiterPosition - 1);
     }
-    private function getText(TreeNode $treeNode) : ?string
+    private function getText(TreeNode $treeNode): ?string
     {
         if ($treeNode->getId() === 'token') {
             return $treeNode->getValueValue();
@@ -110,7 +110,7 @@ final class IgnoredRegexValidator
         }
         return null;
     }
-    private function hasAnchorsInTheMiddle(TreeNode $ast) : bool
+    private function hasAnchorsInTheMiddle(TreeNode $ast): bool
     {
         if ($ast->getId() === 'token') {
             $valueArray = $ast->getValue();

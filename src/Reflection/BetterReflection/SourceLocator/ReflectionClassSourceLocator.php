@@ -21,7 +21,7 @@ final class ReflectionClassSourceLocator implements SourceLocator
         $this->astLocator = $astLocator;
         $this->reflectionSourceStubber = $reflectionSourceStubber;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if (!$identifier->isClass()) {
             return null;
@@ -35,7 +35,7 @@ final class ReflectionClassSourceLocator implements SourceLocator
         $reflection = new ReflectionClass($className);
         return $this->astLocator->findReflection($reflector, new LocatedSource($stub->getStub(), $reflection->getName(), null), new Identifier($reflection->getName(), new IdentifierType(IdentifierType::IDENTIFIER_CLASS)));
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return [];
     }

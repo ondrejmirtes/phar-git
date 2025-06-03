@@ -43,7 +43,7 @@ final class OptimizedDirectorySourceLocator implements SourceLocator
         $this->functionToFiles = $functionToFiles;
         $this->constantToFile = $constantToFile;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if ($identifier->isClass()) {
             $className = strtolower($identifier->getName());
@@ -95,19 +95,19 @@ final class OptimizedDirectorySourceLocator implements SourceLocator
     /**
      * @param FetchedNode<Node\Stmt\ClassLike>|FetchedNode<Node\Stmt\Function_>|FetchedNode<Node\Stmt\Const_|Node\Expr\FuncCall> $fetchedNode
      */
-    private function nodeToReflection(Reflector $reflector, \PHPStan\Reflection\BetterReflection\SourceLocator\FetchedNode $fetchedNode, ?int $positionInNode = null) : Reflection
+    private function nodeToReflection(Reflector $reflector, \PHPStan\Reflection\BetterReflection\SourceLocator\FetchedNode $fetchedNode, ?int $positionInNode = null): Reflection
     {
         $nodeToReflection = new NodeToReflection();
         return $nodeToReflection->__invoke($reflector, $fetchedNode->getNode(), $fetchedNode->getLocatedSource(), $fetchedNode->getNamespace(), $positionInNode);
     }
-    private function findFileByClass(string $className) : ?string
+    private function findFileByClass(string $className): ?string
     {
         if (!array_key_exists($className, $this->classToFile)) {
             return null;
         }
         return $this->classToFile[$className];
     }
-    private function findFileByConstant(string $constantName) : ?string
+    private function findFileByConstant(string $constantName): ?string
     {
         if (!array_key_exists($constantName, $this->constantToFile)) {
             return null;
@@ -117,7 +117,7 @@ final class OptimizedDirectorySourceLocator implements SourceLocator
     /**
      * @return string[]
      */
-    private function findFilesByFunction(string $functionName) : array
+    private function findFilesByFunction(string $functionName): array
     {
         if (!array_key_exists($functionName, $this->functionToFiles)) {
             return [];
@@ -127,7 +127,7 @@ final class OptimizedDirectorySourceLocator implements SourceLocator
     /**
      * @return list<Reflection>
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         $reflections = [];
         if ($identifierType->isClass()) {
@@ -166,7 +166,7 @@ final class OptimizedDirectorySourceLocator implements SourceLocator
     /**
      * @param \PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall $constantNode
      */
-    private function findConstantPositionInConstNode($constantNode, string $constantName) : ?int
+    private function findConstantPositionInConstNode($constantNode, string $constantName): ?int
     {
         if ($constantNode instanceof Node\Expr\FuncCall) {
             return null;

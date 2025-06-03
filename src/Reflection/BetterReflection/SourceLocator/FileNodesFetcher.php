@@ -16,7 +16,7 @@ final class FileNodesFetcher
         $this->cachingVisitor = $cachingVisitor;
         $this->parser = $parser;
     }
-    public function fetchNodes(string $fileName) : \PHPStan\Reflection\BetterReflection\SourceLocator\FetchedNodesResult
+    public function fetchNodes(string $fileName): \PHPStan\Reflection\BetterReflection\SourceLocator\FetchedNodesResult
     {
         $nodeTraverser = new NodeTraverser();
         $nodeTraverser->addVisitor($this->cachingVisitor);

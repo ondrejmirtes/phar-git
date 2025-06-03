@@ -32,7 +32,7 @@ final class MethodCall
     {
         return $this->node;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }

@@ -37,34 +37,34 @@ final class GetTemplateTypeType implements CompoundType, LateResolvableType
         $this->ancestorClassName = $ancestorClassName;
         $this->templateTypeName = $templateTypeName;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return $this->type->getReferencedClasses();
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         return $this->type->getReferencedTemplateTypes($positionVariance);
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && $this->type->equals($type->type);
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return sprintf('template-type<%s, %s, %s>', $this->type->describe($level), $this->ancestorClassName, $this->templateTypeName);
     }
-    public function isResolvable() : bool
+    public function isResolvable(): bool
     {
         return !TypeUtils::containsTemplateType($this->type);
     }
-    protected function getResult() : Type
+    protected function getResult(): Type
     {
         return $this->type->getTemplateType($this->ancestorClassName, $this->templateTypeName);
     }
     /**
      * @param callable(Type): Type $cb
      */
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         $type = $cb($this->type);
         if ($this->type === $type) {
@@ -72,7 +72,7 @@ final class GetTemplateTypeType implements CompoundType, LateResolvableType
         }
         return new self($type, $this->ancestorClassName, $this->templateTypeName);
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         if (!$right instanceof self) {
             return $this;
@@ -83,7 +83,7 @@ final class GetTemplateTypeType implements CompoundType, LateResolvableType
         }
         return new self($type, $this->ancestorClassName, $this->templateTypeName);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new GenericTypeNode(new IdentifierTypeNode('template-type'), [$this->type->toPhpDocNode(), new IdentifierTypeNode($this->ancestorClassName), new ConstTypeNode(new ConstExprStringNode($this->templateTypeName, ConstExprStringNode::SINGLE_QUOTED))]);
     }

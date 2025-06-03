@@ -46,7 +46,7 @@ final class Collection
      *
      * @return array<TargetClass<T>>
      */
-    public function findTargetClasses(string $attribute) : array
+    public function findTargetClasses(string $attribute): array
     {
         return array_map(fn(array $t) => self::createClassAttribute($attribute, ...$t), $this->targetClasses[$attribute] ?? []);
     }
@@ -59,7 +59,7 @@ final class Collection
      *
      * @return TargetClass<T>
      */
-    private static function createClassAttribute(string $attribute, array $arguments, string $class) : object
+    private static function createClassAttribute(string $attribute, array $arguments, string $class): object
     {
         try {
             $a = new $attribute(...$arguments);
@@ -75,7 +75,7 @@ final class Collection
      *
      * @return array<TargetMethod<T>>
      */
-    public function findTargetMethods(string $attribute) : array
+    public function findTargetMethods(string $attribute): array
     {
         return array_map(fn(array $t) => self::createMethodAttribute($attribute, ...$t), $this->targetMethods[$attribute] ?? []);
     }
@@ -89,7 +89,7 @@ final class Collection
      *
      * @return TargetMethod<T>
      */
-    private static function createMethodAttribute(string $attribute, array $arguments, string $class, string $method) : object
+    private static function createMethodAttribute(string $attribute, array $arguments, string $class, string $method): object
     {
         try {
             $a = new $attribute(...$arguments);
@@ -105,7 +105,7 @@ final class Collection
      *
      * @return array<TargetProperty<T>>
      */
-    public function findTargetProperties(string $attribute) : array
+    public function findTargetProperties(string $attribute): array
     {
         return array_map(fn(array $t) => self::createPropertyAttribute($attribute, ...$t), $this->targetProperties[$attribute] ?? []);
     }
@@ -119,7 +119,7 @@ final class Collection
      *
      * @return TargetProperty<T>
      */
-    private static function createPropertyAttribute(string $attribute, array $arguments, string $class, string $property) : object
+    private static function createPropertyAttribute(string $attribute, array $arguments, string $class, string $property): object
     {
         try {
             $a = new $attribute(...$arguments);
@@ -133,7 +133,7 @@ final class Collection
      *
      * @return array<TargetClass<object>>
      */
-    public function filterTargetClasses(callable $predicate) : array
+    public function filterTargetClasses(callable $predicate): array
     {
         $ar = [];
         foreach ($this->targetClasses as $attribute => $references) {
@@ -150,7 +150,7 @@ final class Collection
      *
      * @return array<TargetMethod<object>>
      */
-    public function filterTargetMethods(callable $predicate) : array
+    public function filterTargetMethods(callable $predicate): array
     {
         $ar = [];
         foreach ($this->targetMethods as $attribute => $references) {
@@ -167,7 +167,7 @@ final class Collection
      *
      * @return array<TargetProperty<object>>
      */
-    public function filterTargetProperties(callable $predicate) : array
+    public function filterTargetProperties(callable $predicate): array
     {
         $ar = [];
         foreach ($this->targetProperties as $attribute => $references) {
@@ -182,7 +182,7 @@ final class Collection
     /**
      * @param class-string $class
      */
-    public function forClass(string $class) : ForClass
+    public function forClass(string $class): ForClass
     {
         $classAttributes = [];
         foreach ($this->filterTargetClasses(fn($a, $c): bool => $c === $class) as $targetClass) {

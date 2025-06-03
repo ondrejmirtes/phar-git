@@ -30,44 +30,44 @@ final class Assertions
     /**
      * @return AssertTag[]
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         return $this->asserts;
     }
     /**
      * @return AssertTag[]
      */
-    public function getAsserts() : array
+    public function getAsserts(): array
     {
         return array_filter($this->asserts, static fn(AssertTag $assert) => $assert->getIf() === AssertTag::NULL);
     }
     /**
      * @return AssertTag[]
      */
-    public function getAssertsIfTrue() : array
+    public function getAssertsIfTrue(): array
     {
         return array_merge(array_filter($this->asserts, static fn(AssertTag $assert) => $assert->getIf() === AssertTag::IF_TRUE), array_map(static fn(AssertTag $assert) => $assert->negate(), array_filter($this->asserts, static fn(AssertTag $assert) => $assert->getIf() === AssertTag::IF_FALSE && !$assert->isEquality())));
     }
     /**
      * @return AssertTag[]
      */
-    public function getAssertsIfFalse() : array
+    public function getAssertsIfFalse(): array
     {
         return array_merge(array_filter($this->asserts, static fn(AssertTag $assert) => $assert->getIf() === AssertTag::IF_FALSE), array_map(static fn(AssertTag $assert) => $assert->negate(), array_filter($this->asserts, static fn(AssertTag $assert) => $assert->getIf() === AssertTag::IF_TRUE && !$assert->isEquality())));
     }
     /**
      * @param callable(Type): Type $callable
      */
-    public function mapTypes(callable $callable) : self
+    public function mapTypes(callable $callable): self
     {
         $assertTagsCallback = static fn(AssertTag $tag): AssertTag => $tag->withType($callable($tag->getType()));
         return new self(array_map($assertTagsCallback, $this->asserts));
     }
-    public function intersectWith(\PHPStan\Reflection\Assertions $other) : self
+    public function intersectWith(\PHPStan\Reflection\Assertions $other): self
     {
         return new self(array_merge($this->getAll(), $other->getAll()));
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         $empty = self::$empty;
         if ($empty !== null) {
@@ -77,7 +77,7 @@ final class Assertions
         self::$empty = $empty;
         return $empty;
     }
-    public static function createFromResolvedPhpDocBlock(ResolvedPhpDocBlock $phpDocBlock) : self
+    public static function createFromResolvedPhpDocBlock(ResolvedPhpDocBlock $phpDocBlock): self
     {
         $tags = $phpDocBlock->getAssertTags();
         if (count($tags) === 0) {

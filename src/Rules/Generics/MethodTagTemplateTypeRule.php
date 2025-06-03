@@ -17,11 +17,11 @@ final class MethodTagTemplateTypeRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {

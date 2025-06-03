@@ -15,10 +15,10 @@ final class TemplateTypeHelper
     /**
      * Replaces template types with standin types
      */
-    public static function resolveTemplateTypes(Type $type, \PHPStan\Type\Generic\TemplateTypeMap $standins, \PHPStan\Type\Generic\TemplateTypeVarianceMap $callSiteVariances, \PHPStan\Type\Generic\TemplateTypeVariance $positionVariance, bool $keepErrorTypes = \false) : Type
+    public static function resolveTemplateTypes(Type $type, \PHPStan\Type\Generic\TemplateTypeMap $standins, \PHPStan\Type\Generic\TemplateTypeVarianceMap $callSiteVariances, \PHPStan\Type\Generic\TemplateTypeVariance $positionVariance, bool $keepErrorTypes = \false): Type
     {
         $references = $type->getReferencedTemplateTypes($positionVariance);
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use($standins, $references, $callSiteVariances, $keepErrorTypes) : Type {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use ($standins, $references, $callSiteVariances, $keepErrorTypes): Type {
             if ($type instanceof \PHPStan\Type\Generic\TemplateType && !$type->isArgument()) {
                 $newType = $standins->getType($type->getName());
                 $variance = \PHPStan\Type\Generic\TemplateTypeVariance::createInvariant();
@@ -51,18 +51,18 @@ final class TemplateTypeHelper
             return $traverse($type);
         });
     }
-    public static function resolveToDefaults(Type $type) : Type
+    public static function resolveToDefaults(Type $type): Type
     {
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse): Type {
             if ($type instanceof \PHPStan\Type\Generic\TemplateType) {
                 return $traverse($type->getDefault() ?? $type->getBound());
             }
             return $traverse($type);
         });
     }
-    public static function resolveToBounds(Type $type) : Type
+    public static function resolveToBounds(Type $type): Type
     {
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse): Type {
             if ($type instanceof \PHPStan\Type\Generic\TemplateType) {
                 return $traverse($type->getBound());
             }
@@ -74,11 +74,11 @@ final class TemplateTypeHelper
      * @param T $type
      * @return T
      */
-    public static function toArgument(Type $type) : Type
+    public static function toArgument(Type $type): Type
     {
         $ownedTemplates = [];
         /** @var T */
-        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use(&$ownedTemplates) : Type {
+        return TypeTraverser::map($type, static function (Type $type, callable $traverse) use (&$ownedTemplates): Type {
             if ($type instanceof ParametersAcceptor) {
                 $templateTypeMap = $type->getTemplateTypeMap();
                 foreach ($type->getParameters() as $parameter) {
@@ -104,7 +104,7 @@ final class TemplateTypeHelper
             return $traverse($type);
         });
     }
-    public static function generalizeInferredTemplateType(\PHPStan\Type\Generic\TemplateType $templateType, Type $type) : Type
+    public static function generalizeInferredTemplateType(\PHPStan\Type\Generic\TemplateType $templateType, Type $type): Type
     {
         if (!$templateType->getVariance()->covariant()) {
             $isArrayKey = $templateType->getBound()->describe(VerbosityLevel::precise()) === '(int|string)';

@@ -19,7 +19,7 @@ final class RewriteClassAliasSourceLocator implements SourceLocator
     {
         $this->originalSourceLocator = $originalSourceLocator;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if (!$identifier->isClass()) {
             return $this->originalSourceLocator->locateIdentifier($reflector, $identifier);
@@ -30,7 +30,7 @@ final class RewriteClassAliasSourceLocator implements SourceLocator
         }
         return $this->originalSourceLocator->locateIdentifier($reflector, $identifier);
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return $this->originalSourceLocator->locateIdentifiersByType($reflector, $identifierType);
     }

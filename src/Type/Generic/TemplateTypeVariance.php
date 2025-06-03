@@ -29,52 +29,52 @@ final class TemplateTypeVariance
     {
         $this->value = $value;
     }
-    private static function create(int $value) : self
+    private static function create(int $value): self
     {
         self::$registry[$value] ??= new self($value);
         return self::$registry[$value];
     }
-    public static function createInvariant() : self
+    public static function createInvariant(): self
     {
         return self::create(self::INVARIANT);
     }
-    public static function createCovariant() : self
+    public static function createCovariant(): self
     {
         return self::create(self::COVARIANT);
     }
-    public static function createContravariant() : self
+    public static function createContravariant(): self
     {
         return self::create(self::CONTRAVARIANT);
     }
-    public static function createStatic() : self
+    public static function createStatic(): self
     {
         return self::create(self::STATIC);
     }
-    public static function createBivariant() : self
+    public static function createBivariant(): self
     {
         return self::create(self::BIVARIANT);
     }
-    public function invariant() : bool
+    public function invariant(): bool
     {
         return $this->value === self::INVARIANT;
     }
-    public function covariant() : bool
+    public function covariant(): bool
     {
         return $this->value === self::COVARIANT;
     }
-    public function contravariant() : bool
+    public function contravariant(): bool
     {
         return $this->value === self::CONTRAVARIANT;
     }
-    public function static() : bool
+    public function static(): bool
     {
         return $this->value === self::STATIC;
     }
-    public function bivariant() : bool
+    public function bivariant(): bool
     {
         return $this->value === self::BIVARIANT;
     }
-    public function compose(self $other) : self
+    public function compose(self $other): self
     {
         if ($this->contravariant()) {
             if ($other->contravariant()) {
@@ -108,7 +108,7 @@ final class TemplateTypeVariance
         }
         return $other;
     }
-    public function isValidVariance(\PHPStan\Type\Generic\TemplateType $templateType, Type $a, Type $b) : IsSuperTypeOfResult
+    public function isValidVariance(\PHPStan\Type\Generic\TemplateType $templateType, Type $a, Type $b): IsSuperTypeOfResult
     {
         if ($b instanceof NeverType) {
             return IsSuperTypeOfResult::createYes();
@@ -150,15 +150,15 @@ final class TemplateTypeVariance
         }
         throw new ShouldNotHappenException();
     }
-    public function equals(self $other) : bool
+    public function equals(self $other): bool
     {
         return $other->value === $this->value;
     }
-    public function validPosition(self $other) : bool
+    public function validPosition(self $other): bool
     {
         return $other->value === $this->value || $other->invariant() || $this->bivariant() || $this->static();
     }
-    public function describe() : string
+    public function describe(): string
     {
         switch ($this->value) {
             case self::INVARIANT:
@@ -177,7 +177,7 @@ final class TemplateTypeVariance
     /**
      * @return GenericTypeNode::VARIANCE_*
      */
-    public function toPhpDocNodeVariance() : string
+    public function toPhpDocNodeVariance(): string
     {
         switch ($this->value) {
             case self::INVARIANT:

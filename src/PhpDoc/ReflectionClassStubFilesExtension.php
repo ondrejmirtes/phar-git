@@ -13,7 +13,7 @@ final class ReflectionClassStubFilesExtension implements \PHPStan\PhpDoc\StubFil
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getFiles() : array
+    public function getFiles(): array
     {
         if (!$this->phpVersion->supportsLazyObjects()) {
             return [__DIR__ . '/../../stubs/ReflectionClass.stub'];

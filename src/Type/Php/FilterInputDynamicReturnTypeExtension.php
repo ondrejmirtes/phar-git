@@ -18,11 +18,11 @@ final class FilterInputDynamicReturnTypeExtension implements DynamicFunctionRetu
     {
         $this->filterFunctionReturnTypeHelper = $filterFunctionReturnTypeHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'filter_input';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 2) {
             return null;

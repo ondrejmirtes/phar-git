@@ -16,11 +16,11 @@ use function strtolower;
  */
 final class CallToFunctionStatementWithoutImpurePointsRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return CollectedDataNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $functions = [];
         foreach ($node->get(\PHPStan\Rules\DeadCode\FunctionWithoutImpurePointsCollector::class) as [$functionName]) {

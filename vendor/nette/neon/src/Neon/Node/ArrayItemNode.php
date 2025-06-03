@@ -19,7 +19,7 @@ final class ArrayItemNode extends Node
      * @param  self[]  $items
      * @return mixed[]
      */
-    public static function itemsToArray(array $items) : array
+    public static function itemsToArray(array $items): array
     {
         $res = [];
         foreach ($items as $item) {
@@ -32,7 +32,7 @@ final class ArrayItemNode extends Node
         return $res;
     }
     /** @param  self[]  $items */
-    public static function itemsToInlineString(array $items) : string
+    public static function itemsToInlineString(array $items): string
     {
         $res = '';
         foreach ($items as $item) {
@@ -41,7 +41,7 @@ final class ArrayItemNode extends Node
         return $res;
     }
     /** @param  self[]  $items */
-    public static function itemsToBlockString(array $items) : string
+    public static function itemsToBlockString(array $items): string
     {
         $res = '';
         foreach ($items as $item) {
@@ -54,15 +54,15 @@ final class ArrayItemNode extends Node
     {
         throw new \LogicException();
     }
-    public function toString() : string
+    public function toString(): string
     {
         throw new \LogicException();
     }
-    public function &getIterator() : \Generator
+    public function &getIterator(): \Generator
     {
         if ($this->key) {
-            (yield $this->key);
+            yield $this->key;
         }
-        (yield $this->value);
+        yield $this->value;
     }
 }

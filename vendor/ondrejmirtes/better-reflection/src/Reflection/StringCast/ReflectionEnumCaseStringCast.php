@@ -14,7 +14,7 @@ final class ReflectionEnumCaseStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionEnumCase $enumCaseReflection, bool $indentDocComment = \true) : string
+    public static function toString(ReflectionEnumCase $enumCaseReflection, bool $indentDocComment = \true): string
     {
         $enumReflection = $enumCaseReflection->getDeclaringEnum();
         $value = $enumReflection->isBacked() ? $enumCaseReflection->getValue() : 'Object';

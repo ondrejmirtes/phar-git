@@ -75,7 +75,7 @@ class SymfonyQuestionHelper extends QuestionHelper
         }
         parent::writeError($output, $error);
     }
-    private function getEofShortcut() : string
+    private function getEofShortcut(): string
     {
         if ('Windows' === \PHP_OS_FAMILY) {
             return '<comment>Ctrl+Z</comment> then <comment>Enter</comment>';

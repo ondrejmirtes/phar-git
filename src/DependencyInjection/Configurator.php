@@ -43,29 +43,29 @@ final class Configurator extends \_PHPStan_checksum\Nette\Bootstrap\Configurator
         $this->journalContainer = $journalContainer;
         parent::__construct();
     }
-    protected function createLoader() : Loader
+    protected function createLoader(): Loader
     {
         return $this->loaderFactory->createLoader();
     }
     /**
      * @param string[] $allConfigFiles
      */
-    public function setAllConfigFiles(array $allConfigFiles) : void
+    public function setAllConfigFiles(array $allConfigFiles): void
     {
         $this->allConfigFiles = $allConfigFiles;
     }
     /**
      * @return mixed[]
      */
-    protected function getDefaultParameters() : array
+    protected function getDefaultParameters(): array
     {
         return [];
     }
-    public function getContainerCacheDirectory() : string
+    public function getContainerCacheDirectory(): string
     {
         return $this->getCacheDirectory() . '/nette.configurator';
     }
-    public function loadContainer() : string
+    public function loadContainer(): string
     {
         $loader = new ContainerLoader($this->getContainerCacheDirectory(), $this->staticParameters['debugMode']);
         $attributesPhp = __DIR__ . '/../../vendor/attributes.php';
@@ -75,7 +75,7 @@ final class Configurator extends \_PHPStan_checksum\Nette\Bootstrap\Configurator
         }
         return $className;
     }
-    private function journal(string $currentContainerClassName) : void
+    private function journal(string $currentContainerClassName): void
     {
         $directory = $this->getContainerCacheDirectory();
         if (!is_dir($directory)) {
@@ -152,9 +152,9 @@ final class Configurator extends \_PHPStan_checksum\Nette\Bootstrap\Configurator
             @unlink($basePathname . '.meta');
         }
     }
-    public function createContainer(bool $initialize = \true) : OriginalNetteContainer
+    public function createContainer(bool $initialize = \true): OriginalNetteContainer
     {
-        set_error_handler(static function (int $errno) : bool {
+        set_error_handler(static function (int $errno): bool {
             if ((error_reporting() & $errno) === 0) {
                 // silence @ operator
                 return \true;
@@ -171,7 +171,7 @@ final class Configurator extends \_PHPStan_checksum\Nette\Bootstrap\Configurator
     /**
      * @return string[]
      */
-    private function getAllConfigFilesHashes() : array
+    private function getAllConfigFilesHashes(): array
     {
         $hashes = [];
         foreach ($this->allConfigFiles as $file) {

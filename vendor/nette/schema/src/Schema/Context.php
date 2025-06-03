@@ -23,20 +23,20 @@ final class Context
     public $warnings = [];
     /** @var array[] */
     public $dynamics = [];
-    public function addError(string $message, string $code, array $variables = []) : Message
+    public function addError(string $message, string $code, array $variables = []): Message
     {
         $variables['isKey'] = $this->isKey;
         return $this->errors[] = new Message($message, $code, $this->path, $variables);
     }
-    public function addWarning(string $message, string $code, array $variables = []) : Message
+    public function addWarning(string $message, string $code, array $variables = []): Message
     {
         return $this->warnings[] = new Message($message, $code, $this->path, $variables);
     }
     /** @return \Closure(): bool */
-    public function createChecker() : \Closure
+    public function createChecker(): \Closure
     {
         $count = \count($this->errors);
-        return function () use($count) : bool {
+        return function () use ($count): bool {
             return $count === \count($this->errors);
         };
     }

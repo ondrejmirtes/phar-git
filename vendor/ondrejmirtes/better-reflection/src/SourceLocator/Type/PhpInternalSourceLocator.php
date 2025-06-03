@@ -28,11 +28,11 @@ final class PhpInternalSourceLocator extends \PHPStan\BetterReflection\SourceLoc
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         return $this->getClassSource($identifier) ?? $this->getFunctionSource($identifier) ?? $this->getConstantSource($identifier);
     }
-    private function getClassSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
+    private function getClassSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
     {
         if (!$identifier->isClass()) {
             return null;
@@ -50,21 +50,21 @@ final class PhpInternalSourceLocator extends \PHPStan\BetterReflection\SourceLoc
         }
         return $this->createLocatedSourceFromStubData($identifier, $this->stubber->generateClassStub($className), $aliasName);
     }
-    private function getFunctionSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
+    private function getFunctionSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
     {
         if (!$identifier->isFunction()) {
             return null;
         }
         return $this->createLocatedSourceFromStubData($identifier, $this->stubber->generateFunctionStub($identifier->getName()));
     }
-    private function getConstantSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
+    private function getConstantSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
     {
         if (!$identifier->isConstant()) {
             return null;
         }
         return $this->createLocatedSourceFromStubData($identifier, $this->stubber->generateConstantStub($identifier->getName()));
     }
-    private function createLocatedSourceFromStubData(Identifier $identifier, ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData $stubData, ?string $aliasName = null) : ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
+    private function createLocatedSourceFromStubData(Identifier $identifier, ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData $stubData, ?string $aliasName = null): ?\PHPStan\BetterReflection\SourceLocator\Located\InternalLocatedSource
     {
         if ($stubData === null) {
             return null;

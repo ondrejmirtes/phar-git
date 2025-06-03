@@ -6,9 +6,9 @@ namespace PHPStan\Reflection;
 /** @api */
 interface ClassMemberReflection
 {
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection;
-    public function isStatic() : bool;
-    public function isPrivate() : bool;
-    public function isPublic() : bool;
-    public function getDocComment() : ?string;
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection;
+    public function isStatic(): bool;
+    public function isPrivate(): bool;
+    public function isPublic(): bool;
+    public function getDocComment(): ?string;
 }

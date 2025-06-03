@@ -25,7 +25,7 @@ final class TemplateArrayType extends ArrayType implements \PHPStan\Type\Generic
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

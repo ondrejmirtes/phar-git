@@ -39,82 +39,82 @@ class IntegerType implements \PHPStan\Type\Type
     public function __construct()
     {
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return 'int';
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\IntegerRangeType::createAllGreaterThanOrEqualTo(0);
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\FloatType();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\IntersectionType([new \PHPStan\Type\StringType(), new AccessoryLowercaseStringType(), new AccessoryUppercaseStringType(), new AccessoryNumericStringType()]);
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return new ConstantArrayType([new ConstantIntegerType(0)], [$this], [1], [], TrinaryLogic::createYes());
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         if (!$strictTypes) {
             return \PHPStan\Type\TypeCombinator::union($this, $this->toFloat(), $this->toString(), $this->toBoolean());
         }
         return \PHPStan\Type\TypeCombinator::union($this, $this->toFloat());
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         if ($type->isArray()->yes()) {
             return new ConstantBooleanType(\false);
@@ -124,7 +124,7 @@ class IntegerType implements \PHPStan\Type\Type
         }
         return new \PHPStan\Type\BooleanType();
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($typeToRemove instanceof \PHPStan\Type\IntegerRangeType || $typeToRemove instanceof ConstantIntegerType) {
             if ($typeToRemove instanceof \PHPStan\Type\IntegerRangeType) {
@@ -143,15 +143,15 @@ class IntegerType implements \PHPStan\Type\Type
         }
         return null;
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return \PHPStan\Type\ExponentiateHelper::exponentiate($this, $exponent);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('int');
     }

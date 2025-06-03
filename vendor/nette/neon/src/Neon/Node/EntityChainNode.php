@@ -18,7 +18,7 @@ final class EntityChainNode extends Node
     {
         $this->chain = $chain;
     }
-    public function toValue() : Neon\Entity
+    public function toValue(): Neon\Entity
     {
         $entities = [];
         foreach ($this->chain as $item) {
@@ -26,16 +26,16 @@ final class EntityChainNode extends Node
         }
         return new Neon\Entity(Neon\Neon::Chain, $entities);
     }
-    public function toString() : string
+    public function toString(): string
     {
         return \implode('', \array_map(function ($entity) {
             return $entity->toString();
         }, $this->chain));
     }
-    public function &getIterator() : \Generator
+    public function &getIterator(): \Generator
     {
         foreach ($this->chain as &$item) {
-            (yield $item);
+            yield $item;
         }
     }
 }

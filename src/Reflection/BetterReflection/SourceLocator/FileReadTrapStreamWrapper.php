@@ -78,7 +78,7 @@ final class FileReadTrapStreamWrapper
      * @param int    $options
      * @param string $openedPath
      */
-    public function stream_open($path, $mode, $options, &$openedPath) : bool
+    public function stream_open($path, $mode, $options, &$openedPath): bool
     {
         $exists = is_file($path) || stream_resolve_include_path($path) !== \false;
         if ($exists) {
@@ -95,7 +95,7 @@ final class FileReadTrapStreamWrapper
      * @param int $count
      *
      */
-    public function stream_read($count) : string
+    public function stream_read($count): string
     {
         $this->readFromFile = \true;
         // Dummy return value that is also valid PHP for require(). We'll read
@@ -108,7 +108,7 @@ final class FileReadTrapStreamWrapper
      * as well.
      *
      */
-    public function stream_close() : void
+    public function stream_close(): void
     {
         // no op
     }
@@ -175,15 +175,15 @@ final class FileReadTrapStreamWrapper
      * Simulates behavior of reading from an empty file.
      *
      */
-    public function stream_eof() : bool
+    public function stream_eof(): bool
     {
         return $this->readFromFile;
     }
-    public function stream_flush() : bool
+    public function stream_flush(): bool
     {
         return \true;
     }
-    public function stream_tell() : int
+    public function stream_tell(): int
     {
         return $this->seekPosition;
     }
@@ -191,7 +191,7 @@ final class FileReadTrapStreamWrapper
      * @param   int  $offset
      * @param   int  $whence
      */
-    public function stream_seek($offset, $whence) : bool
+    public function stream_seek($offset, $whence): bool
     {
         switch ($whence) {
             // Behavior is the same for a zero-length file
@@ -217,15 +217,15 @@ final class FileReadTrapStreamWrapper
      * @param int  $arg1
      * @param int  $arg2
      */
-    public function stream_set_option($option, $arg1, $arg2) : bool
+    public function stream_set_option($option, $arg1, $arg2): bool
     {
         return \false;
     }
-    public function dir_opendir(string $path, int $options) : bool
+    public function dir_opendir(string $path, int $options): bool
     {
         return is_dir($path);
     }
-    public function dir_readdir() : string
+    public function dir_readdir(): string
     {
         return '';
     }

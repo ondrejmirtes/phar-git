@@ -22,7 +22,7 @@ final class TemplateTypeVarianceMap
     {
         $this->variances = $variances;
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         $empty = self::$empty;
         if ($empty !== null) {
@@ -33,15 +33,15 @@ final class TemplateTypeVarianceMap
         return $empty;
     }
     /** @return array<string, TemplateTypeVariance> */
-    public function getVariances() : array
+    public function getVariances(): array
     {
         return $this->variances;
     }
-    public function hasVariance(string $name) : bool
+    public function hasVariance(string $name): bool
     {
         return array_key_exists($name, $this->getVariances());
     }
-    public function getVariance(string $name) : ?\PHPStan\Type\Generic\TemplateTypeVariance
+    public function getVariance(string $name): ?\PHPStan\Type\Generic\TemplateTypeVariance
     {
         return $this->getVariances()[$name] ?? null;
     }

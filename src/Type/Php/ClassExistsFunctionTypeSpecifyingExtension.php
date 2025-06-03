@@ -26,11 +26,11 @@ use function ltrim;
 final class ClassExistsFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return in_array($functionReflection->getName(), ['class_exists', 'interface_exists', 'trait_exists', 'enum_exists'], \true) && isset($node->getArgs()[0]) && $context->true();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $argType = $scope->getType($node->getArgs()[0]->value);
         if ($argType instanceof ConstantStringType) {
@@ -42,7 +42,7 @@ final class ClassExistsFunctionTypeSpecifyingExtension implements FunctionTypeSp
         }
         return $this->typeSpecifier->create($node->getArgs()[0]->value, $narrowedType, $context, $scope);
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

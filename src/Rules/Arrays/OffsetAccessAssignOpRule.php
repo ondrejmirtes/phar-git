@@ -24,11 +24,11 @@ final class OffsetAccessAssignOpRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\AssignOp::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->var instanceof ArrayDimFetch) {
             return [];
@@ -38,13 +38,13 @@ final class OffsetAccessAssignOpRule implements Rule
         if ($arrayDimFetch->dim !== null) {
             $potentialDimType = $scope->getType($arrayDimFetch->dim);
         }
-        $varTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->var, '', static function (Type $varType) use($potentialDimType) : bool {
+        $varTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->var, '', static function (Type $varType) use ($potentialDimType): bool {
             $arrayDimType = $varType->setOffsetValueType($potentialDimType, new MixedType());
             return !$arrayDimType instanceof ErrorType;
         });
         $varType = $varTypeResult->getType();
         if ($arrayDimFetch->dim !== null) {
-            $dimTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->dim, '', static function (Type $dimType) use($varType) : bool {
+            $dimTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->dim, '', static function (Type $dimType) use ($varType): bool {
                 $arrayDimType = $varType->setOffsetValueType($dimType, new MixedType());
                 return !$arrayDimType instanceof ErrorType;
             });

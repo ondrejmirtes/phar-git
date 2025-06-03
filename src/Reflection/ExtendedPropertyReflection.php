@@ -23,27 +23,27 @@ interface ExtendedPropertyReflection extends \PHPStan\Reflection\PropertyReflect
 {
     public const HOOK_GET = 'get';
     public const HOOK_SET = 'set';
-    public function getName() : string;
-    public function hasPhpDocType() : bool;
-    public function getPhpDocType() : Type;
-    public function hasNativeType() : bool;
-    public function getNativeType() : Type;
-    public function isAbstract() : TrinaryLogic;
-    public function isFinalByKeyword() : TrinaryLogic;
-    public function isFinal() : TrinaryLogic;
-    public function isVirtual() : TrinaryLogic;
+    public function getName(): string;
+    public function hasPhpDocType(): bool;
+    public function getPhpDocType(): Type;
+    public function hasNativeType(): bool;
+    public function getNativeType(): Type;
+    public function isAbstract(): TrinaryLogic;
+    public function isFinalByKeyword(): TrinaryLogic;
+    public function isFinal(): TrinaryLogic;
+    public function isVirtual(): TrinaryLogic;
     /**
      * @param self::HOOK_* $hookType
      */
-    public function hasHook(string $hookType) : bool;
+    public function hasHook(string $hookType): bool;
     /**
      * @param self::HOOK_* $hookType
      */
-    public function getHook(string $hookType) : \PHPStan\Reflection\ExtendedMethodReflection;
-    public function isProtectedSet() : bool;
-    public function isPrivateSet() : bool;
+    public function getHook(string $hookType): \PHPStan\Reflection\ExtendedMethodReflection;
+    public function isProtectedSet(): bool;
+    public function isPrivateSet(): bool;
     /**
      * @return list<AttributeReflection>
      */
-    public function getAttributes() : array;
+    public function getAttributes(): array;
 }

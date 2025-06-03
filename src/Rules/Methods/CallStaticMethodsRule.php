@@ -27,11 +27,11 @@ final class CallStaticMethodsRule implements Rule
         $this->methodCallCheck = $methodCallCheck;
         $this->parametersCheck = $parametersCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return StaticCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         if ($node->name instanceof Node\Identifier) {
@@ -52,7 +52,7 @@ final class CallStaticMethodsRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleMethodCall(Scope $scope, StaticCall $node, string $methodName) : array
+    private function processSingleMethodCall(Scope $scope, StaticCall $node, string $methodName): array
     {
         [$errors, $method] = $this->methodCallCheck->check($scope, $methodName, $node->class);
         if ($method === null) {

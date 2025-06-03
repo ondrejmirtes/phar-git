@@ -25,12 +25,12 @@ final class TemplateKeyOfType extends KeyOfType implements \PHPStan\Type\Generic
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function getResult() : Type
+    protected function getResult(): Type
     {
         $result = $this->getBound()->getResult();
         return \PHPStan\Type\Generic\TemplateTypeFactory::create($this->getScope(), $this->getName(), $result, $this->getVariance(), $this->getStrategy(), $this->getDefault());
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

@@ -46,7 +46,7 @@ final class PropertyTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node) : array
+    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node): array
     {
         $errors = [];
         foreach ($classReflection->getPropertyTags() as $propertyName => $propertyTag) {
@@ -65,7 +65,7 @@ final class PropertyTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitDefinitionContext(ClassReflection $classReflection) : array
+    public function checkInTraitDefinitionContext(ClassReflection $classReflection): array
     {
         $errors = [];
         foreach ($classReflection->getPropertyTags() as $propertyName => $propertyTag) {
@@ -81,7 +81,7 @@ final class PropertyTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitUseContext(Scope $scope, ClassReflection $classReflection, ClassReflection $implementingClass, ClassLike $node) : array
+    public function checkInTraitUseContext(Scope $scope, ClassReflection $classReflection, ClassReflection $implementingClass, ClassLike $node): array
     {
         $phpDoc = $classReflection->getTraitContextResolvedPhpDoc($implementingClass);
         if ($phpDoc === null) {
@@ -101,7 +101,7 @@ final class PropertyTagCheck
     /**
      * @return array{list<Type>, string}
      */
-    private function getTypesAndTagName(PropertyTag $propertyTag) : array
+    private function getTypesAndTagName(PropertyTag $propertyTag): array
     {
         $readableType = $propertyTag->getReadableType();
         $writableType = $propertyTag->getWritableType();
@@ -130,7 +130,7 @@ final class PropertyTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkPropertyTypeInTraitDefinitionContext(ClassReflection $classReflection, string $propertyName, string $tagName, Type $type) : array
+    private function checkPropertyTypeInTraitDefinitionContext(ClassReflection $classReflection, string $propertyName, string $tagName, Type $type): array
     {
         if (!$this->checkMissingTypehints) {
             return [];
@@ -151,7 +151,7 @@ final class PropertyTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkPropertyTypeInTraitUseContext(Scope $scope, ClassReflection $classReflection, string $propertyName, string $tagName, Type $type, ClassLike $node) : array
+    private function checkPropertyTypeInTraitUseContext(Scope $scope, ClassReflection $classReflection, string $propertyName, string $tagName, Type $type, ClassLike $node): array
     {
         $errors = [];
         foreach ($type->getReferencedClasses() as $class) {

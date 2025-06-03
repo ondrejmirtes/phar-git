@@ -28,11 +28,11 @@ final class PregReplaceCallbackClosureTypeExtension implements StaticMethodParam
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter): bool
     {
         return \in_array($methodReflection->getDeclaringClass()->getName(), [Preg::class, Regex::class], \true) && \in_array($methodReflection->getName(), ['replaceCallback', 'replaceCallbackStrictGroups'], \true) && $parameter->getName() === 'replacement';
     }
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, ParameterReflection $parameter, Scope $scope) : ?Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
         $args = $methodCall->getArgs();
         $patternArg = $args[0] ?? null;
@@ -47,10 +47,10 @@ final class PregReplaceCallbackClosureTypeExtension implements StaticMethodParam
         }
         if ($methodReflection->getName() === 'replaceCallbackStrictGroups' && \count($matchesType->getConstantArrays()) === 1) {
             $matchesType = $matchesType->getConstantArrays()[0];
-            $matchesType = new ConstantArrayType($matchesType->getKeyTypes(), \array_map(static function (Type $valueType) : Type {
+            $matchesType = new ConstantArrayType($matchesType->getKeyTypes(), \array_map(static function (Type $valueType): Type {
                 if (\count($valueType->getConstantArrays()) === 1) {
                     $valueTypeArray = $valueType->getConstantArrays()[0];
-                    return new ConstantArrayType($valueTypeArray->getKeyTypes(), \array_map(static function (Type $valueType) : Type {
+                    return new ConstantArrayType($valueTypeArray->getKeyTypes(), \array_map(static function (Type $valueType): Type {
                         return TypeCombinator::removeNull($valueType);
                     }, $valueTypeArray->getValueTypes()), $valueTypeArray->getNextAutoIndexes(), [], $valueTypeArray->isList());
                 }

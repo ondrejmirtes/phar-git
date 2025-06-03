@@ -57,66 +57,66 @@ final class ClassStatementsGatherer
     /**
      * @return ClassPropertyNode[]
      */
-    public function getProperties() : array
+    public function getProperties(): array
     {
         return $this->properties;
     }
     /**
      * @return ClassMethod[]
      */
-    public function getMethods() : array
+    public function getMethods(): array
     {
         return $this->methods;
     }
     /**
      * @return Method\MethodCall[]
      */
-    public function getMethodCalls() : array
+    public function getMethodCalls(): array
     {
         return $this->methodCalls;
     }
     /**
      * @return array<int, PropertyWrite|PropertyRead>
      */
-    public function getPropertyUsages() : array
+    public function getPropertyUsages(): array
     {
         return $this->propertyUsages;
     }
     /**
      * @return Node\Stmt\ClassConst[]
      */
-    public function getConstants() : array
+    public function getConstants(): array
     {
         return $this->constants;
     }
     /**
      * @return ClassConstantFetch[]
      */
-    public function getConstantFetches() : array
+    public function getConstantFetches(): array
     {
         return $this->constantFetches;
     }
     /**
      * @return array<string, MethodReturnStatementsNode>
      */
-    public function getReturnStatementsNodes() : array
+    public function getReturnStatementsNodes(): array
     {
         return $this->returnStatementNodes;
     }
     /**
      * @return list<PropertyAssign>
      */
-    public function getPropertyAssigns() : array
+    public function getPropertyAssigns(): array
     {
         return $this->propertyAssigns;
     }
-    public function __invoke(Node $node, Scope $scope) : void
+    public function __invoke(Node $node, Scope $scope): void
     {
         $nodeCallback = $this->nodeCallback;
         $nodeCallback($node, $scope);
         $this->gatherNodes($node, $scope);
     }
-    private function gatherNodes(Node $node, Scope $scope) : void
+    private function gatherNodes(Node $node, Scope $scope): void
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();
@@ -204,7 +204,7 @@ final class ClassStatementsGatherer
         }
         $this->propertyUsages[] = new PropertyRead($node, $scope);
     }
-    private function tryToApplyPropertyReads(Expr\FuncCall $node, Scope $scope) : void
+    private function tryToApplyPropertyReads(Expr\FuncCall $node, Scope $scope): void
     {
         $args = $node->getArgs();
         if (count($args) === 0) {
@@ -225,7 +225,7 @@ final class ClassStatementsGatherer
             $this->propertyUsages[] = new PropertyRead(new PropertyFetch(new Expr\Variable('this'), new Identifier($property->getName())), $scope);
         }
     }
-    private function tryToApplyPropertyWritesFromAncestorConstructor(StaticCall $ancestorConstructorCall, Scope $scope) : void
+    private function tryToApplyPropertyWritesFromAncestorConstructor(StaticCall $ancestorConstructorCall, Scope $scope): void
     {
         if (!$ancestorConstructorCall->class instanceof Node\Name) {
             return;

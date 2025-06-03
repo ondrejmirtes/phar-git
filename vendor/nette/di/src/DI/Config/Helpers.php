@@ -22,7 +22,7 @@ final class Helpers
         return Nette\Schema\Helpers::merge($left, $right);
     }
     /** @deprecated */
-    public static function takeParent(&$data) : bool
+    public static function takeParent(&$data): bool
     {
         if (\is_array($data) && isset($data[self::PREVENT_MERGING])) {
             unset($data[self::PREVENT_MERGING]);

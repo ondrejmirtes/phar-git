@@ -33,11 +33,11 @@ final class ReturnTypeRule implements Rule
     {
         $this->returnTypeCheck = $returnTypeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Return_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($scope->getFunction() === null) {
             return [];

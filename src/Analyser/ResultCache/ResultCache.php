@@ -97,92 +97,92 @@ final class ResultCache
     /**
      * @return string[]
      */
-    public function getFilesToAnalyse() : array
+    public function getFilesToAnalyse(): array
     {
         return $this->filesToAnalyse;
     }
-    public function isFullAnalysis() : bool
+    public function isFullAnalysis(): bool
     {
         return $this->fullAnalysis;
     }
-    public function getLastFullAnalysisTime() : int
+    public function getLastFullAnalysisTime(): int
     {
         return $this->lastFullAnalysisTime;
     }
     /**
      * @return mixed[]
      */
-    public function getMeta() : array
+    public function getMeta(): array
     {
         return $this->meta;
     }
     /**
      * @return array<string, list<Error>>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
     /**
      * @return array<string, list<Error>>
      */
-    public function getLocallyIgnoredErrors() : array
+    public function getLocallyIgnoredErrors(): array
     {
         return $this->locallyIgnoredErrors;
     }
     /**
      * @return array<string, LinesToIgnore>
      */
-    public function getLinesToIgnore() : array
+    public function getLinesToIgnore(): array
     {
         return $this->linesToIgnore;
     }
     /**
      * @return array<string, LinesToIgnore>
      */
-    public function getUnmatchedLineIgnores() : array
+    public function getUnmatchedLineIgnores(): array
     {
         return $this->unmatchedLineIgnores;
     }
     /**
      * @return CollectorData
      */
-    public function getCollectedData() : array
+    public function getCollectedData(): array
     {
         return $this->collectedData;
     }
     /**
      * @return array<string, array<string>>
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return $this->dependencies;
     }
     /**
      * @return array<string, array<string>>
      */
-    public function getUsedTraitDependencies() : array
+    public function getUsedTraitDependencies(): array
     {
         return $this->usedTraitDependencies;
     }
     /**
      * @return array<string, array<RootExportedNode>>
      */
-    public function getExportedNodes() : array
+    public function getExportedNodes(): array
     {
         return $this->exportedNodes;
     }
     /**
      * @return array<string, array{string, bool, string}>
      */
-    public function getProjectExtensionFiles() : array
+    public function getProjectExtensionFiles(): array
     {
         return $this->projectExtensionFiles;
     }
     /**
      * @return array<string, string>
      */
-    public function getCurrentFileHashes() : array
+    public function getCurrentFileHashes(): array
     {
         return $this->currentFileHashes;
     }

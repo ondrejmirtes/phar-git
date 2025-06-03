@@ -28,15 +28,15 @@ final class NativeReflectionEnumReturnDynamicReturnTypeExtension implements Dyna
         $this->className = $className;
         $this->methodName = $methodName;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return $this->className;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === $this->methodName;
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if ($this->phpVersion->getVersionId() >= 80000) {
             return null;

@@ -47,11 +47,11 @@ final class AccessStaticPropertiesRule implements Rule
         $this->classCheck = $classCheck;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return StaticPropertyFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->name instanceof Node\VarLikeIdentifier) {
             $names = [$node->name->name];
@@ -67,7 +67,7 @@ final class AccessStaticPropertiesRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleProperty(Scope $scope, StaticPropertyFetch $node, string $name) : array
+    private function processSingleProperty(Scope $scope, StaticPropertyFetch $node, string $name): array
     {
         $messages = [];
         if ($node->class instanceof Name) {

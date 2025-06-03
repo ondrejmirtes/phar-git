@@ -14,7 +14,7 @@ final class RegistryFactory
     {
         $this->container = $container;
     }
-    public function create() : \PHPStan\Collectors\Registry
+    public function create(): \PHPStan\Collectors\Registry
     {
         return new \PHPStan\Collectors\Registry($this->container->getServicesByTag(self::COLLECTOR_TAG));
     }

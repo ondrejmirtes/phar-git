@@ -23,7 +23,7 @@ final class TeamcityErrorFormatter implements \PHPStan\Command\ErrorFormatter\Er
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $result = '';
         $fileSpecificErrors = $analysisResult->getFileSpecificErrors();
@@ -77,7 +77,7 @@ final class TeamcityErrorFormatter implements \PHPStan\Command\ErrorFormatter\Er
      * @param mixed[] $keyValuePairs The key=>value pairs
      * @return string The Teamcity report line
      */
-    private function createTeamcityLine(string $messageName, array $keyValuePairs) : string
+    private function createTeamcityLine(string $messageName, array $keyValuePairs): string
     {
         $string = '##teamcity[' . $messageName;
         foreach ($keyValuePairs as $key => $value) {
@@ -94,9 +94,9 @@ final class TeamcityErrorFormatter implements \PHPStan\Command\ErrorFormatter\Er
      * @param string $string The string to escape
      * @return string The escaped string
      */
-    private function escape(string $string) : string
+    private function escape(string $string): string
     {
-        $replacements = ['~\\n~' => '|n', '~\\r~' => '|r', '~([\'\\|\\[\\]])~' => '|$1'];
+        $replacements = ['~\n~' => '|n', '~\r~' => '|r', '~([\'\|\[\]])~' => '|$1'];
         return (string) preg_replace(array_keys($replacements), array_values($replacements), $string);
     }
 }

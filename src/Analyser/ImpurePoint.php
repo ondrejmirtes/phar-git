@@ -34,7 +34,7 @@ final class ImpurePoint
         $this->description = $description;
         $this->certain = $certain;
     }
-    public function getScope() : \PHPStan\Analyser\Scope
+    public function getScope(): \PHPStan\Analyser\Scope
     {
         return $this->scope;
     }
@@ -48,15 +48,15 @@ final class ImpurePoint
     /**
      * @return ImpurePointIdentifier
      */
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
-    public function isCertain() : bool
+    public function isCertain(): bool
     {
         return $this->certain;
     }

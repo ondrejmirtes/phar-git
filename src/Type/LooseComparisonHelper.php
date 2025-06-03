@@ -7,7 +7,7 @@ use PHPStan\Php\PhpVersion;
 use PHPStan\Type\Constant\ConstantBooleanType;
 final class LooseComparisonHelper
 {
-    public static function compareConstantScalars(\PHPStan\Type\ConstantScalarType $leftType, \PHPStan\Type\ConstantScalarType $rightType, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public static function compareConstantScalars(\PHPStan\Type\ConstantScalarType $leftType, \PHPStan\Type\ConstantScalarType $rightType, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         if ($phpVersion->castsNumbersToStringsOnLooseComparison()) {
             $isNumber = new \PHPStan\Type\UnionType([new \PHPStan\Type\IntegerType(), new \PHPStan\Type\FloatType()]);

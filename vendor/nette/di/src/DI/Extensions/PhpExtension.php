@@ -14,13 +14,13 @@ use _PHPStan_checksum\Nette;
  */
 final class PhpExtension extends Nette\DI\CompilerExtension
 {
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         return Nette\Schema\Expect::arrayOf('scalar');
     }
     public function loadConfiguration()
     {
-        \trigger_error(self::class . ' is deprecated, use Nette\\Bootstrap\\Extensions\\PhpExtension.', \E_USER_DEPRECATED);
+        \trigger_error(self::class . ' is deprecated, use Nette\Bootstrap\Extensions\PhpExtension.', \E_USER_DEPRECATED);
         foreach ($this->getConfig() as $name => $value) {
             if ($value === null) {
                 continue;

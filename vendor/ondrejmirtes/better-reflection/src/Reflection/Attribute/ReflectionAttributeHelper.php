@@ -27,7 +27,7 @@ class ReflectionAttributeHelper
      * @psalm-pure
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass|\PHPStan\BetterReflection\Reflection\ReflectionMethod|\PHPStan\BetterReflection\Reflection\ReflectionFunction|\PHPStan\BetterReflection\Reflection\ReflectionClassConstant|\PHPStan\BetterReflection\Reflection\ReflectionEnumCase|\PHPStan\BetterReflection\Reflection\ReflectionProperty|\PHPStan\BetterReflection\Reflection\ReflectionParameter $reflection
      */
-    public static function createAttributes(Reflector $reflector, $reflection, array $attrGroups) : array
+    public static function createAttributes(Reflector $reflector, $reflection, array $attrGroups): array
     {
         $repeated = [];
         foreach ($attrGroups as $attributesGroupNode) {
@@ -50,7 +50,7 @@ class ReflectionAttributeHelper
      *
      * @psalm-pure
      */
-    public static function filterAttributesByName(array $attributes, string $name) : array
+    public static function filterAttributesByName(array $attributes, string $name): array
     {
         return array_values(array_filter($attributes, static fn(ReflectionAttribute $attribute): bool => $attribute->getName() === $name));
     }
@@ -62,9 +62,9 @@ class ReflectionAttributeHelper
      *
      * @psalm-pure
      */
-    public static function filterAttributesByInstance(array $attributes, string $className) : array
+    public static function filterAttributesByInstance(array $attributes, string $className): array
     {
-        return array_values(array_filter($attributes, static function (ReflectionAttribute $attribute) use($className) : bool {
+        return array_values(array_filter($attributes, static function (ReflectionAttribute $attribute) use ($className): bool {
             $class = $attribute->getClass();
             return $class->getName() === $className || $class->isSubclassOf($className) || $class->implementsInterface($className);
         }));

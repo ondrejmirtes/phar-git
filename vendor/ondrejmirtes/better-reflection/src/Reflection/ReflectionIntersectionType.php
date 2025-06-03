@@ -19,7 +19,7 @@ class ReflectionIntersectionType extends \PHPStan\BetterReflection\Reflection\Re
     public function __construct(Reflector $reflector, $owner, IntersectionType $type)
     {
         /** @var non-empty-list<ReflectionNamedType> $types */
-        $types = array_map(static function ($type) use($reflector, $owner) : \PHPStan\BetterReflection\Reflection\ReflectionNamedType {
+        $types = array_map(static function ($type) use ($reflector, $owner): \PHPStan\BetterReflection\Reflection\ReflectionNamedType {
             $type = \PHPStan\BetterReflection\Reflection\ReflectionType::createFromNode($reflector, $owner, $type);
             assert($type instanceof \PHPStan\BetterReflection\Reflection\ReflectionNamedType);
             return $type;
@@ -38,19 +38,19 @@ class ReflectionIntersectionType extends \PHPStan\BetterReflection\Reflection\Re
         return $clone;
     }
     /** @return non-empty-list<ReflectionNamedType> */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return $this->types;
     }
     /**
      * @return false
      */
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return \false;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         // @infection-ignore-all UnwrapArrayMap: It works without array_map() as well but this is less magical
         return implode('&', array_map(static fn(\PHPStan\BetterReflection\Reflection\ReflectionNamedType $type): string => $type->__toString(), $this->types));

@@ -23,11 +23,11 @@ final class ApiClassConstFetchRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ClassConstFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Identifier) {
             return [];

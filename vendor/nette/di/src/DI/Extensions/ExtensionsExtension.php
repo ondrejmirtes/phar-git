@@ -13,9 +13,9 @@ use _PHPStan_checksum\Nette;
  */
 class ExtensionsExtension extends Nette\DI\CompilerExtension
 {
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
-        return Nette\Schema\Expect::arrayOf('string|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement');
+        return Nette\Schema\Expect::arrayOf('string|_PHPStan_checksum\Nette\DI\Definitions\Statement');
     }
     public function loadConfiguration()
     {

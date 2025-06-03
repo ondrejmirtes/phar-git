@@ -35,7 +35,7 @@ class RequestHeaderParser extends EventEmitter
         $buffer = '';
         $maxSize = $this->maxSize;
         $that = $this;
-        $conn->on('data', $fn = function ($data) use(&$buffer, &$fn, $conn, $maxSize, $that) {
+        $conn->on('data', $fn = function ($data) use (&$buffer, &$fn, $conn, $maxSize, $that) {
             // append chunk of data to buffer and look for end of request headers
             $buffer .= $data;
             $endOfHeader = \strpos($buffer, "\r\n\r\n");
@@ -133,14 +133,14 @@ class RequestHeaderParser extends EventEmitter
             // remember server params for all requests from this connection, reset on connection close
             $this->connectionParams[$cid] = $serverParams;
             $params =& $this->connectionParams;
-            $connection->on('close', function () use(&$params, $cid) {
+            $connection->on('close', function () use (&$params, $cid) {
                 \assert(\is_array($params));
                 unset($params[$cid]);
             });
         }
         // create new obj implementing ServerRequestInterface by preserving all
         // previous properties and restoring original request-target
-        $serverParams['REQUEST_TIME'] = (int) ($now = $this->clock->now());
+        $serverParams['REQUEST_TIME'] = (int) $now = $this->clock->now();
         $serverParams['REQUEST_TIME_FLOAT'] = $now;
         return ServerRequest::parseMessage($headers, $serverParams);
     }

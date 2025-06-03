@@ -14,19 +14,19 @@ interface CallableParametersAcceptor extends ParametersAcceptor
     /**
      * @return SimpleThrowPoint[]
      */
-    public function getThrowPoints() : array;
-    public function isPure() : TrinaryLogic;
-    public function acceptsNamedArguments() : TrinaryLogic;
+    public function getThrowPoints(): array;
+    public function isPure(): TrinaryLogic;
+    public function acceptsNamedArguments(): TrinaryLogic;
     /**
      * @return SimpleImpurePoint[]
      */
-    public function getImpurePoints() : array;
+    public function getImpurePoints(): array;
     /**
      * @return InvalidateExprNode[]
      */
-    public function getInvalidateExpressions() : array;
+    public function getInvalidateExpressions(): array;
     /**
      * @return string[]
      */
-    public function getUsedVariables() : array;
+    public function getUsedVariables(): array;
 }

@@ -13,7 +13,7 @@ final class ReflectionEnumStubFilesExtension implements \PHPStan\PhpDoc\StubFile
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getFiles() : array
+    public function getFiles(): array
     {
         if (!$this->phpVersion->supportsEnums()) {
             return [];

@@ -36,29 +36,29 @@ final class ExpressionResult
         $this->truthyScopeCallback = $truthyScopeCallback;
         $this->falseyScopeCallback = $falseyScopeCallback;
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }
-    public function hasYield() : bool
+    public function hasYield(): bool
     {
         return $this->hasYield;
     }
     /**
      * @return ThrowPoint[]
      */
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return $this->throwPoints;
     }
     /**
      * @return ImpurePoint[]
      */
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
-    public function getTruthyScope() : \PHPStan\Analyser\MutatingScope
+    public function getTruthyScope(): \PHPStan\Analyser\MutatingScope
     {
         if ($this->truthyScopeCallback === null) {
             return $this->scope;
@@ -70,7 +70,7 @@ final class ExpressionResult
         $this->truthyScope = $callback();
         return $this->truthyScope;
     }
-    public function getFalseyScope() : \PHPStan\Analyser\MutatingScope
+    public function getFalseyScope(): \PHPStan\Analyser\MutatingScope
     {
         if ($this->falseyScopeCallback === null) {
             return $this->scope;

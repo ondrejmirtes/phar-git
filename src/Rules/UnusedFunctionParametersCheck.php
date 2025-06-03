@@ -29,9 +29,9 @@ final class UnusedFunctionParametersCheck
      * @param 'constructor.unusedParameter'|'closure.unusedUse' $identifier
      * @return list<IdentifierRuleError>
      */
-    public function getUnusedParameters(Scope $scope, array $parameterVars, array $statements, string $unusedParameterMessage, string $identifier) : array
+    public function getUnusedParameters(Scope $scope, array $parameterVars, array $statements, string $unusedParameterMessage, string $identifier): array
     {
-        $parameterNames = array_map(static function (Variable $variable) : string {
+        $parameterNames = array_map(static function (Variable $variable): string {
             if (!is_string($variable->name)) {
                 throw new ShouldNotHappenException();
             }
@@ -58,7 +58,7 @@ final class UnusedFunctionParametersCheck
      * @param Node[]|Node|scalar|null $node
      * @return string[]
      */
-    private function getUsedVariables(Scope $scope, $node) : array
+    private function getUsedVariables(Scope $scope, $node): array
     {
         $variableNames = [];
         if ($node instanceof Node) {

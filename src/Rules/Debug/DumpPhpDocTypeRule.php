@@ -26,11 +26,11 @@ final class DumpPhpDocTypeRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->printer = $printer;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -39,7 +39,7 @@ final class DumpPhpDocTypeRule implements Rule
         if ($functionName === null) {
             return [];
         }
-        if (strtolower($functionName) !== 'phpstan\\dumpphpdoctype') {
+        if (strtolower($functionName) !== 'phpstan\dumpphpdoctype') {
             return [];
         }
         if (count($node->getArgs()) === 0) {

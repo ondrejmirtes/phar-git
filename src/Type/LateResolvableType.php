@@ -6,6 +6,6 @@ namespace PHPStan\Type;
 /** @api */
 interface LateResolvableType
 {
-    public function resolve() : \PHPStan\Type\Type;
-    public function isResolvable() : bool;
+    public function resolve(): \PHPStan\Type\Type;
+    public function isResolvable(): bool;
 }

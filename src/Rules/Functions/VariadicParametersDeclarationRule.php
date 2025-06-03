@@ -13,11 +13,11 @@ use function count;
  */
 final class VariadicParametersDeclarationRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\FunctionLike::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $parameters = $node->getParams();
         $paramCount = count($parameters);

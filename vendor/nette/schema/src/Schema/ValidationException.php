@@ -26,7 +26,7 @@ class ValidationException extends Nette\InvalidStateException
     /**
      * @return string[]
      */
-    public function getMessages() : array
+    public function getMessages(): array
     {
         $res = [];
         foreach ($this->messages as $message) {
@@ -37,7 +37,7 @@ class ValidationException extends Nette\InvalidStateException
     /**
      * @return Message[]
      */
-    public function getMessageObjects() : array
+    public function getMessageObjects(): array
     {
         return $this->messages;
     }

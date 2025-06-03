@@ -22,15 +22,15 @@ use function strtolower;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ThrowableReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return Throwable::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'getCode';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): Type
     {
         $type = $scope->getType($methodCall->var);
         $types = [];

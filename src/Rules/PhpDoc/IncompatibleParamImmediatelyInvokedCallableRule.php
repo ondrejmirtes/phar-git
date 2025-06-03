@@ -25,11 +25,11 @@ final class IncompatibleParamImmediatelyInvokedCallableRule implements Rule
     {
         $this->fileTypeMapper = $fileTypeMapper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionLike::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node instanceof Node\Stmt\ClassMethod) {
             $functionName = $node->name->name;

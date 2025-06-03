@@ -25,11 +25,11 @@ final class ReadingWriteOnlyPropertiesRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->checkThisOnly = $checkThisOnly;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\PropertyFetch && !$node instanceof Node\Expr\StaticPropertyFetch) {
             return [];

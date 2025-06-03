@@ -33,11 +33,11 @@ final class MissingReturnRule implements Rule
         $this->checkExplicitMixedMissingReturn = $checkExplicitMixedMissingReturn;
         $this->checkPhpDocMissingReturn = $checkPhpDocMissingReturn;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ExecutionEndNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $statementResult = $node->getStatementResult();
         if ($statementResult->isAlwaysTerminating()) {

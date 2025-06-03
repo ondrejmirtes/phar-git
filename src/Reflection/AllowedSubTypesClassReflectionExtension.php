@@ -25,9 +25,9 @@ use PHPStan\Type\Type;
  */
 interface AllowedSubTypesClassReflectionExtension
 {
-    public function supports(\PHPStan\Reflection\ClassReflection $classReflection) : bool;
+    public function supports(\PHPStan\Reflection\ClassReflection $classReflection): bool;
     /**
      * @return array<Type>
      */
-    public function getAllowedSubTypes(\PHPStan\Reflection\ClassReflection $classReflection) : array;
+    public function getAllowedSubTypes(\PHPStan\Reflection\ClassReflection $classReflection): array;
 }

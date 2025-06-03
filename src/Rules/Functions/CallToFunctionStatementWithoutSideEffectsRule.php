@@ -25,16 +25,16 @@ final class CallToFunctionStatementWithoutSideEffectsRule implements Rule
         'var_export' => ['return', 1, 'isTruthy'],
         'highlight_string' => ['return', 1, 'isTruthy'],
     ];
-    public const PHPSTAN_TESTING_FUNCTIONS = ['PHPStan\\dumpType', 'PHPStan\\dumpPhpDocType', 'PHPStan\\debugScope', 'PHPStan\\Testing\\assertType', 'PHPStan\\Testing\\assertNativeType', 'PHPStan\\Testing\\assertVariableCertainty'];
+    public const PHPSTAN_TESTING_FUNCTIONS = ['PHPStan\dumpType', 'PHPStan\dumpPhpDocType', 'PHPStan\debugScope', 'PHPStan\Testing\assertType', 'PHPStan\Testing\assertNativeType', 'PHPStan\Testing\assertVariableCertainty'];
     public function __construct(ReflectionProvider $reflectionProvider)
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Expression::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->expr instanceof Node\Expr\FuncCall) {
             return [];

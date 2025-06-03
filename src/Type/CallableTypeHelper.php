@@ -11,7 +11,7 @@ use function count;
 use function sprintf;
 final class CallableTypeHelper
 {
-    public static function isParametersAcceptorSuperTypeOf(CallableParametersAcceptor $ours, CallableParametersAcceptor $theirs, bool $treatMixedAsAny) : \PHPStan\Type\IsSuperTypeOfResult
+    public static function isParametersAcceptorSuperTypeOf(CallableParametersAcceptor $ours, CallableParametersAcceptor $theirs, bool $treatMixedAsAny): \PHPStan\Type\IsSuperTypeOfResult
     {
         $theirParameters = $theirs->getParameters();
         $ourParameters = $ours->getParameters();

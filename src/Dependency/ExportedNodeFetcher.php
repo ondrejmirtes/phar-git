@@ -18,7 +18,7 @@ final class ExportedNodeFetcher
     /**
      * @return RootExportedNode[]
      */
-    public function fetchNodes(string $fileName) : array
+    public function fetchNodes(string $fileName): array
     {
         $nodeTraverser = new NodeTraverser();
         $nodeTraverser->addVisitor($this->visitor);

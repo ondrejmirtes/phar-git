@@ -13,11 +13,11 @@ final class RuleError81 implements RuleError, IdentifierRuleError, NonIgnorableR
 {
     public string $message;
     public string $identifier;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

@@ -32,10 +32,10 @@ final class GenericCallableRuleHelper
      *
      * @return list<IdentifierRuleError>
      */
-    public function check(Node $node, Scope $scope, string $location, Type $callableType, ?string $functionName, array $functionTemplateTags, ?ClassReflection $classReflection) : array
+    public function check(Node $node, Scope $scope, string $location, Type $callableType, ?string $functionName, array $functionTemplateTags, ?ClassReflection $classReflection): array
     {
         $errors = [];
-        TypeTraverser::map($callableType, function (Type $type, callable $traverse) use(&$errors, $node, $scope, $location, $functionName, $functionTemplateTags, $classReflection) {
+        TypeTraverser::map($callableType, function (Type $type, callable $traverse) use (&$errors, $node, $scope, $location, $functionName, $functionTemplateTags, $classReflection) {
             if (!($type instanceof CallableType || $type instanceof ClosureType)) {
                 return $traverse($type);
             }

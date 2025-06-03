@@ -21,11 +21,11 @@ final class GithubErrorFormatter implements \PHPStan\Command\ErrorFormatter\Erro
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         foreach ($analysisResult->getFileSpecificErrors() as $fileSpecificError) {
             $metas = ['file' => $this->relativePathHelper->getRelativePath($fileSpecificError->getFile()), 'line' => $fileSpecificError->getLine(), 'col' => 0];
-            array_walk($metas, static function (&$value, string $key) : void {
+            array_walk($metas, static function (&$value, string $key): void {
                 $value = sprintf('%s=%s', $key, (string) $value);
             });
             $message = $fileSpecificError->getMessage();

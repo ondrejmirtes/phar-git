@@ -18,7 +18,7 @@ final class ProcessHelper
     /**
      * @param string[] $additionalItems
      */
-    public static function getWorkerCommand(string $mainScript, string $commandName, ?string $projectConfigFile, array $additionalItems, InputInterface $input) : string
+    public static function getWorkerCommand(string $mainScript, string $commandName, ?string $projectConfigFile, array $additionalItems, InputInterface $input): string
     {
         $phpIni = php_ini_loaded_file();
         $phpCmd = $phpIni === \false ? escapeshellarg(PHP_BINARY) : sprintf('%s -c %s', escapeshellarg(PHP_BINARY), escapeshellarg($phpIni));

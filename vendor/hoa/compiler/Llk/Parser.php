@@ -229,7 +229,7 @@ class Parser
                 return \false;
             }
             $value = $this->_tokenSequence->current()['value'];
-            if (0 <= ($unification = $zeRule->getUnificationIndex())) {
+            if (0 <= $unification = $zeRule->getUnificationIndex()) {
                 for ($skip = 0, $i = \count($this->_trace) - 1; $i >= 0; --$i) {
                     $trace = $this->_trace[$i];
                     if ($trace instanceof \Hoa\Compiler\Llk\Rule\Entry) {
@@ -258,7 +258,7 @@ class Parser
                 $zzeRule->setRepresentation($this->_tokens[$namespace][$name]);
             } else {
                 foreach ($this->_tokens[$namespace] as $_name => $regex) {
-                    if (\false === ($pos = \strpos($_name, ':'))) {
+                    if (\false === $pos = \strpos($_name, ':')) {
                         continue;
                     }
                     $_name = \substr($_name, 0, $pos);

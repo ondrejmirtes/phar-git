@@ -33,11 +33,11 @@ final class MatchExpressionRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MatchExpressionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $matchCondition = $node->getCondition();
         $matchConditionType = $scope->getType($matchCondition);
@@ -111,7 +111,7 @@ final class MatchExpressionRule implements Rule
         }
         return $errors;
     }
-    private function isUnhandledMatchErrorCaught(Node $node) : bool
+    private function isUnhandledMatchErrorCaught(Node $node): bool
     {
         $tryCatchTypes = $node->getAttribute(TryCatchTypeVisitor::ATTRIBUTE_NAME);
         if ($tryCatchTypes === null) {
@@ -120,7 +120,7 @@ final class MatchExpressionRule implements Rule
         $tryCatchType = TypeCombinator::union(...array_map(static fn(string $class) => new ObjectType($class), $tryCatchTypes));
         return $tryCatchType->isSuperTypeOf(new ObjectType(UnhandledMatchError::class))->yes();
     }
-    private function hasUnhandledMatchErrorThrowsTag(Scope $scope) : bool
+    private function hasUnhandledMatchErrorThrowsTag(Scope $scope): bool
     {
         $function = $scope->getFunction();
         if ($function === null) {

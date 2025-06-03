@@ -64,7 +64,7 @@ final class FunctionDefinitionCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkFunction(Scope $scope, Function_ $function, PhpFunctionFromParserNodeReflection $functionReflection, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage) : array
+    public function checkFunction(Scope $scope, Function_ $function, PhpFunctionFromParserNodeReflection $functionReflection, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage): array
     {
         return $this->checkParametersAcceptor($scope, $functionReflection, $function, $parameterMessage, $returnMessage, $unionTypesMessage, $templateTypeMissingInParameterMessage, $unresolvableParameterTypeMessage, $unresolvableReturnTypeMessage);
     }
@@ -73,7 +73,7 @@ final class FunctionDefinitionCheck
      * @param Node\Identifier|Node\Name|Node\ComplexType|null $returnTypeNode
      * @return list<IdentifierRuleError>
      */
-    public function checkAnonymousFunction(Scope $scope, array $parameters, $returnTypeNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage) : array
+    public function checkAnonymousFunction(Scope $scope, array $parameters, $returnTypeNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage): array
     {
         $errors = [];
         $unionTypeReported = \false;
@@ -142,7 +142,7 @@ final class FunctionDefinitionCheck
      * @return list<IdentifierRuleError>
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\PropertyHook $methodNode
      */
-    public function checkClassMethod(Scope $scope, PhpMethodFromParserNodeReflection $methodReflection, $methodNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage, string $selfOutMessage) : array
+    public function checkClassMethod(Scope $scope, PhpMethodFromParserNodeReflection $methodReflection, $methodNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage, string $selfOutMessage): array
     {
         $errors = $this->checkParametersAcceptor($scope, $methodReflection, $methodNode, $parameterMessage, $returnMessage, $unionTypesMessage, $templateTypeMissingInParameterMessage, $unresolvableParameterTypeMessage, $unresolvableReturnTypeMessage);
         $selfOutType = $methodReflection->getSelfOutType();
@@ -166,7 +166,7 @@ final class FunctionDefinitionCheck
      * @return list<IdentifierRuleError>
      * @param \PHPStan\Reflection\Php\PhpMethodFromParserNodeReflection|\PHPStan\Reflection\Php\PhpFunctionFromParserNodeReflection $parametersAcceptor
      */
-    private function checkParametersAcceptor(Scope $scope, $parametersAcceptor, FunctionLike $functionNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage) : array
+    private function checkParametersAcceptor(Scope $scope, $parametersAcceptor, FunctionLike $functionNode, string $parameterMessage, string $returnMessage, string $unionTypesMessage, string $templateTypeMissingInParameterMessage, string $unresolvableParameterTypeMessage, string $unresolvableReturnTypeMessage): array
     {
         $errors = [];
         $parameterNodes = $functionNode->getParams();
@@ -201,7 +201,7 @@ final class FunctionDefinitionCheck
         foreach ($parametersAcceptor->getParameters() as $parameter) {
             $referencedClasses = $this->getParameterReferencedClasses($parameter);
             $parameterNode = null;
-            $parameterNodeCallback = function () use($parameter, $parameterNodes, &$parameterNode) : Param {
+            $parameterNodeCallback = function () use ($parameter, $parameterNodes, &$parameterNode): Param {
                 if ($parameterNode === null) {
                     $parameterNode = $this->getParameterNode($parameter->getName(), $parameterNodes);
                 }
@@ -276,7 +276,7 @@ final class FunctionDefinitionCheck
         $templateTypes = $templateTypeMap->getTypes();
         if (count($templateTypes) > 0) {
             foreach ($parametersAcceptor->getParameters() as $parameter) {
-                TypeTraverser::map($parameter->getType(), static function (Type $type, callable $traverse) use(&$templateTypes) : Type {
+                TypeTraverser::map($parameter->getType(), static function (Type $type, callable $traverse) use (&$templateTypes): Type {
                     if ($type instanceof TemplateType) {
                         unset($templateTypes[$type->getName()]);
                         return $traverse($type);
@@ -286,7 +286,7 @@ final class FunctionDefinitionCheck
             }
             $returnType = $parametersAcceptor->getReturnType();
             if ($returnType instanceof ConditionalTypeForParameter && !$returnType->isNegated()) {
-                TypeTraverser::map($returnType, static function (Type $type, callable $traverse) use(&$templateTypes) : Type {
+                TypeTraverser::map($returnType, static function (Type $type, callable $traverse) use (&$templateTypes): Type {
                     if ($type instanceof TemplateType) {
                         unset($templateTypes[$type->getName()]);
                         return $traverse($type);
@@ -304,7 +304,7 @@ final class FunctionDefinitionCheck
      * @param Param[] $parameterNodes
      * @return list<IdentifierRuleError>
      */
-    private function checkRequiredParameterAfterOptional(array $parameterNodes) : array
+    private function checkRequiredParameterAfterOptional(array $parameterNodes): array
     {
         /** @var string|null $optionalParameter */
         $optionalParameter = null;
@@ -367,7 +367,7 @@ final class FunctionDefinitionCheck
     /**
      * @param Param[] $parameterNodes
      */
-    private function getParameterNode(string $parameterName, array $parameterNodes) : Param
+    private function getParameterNode(string $parameterName, array $parameterNodes): Param
     {
         foreach ($parameterNodes as $param) {
             if ($param->var instanceof Node\Expr\Error) {
@@ -385,7 +385,7 @@ final class FunctionDefinitionCheck
     /**
      * @return string[]
      */
-    private function getParameterReferencedClasses(ParameterReflection $parameter) : array
+    private function getParameterReferencedClasses(ParameterReflection $parameter): array
     {
         if (!$parameter instanceof ExtendedParameterReflection) {
             return $parameter->getType()->getReferencedClasses();
@@ -405,7 +405,7 @@ final class FunctionDefinitionCheck
     /**
      * @return string[]
      */
-    private function getReturnTypeReferencedClasses(ParametersAcceptor $parametersAcceptor) : array
+    private function getReturnTypeReferencedClasses(ParametersAcceptor $parametersAcceptor): array
     {
         if (!$parametersAcceptor instanceof ExtendedParametersAcceptor) {
             return $parametersAcceptor->getReturnType()->getReferencedClasses();
@@ -418,7 +418,7 @@ final class FunctionDefinitionCheck
     /**
      * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name|\PhpParser\Node\ComplexType|null $type
      */
-    private function checkImplicitlyNullableType($type, ?Node\Expr $default, int $order, int $line, string $name) : ?\PHPStan\Rules\IdentifierRuleError
+    private function checkImplicitlyNullableType($type, ?Node\Expr $default, int $order, int $line, string $name): ?\PHPStan\Rules\IdentifierRuleError
     {
         if (!$default instanceof ConstFetch) {
             return null;

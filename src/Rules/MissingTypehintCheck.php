@@ -51,10 +51,10 @@ final class MissingTypehintCheck
     /**
      * @return Type[]
      */
-    public function getIterableTypesWithMissingValueTypehint(Type $type) : array
+    public function getIterableTypesWithMissingValueTypehint(Type $type): array
     {
         $iterablesWithMissingValueTypehint = [];
-        TypeTraverser::map($type, function (Type $type, callable $traverse) use(&$iterablesWithMissingValueTypehint) : Type {
+        TypeTraverser::map($type, function (Type $type, callable $traverse) use (&$iterablesWithMissingValueTypehint): Type {
             if ($type instanceof TemplateType) {
                 return $type;
             }
@@ -84,10 +84,10 @@ final class MissingTypehintCheck
     /**
      * @return array<int, array{string, string}>
      */
-    public function getNonGenericObjectTypesWithGenericClass(Type $type) : array
+    public function getNonGenericObjectTypesWithGenericClass(Type $type): array
     {
         $objectTypes = [];
-        TypeTraverser::map($type, function (Type $type, callable $traverse) use(&$objectTypes) : Type {
+        TypeTraverser::map($type, function (Type $type, callable $traverse) use (&$objectTypes): Type {
             if ($type instanceof GenericObjectType || $type instanceof GenericStaticType) {
                 $traverse($type);
                 return $type;
@@ -137,13 +137,13 @@ final class MissingTypehintCheck
     /**
      * @return Type[]
      */
-    public function getCallablesWithMissingSignature(Type $type) : array
+    public function getCallablesWithMissingSignature(Type $type): array
     {
         if (!$this->checkMissingCallableSignature) {
             return [];
         }
         $result = [];
-        TypeTraverser::map($type, static function (Type $type, callable $traverse) use(&$result) : Type {
+        TypeTraverser::map($type, static function (Type $type, callable $traverse) use (&$result): Type {
             if ($type instanceof CallableType && $type->isCommonCallable() || $type instanceof ClosureType && $type->isCommonCallable() || $type instanceof ObjectType && $type->getClassName() === Closure::class) {
                 $result[] = $type;
             }

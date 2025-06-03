@@ -75,7 +75,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
         if (!\in_array($this->getMode(), $createModes)) {
             throw new \Hoa\File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), \implode(', ', $createModes)]);
         }
-        \preg_match('#^(\\w+)://#', $streamName, $match);
+        \preg_match('#^(\w+)://#', $streamName, $match);
         if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !\file_exists($streamName)) {
             throw new \Hoa\File\Exception\FileDoesNotExist('File %s does not exist.', 1, $streamName);
         }

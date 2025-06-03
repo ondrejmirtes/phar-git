@@ -17,75 +17,75 @@ final class RewrittenDeclaringClassClassConstantReflection implements ClassConst
         $this->declaringClass = $declaringClass;
         $this->constantReflection = $constantReflection;
     }
-    public function getValueExpr() : Expr
+    public function getValueExpr(): Expr
     {
         return $this->constantReflection->getValueExpr();
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->constantReflection->isFinal();
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return $this->constantReflection->hasPhpDocType();
     }
-    public function getPhpDocType() : ?Type
+    public function getPhpDocType(): ?Type
     {
         return $this->constantReflection->getPhpDocType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->constantReflection->hasNativeType();
     }
-    public function getNativeType() : ?Type
+    public function getNativeType(): ?Type
     {
         return $this->constantReflection->getNativeType();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->constantReflection->getAttributes();
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->constantReflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->constantReflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->constantReflection->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->constantReflection->getDocComment();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->constantReflection->getName();
     }
-    public function getValueType() : Type
+    public function getValueType(): Type
     {
         return $this->constantReflection->getValueType();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->constantReflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->constantReflection->getDeprecatedDescription();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->constantReflection->isInternal();
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->constantReflection->getFileName();
     }

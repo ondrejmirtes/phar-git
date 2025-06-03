@@ -88,7 +88,7 @@ final class ProgressBar
      * @param string   $name     The placeholder name (including the delimiter char like %)
      * @param callable $callable A PHP callable
      */
-    public static function setPlaceholderFormatterDefinition(string $name, callable $callable) : void
+    public static function setPlaceholderFormatterDefinition(string $name, callable $callable): void
     {
         if (!self::$formatters) {
             self::$formatters = self::initPlaceholderFormatters();
@@ -100,7 +100,7 @@ final class ProgressBar
      *
      * @param string $name The placeholder name (including the delimiter char like %)
      */
-    public static function getPlaceholderFormatterDefinition(string $name) : ?callable
+    public static function getPlaceholderFormatterDefinition(string $name): ?callable
     {
         if (!self::$formatters) {
             self::$formatters = self::initPlaceholderFormatters();
@@ -115,7 +115,7 @@ final class ProgressBar
      * @param string $name   The format name
      * @param string $format A format string
      */
-    public static function setFormatDefinition(string $name, string $format) : void
+    public static function setFormatDefinition(string $name, string $format): void
     {
         if (!self::$formats) {
             self::$formats = self::initFormats();
@@ -127,7 +127,7 @@ final class ProgressBar
      *
      * @param string $name The format name
      */
-    public static function getFormatDefinition(string $name) : ?string
+    public static function getFormatDefinition(string $name): ?string
     {
         if (!self::$formats) {
             self::$formats = self::initFormats();
@@ -155,38 +155,38 @@ final class ProgressBar
     {
         return $this->messages[$name] ?? null;
     }
-    public function getStartTime() : int
+    public function getStartTime(): int
     {
         return $this->startTime;
     }
-    public function getMaxSteps() : int
+    public function getMaxSteps(): int
     {
         return $this->max;
     }
-    public function getProgress() : int
+    public function getProgress(): int
     {
         return $this->step;
     }
-    private function getStepWidth() : int
+    private function getStepWidth(): int
     {
         return $this->stepWidth;
     }
-    public function getProgressPercent() : float
+    public function getProgressPercent(): float
     {
         return $this->percent;
     }
-    public function getBarOffset() : float
+    public function getBarOffset(): float
     {
         return \floor($this->max ? $this->percent * $this->barWidth : (null === $this->redrawFreq ? (int) (\min(5, $this->barWidth / 15) * $this->writeCount) : $this->step) % $this->barWidth);
     }
-    public function getEstimated() : float
+    public function getEstimated(): float
     {
         if (!$this->step) {
             return 0;
         }
         return \round((\time() - $this->startTime) / $this->step * $this->max);
     }
-    public function getRemaining() : float
+    public function getRemaining(): float
     {
         if (!$this->step) {
             return 0;
@@ -197,7 +197,7 @@ final class ProgressBar
     {
         $this->barWidth = \max(1, $size);
     }
-    public function getBarWidth() : int
+    public function getBarWidth(): int
     {
         return $this->barWidth;
     }
@@ -205,7 +205,7 @@ final class ProgressBar
     {
         $this->barChar = $char;
     }
-    public function getBarCharacter() : string
+    public function getBarCharacter(): string
     {
         return $this->barChar ?? ($this->max ? '=' : $this->emptyBarChar);
     }
@@ -213,7 +213,7 @@ final class ProgressBar
     {
         $this->emptyBarChar = $char;
     }
-    public function getEmptyBarCharacter() : string
+    public function getEmptyBarCharacter(): string
     {
         return $this->emptyBarChar;
     }
@@ -221,7 +221,7 @@ final class ProgressBar
     {
         $this->progressChar = $char;
     }
-    public function getProgressCharacter() : string
+    public function getProgressCharacter(): string
     {
         return $this->progressChar;
     }
@@ -239,11 +239,11 @@ final class ProgressBar
     {
         $this->redrawFreq = null !== $freq ? \max(1, $freq) : null;
     }
-    public function minSecondsBetweenRedraws(float $seconds) : void
+    public function minSecondsBetweenRedraws(float $seconds): void
     {
         $this->minSecondsBetweenRedraws = $seconds;
     }
-    public function maxSecondsBetweenRedraws(float $seconds) : void
+    public function maxSecondsBetweenRedraws(float $seconds): void
     {
         $this->maxSecondsBetweenRedraws = $seconds;
     }
@@ -252,11 +252,11 @@ final class ProgressBar
      *
      * @param int|null $max Number of steps to complete the bar (0 if indeterminate), if null it will be inferred from $iterable
      */
-    public function iterate(iterable $iterable, ?int $max = null) : iterable
+    public function iterate(iterable $iterable, ?int $max = null): iterable
     {
         $this->start($max ?? (\is_countable($iterable) ? \count($iterable) : 0));
         foreach ($iterable as $key => $value) {
-            (yield $key => $value);
+            yield $key => $value;
             $this->advance();
         }
         $this->finish();
@@ -328,7 +328,7 @@ final class ProgressBar
     /**
      * Finishes the progress output.
      */
-    public function finish() : void
+    public function finish(): void
     {
         if (!$this->max) {
             $this->max = $this->step;
@@ -342,7 +342,7 @@ final class ProgressBar
     /**
      * Outputs the current progress string.
      */
-    public function display() : void
+    public function display(): void
     {
         if (OutputInterface::VERBOSITY_QUIET === $this->output->getVerbosity()) {
             return;
@@ -359,7 +359,7 @@ final class ProgressBar
      * while a progress bar is running.
      * Call display() to show the progress bar again.
      */
-    public function clear() : void
+    public function clear(): void
     {
         if (!$this->overwrite) {
             return;
@@ -383,7 +383,7 @@ final class ProgressBar
     /**
      * Overwrites a previous message to the output.
      */
-    private function overwrite(string $message) : void
+    private function overwrite(string $message): void
     {
         if ($this->previousMessage === $message) {
             return;
@@ -420,7 +420,7 @@ final class ProgressBar
         $this->output->write($message);
         ++$this->writeCount;
     }
-    private function determineBestFormat() : string
+    private function determineBestFormat(): string
     {
         switch ($this->output->getVerbosity()) {
             // OutputInterface::VERBOSITY_QUIET: display is disabled anyway
@@ -434,7 +434,7 @@ final class ProgressBar
                 return $this->max ? self::FORMAT_NORMAL : self::FORMAT_NORMAL_NOMAX;
         }
     }
-    private static function initPlaceholderFormatters() : array
+    private static function initPlaceholderFormatters(): array
     {
         return ['bar' => function (self $bar, OutputInterface $output) {
             $completeBars = $bar->getBarOffset();
@@ -466,11 +466,11 @@ final class ProgressBar
             return \floor($bar->getProgressPercent() * 100);
         }];
     }
-    private static function initFormats() : array
+    private static function initFormats(): array
     {
         return [self::FORMAT_NORMAL => ' %current%/%max% [%bar%] %percent:3s%%', self::FORMAT_NORMAL_NOMAX => ' %current% [%bar%]', self::FORMAT_VERBOSE => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%', self::FORMAT_VERBOSE_NOMAX => ' %current% [%bar%] %elapsed:6s%', self::FORMAT_VERY_VERBOSE => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s%', self::FORMAT_VERY_VERBOSE_NOMAX => ' %current% [%bar%] %elapsed:6s%', self::FORMAT_DEBUG => ' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%', self::FORMAT_DEBUG_NOMAX => ' %current% [%bar%] %elapsed:6s% %memory:6s%'];
     }
-    private function buildLine() : string
+    private function buildLine(): string
     {
         $regex = "{%([a-z\\-_]+)(?:\\:([^%]+))?%}i";
         $callback = function ($matches) {

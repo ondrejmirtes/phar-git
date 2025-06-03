@@ -31,7 +31,7 @@ class CiDetector
     {
         $this->environment = new Env();
     }
-    public static function fromEnvironment(Env $environment) : self
+    public static function fromEnvironment(Env $environment): self
     {
         $detector = new static();
         $detector->environment = $environment;
@@ -40,7 +40,7 @@ class CiDetector
     /**
      * Is current environment an recognized CI server?
      */
-    public function isCiDetected() : bool
+    public function isCiDetected(): bool
     {
         $ciServer = $this->detectCurrentCiServer();
         return $ciServer !== null;
@@ -50,7 +50,7 @@ class CiDetector
      *
      * @throws CiNotDetectedException
      */
-    public function detect() : CiInterface
+    public function detect(): CiInterface
     {
         $ciServer = $this->detectCurrentCiServer();
         if ($ciServer === null) {
@@ -61,11 +61,11 @@ class CiDetector
     /**
      * @return string[]
      */
-    protected function getCiServers() : array
+    protected function getCiServers(): array
     {
         return [Ci\AppVeyor::class, Ci\AwsCodeBuild::class, Ci\Bamboo::class, Ci\BitbucketPipelines::class, Ci\Buddy::class, Ci\Circle::class, Ci\Codeship::class, Ci\Continuousphp::class, Ci\Drone::class, Ci\GitHubActions::class, Ci\GitLab::class, Ci\Jenkins::class, Ci\TeamCity::class, Ci\Travis::class, Ci\Wercker::class];
     }
-    protected function detectCurrentCiServer() : ?CiInterface
+    protected function detectCurrentCiServer(): ?CiInterface
     {
         $ciServers = $this->getCiServers();
         foreach ($ciServers as $ciClass) {

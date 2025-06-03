@@ -14,7 +14,7 @@ final class LazyExpressionTypeResolverExtensionRegistryProvider implements \PHPS
     {
         $this->container = $container;
     }
-    public function getRegistry() : ExpressionTypeResolverExtensionRegistry
+    public function getRegistry(): ExpressionTypeResolverExtensionRegistry
     {
         if ($this->registry === null) {
             $this->registry = new ExpressionTypeResolverExtensionRegistry($this->container->getServicesByTag(BrokerFactory::EXPRESSION_TYPE_RESOLVER_EXTENSION_TAG));

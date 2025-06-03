@@ -31,18 +31,18 @@ final class InstantiationCallableNode extends Expr implements \PHPStan\Node\Virt
     {
         return $this->class;
     }
-    public function getOriginalNode() : Expr\New_
+    public function getOriginalNode(): Expr\New_
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InstantiationCallableNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

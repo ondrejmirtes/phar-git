@@ -31,14 +31,14 @@ final class RestrictedStaticMethodCallableUsageRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return StaticMethodCallableNode::class;
     }
     /**
      * @api
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getName() instanceof Identifier) {
             return [];

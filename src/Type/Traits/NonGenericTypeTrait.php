@@ -8,11 +8,11 @@ use PHPStan\Type\Generic\TemplateTypeVariance;
 use PHPStan\Type\Type;
 trait NonGenericTypeTrait
 {
-    public function inferTemplateTypes(Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): TemplateTypeMap
     {
         return TemplateTypeMap::createEmpty();
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         return [];
     }

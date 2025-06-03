@@ -50,13 +50,13 @@ abstract class Helper implements HelperInterface
      * Returns the width of a string, using mb_strwidth if it is available.
      * The width is how many characters positions the string will use.
      */
-    public static function width(?string $string) : int
+    public static function width(?string $string): int
     {
-        $string ?? ($string = '');
+        $string ?? $string = '';
         if (\preg_match('//u', $string)) {
             return (new UnicodeString($string))->width(\false);
         }
-        if (\false === ($encoding = \mb_detect_encoding($string, null, \true))) {
+        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
             return \strlen($string);
         }
         return \mb_strwidth($string, $encoding);
@@ -65,13 +65,13 @@ abstract class Helper implements HelperInterface
      * Returns the length of a string, using mb_strlen if it is available.
      * The length is related to how many bytes the string will use.
      */
-    public static function length(?string $string) : int
+    public static function length(?string $string): int
     {
-        $string ?? ($string = '');
+        $string ?? $string = '';
         if (\preg_match('//u', $string)) {
             return (new UnicodeString($string))->length();
         }
-        if (\false === ($encoding = \mb_detect_encoding($string, null, \true))) {
+        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
             return \strlen($string);
         }
         return \mb_strlen($string, $encoding);
@@ -83,8 +83,8 @@ abstract class Helper implements HelperInterface
      */
     public static function substr(?string $string, int $from, ?int $length = null)
     {
-        $string ?? ($string = '');
-        if (\false === ($encoding = \mb_detect_encoding($string, null, \true))) {
+        $string ?? $string = '';
+        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
             return \substr($string, $from, $length);
         }
         return \mb_substr($string, $from, $length, $encoding);
@@ -133,7 +133,7 @@ abstract class Helper implements HelperInterface
         // remove already formatted characters
         $string = \preg_replace("/\x1b\\[[^m]*m/", '', $string ?? '');
         // remove terminal hyperlinks
-        $string = \preg_replace('/\\033]8;[^;]*;[^\\033]*\\033\\\\/', '', $string ?? '');
+        $string = \preg_replace('/\033]8;[^;]*;[^\033]*\033\\\\/', '', $string ?? '');
         $formatter->setDecorated($isDecorated);
         return $string;
     }

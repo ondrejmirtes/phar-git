@@ -29,12 +29,12 @@ class CompilerContext
         $this->reflector = $reflector;
         $this->contextReflection = $contextReflection;
     }
-    public function getReflector() : Reflector
+    public function getReflector(): Reflector
     {
         return $this->reflector;
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         if ($this->contextReflection instanceof ReflectionConstant) {
             $fileName = $this->contextReflection->getFileName();
@@ -49,11 +49,11 @@ class CompilerContext
         }
         return $this->realPath($fileName);
     }
-    private function realPath(string $fileName) : string
+    private function realPath(string $fileName): string
     {
         return FileHelper::normalizePath($fileName, '/');
     }
-    public function getNamespace() : ?string
+    public function getNamespace(): ?string
     {
         if ($this->contextReflection instanceof ReflectionConstant) {
             return $this->contextReflection->getNamespaceName();
@@ -61,7 +61,7 @@ class CompilerContext
         // @infection-ignore-all Coalesce: There's no difference
         return (($nullsafeVariable3 = $this->getClass()) ? $nullsafeVariable3->getNamespaceName() : null) ?? (($nullsafeVariable4 = $this->getFunction()) ? $nullsafeVariable4->getNamespaceName() : null);
     }
-    public function getClass() : ?\PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getClass(): ?\PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         if ($this->contextReflection instanceof ReflectionClass) {
             return $this->contextReflection;

@@ -8,7 +8,7 @@ use PhpParser\NodeVisitorAbstract;
 use PHPStan\Node\Expr\AlwaysRememberedExpr;
 final class UnwrapVirtualNodesVisitor extends NodeVisitorAbstract
 {
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\Match_) {
             return null;

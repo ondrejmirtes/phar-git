@@ -18,11 +18,11 @@ use function sprintf;
  */
 final class TooWideClosureReturnTypehintRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClosureReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $closureExpr = $node->getClosureExpr();
         if ($closureExpr->returnType === null) {

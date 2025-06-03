@@ -45,18 +45,18 @@ final class StaticMethodCallableNode extends Expr implements \PHPStan\Node\Virtu
     {
         return $this->name;
     }
-    public function getOriginalNode() : Expr\StaticCall
+    public function getOriginalNode(): Expr\StaticCall
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_StaticMethodCallableNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

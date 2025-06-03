@@ -14,15 +14,15 @@ final class LazyDynamicThrowTypeExtensionProvider implements \PHPStan\Dependency
     {
         $this->container = $container;
     }
-    public function getDynamicFunctionThrowTypeExtensions() : array
+    public function getDynamicFunctionThrowTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::FUNCTION_TAG);
     }
-    public function getDynamicMethodThrowTypeExtensions() : array
+    public function getDynamicMethodThrowTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::METHOD_TAG);
     }
-    public function getDynamicStaticMethodThrowTypeExtensions() : array
+    public function getDynamicStaticMethodThrowTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::STATIC_METHOD_TAG);
     }

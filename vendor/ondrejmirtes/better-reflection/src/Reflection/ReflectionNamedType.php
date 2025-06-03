@@ -46,7 +46,7 @@ class ReflectionNamedType extends \PHPStan\BetterReflection\Reflection\Reflectio
         return $clone;
     }
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -55,11 +55,11 @@ class ReflectionNamedType extends \PHPStan\BetterReflection\Reflection\Reflectio
      *
      * @see https://php.net/manual/en/reflectiontype.isbuiltin.php
      */
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return array_key_exists(strtolower($this->name), self::BUILT_IN_TYPES);
     }
-    public function getClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         if (!$this->isBuiltin()) {
             return $this->reflector->reflectClass($this->name);
@@ -85,7 +85,7 @@ class ReflectionNamedType extends \PHPStan\BetterReflection\Reflection\Reflectio
         }
         throw new LogicException(sprintf('The type %s cannot be resolved to class', $this->name));
     }
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         switch (strtolower($this->name)) {
             case 'mixed':
@@ -96,12 +96,12 @@ class ReflectionNamedType extends \PHPStan\BetterReflection\Reflection\Reflectio
                 return \false;
         }
     }
-    public function isIdentifier() : bool
+    public function isIdentifier(): bool
     {
         return $this->type instanceof Identifier;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getName();
     }

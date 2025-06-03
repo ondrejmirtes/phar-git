@@ -31,15 +31,15 @@ final class StrContainingTypeSpecifyingExtension implements FunctionTypeSpecifyi
 {
     private const STR_CONTAINING_FUNCTIONS = ['fnmatch' => [1, 0], 'str_contains' => [0, 1], 'str_starts_with' => [0, 1], 'str_ends_with' => [0, 1], 'strpos' => [0, 1], 'strrpos' => [0, 1], 'stripos' => [0, 1], 'strripos' => [0, 1], 'strstr' => [0, 1], 'mb_strpos' => [0, 1], 'mb_strrpos' => [0, 1], 'mb_stripos' => [0, 1], 'mb_strripos' => [0, 1], 'mb_strstr' => [0, 1]];
     private TypeSpecifier $typeSpecifier;
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return array_key_exists(strtolower($functionReflection->getName()), self::STR_CONTAINING_FUNCTIONS) && $context->true();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $args = $node->getArgs();
         if (count($args) >= 2) {

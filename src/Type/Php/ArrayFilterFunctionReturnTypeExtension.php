@@ -17,11 +17,11 @@ final class ArrayFilterFunctionReturnTypeExtension implements DynamicFunctionRet
     {
         $this->arrayFilterFunctionReturnTypeHelper = $arrayFilterFunctionReturnTypeHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_filter';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $arrayArg = $functionCall->getArgs()[0]->value ?? null;
         $callbackArg = $functionCall->getArgs()[1]->value ?? null;

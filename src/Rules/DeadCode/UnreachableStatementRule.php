@@ -13,11 +13,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class UnreachableStatementRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return UnreachableStatementNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return [RuleErrorBuilder::message('Unreachable statement - code above always terminates.')->identifier('deadCode.unreachable')->build()];
     }

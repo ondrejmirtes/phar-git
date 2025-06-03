@@ -53,26 +53,26 @@ final class RegexCapturingGroup
         $this->forceNonOptional = $forceNonOptional;
         $this->forceType = $forceType;
     }
-    public function getId() : int
+    public function getId(): int
     {
         return $this->id;
     }
-    public function forceNonOptional() : self
+    public function forceNonOptional(): self
     {
         return new self($this->id, $this->name, $this->alternation, $this->inOptionalQuantification, $this->parent, $this->type, \true, $this->forceType);
     }
-    public function forceType(Type $type) : self
+    public function forceType(Type $type): self
     {
         return new self($this->id, $this->name, $this->alternation, $this->inOptionalQuantification, $this->parent, $type, $this->forceNonOptional, $this->forceType);
     }
     /**
      * @param \PHPStan\Type\Regex\RegexCapturingGroup|\PHPStan\Type\Regex\RegexNonCapturingGroup $parent
      */
-    public function withParent($parent) : self
+    public function withParent($parent): self
     {
         return new self($this->id, $this->name, $this->alternation, $this->inOptionalQuantification, $parent, $this->type, $this->forceNonOptional, $this->forceType);
     }
-    public function resetsGroupCounter() : bool
+    public function resetsGroupCounter(): bool
     {
         return $this->parent instanceof \PHPStan\Type\Regex\RegexNonCapturingGroup && $this->parent->resetsGroupCounter();
     }
@@ -80,33 +80,33 @@ final class RegexCapturingGroup
      * @phpstan-assert-if-true !null $this->getAlternationId()
      * @phpstan-assert-if-true !null $this->getAlternation()
      */
-    public function inAlternation() : bool
+    public function inAlternation(): bool
     {
         return $this->alternation !== null;
     }
-    public function getAlternation() : ?\PHPStan\Type\Regex\RegexAlternation
+    public function getAlternation(): ?\PHPStan\Type\Regex\RegexAlternation
     {
         return $this->alternation;
     }
-    public function getAlternationId() : ?int
+    public function getAlternationId(): ?int
     {
         if ($this->alternation === null) {
             return null;
         }
         return $this->alternation->getId();
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         if ($this->forceNonOptional) {
             return \false;
         }
         return $this->inAlternation() || $this->inOptionalQuantification || $this->parent !== null && $this->parent->isOptional();
     }
-    public function inOptionalQuantification() : bool
+    public function inOptionalQuantification(): bool
     {
         return $this->inOptionalQuantification;
     }
-    public function inOptionalAlternation() : bool
+    public function inOptionalAlternation(): bool
     {
         if (!$this->inAlternation()) {
             return \false;
@@ -120,20 +120,20 @@ final class RegexCapturingGroup
         }
         return $parent !== null && $parent->isOptional();
     }
-    public function isTopLevel() : bool
+    public function isTopLevel(): bool
     {
         return $this->parent === null || $this->parent instanceof \PHPStan\Type\Regex\RegexNonCapturingGroup && $this->parent->isTopLevel();
     }
     /** @phpstan-assert-if-true !null $this->getName() */
-    public function isNamed() : bool
+    public function isNamed(): bool
     {
         return $this->name !== null;
     }
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         if ($this->forceType !== null) {
             return $this->forceType;

@@ -18,7 +18,7 @@ final class VarianceCheck
      * @param 'function'|'method' $identifier
      * @return list<IdentifierRuleError>
      */
-    public function checkParametersAcceptor(ExtendedParametersAcceptor $parametersAcceptor, string $parameterTypeMessage, string $parameterOutTypeMessage, string $returnTypeMessage, string $generalMessage, bool $isStatic, bool $isPrivate, string $identifier) : array
+    public function checkParametersAcceptor(ExtendedParametersAcceptor $parametersAcceptor, string $parameterTypeMessage, string $parameterOutTypeMessage, string $returnTypeMessage, string $generalMessage, bool $isStatic, bool $isPrivate, string $identifier): array
     {
         $errors = [];
         foreach ($parametersAcceptor->getTemplateTypeMap()->getTypes() as $templateType) {
@@ -54,7 +54,7 @@ final class VarianceCheck
         return $errors;
     }
     /** @return list<IdentifierRuleError> */
-    public function check(TemplateTypeVariance $positionVariance, Type $type, string $messageContext) : array
+    public function check(TemplateTypeVariance $positionVariance, Type $type, string $messageContext): array
     {
         $errors = [];
         foreach ($type->getReferencedTemplateTypes($positionVariance) as $reference) {
@@ -66,7 +66,7 @@ final class VarianceCheck
         }
         return $errors;
     }
-    private function isTemplateTypeVarianceValid(TemplateTypeVariance $positionVariance, TemplateType $type) : bool
+    private function isTemplateTypeVarianceValid(TemplateTypeVariance $positionVariance, TemplateType $type): bool
     {
         return $positionVariance->validPosition($type->getVariance());
     }

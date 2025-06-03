@@ -27,7 +27,7 @@ final class ConstructorsHelper
     /**
      * @return list<string>
      */
-    public function getConstructors(\PHPStan\Reflection\ClassReflection $classReflection) : array
+    public function getConstructors(\PHPStan\Reflection\ClassReflection $classReflection): array
     {
         if (array_key_exists($classReflection->getName(), $this->additionalConstructorsCache)) {
             return $this->additionalConstructorsCache[$classReflection->getName()];

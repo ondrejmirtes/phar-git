@@ -24,6 +24,6 @@ use PHPStan\Reflection\ParameterReflection;
  */
 interface MethodParameterClosureTypeExtension
 {
-    public function isMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter) : bool;
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, ParameterReflection $parameter, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter): bool;
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, ParameterReflection $parameter, Scope $scope): ?\PHPStan\Type\Type;
 }

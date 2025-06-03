@@ -9,5 +9,5 @@ interface AlwaysUsedClassConstantsExtensionProvider
     /**
      * @return AlwaysUsedClassConstantsExtension[]
      */
-    public function getExtensions() : array;
+    public function getExtensions(): array;
 }

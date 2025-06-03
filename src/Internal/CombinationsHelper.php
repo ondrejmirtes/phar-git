@@ -10,11 +10,11 @@ final class CombinationsHelper
      * @param array<mixed> $arrays
      * @return iterable<mixed>
      */
-    public static function combinations(array $arrays) : iterable
+    public static function combinations(array $arrays): iterable
     {
         // from https://stackoverflow.com/a/70800936/565782 by Arnaud Le Blanc
         if ($arrays === []) {
-            (yield []);
+            yield [];
             return;
         }
         $head = array_shift($arrays);
@@ -24,7 +24,7 @@ final class CombinationsHelper
                 foreach ($combination as $c) {
                     $comb[] = $c;
                 }
-                (yield $comb);
+                yield $comb;
             }
         }
     }

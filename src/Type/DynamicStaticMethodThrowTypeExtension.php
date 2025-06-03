@@ -25,6 +25,6 @@ use PHPStan\Reflection\MethodReflection;
  */
 interface DynamicStaticMethodThrowTypeExtension
 {
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool;
-    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool;
+    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?\PHPStan\Type\Type;
 }

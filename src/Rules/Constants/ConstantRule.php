@@ -18,11 +18,11 @@ final class ConstantRule implements Rule
     {
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ConstFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->hasConstant($node->name)) {
             $errorBuilder = RuleErrorBuilder::message(sprintf('Constant %s not found.', (string) $node->name))->identifier('constant.notFound');

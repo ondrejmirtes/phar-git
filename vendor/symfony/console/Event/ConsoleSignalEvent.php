@@ -24,7 +24,7 @@ final class ConsoleSignalEvent extends ConsoleEvent
         parent::__construct($command, $input, $output);
         $this->handlingSignal = $handlingSignal;
     }
-    public function getHandlingSignal() : int
+    public function getHandlingSignal(): int
     {
         return $this->handlingSignal;
     }

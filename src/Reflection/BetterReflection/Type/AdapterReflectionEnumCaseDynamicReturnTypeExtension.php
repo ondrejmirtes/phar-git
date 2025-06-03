@@ -31,15 +31,15 @@ final class AdapterReflectionEnumCaseDynamicReturnTypeExtension implements Dynam
         $this->phpVersion = $phpVersion;
         $this->class = $class;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return $this->class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return in_array($methodReflection->getName(), ['getDocComment', 'getType'], \true);
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if ($this->phpVersion->getVersionId() >= 80000) {
             return null;

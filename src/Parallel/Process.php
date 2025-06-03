@@ -42,7 +42,7 @@ final class Process
      * @param callable(Throwable $exception): void $onError
      * @param callable(?int $exitCode, string $output) : void $onExit
      */
-    public function start(callable $onData, callable $onError, callable $onExit) : void
+    public function start(callable $onData, callable $onError, callable $onExit): void
     {
         $tmpStdOut = tmpfile();
         if ($tmpStdOut === \false) {
@@ -58,7 +58,7 @@ final class Process
         $this->process->start($this->loop);
         $this->onData = $onData;
         $this->onError = $onError;
-        $this->process->on('exit', function ($exitCode) use($onExit) : void {
+        $this->process->on('exit', function ($exitCode) use ($onExit): void {
             $this->cancelTimer();
             $output = '';
             rewind($this->stdOut);
@@ -76,7 +76,7 @@ final class Process
             fclose($this->stdErr);
         });
     }
-    private function cancelTimer() : void
+    private function cancelTimer(): void
     {
         if ($this->timer === null) {
             return;
@@ -87,19 +87,19 @@ final class Process
     /**
      * @param mixed[] $data
      */
-    public function request(array $data) : void
+    public function request(array $data): void
     {
         $this->cancelTimer();
         if ($this->in === null) {
             throw new ShouldNotHappenException();
         }
         $this->in->write($data);
-        $this->timer = $this->loop->addTimer($this->timeoutSeconds, function () : void {
+        $this->timer = $this->loop->addTimer($this->timeoutSeconds, function (): void {
             $onError = $this->onError;
             $onError(new \PHPStan\Parallel\ProcessTimedOutException(sprintf('Child process timed out after %.1f seconds. Try making it longer with parallel.processTimeout setting.', $this->timeoutSeconds)));
         });
     }
-    public function quit() : void
+    public function quit(): void
     {
         $this->cancelTimer();
         if (!$this->process->isRunning()) {
@@ -113,9 +113,9 @@ final class Process
         }
         $this->in->end();
     }
-    public function bindConnection(ReadableStreamInterface $out, WritableStreamInterface $in) : void
+    public function bindConnection(ReadableStreamInterface $out, WritableStreamInterface $in): void
     {
-        $out->on('data', function (array $json) : void {
+        $out->on('data', function (array $json): void {
             $this->cancelTimer();
             if ($json['action'] !== 'result') {
                 return;
@@ -124,11 +124,11 @@ final class Process
             $onData($json['result']);
         });
         $this->in = $in;
-        $out->on('error', function (Throwable $error) : void {
+        $out->on('error', function (Throwable $error): void {
             $onError = $this->onError;
             $onError($error);
         });
-        $in->on('error', function (Throwable $error) : void {
+        $in->on('error', function (Throwable $error): void {
             $onError = $this->onError;
             $onError($error);
         });

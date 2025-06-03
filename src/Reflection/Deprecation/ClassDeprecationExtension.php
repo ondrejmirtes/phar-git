@@ -26,5 +26,5 @@ interface ClassDeprecationExtension
     /**
      * @param \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum $reflection
      */
-    public function getClassDeprecation($reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation;
+    public function getClassDeprecation($reflection): ?\PHPStan\Reflection\Deprecation\Deprecation;
 }

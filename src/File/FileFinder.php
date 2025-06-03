@@ -30,7 +30,7 @@ final class FileFinder
     /**
      * @param string[] $paths
      */
-    public function findFiles(array $paths) : \PHPStan\File\FileFinderResult
+    public function findFiles(array $paths): \PHPStan\File\FileFinderResult
     {
         $onlyFiles = \true;
         $files = [];

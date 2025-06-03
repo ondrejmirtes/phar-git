@@ -20,7 +20,7 @@ use function array_values;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class IsAFunctionTypeSpecifyingHelper
 {
-    public function determineType(Type $objectOrClassType, Type $classType, bool $allowString, bool $allowSameClass) : Type
+    public function determineType(Type $objectOrClassType, Type $classType, bool $allowString, bool $allowSameClass): Type
     {
         $objectOrClassTypeClassNames = $objectOrClassType->getObjectClassNames();
         if ($allowString) {
@@ -29,7 +29,7 @@ final class IsAFunctionTypeSpecifyingHelper
             }
             $objectOrClassTypeClassNames = array_values(array_unique($objectOrClassTypeClassNames));
         }
-        return TypeTraverser::map($classType, static function (Type $type, callable $traverse) use($objectOrClassTypeClassNames, $allowString, $allowSameClass) : Type {
+        return TypeTraverser::map($classType, static function (Type $type, callable $traverse) use ($objectOrClassTypeClassNames, $allowString, $allowSameClass): Type {
             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                 return $traverse($type);
             }

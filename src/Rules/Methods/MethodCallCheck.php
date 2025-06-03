@@ -39,7 +39,7 @@ final class MethodCallCheck
      * @return array{list<IdentifierRuleError>, ExtendedMethodReflection|null}
      * @param \PhpParser\Node\Identifier|\PhpParser\Node\Expr $astName
      */
-    public function check(Scope $scope, string $methodName, Expr $var, $astName) : array
+    public function check(Scope $scope, string $methodName, Expr $var, $astName): array
     {
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, NullsafeOperatorHelper::getNullsafeShortcircuitedExprRespectingScope($scope, $var), sprintf('Call to method %s() on an unknown class %%s.', SprintfHelper::escapeFormatString($methodName)), static fn(Type $type): bool => $type->canCallMethods()->yes() && $type->hasMethod($methodName)->yes());
         $type = $typeResult->getType();

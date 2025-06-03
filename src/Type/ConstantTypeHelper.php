@@ -28,7 +28,7 @@ final class ConstantTypeHelper
     /**
      * @param mixed $value
      */
-    public static function getTypeFromValue($value) : \PHPStan\Type\Type
+    public static function getTypeFromValue($value): \PHPStan\Type\Type
     {
         if (is_int($value)) {
             return new ConstantIntegerType($value);

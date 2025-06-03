@@ -130,7 +130,7 @@ final class TypeSpecifier
         }
     }
     /** @api */
-    public function specifyTypesInCondition(\PHPStan\Analyser\Scope $scope, Expr $expr, \PHPStan\Analyser\TypeSpecifierContext $context) : \PHPStan\Analyser\SpecifiedTypes
+    public function specifyTypesInCondition(\PHPStan\Analyser\Scope $scope, Expr $expr, \PHPStan\Analyser\TypeSpecifierContext $context): \PHPStan\Analyser\SpecifiedTypes
     {
         if ($expr instanceof Expr\CallLike && $expr->isFirstClassCallable()) {
             return (new \PHPStan\Analyser\SpecifiedTypes([], []))->setRootExpr($expr);
@@ -157,7 +157,7 @@ final class TypeSpecifier
             }
             $classType = $scope->getType($expr->class);
             $uncertainty = \false;
-            $type = TypeTraverser::map($classType, static function (Type $type, callable $traverse) use(&$uncertainty) : Type {
+            $type = TypeTraverser::map($classType, static function (Type $type, callable $traverse) use (&$uncertainty): Type {
                 if ($type instanceof UnionType || $type instanceof IntersectionType) {
                     return $traverse($type);
                 }
@@ -649,7 +649,7 @@ final class TypeSpecifier
         }
         return (new \PHPStan\Analyser\SpecifiedTypes([], []))->setRootExpr($expr);
     }
-    private function specifyTypesForCountFuncCall(FuncCall $countFuncCall, Type $type, Type $sizeType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr) : ?\PHPStan\Analyser\SpecifiedTypes
+    private function specifyTypesForCountFuncCall(FuncCall $countFuncCall, Type $type, Type $sizeType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr): ?\PHPStan\Analyser\SpecifiedTypes
     {
         if (count($countFuncCall->getArgs()) === 1) {
             $isNormalCount = TrinaryLogic::createYes();
@@ -726,7 +726,7 @@ final class TypeSpecifier
         }
         return $this->create($countFuncCall->getArgs()[0]->value, TypeCombinator::union(...$resultTypes), $context, $scope)->setRootExpr($rootExpr);
     }
-    private function specifyTypesForConstantBinaryExpression(Expr $exprNode, Type $constantType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr) : ?\PHPStan\Analyser\SpecifiedTypes
+    private function specifyTypesForConstantBinaryExpression(Expr $exprNode, Type $constantType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr): ?\PHPStan\Analyser\SpecifiedTypes
     {
         if (!$context->null() && $constantType->isFalse()->yes()) {
             $types = $this->create($exprNode, $constantType, $context, $scope)->setRootExpr($rootExpr);
@@ -744,7 +744,7 @@ final class TypeSpecifier
         }
         return null;
     }
-    private function specifyTypesForConstantStringBinaryExpression(Expr $exprNode, Type $constantType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr) : ?\PHPStan\Analyser\SpecifiedTypes
+    private function specifyTypesForConstantStringBinaryExpression(Expr $exprNode, Type $constantType, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope, Expr $rootExpr): ?\PHPStan\Analyser\SpecifiedTypes
     {
         $scalarValues = $constantType->getConstantScalarValues();
         if (count($scalarValues) !== 1 || !is_string($scalarValues[0])) {
@@ -797,7 +797,7 @@ final class TypeSpecifier
         }
         return null;
     }
-    private function handleDefaultTruthyOrFalseyContext(\PHPStan\Analyser\TypeSpecifierContext $context, Expr $expr, \PHPStan\Analyser\Scope $scope) : \PHPStan\Analyser\SpecifiedTypes
+    private function handleDefaultTruthyOrFalseyContext(\PHPStan\Analyser\TypeSpecifierContext $context, Expr $expr, \PHPStan\Analyser\Scope $scope): \PHPStan\Analyser\SpecifiedTypes
     {
         if ($context->null()) {
             return (new \PHPStan\Analyser\SpecifiedTypes([], []))->setRootExpr($expr);
@@ -811,7 +811,7 @@ final class TypeSpecifier
         }
         return (new \PHPStan\Analyser\SpecifiedTypes([], []))->setRootExpr($expr);
     }
-    private function specifyTypesFromConditionalReturnType(\PHPStan\Analyser\TypeSpecifierContext $context, Expr\CallLike $call, ParametersAcceptor $parametersAcceptor, \PHPStan\Analyser\Scope $scope) : ?\PHPStan\Analyser\SpecifiedTypes
+    private function specifyTypesFromConditionalReturnType(\PHPStan\Analyser\TypeSpecifierContext $context, Expr\CallLike $call, ParametersAcceptor $parametersAcceptor, \PHPStan\Analyser\Scope $scope): ?\PHPStan\Analyser\SpecifiedTypes
     {
         if (!$parametersAcceptor instanceof ResolvedFunctionVariant) {
             return null;
@@ -852,7 +852,7 @@ final class TypeSpecifier
     /**
      * @param array<string, Expr> $argsMap
      */
-    public function getConditionalSpecifiedTypes(ConditionalTypeForParameter $conditionalType, Type $leftType, Type $rightType, \PHPStan\Analyser\Scope $scope, array $argsMap) : ?\PHPStan\Analyser\SpecifiedTypes
+    public function getConditionalSpecifiedTypes(ConditionalTypeForParameter $conditionalType, Type $leftType, Type $rightType, \PHPStan\Analyser\Scope $scope, array $argsMap): ?\PHPStan\Analyser\SpecifiedTypes
     {
         $parameterName = $conditionalType->getParameterName();
         if (!array_key_exists($parameterName, $argsMap)) {
@@ -877,7 +877,7 @@ final class TypeSpecifier
         }
         return $specifiedTypes;
     }
-    private function specifyTypesFromAsserts(\PHPStan\Analyser\TypeSpecifierContext $context, Expr\CallLike $call, Assertions $assertions, ParametersAcceptor $parametersAcceptor, \PHPStan\Analyser\Scope $scope) : ?\PHPStan\Analyser\SpecifiedTypes
+    private function specifyTypesFromAsserts(\PHPStan\Analyser\TypeSpecifierContext $context, Expr\CallLike $call, Assertions $assertions, ParametersAcceptor $parametersAcceptor, \PHPStan\Analyser\Scope $scope): ?\PHPStan\Analyser\SpecifiedTypes
     {
         if ($context->null()) {
             $asserts = $assertions->getAsserts();
@@ -916,7 +916,7 @@ final class TypeSpecifier
         $types = null;
         foreach ($asserts as $assert) {
             foreach ($argsMap[substr($assert->getParameter()->getParameterName(), 1)] ?? [] as $parameterExpr) {
-                $assertedType = TypeTraverser::map($assert->getType(), static function (Type $type, callable $traverse) use($argsMap, $scope) : Type {
+                $assertedType = TypeTraverser::map($assert->getType(), static function (Type $type, callable $traverse) use ($argsMap, $scope): Type {
                     if ($type instanceof ConditionalTypeForParameter) {
                         $parameterName = substr($type->getParameterName(), 1);
                         if (array_key_exists($parameterName, $argsMap)) {
@@ -929,7 +929,7 @@ final class TypeSpecifier
                 $assertExpr = $assert->getParameter()->getExpr($parameterExpr);
                 $templateTypeMap = $parametersAcceptor->getResolvedTemplateTypeMap();
                 $containsUnresolvedTemplate = \false;
-                TypeTraverser::map($assert->getOriginalType(), static function (Type $type, callable $traverse) use($templateTypeMap, &$containsUnresolvedTemplate) {
+                TypeTraverser::map($assert->getOriginalType(), static function (Type $type, callable $traverse) use ($templateTypeMap, &$containsUnresolvedTemplate) {
                     if ($type instanceof TemplateType && $type->getScope()->getClassName() !== null) {
                         $resolvedType = $templateTypeMap->getType($type->getName());
                         if ($resolvedType === null || $type->getBound()->equals($resolvedType)) {
@@ -956,7 +956,7 @@ final class TypeSpecifier
     /**
      * @return array<string, ConditionalExpressionHolder[]>
      */
-    private function processBooleanSureConditionalTypes(\PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\SpecifiedTypes $leftTypes, \PHPStan\Analyser\SpecifiedTypes $rightTypes) : array
+    private function processBooleanSureConditionalTypes(\PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\SpecifiedTypes $leftTypes, \PHPStan\Analyser\SpecifiedTypes $rightTypes): array
     {
         $conditionExpressionTypes = [];
         foreach ($leftTypes->getSureTypes() as $exprString => [$expr, $type]) {
@@ -1007,7 +1007,7 @@ final class TypeSpecifier
     /**
      * @return array<string, ConditionalExpressionHolder[]>
      */
-    private function processBooleanNotSureConditionalTypes(\PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\SpecifiedTypes $leftTypes, \PHPStan\Analyser\SpecifiedTypes $rightTypes) : array
+    private function processBooleanNotSureConditionalTypes(\PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\SpecifiedTypes $leftTypes, \PHPStan\Analyser\SpecifiedTypes $rightTypes): array
     {
         $conditionExpressionTypes = [];
         foreach ($leftTypes->getSureNotTypes() as $exprString => [$expr, $type]) {
@@ -1058,7 +1058,7 @@ final class TypeSpecifier
     /**
      * @return array{Expr, ConstantScalarType, Type}|null
      */
-    private function findTypeExpressionsFromBinaryOperation(\PHPStan\Analyser\Scope $scope, Node\Expr\BinaryOp $binaryOperation) : ?array
+    private function findTypeExpressionsFromBinaryOperation(\PHPStan\Analyser\Scope $scope, Node\Expr\BinaryOp $binaryOperation): ?array
     {
         $leftType = $scope->getType($binaryOperation->left);
         $rightType = $scope->getType($binaryOperation->right);
@@ -1078,7 +1078,7 @@ final class TypeSpecifier
         return null;
     }
     /** @api */
-    public function create(Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope) : \PHPStan\Analyser\SpecifiedTypes
+    public function create(Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope): \PHPStan\Analyser\SpecifiedTypes
     {
         if ($expr instanceof Instanceof_ || $expr instanceof Expr\List_) {
             return (new \PHPStan\Analyser\SpecifiedTypes([], []))->setRootExpr($expr);
@@ -1111,7 +1111,7 @@ final class TypeSpecifier
         }
         return $types;
     }
-    private function createForExpr(Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope) : \PHPStan\Analyser\SpecifiedTypes
+    private function createForExpr(Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context, \PHPStan\Analyser\Scope $scope): \PHPStan\Analyser\SpecifiedTypes
     {
         if ($context->true()) {
             $containsNull = !$type->isNull()->no() && !$scope->getType($expr)->isNull()->no();
@@ -1190,7 +1190,7 @@ final class TypeSpecifier
         }
         return $types;
     }
-    private function createNullsafeTypes(Expr $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context, ?Type $type) : \PHPStan\Analyser\SpecifiedTypes
+    private function createNullsafeTypes(Expr $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context, ?Type $type): \PHPStan\Analyser\SpecifiedTypes
     {
         if ($expr instanceof Expr\NullsafePropertyFetch) {
             if ($type !== null) {
@@ -1225,7 +1225,7 @@ final class TypeSpecifier
         }
         return new \PHPStan\Analyser\SpecifiedTypes([], []);
     }
-    private function createRangeTypes(?Expr $rootExpr, Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context) : \PHPStan\Analyser\SpecifiedTypes
+    private function createRangeTypes(?Expr $rootExpr, Expr $expr, Type $type, \PHPStan\Analyser\TypeSpecifierContext $context): \PHPStan\Analyser\SpecifiedTypes
     {
         $sureNotTypes = [];
         if ($type instanceof IntegerRangeType || $type instanceof ConstantIntegerType) {
@@ -1242,14 +1242,14 @@ final class TypeSpecifier
     /**
      * @return FunctionTypeSpecifyingExtension[]
      */
-    private function getFunctionTypeSpecifyingExtensions() : array
+    private function getFunctionTypeSpecifyingExtensions(): array
     {
         return $this->functionTypeSpecifyingExtensions;
     }
     /**
      * @return MethodTypeSpecifyingExtension[]
      */
-    private function getMethodTypeSpecifyingExtensionsForClass(string $className) : array
+    private function getMethodTypeSpecifyingExtensionsForClass(string $className): array
     {
         if ($this->methodTypeSpecifyingExtensionsByClass === null) {
             $byClass = [];
@@ -1263,7 +1263,7 @@ final class TypeSpecifier
     /**
      * @return StaticMethodTypeSpecifyingExtension[]
      */
-    private function getStaticMethodTypeSpecifyingExtensionsForClass(string $className) : array
+    private function getStaticMethodTypeSpecifyingExtensionsForClass(string $className): array
     {
         if ($this->staticMethodTypeSpecifyingExtensionsByClass === null) {
             $byClass = [];
@@ -1278,7 +1278,7 @@ final class TypeSpecifier
      * @param MethodTypeSpecifyingExtension[][]|StaticMethodTypeSpecifyingExtension[][] $extensions
      * @return mixed[]
      */
-    private function getTypeSpecifyingExtensionsForType(array $extensions, string $className) : array
+    private function getTypeSpecifyingExtensionsForType(array $extensions, string $className): array
     {
         $extensionsForClass = [[]];
         $class = $this->reflectionProvider->getClass($className);
@@ -1290,7 +1290,7 @@ final class TypeSpecifier
         }
         return array_merge(...$extensionsForClass);
     }
-    public function resolveEqual(Expr\BinaryOp\Equal $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context) : \PHPStan\Analyser\SpecifiedTypes
+    public function resolveEqual(Expr\BinaryOp\Equal $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context): \PHPStan\Analyser\SpecifiedTypes
     {
         $expressions = $this->findTypeExpressionsFromBinaryOperation($scope, $expr);
         if ($expressions !== null) {
@@ -1366,7 +1366,7 @@ final class TypeSpecifier
         $rightTypes = $this->create($expr->right, $rightType, $context, $scope)->setRootExpr($expr);
         return $context->true() ? $leftTypes->unionWith($rightTypes) : $leftTypes->normalize($scope)->intersectWith($rightTypes->normalize($scope));
     }
-    public function resolveIdentical(Expr\BinaryOp\Identical $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context) : \PHPStan\Analyser\SpecifiedTypes
+    public function resolveIdentical(Expr\BinaryOp\Identical $expr, \PHPStan\Analyser\Scope $scope, \PHPStan\Analyser\TypeSpecifierContext $context): \PHPStan\Analyser\SpecifiedTypes
     {
         // Normalize to: fn() === expr
         $leftExpr = $expr->left;

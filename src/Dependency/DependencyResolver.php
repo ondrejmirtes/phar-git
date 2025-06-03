@@ -43,7 +43,7 @@ final class DependencyResolver
         $this->exportedNodeResolver = $exportedNodeResolver;
         $this->fileTypeMapper = $fileTypeMapper;
     }
-    public function resolveDependencies(Node $node, Scope $scope) : \PHPStan\Dependency\NodeDependencies
+    public function resolveDependencies(Node $node, Scope $scope): \PHPStan\Dependency\NodeDependencies
     {
         $dependenciesReflections = [];
         if ($node instanceof Node\Stmt\Class_) {
@@ -437,7 +437,7 @@ final class DependencyResolver
         }
         return new \PHPStan\Dependency\NodeDependencies($this->fileHelper, $dependenciesReflections, $this->exportedNodeResolver->resolve($scope->getFile(), $node));
     }
-    public function resolveUsedTraitDependencies(InClassNode $inClassNode) : \PHPStan\Dependency\NodeDependencies
+    public function resolveUsedTraitDependencies(InClassNode $inClassNode): \PHPStan\Dependency\NodeDependencies
     {
         $dependenciesReflections = [];
         foreach ($inClassNode->getClassReflection()->getTraits(\true) as $trait) {
@@ -445,7 +445,7 @@ final class DependencyResolver
         }
         return new \PHPStan\Dependency\NodeDependencies($this->fileHelper, $dependenciesReflections, null);
     }
-    private function considerArrayForCallableTest(Scope $scope, Array_ $arrayNode) : bool
+    private function considerArrayForCallableTest(Scope $scope, Array_ $arrayNode): bool
     {
         $items = $arrayNode->items;
         if (count($items) !== 2) {
@@ -457,7 +457,7 @@ final class DependencyResolver
     /**
      * @param array<int, ClassReflection|FunctionReflection> $dependenciesReflections
      */
-    private function addClassToDependencies(string $className, array &$dependenciesReflections) : void
+    private function addClassToDependencies(string $className, array &$dependenciesReflections): void
     {
         try {
             $classReflection = $this->reflectionProvider->getClass($className);
@@ -575,14 +575,14 @@ final class DependencyResolver
             $classReflection = $classReflection->getParentClass();
         } while ($classReflection !== null);
     }
-    private function getFunctionReflection(Node\Name $nameNode, ?Scope $scope) : FunctionReflection
+    private function getFunctionReflection(Node\Name $nameNode, ?Scope $scope): FunctionReflection
     {
         return $this->reflectionProvider->getFunction($nameNode, $scope);
     }
     /**
      * @param array<ClassReflection|FunctionReflection> $dependenciesReflections
      */
-    private function extractFromParametersAcceptor(ExtendedParametersAcceptor $parametersAcceptor, array &$dependenciesReflections) : void
+    private function extractFromParametersAcceptor(ExtendedParametersAcceptor $parametersAcceptor, array &$dependenciesReflections): void
     {
         foreach ($parametersAcceptor->getParameters() as $parameter) {
             $referencedClasses = array_merge($parameter->getNativeType()->getReferencedClasses(), $parameter->getPhpDocType()->getReferencedClasses());
@@ -609,7 +609,7 @@ final class DependencyResolver
     /**
      * @param array<ClassReflection|FunctionReflection> $dependenciesReflections
      */
-    private function extractThrowType(?Type $throwType, array &$dependenciesReflections) : void
+    private function extractThrowType(?Type $throwType, array &$dependenciesReflections): void
     {
         if ($throwType === null) {
             return;

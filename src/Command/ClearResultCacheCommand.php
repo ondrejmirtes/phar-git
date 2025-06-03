@@ -26,11 +26,11 @@ final class ClearResultCacheCommand extends Command
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
         parent::__construct();
     }
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName(self::NAME)->setDescription('Clears the result cache.')->setDefinition([new InputOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Path to project configuration file'), new InputOption('autoload-file', 'a', InputOption::VALUE_REQUIRED, 'Project\'s additional autoload file path'), new InputOption('debug', null, InputOption::VALUE_NONE, 'Show debug information - which file is analysed, do not catch internal errors'), new InputOption('memory-limit', null, InputOption::VALUE_REQUIRED, 'Memory limit for clearing result cache'), new InputOption('xdebug', null, InputOption::VALUE_NONE, 'Allow running with Xdebug for debugging purposes')]);
     }
-    protected function initialize(InputInterface $input, OutputInterface $output) : void
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         if ((bool) $input->getOption('debug')) {
             $application = $this->getApplication();
@@ -41,7 +41,7 @@ final class ClearResultCacheCommand extends Command
             return;
         }
     }
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $autoloadFile = $input->getOption('autoload-file');
         $configuration = $input->getOption('configuration');

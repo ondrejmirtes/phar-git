@@ -29,11 +29,11 @@ final class CallToStaticMethodStatementWithoutSideEffectsRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NoopExpressionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $staticCall = $node->getOriginalExpr();
         if (!$staticCall instanceof Node\Expr\StaticCall) {

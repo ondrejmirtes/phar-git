@@ -15,22 +15,22 @@ final class VariableAssignNode extends NodeAbstract implements \PHPStan\Node\Vir
         $this->assignedExpr = $assignedExpr;
         parent::__construct($variable->getAttributes());
     }
-    public function getVariable() : Expr\Variable
+    public function getVariable(): Expr\Variable
     {
         return $this->variable;
     }
-    public function getAssignedExpr() : Expr
+    public function getAssignedExpr(): Expr
     {
         return $this->assignedExpr;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_VariableAssignNodeNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

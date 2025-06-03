@@ -17,7 +17,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
     {
         parent::__construct($types, $normalized);
     }
-    public function filterTypes(callable $filterCb) : \PHPStan\Type\Type
+    public function filterTypes(callable $filterCb): \PHPStan\Type\Type
     {
         $result = parent::filterTypes($filterCb);
         if (!$result instanceof self && $result instanceof \PHPStan\Type\UnionType) {
@@ -25,11 +25,11 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $result;
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return '(' . parent::describe($level) . ')';
     }
-    protected function unionTypes(callable $getType) : \PHPStan\Type\Type
+    protected function unionTypes(callable $getType): \PHPStan\Type\Type
     {
         $resultTypes = [];
         foreach ($this->getTypes() as $type) {
@@ -44,7 +44,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return \PHPStan\Type\TypeUtils::toBenevolentUnion(\PHPStan\Type\TypeCombinator::union(...$resultTypes));
     }
-    protected function pickFromTypes(callable $getValues, callable $criteria) : array
+    protected function pickFromTypes(callable $getValues, callable $criteria): array
     {
         $values = [];
         foreach ($this->getTypes() as $type) {
@@ -58,7 +58,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $values;
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         $types = [];
         foreach ($this->getTypes() as $innerType) {
@@ -73,11 +73,11 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return \PHPStan\Type\TypeUtils::toBenevolentUnion(\PHPStan\Type\TypeCombinator::union(...$types));
     }
-    protected function unionResults(callable $getResult) : TrinaryLogic
+    protected function unionResults(callable $getResult): TrinaryLogic
     {
         return TrinaryLogic::createNo()->lazyOr($this->getTypes(), $getResult);
     }
-    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         $result = \PHPStan\Type\AcceptsResult::createNo();
         foreach ($this->getTypes() as $innerType) {
@@ -85,7 +85,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $result;
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         $types = TemplateTypeMap::createEmpty();
         foreach ($this->getTypes() as $type) {
@@ -93,7 +93,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $types;
     }
-    public function inferTemplateTypesOn(\PHPStan\Type\Type $templateType) : TemplateTypeMap
+    public function inferTemplateTypesOn(\PHPStan\Type\Type $templateType): TemplateTypeMap
     {
         $types = TemplateTypeMap::createEmpty();
         foreach ($this->getTypes() as $type) {
@@ -101,7 +101,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $types;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $types = [];
         $changed = \false;
@@ -117,7 +117,7 @@ class BenevolentUnionType extends \PHPStan\Type\UnionType
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         $types = [];
         $changed = \false;

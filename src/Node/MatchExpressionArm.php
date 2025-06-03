@@ -23,18 +23,18 @@ final class MatchExpressionArm
         $this->conditions = $conditions;
         $this->line = $line;
     }
-    public function getBody() : \PHPStan\Node\MatchExpressionArmBody
+    public function getBody(): \PHPStan\Node\MatchExpressionArmBody
     {
         return $this->body;
     }
     /**
      * @return MatchExpressionArmCondition[]
      */
-    public function getConditions() : array
+    public function getConditions(): array
     {
         return $this->conditions;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }

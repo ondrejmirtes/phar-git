@@ -27,11 +27,11 @@ final class UnusedPrivateMethodRule implements Rule
     {
         $this->extensionProvider = $extensionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassMethodsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getClass() instanceof Node\Stmt\Class_ && !$node->getClass() instanceof Node\Stmt\Enum_) {
             return [];
@@ -92,12 +92,10 @@ final class UnusedPrivateMethodRule implements Rule
             }
             if ($methodCallNode instanceof Node\Expr\MethodCall) {
                 $calledOnType = $callScope->getType($methodCallNode->var);
+            } else if ($methodCallNode->class instanceof Node\Name) {
+                $calledOnType = $callScope->resolveTypeByName($methodCallNode->class);
             } else {
-                if ($methodCallNode->class instanceof Node\Name) {
-                    $calledOnType = $callScope->resolveTypeByName($methodCallNode->class);
-                } else {
-                    $calledOnType = $callScope->getType($methodCallNode->class);
-                }
+                $calledOnType = $callScope->getType($methodCallNode->class);
             }
             $inMethod = $callScope->getFunction();
             if (!$inMethod instanceof MethodReflection) {

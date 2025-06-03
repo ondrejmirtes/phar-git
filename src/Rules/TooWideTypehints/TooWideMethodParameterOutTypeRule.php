@@ -18,11 +18,11 @@ final class TooWideMethodParameterOutTypeRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MethodReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $inMethod = $node->getMethodReflection();
         return $this->check->check($node->getExecutionEnds(), $node->getReturnStatements(), $inMethod->getParameters(), sprintf('Method %s::%s()', $inMethod->getDeclaringClass()->getDisplayName(), $inMethod->getName()));

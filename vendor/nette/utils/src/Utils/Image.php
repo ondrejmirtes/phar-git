@@ -112,7 +112,7 @@ class Image
     /**
      * Returns RGB color (0..255) and transparency (0..127).
      */
-    public static function rgb(int $red, int $green, int $blue, int $transparency = 0) : array
+    public static function rgb(int $red, int $green, int $blue, int $transparency = 0): array
     {
         return ['red' => \max(0, \min(255, $red)), 'green' => \max(0, \min(255, $green)), 'blue' => \max(0, \min(255, $blue)), 'alpha' => \max(0, \min(127, $transparency))];
     }
@@ -150,10 +150,10 @@ class Image
         }
         return self::invokeSafe('imagecreatefromstring', $s, 'Unable to open image from string.', __METHOD__);
     }
-    private static function invokeSafe(string $func, string $arg, string $message, string $callee) : self
+    private static function invokeSafe(string $func, string $arg, string $message, string $callee): self
     {
         $errors = [];
-        $res = Callback::invokeSafe($func, [$arg], function (string $message) use(&$errors) : void {
+        $res = Callback::invokeSafe($func, [$arg], function (string $message) use (&$errors): void {
             $errors[] = $message;
         });
         if (!$res) {
@@ -191,7 +191,7 @@ class Image
     /**
      * Returns the type of image from file.
      */
-    public static function detectTypeFromFile(string $file, &$width = null, &$height = null) : ?int
+    public static function detectTypeFromFile(string $file, &$width = null, &$height = null): ?int
     {
         [$width, $height, $type] = @\getimagesize($file);
         // @ - files smaller than 12 bytes causes read error
@@ -200,7 +200,7 @@ class Image
     /**
      * Returns the type of image from string.
      */
-    public static function detectTypeFromString(string $s, &$width = null, &$height = null) : ?int
+    public static function detectTypeFromString(string $s, &$width = null, &$height = null): ?int
     {
         [$width, $height, $type] = @\getimagesizefromstring($s);
         // @ - strings smaller than 12 bytes causes read error
@@ -209,7 +209,7 @@ class Image
     /**
      * Returns the file extension for the given `Image::XXX` constant.
      */
-    public static function typeToExtension(int $type) : string
+    public static function typeToExtension(int $type): string
     {
         if (!isset(self::Formats[$type])) {
             throw new Nette\InvalidArgumentException("Unsupported image type '{$type}'.");
@@ -219,7 +219,7 @@ class Image
     /**
      * Returns the `Image::XXX` constant for given file extension.
      */
-    public static function extensionToType(string $extension) : int
+    public static function extensionToType(string $extension): int
     {
         $extensions = \array_flip(self::Formats) + ['jpg' => self::JPEG];
         $extension = \strtolower($extension);
@@ -231,7 +231,7 @@ class Image
     /**
      * Returns the mime type for the given `Image::XXX` constant.
      */
-    public static function typeToMimeType(int $type) : string
+    public static function typeToMimeType(int $type): string
     {
         return 'image/' . self::typeToExtension($type);
     }
@@ -248,7 +248,7 @@ class Image
      * Returns image width.
      * @return positive-int
      */
-    public function getWidth() : int
+    public function getWidth(): int
     {
         return \imagesx($this->image);
     }
@@ -256,7 +256,7 @@ class Image
      * Returns image height.
      * @return positive-int
      */
-    public function getHeight() : int
+    public function getHeight(): int
     {
         return \imagesy($this->image);
     }
@@ -309,7 +309,7 @@ class Image
      * @param  int|string|null  $newWidth in pixels or percent
      * @param  int|string|null  $newHeight in pixels or percent
      */
-    public static function calculateSize(int $srcWidth, int $srcHeight, $newWidth, $newHeight, int $flags = self::FIT) : array
+    public static function calculateSize(int $srcWidth, int $srcHeight, $newWidth, $newHeight, int $flags = self::FIT): array
     {
         if ($newWidth === null) {
         } elseif (self::isPercent($newWidth)) {
@@ -388,7 +388,7 @@ class Image
      * @param  int|string  $newWidth in pixels or percent
      * @param  int|string  $newHeight in pixels or percent
      */
-    public static function calculateCutout(int $srcWidth, int $srcHeight, $left, $top, $newWidth, $newHeight) : array
+    public static function calculateCutout(int $srcWidth, int $srcHeight, $left, $top, $newWidth, $newHeight): array
     {
         if (self::isPercent($newWidth)) {
             $newWidth = (int) \round($srcWidth / 100 * $newWidth);
@@ -478,7 +478,7 @@ class Image
      * Saves image to the file. Quality is in the range 0..100 for JPEG (default 85), WEBP (default 80) and AVIF (default 30) and 0..9 for PNG (default 9).
      * @throws ImageException
      */
-    public function save(string $file, ?int $quality = null, ?int $type = null) : void
+    public function save(string $file, ?int $quality = null, ?int $type = null): void
     {
         $type = $type ?? self::extensionToType(\pathinfo($file, \PATHINFO_EXTENSION));
         $this->output($type, $quality, $file);
@@ -486,16 +486,16 @@ class Image
     /**
      * Outputs image to string. Quality is in the range 0..100 for JPEG (default 85), WEBP (default 80) and AVIF (default 30) and 0..9 for PNG (default 9).
      */
-    public function toString(int $type = self::JPEG, ?int $quality = null) : string
+    public function toString(int $type = self::JPEG, ?int $quality = null): string
     {
-        return Helpers::capture(function () use($type, $quality) {
+        return Helpers::capture(function () use ($type, $quality) {
             $this->output($type, $quality);
         });
     }
     /**
      * Outputs image to string.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return $this->toString();
@@ -511,7 +511,7 @@ class Image
      * Outputs image to browser. Quality is in the range 0..100 for JPEG (default 85), WEBP (default 80) and AVIF (default 30) and 0..9 for PNG (default 9).
      * @throws ImageException
      */
-    public function send(int $type = self::JPEG, ?int $quality = null) : void
+    public function send(int $type = self::JPEG, ?int $quality = null): void
     {
         \header('Content-Type: ' . self::typeToMimeType($type));
         $this->output($type, $quality);
@@ -520,7 +520,7 @@ class Image
      * Outputs image to browser or file.
      * @throws ImageException
      */
-    private function output(int $type, ?int $quality, ?string $file = null) : void
+    private function output(int $type, ?int $quality, ?string $file = null): void
     {
         switch ($type) {
             case self::JPEG:
@@ -590,7 +590,7 @@ class Image
     /**
      * @param  int|string  $num in pixels or percent
      */
-    private static function isPercent(&$num) : bool
+    private static function isPercent(&$num): bool
     {
         if (\is_string($num) && \substr($num, -1) === '%') {
             $num = (float) \substr($num, 0, -1);
@@ -604,7 +604,7 @@ class Image
     /**
      * Prevents serialization.
      */
-    public function __sleep() : array
+    public function __sleep(): array
     {
         throw new Nette\NotSupportedException('You cannot serialize or unserialize ' . self::class . ' instances.');
     }

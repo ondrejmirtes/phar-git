@@ -19,11 +19,11 @@ final class ReadOnlyPropertyRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->isReadOnly()) {
             return [];

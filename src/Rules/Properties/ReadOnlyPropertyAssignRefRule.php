@@ -18,11 +18,11 @@ final class ReadOnlyPropertyAssignRefRule implements Rule
     {
         $this->propertyReflectionFinder = $propertyReflectionFinder;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\AssignRef::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->expr instanceof Node\Expr\PropertyFetch) {
             return [];

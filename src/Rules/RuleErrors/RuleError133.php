@@ -18,26 +18,26 @@ final class RuleError133 implements RuleError, FileRuleError, FixableNodeRuleErr
     public Node $originalNode;
     /** @var callable(Node): Node */
     public $newNodeCallable;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getOriginalNode() : Node
+    public function getOriginalNode(): Node
     {
         return $this->originalNode;
     }
     /**
      * @return callable(Node): Node
      */
-    public function getNewNodeCallable() : callable
+    public function getNewNodeCallable(): callable
     {
         return $this->newNodeCallable;
     }

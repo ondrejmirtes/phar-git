@@ -40,11 +40,11 @@ use function vsprintf;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['sprintf', 'vsprintf'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) === 0) {
@@ -76,7 +76,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
                 $allPatternsNonEmpty = \false;
                 $allPatternsNonFalsy = \false;
             }
-            if (is_array($singlePlaceholderEarlyReturn) && preg_match('/^%(?P<argnum>[0-9]*\\$)?(?P<width>[0-9]*)\\.?[0-9]*(?P<specifier>[sbdeEfFgGhHouxX])$/', $constantString->getValue(), $matches) === 1) {
+            if (is_array($singlePlaceholderEarlyReturn) && preg_match('/^%(?P<argnum>[0-9]*\$)?(?P<width>[0-9]*)\.?[0-9]*(?P<specifier>[sbdeEfFgGhHouxX])$/', $constantString->getValue(), $matches) === 1) {
                 if ($matches['argnum'] !== '') {
                     // invalid positional argument
                     if ($matches['argnum'] === '0$') {
@@ -137,7 +137,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
      * @param array<Arg> $args
      * @param callable(Type): bool $cb
      */
-    private function allValuesSatisfies(FunctionReflection $functionReflection, Scope $scope, array $args, callable $cb) : bool
+    private function allValuesSatisfies(FunctionReflection $functionReflection, Scope $scope, array $args, callable $cb): bool
     {
         if ($functionReflection->getName() === 'sprintf' && count($args) >= 2) {
             foreach ($args as $key => $arg) {
@@ -158,7 +158,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
     /**
      * @param Arg[] $args
      */
-    private function getValueType(FunctionReflection $functionReflection, Scope $scope, array $args, int $argNumber) : ?Type
+    private function getValueType(FunctionReflection $functionReflection, Scope $scope, array $args, int $argNumber): ?Type
     {
         if ($functionReflection->getName() === 'sprintf') {
             // constant string specifies a numbered argument that does not exist
@@ -192,7 +192,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
     /**
      * Detect constant strings in the format which neither depend on placeholders nor on given value arguments.
      */
-    private function getFormatConstantParts(string $format, FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?ConstantStringType
+    private function getFormatConstantParts(string $format, FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?ConstantStringType
     {
         $args = $functionCall->getArgs();
         if ($functionReflection->getName() === 'sprintf') {
@@ -224,7 +224,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
     /**
      * @param Arg[] $args
      */
-    private function getConstantType(array $args, FunctionReflection $functionReflection, Scope $scope) : ?Type
+    private function getConstantType(array $args, FunctionReflection $functionReflection, Scope $scope): ?Type
     {
         $values = [];
         $combinationsCount = 1;
@@ -272,7 +272,7 @@ final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunction
         }
         return TypeCombinator::union(...$returnTypes);
     }
-    private function getStringReturnType(?AccessoryType $accessoryType, bool $isLowercase) : Type
+    private function getStringReturnType(?AccessoryType $accessoryType, bool $isLowercase): Type
     {
         $accessoryTypes = [];
         if ($accessoryType !== null) {

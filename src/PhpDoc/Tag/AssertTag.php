@@ -36,46 +36,46 @@ final class AssertTag implements \PHPStan\PhpDoc\Tag\TypedTag
     /**
      * @return self::NULL|self::IF_TRUE|self::IF_FALSE
      */
-    public function getIf() : string
+    public function getIf(): string
     {
         return $this->if;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function getOriginalType() : Type
+    public function getOriginalType(): Type
     {
         return $this->originalType ??= $this->type;
     }
-    public function getParameter() : \PHPStan\PhpDoc\Tag\AssertTagParameter
+    public function getParameter(): \PHPStan\PhpDoc\Tag\AssertTagParameter
     {
         return $this->parameter;
     }
-    public function isNegated() : bool
+    public function isNegated(): bool
     {
         return $this->negated;
     }
-    public function isEquality() : bool
+    public function isEquality(): bool
     {
         return $this->equality;
     }
     /**
      * @return static
      */
-    public function withType(Type $type) : \PHPStan\PhpDoc\Tag\TypedTag
+    public function withType(Type $type): \PHPStan\PhpDoc\Tag\TypedTag
     {
         $tag = new self($this->if, $type, $this->parameter, $this->negated, $this->equality, $this->isExplicit);
         $tag->originalType = $this->getOriginalType();
         return $tag;
     }
-    public function withParameter(\PHPStan\PhpDoc\Tag\AssertTagParameter $parameter) : self
+    public function withParameter(\PHPStan\PhpDoc\Tag\AssertTagParameter $parameter): self
     {
         $tag = new self($this->if, $this->type, $parameter, $this->negated, $this->equality, $this->isExplicit);
         $tag->originalType = $this->getOriginalType();
         return $tag;
     }
-    public function negate() : self
+    public function negate(): self
     {
         if ($this->isEquality()) {
             throw new ShouldNotHappenException();
@@ -84,11 +84,11 @@ final class AssertTag implements \PHPStan\PhpDoc\Tag\TypedTag
         $tag->originalType = $this->getOriginalType();
         return $tag;
     }
-    public function isExplicit() : bool
+    public function isExplicit(): bool
     {
         return $this->isExplicit;
     }
-    public function toImplicit() : self
+    public function toImplicit(): self
     {
         return new self($this->if, $this->type, $this->parameter, $this->negated, $this->equality, \false);
     }

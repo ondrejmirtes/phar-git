@@ -12,12 +12,12 @@ final class DeclarePositionVisitor extends NodeVisitorAbstract
 {
     private bool $isFirstStatement = \true;
     public const ATTRIBUTE_NAME = 'isFirstStatement';
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->isFirstStatement = \true;
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         // ignore shebang
         if ($this->isFirstStatement && $node instanceof Node\Stmt\InlineHTML && str_starts_with($node->value, '#!')) {

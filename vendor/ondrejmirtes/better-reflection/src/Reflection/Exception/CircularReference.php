@@ -7,7 +7,7 @@ use UnexpectedValueException;
 use function sprintf;
 class CircularReference extends UnexpectedValueException
 {
-    public static function fromClassName(string $className) : self
+    public static function fromClassName(string $className): self
     {
         return new self(sprintf('Circular reference to class "%s"', $className));
     }

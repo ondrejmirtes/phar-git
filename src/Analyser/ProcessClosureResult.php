@@ -31,28 +31,28 @@ final class ProcessClosureResult
         $this->impurePoints = $impurePoints;
         $this->invalidateExpressions = $invalidateExpressions;
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }
     /**
      * @return ThrowPoint[]
      */
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return $this->throwPoints;
     }
     /**
      * @return ImpurePoint[]
      */
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
     /**
      * @return InvalidateExprNode[]
      */
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return $this->invalidateExpressions;
     }

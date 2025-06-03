@@ -19,11 +19,11 @@ use PHPStan\Type\UnionType;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GettimeofdayDynamicFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'gettimeofday';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $arrayType = new ConstantArrayType([new ConstantStringType('sec'), new ConstantStringType('usec'), new ConstantStringType('minuteswest'), new ConstantStringType('dsttime')], [new IntegerType(), new IntegerType(), new IntegerType(), new IntegerType()]);
         $floatType = new FloatType();

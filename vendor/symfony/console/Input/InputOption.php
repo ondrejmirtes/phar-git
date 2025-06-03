@@ -66,7 +66,7 @@ class InputOption
             if (\is_array($shortcut)) {
                 $shortcut = \implode('|', $shortcut);
             }
-            $shortcuts = \preg_split('{(\\|)-?}', \ltrim($shortcut, '-'));
+            $shortcuts = \preg_split('{(\|)-?}', \ltrim($shortcut, '-'));
             $shortcuts = \array_filter($shortcuts, 'strlen');
             $shortcut = \implode('|', $shortcuts);
             if ('' === $shortcut) {
@@ -144,7 +144,7 @@ class InputOption
     {
         return self::VALUE_IS_ARRAY === (self::VALUE_IS_ARRAY & $this->mode);
     }
-    public function isNegatable() : bool
+    public function isNegatable(): bool
     {
         return self::VALUE_NEGATABLE === (self::VALUE_NEGATABLE & $this->mode);
     }

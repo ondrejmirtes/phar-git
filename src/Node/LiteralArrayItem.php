@@ -17,11 +17,11 @@ final class LiteralArrayItem
         $this->scope = $scope;
         $this->arrayItem = $arrayItem;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }
-    public function getArrayItem() : ?ArrayItem
+    public function getArrayItem(): ?ArrayItem
     {
         return $this->arrayItem;
     }

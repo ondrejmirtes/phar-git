@@ -32,11 +32,11 @@ final class FileMonitorResult
     /**
      * @return string[]
      */
-    public function getChangedFiles() : array
+    public function getChangedFiles(): array
     {
         return $this->changedFiles;
     }
-    public function hasAnyChanges() : bool
+    public function hasAnyChanges(): bool
     {
         return count($this->newFiles) > 0 || count($this->changedFiles) > 0 || count($this->deletedFiles) > 0;
     }

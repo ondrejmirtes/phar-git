@@ -45,13 +45,13 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
         $this->isGenerator = $this->nodeIsOrContainsYield($node);
     }
     /** @throws IdentifierNotFound */
-    public static function createFromClosure(Closure $closure) : self
+    public static function createFromClosure(Closure $closure): self
     {
         $configuration = new BetterReflection();
         return (new DefaultReflector(new AggregateSourceLocator([$configuration->sourceLocator(), new ClosureSourceLocator($closure, $configuration->phpParser())])))->reflectFunction(self::CLOSURE_NAME);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionFunctionStringCast::toString($this);
     }
@@ -61,7 +61,7 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
      * @param non-empty-string|null $namespace
      * @param \PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure|\PhpParser\Node\Expr\ArrowFunction $node
      */
-    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null) : self
+    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null): self
     {
         return new self($reflector, $node, $locatedSource, $namespace);
     }
@@ -71,7 +71,7 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @return non-empty-string
      */
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->name;
     }
@@ -87,11 +87,11 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
      *
      * @todo https://github.com/Roave/BetterReflection/issues/14
      */
-    public function isDisabled() : bool
+    public function isDisabled(): bool
     {
         return \false;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->isStatic;
     }
@@ -99,7 +99,7 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
      * @throws NotImplemented
      * @throws FunctionDoesNotExist
      */
-    public function getClosure() : Closure
+    public function getClosure(): Closure
     {
         $this->assertIsNoClosure();
         $functionName = $this->getName();
@@ -131,14 +131,14 @@ class ReflectionFunction implements \PHPStan\BetterReflection\Reflection\Reflect
         return $functionName(...$args);
     }
     /** @throws NotImplemented */
-    private function assertIsNoClosure() : void
+    private function assertIsNoClosure(): void
     {
         if ($this->isClosure()) {
             throw new NotImplemented('Not implemented for closures');
         }
     }
     /** @throws FunctionDoesNotExist */
-    private function assertFunctionExist(string $functionName) : void
+    private function assertFunctionExist(string $functionName): void
     {
         if (!function_exists($functionName)) {
             throw FunctionDoesNotExist::fromName($functionName);

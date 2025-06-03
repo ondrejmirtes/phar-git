@@ -284,7 +284,7 @@ class SymfonyStyle extends OutputStyle
     /**
      * @see ProgressBar::iterate()
      */
-    public function progressIterate(iterable $iterable, ?int $max = null) : iterable
+    public function progressIterate(iterable $iterable, ?int $max = null): iterable
     {
         yield from $this->createProgressBar()->iterate($iterable, $max);
         $this->newLine(2);
@@ -350,21 +350,21 @@ class SymfonyStyle extends OutputStyle
     {
         return new self($this->input, $this->getErrorOutput());
     }
-    public function createTable() : Table
+    public function createTable(): Table
     {
         $output = $this->output instanceof ConsoleOutputInterface ? $this->output->section() : $this->output;
         $style = clone Table::getStyleDefinition('symfony-style-guide');
         $style->setCellHeaderFormat('<info>%s</info>');
         return (new Table($output))->setStyle($style);
     }
-    private function getProgressBar() : ProgressBar
+    private function getProgressBar(): ProgressBar
     {
         if (!$this->progressBar) {
             throw new RuntimeException('The ProgressBar is not started.');
         }
         return $this->progressBar;
     }
-    private function autoPrependBlock() : void
+    private function autoPrependBlock(): void
     {
         $chars = \substr(\str_replace(\PHP_EOL, "\n", $this->bufferedOutput->fetch()), -2);
         if (!isset($chars[0])) {
@@ -375,7 +375,7 @@ class SymfonyStyle extends OutputStyle
         // Prepend new line for each non LF chars (This means no blank line was output before)
         $this->newLine(2 - \substr_count($chars, "\n"));
     }
-    private function autoPrependText() : void
+    private function autoPrependText(): void
     {
         $fetched = $this->bufferedOutput->fetch();
         // Prepend new line if last char isn't EOL:
@@ -383,12 +383,12 @@ class SymfonyStyle extends OutputStyle
             $this->newLine();
         }
     }
-    private function writeBuffer(string $message, bool $newLine, int $type) : void
+    private function writeBuffer(string $message, bool $newLine, int $type): void
     {
         // We need to know if the last chars are PHP_EOL
         $this->bufferedOutput->write($message, $newLine, $type);
     }
-    private function createBlock(iterable $messages, ?string $type = null, ?string $style = null, string $prefix = ' ', bool $padding = \false, bool $escape = \false) : array
+    private function createBlock(iterable $messages, ?string $type = null, ?string $style = null, string $prefix = ' ', bool $padding = \false, bool $escape = \false): array
     {
         $indentLength = 0;
         $prefixLength = Helper::width(Helper::removeDecoration($this->getFormatter(), $prefix));

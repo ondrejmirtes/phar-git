@@ -17,26 +17,26 @@ final class SetOffsetValueTypeExpr extends Expr implements VirtualNode
         $this->value = $value;
         parent::__construct([]);
     }
-    public function getVar() : Expr
+    public function getVar(): Expr
     {
         return $this->var;
     }
-    public function getDim() : ?Expr
+    public function getDim(): ?Expr
     {
         return $this->dim;
     }
-    public function getValue() : Expr
+    public function getValue(): Expr
     {
         return $this->value;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_SetOffsetValueTypeExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

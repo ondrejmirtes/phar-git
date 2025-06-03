@@ -22,7 +22,7 @@ final class BaselineNeonErrorFormatter
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output, string $existingBaselineContent) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output, string $existingBaselineContent): int
     {
         if (!$analysisResult->hasErrors()) {
             $output->writeRaw($this->getNeon([], $existingBaselineContent));
@@ -74,7 +74,7 @@ final class BaselineNeonErrorFormatter
     /**
      * @param array<int, array{message: string, count: int, path: string}> $ignoreErrors
      */
-    private function getNeon(array $ignoreErrors, string $existingBaselineContent) : string
+    private function getNeon(array $ignoreErrors, string $existingBaselineContent): string
     {
         $neon = Neon::encode(['parameters' => ['ignoreErrors' => $ignoreErrors]], Neon::BLOCK);
         if (substr($neon, -2) !== "\n\n") {

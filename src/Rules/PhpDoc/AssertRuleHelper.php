@@ -54,7 +54,7 @@ final class AssertRuleHelper
      * @param \PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\ClassMethod $node
      * @param \PHPStan\Reflection\ExtendedMethodReflection|\PHPStan\Reflection\FunctionReflection $reflection
      */
-    public function check(Scope $scope, $node, $reflection, ParametersAcceptor $acceptor) : array
+    public function check(Scope $scope, $node, $reflection, ParametersAcceptor $acceptor): array
     {
         $parametersByName = [];
         foreach ($acceptor->getParameters() as $parameter) {

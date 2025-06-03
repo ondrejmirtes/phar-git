@@ -25,11 +25,11 @@ final class InvalidPartOfEncapsedStringRule implements Rule
         $this->exprPrinter = $exprPrinter;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Scalar\InterpolatedString::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $messages = [];
         foreach ($node->parts as $part) {

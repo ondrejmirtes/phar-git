@@ -37,7 +37,7 @@ final class IncompatiblePhpDocTypeCheck
      * @param array<string, bool> $byRefParameters
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, Node $node, ResolvedPhpDocBlock $resolvedPhpDoc, string $functionName, array $nativeParameterTypes, array $byRefParameters, Type $nativeReturnType) : array
+    public function check(Scope $scope, Node $node, ResolvedPhpDocBlock $resolvedPhpDoc, string $functionName, array $nativeParameterTypes, array $byRefParameters, Type $nativeReturnType): array
     {
         $errors = [];
         foreach (['@param' => $resolvedPhpDoc->getParamTags(), '@param-out' => $resolvedPhpDoc->getParamOutTags(), '@param-closure-this' => $resolvedPhpDoc->getParamClosureThisTags()] as $tagName => $parameters) {

@@ -13,11 +13,11 @@ use function sprintf;
 /** @implements Rule<MagicConst> */
 final class MagicConstantContextRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MagicConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         // test cases https://3v4l.org/ZUvvr
         if ($node instanceof MagicConst\Class_) {

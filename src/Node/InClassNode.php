@@ -19,22 +19,22 @@ final class InClassNode extends Node\Stmt implements \PHPStan\Node\VirtualNode
         $this->classReflection = $classReflection;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getOriginalNode() : ClassLike
+    public function getOriginalNode(): ClassLike
     {
         return $this->originalNode;
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Stmt_InClassNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

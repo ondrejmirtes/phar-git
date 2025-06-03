@@ -13,11 +13,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ReadOnlyByPhpDocPropertyRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!($node->isReadOnlyByPhpDoc() && !$node->isAllowedPrivateMutation()) || $node->isReadOnly()) {
             return [];

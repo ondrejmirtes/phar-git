@@ -27,16 +27,16 @@ final class LogicalXorConstantConditionRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return LogicalXor::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         $leftType = $this->helper->getBooleanType($scope, $node->left);
         if ($leftType instanceof ConstantBooleanType) {
-            $addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+            $addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }
@@ -60,7 +60,7 @@ final class LogicalXorConstantConditionRule implements Rule
         }
         $rightType = $this->helper->getBooleanType($scope, $node->right);
         if ($rightType instanceof ConstantBooleanType) {
-            $addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+            $addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }

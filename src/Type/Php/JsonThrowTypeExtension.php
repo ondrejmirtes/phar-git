@@ -25,11 +25,11 @@ final class JsonThrowTypeExtension implements DynamicFunctionThrowTypeExtension
         $this->reflectionProvider = $reflectionProvider;
         $this->bitwiseFlagAnalyser = $bitwiseFlagAnalyser;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['json_encode', 'json_decode'], \true) && $this->reflectionProvider->hasConstant(new Name\FullyQualified('JSON_THROW_ON_ERROR'), null);
     }
-    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $argumentPosition = self::ARGUMENTS_POSITIONS[$functionReflection->getName()];
         if (!isset($functionCall->getArgs()[$argumentPosition])) {

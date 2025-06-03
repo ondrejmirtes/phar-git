@@ -33,7 +33,7 @@ class StringSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type\A
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         return new LocatedSource($this->source, $identifier->getName(), null);
     }

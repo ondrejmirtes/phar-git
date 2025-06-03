@@ -16,15 +16,15 @@ final class AssertTagParameter
         $this->property = $property;
         $this->method = $method;
     }
-    public function getParameterName() : string
+    public function getParameterName(): string
     {
         return $this->parameterName;
     }
-    public function changeParameterName(string $parameterName) : self
+    public function changeParameterName(string $parameterName): self
     {
         return new self($parameterName, $this->property, $this->method);
     }
-    public function describe() : string
+    public function describe(): string
     {
         if ($this->property !== null) {
             return sprintf('%s->%s', $this->parameterName, $this->property);
@@ -34,7 +34,7 @@ final class AssertTagParameter
         }
         return $this->parameterName;
     }
-    public function getExpr(Expr $parameter) : Expr
+    public function getExpr(Expr $parameter): Expr
     {
         if ($this->property !== null) {
             return new Expr\PropertyFetch($parameter, $this->property);

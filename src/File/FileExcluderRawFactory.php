@@ -8,5 +8,5 @@ interface FileExcluderRawFactory
     /**
      * @param string[] $analyseExcludes
      */
-    public function create(array $analyseExcludes) : \PHPStan\File\FileExcluder;
+    public function create(array $analyseExcludes): \PHPStan\File\FileExcluder;
 }

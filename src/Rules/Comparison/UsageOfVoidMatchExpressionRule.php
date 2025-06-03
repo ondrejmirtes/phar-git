@@ -12,11 +12,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class UsageOfVoidMatchExpressionRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Match_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInFirstLevelStatement()) {
             $matchResultType = $scope->getKeepVoidType($node);

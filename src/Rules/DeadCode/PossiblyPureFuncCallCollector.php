@@ -18,7 +18,7 @@ final class PossiblyPureFuncCallCollector implements Collector
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Expression::class;
     }

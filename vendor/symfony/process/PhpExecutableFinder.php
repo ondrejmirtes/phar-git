@@ -63,12 +63,12 @@ class PhpExecutableFinder
                 return $php;
             }
         }
-        if (@\is_executable($php = \PHP_BINDIR . ('\\' === \DIRECTORY_SEPARATOR ? '\\php.exe' : '/php')) && !@\is_dir($php)) {
+        if (@\is_executable($php = \PHP_BINDIR . ('\\' === \DIRECTORY_SEPARATOR ? '\php.exe' : '/php')) && !@\is_dir($php)) {
             return $php;
         }
         $dirs = [\PHP_BINDIR];
         if ('\\' === \DIRECTORY_SEPARATOR) {
-            $dirs[] = 'C:\\xampp\\php\\';
+            $dirs[] = 'C:\xampp\php\\';
         }
         return $this->executableFinder->find('php', \false, $dirs);
     }

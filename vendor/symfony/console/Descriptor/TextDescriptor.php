@@ -43,7 +43,7 @@ class TextDescriptor extends Descriptor
             $argument->getName(),
             \str_repeat(' ', $spacingWidth),
             // + 4 = 2 spaces before <info>, 2 spaces after </info>
-            \preg_replace('/\\s*[\\r\\n]\\s*/', "\n" . \str_repeat(' ', $totalWidth + 4), $argument->getDescription()),
+            \preg_replace('/\s*[\r\n]\s*/', "\n" . \str_repeat(' ', $totalWidth + 4), $argument->getDescription()),
             $default
         ), $options);
     }
@@ -72,7 +72,7 @@ class TextDescriptor extends Descriptor
             $synopsis,
             \str_repeat(' ', $spacingWidth),
             // + 4 = 2 spaces before <info>, 2 spaces after </info>
-            \preg_replace('/\\s*[\\r\\n]\\s*/', "\n" . \str_repeat(' ', $totalWidth + 4), $option->getDescription()),
+            \preg_replace('/\s*[\r\n]\s*/', "\n" . \str_repeat(' ', $totalWidth + 4), $option->getDescription()),
             $default,
             $option->isArray() ? '<comment> (multiple values allowed)</comment>' : ''
         ), $options);
@@ -161,7 +161,7 @@ class TextDescriptor extends Descriptor
                 $this->writeText("\n");
             }
         } else {
-            if ('' != ($help = $application->getHelp())) {
+            if ('' != $help = $application->getHelp()) {
                 $this->writeText("{$help}\n\n", $options);
             }
             $this->writeText("<comment>Usage:</comment>\n", $options);
@@ -179,7 +179,7 @@ class TextDescriptor extends Descriptor
                 }
             }
             // calculate max. width based on available commands per namespace
-            $width = $this->getColumnWidth(\array_merge(...\array_values(\array_map(function ($namespace) use($commands) {
+            $width = $this->getColumnWidth(\array_merge(...\array_values(\array_map(function ($namespace) use ($commands) {
                 return \array_intersect($namespace['commands'], \array_keys($commands));
             }, \array_values($namespaces)))));
             if ($describedNamespace) {
@@ -188,7 +188,7 @@ class TextDescriptor extends Descriptor
                 $this->writeText('<comment>Available commands:</comment>', $options);
             }
             foreach ($namespaces as $namespace) {
-                $namespace['commands'] = \array_filter($namespace['commands'], function ($name) use($commands) {
+                $namespace['commands'] = \array_filter($namespace['commands'], function ($name) use ($commands) {
                     return isset($commands[$name]);
                 });
                 if (!$namespace['commands']) {
@@ -219,7 +219,7 @@ class TextDescriptor extends Descriptor
     /**
      * Formats command aliases to show them in the command description.
      */
-    private function getCommandAliasesText(Command $command) : string
+    private function getCommandAliasesText(Command $command): string
     {
         $text = '';
         $aliases = $command->getAliases();
@@ -233,7 +233,7 @@ class TextDescriptor extends Descriptor
      *
      * @param mixed $default
      */
-    private function formatDefaultValue($default) : string
+    private function formatDefaultValue($default): string
     {
         if (\INF === $default) {
             return 'INF';
@@ -252,7 +252,7 @@ class TextDescriptor extends Descriptor
     /**
      * @param array<Command|string> $commands
      */
-    private function getColumnWidth(array $commands) : int
+    private function getColumnWidth(array $commands): int
     {
         $widths = [];
         foreach ($commands as $command) {
@@ -270,7 +270,7 @@ class TextDescriptor extends Descriptor
     /**
      * @param InputOption[] $options
      */
-    private function calculateTotalWidthForOptions(array $options) : int
+    private function calculateTotalWidthForOptions(array $options): int
     {
         $totalWidth = 0;
         foreach ($options as $option) {

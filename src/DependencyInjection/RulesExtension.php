@@ -9,11 +9,11 @@ use _PHPStan_checksum\Nette\Schema\Schema;
 use PHPStan\Rules\LazyRegistry;
 final class RulesExtension extends CompilerExtension
 {
-    public function getConfigSchema() : Schema
+    public function getConfigSchema(): Schema
     {
         return Expect::listOf('string');
     }
-    public function loadConfiguration() : void
+    public function loadConfiguration(): void
     {
         /** @var mixed[] $config */
         $config = $this->config;

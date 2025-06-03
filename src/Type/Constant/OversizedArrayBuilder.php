@@ -26,7 +26,7 @@ final class OversizedArrayBuilder
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function build(Array_ $expr, callable $getTypeCallback) : Type
+    public function build(Array_ $expr, callable $getTypeCallback): Type
     {
         $isList = \true;
         $valueTypes = [];

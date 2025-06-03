@@ -57,7 +57,7 @@ class TableCell
     {
         return (int) $this->options['rowspan'];
     }
-    public function getStyle() : ?TableCellStyle
+    public function getStyle(): ?TableCellStyle
     {
         return $this->options['style'];
     }

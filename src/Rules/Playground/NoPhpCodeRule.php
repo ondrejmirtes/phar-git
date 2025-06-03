@@ -14,11 +14,11 @@ use function count;
  */
 final class NoPhpCodeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FileNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (count($node->getNodes()) !== 1) {
             return [];

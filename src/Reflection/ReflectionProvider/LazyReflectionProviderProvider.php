@@ -12,7 +12,7 @@ final class LazyReflectionProviderProvider implements \PHPStan\Reflection\Reflec
     {
         $this->container = $container;
     }
-    public function getReflectionProvider() : ReflectionProvider
+    public function getReflectionProvider(): ReflectionProvider
     {
         return $this->container->getByType(ReflectionProvider::class);
     }

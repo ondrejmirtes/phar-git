@@ -64,7 +64,7 @@ class ConsoleSectionOutput extends StreamOutput
         $this->clear();
         $this->writeln($message);
     }
-    public function getContent() : string
+    public function getContent(): string
     {
         return \implode('', $this->content);
     }
@@ -97,7 +97,7 @@ class ConsoleSectionOutput extends StreamOutput
      * At initial stage, cursor is at the end of stream output. This method makes cursor crawl upwards until it hits
      * current section. Then it erases content it crawled through. Optionally, it erases part of current section too.
      */
-    private function popStreamContentUntilCurrentSection(int $numberOfLinesToClearFromCurrentSection = 0) : string
+    private function popStreamContentUntilCurrentSection(int $numberOfLinesToClearFromCurrentSection = 0): string
     {
         $numberOfLinesToClear = $numberOfLinesToClearFromCurrentSection;
         $erasedContent = [];
@@ -116,7 +116,7 @@ class ConsoleSectionOutput extends StreamOutput
         }
         return \implode('', \array_reverse($erasedContent));
     }
-    private function getDisplayLength(string $text) : int
+    private function getDisplayLength(string $text): int
     {
         return Helper::width(Helper::removeDecoration($this->getFormatter(), \str_replace("\t", '        ', $text)));
     }

@@ -257,7 +257,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function compare($string)
     {
-        if (null === ($collator = static::getCollator())) {
+        if (null === $collator = static::getCollator()) {
             return \strcmp($this->_string, (string) $string);
         }
         return $collator->compare($this->_string, $string);
@@ -393,13 +393,13 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function toAscii($try = \false)
     {
-        if (0 === \preg_match('#[\\x80-\\xff]#', $this->_string)) {
+        if (0 === \preg_match('#[\x80-\xff]#', $this->_string)) {
             return $this;
         }
         $string = $this->_string;
-        $transId = 'Any-Latin; ' . '[\\p{S}] Name; ' . 'Latin-ASCII';
-        if (null !== ($transliterator = static::getTransliterator($transId))) {
-            $this->_string = \preg_replace_callback('#\\\\N\\{([A-Z ]+)\\}#u', function (array $matches) {
+        $transId = 'Any-Latin; ' . '[\p{S}] Name; ' . 'Latin-ASCII';
+        if (null !== $transliterator = static::getTransliterator($transId)) {
+            $this->_string = \preg_replace_callback('#\\\\N\{([A-Z ]+)\}#u', function (array $matches) {
                 return '(' . \strtolower($matches[1]) . ')';
             }, $transliterator->transliterate($string));
             return $this;
@@ -409,11 +409,11 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
                 throw new \Hoa\Ustring\Exception('%s needs the class Normalizer to work properly, ' . 'or you can force a try by using %1$s(true).', 0, __METHOD__);
             }
             $string = static::transcode($string, 'UTF-8', 'ASCII//IGNORE//TRANSLIT');
-            $this->_string = \preg_replace('#(?:[\'"`^](\\w))#u', '\\1', $string);
+            $this->_string = \preg_replace('#(?:[\'"`^](\w))#u', '\1', $string);
             return $this;
         }
         $string = \Normalizer::normalize($string, \Normalizer::NFKD);
-        $string = \preg_replace('#\\p{Mn}+#u', '', $string);
+        $string = \preg_replace('#\p{Mn}+#u', '', $string);
         $this->_string = static::transcode($string, 'UTF-8', 'ASCII//IGNORE//TRANSLIT');
         return $this;
     }
@@ -429,7 +429,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function transliterate($identifier, $start = 0, $end = null)
     {
-        if (null === ($transliterator = static::getTransliterator($identifier))) {
+        if (null === $transliterator = static::getTransliterator($identifier)) {
             throw new \Hoa\Ustring\Exception('%s needs the class Transliterator to work properly.', 1, __METHOD__);
         }
         $this->_string = $transliterator->transliterate($this->_string, $start, $end);
@@ -457,7 +457,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      *                            sides, of the current string.
      * @return  \Hoa\Ustring
      */
-    public function trim($regex = '\\s', $side = 3)
+    public function trim($regex = '\s', $side = 3)
     {
         $regex = '(?:' . $regex . ')+';
         $handle = null;
@@ -672,7 +672,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
             return -1;
         }
         // Non-spacing characters.
-        if (0xad !== $c && 0 !== \preg_match('#^[\\p{Mn}\\p{Me}\\p{Cf}\\x{1160}-\\x{11ff}\\x{200b}]#u', $char)) {
+        if (0xad !== $c && 0 !== \preg_match('#^[\p{Mn}\p{Me}\p{Cf}\x{1160}-\x{11ff}\x{200b}]#u', $char)) {
             return 0;
         }
         // If we arrive here, $c is not a combining C0/C1 control character.
@@ -795,7 +795,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Ustring\\Ustring');
+Consistency::flexEntity('Hoa\Ustring\Ustring');
 if (\false === \Hoa\Ustring\Ustring::checkMbString()) {
-    throw new \Hoa\Ustring\Exception('%s needs the mbstring extension.', 0, __NAMESPACE__ . '\\Ustring');
+    throw new \Hoa\Ustring\Exception('%s needs the mbstring extension.', 0, __NAMESPACE__ . '\Ustring');
 }

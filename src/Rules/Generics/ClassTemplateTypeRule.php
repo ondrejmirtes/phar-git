@@ -20,11 +20,11 @@ final class ClassTemplateTypeRule implements Rule
     {
         $this->templateTypeCheck = $templateTypeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         if (!$classReflection->isClass()) {

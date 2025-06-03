@@ -21,11 +21,11 @@ final class MissingCheckedExceptionInPropertyHookThrowsRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyHookReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $statementResult = $node->getStatementResult();
         $hookReflection = $node->getHookReflection();

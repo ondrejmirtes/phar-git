@@ -13,21 +13,21 @@ interface ReturnStatementsNode extends \PHPStan\Node\VirtualNode
     /**
      * @return list<ReturnStatement>
      */
-    public function getReturnStatements() : array;
-    public function getStatementResult() : StatementResult;
+    public function getReturnStatements(): array;
+    public function getStatementResult(): StatementResult;
     /**
      * @return list<ExecutionEndNode>
      */
-    public function getExecutionEnds() : array;
+    public function getExecutionEnds(): array;
     /**
      * @return ImpurePoint[]
      */
-    public function getImpurePoints() : array;
-    public function returnsByRef() : bool;
-    public function hasNativeReturnTypehint() : bool;
+    public function getImpurePoints(): array;
+    public function returnsByRef(): bool;
+    public function hasNativeReturnTypehint(): bool;
     /**
      * @return list<Yield_|YieldFrom>
      */
-    public function getYieldStatements() : array;
-    public function isGenerator() : bool;
+    public function getYieldStatements(): array;
+    public function isGenerator(): bool;
 }

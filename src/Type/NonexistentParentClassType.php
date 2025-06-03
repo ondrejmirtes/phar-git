@@ -35,131 +35,131 @@ class NonexistentParentClassType implements \PHPStan\Type\Type
     use UndecidedComparisonTypeTrait;
     use NonRemoveableTypeTrait;
     use NonGeneralizableTypeTrait;
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return 'parent';
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : \PHPStan\Type\Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         return new \PHPStan\Type\BooleanType();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('parent');
     }

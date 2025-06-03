@@ -51,7 +51,7 @@ abstract class PHPStanTestCase extends TestCase
     /** @var array<string, Container> */
     private static array $containers = [];
     /** @api */
-    public static function getContainer() : Container
+    public static function getContainer(): Container
     {
         $additionalConfigFiles = static::getAdditionalConfigFiles();
         $additionalConfigFiles[] = __DIR__ . '/TestCase.neon';
@@ -70,7 +70,7 @@ abstract class PHPStanTestCase extends TestCase
             $container = $containerFactory->create($tmpDir, array_merge([$containerFactory->getConfigDirectory() . '/config.level8.neon'], $additionalConfigFiles), []);
             self::$containers[$cacheKey] = $container;
             foreach ($container->getParameter('bootstrapFiles') as $bootstrapFile) {
-                (static function (string $file) use($container) : void {
+                (static function (string $file) use ($container): void {
                     require_once $file;
                 })($bootstrapFile);
             }
@@ -89,33 +89,33 @@ abstract class PHPStanTestCase extends TestCase
     /**
      * @return string[]
      */
-    public static function getAdditionalConfigFiles() : array
+    public static function getAdditionalConfigFiles(): array
     {
         return [];
     }
-    public static function getParser() : Parser
+    public static function getParser(): Parser
     {
         /** @var Parser $parser */
         $parser = self::getContainer()->getService('defaultAnalysisParser');
         return $parser;
     }
     /** @api */
-    public static function createReflectionProvider() : ReflectionProvider
+    public static function createReflectionProvider(): ReflectionProvider
     {
         return self::getContainer()->getByType(ReflectionProvider::class);
     }
-    public static function getReflector() : Reflector
+    public static function getReflector(): Reflector
     {
         return self::getContainer()->getService('betterReflectionReflector');
     }
-    public static function getClassReflectionExtensionRegistryProvider() : ClassReflectionExtensionRegistryProvider
+    public static function getClassReflectionExtensionRegistryProvider(): ClassReflectionExtensionRegistryProvider
     {
         return self::getContainer()->getByType(ClassReflectionExtensionRegistryProvider::class);
     }
     /**
      * @param string[] $dynamicConstantNames
      */
-    public static function createScopeFactory(ReflectionProvider $reflectionProvider, TypeSpecifier $typeSpecifier, array $dynamicConstantNames = []) : ScopeFactory
+    public static function createScopeFactory(ReflectionProvider $reflectionProvider, TypeSpecifier $typeSpecifier, array $dynamicConstantNames = []): ScopeFactory
     {
         $container = self::getContainer();
         if (count($dynamicConstantNames) === 0) {
@@ -130,16 +130,16 @@ abstract class PHPStanTestCase extends TestCase
     /**
      * @param array<string, string> $globalTypeAliases
      */
-    public static function createTypeAliasResolver(array $globalTypeAliases, ReflectionProvider $reflectionProvider) : TypeAliasResolver
+    public static function createTypeAliasResolver(array $globalTypeAliases, ReflectionProvider $reflectionProvider): TypeAliasResolver
     {
         $container = self::getContainer();
         return new UsefulTypeAliasResolver($globalTypeAliases, $container->getByType(TypeStringResolver::class), $container->getByType(TypeNodeResolver::class), $reflectionProvider);
     }
-    protected function shouldTreatPhpDocTypesAsCertain() : bool
+    protected function shouldTreatPhpDocTypesAsCertain(): bool
     {
         return \true;
     }
-    public static function getFileHelper() : FileHelper
+    public static function getFileHelper(): FileHelper
     {
         return self::getContainer()->getByType(FileHelper::class);
     }
@@ -147,7 +147,7 @@ abstract class PHPStanTestCase extends TestCase
      * Provides a DIRECTORY_SEPARATOR agnostic assertion helper, to compare file paths.
      *
      */
-    protected function assertSamePaths(string $expected, string $actual, string $message = '') : void
+    protected function assertSamePaths(string $expected, string $actual, string $message = ''): void
     {
         $expected = $this->getFileHelper()->normalizePath($expected);
         $actual = $this->getFileHelper()->normalizePath($actual);
@@ -156,7 +156,7 @@ abstract class PHPStanTestCase extends TestCase
     /**
      * @param Error[]|string[] $errors
      */
-    protected function assertNoErrors(array $errors) : void
+    protected function assertNoErrors(array $errors): void
     {
         try {
             $this->assertCount(0, $errors);
@@ -172,14 +172,14 @@ abstract class PHPStanTestCase extends TestCase
             $this->fail($e->getMessage() . "\n\nEmitted errors:\n" . implode("\n", $messages));
         }
     }
-    protected function skipIfNotOnWindows() : void
+    protected function skipIfNotOnWindows(): void
     {
         if (DIRECTORY_SEPARATOR === '\\') {
             return;
         }
         self::markTestSkipped();
     }
-    protected function skipIfNotOnUnix() : void
+    protected function skipIfNotOnUnix(): void
     {
         if (DIRECTORY_SEPARATOR === '/') {
             return;

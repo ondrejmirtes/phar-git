@@ -13,18 +13,18 @@ final class ParameterVariableOriginalValueExpr extends Expr implements VirtualNo
         $this->variableName = $variableName;
         parent::__construct([]);
     }
-    public function getVariableName() : string
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ParameterVariableOriginalValueExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

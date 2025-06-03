@@ -24,11 +24,11 @@ final class OverridingConstantRule implements Rule
     {
         $this->checkPhpDocMethodSignatures = $checkPhpDocMethodSignatures;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();
@@ -43,7 +43,7 @@ final class OverridingConstantRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleConstant(ClassReflection $classReflection, string $constantName) : array
+    private function processSingleConstant(ClassReflection $classReflection, string $constantName): array
     {
         $prototype = $this->findPrototype($classReflection, $constantName);
         if ($prototype === null) {
@@ -86,7 +86,7 @@ final class OverridingConstantRule implements Rule
         }
         return $errors;
     }
-    private function findPrototype(ClassReflection $classReflection, string $constantName) : ?ClassConstantReflection
+    private function findPrototype(ClassReflection $classReflection, string $constantName): ?ClassConstantReflection
     {
         foreach ($classReflection->getImmediateInterfaces() as $immediateInterface) {
             if ($immediateInterface->hasConstant($constantName)) {

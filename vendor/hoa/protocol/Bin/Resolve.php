@@ -64,7 +64,7 @@ class Resolve extends Console\Dispatcher\Kit
         $unfold = \false;
         $tree = \false;
         $verbose = Console::isDirect(\STDOUT);
-        while (\false !== ($c = $this->getOption($v))) {
+        while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'E':
                     $exists = \false;
@@ -129,4 +129,5 @@ class Resolve extends Console\Dispatcher\Kit
 }
 __halt_compiler();
 Resolve `hoa://` paths.
+
 

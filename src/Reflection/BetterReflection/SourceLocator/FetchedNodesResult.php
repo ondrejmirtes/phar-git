@@ -32,21 +32,21 @@ final class FetchedNodesResult
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\ClassLike>>>
      */
-    public function getClassNodes() : array
+    public function getClassNodes(): array
     {
         return $this->classNodes;
     }
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\Function_>>>
      */
-    public function getFunctionNodes() : array
+    public function getFunctionNodes(): array
     {
         return $this->functionNodes;
     }
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\Const_|Node\Expr\FuncCall>>>
      */
-    public function getConstantNodes() : array
+    public function getConstantNodes(): array
     {
         return $this->constantNodes;
     }

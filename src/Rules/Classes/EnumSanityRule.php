@@ -23,11 +23,11 @@ use function sprintf;
 final class EnumSanityRule implements Rule
 {
     private const ALLOWED_MAGIC_METHODS = ['__call' => \true, '__callstatic' => \true, '__invoke' => \true];
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         if (!$classReflection->isEnum()) {

@@ -24,7 +24,7 @@ final class GenericParametersAcceptorResolver
      * @api
      * @param array<int|string, Type> $argTypes
      */
-    public static function resolve(array $argTypes, \PHPStan\Reflection\ParametersAcceptor $parametersAcceptor) : \PHPStan\Reflection\ExtendedParametersAcceptor
+    public static function resolve(array $argTypes, \PHPStan\Reflection\ParametersAcceptor $parametersAcceptor): \PHPStan\Reflection\ExtendedParametersAcceptor
     {
         $typeMap = TemplateTypeMap::createEmpty();
         $passedArgs = [];

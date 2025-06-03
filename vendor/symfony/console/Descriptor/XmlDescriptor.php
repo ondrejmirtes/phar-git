@@ -24,7 +24,7 @@ use _PHPStan_checksum\Symfony\Component\Console\Input\InputOption;
  */
 class XmlDescriptor extends Descriptor
 {
-    public function getInputDefinitionDocument(InputDefinition $definition) : \DOMDocument
+    public function getInputDefinitionDocument(InputDefinition $definition): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($definitionXML = $dom->createElement('definition'));
@@ -38,7 +38,7 @@ class XmlDescriptor extends Descriptor
         }
         return $dom;
     }
-    public function getCommandDocument(Command $command, bool $short = \false) : \DOMDocument
+    public function getCommandDocument(Command $command, bool $short = \false): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($commandXML = $dom->createElement('command'));
@@ -64,7 +64,7 @@ class XmlDescriptor extends Descriptor
         }
         return $dom;
     }
-    public function getApplicationDocument(Application $application, ?string $namespace = null, bool $short = \false) : \DOMDocument
+    public function getApplicationDocument(Application $application, ?string $namespace = null, bool $short = \false): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($rootXml = $dom->createElement('symfony'));
@@ -147,7 +147,7 @@ class XmlDescriptor extends Descriptor
         $dom->formatOutput = \true;
         $this->write($dom->saveXML());
     }
-    private function getInputArgumentDocument(InputArgument $argument) : \DOMDocument
+    private function getInputArgumentDocument(InputArgument $argument): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($objectXML = $dom->createElement('argument'));
@@ -164,7 +164,7 @@ class XmlDescriptor extends Descriptor
         }
         return $dom;
     }
-    private function getInputOptionDocument(InputOption $option) : \DOMDocument
+    private function getInputOptionDocument(InputOption $option): \DOMDocument
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($objectXML = $dom->createElement('option'));

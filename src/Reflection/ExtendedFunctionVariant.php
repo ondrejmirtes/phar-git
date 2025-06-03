@@ -26,17 +26,17 @@ class ExtendedFunctionVariant extends \PHPStan\Reflection\FunctionVariant implem
     /**
      * @return list<ExtendedParameterReflection>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         /** @var list<ExtendedParameterReflection> $parameters */
         $parameters = parent::getParameters();
         return $parameters;
     }
-    public function getPhpDocReturnType() : Type
+    public function getPhpDocReturnType(): Type
     {
         return $this->phpDocReturnType;
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->nativeReturnType;
     }

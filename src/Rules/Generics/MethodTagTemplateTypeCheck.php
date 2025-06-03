@@ -29,7 +29,7 @@ final class MethodTagTemplateTypeCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(ClassReflection $classReflection, Scope $scope, ClassLike $node, string $docComment) : array
+    public function check(ClassReflection $classReflection, Scope $scope, ClassLike $node, string $docComment): array
     {
         $className = $classReflection->getDisplayName();
         $resolvedPhpDoc = $this->fileTypeMapper->getResolvedPhpDoc($scope->getFile(), $classReflection->getName(), $scope->isInTrait() ? $scope->getTraitReflection()->getName() : null, null, $docComment);

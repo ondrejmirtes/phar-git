@@ -11,7 +11,7 @@ use function str_starts_with;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class RestrictedInternalUsageHelper
 {
-    public function shouldBeReported(Scope $scope, string $name) : bool
+    public function shouldBeReported(Scope $scope, string $name): bool
     {
         $currentNamespace = $scope->getNamespace();
         $namespace = array_slice(explode('\\', $name), 0, -1)[0] ?? null;

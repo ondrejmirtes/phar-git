@@ -20,27 +20,27 @@ final class ValueOfType implements \PHPStan\Type\CompoundType, \PHPStan\Type\Lat
     {
         $this->type = $type;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return $this->type->getReferencedClasses();
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         return $this->type->getReferencedTemplateTypes($positionVariance);
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         return $type instanceof self && $this->type->equals($type->type);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('value-of<%s>', $this->type->describe($level));
     }
-    public function isResolvable() : bool
+    public function isResolvable(): bool
     {
         return !\PHPStan\Type\TypeUtils::containsTemplateType($this->type);
     }
-    protected function getResult() : \PHPStan\Type\Type
+    protected function getResult(): \PHPStan\Type\Type
     {
         if ($this->type->isEnum()->yes()) {
             $valueTypes = [];
@@ -58,7 +58,7 @@ final class ValueOfType implements \PHPStan\Type\CompoundType, \PHPStan\Type\Lat
     /**
      * @param callable(Type): Type $cb
      */
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $type = $cb($this->type);
         if ($this->type === $type) {
@@ -66,7 +66,7 @@ final class ValueOfType implements \PHPStan\Type\CompoundType, \PHPStan\Type\Lat
         }
         return new self($type);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if (!$right instanceof self) {
             return $this;
@@ -77,7 +77,7 @@ final class ValueOfType implements \PHPStan\Type\CompoundType, \PHPStan\Type\Lat
         }
         return new self($type);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new GenericTypeNode(new IdentifierTypeNode('value-of'), [$this->type->toPhpDocNode()]);
     }

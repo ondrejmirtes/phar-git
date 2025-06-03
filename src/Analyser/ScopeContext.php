@@ -17,15 +17,15 @@ final class ScopeContext
         $this->traitReflection = $traitReflection;
     }
     /** @api */
-    public static function create(string $file) : self
+    public static function create(string $file): self
     {
         return new self($file, null, null);
     }
-    public function beginFile() : self
+    public function beginFile(): self
     {
         return new self($this->file, null, null);
     }
-    public function enterClass(ClassReflection $classReflection) : self
+    public function enterClass(ClassReflection $classReflection): self
     {
         if ($this->classReflection !== null && !$classReflection->isAnonymous()) {
             throw new ShouldNotHappenException();
@@ -35,7 +35,7 @@ final class ScopeContext
         }
         return new self($this->file, $classReflection, null);
     }
-    public function enterTrait(ClassReflection $traitReflection) : self
+    public function enterTrait(ClassReflection $traitReflection): self
     {
         if ($this->classReflection === null) {
             throw new ShouldNotHappenException();
@@ -45,7 +45,7 @@ final class ScopeContext
         }
         return new self($this->file, $this->classReflection, $traitReflection);
     }
-    public function equals(self $otherContext) : bool
+    public function equals(self $otherContext): bool
     {
         if ($this->file !== $otherContext->file) {
             return \false;
@@ -64,15 +64,15 @@ final class ScopeContext
         $isSameTrait = $this->getTraitReflection()->getName() === $otherContext->getTraitReflection()->getName();
         return $isSameClass && $isSameTrait;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getClassReflection() : ?ClassReflection
+    public function getClassReflection(): ?ClassReflection
     {
         return $this->classReflection;
     }
-    public function getTraitReflection() : ?ClassReflection
+    public function getTraitReflection(): ?ClassReflection
     {
         return $this->traitReflection;
     }

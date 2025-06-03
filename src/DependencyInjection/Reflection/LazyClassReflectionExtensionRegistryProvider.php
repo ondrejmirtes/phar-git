@@ -23,7 +23,7 @@ final class LazyClassReflectionExtensionRegistryProvider implements \PHPStan\Dep
     {
         $this->container = $container;
     }
-    public function getRegistry() : ClassReflectionExtensionRegistry
+    public function getRegistry(): ClassReflectionExtensionRegistry
     {
         if ($this->registry === null) {
             $phpClassReflectionExtension = $this->container->getByType(PhpClassReflectionExtension::class);

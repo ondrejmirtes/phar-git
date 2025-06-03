@@ -15,7 +15,7 @@ final class OptimizedDirectorySourceLocatorRepository
     {
         $this->factory = $factory;
     }
-    public function getOrCreate(string $directory) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
+    public function getOrCreate(string $directory): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
     {
         if (array_key_exists($directory, $this->locators)) {
             return $this->locators[$directory];

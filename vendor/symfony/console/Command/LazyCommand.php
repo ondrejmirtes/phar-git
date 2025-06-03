@@ -30,40 +30,40 @@ final class LazyCommand extends Command
         $this->command = $commandFactory;
         $this->isEnabled = $isEnabled;
     }
-    public function ignoreValidationErrors() : void
+    public function ignoreValidationErrors(): void
     {
         $this->getCommand()->ignoreValidationErrors();
     }
-    public function setApplication(?Application $application = null) : void
+    public function setApplication(?Application $application = null): void
     {
         if ($this->command instanceof parent) {
             $this->command->setApplication($application);
         }
         parent::setApplication($application);
     }
-    public function setHelperSet(HelperSet $helperSet) : void
+    public function setHelperSet(HelperSet $helperSet): void
     {
         if ($this->command instanceof parent) {
             $this->command->setHelperSet($helperSet);
         }
         parent::setHelperSet($helperSet);
     }
-    public function isEnabled() : bool
+    public function isEnabled(): bool
     {
         return $this->isEnabled ?? $this->getCommand()->isEnabled();
     }
-    public function run(InputInterface $input, OutputInterface $output) : int
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         return $this->getCommand()->run($input, $output);
     }
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions) : void
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         $this->getCommand()->complete($input, $suggestions);
     }
     /**
      * @return $this
      */
-    public function setCode(callable $code) : self
+    public function setCode(callable $code): self
     {
         $this->getCommand()->setCode($code);
         return $this;
@@ -71,30 +71,30 @@ final class LazyCommand extends Command
     /**
      * @internal
      */
-    public function mergeApplicationDefinition(bool $mergeArgs = \true) : void
+    public function mergeApplicationDefinition(bool $mergeArgs = \true): void
     {
         $this->getCommand()->mergeApplicationDefinition($mergeArgs);
     }
     /**
      * @return $this
      */
-    public function setDefinition($definition) : self
+    public function setDefinition($definition): self
     {
         $this->getCommand()->setDefinition($definition);
         return $this;
     }
-    public function getDefinition() : InputDefinition
+    public function getDefinition(): InputDefinition
     {
         return $this->getCommand()->getDefinition();
     }
-    public function getNativeDefinition() : InputDefinition
+    public function getNativeDefinition(): InputDefinition
     {
         return $this->getCommand()->getNativeDefinition();
     }
     /**
      * @return $this
      */
-    public function addArgument(string $name, ?int $mode = null, string $description = '', $default = null) : self
+    public function addArgument(string $name, ?int $mode = null, string $description = '', $default = null): self
     {
         $this->getCommand()->addArgument($name, $mode, $description, $default);
         return $this;
@@ -102,7 +102,7 @@ final class LazyCommand extends Command
     /**
      * @return $this
      */
-    public function addOption(string $name, $shortcut = null, ?int $mode = null, string $description = '', $default = null) : self
+    public function addOption(string $name, $shortcut = null, ?int $mode = null, string $description = '', $default = null): self
     {
         $this->getCommand()->addOption($name, $shortcut, $mode, $description, $default);
         return $this;
@@ -110,7 +110,7 @@ final class LazyCommand extends Command
     /**
      * @return $this
      */
-    public function setProcessTitle(string $title) : self
+    public function setProcessTitle(string $title): self
     {
         $this->getCommand()->setProcessTitle($title);
         return $this;
@@ -118,32 +118,32 @@ final class LazyCommand extends Command
     /**
      * @return $this
      */
-    public function setHelp(string $help) : self
+    public function setHelp(string $help): self
     {
         $this->getCommand()->setHelp($help);
         return $this;
     }
-    public function getHelp() : string
+    public function getHelp(): string
     {
         return $this->getCommand()->getHelp();
     }
-    public function getProcessedHelp() : string
+    public function getProcessedHelp(): string
     {
         return $this->getCommand()->getProcessedHelp();
     }
-    public function getSynopsis(bool $short = \false) : string
+    public function getSynopsis(bool $short = \false): string
     {
         return $this->getCommand()->getSynopsis($short);
     }
     /**
      * @return $this
      */
-    public function addUsage(string $usage) : self
+    public function addUsage(string $usage): self
     {
         $this->getCommand()->addUsage($usage);
         return $this;
     }
-    public function getUsages() : array
+    public function getUsages(): array
     {
         return $this->getCommand()->getUsages();
     }
@@ -154,7 +154,7 @@ final class LazyCommand extends Command
     {
         return $this->getCommand()->getHelper($name);
     }
-    public function getCommand() : parent
+    public function getCommand(): parent
     {
         if (!$this->command instanceof \Closure) {
             return $this->command;

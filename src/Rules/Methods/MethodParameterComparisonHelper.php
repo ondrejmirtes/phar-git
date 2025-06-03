@@ -33,7 +33,7 @@ final class MethodParameterComparisonHelper
     /**
      * @return list<IdentifierRuleError>
      */
-    public function compare(ExtendedMethodReflection $prototype, ClassReflection $prototypeDeclaringClass, PhpMethodFromParserNodeReflection $method, bool $ignorable) : array
+    public function compare(ExtendedMethodReflection $prototype, ClassReflection $prototypeDeclaringClass, PhpMethodFromParserNodeReflection $method, bool $ignorable): array
     {
         /** @var list<IdentifierRuleError> $messages */
         $messages = [];
@@ -176,15 +176,15 @@ final class MethodParameterComparisonHelper
         }
         return $messages;
     }
-    public function isParameterTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsContravariance) : bool
+    public function isParameterTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsContravariance): bool
     {
         return $this->isTypeCompatible($methodParameterType, $prototypeParameterType, $supportsContravariance, \false);
     }
-    public function isReturnTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsCovariance) : bool
+    public function isReturnTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsCovariance): bool
     {
         return $this->isTypeCompatible($methodParameterType, $prototypeParameterType, $supportsCovariance, \true);
     }
-    private function isTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsContravariance, bool $considerMixedExplicitness) : bool
+    private function isTypeCompatible(Type $methodParameterType, Type $prototypeParameterType, bool $supportsContravariance, bool $considerMixedExplicitness): bool
     {
         if ($methodParameterType instanceof MixedType) {
             if ($considerMixedExplicitness && $prototypeParameterType instanceof MixedType) {

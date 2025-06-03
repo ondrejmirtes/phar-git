@@ -74,7 +74,7 @@ class ConsoleLogger extends AbstractLogger
      *
      * @author PHP Framework Interoperability Group
      */
-    private function interpolate(string $message, array $context) : string
+    private function interpolate(string $message, array $context): string
     {
         if (!\str_contains($message, '{')) {
             return $message;

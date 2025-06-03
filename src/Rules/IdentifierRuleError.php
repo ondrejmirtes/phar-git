@@ -6,5 +6,5 @@ namespace PHPStan\Rules;
 /** @api */
 interface IdentifierRuleError extends \PHPStan\Rules\RuleError
 {
-    public function getIdentifier() : string;
+    public function getIdentifier(): string;
 }

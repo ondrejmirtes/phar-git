@@ -25,7 +25,7 @@ final class MemoizingReflector implements Reflector
     {
         $this->reflector = $reflector;
     }
-    public function reflectClass(string $className) : ReflectionClass
+    public function reflectClass(string $className): ReflectionClass
     {
         $lowerClassName = strtolower($className);
         if (array_key_exists($lowerClassName, $this->classReflections) && $this->classReflections[$lowerClassName] !== null) {
@@ -45,7 +45,7 @@ final class MemoizingReflector implements Reflector
             throw $e;
         }
     }
-    public function reflectConstant(string $constantName) : ReflectionConstant
+    public function reflectConstant(string $constantName): ReflectionConstant
     {
         if (array_key_exists($constantName, $this->constantReflections)) {
             $constantReflection = $this->constantReflections[$constantName];
@@ -61,7 +61,7 @@ final class MemoizingReflector implements Reflector
             throw $e;
         }
     }
-    public function reflectFunction(string $functionName) : ReflectionFunction
+    public function reflectFunction(string $functionName): ReflectionFunction
     {
         $lowerFunctionName = strtolower($functionName);
         if (array_key_exists($lowerFunctionName, $this->functionReflections)) {
@@ -78,15 +78,15 @@ final class MemoizingReflector implements Reflector
             throw $e;
         }
     }
-    public function reflectAllClasses() : iterable
+    public function reflectAllClasses(): iterable
     {
         return $this->reflector->reflectAllClasses();
     }
-    public function reflectAllFunctions() : iterable
+    public function reflectAllFunctions(): iterable
     {
         return $this->reflector->reflectAllFunctions();
     }
-    public function reflectAllConstants() : iterable
+    public function reflectAllConstants(): iterable
     {
         return $this->reflector->reflectAllConstants();
     }

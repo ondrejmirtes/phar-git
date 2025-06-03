@@ -21,26 +21,26 @@ final class CatchWithUnthrownExceptionNode extends NodeAbstract implements \PHPS
         $this->originalCaughtType = $originalCaughtType;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getOriginalNode() : Catch_
+    public function getOriginalNode(): Catch_
     {
         return $this->originalNode;
     }
-    public function getCaughtType() : Type
+    public function getCaughtType(): Type
     {
         return $this->caughtType;
     }
-    public function getOriginalCaughtType() : Type
+    public function getOriginalCaughtType(): Type
     {
         return $this->originalCaughtType;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_CatchWithUnthrownExceptionNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

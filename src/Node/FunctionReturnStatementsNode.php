@@ -53,57 +53,57 @@ final class FunctionReturnStatementsNode extends NodeAbstract implements \PHPSta
         $this->functionReflection = $functionReflection;
         parent::__construct($function->getAttributes());
     }
-    public function getReturnStatements() : array
+    public function getReturnStatements(): array
     {
         return $this->returnStatements;
     }
-    public function getStatementResult() : StatementResult
+    public function getStatementResult(): StatementResult
     {
         return $this->statementResult;
     }
-    public function getExecutionEnds() : array
+    public function getExecutionEnds(): array
     {
         return $this->executionEnds;
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
-    public function returnsByRef() : bool
+    public function returnsByRef(): bool
     {
         return $this->function->byRef;
     }
-    public function hasNativeReturnTypehint() : bool
+    public function hasNativeReturnTypehint(): bool
     {
         return $this->function->returnType !== null;
     }
-    public function getYieldStatements() : array
+    public function getYieldStatements(): array
     {
         return $this->yieldStatements;
     }
-    public function isGenerator() : bool
+    public function isGenerator(): bool
     {
         return count($this->yieldStatements) > 0;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_FunctionReturnStatementsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
-    public function getFunctionReflection() : PhpFunctionFromParserNodeReflection
+    public function getFunctionReflection(): PhpFunctionFromParserNodeReflection
     {
         return $this->functionReflection;
     }
     /**
      * @return Stmt[]
      */
-    public function getStatements() : array
+    public function getStatements(): array
     {
         return $this->function->getStmts();
     }

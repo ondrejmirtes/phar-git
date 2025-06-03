@@ -44,7 +44,7 @@ final class MiddlewareRunner
             return $handler($request);
         }
         $that = $this;
-        $next = function (ServerRequestInterface $request) use($that, $position) {
+        $next = function (ServerRequestInterface $request) use ($that, $position) {
             return $that->call($request, $position + 1);
         };
         // invoke middleware request handler with next handler

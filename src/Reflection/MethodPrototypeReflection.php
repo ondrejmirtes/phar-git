@@ -33,46 +33,46 @@ final class MethodPrototypeReflection implements \PHPStan\Reflection\ClassMember
         $this->variants = $variants;
         $this->tentativeReturnType = $tentativeReturnType;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->isStatic;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->isPrivate;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->isPublic;
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->isAbstract;
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->isInternal;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
     /**
      * @return ParametersAcceptor[]
      */
-    public function getVariants() : array
+    public function getVariants(): array
     {
         return $this->variants;
     }
-    public function getTentativeReturnType() : ?Type
+    public function getTentativeReturnType(): ?Type
     {
         return $this->tentativeReturnType;
     }

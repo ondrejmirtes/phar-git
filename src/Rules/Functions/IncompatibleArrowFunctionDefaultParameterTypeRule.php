@@ -18,11 +18,11 @@ use function sprintf;
  */
 final class IncompatibleArrowFunctionDefaultParameterTypeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InArrowFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $parameters = $node->getClosureType()->getParameters();
         $errors = [];

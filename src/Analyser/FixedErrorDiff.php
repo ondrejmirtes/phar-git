@@ -21,7 +21,7 @@ final class FixedErrorDiff
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['originalHash'], $properties['diff']);
     }

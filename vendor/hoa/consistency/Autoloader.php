@@ -84,7 +84,7 @@ class Autoloader
     {
         $entityPrefix = $entity;
         $hasBaseDirectory = \false;
-        while (\false !== ($pos = \strrpos($entityPrefix, '\\'))) {
+        while (\false !== $pos = \strrpos($entityPrefix, '\\')) {
             $currentEntityPrefix = \substr($entity, 0, $pos + 1);
             $entityPrefix = \rtrim($currentEntityPrefix, '\\');
             $entitySuffix = \substr($entity, $pos + 1);
@@ -100,7 +100,7 @@ class Autoloader
                 }
             }
         }
-        if (\true === $hasBaseDirectory && $entity === \Hoa\Consistency\Consistency::getEntityShortestName($entity) && \false !== ($pos = \strrpos($entity, '\\'))) {
+        if (\true === $hasBaseDirectory && $entity === \Hoa\Consistency\Consistency::getEntityShortestName($entity) && \false !== $pos = \strrpos($entity, '\\')) {
             return $this->runAutoloaderStack($entity . '\\' . \substr($entity, $pos + 1));
         }
         return null;

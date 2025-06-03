@@ -15,7 +15,7 @@ use _PHPStan_checksum\Nette\Schema\Expect;
  */
 final class DecoratorExtension extends Nette\DI\CompilerExtension
 {
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         return Expect::arrayOf(Expect::structure(['setup' => Expect::list(), 'tags' => Expect::array(), 'inject' => Expect::bool()]));
     }
@@ -33,7 +33,7 @@ final class DecoratorExtension extends Nette\DI\CompilerExtension
             $this->addTags($type, $info->tags);
         }
     }
-    public function addSetups(string $type, array $setups) : void
+    public function addSetups(string $type, array $setups): void
     {
         foreach ($this->findByType($type) as $def) {
             if ($def instanceof Definitions\FactoryDefinition) {
@@ -47,16 +47,16 @@ final class DecoratorExtension extends Nette\DI\CompilerExtension
             }
         }
     }
-    public function addTags(string $type, array $tags) : void
+    public function addTags(string $type, array $tags): void
     {
         $tags = Nette\Utils\Arrays::normalize($tags, \true);
         foreach ($this->findByType($type) as $def) {
             $def->setTags($def->getTags() + $tags);
         }
     }
-    private function findByType(string $type) : array
+    private function findByType(string $type): array
     {
-        return \array_filter($this->getContainerBuilder()->getDefinitions(), function (Definitions\Definition $def) use($type) : bool {
+        return \array_filter($this->getContainerBuilder()->getDefinitions(), function (Definitions\Definition $def) use ($type): bool {
             return \is_a($def->getType(), $type, \true) || $def instanceof Definitions\FactoryDefinition && \is_a($def->getResultType(), $type, \true);
         });
     }

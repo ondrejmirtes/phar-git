@@ -21,11 +21,11 @@ final class ApiTraitUseRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\TraitUse::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         $tip = sprintf("If you think it should be covered by backward compatibility promise, open a discussion:\n   %s\n\n   See also:\n   https://phpstan.org/developing-extensions/backward-compatibility-promise", 'https://github.com/phpstan/phpstan/discussions');

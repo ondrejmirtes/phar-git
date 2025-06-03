@@ -18,7 +18,7 @@ final class RestrictedInternalClassConstantUsageExtension implements RestrictedC
     {
         $this->helper = $helper;
     }
-    public function isRestrictedClassConstantUsage(ClassConstantReflection $constantReflection, Scope $scope) : ?RestrictedUsage
+    public function isRestrictedClassConstantUsage(ClassConstantReflection $constantReflection, Scope $scope): ?RestrictedUsage
     {
         $isConstantInternal = $constantReflection->isInternal()->yes();
         $declaringClass = $constantReflection->getDeclaringClass();

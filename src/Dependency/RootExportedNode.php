@@ -11,6 +11,6 @@ interface RootExportedNode extends \PHPStan\Dependency\ExportedNode
     public const TYPE_TRAIT = 'trait';
     public const TYPE_FUNCTION = 'function';
     /** @return self::TYPE_* */
-    public function getType() : string;
-    public function getName() : string;
+    public function getType(): string;
+    public function getName(): string;
 }

@@ -28,11 +28,11 @@ final class IncompatiblePropertyPhpDocTypeRule implements Rule
         $this->unresolvableTypeHelper = $unresolvableTypeHelper;
         $this->genericCallableRuleHelper = $genericCallableRuleHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $phpDocType = $node->getPhpDocType();
         if ($phpDocType === null) {

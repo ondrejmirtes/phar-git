@@ -57,7 +57,7 @@ final class TemplateTypeCheck
      * @param array<string, TemplateTag> $templateTags
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, Node $node, TemplateTypeScope $templateTypeScope, array $templateTags, string $sameTemplateTypeNameAsClassMessage, string $sameTemplateTypeNameAsTypeMessage, string $invalidBoundTypeMessage, string $notSupportedBoundMessage, string $invalidDefaultTypeMessage, string $defaultNotSubtypeOfBoundMessage, string $requiredTypeAfterOptionalMessage) : array
+    public function check(Scope $scope, Node $node, TemplateTypeScope $templateTypeScope, array $templateTags, string $sameTemplateTypeNameAsClassMessage, string $sameTemplateTypeNameAsTypeMessage, string $invalidBoundTypeMessage, string $notSupportedBoundMessage, string $invalidDefaultTypeMessage, string $defaultNotSubtypeOfBoundMessage, string $requiredTypeAfterOptionalMessage): array
     {
         $messages = [];
         $templateTagWithDefaultType = null;

@@ -31,19 +31,19 @@ final class PregMatchTypeSpecifyingExtension implements StaticMethodTypeSpecifyi
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return Preg::class;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection, StaticCall $node, TypeSpecifierContext $context) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection, StaticCall $node, TypeSpecifierContext $context): bool
     {
         return \in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups', 'matchAll', 'isMatchAll', 'matchAllStrictGroups', 'isMatchAllStrictGroups'], \true) && !$context->null();
     }
-    public function specifyTypes(MethodReflection $methodReflection, StaticCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(MethodReflection $methodReflection, StaticCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $args = $node->getArgs();
         $patternArg = $args[0] ?? null;

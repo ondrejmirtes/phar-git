@@ -23,27 +23,27 @@ class DummyParameter implements ParameterReflection
         $this->defaultValue = $defaultValue;
         $this->passedByReference = $passedByReference ?? PassedByReference::createNo();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }

@@ -151,4 +151,4 @@ class Link extends File
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\File\\Link\\Link');
+Consistency::flexEntity('Hoa\File\Link\Link');

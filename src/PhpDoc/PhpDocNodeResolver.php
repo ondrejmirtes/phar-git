@@ -65,7 +65,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<(string|int), VarTag>
      */
-    public function resolveVarTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveVarTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         $resolvedByTag = [];
@@ -97,7 +97,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, PropertyTag>
      */
-    public function resolvePropertyTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolvePropertyTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@property', '@phpstan-property'] as $tagName) {
@@ -134,7 +134,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, MethodTag>
      */
-    public function resolveMethodTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveMethodTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         $originalNameScope = $nameScope;
@@ -171,7 +171,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, ExtendsTag>
      */
-    public function resolveExtendsTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveExtendsTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@extends', '@phan-extends', '@phan-inherits', '@template-extends', '@phpstan-extends'] as $tagName) {
@@ -184,7 +184,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, ImplementsTag>
      */
-    public function resolveImplementsTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveImplementsTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@implements', '@template-implements', '@phpstan-implements'] as $tagName) {
@@ -197,7 +197,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, UsesTag>
      */
-    public function resolveUsesTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveUsesTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@use', '@template-use', '@phpstan-use'] as $tagName) {
@@ -210,7 +210,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, TemplateTag>
      */
-    public function resolveTemplateTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveTemplateTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         $resolvedPrefix = [];
@@ -254,7 +254,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, ParamTag>
      */
-    public function resolveParamTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveParamTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@param', '@phan-param', '@psalm-param', '@phpstan-param'] as $tagName) {
@@ -272,7 +272,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, ParamOutTag>
      */
-    public function resolveParamOutTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveParamOutTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         if (!method_exists($phpDocNode, 'getParamOutTypeTagValues')) {
             return [];
@@ -293,7 +293,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, bool>
      */
-    public function resolveParamImmediatelyInvokedCallable(PhpDocNode $phpDocNode) : array
+    public function resolveParamImmediatelyInvokedCallable(PhpDocNode $phpDocNode): array
     {
         $parameters = [];
         foreach (['@param-immediately-invoked-callable', '@phpstan-param-immediately-invoked-callable'] as $tagName) {
@@ -313,7 +313,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, ParamClosureThisTag>
      */
-    public function resolveParamClosureThisTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveParamClosureThisTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $closureThisTypes = [];
         foreach (['@param-closure-this', '@phpstan-param-closure-this'] as $tagName) {
@@ -324,7 +324,7 @@ final class PhpDocNodeResolver
         }
         return $closureThisTypes;
     }
-    public function resolveReturnTag(PhpDocNode $phpDocNode, NameScope $nameScope) : ?ReturnTag
+    public function resolveReturnTag(PhpDocNode $phpDocNode, NameScope $nameScope): ?ReturnTag
     {
         $resolved = null;
         foreach (['@return', '@phan-return', '@phan-real-return', '@psalm-return', '@phpstan-return'] as $tagName) {
@@ -338,7 +338,7 @@ final class PhpDocNodeResolver
         }
         return $resolved;
     }
-    public function resolveThrowsTags(PhpDocNode $phpDocNode, NameScope $nameScope) : ?ThrowsTag
+    public function resolveThrowsTags(PhpDocNode $phpDocNode, NameScope $nameScope): ?ThrowsTag
     {
         foreach (['@phpstan-throws', '@throws'] as $tagName) {
             $types = [];
@@ -358,14 +358,14 @@ final class PhpDocNodeResolver
     /**
      * @return array<MixinTag>
      */
-    public function resolveMixinTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveMixinTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         return array_map(fn(MixinTagValueNode $mixinTagValueNode): MixinTag => new MixinTag($this->typeNodeResolver->resolve($mixinTagValueNode->type, $nameScope)), $phpDocNode->getMixinTagValues());
     }
     /**
      * @return array<RequireExtendsTag>
      */
-    public function resolveRequireExtendsTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveRequireExtendsTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@psalm-require-extends', '@phpstan-require-extends'] as $tagName) {
@@ -378,7 +378,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<RequireImplementsTag>
      */
-    public function resolveRequireImplementsTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveRequireImplementsTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@psalm-require-implements', '@phpstan-require-implements'] as $tagName) {
@@ -391,7 +391,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, TypeAliasTag>
      */
-    public function resolveTypeAliasTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveTypeAliasTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@phan-type', '@psalm-type', '@phpstan-type'] as $tagName) {
@@ -406,7 +406,7 @@ final class PhpDocNodeResolver
     /**
      * @return array<string, TypeAliasImportTag>
      */
-    public function resolveTypeAliasImportTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveTypeAliasImportTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         $resolved = [];
         foreach (['@psalm-import-type', '@phpstan-import-type'] as $tagName) {
@@ -422,7 +422,7 @@ final class PhpDocNodeResolver
     /**
      * @return AssertTag[]
      */
-    public function resolveAssertTags(PhpDocNode $phpDocNode, NameScope $nameScope) : array
+    public function resolveAssertTags(PhpDocNode $phpDocNode, NameScope $nameScope): array
     {
         foreach (['@phpstan', '@psalm', '@phan'] as $prefix) {
             $resolved = array_merge($this->resolveAssertTagsFor($phpDocNode, $nameScope, $prefix . '-assert', AssertTag::NULL), $this->resolveAssertTagsFor($phpDocNode, $nameScope, $prefix . '-assert-if-true', AssertTag::IF_TRUE), $this->resolveAssertTagsFor($phpDocNode, $nameScope, $prefix . '-assert-if-false', AssertTag::IF_FALSE));
@@ -436,7 +436,7 @@ final class PhpDocNodeResolver
      * @param AssertTag::NULL|AssertTag::IF_TRUE|AssertTag::IF_FALSE $if
      * @return AssertTag[]
      */
-    private function resolveAssertTagsFor(PhpDocNode $phpDocNode, NameScope $nameScope, string $tagName, string $if) : array
+    private function resolveAssertTagsFor(PhpDocNode $phpDocNode, NameScope $nameScope, string $tagName, string $if): array
     {
         $resolved = [];
         foreach ($phpDocNode->getAssertTagValues($tagName) as $assertTagValue) {
@@ -456,7 +456,7 @@ final class PhpDocNodeResolver
         }
         return $resolved;
     }
-    public function resolveSelfOutTypeTag(PhpDocNode $phpDocNode, NameScope $nameScope) : ?SelfOutTypeTag
+    public function resolveSelfOutTypeTag(PhpDocNode $phpDocNode, NameScope $nameScope): ?SelfOutTypeTag
     {
         if (!method_exists($phpDocNode, 'getSelfOutTypeTagValues')) {
             return null;
@@ -469,7 +469,7 @@ final class PhpDocNodeResolver
         }
         return null;
     }
-    public function resolveDeprecatedTag(PhpDocNode $phpDocNode, NameScope $nameScope) : ?DeprecatedTag
+    public function resolveDeprecatedTag(PhpDocNode $phpDocNode, NameScope $nameScope): ?DeprecatedTag
     {
         foreach ($phpDocNode->getDeprecatedTagValues() as $deprecatedTagValue) {
             $description = (string) $deprecatedTagValue;
@@ -477,27 +477,27 @@ final class PhpDocNodeResolver
         }
         return null;
     }
-    public function resolveIsDeprecated(PhpDocNode $phpDocNode) : bool
+    public function resolveIsDeprecated(PhpDocNode $phpDocNode): bool
     {
         $deprecatedTags = $phpDocNode->getTagsByName('@deprecated');
         return count($deprecatedTags) > 0;
     }
-    public function resolveIsNotDeprecated(PhpDocNode $phpDocNode) : bool
+    public function resolveIsNotDeprecated(PhpDocNode $phpDocNode): bool
     {
         $notDeprecatedTags = $phpDocNode->getTagsByName('@not-deprecated');
         return count($notDeprecatedTags) > 0;
     }
-    public function resolveIsInternal(PhpDocNode $phpDocNode) : bool
+    public function resolveIsInternal(PhpDocNode $phpDocNode): bool
     {
         $internalTags = $phpDocNode->getTagsByName('@internal');
         return count($internalTags) > 0;
     }
-    public function resolveIsFinal(PhpDocNode $phpDocNode) : bool
+    public function resolveIsFinal(PhpDocNode $phpDocNode): bool
     {
         $finalTags = $phpDocNode->getTagsByName('@final');
         return count($finalTags) > 0;
     }
-    public function resolveIsPure(PhpDocNode $phpDocNode) : bool
+    public function resolveIsPure(PhpDocNode $phpDocNode): bool
     {
         foreach ($phpDocNode->getTags() as $phpDocTagNode) {
             if (in_array($phpDocTagNode->name, ['@pure', '@phan-pure', '@phan-side-effect-free', '@psalm-pure', '@phpstan-pure'], \true)) {
@@ -506,7 +506,7 @@ final class PhpDocNodeResolver
         }
         return \false;
     }
-    public function resolveIsImpure(PhpDocNode $phpDocNode) : bool
+    public function resolveIsImpure(PhpDocNode $phpDocNode): bool
     {
         foreach ($phpDocNode->getTags() as $phpDocTagNode) {
             if (in_array($phpDocTagNode->name, ['@impure', '@phpstan-impure'], \true)) {
@@ -515,7 +515,7 @@ final class PhpDocNodeResolver
         }
         return \false;
     }
-    public function resolveIsReadOnly(PhpDocNode $phpDocNode) : bool
+    public function resolveIsReadOnly(PhpDocNode $phpDocNode): bool
     {
         foreach (['@readonly', '@phan-read-only', '@psalm-readonly', '@phpstan-readonly', '@phpstan-readonly-allow-private-mutation', '@psalm-readonly-allow-private-mutation'] as $tagName) {
             $tags = $phpDocNode->getTagsByName($tagName);
@@ -525,7 +525,7 @@ final class PhpDocNodeResolver
         }
         return \false;
     }
-    public function resolveIsImmutable(PhpDocNode $phpDocNode) : bool
+    public function resolveIsImmutable(PhpDocNode $phpDocNode): bool
     {
         foreach (['@immutable', '@phan-immutable', '@psalm-immutable', '@phpstan-immutable'] as $tagName) {
             $tags = $phpDocNode->getTagsByName($tagName);
@@ -535,7 +535,7 @@ final class PhpDocNodeResolver
         }
         return \false;
     }
-    public function resolveHasConsistentConstructor(PhpDocNode $phpDocNode) : bool
+    public function resolveHasConsistentConstructor(PhpDocNode $phpDocNode): bool
     {
         foreach (['@consistent-constructor', '@phpstan-consistent-constructor', '@psalm-consistent-constructor'] as $tagName) {
             $tags = $phpDocNode->getTagsByName($tagName);
@@ -545,18 +545,18 @@ final class PhpDocNodeResolver
         }
         return \false;
     }
-    public function resolveAcceptsNamedArguments(PhpDocNode $phpDocNode) : bool
+    public function resolveAcceptsNamedArguments(PhpDocNode $phpDocNode): bool
     {
         return count($phpDocNode->getTagsByName('@no-named-arguments')) === 0;
     }
-    private function shouldSkipType(string $tagName, Type $type) : bool
+    private function shouldSkipType(string $tagName, Type $type): bool
     {
         if (!str_starts_with($tagName, '@psalm-')) {
             return \false;
         }
         return $this->unresolvableTypeHelper->containsUnresolvableType($type);
     }
-    public function resolveAllowPrivateMutation(PhpDocNode $phpDocNode) : bool
+    public function resolveAllowPrivateMutation(PhpDocNode $phpDocNode): bool
     {
         foreach (['@phpstan-readonly-allow-private-mutation', '@phpstan-allow-private-mutation', '@psalm-readonly-allow-private-mutation', '@psalm-allow-private-mutation'] as $tagName) {
             $tags = $phpDocNode->getTagsByName($tagName);

@@ -9,9 +9,9 @@ use PHPStan\Type\StaticMethodParameterOutTypeExtension;
 interface ParameterOutTypeExtensionProvider
 {
     /** @return FunctionParameterOutTypeExtension[] */
-    public function getFunctionParameterOutTypeExtensions() : array;
+    public function getFunctionParameterOutTypeExtensions(): array;
     /** @return MethodParameterOutTypeExtension[] */
-    public function getMethodParameterOutTypeExtensions() : array;
+    public function getMethodParameterOutTypeExtensions(): array;
     /** @return StaticMethodParameterOutTypeExtension[] */
-    public function getStaticMethodParameterOutTypeExtensions() : array;
+    public function getStaticMethodParameterOutTypeExtensions(): array;
 }

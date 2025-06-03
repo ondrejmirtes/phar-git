@@ -19,11 +19,11 @@ final class ReturnNullsafeByRefRule implements Rule
     {
         $this->nullsafeCheck = $nullsafeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->returnsByRef()) {
             return [];

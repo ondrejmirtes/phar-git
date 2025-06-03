@@ -21,25 +21,25 @@ final class UnreachableStatementNode extends Stmt implements \PHPStan\Node\Virtu
         $this->nextStatements = $nextStatements;
         parent::__construct($originalStatement->getAttributes());
     }
-    public function getOriginalStatement() : Stmt
+    public function getOriginalStatement(): Stmt
     {
         return $this->originalStatement;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Stmt_UnreachableStatementNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
     /**
      * @return Stmt[]
      */
-    public function getNextStatements() : array
+    public function getNextStatements(): array
     {
         return $this->nextStatements;
     }

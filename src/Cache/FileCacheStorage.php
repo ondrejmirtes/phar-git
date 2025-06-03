@@ -47,8 +47,8 @@ final class FileCacheStorage implements \PHPStan\Cache\CacheStorage
     public function load(string $key, string $variableKey)
     {
         [, , $filePath] = $this->getFilePaths($key);
-        return (static function () use($variableKey, $filePath) {
-            $cacheItem = @(include $filePath);
+        return (static function () use ($variableKey, $filePath) {
+            $cacheItem = @include $filePath;
             if (!$cacheItem instanceof \PHPStan\Cache\CacheItem) {
                 return null;
             }
@@ -62,7 +62,7 @@ final class FileCacheStorage implements \PHPStan\Cache\CacheStorage
      * @param mixed $data
      * @throws DirectoryCreatorException
      */
-    public function save(string $key, string $variableKey, $data) : void
+    public function save(string $key, string $variableKey, $data): void
     {
         [$firstDirectory, $secondDirectory, $path] = $this->getFilePaths($key);
         DirectoryCreator::ensureDirectoryExists($this->directory, 0777);
@@ -88,7 +88,7 @@ final class FileCacheStorage implements \PHPStan\Cache\CacheStorage
     /**
      * @return array{string, string, string}
      */
-    private function getFilePaths(string $key) : array
+    private function getFilePaths(string $key): array
     {
         $keyHash = sha1($key);
         $firstDirectory = sprintf('%s/%s', $this->directory, substr($keyHash, 0, 2));
@@ -96,7 +96,7 @@ final class FileCacheStorage implements \PHPStan\Cache\CacheStorage
         $filePath = sprintf('%s/%s.php', $secondDirectory, $keyHash);
         return [$firstDirectory, $secondDirectory, $filePath];
     }
-    public function clearUnusedFiles() : void
+    public function clearUnusedFiles(): void
     {
         if (!is_dir($this->directory)) {
             return;
@@ -146,7 +146,7 @@ final class FileCacheStorage implements \PHPStan\Cache\CacheStorage
             // pass
         }
     }
-    private function isDirectoryEmpty(string $directory) : bool
+    private function isDirectoryEmpty(string $directory): bool
     {
         $handle = opendir($directory);
         if ($handle === \false) {

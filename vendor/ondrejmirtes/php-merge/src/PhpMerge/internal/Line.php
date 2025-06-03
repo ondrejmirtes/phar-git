@@ -84,14 +84,14 @@ final class Line
     /**
      * @return string
      */
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }
     /**
      * @return int
      */
-    public function getType() : int
+    public function getType(): int
     {
         return $this->type;
     }
@@ -100,7 +100,7 @@ final class Line
      *
      * @return bool
      */
-    public function isSame(Line $other) : bool
+    public function isSame(Line $other): bool
     {
         return $this->type === $other->type && $this->index === $other->index && $this->content === $other->content;
     }

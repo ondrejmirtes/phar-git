@@ -16,23 +16,23 @@ final class PhpVersions
     {
         $this->phpVersions = $phpVersions;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->phpVersions;
     }
-    public function supportsNoncapturingCatches() : TrinaryLogic
+    public function supportsNoncapturingCatches(): TrinaryLogic
     {
         return IntegerRangeType::fromInterval(80000, null)->isSuperTypeOf($this->phpVersions)->result;
     }
-    public function producesWarningForFinalPrivateMethods() : TrinaryLogic
+    public function producesWarningForFinalPrivateMethods(): TrinaryLogic
     {
         return IntegerRangeType::fromInterval(80000, null)->isSuperTypeOf($this->phpVersions)->result;
     }
-    public function supportsNamedArguments() : TrinaryLogic
+    public function supportsNamedArguments(): TrinaryLogic
     {
         return IntegerRangeType::fromInterval(80000, null)->isSuperTypeOf($this->phpVersions)->result;
     }
-    public function supportsNamedArgumentAfterUnpackedArgument() : TrinaryLogic
+    public function supportsNamedArgumentAfterUnpackedArgument(): TrinaryLogic
     {
         return IntegerRangeType::fromInterval(80100, null)->isSuperTypeOf($this->phpVersions)->result;
     }

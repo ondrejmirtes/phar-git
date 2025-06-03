@@ -27,11 +27,11 @@ final class ExistingClassesInInterfaceExtendsRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Interface_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $currentInterfaceName = (string) $node->namespacedName;
         $messages = $this->classCheck->checkClassNames($scope, array_map(static fn(Node\Name $interfaceName): ClassNameNodePair => new ClassNameNodePair((string) $interfaceName, $interfaceName), $node->extends), ClassNameUsageLocation::from(ClassNameUsageLocation::INTERFACE_EXTENDS, ['currentClassName' => $currentInterfaceName]));

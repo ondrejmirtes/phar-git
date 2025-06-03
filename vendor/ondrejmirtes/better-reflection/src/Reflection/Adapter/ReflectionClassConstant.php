@@ -41,7 +41,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
         unset($this->name);
         unset($this->class);
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterClassConstantOrEnumCase->getName();
     }
@@ -53,7 +53,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
         return $this->betterClassConstantOrEnumCase;
     }
     /** @psalm-mutation-free */
-    public function hasType() : bool
+    public function hasType(): bool
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \false;
@@ -64,7 +64,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
      * @psalm-mutation-free
      * @return ReflectionUnionType|ReflectionNamedType|ReflectionIntersectionType|null
      */
-    public function getType() : ?CoreReflectionType
+    public function getType(): ?CoreReflectionType
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return null;
@@ -79,39 +79,39 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
         }
         return $this->betterClassConstantOrEnumCase->getValue();
     }
-    public function getValueExpression() : Expr
+    public function getValueExpression(): Expr
     {
         return $this->betterClassConstantOrEnumCase->getValueExpression();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \true;
         }
         return $this->betterClassConstantOrEnumCase->isPublic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \false;
         }
         return $this->betterClassConstantOrEnumCase->isPrivate();
     }
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \false;
         }
         return $this->betterClassConstantOrEnumCase->isProtected();
     }
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant::IS_PUBLIC_COMPATIBILITY;
         }
         return $this->betterClassConstantOrEnumCase->getModifiers();
     }
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($this->betterClassConstantOrEnumCase->getDeclaringClass());
@@ -135,7 +135,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
      *
      * @return non-empty-string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterClassConstantOrEnumCase->__toString();
     }
@@ -144,7 +144,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(?string $name = null, int $flags = 0) : array
+    public function getAttributes(?string $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');
@@ -159,18 +159,18 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(static fn(BetterReflectionAttribute $betterReflectionAttribute) => \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttributeFactory::create($betterReflectionAttribute), $attributes);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             return \true;
         }
         return $this->betterClassConstantOrEnumCase->isFinal();
     }
-    public function isEnumCase() : bool
+    public function isEnumCase(): bool
     {
         return $this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return $this->betterClassConstantOrEnumCase->isDeprecated();
     }

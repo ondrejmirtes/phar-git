@@ -19,7 +19,7 @@ final class ReflectionTypeStringCast
      * @psalm-pure
      * @param \PHPStan\BetterReflection\Reflection\ReflectionNamedType|\PHPStan\BetterReflection\Reflection\ReflectionUnionType|\PHPStan\BetterReflection\Reflection\ReflectionIntersectionType $type
      */
-    public static function toString($type) : string
+    public static function toString($type): string
     {
         if ($type instanceof ReflectionUnionType) {
             // php-src has this weird behavior where a union type composed of a single type `T`

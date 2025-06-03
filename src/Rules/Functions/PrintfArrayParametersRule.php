@@ -31,11 +31,11 @@ final class PrintfArrayParametersRule implements Rule
         $this->printfHelper = $printfHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -115,7 +115,7 @@ final class PrintfArrayParametersRule implements Rule
      * @param \PHPStan\Type\Constant\ConstantIntegerType|\PHPStan\Type\IntegerRangeType $placeHoldersCount
      * @param \PHPStan\Type\Constant\ConstantIntegerType|\PHPStan\Type\IntegerRangeType $formatArgsCount
      */
-    private function placeholdersMatchesArgsCount($placeHoldersCount, $formatArgsCount) : bool
+    private function placeholdersMatchesArgsCount($placeHoldersCount, $formatArgsCount): bool
     {
         if ($placeHoldersCount instanceof ConstantIntegerType) {
             if ($formatArgsCount instanceof ConstantIntegerType) {
@@ -137,7 +137,7 @@ final class PrintfArrayParametersRule implements Rule
         }
         return \false;
     }
-    private function getIntegerRangeAsString(IntegerRangeType $range) : string
+    private function getIntegerRangeAsString(IntegerRangeType $range): string
     {
         if ($range->getMin() !== null && $range->getMax() !== null) {
             return $range->getMin() . '-' . $range->getMax();

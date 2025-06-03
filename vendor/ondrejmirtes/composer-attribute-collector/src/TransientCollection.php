@@ -27,7 +27,7 @@ final class TransientCollection
      * @param iterable<TransientTargetClass> $targets
      *     The target class.
      */
-    public function addClassAttributes(string $class, iterable $targets) : void
+    public function addClassAttributes(string $class, iterable $targets): void
     {
         $this->classes[$class] = $targets;
     }
@@ -36,7 +36,7 @@ final class TransientCollection
      * @param iterable<TransientTargetMethod> $targets
      *     The target class.
      */
-    public function addMethodAttributes(string $class, iterable $targets) : void
+    public function addMethodAttributes(string $class, iterable $targets): void
     {
         $this->methods[$class] = $targets;
     }
@@ -45,7 +45,7 @@ final class TransientCollection
      * @param iterable<TransientTargetProperty> $targets
      *     The target class.
      */
-    public function addTargetProperties(string $class, iterable $targets) : void
+    public function addTargetProperties(string $class, iterable $targets): void
     {
         $this->properties[$class] = $targets;
     }

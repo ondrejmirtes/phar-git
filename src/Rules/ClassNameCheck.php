@@ -26,7 +26,7 @@ final class ClassNameCheck
      * @param ClassNameNodePair[] $pairs
      * @return list<IdentifierRuleError>
      */
-    public function checkClassNames(Scope $scope, array $pairs, ?\PHPStan\Rules\ClassNameUsageLocation $location, bool $checkClassCaseSensitivity = \true) : array
+    public function checkClassNames(Scope $scope, array $pairs, ?\PHPStan\Rules\ClassNameUsageLocation $location, bool $checkClassCaseSensitivity = \true): array
     {
         $errors = [];
         if ($checkClassCaseSensitivity) {

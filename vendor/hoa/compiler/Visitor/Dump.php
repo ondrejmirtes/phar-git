@@ -64,7 +64,7 @@ class Dump implements Visitor\Visit
     {
         ++self::$_i;
         $out = \str_repeat('>  ', self::$_i) . $element->getId();
-        if (null !== ($value = $element->getValue())) {
+        if (null !== $value = $element->getValue()) {
             $out .= '(' . ('default' !== $value['namespace'] ? $value['namespace'] . ':' : '') . $value['token'] . ', ' . $value['value'] . ')';
         }
         $data = $element->getData();

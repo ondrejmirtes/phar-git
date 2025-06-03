@@ -78,7 +78,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         $this->prettyPrinter = $prettyPrinter;
     }
     /** @param class-string|trait-string $className */
-    public function generateClassStub(string $className) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateClassStub(string $className): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         /** @phpstan-ignore staticMethod.alreadyNarrowedType */
         if (!ClassExistenceChecker::exists($className, \false)) {
@@ -115,14 +115,14 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         assert(is_string($extensionName) && $extensionName !== '' || $extensionName === null);
         return $this->createStubData($stub, $extensionName, $classReflection->getFileName() !== \false ? $classReflection->getFileName() : null);
     }
-    public function generateFunctionStub(string $functionName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateFunctionStub(string $functionName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         if (!function_exists($functionName)) {
             return null;
         }
         return $this->generateFunctionStubFromReflection(new CoreReflectionFunction($functionName));
     }
-    public function generateFunctionStubFromReflection(CoreReflectionFunction $functionReflection) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateFunctionStubFromReflection(CoreReflectionFunction $functionReflection): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         $shortName = $functionReflection->getShortName();
         if ($functionReflection->isClosure()) {
@@ -147,7 +147,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         }
         return $this->createStubData($this->generateStubInNamespace($functionNode->getNode(), $functionReflection->getNamespaceName()), $extensionName, $functionReflection->getFileName() !== \false ? $functionReflection->getFileName() : null);
     }
-    public function generateConstantStub(string $constantName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateConstantStub(string $constantName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         $constantData = $this->findConstantData($constantName);
         if ($constantData === null) {
@@ -195,7 +195,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Interface_|\PhpParser\Builder\Trait_|\PhpParser\Builder\Enum_|\PhpParser\Builder\ClassConst|\PhpParser\Builder\EnumCase|\PhpParser\Builder\Method|\PhpParser\Builder\Property|\PhpParser\Builder\Function_|\PhpParser\Builder\Param $node
      * @param CoreReflectionClass|CoreReflectionClassConstant|CoreReflectionEnumUnitCase|CoreReflectionMethod|CoreReflectionProperty|CoreReflectionFunction|CoreReflectionParameter $reflection
      */
-    private function addAttributes($node, $reflection) : void
+    private function addAttributes($node, $reflection): void
     {
         if (!method_exists($reflection, 'getAttributes')) {
             return;
@@ -212,7 +212,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Interface_|\PhpParser\Builder\Trait_|\PhpParser\Builder\Enum_|\PhpParser\Builder\Method|\PhpParser\Builder\Property|\PhpParser\Builder\Function_ $node
      * @param CoreReflectionClass|CoreReflectionMethod|CoreReflectionProperty|CoreReflectionFunction $reflection
      */
-    private function addDocComment($node, $reflection) : void
+    private function addDocComment($node, $reflection): void
     {
         $docComment = $reflection->getDocComment() !== \false ? $reflection->getDocComment() : '';
         $annotations = [];
@@ -230,12 +230,12 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         if ($docComment === '') {
             $docComment = sprintf("/**\n* %s\n*/", implode("\n *", $annotations));
         } elseif ($annotations !== []) {
-            $docComment = preg_replace('~\\s+\\*/$~', sprintf("\n* %s\n*/", implode("\n *", $annotations)), $docComment);
+            $docComment = preg_replace('~\s+\*/$~', sprintf("\n* %s\n*/", implode("\n *", $annotations)), $docComment);
             assert($docComment !== null);
         }
         $node->setDocComment(new Doc($docComment));
     }
-    private function addEnumBackingType(Enum_ $enumNode, CoreReflectionEnum $enumReflection) : void
+    private function addEnumBackingType(Enum_ $enumNode, CoreReflectionEnum $enumReflection): void
     {
         if (!$enumReflection->isBacked()) {
             return;
@@ -245,7 +245,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         assert($backingType instanceof CoreReflectionNamedType);
         $enumNode->setScalarType($backingType->getName());
     }
-    private function addClassModifiers(Class_ $classNode, CoreReflectionClass $classReflection) : void
+    private function addClassModifiers(Class_ $classNode, CoreReflectionClass $classReflection): void
     {
         if (!$classReflection->isInterface() && $classReflection->isAbstract()) {
             // Interface \Iterator is interface and abstract
@@ -259,7 +259,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
     /**
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Interface_|\PhpParser\Builder\Enum_ $classNode
      */
-    private function addExtendsAndImplements($classNode, CoreReflectionClass $classReflection) : void
+    private function addExtendsAndImplements($classNode, CoreReflectionClass $classReflection): void
     {
         $interfaces = $classReflection->getInterfaceNames();
         if ($classNode instanceof Class_ || $classNode instanceof Interface_) {
@@ -287,7 +287,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
     /**
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Trait_|\PhpParser\Builder\Enum_ $classNode
      */
-    private function addTraitUse($classNode, CoreReflectionClass $classReflection) : void
+    private function addTraitUse($classNode, CoreReflectionClass $classReflection): void
     {
         /** @var array<string, string> $traitAliases */
         $traitAliases = $classReflection->getTraitAliases();
@@ -309,7 +309,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
     /**
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Trait_ $classNode
      */
-    private function addProperties($classNode, CoreReflectionClass $classReflection) : void
+    private function addProperties($classNode, CoreReflectionClass $classReflection): void
     {
         foreach ($classReflection->getProperties() as $propertyReflection) {
             if (!$this->isPropertyDeclaredInClass($propertyReflection, $classReflection)) {
@@ -336,7 +336,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             $classNode->addStmt($propertyNode);
         }
     }
-    private function isPropertyDeclaredInClass(CoreReflectionProperty $propertyReflection, CoreReflectionClass $classReflection) : bool
+    private function isPropertyDeclaredInClass(CoreReflectionProperty $propertyReflection, CoreReflectionClass $classReflection): bool
     {
         if ($propertyReflection->getDeclaringClass()->getName() !== $classReflection->getName()) {
             return \false;
@@ -348,7 +348,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         }
         return \true;
     }
-    private function addPropertyModifiers(Property $propertyNode, CoreReflectionProperty $propertyReflection) : void
+    private function addPropertyModifiers(Property $propertyNode, CoreReflectionProperty $propertyReflection): void
     {
         if ($this->phpVersion >= 80100) {
             if (method_exists($propertyReflection, 'isReadOnly') && $propertyReflection->isReadOnly()) {
@@ -366,7 +366,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             $propertyNode->makePrivate();
         }
     }
-    private function addEnumCases(Enum_ $enumNode, CoreReflectionEnum $enumReflection) : void
+    private function addEnumCases(Enum_ $enumNode, CoreReflectionEnum $enumReflection): void
     {
         foreach ($enumReflection->getCases() as $enumCaseReflection) {
             $enumCaseNode = $this->builderFactory->enumCase($enumCaseReflection->getName());
@@ -380,7 +380,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
     /**
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Interface_|\PhpParser\Builder\Trait_|\PhpParser\Builder\Enum_ $classNode
      */
-    private function addClassConstants($classNode, CoreReflectionClass $classReflection) : void
+    private function addClassConstants($classNode, CoreReflectionClass $classReflection): void
     {
         foreach ($classReflection->getReflectionConstants() as $constantReflection) {
             if (method_exists($constantReflection, 'isEnumCase') && $constantReflection->isEnumCase()) {
@@ -405,7 +405,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             $classNode->addStmt($classConstantNode);
         }
     }
-    private function addClassConstantModifiers(ClassConst $classConstantNode, CoreReflectionClassConstant $classConstantReflection) : void
+    private function addClassConstantModifiers(ClassConst $classConstantNode, CoreReflectionClassConstant $classConstantReflection): void
     {
         if (method_exists($classConstantReflection, 'isFinal') && $classConstantReflection->isFinal()) {
             $classConstantNode->makeFinal();
@@ -421,7 +421,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
     /**
      * @param \PhpParser\Builder\Class_|\PhpParser\Builder\Interface_|\PhpParser\Builder\Trait_|\PhpParser\Builder\Enum_ $classNode
      */
-    private function addMethods($classNode, CoreReflectionClass $classReflection) : void
+    private function addMethods($classNode, CoreReflectionClass $classReflection): void
     {
         foreach ($classReflection->getMethods() as $methodReflection) {
             if (!$this->isMethodDeclaredInClass($methodReflection, $classReflection)) {
@@ -443,7 +443,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             $classNode->addStmt($methodNode);
         }
     }
-    private function isMethodDeclaredInClass(CoreReflectionMethod $methodReflection, CoreReflectionClass $classReflection) : bool
+    private function isMethodDeclaredInClass(CoreReflectionMethod $methodReflection, CoreReflectionClass $classReflection): bool
     {
         if ($methodReflection->getDeclaringClass()->getName() !== $classReflection->getName()) {
             return \false;
@@ -469,7 +469,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         }
         return \true;
     }
-    private function addMethodFlags(Method $methodNode, CoreReflectionMethod $methodReflection) : void
+    private function addMethodFlags(Method $methodNode, CoreReflectionMethod $methodReflection): void
     {
         if ($methodReflection->isFinal()) {
             $methodNode->makeFinal();
@@ -494,7 +494,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         }
         $methodNode->makeReturnByRef();
     }
-    private function addParameters(FunctionLike $functionNode, CoreReflectionFunctionAbstract $functionReflectionAbstract) : void
+    private function addParameters(FunctionLike $functionNode, CoreReflectionFunctionAbstract $functionReflectionAbstract): void
     {
         foreach ($functionReflectionAbstract->getParameters() as $parameterReflection) {
             $parameterNode = $this->builderFactory->param($parameterReflection->getName());
@@ -504,7 +504,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             $functionNode->addParam($parameterNode);
         }
     }
-    private function addParameterModifiers(CoreReflectionParameter $parameterReflection, Param $parameterNode) : void
+    private function addParameterModifiers(CoreReflectionParameter $parameterReflection, Param $parameterNode): void
     {
         if ($parameterReflection->isVariadic()) {
             $parameterNode->makeVariadic();
@@ -519,7 +519,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
         assert($parameterType instanceof CoreReflectionNamedType || $parameterType instanceof CoreReflectionUnionType || $parameterType instanceof CoreReflectionIntersectionType);
         $parameterNode->setType($this->formatType($parameterType));
     }
-    private function setParameterDefaultValue(CoreReflectionParameter $parameterReflection, Param $parameterNode) : void
+    private function setParameterDefaultValue(CoreReflectionParameter $parameterReflection, Param $parameterNode): void
     {
         if (!$parameterReflection->isOptional()) {
             return;
@@ -609,7 +609,7 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
      *
      * @return list<Name|UnionType|IntersectionType>
      */
-    private function formatTypes(array $types) : array
+    private function formatTypes(array $types): array
     {
         return array_map(function (CoreReflectionType $type) {
             $formattedType = $this->formatType($type);
@@ -617,23 +617,23 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
             return $formattedType;
         }, $types);
     }
-    private function formatNamedType(CoreReflectionNamedType $type) : Name
+    private function formatNamedType(CoreReflectionNamedType $type): Name
     {
         $name = $type->getName();
         return $type->isBuiltin() || in_array($name, ['self', 'parent', 'static'], \true) ? new Name($name) : new FullyQualified($name);
     }
-    private function generateStubInNamespace(Node $node, string $namespaceName) : string
+    private function generateStubInNamespace(Node $node, string $namespaceName): string
     {
         $namespaceBuilder = $this->builderFactory->namespace($namespaceName);
         $namespaceBuilder->addStmt($node);
         return $this->generateStub($namespaceBuilder->getNode());
     }
-    private function generateStub(Node $node) : string
+    private function generateStub(Node $node): string
     {
         return sprintf("<?php\n\n%s%s\n", $this->prettyPrinter->prettyPrint([$node]), $node instanceof Node\Expr\FuncCall ? ';' : '');
     }
     /** @param non-empty-string|null $extensionName */
-    private function createStubData(string $stub, ?string $extensionName, ?string $fileName) : \PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    private function createStubData(string $stub, ?string $extensionName, ?string $fileName): \PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         return new \PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData($stub, $extensionName, $fileName);
     }

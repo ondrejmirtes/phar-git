@@ -18,11 +18,11 @@ final class ExistingClassesInClosureTypehintsRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Closure::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->check->checkAnonymousFunction($scope, $node->getParams(), $node->getReturnType(), 'Parameter $%s of anonymous function has invalid type %s.', 'Anonymous function has invalid return type %s.', 'Anonymous function uses native union types but they\'re supported only on PHP 8.0 and later.', 'Parameter $%s of anonymous function has unresolvable native type.', 'Anonymous function has unresolvable native return type.');
     }

@@ -31,11 +31,11 @@ final class CurlGetinfoFunctionDynamicReturnTypeExtension implements DynamicFunc
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'curl_getinfo';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;
@@ -71,7 +71,7 @@ final class CurlGetinfoFunctionDynamicReturnTypeExtension implements DynamicFunc
         }
         return $falseType;
     }
-    private function createAllComponentsReturnType() : Type
+    private function createAllComponentsReturnType(): Type
     {
         $returnTypes = [new ConstantBooleanType(\false)];
         $builder = ConstantArrayTypeBuilder::createEmpty();

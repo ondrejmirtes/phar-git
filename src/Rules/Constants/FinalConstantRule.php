@@ -17,11 +17,11 @@ final class FinalConstantRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->isFinal()) {
             return [];

@@ -24,14 +24,14 @@ final class RestrictedPropertyUsageRule implements Rule
         $this->container = $container;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\PropertyFetch::class;
     }
     /**
      * @api
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Identifier) {
             return [];

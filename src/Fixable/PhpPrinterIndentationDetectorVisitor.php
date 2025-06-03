@@ -23,7 +23,7 @@ final class PhpPrinterIndentationDetectorVisitor extends NodeVisitorAbstract
     {
         $this->origTokens = $origTokens;
     }
-    public function enterNode(Node $node) : ?int
+    public function enterNode(Node $node): ?int
     {
         if ($node instanceof Node\Stmt\Namespace_ || $node instanceof Node\Stmt\Declare_) {
             return null;
@@ -39,7 +39,7 @@ final class PhpPrinterIndentationDetectorVisitor extends NodeVisitorAbstract
             return null;
         }
         $text = $this->origTokens->getTokenCode($node->getStartTokenPos(), $firstStmt->getStartTokenPos(), 0);
-        $c = preg_match_all('~\\n([\\x09\\x20]*)~', $text, $matches, PREG_SET_ORDER);
+        $c = preg_match_all('~\n([\x09\x20]*)~', $text, $matches, PREG_SET_ORDER);
         if ($c === 0 || $c === \false) {
             return null;
         }
@@ -55,7 +55,7 @@ final class PhpPrinterIndentationDetectorVisitor extends NodeVisitorAbstract
             break;
         }
         if ($size > 0) {
-            $d = preg_match('~^(\\x20+)$~', $char);
+            $d = preg_match('~^(\x20+)$~', $char);
             if ($d !== \false && $d > 0) {
                 $size = strlen($char);
                 $char = ' ';

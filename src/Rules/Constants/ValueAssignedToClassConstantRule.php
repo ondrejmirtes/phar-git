@@ -20,11 +20,11 @@ use function sprintf;
  */
 final class ValueAssignedToClassConstantRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();
@@ -43,7 +43,7 @@ final class ValueAssignedToClassConstantRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleConstant(ClassReflection $classReflection, string $constantName, Type $valueExprType, ?Type $nativeType) : array
+    private function processSingleConstant(ClassReflection $classReflection, string $constantName, Type $valueExprType, ?Type $nativeType): array
     {
         $constantReflection = $classReflection->getConstant($constantName);
         $phpDocType = $constantReflection->getPhpDocType();

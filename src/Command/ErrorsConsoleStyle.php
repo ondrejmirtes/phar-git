@@ -29,7 +29,7 @@ final class ErrorsConsoleStyle extends SymfonyStyle
         parent::__construct($input, $output);
         $this->showProgress = $input->hasOption(self::OPTION_NO_PROGRESS) && !(bool) $input->getOption(self::OPTION_NO_PROGRESS);
     }
-    private function isCiDetected() : bool
+    private function isCiDetected(): bool
     {
         if ($this->isCiDetected === null) {
             $ciDetector = new CiDetector();
@@ -41,7 +41,7 @@ final class ErrorsConsoleStyle extends SymfonyStyle
      * @param string[] $headers
      * @param string[][] $rows
      */
-    public function table(array $headers, array $rows) : void
+    public function table(array $headers, array $rows): void
     {
         /** @var int $terminalWidth */
         $terminalWidth = (new Terminal())->getWidth() - 2;
@@ -78,7 +78,7 @@ final class ErrorsConsoleStyle extends SymfonyStyle
      * @param string[] $rows
      * @return string[]
      */
-    private function wrap(array $rows, int $terminalWidth, int $maxHeaderWidth) : array
+    private function wrap(array $rows, int $terminalWidth, int $maxHeaderWidth): array
     {
         foreach ($rows as $i => $column) {
             $columnRows = explode("\n", $column);
@@ -106,7 +106,7 @@ final class ErrorsConsoleStyle extends SymfonyStyle
         }
         return $rows;
     }
-    public function createProgressBar(int $max = 0) : ProgressBar
+    public function createProgressBar(int $max = 0): ProgressBar
     {
         $this->progressBar = parent::createProgressBar($max);
         $format = $this->getProgressBarFormat();
@@ -127,7 +127,7 @@ final class ErrorsConsoleStyle extends SymfonyStyle
         }
         return $this->progressBar;
     }
-    private function getProgressBarFormat() : ?string
+    private function getProgressBarFormat(): ?string
     {
         switch ($this->getVerbosity()) {
             case OutputInterface::VERBOSITY_NORMAL:
@@ -149,21 +149,21 @@ final class ErrorsConsoleStyle extends SymfonyStyle
         }
         return ProgressBar::getFormatDefinition($formatName);
     }
-    public function progressStart(int $max = 0) : void
+    public function progressStart(int $max = 0): void
     {
         if (!$this->showProgress) {
             return;
         }
         parent::progressStart($max);
     }
-    public function progressAdvance(int $step = 1) : void
+    public function progressAdvance(int $step = 1): void
     {
         if (!$this->showProgress) {
             return;
         }
         parent::progressAdvance($step);
     }
-    public function progressFinish() : void
+    public function progressFinish(): void
     {
         if (!$this->showProgress) {
             return;

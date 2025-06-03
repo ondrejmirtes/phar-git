@@ -27,11 +27,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GetClassDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_class';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $args = $functionCall->getArgs();
         if (count($args) === 0) {
@@ -47,7 +47,7 @@ final class GetClassDynamicReturnTypeExtension implements DynamicFunctionReturnT
         if ($scope->isInTrait() && TypeUtils::findThisType($argType) !== null) {
             return new ClassStringType();
         }
-        return TypeTraverser::map($argType, static function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($argType, static function (Type $type, callable $traverse): Type {
             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                 return $traverse($type);
             }

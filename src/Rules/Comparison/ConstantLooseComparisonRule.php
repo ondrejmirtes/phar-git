@@ -24,11 +24,11 @@ final class ConstantLooseComparisonRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\BinaryOp::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\BinaryOp\Equal && !$node instanceof Node\Expr\BinaryOp\NotEqual) {
             return [];
@@ -37,7 +37,7 @@ final class ConstantLooseComparisonRule implements Rule
         if (!$nodeType->isTrue()->yes() && !$nodeType->isFalse()->yes()) {
             return [];
         }
-        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
             if (!$this->treatPhpDocTypesAsCertain) {
                 return $ruleErrorBuilder;
             }

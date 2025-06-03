@@ -22,11 +22,11 @@ final class PrintRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Print_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $node->expr, '', static fn(Type $type): bool => !$type->toString() instanceof ErrorType);
         if (!$typeResult->getType() instanceof ErrorType && $typeResult->getType()->toString() instanceof ErrorType) {

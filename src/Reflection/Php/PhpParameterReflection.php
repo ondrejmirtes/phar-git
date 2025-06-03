@@ -44,15 +44,15 @@ final class PhpParameterReflection implements ExtendedParameterReflection
         $this->closureThisType = $closureThisType;
         $this->attributes = $attributes;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->reflection->isOptional();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         if ($this->type === null) {
             $phpDocType = $this->phpDocType;
@@ -66,52 +66,52 @@ final class PhpParameterReflection implements ExtendedParameterReflection
         }
         return $this->type;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->reflection->isPassedByReference() ? PassedByReference::createCreatesNewVariable() : PassedByReference::createNo();
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->reflection->isVariadic();
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         if ($this->phpDocType !== null) {
             return $this->phpDocType;
         }
         return new MixedType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->reflection->getType() !== null;
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         if ($this->nativeType === null) {
             $this->nativeType = TypehintHelper::decideTypeFromReflection($this->reflection->getType(), null, $this->declaringClass, $this->isVariadic());
         }
         return $this->nativeType;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         if ($this->reflection->isDefaultValueAvailable()) {
             return $this->initializerExprTypeResolver->getType($this->reflection->getDefaultValueExpression(), InitializerExprContext::fromReflectionParameter($this->reflection));
         }
         return null;
     }
-    public function getOutType() : ?Type
+    public function getOutType(): ?Type
     {
         return $this->outType;
     }
-    public function isImmediatelyInvokedCallable() : TrinaryLogic
+    public function isImmediatelyInvokedCallable(): TrinaryLogic
     {
         return $this->immediatelyInvokedCallable;
     }
-    public function getClosureThisType() : ?Type
+    public function getClosureThisType(): ?Type
     {
         return $this->closureThisType;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

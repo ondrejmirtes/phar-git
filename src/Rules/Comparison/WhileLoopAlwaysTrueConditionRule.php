@@ -26,11 +26,11 @@ final class WhileLoopAlwaysTrueConditionRule implements Rule
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return BreaklessWhileLoopNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         foreach ($node->getExitPoints() as $exitPoint) {
             $statement = $exitPoint->getStatement();
@@ -57,7 +57,7 @@ final class WhileLoopAlwaysTrueConditionRule implements Rule
         $originalNode = $node->getOriginalNode();
         $exprType = $this->helper->getBooleanType($scope, $originalNode->cond);
         if ($exprType->isTrue()->yes()) {
-            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $originalNode) : RuleErrorBuilder {
+            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $originalNode): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }

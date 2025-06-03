@@ -39,7 +39,7 @@ final class RuleErrorBuilder
     /**
      * @return array<int, array{string, array<array{string|null, string|null, string|null}>}>
      */
-    public static function getRuleErrorTypes() : array
+    public static function getRuleErrorTypes(): array
     {
         return [self::TYPE_MESSAGE => [\PHPStan\Rules\RuleError::class, [[
             'message',
@@ -47,12 +47,12 @@ final class RuleErrorBuilder
             'string',
             // native type
             'string',
-        ]]], self::TYPE_LINE => [\PHPStan\Rules\LineRuleError::class, [['line', 'int', 'int']]], self::TYPE_FILE => [\PHPStan\Rules\FileRuleError::class, [['file', 'string', 'string'], ['fileDescription', 'string', 'string']]], self::TYPE_TIP => [\PHPStan\Rules\TipRuleError::class, [['tip', 'string', 'string']]], self::TYPE_IDENTIFIER => [\PHPStan\Rules\IdentifierRuleError::class, [['identifier', 'string', 'string']]], self::TYPE_METADATA => [\PHPStan\Rules\MetadataRuleError::class, [['metadata', 'array', 'mixed[]']]], self::TYPE_NON_IGNORABLE => [\PHPStan\Rules\NonIgnorableRuleError::class, []], self::TYPE_FIXABLE_NODE => [\PHPStan\Rules\FixableNodeRuleError::class, [['originalNode', '\\PhpParser\\Node', '\\PhpParser\\Node'], ['newNodeCallable', null, 'callable(\\PhpParser\\Node): \\PhpParser\\Node']]]];
+        ]]], self::TYPE_LINE => [\PHPStan\Rules\LineRuleError::class, [['line', 'int', 'int']]], self::TYPE_FILE => [\PHPStan\Rules\FileRuleError::class, [['file', 'string', 'string'], ['fileDescription', 'string', 'string']]], self::TYPE_TIP => [\PHPStan\Rules\TipRuleError::class, [['tip', 'string', 'string']]], self::TYPE_IDENTIFIER => [\PHPStan\Rules\IdentifierRuleError::class, [['identifier', 'string', 'string']]], self::TYPE_METADATA => [\PHPStan\Rules\MetadataRuleError::class, [['metadata', 'array', 'mixed[]']]], self::TYPE_NON_IGNORABLE => [\PHPStan\Rules\NonIgnorableRuleError::class, []], self::TYPE_FIXABLE_NODE => [\PHPStan\Rules\FixableNodeRuleError::class, [['originalNode', '\PhpParser\Node', '\PhpParser\Node'], ['newNodeCallable', null, 'callable(\PhpParser\Node): \PhpParser\Node']]]];
     }
     /**
      * @return self<RuleError>
      */
-    public static function message(string $message) : self
+    public static function message(string $message): self
     {
         return new self($message);
     }
@@ -60,7 +60,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&LineRuleError>
      * @return self<T&LineRuleError>
      */
-    public function line(int $line) : self
+    public function line(int $line): self
     {
         $this->properties['line'] = $line;
         $this->type |= self::TYPE_LINE;
@@ -70,7 +70,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&FileRuleError>
      * @return self<T&FileRuleError>
      */
-    public function file(string $file, ?string $fileDescription = null) : self
+    public function file(string $file, ?string $fileDescription = null): self
     {
         if (!is_file($file)) {
             throw new ShouldNotHappenException(sprintf('File %s does not exist.', $file));
@@ -84,7 +84,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&TipRuleError>
      * @return self<T&TipRuleError>
      */
-    public function tip(string $tip) : self
+    public function tip(string $tip): self
     {
         $this->tips = [$tip];
         $this->type |= self::TYPE_TIP;
@@ -94,7 +94,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&TipRuleError>
      * @return self<T&TipRuleError>
      */
-    public function addTip(string $tip) : self
+    public function addTip(string $tip): self
     {
         $this->tips[] = $tip;
         $this->type |= self::TYPE_TIP;
@@ -104,7 +104,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&TipRuleError>
      * @return self<T&TipRuleError>
      */
-    public function discoveringSymbolsTip() : self
+    public function discoveringSymbolsTip(): self
     {
         return $this->tip('Learn more at https://phpstan.org/user-guide/discovering-symbols');
     }
@@ -113,7 +113,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&TipRuleError>
      * @return self<T&TipRuleError>
      */
-    public function acceptsReasonsTip(array $reasons) : self
+    public function acceptsReasonsTip(array $reasons): self
     {
         foreach ($reasons as $reason) {
             $this->addTip($reason);
@@ -124,7 +124,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&TipRuleError>
      * @return self<T&TipRuleError>
      */
-    public function treatPhpDocTypesAsCertainTip() : self
+    public function treatPhpDocTypesAsCertainTip(): self
     {
         return $this->tip('Because the type is coming from a PHPDoc, you can turn off this check by setting <fg=cyan>treatPhpDocTypesAsCertain: false</> in your <fg=cyan>%configurationFile%</>.');
     }
@@ -136,7 +136,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&IdentifierRuleError>
      * @return self<T&IdentifierRuleError>
      */
-    public function identifier(string $identifier) : self
+    public function identifier(string $identifier): self
     {
         if (!Error::validateIdentifier($identifier)) {
             throw new ShouldNotHappenException(sprintf('Invalid identifier: %s, error identifiers must match /%s/', $identifier, Error::PATTERN_IDENTIFIER));
@@ -150,7 +150,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&MetadataRuleError>
      * @return self<T&MetadataRuleError>
      */
-    public function metadata(array $metadata) : self
+    public function metadata(array $metadata): self
     {
         $this->properties['metadata'] = $metadata;
         $this->type |= self::TYPE_METADATA;
@@ -160,7 +160,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&NonIgnorableRuleError>
      * @return self<T&NonIgnorableRuleError>
      */
-    public function nonIgnorable() : self
+    public function nonIgnorable(): self
     {
         $this->type |= self::TYPE_NON_IGNORABLE;
         return $this;
@@ -173,7 +173,7 @@ final class RuleErrorBuilder
      * @phpstan-this-out self<T&FixableNodeRuleError>
      * @return self<T&FixableNodeRuleError>
      */
-    public function fixNode(Node $node, callable $cb) : self
+    public function fixNode(Node $node, callable $cb): self
     {
         $this->properties['originalNode'] = $node;
         $this->properties['newNodeCallable'] = $cb;
@@ -183,10 +183,10 @@ final class RuleErrorBuilder
     /**
      * @return T
      */
-    public function build() : \PHPStan\Rules\RuleError
+    public function build(): \PHPStan\Rules\RuleError
     {
         /** @var class-string<T> $className */
-        $className = sprintf('PHPStan\\Rules\\RuleErrors\\RuleError%d', $this->type);
+        $className = sprintf('PHPStan\Rules\RuleErrors\RuleError%d', $this->type);
         if (!class_exists($className)) {
             throw new ShouldNotHappenException(sprintf('Class %s does not exist.', $className));
         }

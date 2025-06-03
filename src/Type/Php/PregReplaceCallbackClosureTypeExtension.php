@@ -22,11 +22,11 @@ final class PregReplaceCallbackClosureTypeExtension implements FunctionParameter
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool
     {
         return $functionReflection->getName() === 'preg_replace_callback' && $parameter->getName() === 'callback';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, ParameterReflection $parameter, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         $patternArg = $args[0] ?? null;

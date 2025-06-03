@@ -27,29 +27,29 @@ final class MatchExpressionNode extends NodeAbstract implements \PHPStan\Node\Vi
         $this->endScope = $endScope;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getCondition() : Expr
+    public function getCondition(): Expr
     {
         return $this->condition;
     }
     /**
      * @return MatchExpressionArm[]
      */
-    public function getArms() : array
+    public function getArms(): array
     {
         return $this->arms;
     }
-    public function getEndScope() : Scope
+    public function getEndScope(): Scope
     {
         return $this->endScope;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_MatchExpression';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

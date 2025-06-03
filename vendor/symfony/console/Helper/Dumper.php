@@ -29,13 +29,13 @@ final class Dumper
         $this->dumper = $dumper;
         $this->cloner = $cloner;
         if (\class_exists(CliDumper::class)) {
-            $this->handler = function ($var) : string {
-                $dumper = $this->dumper ?? ($this->dumper = new CliDumper(null, null, CliDumper::DUMP_LIGHT_ARRAY | CliDumper::DUMP_COMMA_SEPARATOR));
+            $this->handler = function ($var): string {
+                $dumper = $this->dumper ?? $this->dumper = new CliDumper(null, null, CliDumper::DUMP_LIGHT_ARRAY | CliDumper::DUMP_COMMA_SEPARATOR);
                 $dumper->setColors($this->output->isDecorated());
-                return \rtrim($dumper->dump(($this->cloner ?? ($this->cloner = new VarCloner()))->cloneVar($var)->withRefHandles(\false), \true));
+                return \rtrim($dumper->dump(($this->cloner ?? $this->cloner = new VarCloner())->cloneVar($var)->withRefHandles(\false), \true));
             };
         } else {
-            $this->handler = function ($var) : string {
+            $this->handler = function ($var): string {
                 switch (\true) {
                     case null === $var:
                         return 'null';
@@ -51,7 +51,7 @@ final class Dumper
             };
         }
     }
-    public function __invoke($var) : string
+    public function __invoke($var): string
     {
         return ($this->handler)($var);
     }

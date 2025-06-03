@@ -46,9 +46,9 @@ class Emulative extends Lexer
             }
         }
     }
-    public function tokenize(string $code, ?ErrorHandler $errorHandler = null) : array
+    public function tokenize(string $code, ?ErrorHandler $errorHandler = null): array
     {
-        $emulators = \array_filter($this->emulators, function ($emulator) use($code) {
+        $emulators = \array_filter($this->emulators, function ($emulator) use ($code) {
             return $emulator->isEmulationNeeded($code);
         });
         if (empty($emulators)) {
@@ -78,15 +78,15 @@ class Emulative extends Lexer
         }
         return $tokens;
     }
-    private function isForwardEmulationNeeded(PhpVersion $emulatorPhpVersion) : bool
+    private function isForwardEmulationNeeded(PhpVersion $emulatorPhpVersion): bool
     {
         return $this->hostPhpVersion->older($emulatorPhpVersion) && $this->targetPhpVersion->newerOrEqual($emulatorPhpVersion);
     }
-    private function isReverseEmulationNeeded(PhpVersion $emulatorPhpVersion) : bool
+    private function isReverseEmulationNeeded(PhpVersion $emulatorPhpVersion): bool
     {
         return $this->hostPhpVersion->newerOrEqual($emulatorPhpVersion) && $this->targetPhpVersion->older($emulatorPhpVersion);
     }
-    private function sortPatches() : void
+    private function sortPatches(): void
     {
         // Patches may be contributed by different emulators.
         // Make sure they are sorted by increasing patch position.
@@ -98,7 +98,7 @@ class Emulative extends Lexer
      * @param list<Token> $tokens
      * @return list<Token>
      */
-    private function fixupTokens(array $tokens) : array
+    private function fixupTokens(array $tokens): array
     {
         if (\count($this->patches) === 0) {
             return $tokens;
@@ -159,7 +159,7 @@ class Emulative extends Lexer
      *
      * @param Error[] $errors
      */
-    private function fixupErrors(array $errors) : void
+    private function fixupErrors(array $errors): void
     {
         foreach ($errors as $error) {
             $attrs = $error->getAttributes();

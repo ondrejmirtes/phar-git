@@ -16,7 +16,7 @@ class AliasLocatedSource extends \PHPStan\BetterReflection\SourceLocator\Located
         $this->aliasName = $aliasName;
         parent::__construct($source, $name, $filename);
     }
-    public function getAliasName() : ?string
+    public function getAliasName(): ?string
     {
         return $this->aliasName;
     }

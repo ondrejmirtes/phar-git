@@ -26,18 +26,18 @@ final class UniversalObjectCratesClassReflectionExtension implements PropertiesC
         $this->classes = $classes;
         $this->annotationClassReflection = $annotationClassReflection;
     }
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         return self::isUniversalObjectCrateImplementation($this->reflectionProvider, $this->classes, $classReflection);
     }
-    public static function isUniversalObjectCrate(ReflectionProvider $reflectionProvider, ClassReflection $classReflection) : bool
+    public static function isUniversalObjectCrate(ReflectionProvider $reflectionProvider, ClassReflection $classReflection): bool
     {
         return self::isUniversalObjectCrateImplementation($reflectionProvider, $reflectionProvider->getUniversalObjectCratesClasses(), $classReflection);
     }
     /**
      * @param list<string> $classes
      */
-    private static function isUniversalObjectCrateImplementation(ReflectionProvider $reflectionProvider, array $classes, ClassReflection $classReflection) : bool
+    private static function isUniversalObjectCrateImplementation(ReflectionProvider $reflectionProvider, array $classes, ClassReflection $classReflection): bool
     {
         foreach ($classes as $className) {
             if (!$reflectionProvider->hasClass($className)) {
@@ -49,7 +49,7 @@ final class UniversalObjectCratesClassReflectionExtension implements PropertiesC
         }
         return \false;
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : PropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): PropertyReflection
     {
         if ($this->annotationClassReflection->hasProperty($classReflection, $propertyName)) {
             return $this->annotationClassReflection->getProperty($classReflection, $propertyName);

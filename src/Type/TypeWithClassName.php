@@ -7,7 +7,7 @@ use PHPStan\Reflection\ClassReflection;
 /** @api */
 interface TypeWithClassName extends \PHPStan\Type\Type
 {
-    public function getClassName() : string;
-    public function getAncestorWithClassName(string $className) : ?self;
-    public function getClassReflection() : ?ClassReflection;
+    public function getClassName(): string;
+    public function getAncestorWithClassName(string $className): ?self;
+    public function getClassReflection(): ?ClassReflection;
 }

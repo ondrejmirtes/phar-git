@@ -14,12 +14,12 @@ final class AnonymousClassVisitor extends NodeVisitorAbstract
     public const ATTRIBUTE_LINE_INDEX = 'anonymousClassLineIndex';
     /** @var array<int, non-empty-list<AnonymousClassNode>> */
     private array $nodesPerLine = [];
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->nodesPerLine = [];
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt\Class_ || !$node->isAnonymous()) {
             return null;
@@ -30,7 +30,7 @@ final class AnonymousClassVisitor extends NodeVisitorAbstract
         $this->nodesPerLine[$node->getStartLine()][] = $node;
         return $node;
     }
-    public function afterTraverse(array $nodes) : ?array
+    public function afterTraverse(array $nodes): ?array
     {
         foreach ($this->nodesPerLine as $nodesOnLine) {
             if (count($nodesOnLine) === 1) {

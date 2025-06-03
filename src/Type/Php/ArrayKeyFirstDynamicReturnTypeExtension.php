@@ -14,11 +14,11 @@ use PHPStan\Type\TypeCombinator;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ArrayKeyFirstDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_key_first';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (!isset($functionCall->getArgs()[0])) {
             return null;

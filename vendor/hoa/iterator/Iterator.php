@@ -50,4 +50,4 @@ interface Iterator extends \Iterator
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Iterator\\Iterator');
+Consistency::flexEntity('Hoa\Iterator\Iterator');

@@ -20,11 +20,11 @@ use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 final class AllowedArrayKeysTypes
 {
-    public static function getType() : Type
+    public static function getType(): Type
     {
         return new UnionType([new IntegerType(), new StringType(), new FloatType(), new BooleanType(), new NullType()]);
     }
-    public static function narrowOffsetKeyType(Type $varType, Type $keyType) : ?Type
+    public static function narrowOffsetKeyType(Type $varType, Type $keyType): ?Type
     {
         if (!$varType->isArray()->yes() || $varType->isIterableAtLeastOnce()->no()) {
             return null;

@@ -27,11 +27,11 @@ final class PrintfParametersRule implements Rule
         $this->printfHelper = $printfHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];

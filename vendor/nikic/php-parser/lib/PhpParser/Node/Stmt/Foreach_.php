@@ -40,11 +40,11 @@ class Foreach_ extends Node\Stmt
         $this->valueVar = $valueVar;
         $this->stmts = $subNodes['stmts'] ?? [];
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['expr', 'keyVar', 'byRef', 'valueVar', 'stmts'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Stmt_Foreach';
     }

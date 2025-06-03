@@ -32,15 +32,15 @@ class ConstantFloatType extends FloatType implements ConstantScalarType
         $this->value = $value;
         parent::__construct();
     }
-    public function getValue() : float
+    public function getValue(): float
     {
         return $this->value;
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && ($this->value === $type->value || is_nan($this->value) && is_nan($type->value));
     }
-    private function castFloatToString(float $value) : string
+    private function castFloatToString(float $value): string
     {
         $precisionBackup = ini_get('precision');
         ini_set('precision', '-1');
@@ -54,34 +54,34 @@ class ConstantFloatType extends FloatType implements ConstantScalarType
             ini_set('precision', $precisionBackup);
         }
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return $level->handle(static fn(): string => 'float', fn(): string => $this->castFloatToString($this->value));
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return new \PHPStan\Type\Constant\ConstantStringType((string) $this->value);
     }
-    public function toInteger() : Type
+    public function toInteger(): Type
     {
         return new \PHPStan\Type\Constant\ConstantIntegerType((int) $this->value);
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return new self(abs($this->value));
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return new \PHPStan\Type\Constant\ConstantIntegerType((int) $this->value);
     }
-    public function generalize(GeneralizePrecision $precision) : Type
+    public function generalize(GeneralizePrecision $precision): Type
     {
         return new FloatType();
     }
     /**
      * @return ConstTypeNode
      */
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ConstTypeNode(new ConstExprFloatNode($this->castFloatToString($this->value)));
     }

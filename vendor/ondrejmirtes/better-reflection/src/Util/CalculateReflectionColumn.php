@@ -17,7 +17,7 @@ final class CalculateReflectionColumn
      *
      * @psalm-pure
      */
-    public static function getStartColumn(string $source, Node $node) : int
+    public static function getStartColumn(string $source, Node $node): int
     {
         if (!$node->hasAttribute('startFilePos')) {
             return -1;
@@ -30,7 +30,7 @@ final class CalculateReflectionColumn
      *
      * @psalm-pure
      */
-    public static function getEndColumn(string $source, Node $node) : int
+    public static function getEndColumn(string $source, Node $node): int
     {
         if (!$node->hasAttribute('endFilePos')) {
             return -1;
@@ -42,7 +42,7 @@ final class CalculateReflectionColumn
      *
      * @psalm-pure
      */
-    private static function calculateColumn(string $source, int $position) : int
+    private static function calculateColumn(string $source, int $position): int
     {
         $sourceLength = strlen($source);
         if ($position >= $sourceLength) {

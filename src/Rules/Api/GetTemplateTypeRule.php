@@ -22,11 +22,11 @@ final class GetTemplateTypeRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MethodCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $args = $node->getArgs();
         if (count($args) < 2) {

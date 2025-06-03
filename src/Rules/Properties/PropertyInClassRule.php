@@ -19,11 +19,11 @@ final class PropertyInClassRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         if (!$classReflection->isClass()) {
@@ -96,7 +96,7 @@ final class PropertyInClassRule implements Rule
         }
         return [];
     }
-    private function doAllHooksHaveBody(ClassPropertyNode $node) : bool
+    private function doAllHooksHaveBody(ClassPropertyNode $node): bool
     {
         foreach ($node->getHooks() as $hook) {
             if ($hook->body === null) {
@@ -105,7 +105,7 @@ final class PropertyInClassRule implements Rule
         }
         return \true;
     }
-    private function isAtLeastOneHookBodyEmpty(ClassPropertyNode $node) : bool
+    private function isAtLeastOneHookBodyEmpty(ClassPropertyNode $node): bool
     {
         foreach ($node->getHooks() as $hook) {
             if ($hook->body === null) {

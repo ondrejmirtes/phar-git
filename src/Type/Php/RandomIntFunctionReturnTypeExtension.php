@@ -21,11 +21,11 @@ use function min;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class RandomIntFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['random_int', 'rand', 'mt_rand'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (in_array($functionReflection->getName(), ['rand', 'mt_rand'], \true) && count($functionCall->getArgs()) === 0) {
             return IntegerRangeType::fromInterval(0, null);
@@ -37,9 +37,9 @@ final class RandomIntFunctionReturnTypeExtension implements DynamicFunctionRetur
         $maxType = $scope->getType($functionCall->getArgs()[1]->value)->toInteger();
         return $this->createRange($minType, $maxType);
     }
-    private function createRange(Type $minType, Type $maxType) : Type
+    private function createRange(Type $minType, Type $maxType): Type
     {
-        $minValues = array_map(static function (Type $type) : ?int {
+        $minValues = array_map(static function (Type $type): ?int {
             if ($type instanceof IntegerRangeType) {
                 return $type->getMin();
             }
@@ -48,7 +48,7 @@ final class RandomIntFunctionReturnTypeExtension implements DynamicFunctionRetur
             }
             return null;
         }, $minType instanceof UnionType ? $minType->getTypes() : [$minType]);
-        $maxValues = array_map(static function (Type $type) : ?int {
+        $maxValues = array_map(static function (Type $type): ?int {
             if ($type instanceof IntegerRangeType) {
                 return $type->getMax();
             }

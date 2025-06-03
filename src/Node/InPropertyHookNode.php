@@ -25,30 +25,30 @@ final class InPropertyHookNode extends NodeAbstract implements \PHPStan\Node\Vir
         $this->originalNode = $originalNode;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }
-    public function getHookReflection() : PhpMethodFromParserNodeReflection
+    public function getHookReflection(): PhpMethodFromParserNodeReflection
     {
         return $this->hookReflection;
     }
-    public function getPropertyReflection() : PhpPropertyReflection
+    public function getPropertyReflection(): PhpPropertyReflection
     {
         return $this->propertyReflection;
     }
-    public function getOriginalNode() : Node\PropertyHook
+    public function getOriginalNode(): Node\PropertyHook
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InPropertyHookNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

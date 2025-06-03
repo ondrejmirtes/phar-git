@@ -18,11 +18,11 @@ final class ClassConstantAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->attributesCheck->check($scope, $node->attrGroups, Attribute::TARGET_CLASS_CONSTANT, 'class constant');
     }

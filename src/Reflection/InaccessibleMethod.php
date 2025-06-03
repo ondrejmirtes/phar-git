@@ -17,55 +17,55 @@ final class InaccessibleMethod implements CallableParametersAcceptor
     {
         $this->methodReflection = $methodReflection;
     }
-    public function getMethod() : \PHPStan\Reflection\ExtendedMethodReflection
+    public function getMethod(): \PHPStan\Reflection\ExtendedMethodReflection
     {
         return $this->methodReflection;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return TemplateTypeMap::createEmpty();
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return TemplateTypeMap::createEmpty();
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return TemplateTypeVarianceMap::createEmpty();
     }
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return [];
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return \true;
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return new MixedType();
     }
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return [];
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return [new SimpleImpurePoint('methodCall', 'call to unknown method', \false)];
     }
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return [];
     }
-    public function getUsedVariables() : array
+    public function getUsedVariables(): array
     {
         return [];
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->methodReflection->acceptsNamedArguments();
     }

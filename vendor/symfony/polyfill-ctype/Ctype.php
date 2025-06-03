@@ -59,7 +59,7 @@ final class Ctype
     public static function ctype_cntrl($text)
     {
         $text = self::convert_int_to_char_for_ctype($text, __FUNCTION__);
-        return \is_string($text) && '' !== $text && !\preg_match('/[^\\x00-\\x1f\\x7f]/', $text);
+        return \is_string($text) && '' !== $text && !\preg_match('/[^\x00-\x1f\x7f]/', $text);
     }
     /**
      * Returns TRUE if every character in the string text is a decimal digit, FALSE otherwise.
@@ -129,7 +129,7 @@ final class Ctype
     public static function ctype_punct($text)
     {
         $text = self::convert_int_to_char_for_ctype($text, __FUNCTION__);
-        return \is_string($text) && '' !== $text && !\preg_match('/[^!-\\/\\:-@\\[-`\\{-~]/', $text);
+        return \is_string($text) && '' !== $text && !\preg_match('/[^!-\/\:-@\[-`\{-~]/', $text);
     }
     /**
      * Returns TRUE if every character in text creates some sort of white space, FALSE otherwise. Besides the blank character this also includes tab, vertical tab, line feed, carriage return and form feed characters.
@@ -143,7 +143,7 @@ final class Ctype
     public static function ctype_space($text)
     {
         $text = self::convert_int_to_char_for_ctype($text, __FUNCTION__);
-        return \is_string($text) && '' !== $text && !\preg_match('/[^\\s]/', $text);
+        return \is_string($text) && '' !== $text && !\preg_match('/[^\s]/', $text);
     }
     /**
      * Returns TRUE if every character in text is an uppercase letter.

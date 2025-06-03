@@ -19,15 +19,15 @@ final class MatchExpressionArmCondition
         $this->scope = $scope;
         $this->line = $line;
     }
-    public function getCondition() : Expr
+    public function getCondition(): Expr
     {
         return $this->condition;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }

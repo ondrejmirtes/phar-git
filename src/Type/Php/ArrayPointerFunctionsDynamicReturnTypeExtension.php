@@ -18,11 +18,11 @@ final class ArrayPointerFunctionsDynamicReturnTypeExtension implements DynamicFu
 {
     /** @var string[] */
     private array $functions = ['reset', 'end'];
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), $this->functions, \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) === 0) {
             return null;

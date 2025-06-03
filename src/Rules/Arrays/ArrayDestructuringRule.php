@@ -32,11 +32,11 @@ final class ArrayDestructuringRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->nonexistentOffsetInArrayDimFetchCheck = $nonexistentOffsetInArrayDimFetchCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Assign::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->var instanceof Node\Expr\List_) {
             return [];
@@ -46,7 +46,7 @@ final class ArrayDestructuringRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function getErrors(Scope $scope, Node\Expr\List_ $var, Expr $expr) : array
+    private function getErrors(Scope $scope, Node\Expr\List_ $var, Expr $expr): array
     {
         $exprTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $expr, '', static fn(Type $varType): bool => $varType->isArray()->yes() || (new ObjectType(ArrayAccess::class))->isSuperTypeOf($varType)->yes());
         $exprType = $exprTypeResult->getType();

@@ -8,39 +8,39 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 trait NonIterableTypeTrait
 {
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getArraySize() : Type
+    public function getArraySize(): Type
     {
         return new ErrorType();
     }
-    public function getIterableKeyType() : Type
+    public function getIterableKeyType(): Type
     {
         return new ErrorType();
     }
-    public function getFirstIterableKeyType() : Type
+    public function getFirstIterableKeyType(): Type
     {
         return new ErrorType();
     }
-    public function getLastIterableKeyType() : Type
+    public function getLastIterableKeyType(): Type
     {
         return new ErrorType();
     }
-    public function getIterableValueType() : Type
+    public function getIterableValueType(): Type
     {
         return new ErrorType();
     }
-    public function getFirstIterableValueType() : Type
+    public function getFirstIterableValueType(): Type
     {
         return new ErrorType();
     }
-    public function getLastIterableValueType() : Type
+    public function getLastIterableValueType(): Type
     {
         return new ErrorType();
     }

@@ -26,115 +26,115 @@ final class ChangedTypePropertyReflection implements WrapperPropertyReflection
         $this->phpDocType = $phpDocType;
         $this->nativeType = $nativeType;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->reflection->getDocComment();
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return $this->reflection->hasPhpDocType();
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->phpDocType;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->reflection->hasNativeType();
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return $this->nativeType;
     }
-    public function getReadableType() : Type
+    public function getReadableType(): Type
     {
         return $this->readableType;
     }
-    public function getWritableType() : Type
+    public function getWritableType(): Type
     {
         return $this->writableType;
     }
-    public function canChangeTypeAfterAssignment() : bool
+    public function canChangeTypeAfterAssignment(): bool
     {
         return $this->reflection->canChangeTypeAfterAssignment();
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return $this->reflection->isReadable();
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return $this->reflection->isWritable();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->reflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->reflection->getDeprecatedDescription();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->reflection->isInternal();
     }
-    public function getOriginalReflection() : ExtendedPropertyReflection
+    public function getOriginalReflection(): ExtendedPropertyReflection
     {
         return $this->reflection;
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return $this->reflection->isAbstract();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->reflection->isFinalByKeyword();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->reflection->isFinal();
     }
-    public function isVirtual() : TrinaryLogic
+    public function isVirtual(): TrinaryLogic
     {
         return $this->reflection->isVirtual();
     }
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         return $this->reflection->hasHook($hookType);
     }
-    public function getHook(string $hookType) : ExtendedMethodReflection
+    public function getHook(string $hookType): ExtendedMethodReflection
     {
         return $this->reflection->getHook($hookType);
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return $this->reflection->isProtectedSet();
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return $this->reflection->isPrivateSet();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->reflection->getAttributes();
     }

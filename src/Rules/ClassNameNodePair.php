@@ -13,11 +13,11 @@ final class ClassNameNodePair
         $this->className = $className;
         $this->node = $node;
     }
-    public function getClassName() : string
+    public function getClassName(): string
     {
         return $this->className;
     }
-    public function getNode() : Node
+    public function getNode(): Node
     {
         return $this->node;
     }

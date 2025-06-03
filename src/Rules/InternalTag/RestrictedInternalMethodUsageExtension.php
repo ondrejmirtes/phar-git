@@ -18,7 +18,7 @@ final class RestrictedInternalMethodUsageExtension implements RestrictedMethodUs
     {
         $this->helper = $helper;
     }
-    public function isRestrictedMethodUsage(ExtendedMethodReflection $methodReflection, Scope $scope) : ?RestrictedUsage
+    public function isRestrictedMethodUsage(ExtendedMethodReflection $methodReflection, Scope $scope): ?RestrictedUsage
     {
         $isMethodInternal = $methodReflection->isInternal()->yes();
         $declaringClass = $methodReflection->getDeclaringClass();

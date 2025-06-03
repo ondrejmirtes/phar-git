@@ -21,7 +21,7 @@ final class ParameterCastableToStringCheck
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
     /** @param callable(Type): Type $castFn */
-    public function checkParameter(Arg $parameter, Scope $scope, string $errorMessageTemplate, callable $castFn, string $functionName, string $parameterName) : ?\PHPStan\Rules\IdentifierRuleError
+    public function checkParameter(Arg $parameter, Scope $scope, string $errorMessageTemplate, callable $castFn, string $functionName, string $parameterName): ?\PHPStan\Rules\IdentifierRuleError
     {
         if ($parameter->unpack) {
             return null;
@@ -32,7 +32,7 @@ final class ParameterCastableToStringCheck
         }
         return \PHPStan\Rules\RuleErrorBuilder::message(sprintf($errorMessageTemplate, $parameterName, $functionName, $typeResult->getType()->describe(VerbosityLevel::typeOnly())))->identifier('argument.type')->build();
     }
-    public function getParameterName(Arg $parameter, int $parameterIdx, ?ParameterReflection $parameterReflection) : string
+    public function getParameterName(Arg $parameter, int $parameterIdx, ?ParameterReflection $parameterReflection): string
     {
         if ($parameterReflection === null) {
             return sprintf('#%d', $parameterIdx + 1);

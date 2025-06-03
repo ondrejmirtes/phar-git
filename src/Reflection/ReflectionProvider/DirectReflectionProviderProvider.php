@@ -11,7 +11,7 @@ final class DirectReflectionProviderProvider implements \PHPStan\Reflection\Refl
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getReflectionProvider() : ReflectionProvider
+    public function getReflectionProvider(): ReflectionProvider
     {
         return $this->reflectionProvider;
     }

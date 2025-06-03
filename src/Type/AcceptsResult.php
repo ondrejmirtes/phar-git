@@ -32,49 +32,49 @@ final class AcceptsResult
         $this->result = $result;
         $this->reasons = $reasons;
     }
-    public function yes() : bool
+    public function yes(): bool
     {
         return $this->result->yes();
     }
-    public function maybe() : bool
+    public function maybe(): bool
     {
         return $this->result->maybe();
     }
-    public function no() : bool
+    public function no(): bool
     {
         return $this->result->no();
     }
-    public static function createYes() : self
+    public static function createYes(): self
     {
         return new self(TrinaryLogic::createYes(), []);
     }
     /**
      * @param list<string> $reasons
      */
-    public static function createNo(array $reasons = []) : self
+    public static function createNo(array $reasons = []): self
     {
         return new self(TrinaryLogic::createNo(), $reasons);
     }
-    public static function createMaybe() : self
+    public static function createMaybe(): self
     {
         return new self(TrinaryLogic::createMaybe(), []);
     }
-    public static function createFromBoolean(bool $value) : self
+    public static function createFromBoolean(bool $value): self
     {
         return new self(TrinaryLogic::createFromBoolean($value), []);
     }
-    public function and(self $other) : self
+    public function and(self $other): self
     {
         return new self($this->result->and($other->result), array_values(array_unique(array_merge($this->reasons, $other->reasons))));
     }
-    public function or(self $other) : self
+    public function or(self $other): self
     {
         return new self($this->result->or($other->result), array_values(array_unique(array_merge($this->reasons, $other->reasons))));
     }
     /**
      * @param callable(string): string $cb
      */
-    public function decorateReasons(callable $cb) : self
+    public function decorateReasons(callable $cb): self
     {
         $reasons = [];
         foreach ($this->reasons as $reason) {
@@ -82,7 +82,7 @@ final class AcceptsResult
         }
         return new self($this->result, $reasons);
     }
-    public static function extremeIdentity(self ...$operands) : self
+    public static function extremeIdentity(self ...$operands): self
     {
         if ($operands === []) {
             throw new ShouldNotHappenException();
@@ -96,7 +96,7 @@ final class AcceptsResult
         }
         return new self($result, array_values(array_unique($reasons)));
     }
-    public static function maxMin(self ...$operands) : self
+    public static function maxMin(self ...$operands): self
     {
         if ($operands === []) {
             throw new ShouldNotHappenException();

@@ -25,7 +25,7 @@ final class TemplateStringType extends StringType implements \PHPStan\Type\Gener
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

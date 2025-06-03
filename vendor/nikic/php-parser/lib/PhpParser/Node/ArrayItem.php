@@ -30,11 +30,11 @@ class ArrayItem extends NodeAbstract
         $this->byRef = $byRef;
         $this->unpack = $unpack;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['key', 'value', 'byRef', 'unpack'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'ArrayItem';
     }

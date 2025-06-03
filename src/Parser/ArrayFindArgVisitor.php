@@ -11,7 +11,7 @@ use function in_array;
 final class ArrayFindArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isArrayFindArg';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\FuncCall && $node->name instanceof Node\Name) {
             $functionName = $node->name->toLowerString();

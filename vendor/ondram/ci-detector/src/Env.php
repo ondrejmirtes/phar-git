@@ -15,7 +15,7 @@ class Env
     {
         return \getenv($name);
     }
-    public function getString(string $name) : string
+    public function getString(string $name): string
     {
         return (string) $this->get($name);
     }

@@ -105,10 +105,10 @@ final class StreamingServer extends EventEmitter
         $this->clock = new Clock($loop);
         $this->parser = new RequestHeaderParser($this->clock);
         $that = $this;
-        $this->parser->on('headers', function (ServerRequestInterface $request, ConnectionInterface $conn) use($that) {
+        $this->parser->on('headers', function (ServerRequestInterface $request, ConnectionInterface $conn) use ($that) {
             $that->handleRequest($conn, $request);
         });
-        $this->parser->on('error', function (\Exception $e, ConnectionInterface $conn) use($that) {
+        $this->parser->on('error', function (\Exception $e, ConnectionInterface $conn) use ($that) {
             $that->emit('error', array($e));
             // parsing failed => assume dummy request and send appropriate error
             $that->writeError($conn, $e->getCode() !== 0 ? $e->getCode() : Response::STATUS_BAD_REQUEST, new ServerRequest('GET', '/'));
@@ -147,10 +147,10 @@ final class StreamingServer extends EventEmitter
         $connectionOnCloseResponseCancelerHandler = function () {
         };
         if ($response instanceof PromiseInterface && \method_exists($response, 'cancel')) {
-            $connectionOnCloseResponseCanceler = function () use($response) {
+            $connectionOnCloseResponseCanceler = function () use ($response) {
                 $response->cancel();
             };
-            $connectionOnCloseResponseCancelerHandler = function () use($connectionOnCloseResponseCanceler, $conn) {
+            $connectionOnCloseResponseCancelerHandler = function () use ($connectionOnCloseResponseCanceler, $conn) {
                 if ($connectionOnCloseResponseCanceler !== null) {
                     $conn->removeListener('close', $connectionOnCloseResponseCanceler);
                 }
@@ -166,17 +166,17 @@ final class StreamingServer extends EventEmitter
             $response = Promise\resolve($response);
         }
         $that = $this;
-        $response->then(function ($response) use($that, $conn, $request) {
+        $response->then(function ($response) use ($that, $conn, $request) {
             if (!$response instanceof ResponseInterface) {
-                $message = 'The response callback is expected to resolve with an object implementing Psr\\Http\\Message\\ResponseInterface, but resolved with "%s" instead.';
+                $message = 'The response callback is expected to resolve with an object implementing Psr\Http\Message\ResponseInterface, but resolved with "%s" instead.';
                 $message = \sprintf($message, \is_object($response) ? \get_class($response) : \gettype($response));
                 $exception = new \RuntimeException($message);
                 $that->emit('error', array($exception));
                 return $that->writeError($conn, Response::STATUS_INTERNAL_SERVER_ERROR, $request);
             }
             $that->handleResponse($conn, $request, $response);
-        }, function ($error) use($that, $conn, $request) {
-            $message = 'The response callback is expected to resolve with an object implementing Psr\\Http\\Message\\ResponseInterface, but rejected with "%s" instead.';
+        }, function ($error) use ($that, $conn, $request) {
+            $message = 'The response callback is expected to resolve with an object implementing Psr\Http\Message\ResponseInterface, but rejected with "%s" instead.';
             $message = \sprintf($message, \is_object($error) ? \get_class($error) : \gettype($error));
             $previous = null;
             if ($error instanceof \Throwable || $error instanceof \Exception) {
@@ -276,7 +276,7 @@ final class StreamingServer extends EventEmitter
         if (($code === Response::STATUS_SWITCHING_PROTOCOLS || $method === 'CONNECT' && $code >= 200 && $code < 300) && $body instanceof HttpBodyStream && $body->input instanceof WritableStreamInterface) {
             if ($request->getBody()->isReadable()) {
                 // request is still streaming => wait for request close before forwarding following data from connection
-                $request->getBody()->on('close', function () use($connection, $body) {
+                $request->getBody()->on('close', function () use ($connection, $body) {
                     if ($body->input->isWritable()) {
                         $connection->pipe($body->input);
                         $connection->resume();
@@ -341,7 +341,7 @@ final class StreamingServer extends EventEmitter
         if ($persist) {
             $body->pipe($connection, array('end' => \false));
             $parser = $this->parser;
-            $body->on('end', function () use($connection, $parser, $body) {
+            $body->on('end', function () use ($connection, $parser, $body) {
                 $connection->removeListener('close', array($body, 'close'));
                 $parser->handle($connection);
             });

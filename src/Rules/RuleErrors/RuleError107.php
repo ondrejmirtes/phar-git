@@ -18,22 +18,22 @@ final class RuleError107 implements RuleError, LineRuleError, TipRuleError, Meta
     public string $tip;
     /** @var mixed[] */
     public array $metadata;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

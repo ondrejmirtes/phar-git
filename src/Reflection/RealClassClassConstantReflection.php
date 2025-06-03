@@ -41,35 +41,35 @@ final class RealClassClassConstantReflection implements \PHPStan\Reflection\Clas
         $this->isFinal = $isFinal;
         $this->attributes = $attributes;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->declaringClass->getFileName();
     }
-    public function getValueExpr() : Expr
+    public function getValueExpr(): Expr
     {
         return $this->reflection->getValueExpression();
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return $this->phpDocType !== null;
     }
-    public function getPhpDocType() : ?Type
+    public function getPhpDocType(): ?Type
     {
         return $this->phpDocType;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->nativeType !== null;
     }
-    public function getNativeType() : ?Type
+    public function getNativeType(): ?Type
     {
         return $this->nativeType;
     }
-    public function getValueType() : Type
+    public function getValueType(): Type
     {
         if ($this->valueType === null) {
             if ($this->phpDocType !== null) {
@@ -84,31 +84,31 @@ final class RealClassClassConstantReflection implements \PHPStan\Reflection\Clas
         }
         return $this->valueType;
     }
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return \true;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->isFinal || $this->reflection->isFinal();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated || $this->reflection->isDeprecated());
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated) {
             return $this->deprecatedDescription;
@@ -119,11 +119,11 @@ final class RealClassClassConstantReflection implements \PHPStan\Reflection\Clas
         }
         return null;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isInternal);
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         $docComment = $this->reflection->getDocComment();
         if ($docComment === \false) {
@@ -131,7 +131,7 @@ final class RealClassClassConstantReflection implements \PHPStan\Reflection\Clas
         }
         return $docComment;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

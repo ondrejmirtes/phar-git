@@ -32,11 +32,11 @@ final class RuntimeReflectionInstantiationRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\New_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->class instanceof Node\Name) {
             return [];

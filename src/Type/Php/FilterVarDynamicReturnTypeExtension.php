@@ -19,11 +19,11 @@ final class FilterVarDynamicReturnTypeExtension implements DynamicFunctionReturn
     {
         $this->filterFunctionReturnTypeHelper = $filterFunctionReturnTypeHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return strtolower($functionReflection->getName()) === 'filter_var';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;

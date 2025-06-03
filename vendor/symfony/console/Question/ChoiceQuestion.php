@@ -100,13 +100,13 @@ class ChoiceQuestion extends Question
         $this->setValidator($this->getDefaultValidator());
         return $this;
     }
-    private function getDefaultValidator() : callable
+    private function getDefaultValidator(): callable
     {
         $choices = $this->choices;
         $errorMessage = $this->errorMessage;
         $multiselect = $this->multiselect;
         $isAssoc = $this->isAssoc($choices);
-        return function ($selected) use($choices, $errorMessage, $multiselect, $isAssoc) {
+        return function ($selected) use ($choices, $errorMessage, $multiselect, $isAssoc) {
             if ($multiselect) {
                 // Check for a separated comma values
                 if (!\preg_match('/^[^,]+(?:,[^,]+)*$/', (string) $selected, $matches)) {

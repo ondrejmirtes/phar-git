@@ -22,11 +22,11 @@ final class NoopRule implements Rule
     {
         $this->exprPrinter = $exprPrinter;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NoopExpressionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $expr = $node->getOriginalExpr();
         if ($expr instanceof Node\Expr\BinaryOp\LogicalXor) {
@@ -71,7 +71,7 @@ final class NoopRule implements Rule
             return [];
         }
         $exprString = $this->exprPrinter->printExpr($expr);
-        $exprStringLines = preg_split('~\\R~', $exprString, 2);
+        $exprStringLines = preg_split('~\R~', $exprString, 2);
         if ($exprStringLines !== \false && count($exprStringLines) > 1) {
             $exprString = $exprStringLines[0] . '…';
         }

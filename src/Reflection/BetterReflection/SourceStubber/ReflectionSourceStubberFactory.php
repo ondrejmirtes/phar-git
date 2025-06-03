@@ -17,7 +17,7 @@ final class ReflectionSourceStubberFactory
         $this->printer = $printer;
         $this->phpVersion = $phpVersion;
     }
-    public function create() : ReflectionSourceStubber
+    public function create(): ReflectionSourceStubber
     {
         return new ReflectionSourceStubber($this->printer, $this->phpVersion->getVersionId());
     }

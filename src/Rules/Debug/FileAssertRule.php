@@ -27,11 +27,11 @@ final class FileAssertRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -40,13 +40,13 @@ final class FileAssertRule implements Rule
             return [];
         }
         $function = $this->reflectionProvider->getFunction($node->name, $scope);
-        if ($function->getName() === 'PHPStan\\Testing\\assertType') {
+        if ($function->getName() === 'PHPStan\Testing\assertType') {
             return $this->processAssertType($node->getArgs(), $scope);
         }
-        if ($function->getName() === 'PHPStan\\Testing\\assertNativeType') {
+        if ($function->getName() === 'PHPStan\Testing\assertNativeType') {
             return $this->processAssertNativeType($node->getArgs(), $scope);
         }
-        if ($function->getName() === 'PHPStan\\Testing\\assertVariableCertainty') {
+        if ($function->getName() === 'PHPStan\Testing\assertVariableCertainty') {
             return $this->processAssertVariableCertainty($node->getArgs(), $scope);
         }
         return [];
@@ -55,7 +55,7 @@ final class FileAssertRule implements Rule
      * @param Node\Arg[] $args
      * @return list<IdentifierRuleError>
      */
-    private function processAssertType(array $args, Scope $scope) : array
+    private function processAssertType(array $args, Scope $scope): array
     {
         if (count($args) !== 2) {
             return [];
@@ -74,7 +74,7 @@ final class FileAssertRule implements Rule
      * @param Node\Arg[] $args
      * @return list<IdentifierRuleError>
      */
-    private function processAssertNativeType(array $args, Scope $scope) : array
+    private function processAssertNativeType(array $args, Scope $scope): array
     {
         if (count($args) !== 2) {
             return [];
@@ -93,7 +93,7 @@ final class FileAssertRule implements Rule
      * @param Node\Arg[] $args
      * @return list<IdentifierRuleError>
      */
-    private function processAssertVariableCertainty(array $args, Scope $scope) : array
+    private function processAssertVariableCertainty(array $args, Scope $scope): array
     {
         if (count($args) !== 2) {
             return [];
@@ -105,7 +105,7 @@ final class FileAssertRule implements Rule
         if (!$certainty->class instanceof Node\Name) {
             return [RuleErrorBuilder::message('Invalid TrinaryLogic call.')->nonIgnorable()->identifier('phpstan.unknownExpectation')->build()];
         }
-        if ($certainty->class->toString() !== 'PHPStan\\TrinaryLogic') {
+        if ($certainty->class->toString() !== 'PHPStan\TrinaryLogic') {
             return [RuleErrorBuilder::message('Invalid TrinaryLogic call.')->nonIgnorable()->identifier('phpstan.unknownExpectation')->build()];
         }
         if (!$certainty->name instanceof Node\Identifier) {

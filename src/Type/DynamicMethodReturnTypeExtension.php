@@ -26,7 +26,7 @@ use PHPStan\Reflection\MethodReflection;
 interface DynamicMethodReturnTypeExtension
 {
     /** @return class-string */
-    public function getClass() : string;
-    public function isMethodSupported(MethodReflection $methodReflection) : bool;
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?\PHPStan\Type\Type;
+    public function getClass(): string;
+    public function isMethodSupported(MethodReflection $methodReflection): bool;
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?\PHPStan\Type\Type;
 }

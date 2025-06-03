@@ -186,7 +186,7 @@ class Table
      *
      * @return $this
      */
-    public function setColumnMaxWidth(int $columnIndex, int $width) : self
+    public function setColumnMaxWidth(int $columnIndex, int $width): self
     {
         if (!$this->output->getFormatter() instanceof WrappableOutputFormatterInterface) {
             throw new \LogicException(\sprintf('Setting a maximum column width is only supported when using a "%s" formatter, got "%s".', WrappableOutputFormatterInterface::class, \get_debug_type($this->output->getFormatter())));
@@ -241,7 +241,7 @@ class Table
      *
      * @return $this
      */
-    public function appendRow($row) : self
+    public function appendRow($row): self
     {
         if (!$this->output instanceof ConsoleSectionOutput) {
             throw new RuntimeException(\sprintf('Output should be an instance of "%s" when calling "%s".', ConsoleSectionOutput::class, __METHOD__));
@@ -264,7 +264,7 @@ class Table
     /**
      * @return $this
      */
-    public function setHeaderTitle(?string $title) : self
+    public function setHeaderTitle(?string $title): self
     {
         $this->headerTitle = $title;
         return $this;
@@ -272,7 +272,7 @@ class Table
     /**
      * @return $this
      */
-    public function setFooterTitle(?string $title) : self
+    public function setFooterTitle(?string $title): self
     {
         $this->footerTitle = $title;
         return $this;
@@ -280,7 +280,7 @@ class Table
     /**
      * @return $this
      */
-    public function setHorizontal(bool $horizontal = \true) : self
+    public function setHorizontal(bool $horizontal = \true): self
     {
         $this->horizontal = $horizontal;
         return $this;
@@ -372,7 +372,7 @@ class Table
      */
     private function renderRowSeparator(int $type = self::SEPARATOR_MID, ?string $title = null, ?string $titleFormat = null)
     {
-        if (0 === ($count = $this->numberOfColumns)) {
+        if (0 === $count = $this->numberOfColumns) {
             return;
         }
         $borders = $this->style->getBorderChars();
@@ -397,7 +397,7 @@ class Table
         if (null !== $title) {
             $titleLength = Helper::width(Helper::removeDecoration($formatter = $this->output->getFormatter(), $formattedTitle = \sprintf($titleFormat, $title)));
             $markupLength = Helper::width($markup);
-            if ($titleLength > ($limit = $markupLength - 4)) {
+            if ($titleLength > $limit = $markupLength - 4) {
                 $titleLength = $limit;
                 $formatLength = Helper::width(Helper::removeDecoration($formatter, \sprintf($titleFormat, '')));
                 $formattedTitle = \sprintf($titleFormat, Helper::substr($title, 0, $limit - $formatLength - 3) . '...');
@@ -414,7 +414,7 @@ class Table
     /**
      * Renders vertical column separator.
      */
-    private function renderColumnSeparator(int $type = self::BORDER_OUTSIDE) : string
+    private function renderColumnSeparator(int $type = self::BORDER_OUTSIDE): string
     {
         $borders = $this->style->getBorderChars();
         return \sprintf($this->style->getBorderFormat(), self::BORDER_OUTSIDE === $type ? $borders[1] : $borders[3]);
@@ -444,7 +444,7 @@ class Table
     /**
      * Renders table cell with padding.
      */
-    private function renderCell(array $row, int $column, string $cellFormat) : string
+    private function renderCell(array $row, int $column, string $cellFormat): string
     {
         $cell = $row[$column] ?? '';
         $width = $this->effectiveColumnWidths[$column];
@@ -455,7 +455,7 @@ class Table
             }
         }
         // str_pad won't work properly with multi-byte strings, we need to fix the padding
-        if (\false !== ($encoding = \mb_detect_encoding($cell, null, \true))) {
+        if (\false !== $encoding = \mb_detect_encoding($cell, null, \true)) {
             $width += \strlen($cell) - \mb_strwidth($cell, $encoding);
         }
         $style = $this->getColumnStyle($column);
@@ -466,7 +466,7 @@ class Table
         $content = \sprintf($style->getCellRowContentFormat(), $cell);
         $padType = $style->getPadType();
         if ($cell instanceof TableCell && $cell->getStyle() instanceof TableCellStyle) {
-            $isNotStyledByTag = !\preg_match('/^<(\\w+|(\\w+=[\\w,]+;?)*)>.+<\\/(\\w+|(\\w+=\\w+;?)*)?>$/', $cell);
+            $isNotStyledByTag = !\preg_match('/^<(\w+|(\w+=[\w,]+;?)*)>.+<\/(\w+|(\w+=\w+;?)*)?>$/', $cell);
             if ($isNotStyledByTag) {
                 $cellFormat = $cell->getStyle()->getCellFormat();
                 if (!\is_string($cellFormat)) {
@@ -500,7 +500,7 @@ class Table
         }
         $this->numberOfColumns = \max($columns);
     }
-    private function buildTableRows(array $rows) : TableRows
+    private function buildTableRows(array $rows): TableRows
     {
         /** @var WrappableOutputFormatterInterface $formatter */
         $formatter = $this->output->getFormatter();
@@ -535,7 +535,7 @@ class Table
                 }
             }
         }
-        return new TableRows(function () use($rows, $unmergedRows) : \Traversable {
+        return new TableRows(function () use ($rows, $unmergedRows): \Traversable {
             foreach ($rows as $rowKey => $row) {
                 $rowGroup = [$row instanceof TableSeparator ? $row : $this->fillCells($row)];
                 if (isset($unmergedRows[$rowKey])) {
@@ -543,11 +543,11 @@ class Table
                         $rowGroup[] = $row instanceof TableSeparator ? $row : $this->fillCells($row);
                     }
                 }
-                (yield $rowGroup);
+                yield $rowGroup;
             }
         });
     }
-    private function calculateRowCount() : int
+    private function calculateRowCount(): int
     {
         $numberOfRows = \count(\iterator_to_array($this->buildTableRows(\array_merge($this->headers, [new TableSeparator()], $this->rows))));
         if ($this->headers) {
@@ -565,7 +565,7 @@ class Table
      *
      * @throws InvalidArgumentException
      */
-    private function fillNextRows(array $rows, int $line) : array
+    private function fillNextRows(array $rows, int $line): array
     {
         $unmergedRows = [];
         foreach ($rows[$line] as $column => $cell) {
@@ -629,7 +629,7 @@ class Table
         }
         return $newRow ?: $row;
     }
-    private function copyRow(array $rows, int $line) : array
+    private function copyRow(array $rows, int $line): array
     {
         $row = $rows[$line];
         foreach ($row as $cellKey => $cellValue) {
@@ -643,7 +643,7 @@ class Table
     /**
      * Gets number of columns by row.
      */
-    private function getNumberOfColumns(array $row) : int
+    private function getNumberOfColumns(array $row): int
     {
         $columns = \count($row);
         foreach ($row as $column) {
@@ -654,7 +654,7 @@ class Table
     /**
      * Gets list of columns for the given row.
      */
-    private function getRowColumns(array $row) : array
+    private function getRowColumns(array $row): array
     {
         $columns = \range(0, $this->numberOfColumns - 1);
         foreach ($row as $cellKey => $cell) {
@@ -695,11 +695,11 @@ class Table
             $this->effectiveColumnWidths[$column] = \max($lengths) + Helper::width($this->style->getCellRowContentFormat()) - 2;
         }
     }
-    private function getColumnSeparatorWidth() : int
+    private function getColumnSeparatorWidth(): int
     {
         return Helper::width(\sprintf($this->style->getBorderFormat(), $this->style->getBorderChars()[3]));
     }
-    private function getCellWidth(array $row, int $column) : int
+    private function getCellWidth(array $row, int $column): int
     {
         $cellWidth = 0;
         if (isset($row[$column])) {
@@ -721,7 +721,7 @@ class Table
     /**
      * @return array<string, TableStyle>
      */
-    private static function initStyles() : array
+    private static function initStyles(): array
     {
         $borderless = new TableStyle();
         $borderless->setHorizontalBorderChars('=')->setVerticalBorderChars(' ')->setDefaultCrossingChar(' ');
@@ -733,7 +733,7 @@ class Table
         $boxDouble = (new TableStyle())->setHorizontalBorderChars('═', '─')->setVerticalBorderChars('║', '│')->setCrossingChars('┼', '╔', '╤', '╗', '╢', '╝', '╧', '╚', '╟', '╠', '╪', '╣');
         return ['default' => new TableStyle(), 'borderless' => $borderless, 'compact' => $compact, 'symfony-style-guide' => $styleGuide, 'box' => $box, 'box-double' => $boxDouble];
     }
-    private function resolveStyle($name) : TableStyle
+    private function resolveStyle($name): TableStyle
     {
         if ($name instanceof TableStyle) {
             return $name;

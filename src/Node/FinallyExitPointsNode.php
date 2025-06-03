@@ -31,25 +31,25 @@ final class FinallyExitPointsNode extends NodeAbstract implements \PHPStan\Node\
     /**
      * @return StatementExitPoint[]
      */
-    public function getFinallyExitPoints() : array
+    public function getFinallyExitPoints(): array
     {
         return $this->finallyExitPoints;
     }
     /**
      * @return StatementExitPoint[]
      */
-    public function getTryCatchExitPoints() : array
+    public function getTryCatchExitPoints(): array
     {
         return $this->tryCatchExitPoints;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_FinallyExitPointsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

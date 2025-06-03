@@ -31,7 +31,7 @@ final class DiffOnlyOutputBuilder implements DiffOutputBuilderInterface
     {
         $this->header = $header;
     }
-    public function getDiff(array $diff) : string
+    public function getDiff(array $diff): string
     {
         $buffer = fopen('php://memory', 'r+b');
         if ('' !== $this->header) {

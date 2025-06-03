@@ -6,5 +6,5 @@ namespace PHPStan\PhpDoc;
 /** @api */
 interface TypeNodeResolverAwareExtension
 {
-    public function setTypeNodeResolver(\PHPStan\PhpDoc\TypeNodeResolver $typeNodeResolver) : void;
+    public function setTypeNodeResolver(\PHPStan\PhpDoc\TypeNodeResolver $typeNodeResolver): void;
 }

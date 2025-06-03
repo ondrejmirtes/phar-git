@@ -17,23 +17,23 @@ final class SimpleThrowPoint
         $this->explicit = $explicit;
         $this->canContainAnyThrowable = $canContainAnyThrowable;
     }
-    public static function createExplicit(Type $type, bool $canContainAnyThrowable) : self
+    public static function createExplicit(Type $type, bool $canContainAnyThrowable): self
     {
         return new self($type, \true, $canContainAnyThrowable);
     }
-    public static function createImplicit() : self
+    public static function createImplicit(): self
     {
         return new self(new ObjectType(Throwable::class), \false, \true);
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function isExplicit() : bool
+    public function isExplicit(): bool
     {
         return $this->explicit;
     }
-    public function canContainAnyThrowable() : bool
+    public function canContainAnyThrowable(): bool
     {
         return $this->canContainAnyThrowable;
     }

@@ -38,7 +38,7 @@ class Clock
             $this->now = \microtime(\true);
             // remember clock for current loop tick only and update on next tick
             $now =& $this->now;
-            $this->loop->futureTick(function () use(&$now) {
+            $this->loop->futureTick(function () use (&$now) {
                 \assert($now !== null);
                 $now = null;
             });

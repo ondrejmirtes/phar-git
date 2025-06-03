@@ -18,11 +18,11 @@ use function sprintf;
  */
 final class IncompatibleDefaultParameterTypeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $function = $node->getFunctionReflection();
         $errors = [];

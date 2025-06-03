@@ -162,7 +162,7 @@ abstract class Rule
     public function setNodeId($nodeId)
     {
         $old = $this->_nodeId;
-        if (\false !== ($pos = \strpos($nodeId, ':'))) {
+        if (\false !== $pos = \strpos($nodeId, ':')) {
             $this->_nodeId = \substr($nodeId, 0, $pos);
             $this->_nodeOptions = \str_split(\substr($nodeId, $pos + 1));
         } else {
@@ -198,7 +198,7 @@ abstract class Rule
     public function setDefaultId($defaultId)
     {
         $old = $this->_defaultId;
-        if (\false !== ($pos = \strpos($defaultId, ':'))) {
+        if (\false !== $pos = \strpos($defaultId, ':')) {
             $this->_defaultId = \substr($defaultId, 0, $pos);
             $this->_defaultOptions = \str_split(\substr($defaultId, $pos + 1));
         } else {
@@ -260,4 +260,4 @@ abstract class Rule
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Compiler\\Llk\\Rule\\Rule');
+Consistency::flexEntity('Hoa\Compiler\Llk\Rule\Rule');

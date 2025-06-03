@@ -17,23 +17,23 @@ final class RuleError29 implements RuleError, FileRuleError, TipRuleError, Ident
     public string $fileDescription;
     public string $tip;
     public string $identifier;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

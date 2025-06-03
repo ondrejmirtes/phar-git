@@ -21,27 +21,27 @@ final class RuntimeConstantReflection implements ConstantReflection
         $this->isDeprecated = $isDeprecated;
         $this->deprecatedDescription = $deprecatedDescription;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getValueType() : Type
+    public function getValueType(): Type
     {
         return $this->valueType;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->isDeprecated;
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->deprecatedDescription;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }

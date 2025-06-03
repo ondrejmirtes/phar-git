@@ -24,6 +24,6 @@ use PHPStan\Reflection\ParameterReflection;
  */
 interface FunctionParameterClosureTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool;
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, ParameterReflection $parameter, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool;
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, ParameterReflection $parameter, Scope $scope): ?\PHPStan\Type\Type;
 }

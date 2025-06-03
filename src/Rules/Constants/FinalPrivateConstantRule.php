@@ -13,11 +13,11 @@ use function sprintf;
 /** @implements Rule<ClassConst> */
 final class FinalPrivateConstantRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();

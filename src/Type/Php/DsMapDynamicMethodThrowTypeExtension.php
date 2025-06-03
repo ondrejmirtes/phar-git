@@ -14,11 +14,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class DsMapDynamicMethodThrowTypeExtension implements DynamicMethodThrowTypeExtension
 {
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
-        return $methodReflection->getDeclaringClass()->getName() === 'Ds\\Map' && ($methodReflection->getName() === 'get' || $methodReflection->getName() === 'remove');
+        return $methodReflection->getDeclaringClass()->getName() === 'Ds\Map' && ($methodReflection->getName() === 'get' || $methodReflection->getName() === 'remove');
     }
-    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->args) < 2) {
             return $methodReflection->getThrowType();

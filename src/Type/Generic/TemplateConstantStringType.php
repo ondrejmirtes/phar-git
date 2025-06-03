@@ -25,7 +25,7 @@ final class TemplateConstantStringType extends ConstantStringType implements \PH
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

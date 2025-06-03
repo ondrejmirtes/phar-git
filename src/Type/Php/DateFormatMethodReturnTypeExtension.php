@@ -20,15 +20,15 @@ final class DateFormatMethodReturnTypeExtension implements DynamicMethodReturnTy
     {
         $this->dateFunctionReturnTypeHelper = $dateFunctionReturnTypeHelper;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return DateTimeInterface::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'format';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): Type
     {
         if (count($methodCall->getArgs()) === 0) {
             return new StringType();

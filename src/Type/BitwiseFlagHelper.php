@@ -23,7 +23,7 @@ final class BitwiseFlagHelper
     /**
      * @param non-empty-string $constName
      */
-    public function bitwiseOrContainsConstant(Expr $expr, Scope $scope, string $constName) : TrinaryLogic
+    public function bitwiseOrContainsConstant(Expr $expr, Scope $scope, string $constName): TrinaryLogic
     {
         if ($expr instanceof ConstFetch) {
             if ((string) $expr->name === $constName) {
@@ -50,7 +50,7 @@ final class BitwiseFlagHelper
         }
         return TrinaryLogic::createNo();
     }
-    private function exprContainsIntFlag(Expr $expr, Scope $scope, int $flag) : TrinaryLogic
+    private function exprContainsIntFlag(Expr $expr, Scope $scope, int $flag): TrinaryLogic
     {
         $exprType = $scope->getType($expr);
         if ($exprType instanceof \PHPStan\Type\UnionType) {
@@ -76,7 +76,7 @@ final class BitwiseFlagHelper
         }
         return $this->typeContainsIntFlag($exprType, $flag);
     }
-    private function typeContainsIntFlag(\PHPStan\Type\Type $type, int $flag) : TrinaryLogic
+    private function typeContainsIntFlag(\PHPStan\Type\Type $type, int $flag): TrinaryLogic
     {
         if ($type instanceof ConstantIntegerType) {
             if (($type->getValue() & $flag) === $flag) {

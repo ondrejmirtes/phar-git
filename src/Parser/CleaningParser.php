@@ -17,11 +17,11 @@ final class CleaningParser implements \PHPStan\Parser\Parser
         $this->traverser->addVisitor(new \PHPStan\Parser\CleaningVisitor());
         $this->traverser->addVisitor(new \PHPStan\Parser\RemoveUnusedCodeByPhpVersionIdVisitor($phpVersion->getVersionString()));
     }
-    public function parseFile(string $file) : array
+    public function parseFile(string $file): array
     {
         return $this->clean($this->wrappedParser->parseFile($file));
     }
-    public function parseString(string $sourceCode) : array
+    public function parseString(string $sourceCode): array
     {
         return $this->clean($this->wrappedParser->parseString($sourceCode));
     }
@@ -29,7 +29,7 @@ final class CleaningParser implements \PHPStan\Parser\Parser
      * @param Stmt[] $ast
      * @return Stmt[]
      */
-    private function clean(array $ast) : array
+    private function clean(array $ast): array
     {
         /** @var Stmt[] */
         return $this->traverser->traverse($ast);

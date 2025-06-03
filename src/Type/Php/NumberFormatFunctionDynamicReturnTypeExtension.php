@@ -18,11 +18,11 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class NumberFormatFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'number_format';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $stringType = new StringType();
         if (!isset($functionCall->getArgs()[3])) {

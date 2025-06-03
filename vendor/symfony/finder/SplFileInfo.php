@@ -52,7 +52,7 @@ class SplFileInfo extends \SplFileInfo
     {
         return $this->relativePathname;
     }
-    public function getFilenameWithoutExtension() : string
+    public function getFilenameWithoutExtension(): string
     {
         $filename = $this->getFilename();
         return \pathinfo($filename, \PATHINFO_FILENAME);
@@ -66,7 +66,7 @@ class SplFileInfo extends \SplFileInfo
      */
     public function getContents()
     {
-        \set_error_handler(function ($type, $msg) use(&$error) {
+        \set_error_handler(function ($type, $msg) use (&$error) {
             $error = $msg;
         });
         try {

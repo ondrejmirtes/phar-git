@@ -34,27 +34,27 @@ final class Type implements Schema
         $this->type = $type;
         $this->default = \strpos($type, '[]') ? [] : $defaults[$type] ?? null;
     }
-    public function nullable() : self
+    public function nullable(): self
     {
         $this->type = 'null|' . $this->type;
         return $this;
     }
-    public function mergeDefaults(bool $state = \true) : self
+    public function mergeDefaults(bool $state = \true): self
     {
         $this->merge = $state;
         return $this;
     }
-    public function dynamic() : self
+    public function dynamic(): self
     {
         $this->type = DynamicParameter::class . '|' . $this->type;
         return $this;
     }
-    public function min(?float $min) : self
+    public function min(?float $min): self
     {
         $this->range[0] = $min;
         return $this;
     }
-    public function max(?float $max) : self
+    public function max(?float $max): self
     {
         $this->range[1] = $max;
         return $this;
@@ -64,13 +64,13 @@ final class Type implements Schema
      * @param  string|Schema|null  $keyType
      * @internal  use arrayOf() or listOf()
      */
-    public function items($valueType = 'mixed', $keyType = null) : self
+    public function items($valueType = 'mixed', $keyType = null): self
     {
         $this->itemsValue = $valueType instanceof Schema ? $valueType : new self($valueType);
         $this->itemsKey = $keyType instanceof Schema || $keyType === null ? $keyType : new self($keyType);
         return $this;
     }
-    public function pattern(?string $pattern) : self
+    public function pattern(?string $pattern): self
     {
         $this->pattern = $pattern;
         return $this;
@@ -136,8 +136,8 @@ final class Type implements Schema
         $isOk() && Helpers::validateRange($value, $this->range, $context, $this->type);
         $isOk() && $value !== null && $this->pattern !== null && Helpers::validatePattern($value, $this->pattern, $context);
         $isOk() && \is_array($value) && $this->validateItems($value, $context);
-        $isOk() && $merge && ($value = Helpers::merge($value, $this->default));
-        $isOk() && ($value = $this->doTransform($value, $context));
+        $isOk() && $merge && $value = Helpers::merge($value, $this->default);
+        $isOk() && $value = $this->doTransform($value, $context);
         if (!$isOk()) {
             return null;
         }
@@ -147,7 +147,7 @@ final class Type implements Schema
         }
         return $value;
     }
-    private function validateItems(array &$value, Context $context) : void
+    private function validateItems(array &$value, Context $context): void
     {
         if (!$this->itemsValue) {
             return;

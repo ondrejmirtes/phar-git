@@ -28,13 +28,13 @@ final class InvalidCastRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Cast::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
-        $castTypeCallback = static function (Type $type) use($node) : ?array {
+        $castTypeCallback = static function (Type $type) use ($node): ?array {
             if ($node instanceof Node\Expr\Cast\Int_) {
                 return [$type->toInteger(), 'int'];
             } elseif ($node instanceof Node\Expr\Cast\Bool_) {
@@ -46,7 +46,7 @@ final class InvalidCastRule implements Rule
             }
             return null;
         };
-        $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $node->expr, '', static function (Type $type) use($castTypeCallback) : bool {
+        $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $node->expr, '', static function (Type $type) use ($castTypeCallback): bool {
             $castResult = $castTypeCallback($type);
             if ($castResult === null) {
                 return \true;

@@ -28,7 +28,7 @@ use PHPStan\Reflection\MethodReflection;
 interface MethodTypeSpecifyingExtension
 {
     /** @return class-string */
-    public function getClass() : string;
-    public function isMethodSupported(MethodReflection $methodReflection, MethodCall $node, TypeSpecifierContext $context) : bool;
-    public function specifyTypes(MethodReflection $methodReflection, MethodCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes;
+    public function getClass(): string;
+    public function isMethodSupported(MethodReflection $methodReflection, MethodCall $node, TypeSpecifierContext $context): bool;
+    public function specifyTypes(MethodReflection $methodReflection, MethodCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes;
 }

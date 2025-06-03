@@ -29,11 +29,11 @@ final class MinMaxFunctionReturnTypeExtension implements DynamicFunctionReturnTy
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['min', 'max'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (!isset($functionCall->getArgs()[0])) {
             return null;
@@ -79,7 +79,7 @@ final class MinMaxFunctionReturnTypeExtension implements DynamicFunctionReturnTy
         }
         return $this->processType($functionName, $argumentTypes);
     }
-    private function processArrayType(string $functionName, Type $argType) : Type
+    private function processArrayType(string $functionName, Type $argType): Type
     {
         $constArrayTypes = $argType->getConstantArrays();
         if (count($constArrayTypes) > 0) {
@@ -116,7 +116,7 @@ final class MinMaxFunctionReturnTypeExtension implements DynamicFunctionReturnTy
     /**
      * @param Type[] $types
      */
-    private function processType(string $functionName, array $types) : Type
+    private function processType(string $functionName, array $types): Type
     {
         $resultType = null;
         foreach ($types as $type) {
@@ -143,7 +143,7 @@ final class MinMaxFunctionReturnTypeExtension implements DynamicFunctionReturnTy
         }
         return $resultType;
     }
-    private function compareTypes(Type $firstType, Type $secondType) : ?Type
+    private function compareTypes(Type $firstType, Type $secondType): ?Type
     {
         if ($firstType->isArray()->yes() && $secondType->isConstantScalarValue()->yes()) {
             return $secondType;

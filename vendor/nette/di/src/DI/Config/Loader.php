@@ -23,7 +23,7 @@ class Loader
     /**
      * Reads configuration from file.
      */
-    public function load(string $file, ?bool $merge = \true) : array
+    public function load(string $file, ?bool $merge = \true): array
     {
         if (!\is_file($file) || !\is_readable($file)) {
             throw new Nette\FileNotFoundException(\sprintf("File '%s' is missing or is not readable.", $file));
@@ -52,7 +52,7 @@ class Loader
         return $res;
     }
     /** @deprecated */
-    public function save(array $data, string $file) : void
+    public function save(array $data, string $file): void
     {
         \trigger_error(__METHOD__ . "() is deprecated, use adapter's dump() method.", \E_USER_DEPRECATED);
         if (\file_put_contents($file, $this->getAdapter($file)->dump($data)) === \false) {
@@ -62,14 +62,14 @@ class Loader
     /**
      * Returns configuration files.
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return \array_unique($this->dependencies);
     }
     /**
      * Expands included file name.
      */
-    public function expandIncludedFile(string $includedFile, string $mainFile) : string
+    public function expandIncludedFile(string $includedFile, string $mainFile): string
     {
         return \preg_match('#([a-z]+:)?[/\\\\]#Ai', $includedFile) ? $includedFile : \dirname($mainFile) . '/' . $includedFile;
     }
@@ -83,7 +83,7 @@ class Loader
         $this->adapters[\strtolower($extension)] = $adapter;
         return $this;
     }
-    private function getAdapter(string $file) : Adapter
+    private function getAdapter(string $file): Adapter
     {
         $extension = \strtolower(\pathinfo($file, \PATHINFO_EXTENSION));
         if (!isset($this->adapters[$extension])) {

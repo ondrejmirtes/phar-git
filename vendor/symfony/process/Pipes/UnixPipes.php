@@ -30,7 +30,7 @@ class UnixPipes extends AbstractPipes
         $this->haveReadSupport = $haveReadSupport;
         parent::__construct($input);
     }
-    public function __sleep() : array
+    public function __sleep(): array
     {
         throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
@@ -45,7 +45,7 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getDescriptors() : array
+    public function getDescriptors(): array
     {
         if (!$this->haveReadSupport) {
             $nullstream = \fopen('/dev/null', 'c');
@@ -67,14 +67,14 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getFiles() : array
+    public function getFiles(): array
     {
         return [];
     }
     /**
      * {@inheritdoc}
      */
-    public function readAndWrite(bool $blocking, bool $close = \false) : array
+    public function readAndWrite(bool $blocking, bool $close = \false): array
     {
         $this->unblock();
         $w = $this->write();
@@ -114,14 +114,14 @@ class UnixPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function haveReadSupport() : bool
+    public function haveReadSupport(): bool
     {
         return $this->haveReadSupport;
     }
     /**
      * {@inheritdoc}
      */
-    public function areOpen() : bool
+    public function areOpen(): bool
     {
         return (bool) $this->pipes;
     }

@@ -17,7 +17,7 @@ final class RestrictedInternalFunctionUsageExtension implements RestrictedFuncti
     {
         $this->helper = $helper;
     }
-    public function isRestrictedFunctionUsage(FunctionReflection $functionReflection, Scope $scope) : ?RestrictedUsage
+    public function isRestrictedFunctionUsage(FunctionReflection $functionReflection, Scope $scope): ?RestrictedUsage
     {
         if (!$functionReflection->isInternal()->yes()) {
             return null;

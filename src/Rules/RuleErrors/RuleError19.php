@@ -14,15 +14,15 @@ final class RuleError19 implements RuleError, LineRuleError, IdentifierRuleError
     public string $message;
     public int $line;
     public string $identifier;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

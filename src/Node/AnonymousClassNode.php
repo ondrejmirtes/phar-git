@@ -9,7 +9,7 @@ use PhpParser\Node\Stmt\Class_;
  */
 final class AnonymousClassNode extends Class_
 {
-    public static function createFromClassNode(Class_ $node) : self
+    public static function createFromClassNode(Class_ $node): self
     {
         $subNodes = [];
         foreach ($node->getSubNodeNames() as $subNodeName) {
@@ -17,7 +17,7 @@ final class AnonymousClassNode extends Class_
         }
         return new \PHPStan\Node\AnonymousClassNode($node->name, $subNodes, $node->getAttributes());
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return \true;
     }

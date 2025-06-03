@@ -9,5 +9,5 @@ interface AlwaysUsedMethodExtensionProvider
     /**
      * @return AlwaysUsedMethodExtension[]
      */
-    public function getExtensions() : array;
+    public function getExtensions(): array;
 }

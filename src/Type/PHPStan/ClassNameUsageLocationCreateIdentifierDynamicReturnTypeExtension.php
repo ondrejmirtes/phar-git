@@ -18,15 +18,15 @@ use function sort;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ClassNameUsageLocationCreateIdentifierDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return ClassNameUsageLocation::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'createIdentifier';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         $args = $methodCall->getArgs();
         if (!isset($args[0])) {

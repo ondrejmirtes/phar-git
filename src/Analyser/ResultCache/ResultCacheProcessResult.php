@@ -13,11 +13,11 @@ final class ResultCacheProcessResult
         $this->analyserResult = $analyserResult;
         $this->saved = $saved;
     }
-    public function getAnalyserResult() : AnalyserResult
+    public function getAnalyserResult(): AnalyserResult
     {
         return $this->analyserResult;
     }
-    public function isSaved() : bool
+    public function isSaved(): bool
     {
         return $this->saved;
     }

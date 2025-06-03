@@ -18,11 +18,11 @@ final class MethodConditionalReturnTypeRule implements Rule
     {
         $this->helper = $helper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         $variants = $method->getVariants();

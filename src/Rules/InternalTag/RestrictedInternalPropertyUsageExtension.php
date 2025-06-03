@@ -18,7 +18,7 @@ final class RestrictedInternalPropertyUsageExtension implements RestrictedProper
     {
         $this->helper = $helper;
     }
-    public function isRestrictedPropertyUsage(ExtendedPropertyReflection $propertyReflection, Scope $scope) : ?RestrictedUsage
+    public function isRestrictedPropertyUsage(ExtendedPropertyReflection $propertyReflection, Scope $scope): ?RestrictedUsage
     {
         $isPropertyInternal = $propertyReflection->isInternal()->yes();
         $declaringClass = $propertyReflection->getDeclaringClass();

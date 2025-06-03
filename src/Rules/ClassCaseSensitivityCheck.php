@@ -19,7 +19,7 @@ final class ClassCaseSensitivityCheck
      * @param ClassNameNodePair[] $pairs
      * @return list<IdentifierRuleError>
      */
-    public function checkClassNames(array $pairs) : array
+    public function checkClassNames(array $pairs): array
     {
         $errors = [];
         foreach ($pairs as $pair) {

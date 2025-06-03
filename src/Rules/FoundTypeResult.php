@@ -30,25 +30,25 @@ final class FoundTypeResult
         $this->unknownClassErrors = $unknownClassErrors;
         $this->tip = $tip;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
     /**
      * @return string[]
      */
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return $this->referencedClasses;
     }
     /**
      * @return list<IdentifierRuleError>
      */
-    public function getUnknownClassErrors() : array
+    public function getUnknownClassErrors(): array
     {
         return $this->unknownClassErrors;
     }
-    public function getTip() : ?string
+    public function getTip(): ?string
     {
         return $this->tip;
     }

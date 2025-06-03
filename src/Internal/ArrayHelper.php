@@ -11,7 +11,7 @@ final class ArrayHelper
      * @param mixed[] $array
      * @param non-empty-list<string> $path
      */
-    public static function unsetKeyAtPath(array &$array, array $path) : void
+    public static function unsetKeyAtPath(array &$array, array $path): void
     {
         [$head, $tail] = [$path[0], array_slice($path, 1)];
         if (count($tail) === 0) {

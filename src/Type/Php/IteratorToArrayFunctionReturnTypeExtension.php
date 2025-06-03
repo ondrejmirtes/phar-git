@@ -19,11 +19,11 @@ use function strtolower;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class IteratorToArrayFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return strtolower($functionReflection->getName()) === 'iterator_to_array';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $arguments = $functionCall->getArgs();
         if ($arguments === []) {

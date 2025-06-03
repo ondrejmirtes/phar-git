@@ -35,11 +35,11 @@ final class SortParameterCastableToStringRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->parameterCastableToStringCheck = $parameterCastableToStringCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -87,7 +87,7 @@ final class SortParameterCastableToStringRule implements Rule
             $castFn = static fn(Type $t) => $t->toString();
         } elseif ($mustBeCastableToString) {
             $errorMessage = 'Parameter %s of function %s expects an array of values castable to string and float, %s given.';
-            $castFn = static function (Type $t) : Type {
+            $castFn = static function (Type $t): Type {
                 $float = $t->toFloat();
                 return $float instanceof ErrorType ? $float : $t->toString();
             };

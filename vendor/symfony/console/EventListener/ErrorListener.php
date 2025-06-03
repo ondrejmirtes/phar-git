@@ -33,7 +33,7 @@ class ErrorListener implements EventSubscriberInterface
             return;
         }
         $error = $event->getError();
-        if (!($inputString = $this->getInputString($event))) {
+        if (!$inputString = $this->getInputString($event)) {
             $this->logger->critical('An error occurred while using the console. Message: "{message}"', ['exception' => $error, 'message' => $error->getMessage()]);
             return;
         }
@@ -48,7 +48,7 @@ class ErrorListener implements EventSubscriberInterface
         if (0 === $exitCode) {
             return;
         }
-        if (!($inputString = $this->getInputString($event))) {
+        if (!$inputString = $this->getInputString($event)) {
             $this->logger->debug('The console exited with code "{code}"', ['code' => $exitCode]);
             return;
         }
@@ -58,7 +58,7 @@ class ErrorListener implements EventSubscriberInterface
     {
         return [ConsoleEvents::ERROR => ['onConsoleError', -128], ConsoleEvents::TERMINATE => ['onConsoleTerminate', -128]];
     }
-    private static function getInputString(ConsoleEvent $event) : ?string
+    private static function getInputString(ConsoleEvent $event): ?string
     {
         $commandName = $event->getCommand() ? $event->getCommand()->getName() : null;
         $input = $event->getInput();

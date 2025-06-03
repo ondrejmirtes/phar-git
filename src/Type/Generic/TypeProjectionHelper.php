@@ -8,7 +8,7 @@ use PHPStan\Type\VerbosityLevel;
 use function sprintf;
 final class TypeProjectionHelper
 {
-    public static function describe(Type $type, ?\PHPStan\Type\Generic\TemplateTypeVariance $variance, VerbosityLevel $level) : string
+    public static function describe(Type $type, ?\PHPStan\Type\Generic\TemplateTypeVariance $variance, VerbosityLevel $level): string
     {
         $describedType = $type->describe($level);
         if ($variance === null || $variance->invariant()) {

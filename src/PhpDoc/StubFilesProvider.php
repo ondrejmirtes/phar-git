@@ -6,7 +6,7 @@ namespace PHPStan\PhpDoc;
 interface StubFilesProvider
 {
     /** @return string[] */
-    public function getStubFiles() : array;
+    public function getStubFiles(): array;
     /** @return string[] */
-    public function getProjectStubFiles() : array;
+    public function getProjectStubFiles(): array;
 }

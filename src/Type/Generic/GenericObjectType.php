@@ -52,11 +52,11 @@ class GenericObjectType extends ObjectType
         $this->variances = $variances;
         parent::__construct($mainType, $subtractedType, $classReflection);
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return sprintf('%s<%s>', parent::describe($level), implode(', ', array_map(static fn(Type $type, ?\PHPStan\Type\Generic\TemplateTypeVariance $variance = null): string => \PHPStan\Type\Generic\TypeProjectionHelper::describe($type, $variance, $level), $this->types, $this->variances)));
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
@@ -80,7 +80,7 @@ class GenericObjectType extends ObjectType
         }
         return \true;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         $classes = parent::getReferencedClasses();
         foreach ($this->types as $type) {
@@ -91,30 +91,30 @@ class GenericObjectType extends ObjectType
         return $classes;
     }
     /** @return array<int, Type> */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return $this->types;
     }
     /** @return array<int, TemplateTypeVariance> */
-    public function getVariances() : array
+    public function getVariances(): array
     {
         return $this->variances;
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return $this->isSuperTypeOfInternal($type, \true)->toAcceptsResult();
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof CompoundType) {
             return $type->isSubTypeOf($this);
         }
         return $this->isSuperTypeOfInternal($type, \false);
     }
-    private function isSuperTypeOfInternal(Type $type, bool $acceptsContext) : IsSuperTypeOfResult
+    private function isSuperTypeOfInternal(Type $type, bool $acceptsContext): IsSuperTypeOfResult
     {
         $nakedSuperTypeOf = parent::isSuperTypeOf($type);
         if ($nakedSuperTypeOf->no()) {
@@ -173,7 +173,7 @@ class GenericObjectType extends ObjectType
         }
         return $result;
     }
-    public function getClassReflection() : ?ClassReflection
+    public function getClassReflection(): ?ClassReflection
     {
         if ($this->classReflection !== null) {
             return $this->classReflection;
@@ -184,25 +184,25 @@ class GenericObjectType extends ObjectType
         }
         return $this->classReflection = $reflectionProvider->getClass($this->getClassName())->withTypes($this->types)->withVariances($this->variances);
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         $prototype = parent::getUnresolvedPropertyPrototype($propertyName, $scope);
         return $prototype->doNotResolveTemplateTypeMapToBounds();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         $prototype = parent::getUnresolvedMethodPrototype($methodName, $scope);
         return $prototype->doNotResolveTemplateTypeMapToBounds();
     }
-    public function inferTemplateTypes(Type $receivedType) : \PHPStan\Type\Generic\TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): \PHPStan\Type\Generic\TemplateTypeMap
     {
         if ($receivedType instanceof UnionType || $receivedType instanceof IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -226,7 +226,7 @@ class GenericObjectType extends ObjectType
         }
         return $typeMap;
     }
-    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance): array
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection !== null) {
@@ -247,7 +247,7 @@ class GenericObjectType extends ObjectType
         }
         return $references;
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         $subtractedType = $this->getSubtractedType() !== null ? $cb($this->getSubtractedType()) : null;
         $typesChanged = \false;
@@ -265,7 +265,7 @@ class GenericObjectType extends ObjectType
         }
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         if (!$right instanceof TypeWithClassName) {
             return $this;
@@ -297,15 +297,15 @@ class GenericObjectType extends ObjectType
      * @param Type[] $types
      * @param TemplateTypeVariance[] $variances
      */
-    protected function recreate(string $className, array $types, ?Type $subtractedType, array $variances = []) : self
+    protected function recreate(string $className, array $types, ?Type $subtractedType, array $variances = []): self
     {
         return new self($className, $types, $subtractedType, null, $variances);
     }
-    public function changeSubtractedType(?Type $subtractedType) : Type
+    public function changeSubtractedType(?Type $subtractedType): Type
     {
         return new self($this->getClassName(), $this->types, $subtractedType, null, $this->variances);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         /** @var IdentifierTypeNode $parent */
         $parent = parent::toPhpDocNode();

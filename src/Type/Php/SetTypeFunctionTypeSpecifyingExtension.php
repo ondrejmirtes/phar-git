@@ -23,11 +23,11 @@ use function strtolower;
 final class SetTypeFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return strtolower($functionReflection->getName()) === 'settype' && count($node->getArgs()) > 1 && $context->null();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $value = $node->getArgs()[0]->value;
         $valueType = $scope->getType($value);
@@ -69,7 +69,7 @@ final class SetTypeFunctionTypeSpecifyingExtension implements FunctionTypeSpecif
         }
         return $this->typeSpecifier->create($value, TypeCombinator::union(...$types), TypeSpecifierContext::createTruthy(), $scope)->setAlwaysOverwriteTypes();
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

@@ -63,7 +63,7 @@ class UnionType implements \PHPStan\Type\CompoundType
     {
         $this->types = $types;
         $this->normalized = $normalized;
-        $throwException = static function () use($types) : void {
+        $throwException = static function () use ($types): void {
             throw new ShouldNotHappenException(sprintf('Cannot create %s with: %s', self::class, implode(', ', array_map(static fn(\PHPStan\Type\Type $type): string => $type->describe(\PHPStan\Type\VerbosityLevel::value()), $types))));
         };
         if (count($types) < 2) {
@@ -82,14 +82,14 @@ class UnionType implements \PHPStan\Type\CompoundType
     /**
      * @return Type[]
      */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return $this->types;
     }
     /**
      * @param callable(Type $type): bool $filterCb
      */
-    public function filterTypes(callable $filterCb) : \PHPStan\Type\Type
+    public function filterTypes(callable $filterCb): \PHPStan\Type\Type
     {
         $newTypes = [];
         $changed = \false;
@@ -105,14 +105,14 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return \PHPStan\Type\TypeCombinator::union(...$newTypes);
     }
-    public function isNormalized() : bool
+    public function isNormalized(): bool
     {
         return $this->normalized;
     }
     /**
      * @return Type[]
      */
-    protected function getSortedTypes() : array
+    protected function getSortedTypes(): array
     {
         if ($this->sortedTypes) {
             return $this->types;
@@ -121,7 +121,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         $this->sortedTypes = \true;
         return $this->types;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         $classes = [];
         foreach ($this->types as $type) {
@@ -131,27 +131,27 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $classes;
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return array_values(array_unique($this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getObjectClassNames(), static fn(\PHPStan\Type\Type $type) => $type->isObject()->yes())));
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return $this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getObjectClassReflections(), static fn(\PHPStan\Type\Type $type) => $type->isObject()->yes());
     }
-    public function getArrays() : array
+    public function getArrays(): array
     {
         return $this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getArrays(), static fn(\PHPStan\Type\Type $type) => $type->isArray()->yes());
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return $this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getConstantArrays(), static fn(\PHPStan\Type\Type $type) => $type->isArray()->yes());
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return $this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getConstantStrings(), static fn(\PHPStan\Type\Type $type) => $type->isString()->yes());
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         foreach (self::EQUAL_UNION_CLASSES as $baseClass => $classes) {
             if (!$type->equals(new \PHPStan\Type\ObjectType($baseClass))) {
@@ -184,7 +184,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $result;
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($otherType instanceof self && !$otherType instanceof TemplateUnionType || $otherType instanceof \PHPStan\Type\IterableType || $otherType instanceof \PHPStan\Type\NeverType || $otherType instanceof \PHPStan\Type\ConditionalType || $otherType instanceof \PHPStan\Type\ConditionalTypeForParameter || $otherType instanceof \PHPStan\Type\IntegerRangeType) {
             return $otherType->isSubTypeOf($this);
@@ -203,15 +203,15 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $result;
     }
-    public function isSubTypeOf(\PHPStan\Type\Type $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSubTypeOf(\PHPStan\Type\Type $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         return \PHPStan\Type\IsSuperTypeOfResult::extremeIdentity(...array_map(static fn(\PHPStan\Type\Type $innerType) => $otherType->isSuperTypeOf($innerType), $this->types));
     }
-    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         return \PHPStan\Type\AcceptsResult::extremeIdentity(...array_map(static fn(\PHPStan\Type\Type $innerType) => $acceptingType->accepts($innerType, $strictTypes), $this->types));
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (!$type instanceof static) {
             return \false;
@@ -236,12 +236,12 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return count($otherTypes) === 0;
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         if (isset($this->cachedDescriptions[$level->getLevelValue()])) {
             return $this->cachedDescriptions[$level->getLevelValue()];
         }
-        $joinTypes = static function (array $types) use($level) : string {
+        $joinTypes = static function (array $types) use ($level): string {
             $typeNames = [];
             foreach ($types as $i => $type) {
                 if ($type instanceof \PHPStan\Type\ClosureType || $type instanceof \PHPStan\Type\CallableType || $type instanceof TemplateUnionType) {
@@ -284,8 +284,8 @@ class UnionType implements \PHPStan\Type\CompoundType
             }
             return implode('|', $typeNames);
         };
-        return $this->cachedDescriptions[$level->getLevelValue()] = $level->handle(function () use($joinTypes) : string {
-            $types = \PHPStan\Type\TypeCombinator::union(...array_map(static function (\PHPStan\Type\Type $type) : \PHPStan\Type\Type {
+        return $this->cachedDescriptions[$level->getLevelValue()] = $level->handle(function () use ($joinTypes): string {
+            $types = \PHPStan\Type\TypeCombinator::union(...array_map(static function (\PHPStan\Type\Type $type): \PHPStan\Type\Type {
                 if ($type->isConstantValue()->yes() && $type->isTrue()->or($type->isFalse())->no()) {
                     return $type->generalize(\PHPStan\Type\GeneralizePrecision::lessSpecific());
                 }
@@ -301,9 +301,9 @@ class UnionType implements \PHPStan\Type\CompoundType
      * @param callable(Type $type): TrinaryLogic $canCallback
      * @param callable(Type $type): TrinaryLogic $hasCallback
      */
-    private function hasInternal(callable $canCallback, callable $hasCallback) : TrinaryLogic
+    private function hasInternal(callable $canCallback, callable $hasCallback): TrinaryLogic
     {
-        return TrinaryLogic::lazyExtremeIdentity($this->types, static function (\PHPStan\Type\Type $type) use($canCallback, $hasCallback) : TrinaryLogic {
+        return TrinaryLogic::lazyExtremeIdentity($this->types, static function (\PHPStan\Type\Type $type) use ($canCallback, $hasCallback): TrinaryLogic {
             if ($canCallback($type)->no()) {
                 return TrinaryLogic::createNo();
             }
@@ -316,7 +316,7 @@ class UnionType implements \PHPStan\Type\CompoundType
      * @param callable(Type $type): TObject $getCallback
      * @return TObject
      */
-    private function getInternal(callable $hasCallback, callable $getCallback) : object
+    private function getInternal(callable $hasCallback, callable $getCallback): object
     {
         /** @var TrinaryLogic|null $result */
         $result = null;
@@ -339,31 +339,31 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $object;
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : \PHPStan\Type\Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getTemplateType($ancestorClassName, $templateTypeName));
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isObject());
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isEnum());
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->canAccessProperties());
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->hasProperty($propertyName));
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         $propertyPrototypes = [];
         foreach ($this->types as $type) {
@@ -381,19 +381,19 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return new UnionTypeUnresolvedPropertyPrototypeReflection($propertyName, $propertyPrototypes);
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->canCallMethods());
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->hasMethod($methodName));
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         $methodPrototypes = [];
         foreach ($this->types as $type) {
@@ -411,135 +411,135 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return new UnionTypeUnresolvedMethodPrototypeReflection($methodName, $methodPrototypes);
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->canAccessConstants());
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return $this->hasInternal(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->canAccessConstants(), static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->hasConstant($constantName));
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         return $this->getInternal(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->hasConstant($constantName), static fn(\PHPStan\Type\Type $type): ClassConstantReflection => $type->getConstant($constantName));
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isIterable());
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isIterableAtLeastOnce());
     }
-    public function getArraySize() : \PHPStan\Type\Type
+    public function getArraySize(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getArraySize());
     }
-    public function getIterableKeyType() : \PHPStan\Type\Type
+    public function getIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getIterableKeyType());
     }
-    public function getFirstIterableKeyType() : \PHPStan\Type\Type
+    public function getFirstIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getFirstIterableKeyType());
     }
-    public function getLastIterableKeyType() : \PHPStan\Type\Type
+    public function getLastIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getLastIterableKeyType());
     }
-    public function getIterableValueType() : \PHPStan\Type\Type
+    public function getIterableValueType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getIterableValueType());
     }
-    public function getFirstIterableValueType() : \PHPStan\Type\Type
+    public function getFirstIterableValueType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getFirstIterableValueType());
     }
-    public function getLastIterableValueType() : \PHPStan\Type\Type
+    public function getLastIterableValueType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getLastIterableValueType());
     }
-    public function isArray() : TrinaryLogic
+    public function isArray(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isArray());
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isConstantArray());
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isOversizedArray());
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isList());
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isString());
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isNumericString());
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isNonEmptyString());
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isNonFalsyString());
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isLiteralString());
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isLowercaseString());
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isUppercaseString());
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isClassString());
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getClassStringObjectType());
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getObjectTypeOrClassStringObjectType());
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isVoid());
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isScalar());
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $innerType): TrinaryLogic => $innerType->looseCompare($type, $phpVersion)->toTrinaryLogic())->toBooleanType();
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isOffsetAccessible());
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isOffsetAccessLegal());
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->hasOffsetValueType($offsetType));
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         $types = [];
         foreach ($this->types as $innerType) {
@@ -554,75 +554,75 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return \PHPStan\Type\TypeCombinator::union(...$types);
     }
-    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true) : \PHPStan\Type\Type
+    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->setOffsetValueType($offsetType, $valueType, $unionValues));
     }
-    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->setExistingOffsetValueType($offsetType, $valueType));
     }
-    public function unsetOffset(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function unsetOffset(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->unsetOffset($offsetType));
     }
-    public function getKeysArray() : \PHPStan\Type\Type
+    public function getKeysArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getKeysArray());
     }
-    public function getValuesArray() : \PHPStan\Type\Type
+    public function getValuesArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getValuesArray());
     }
-    public function chunkArray(\PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function chunkArray(\PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->chunkArray($lengthType, $preserveKeys));
     }
-    public function fillKeysArray(\PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function fillKeysArray(\PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->fillKeysArray($valueType));
     }
-    public function flipArray() : \PHPStan\Type\Type
+    public function flipArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->flipArray());
     }
-    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType) : \PHPStan\Type\Type
+    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->intersectKeyArray($otherArraysType));
     }
-    public function popArray() : \PHPStan\Type\Type
+    public function popArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->popArray());
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function reverseArray(TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->reverseArray($preserveKeys));
     }
-    public function searchArray(\PHPStan\Type\Type $needleType) : \PHPStan\Type\Type
+    public function searchArray(\PHPStan\Type\Type $needleType): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->searchArray($needleType));
     }
-    public function shiftArray() : \PHPStan\Type\Type
+    public function shiftArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->shiftArray());
     }
-    public function shuffleArray() : \PHPStan\Type\Type
+    public function shuffleArray(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->shuffleArray());
     }
-    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->sliceArray($offsetType, $lengthType, $preserveKeys));
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return $this->pickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getEnumCases(), static fn(\PHPStan\Type\Type $type) => $type->isObject()->yes());
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isCallable());
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         $acceptors = [];
         foreach ($this->types as $type) {
@@ -636,127 +636,127 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $acceptors;
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return $this->unionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isCloneable());
     }
-    public function isSmallerThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isSmallerThan($otherType, $phpVersion));
     }
-    public function isSmallerThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isSmallerThanOrEqual($otherType, $phpVersion));
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isNull());
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isConstantValue());
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isConstantScalarValue());
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return $this->notBenevolentPickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getConstantScalarTypes());
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return $this->notBenevolentPickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getConstantScalarValues());
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isTrue());
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isFalse());
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isBoolean());
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isFloat());
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $type->isInteger());
     }
-    public function getSmallerType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getSmallerType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getSmallerType($phpVersion));
     }
-    public function getSmallerOrEqualType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getSmallerOrEqualType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getSmallerOrEqualType($phpVersion));
     }
-    public function getGreaterType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getGreaterType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getGreaterType($phpVersion));
     }
-    public function getGreaterOrEqualType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getGreaterOrEqualType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->getGreaterOrEqualType($phpVersion));
     }
-    public function isGreaterThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $otherType->isSmallerThan($type, $phpVersion));
     }
-    public function isGreaterThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->notBenevolentUnionResults(static fn(\PHPStan\Type\Type $type): TrinaryLogic => $otherType->isSmallerThanOrEqual($type, $phpVersion));
     }
-    public function toBoolean() : \PHPStan\Type\BooleanType
+    public function toBoolean(): \PHPStan\Type\BooleanType
     {
         /** @var BooleanType $type */
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\BooleanType => $type->toBoolean());
         return $type;
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toNumber());
         return $type;
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toAbsoluteNumber());
         return $type;
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toString());
         return $type;
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toInteger());
         return $type;
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toFloat());
         return $type;
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         $type = $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toArray());
         return $type;
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toArrayKey());
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->toCoercedArgumentType($strictTypes));
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         $types = TemplateTypeMap::createEmpty();
         if ($receivedType instanceof \PHPStan\Type\UnionType) {
@@ -793,7 +793,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $types;
     }
-    public function inferTemplateTypesOn(\PHPStan\Type\Type $templateType) : TemplateTypeMap
+    public function inferTemplateTypesOn(\PHPStan\Type\Type $templateType): TemplateTypeMap
     {
         $types = TemplateTypeMap::createEmpty();
         foreach ($this->types as $type) {
@@ -801,7 +801,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $types;
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         $references = [];
         foreach ($this->types as $type) {
@@ -811,7 +811,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $references;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $types = [];
         $changed = \false;
@@ -827,7 +827,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         $types = [];
         $changed = \false;
@@ -850,15 +850,15 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $this;
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => \PHPStan\Type\TypeCombinator::remove($type, $typeToRemove));
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return $this->unionTypes(static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type->exponentiate($exponent));
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         $types = $this->notBenevolentPickFromTypes(static fn(\PHPStan\Type\Type $type) => $type->getFiniteTypes());
         $uniquedTypes = [];
@@ -873,21 +873,21 @@ class UnionType implements \PHPStan\Type\CompoundType
     /**
      * @param callable(Type $type): TrinaryLogic $getResult
      */
-    protected function unionResults(callable $getResult) : TrinaryLogic
+    protected function unionResults(callable $getResult): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->types, $getResult);
     }
     /**
      * @param callable(Type $type): TrinaryLogic $getResult
      */
-    private function notBenevolentUnionResults(callable $getResult) : TrinaryLogic
+    private function notBenevolentUnionResults(callable $getResult): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->types, $getResult);
     }
     /**
      * @param callable(Type $type): Type $getType
      */
-    protected function unionTypes(callable $getType) : \PHPStan\Type\Type
+    protected function unionTypes(callable $getType): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union(...array_map($getType, $this->types));
     }
@@ -897,7 +897,7 @@ class UnionType implements \PHPStan\Type\CompoundType
      * @param callable(Type $type): bool $criteria
      * @return list<T>
      */
-    protected function pickFromTypes(callable $getValues, callable $criteria) : array
+    protected function pickFromTypes(callable $getValues, callable $criteria): array
     {
         $values = [];
         foreach ($this->types as $type) {
@@ -911,7 +911,7 @@ class UnionType implements \PHPStan\Type\CompoundType
         }
         return $values;
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new UnionTypeNode(array_map(static fn(\PHPStan\Type\Type $type) => $type->toPhpDocNode(), $this->getSortedTypes()));
     }
@@ -920,7 +920,7 @@ class UnionType implements \PHPStan\Type\CompoundType
      * @param callable(Type $type): list<T> $getValues
      * @return list<T>
      */
-    private function notBenevolentPickFromTypes(callable $getValues) : array
+    private function notBenevolentPickFromTypes(callable $getValues): array
     {
         $values = [];
         foreach ($this->types as $type) {

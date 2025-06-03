@@ -15,12 +15,12 @@ final class ParentStmtTypesVisitor extends NodeVisitorAbstract
     public const ATTRIBUTE_NAME = 'parentStmtTypes';
     /** @var array<int, class-string<Node\Stmt|Node\Expr\Closure>> */
     private array $typeStack = [];
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->typeStack = [];
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt && !$node instanceof Node\Expr\Closure) {
             return null;
@@ -31,7 +31,7 @@ final class ParentStmtTypesVisitor extends NodeVisitorAbstract
         $this->typeStack[] = get_class($node);
         return null;
     }
-    public function leaveNode(Node $node) : ?Node
+    public function leaveNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt && !$node instanceof Node\Expr\Closure) {
             return null;

@@ -23,55 +23,55 @@ final class TypeSpecifierContext
     {
         $this->value = $value;
     }
-    private static function create(?int $value) : self
+    private static function create(?int $value): self
     {
         self::$registry[$value] ??= new self($value);
         return self::$registry[$value];
     }
-    public static function createTrue() : self
+    public static function createTrue(): self
     {
         return self::create(self::CONTEXT_TRUE);
     }
-    public static function createTruthy() : self
+    public static function createTruthy(): self
     {
         return self::create(self::CONTEXT_TRUTHY);
     }
-    public static function createFalse() : self
+    public static function createFalse(): self
     {
         return self::create(self::CONTEXT_FALSE);
     }
-    public static function createFalsey() : self
+    public static function createFalsey(): self
     {
         return self::create(self::CONTEXT_FALSEY);
     }
-    public static function createNull() : self
+    public static function createNull(): self
     {
         return self::create(null);
     }
-    public function negate() : self
+    public function negate(): self
     {
         if ($this->value === null) {
             throw new ShouldNotHappenException();
         }
         return self::create(~$this->value & self::CONTEXT_BITMASK);
     }
-    public function true() : bool
+    public function true(): bool
     {
         return $this->value !== null && (bool) ($this->value & self::CONTEXT_TRUE);
     }
-    public function truthy() : bool
+    public function truthy(): bool
     {
         return $this->value !== null && (bool) ($this->value & self::CONTEXT_TRUTHY);
     }
-    public function false() : bool
+    public function false(): bool
     {
         return $this->value !== null && (bool) ($this->value & self::CONTEXT_FALSE);
     }
-    public function falsey() : bool
+    public function falsey(): bool
     {
         return $this->value !== null && (bool) ($this->value & self::CONTEXT_FALSEY);
     }
-    public function null() : bool
+    public function null(): bool
     {
         return $this->value === null;
     }

@@ -16,35 +16,35 @@ final class WrappedExtendedMethodReflection implements \PHPStan\Reflection\Exten
     {
         $this->method = $method;
     }
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection
     {
         return $this->method->getDeclaringClass();
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->method->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->method->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->method->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->method->getDocComment();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->method->getName();
     }
-    public function getPrototype() : \PHPStan\Reflection\ClassMemberReflection
+    public function getPrototype(): \PHPStan\Reflection\ClassMemberReflection
     {
         return $this->method->getPrototype();
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         $variants = [];
         foreach ($this->method->getVariants() as $variant) {
@@ -56,71 +56,71 @@ final class WrappedExtendedMethodReflection implements \PHPStan\Reflection\Exten
         }
         return $variants;
     }
-    public function getOnlyVariant() : \PHPStan\Reflection\ExtendedParametersAcceptor
+    public function getOnlyVariant(): \PHPStan\Reflection\ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->method->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->method->getDeprecatedDescription();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->method->isFinal();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->isFinal();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->method->isInternal();
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->method->getThrowType();
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return $this->method->hasSideEffects();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getAsserts() : \PHPStan\Reflection\Assertions
+    public function getAsserts(): \PHPStan\Reflection\Assertions
     {
         return \PHPStan\Reflection\Assertions::createEmpty();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->getDeclaringClass()->acceptsNamedArguments());
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return null;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

@@ -11,7 +11,7 @@ final class CouldNotReadFileException extends AnalysedCodeException
     {
         parent::__construct(sprintf('Could not read file: %s', $fileName));
     }
-    public function getTip() : ?string
+    public function getTip(): ?string
     {
         return null;
     }

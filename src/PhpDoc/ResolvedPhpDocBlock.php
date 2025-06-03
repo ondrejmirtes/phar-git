@@ -122,7 +122,7 @@ final class ResolvedPhpDocBlock
     /**
      * @param TemplateTag[] $templateTags
      */
-    public static function create(PhpDocNode $phpDocNode, string $phpDocString, ?string $filename, NameScope $nameScope, TemplateTypeMap $templateTypeMap, array $templateTags, \PHPStan\PhpDoc\PhpDocNodeResolver $phpDocNodeResolver, ReflectionProvider $reflectionProvider) : self
+    public static function create(PhpDocNode $phpDocNode, string $phpDocString, ?string $filename, NameScope $nameScope, TemplateTypeMap $templateTypeMap, array $templateTags, \PHPStan\PhpDoc\PhpDocNodeResolver $phpDocNodeResolver, ReflectionProvider $reflectionProvider): self
     {
         // new property also needs to be added to withNameScope(), createEmpty() and merge()
         $self = new self();
@@ -137,7 +137,7 @@ final class ResolvedPhpDocBlock
         $self->reflectionProvider = $reflectionProvider;
         return $self;
     }
-    public function withNameScope(NameScope $nameScope) : self
+    public function withNameScope(NameScope $nameScope): self
     {
         $self = new self();
         $self->phpDocNode = $this->phpDocNode;
@@ -151,7 +151,7 @@ final class ResolvedPhpDocBlock
         $self->reflectionProvider = $this->reflectionProvider;
         return $self;
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         // new property also needs to be added to merge()
         $self = new self();
@@ -196,7 +196,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, self> $parents
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      */
-    public function merge(array $parents, array $parentPhpDocBlocks) : self
+    public function merge(array $parents, array $parentPhpDocBlocks): self
     {
         $className = $this->nameScope !== null ? $this->nameScope->getClassName() : null;
         $classReflection = $className !== null && $this->reflectionProvider->hasClass($className) ? $this->reflectionProvider->getClass($className) : null;
@@ -254,12 +254,12 @@ final class ResolvedPhpDocBlock
     /**
      * @param array<string, string> $parameterNameMapping
      */
-    public function changeParameterNamesByMapping(array $parameterNameMapping) : self
+    public function changeParameterNamesByMapping(array $parameterNameMapping): self
     {
         if (count($this->phpDocNodes) === 0) {
             return $this;
         }
-        $mapParameterCb = static function (Type $type, callable $traverse) use($parameterNameMapping) : Type {
+        $mapParameterCb = static function (Type $type, callable $traverse) use ($parameterNameMapping): Type {
             if ($type instanceof ConditionalTypeForParameter) {
                 $parameterName = substr($type->getParameterName(), 1);
                 if (array_key_exists($parameterName, $parameterNameMapping)) {
@@ -307,7 +307,7 @@ final class ResolvedPhpDocBlock
         }
         $assertTags = $this->getAssertTags();
         if (count($assertTags) > 0) {
-            $assertTags = array_map(static function (AssertTag $tag) use($parameterNameMapping) : AssertTag {
+            $assertTags = array_map(static function (AssertTag $tag) use ($parameterNameMapping): AssertTag {
                 $parameterName = substr($tag->getParameter()->getParameterName(), 1);
                 if (array_key_exists($parameterName, $parameterNameMapping)) {
                     $tag = $tag->withParameter($tag->getParameter()->changeParameterName('$' . $parameterNameMapping[$parameterName]));
@@ -352,37 +352,37 @@ final class ResolvedPhpDocBlock
         $self->isPure = $this->isPure;
         return $self;
     }
-    public function hasPhpDocString() : bool
+    public function hasPhpDocString(): bool
     {
         return $this->phpDocString !== self::EMPTY_DOC_STRING;
     }
-    public function getPhpDocString() : string
+    public function getPhpDocString(): string
     {
         return $this->phpDocString;
     }
     /**
      * @return PhpDocNode[]
      */
-    public function getPhpDocNodes() : array
+    public function getPhpDocNodes(): array
     {
         return $this->phpDocNodes;
     }
-    public function getFilename() : ?string
+    public function getFilename(): ?string
     {
         return $this->filename;
     }
-    private function getNameScope() : NameScope
+    private function getNameScope(): NameScope
     {
         return $this->nameScope;
     }
-    public function getNullableNameScope() : ?NameScope
+    public function getNullableNameScope(): ?NameScope
     {
         return $this->nameScope;
     }
     /**
      * @return array<(string|int), VarTag>
      */
-    public function getVarTags() : array
+    public function getVarTags(): array
     {
         if ($this->varTags === \false) {
             $this->varTags = $this->phpDocNodeResolver->resolveVarTags($this->phpDocNode, $this->getNameScope());
@@ -392,7 +392,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, MethodTag>
      */
-    public function getMethodTags() : array
+    public function getMethodTags(): array
     {
         if ($this->methodTags === \false) {
             $this->methodTags = $this->phpDocNodeResolver->resolveMethodTags($this->phpDocNode, $this->getNameScope());
@@ -402,7 +402,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, PropertyTag>
      */
-    public function getPropertyTags() : array
+    public function getPropertyTags(): array
     {
         if ($this->propertyTags === \false) {
             $this->propertyTags = $this->phpDocNodeResolver->resolvePropertyTags($this->phpDocNode, $this->getNameScope());
@@ -412,14 +412,14 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, TemplateTag>
      */
-    public function getTemplateTags() : array
+    public function getTemplateTags(): array
     {
         return $this->templateTags;
     }
     /**
      * @return array<string, ExtendsTag>
      */
-    public function getExtendsTags() : array
+    public function getExtendsTags(): array
     {
         if ($this->extendsTags === \false) {
             $this->extendsTags = $this->phpDocNodeResolver->resolveExtendsTags($this->phpDocNode, $this->getNameScope());
@@ -429,7 +429,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, ImplementsTag>
      */
-    public function getImplementsTags() : array
+    public function getImplementsTags(): array
     {
         if ($this->implementsTags === \false) {
             $this->implementsTags = $this->phpDocNodeResolver->resolveImplementsTags($this->phpDocNode, $this->getNameScope());
@@ -439,7 +439,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, UsesTag>
      */
-    public function getUsesTags() : array
+    public function getUsesTags(): array
     {
         if ($this->usesTags === \false) {
             $this->usesTags = $this->phpDocNodeResolver->resolveUsesTags($this->phpDocNode, $this->getNameScope());
@@ -449,7 +449,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, ParamTag>
      */
-    public function getParamTags() : array
+    public function getParamTags(): array
     {
         if ($this->paramTags === \false) {
             $this->paramTags = $this->phpDocNodeResolver->resolveParamTags($this->phpDocNode, $this->getNameScope());
@@ -459,7 +459,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, ParamOutTag>
      */
-    public function getParamOutTags() : array
+    public function getParamOutTags(): array
     {
         if ($this->paramOutTags === \false) {
             $this->paramOutTags = $this->phpDocNodeResolver->resolveParamOutTags($this->phpDocNode, $this->getNameScope());
@@ -469,7 +469,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, bool>
      */
-    public function getParamsImmediatelyInvokedCallable() : array
+    public function getParamsImmediatelyInvokedCallable(): array
     {
         if ($this->paramsImmediatelyInvokedCallable === \false) {
             $this->paramsImmediatelyInvokedCallable = $this->phpDocNodeResolver->resolveParamImmediatelyInvokedCallable($this->phpDocNode);
@@ -479,21 +479,21 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string, ParamClosureThisTag>
      */
-    public function getParamClosureThisTags() : array
+    public function getParamClosureThisTags(): array
     {
         if ($this->paramClosureThisTags === \false) {
             $this->paramClosureThisTags = $this->phpDocNodeResolver->resolveParamClosureThisTags($this->phpDocNode, $this->getNameScope());
         }
         return $this->paramClosureThisTags;
     }
-    public function getReturnTag() : ?ReturnTag
+    public function getReturnTag(): ?ReturnTag
     {
         if (is_bool($this->returnTag)) {
             $this->returnTag = $this->phpDocNodeResolver->resolveReturnTag($this->phpDocNode, $this->getNameScope());
         }
         return $this->returnTag;
     }
-    public function getThrowsTag() : ?ThrowsTag
+    public function getThrowsTag(): ?ThrowsTag
     {
         if (is_bool($this->throwsTag)) {
             $this->throwsTag = $this->phpDocNodeResolver->resolveThrowsTags($this->phpDocNode, $this->getNameScope());
@@ -503,7 +503,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<MixinTag>
      */
-    public function getMixinTags() : array
+    public function getMixinTags(): array
     {
         if ($this->mixinTags === \false) {
             $this->mixinTags = $this->phpDocNodeResolver->resolveMixinTags($this->phpDocNode, $this->getNameScope());
@@ -513,7 +513,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<RequireExtendsTag>
      */
-    public function getRequireExtendsTags() : array
+    public function getRequireExtendsTags(): array
     {
         if ($this->requireExtendsTags === \false) {
             $this->requireExtendsTags = $this->phpDocNodeResolver->resolveRequireExtendsTags($this->phpDocNode, $this->getNameScope());
@@ -523,7 +523,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<RequireImplementsTag>
      */
-    public function getRequireImplementsTags() : array
+    public function getRequireImplementsTags(): array
     {
         if ($this->requireImplementsTags === \false) {
             $this->requireImplementsTags = $this->phpDocNodeResolver->resolveRequireImplementsTags($this->phpDocNode, $this->getNameScope());
@@ -533,7 +533,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<TypeAliasTag>
      */
-    public function getTypeAliasTags() : array
+    public function getTypeAliasTags(): array
     {
         if ($this->typeAliasTags === \false) {
             $this->typeAliasTags = $this->phpDocNodeResolver->resolveTypeAliasTags($this->phpDocNode, $this->getNameScope());
@@ -543,7 +543,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<TypeAliasImportTag>
      */
-    public function getTypeAliasImportTags() : array
+    public function getTypeAliasImportTags(): array
     {
         if ($this->typeAliasImportTags === \false) {
             $this->typeAliasImportTags = $this->phpDocNodeResolver->resolveTypeAliasImportTags($this->phpDocNode, $this->getNameScope());
@@ -553,28 +553,28 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<AssertTag>
      */
-    public function getAssertTags() : array
+    public function getAssertTags(): array
     {
         if ($this->assertTags === \false) {
             $this->assertTags = $this->phpDocNodeResolver->resolveAssertTags($this->phpDocNode, $this->getNameScope());
         }
         return $this->assertTags;
     }
-    public function getSelfOutTag() : ?SelfOutTypeTag
+    public function getSelfOutTag(): ?SelfOutTypeTag
     {
         if ($this->selfOutTypeTag === \false) {
             $this->selfOutTypeTag = $this->phpDocNodeResolver->resolveSelfOutTypeTag($this->phpDocNode, $this->getNameScope());
         }
         return $this->selfOutTypeTag;
     }
-    public function getDeprecatedTag() : ?DeprecatedTag
+    public function getDeprecatedTag(): ?DeprecatedTag
     {
         if (is_bool($this->deprecatedTag)) {
             $this->deprecatedTag = $this->phpDocNodeResolver->resolveDeprecatedTag($this->phpDocNode, $this->getNameScope());
         }
         return $this->deprecatedTag;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         if ($this->isDeprecated === null) {
             $this->isDeprecated = $this->phpDocNodeResolver->resolveIsDeprecated($this->phpDocNode);
@@ -584,46 +584,46 @@ final class ResolvedPhpDocBlock
     /**
      * @internal
      */
-    public function isNotDeprecated() : bool
+    public function isNotDeprecated(): bool
     {
         if ($this->isNotDeprecated === null) {
             $this->isNotDeprecated = $this->phpDocNodeResolver->resolveIsNotDeprecated($this->phpDocNode);
         }
         return $this->isNotDeprecated;
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         if ($this->isInternal === null) {
             $this->isInternal = $this->phpDocNodeResolver->resolveIsInternal($this->phpDocNode);
         }
         return $this->isInternal;
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         if ($this->isFinal === null) {
             $this->isFinal = $this->phpDocNodeResolver->resolveIsFinal($this->phpDocNode);
         }
         return $this->isFinal;
     }
-    public function hasConsistentConstructor() : bool
+    public function hasConsistentConstructor(): bool
     {
         if ($this->hasConsistentConstructor === null) {
             $this->hasConsistentConstructor = $this->phpDocNodeResolver->resolveHasConsistentConstructor($this->phpDocNode);
         }
         return $this->hasConsistentConstructor;
     }
-    public function acceptsNamedArguments() : bool
+    public function acceptsNamedArguments(): bool
     {
         if ($this->acceptsNamedArguments === null) {
             $this->acceptsNamedArguments = $this->phpDocNodeResolver->resolveAcceptsNamedArguments($this->phpDocNode);
         }
         return $this->acceptsNamedArguments;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->templateTypeMap;
     }
-    public function isPure() : ?bool
+    public function isPure(): ?bool
     {
         if ($this->isPure === 'notLoaded') {
             $pure = $this->phpDocNodeResolver->resolveIsPure($this->phpDocNode);
@@ -640,21 +640,21 @@ final class ResolvedPhpDocBlock
         }
         return $this->isPure;
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         if ($this->isReadOnly === null) {
             $this->isReadOnly = $this->phpDocNodeResolver->resolveIsReadOnly($this->phpDocNode);
         }
         return $this->isReadOnly;
     }
-    public function isImmutable() : bool
+    public function isImmutable(): bool
     {
         if ($this->isImmutable === null) {
             $this->isImmutable = $this->phpDocNodeResolver->resolveIsImmutable($this->phpDocNode);
         }
         return $this->isImmutable;
     }
-    public function isAllowedPrivateMutation() : bool
+    public function isAllowedPrivateMutation(): bool
     {
         if ($this->isAllowedPrivateMutation === null) {
             $this->isAllowedPrivateMutation = $this->phpDocNodeResolver->resolveAllowPrivateMutation($this->phpDocNode);
@@ -667,7 +667,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<string|int, VarTag>
      */
-    private static function mergeVarTags(array $varTags, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeVarTags(array $varTags, array $parents, array $parentPhpDocBlocks): array
     {
         // Only allow one var tag per comment. Check the parent if child does not have this tag.
         if (count($varTags) > 0) {
@@ -685,7 +685,7 @@ final class ResolvedPhpDocBlock
     /**
      * @return array<string|int, VarTag>|null
      */
-    private static function mergeOneParentVarTags(self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : ?array
+    private static function mergeOneParentVarTags(self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): ?array
     {
         foreach ($parent->getVarTags() as $key => $parentVarTag) {
             return [$key => self::resolveTemplateTypeInTag($parentVarTag->toImplicit(), $phpDocBlock, TemplateTypeVariance::createInvariant())];
@@ -698,7 +698,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<string, ParamTag>
      */
-    private static function mergeParamTags(array $paramTags, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeParamTags(array $paramTags, array $parents, array $parentPhpDocBlocks): array
     {
         foreach ($parents as $i => $parent) {
             $paramTags = self::mergeOneParentParamTags($paramTags, $parent, $parentPhpDocBlocks[$i]);
@@ -709,7 +709,7 @@ final class ResolvedPhpDocBlock
      * @param array<string, ParamTag> $paramTags
      * @return array<string, ParamTag>
      */
-    private static function mergeOneParentParamTags(array $paramTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : array
+    private static function mergeOneParentParamTags(array $paramTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): array
     {
         $parentParamTags = $phpDocBlock->transformArrayKeysWithParameterNameMapping($parent->getParamTags());
         foreach ($parentParamTags as $name => $parentParamTag) {
@@ -725,7 +725,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return ReturnTag|Null
      */
-    private static function mergeReturnTags(?ReturnTag $returnTag, ?ClassReflection $classReflection, array $parents, array $parentPhpDocBlocks) : ?ReturnTag
+    private static function mergeReturnTags(?ReturnTag $returnTag, ?ClassReflection $classReflection, array $parents, array $parentPhpDocBlocks): ?ReturnTag
     {
         if ($returnTag !== null) {
             return $returnTag;
@@ -739,7 +739,7 @@ final class ResolvedPhpDocBlock
         }
         return null;
     }
-    private static function mergeOneParentReturnTag(?ReturnTag $returnTag, ?ClassReflection $classReflection, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : ?ReturnTag
+    private static function mergeOneParentReturnTag(?ReturnTag $returnTag, ?ClassReflection $classReflection, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): ?ReturnTag
     {
         $parentReturnTag = $parent->getReturnTag();
         if ($parentReturnTag === null) {
@@ -747,7 +747,7 @@ final class ResolvedPhpDocBlock
         }
         $parentType = $parentReturnTag->getType();
         if ($classReflection !== null) {
-            $parentType = TypeTraverser::map($parentType, static function (Type $type, callable $traverse) use($classReflection) : Type {
+            $parentType = TypeTraverser::map($parentType, static function (Type $type, callable $traverse) use ($classReflection): Type {
                 if ($type instanceof StaticType) {
                     return $type->changeBaseClass($classReflection);
                 }
@@ -768,7 +768,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<AssertTag>
      */
-    private static function mergeAssertTags(array $assertTags, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeAssertTags(array $assertTags, array $parents, array $parentPhpDocBlocks): array
     {
         if (count($assertTags) > 0) {
             return $assertTags;
@@ -786,7 +786,7 @@ final class ResolvedPhpDocBlock
     /**
      * @param array<int, self> $parents
      */
-    private static function mergeSelfOutTypeTags(?SelfOutTypeTag $selfOutTypeTag, array $parents) : ?SelfOutTypeTag
+    private static function mergeSelfOutTypeTags(?SelfOutTypeTag $selfOutTypeTag, array $parents): ?SelfOutTypeTag
     {
         if ($selfOutTypeTag !== null) {
             return $selfOutTypeTag;
@@ -803,7 +803,7 @@ final class ResolvedPhpDocBlock
     /**
      * @param array<int, self> $parents
      */
-    private static function mergeDeprecatedTags(?DeprecatedTag $deprecatedTag, bool $hasNotDeprecatedTag, array $parents) : ?DeprecatedTag
+    private static function mergeDeprecatedTags(?DeprecatedTag $deprecatedTag, bool $hasNotDeprecatedTag, array $parents): ?DeprecatedTag
     {
         if ($deprecatedTag !== null) {
             return $deprecatedTag;
@@ -823,7 +823,7 @@ final class ResolvedPhpDocBlock
     /**
      * @param array<int, self> $parents
      */
-    private static function mergeThrowsTags(?ThrowsTag $throwsTag, array $parents) : ?ThrowsTag
+    private static function mergeThrowsTags(?ThrowsTag $throwsTag, array $parents): ?ThrowsTag
     {
         if ($throwsTag !== null) {
             return $throwsTag;
@@ -843,7 +843,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<string, ParamOutTag>
      */
-    private static function mergeParamOutTags(array $paramOutTags, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeParamOutTags(array $paramOutTags, array $parents, array $parentPhpDocBlocks): array
     {
         foreach ($parents as $i => $parent) {
             $paramOutTags = self::mergeOneParentParamOutTags($paramOutTags, $parent, $parentPhpDocBlocks[$i]);
@@ -854,7 +854,7 @@ final class ResolvedPhpDocBlock
      * @param array<string, ParamOutTag> $paramOutTags
      * @return array<string, ParamOutTag>
      */
-    private static function mergeOneParentParamOutTags(array $paramOutTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : array
+    private static function mergeOneParentParamOutTags(array $paramOutTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): array
     {
         $parentParamOutTags = $phpDocBlock->transformArrayKeysWithParameterNameMapping($parent->getParamOutTags());
         foreach ($parentParamOutTags as $name => $parentParamTag) {
@@ -871,7 +871,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<string, bool>
      */
-    private static function mergeParamsImmediatelyInvokedCallable(array $paramsImmediatelyInvokedCallable, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeParamsImmediatelyInvokedCallable(array $paramsImmediatelyInvokedCallable, array $parents, array $parentPhpDocBlocks): array
     {
         foreach ($parents as $i => $parent) {
             $paramsImmediatelyInvokedCallable = self::mergeOneParentParamImmediatelyInvokedCallable($paramsImmediatelyInvokedCallable, $parent, $parentPhpDocBlocks[$i]);
@@ -882,7 +882,7 @@ final class ResolvedPhpDocBlock
      * @param array<string, bool> $paramsImmediatelyInvokedCallable
      * @return array<string, bool>
      */
-    private static function mergeOneParentParamImmediatelyInvokedCallable(array $paramsImmediatelyInvokedCallable, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : array
+    private static function mergeOneParentParamImmediatelyInvokedCallable(array $paramsImmediatelyInvokedCallable, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): array
     {
         $parentImmediatelyInvokedCallable = $phpDocBlock->transformArrayKeysWithParameterNameMapping($parent->getParamsImmediatelyInvokedCallable());
         foreach ($parentImmediatelyInvokedCallable as $name => $parentIsImmediatelyInvokedCallable) {
@@ -899,7 +899,7 @@ final class ResolvedPhpDocBlock
      * @param array<int, PhpDocBlock> $parentPhpDocBlocks
      * @return array<string, ParamClosureThisTag>
      */
-    private static function mergeParamClosureThisTags(array $paramsClosureThisTags, array $parents, array $parentPhpDocBlocks) : array
+    private static function mergeParamClosureThisTags(array $paramsClosureThisTags, array $parents, array $parentPhpDocBlocks): array
     {
         foreach ($parents as $i => $parent) {
             $paramsClosureThisTags = self::mergeOneParentParamClosureThisTag($paramsClosureThisTags, $parent, $parentPhpDocBlocks[$i]);
@@ -910,7 +910,7 @@ final class ResolvedPhpDocBlock
      * @param array<string, ParamClosureThisTag> $paramsClosureThisTags
      * @return array<string, ParamClosureThisTag>
      */
-    private static function mergeOneParentParamClosureThisTag(array $paramsClosureThisTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock) : array
+    private static function mergeOneParentParamClosureThisTag(array $paramsClosureThisTags, self $parent, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock): array
     {
         $parentClosureThisTags = $phpDocBlock->transformArrayKeysWithParameterNameMapping($parent->getParamClosureThisTags());
         foreach ($parentClosureThisTags as $name => $parentParamClosureThisTag) {
@@ -924,7 +924,7 @@ final class ResolvedPhpDocBlock
     /**
      * @param array<int, self> $parents
      */
-    private static function mergePureTags(?bool $isPure, array $parents) : ?bool
+    private static function mergePureTags(?bool $isPure, array $parents): ?bool
     {
         if ($isPure !== null) {
             return $isPure;
@@ -943,7 +943,7 @@ final class ResolvedPhpDocBlock
      * @param T $tag
      * @return T
      */
-    private static function resolveTemplateTypeInTag(TypedTag $tag, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock, TemplateTypeVariance $positionVariance) : TypedTag
+    private static function resolveTemplateTypeInTag(TypedTag $tag, \PHPStan\PhpDoc\PhpDocBlock $phpDocBlock, TemplateTypeVariance $positionVariance): TypedTag
     {
         $type = TemplateTypeHelper::resolveTemplateTypes($tag->getType(), $phpDocBlock->getClassReflection()->getActiveTemplateTypeMap(), $phpDocBlock->getClassReflection()->getCallSiteVarianceMap(), $positionVariance);
         return $tag->withType($type);

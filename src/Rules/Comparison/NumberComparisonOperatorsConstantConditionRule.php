@@ -25,18 +25,18 @@ final class NumberComparisonOperatorsConstantConditionRule implements Rule
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return BinaryOp::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof BinaryOp\Greater && !$node instanceof BinaryOp\GreaterOrEqual && !$node instanceof BinaryOp\Smaller && !$node instanceof BinaryOp\SmallerOrEqual) {
             return [];
         }
         $exprType = $this->treatPhpDocTypesAsCertain ? $scope->getType($node) : $scope->getNativeType($node);
         if ($exprType instanceof ConstantBooleanType) {
-            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+            $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }

@@ -10,7 +10,7 @@ use PHPStan\Rules\RuleError;
 final class RuleError1 implements RuleError
 {
     public string $message;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }

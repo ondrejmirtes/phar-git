@@ -38,7 +38,7 @@ final class Error implements JsonSerializable
      */
     private array $metadata;
     private ?\PHPStan\Analyser\FixedErrorDiff $fixedErrorDiff;
-    public const PATTERN_IDENTIFIER = '[a-zA-Z0-9](?:[a-zA-Z0-9\\.]*[a-zA-Z0-9])?';
+    public const PATTERN_IDENTIFIER = '[a-zA-Z0-9](?:[a-zA-Z0-9\.]*[a-zA-Z0-9])?';
     /**
      * Error constructor.
      *
@@ -64,67 +64,67 @@ final class Error implements JsonSerializable
             throw new ShouldNotHappenException(sprintf('Invalid identifier: %s', $this->identifier));
         }
     }
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFilePath() : string
+    public function getFilePath(): string
     {
         if ($this->filePath === null) {
             return $this->file;
         }
         return $this->filePath;
     }
-    public function changeFilePath(string $newFilePath) : self
+    public function changeFilePath(string $newFilePath): self
     {
         if ($this->traitFilePath !== null) {
             throw new ShouldNotHappenException('Errors in traits not yet supported');
         }
         return new self($this->message, $newFilePath, $this->line, $this->canBeIgnored, $newFilePath, null, $this->tip, $this->nodeLine, $this->nodeType, $this->identifier, $this->metadata, $this->fixedErrorDiff);
     }
-    public function changeTraitFilePath(string $newFilePath) : self
+    public function changeTraitFilePath(string $newFilePath): self
     {
         return new self($this->message, $this->file, $this->line, $this->canBeIgnored, $this->filePath, $newFilePath, $this->tip, $this->nodeLine, $this->nodeType, $this->identifier, $this->metadata, $this->fixedErrorDiff);
     }
-    public function getTraitFilePath() : ?string
+    public function getTraitFilePath(): ?string
     {
         return $this->traitFilePath;
     }
-    public function getLine() : ?int
+    public function getLine(): ?int
     {
         return $this->line;
     }
-    public function canBeIgnored() : bool
+    public function canBeIgnored(): bool
     {
         return $this->canBeIgnored === \true;
     }
-    public function hasNonIgnorableException() : bool
+    public function hasNonIgnorableException(): bool
     {
         return $this->canBeIgnored instanceof Throwable;
     }
-    public function getTip() : ?string
+    public function getTip(): ?string
     {
         return $this->tip;
     }
-    public function withoutTip() : self
+    public function withoutTip(): self
     {
         if ($this->tip === null) {
             return $this;
         }
         return new self($this->message, $this->file, $this->line, $this->canBeIgnored, $this->filePath, $this->traitFilePath, null, $this->nodeLine, $this->nodeType, $this->identifier, $this->metadata, $this->fixedErrorDiff);
     }
-    public function doNotIgnore() : self
+    public function doNotIgnore(): self
     {
         if (!$this->canBeIgnored()) {
             return $this;
         }
         return new self($this->message, $this->file, $this->line, \false, $this->filePath, $this->traitFilePath, $this->tip, $this->nodeLine, $this->nodeType, $this->identifier, $this->metadata, $this->fixedErrorDiff);
     }
-    public function withIdentifier(string $identifier) : self
+    public function withIdentifier(string $identifier): self
     {
         if ($this->identifier !== null) {
             throw new ShouldNotHappenException(sprintf('Error already has an identifier: %s', $this->identifier));
@@ -134,21 +134,21 @@ final class Error implements JsonSerializable
     /**
      * @param mixed[] $metadata
      */
-    public function withMetadata(array $metadata) : self
+    public function withMetadata(array $metadata): self
     {
         if ($this->metadata !== []) {
             throw new ShouldNotHappenException('Error already has metadata');
         }
         return new self($this->message, $this->file, $this->line, $this->canBeIgnored, $this->filePath, $this->traitFilePath, $this->tip, $this->nodeLine, $this->nodeType, $this->identifier, $metadata, $this->fixedErrorDiff);
     }
-    public function getNodeLine() : ?int
+    public function getNodeLine(): ?int
     {
         return $this->nodeLine;
     }
     /**
      * @return class-string<Node>|null
      */
-    public function getNodeType() : ?string
+    public function getNodeType(): ?string
     {
         return $this->nodeType;
     }
@@ -157,21 +157,21 @@ final class Error implements JsonSerializable
      *
      * List of all current error identifiers in PHPStan: https://phpstan.org/error-identifiers
      */
-    public function getIdentifier() : ?string
+    public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }
     /**
      * @internal Experimental
      */
-    public function getFixedErrorDiff() : ?\PHPStan\Analyser\FixedErrorDiff
+    public function getFixedErrorDiff(): ?\PHPStan\Analyser\FixedErrorDiff
     {
         return $this->fixedErrorDiff;
     }
@@ -192,7 +192,7 @@ final class Error implements JsonSerializable
     /**
      * @param mixed[] $json
      */
-    public static function decode(array $json) : self
+    public static function decode(array $json): self
     {
         $fixedErrorDiff = null;
         if ($json['fixedErrorDiffHash'] !== null && $json['fixedErrorDiffDiff'] !== null) {
@@ -203,11 +203,11 @@ final class Error implements JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['message'], $properties['file'], $properties['line'], $properties['canBeIgnored'], $properties['filePath'], $properties['traitFilePath'], $properties['tip'], $properties['nodeLine'] ?? null, $properties['nodeType'] ?? null, $properties['identifier'] ?? null, $properties['metadata'] ?? [], $properties['fixedErrorDiff'] ?? null);
     }
-    public static function validateIdentifier(string $identifier) : bool
+    public static function validateIdentifier(string $identifier): bool
     {
         return Strings::match($identifier, '~^' . self::PATTERN_IDENTIFIER . '$~') !== null;
     }

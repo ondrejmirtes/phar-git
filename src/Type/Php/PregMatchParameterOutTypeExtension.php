@@ -21,11 +21,11 @@ final class PregMatchParameterOutTypeExtension implements FunctionParameterOutTy
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool
     {
         return in_array(strtolower($functionReflection->getName()), ['preg_match', 'preg_match_all'], \true) && in_array($parameter->getName(), ['subpatterns', 'matches'], \true);
     }
-    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope) : ?Type
+    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
         $args = $funcCall->getArgs();
         $patternArg = $args[0] ?? null;

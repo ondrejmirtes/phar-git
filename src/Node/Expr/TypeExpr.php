@@ -18,18 +18,18 @@ final class TypeExpr extends Expr implements VirtualNode
         $this->exprType = $exprType;
         parent::__construct();
     }
-    public function getExprType() : Type
+    public function getExprType(): Type
     {
         return $this->exprType;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_TypeExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

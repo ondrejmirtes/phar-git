@@ -78,7 +78,7 @@ class DebugFormatterHelper extends Helper
         unset($this->started[$id]['out'], $this->started[$id]['err']);
         return $message;
     }
-    private function getBorder(string $id) : string
+    private function getBorder(string $id): string
     {
         return \sprintf('<bg=%s> </>', self::COLORS[$this->started[$id]['border']]);
     }

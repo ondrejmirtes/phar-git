@@ -27,17 +27,17 @@ final class AnyOf implements Schema
         }
         $this->set = $set;
     }
-    public function firstIsDefault() : self
+    public function firstIsDefault(): self
     {
         $this->default = $this->set[0];
         return $this;
     }
-    public function nullable() : self
+    public function nullable(): self
     {
         $this->set[] = null;
         return $this;
     }
-    public function dynamic() : self
+    public function dynamic(): self
     {
         $this->set[] = new Type(Nette\Schema\DynamicParameter::class);
         return $this;
@@ -59,7 +59,7 @@ final class AnyOf implements Schema
     {
         $isOk = $context->createChecker();
         $value = $this->findAlternative($value, $context);
-        $isOk() && ($value = $this->doTransform($value, $context));
+        $isOk() && $value = $this->doTransform($value, $context);
         return $isOk() ? $value : null;
     }
     private function findAlternative($value, Context $context)

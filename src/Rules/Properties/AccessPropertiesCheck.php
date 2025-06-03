@@ -44,7 +44,7 @@ final class AccessPropertiesCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(PropertyFetch $node, Scope $scope, bool $write) : array
+    public function check(PropertyFetch $node, Scope $scope, bool $write): array
     {
         if ($node->name instanceof Identifier) {
             $names = [$node->name->name];
@@ -60,7 +60,7 @@ final class AccessPropertiesCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleProperty(Scope $scope, PropertyFetch $node, string $name, bool $write) : array
+    private function processSingleProperty(Scope $scope, PropertyFetch $node, string $name, bool $write): array
     {
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, NullsafeOperatorHelper::getNullsafeShortcircuitedExprRespectingScope($scope, $node->var), sprintf('Access to property $%s on an unknown class %%s.', SprintfHelper::escapeFormatString($name)), static fn(Type $type): bool => $type->canAccessProperties()->yes() && $type->hasProperty($name)->yes());
         $type = $typeResult->getType();
@@ -144,7 +144,7 @@ final class AccessPropertiesCheck
         }
         return [RuleErrorBuilder::message(sprintf('Assign to %s property %s::$%s.', $propertyReflection->isPrivateSet() ? 'private(set)' : 'protected(set)', $type->describe(VerbosityLevel::typeOnly()), $name))->identifier(sprintf('assign.property%s', $propertyReflection->isPrivateSet() ? 'PrivateSet' : 'ProtectedSet'))->build()];
     }
-    private function canAccessUndefinedProperties(Scope $scope, Expr $node) : bool
+    private function canAccessUndefinedProperties(Scope $scope, Expr $node): bool
     {
         return $scope->isUndefinedExpressionAllowed($node) && !$this->checkDynamicProperties;
     }

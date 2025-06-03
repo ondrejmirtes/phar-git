@@ -25,7 +25,7 @@ final class SignatureMapParser
     /**
      * @param mixed[] $map
      */
-    public function getFunctionSignature(array $map, ?string $className) : \PHPStan\Reflection\SignatureMap\FunctionSignature
+    public function getFunctionSignature(array $map, ?string $className): \PHPStan\Reflection\SignatureMap\FunctionSignature
     {
         $parameterSignatures = $this->getParameters(array_slice($map, 1));
         $hasVariadic = \false;
@@ -37,7 +37,7 @@ final class SignatureMapParser
         }
         return new \PHPStan\Reflection\SignatureMap\FunctionSignature($parameterSignatures, $this->getTypeFromString($map[0], $className), new MixedType(), $hasVariadic);
     }
-    private function getTypeFromString(string $typeString, ?string $className) : Type
+    private function getTypeFromString(string $typeString, ?string $className): Type
     {
         if ($typeString === '') {
             return new MixedType(\true);
@@ -48,7 +48,7 @@ final class SignatureMapParser
      * @param array<string, string> $parameterMap
      * @return list<ParameterSignature>
      */
-    private function getParameters(array $parameterMap) : array
+    private function getParameters(array $parameterMap): array
     {
         $parameterSignatures = [];
         foreach ($parameterMap as $parameterName => $typeString) {
@@ -60,9 +60,9 @@ final class SignatureMapParser
     /**
      * @return mixed[]
      */
-    private function getParameterInfoFromName(string $parameterNameString) : array
+    private function getParameterInfoFromName(string $parameterNameString): array
     {
-        $matches = Strings::match($parameterNameString, '#^(?P<reference>&(?:\\.\\.\\.)?r?w?_?)?(?P<variadic>\\.\\.\\.)?(?P<name>[^=]+)?(?P<optional>=)?($)#');
+        $matches = Strings::match($parameterNameString, '#^(?P<reference>&(?:\.\.\.)?r?w?_?)?(?P<variadic>\.\.\.)?(?P<name>[^=]+)?(?P<optional>=)?($)#');
         if ($matches === null || !isset($matches['optional'])) {
             throw new ShouldNotHappenException();
         }

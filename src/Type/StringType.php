@@ -39,34 +39,34 @@ class StringType implements \PHPStan\Type\Type
     public function __construct()
     {
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return 'string';
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         return $offsetType->isInteger()->and(TrinaryLogic::createMaybe());
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         if ($this->hasOffsetValueType($offsetType)->no()) {
             return new \PHPStan\Type\ErrorType();
         }
         return new \PHPStan\Type\IntersectionType([new \PHPStan\Type\StringType(), new AccessoryNonEmptyStringType()]);
     }
-    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true) : \PHPStan\Type\Type
+    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true): \PHPStan\Type\Type
     {
         if ($offsetType === null) {
             return new \PHPStan\Type\ErrorType();
@@ -80,15 +80,15 @@ class StringType implements \PHPStan\Type\Type
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function unsetOffset(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function unsetOffset(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof self) {
             return \PHPStan\Type\AcceptsResult::createYes();
@@ -110,35 +110,35 @@ class StringType implements \PHPStan\Type\Type
         $typeClass = $reflectionProvider->getClass($thatClassNames[0]);
         return \PHPStan\Type\AcceptsResult::createFromBoolean($typeClass->hasNativeMethod('__toString'));
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\IntegerType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\FloatType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return new ConstantArrayType([new ConstantIntegerType(0)], [$this], [1], [], TrinaryLogic::createYes());
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         if (!$strictTypes) {
             if ($this->isNumericString()->no()) {
@@ -148,89 +148,89 @@ class StringType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         if ($type->isArray()->yes()) {
             return new ConstantBooleanType(\false);
         }
         return new \PHPStan\Type\BooleanType();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         if ($this->isClassString()->yes()) {
             return TrinaryLogic::createMaybe();
         }
         return TrinaryLogic::createNo();
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($typeToRemove instanceof ConstantStringType && $typeToRemove->getValue() === '') {
             return \PHPStan\Type\TypeCombinator::intersect($this, new AccessoryNonEmptyStringType());
@@ -240,15 +240,15 @@ class StringType implements \PHPStan\Type\Type
         }
         return null;
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return \PHPStan\Type\ExponentiateHelper::exponentiate($this, $exponent);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('string');
     }

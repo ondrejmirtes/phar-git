@@ -61,18 +61,18 @@ class ObjectShapeType implements \PHPStan\Type\Type
     /**
      * @return array<string, Type>
      */
-    public function getProperties() : array
+    public function getProperties(): array
     {
         return $this->properties;
     }
     /**
      * @return list<string>
      */
-    public function getOptionalProperties() : array
+    public function getOptionalProperties(): array
     {
         return $this->optionalProperties;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         $classes = [];
         foreach ($this->properties as $propertyType) {
@@ -82,15 +82,15 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return $classes;
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         if (!array_key_exists($propertyName, $this->properties)) {
             return TrinaryLogic::createNo();
@@ -100,11 +100,11 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return TrinaryLogic::createYes();
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         if (!array_key_exists($propertyName, $this->properties)) {
             throw new ShouldNotHappenException();
@@ -112,7 +112,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         $property = new \PHPStan\Type\ObjectShapePropertyReflection($propertyName, $this->properties[$propertyName]);
         return new CallbackUnresolvedPropertyPrototypeReflection($property, $property->getDeclaringClass(), \false, static fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $type);
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
@@ -166,7 +166,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return $result->and(new \PHPStan\Type\AcceptsResult($type->isObject(), []));
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isSubTypeOf($this);
@@ -218,7 +218,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return $result->and(new \PHPStan\Type\IsSuperTypeOfResult($type->isObject(), []));
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
@@ -245,7 +245,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return \true;
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($typeToRemove instanceof HasPropertyType) {
             $properties = $this->properties;
@@ -255,7 +255,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return null;
     }
-    public function makePropertyRequired(string $propertyName) : self
+    public function makePropertyRequired(string $propertyName): self
     {
         if (array_key_exists($propertyName, $this->properties)) {
             $optionalProperties = array_values(array_filter($this->optionalProperties, static fn(string $currentPropertyName) => $currentPropertyName !== $propertyName));
@@ -263,7 +263,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         if ($receivedType instanceof \PHPStan\Type\UnionType || $receivedType instanceof \PHPStan\Type\IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -293,7 +293,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return TemplateTypeMap::createEmpty();
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         $variance = $positionVariance->compose(TemplateTypeVariance::createCovariant());
         $references = [];
@@ -304,9 +304,9 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return $references;
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
-        $callback = function () use($level) : string {
+        $callback = function () use ($level): string {
             $items = [];
             foreach ($this->properties as $name => $propertyType) {
                 $optional = in_array($name, $this->optionalProperties, \true);
@@ -316,15 +316,15 @@ class ObjectShapeType implements \PHPStan\Type\Type
         };
         return $level->handle($callback, $callback);
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $properties = [];
         $stillOriginal = \true;
@@ -340,7 +340,7 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return new self($properties, $this->optionalProperties);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if (!$right->isObject()->yes()) {
             return $this;
@@ -363,18 +363,18 @@ class ObjectShapeType implements \PHPStan\Type\Type
         }
         return new self($properties, $this->optionalProperties);
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         if (!$exponent instanceof \PHPStan\Type\NeverType && !$this->isSuperTypeOf($exponent)->no()) {
             return \PHPStan\Type\TypeCombinator::union($this, $exponent);
         }
         return new \PHPStan\Type\BenevolentUnionType([new \PHPStan\Type\FloatType(), new \PHPStan\Type\IntegerType()]);
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         $items = [];
         foreach ($this->properties as $name => $type) {

@@ -20,22 +20,22 @@ final class PrintfHelper
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getPrintfPlaceholdersCount(string $format) : int
+    public function getPrintfPlaceholdersCount(string $format): int
     {
         return $this->getPlaceholdersCount('(?:[bs%s]|l?[cdeEgfFGouxX])', $format);
     }
-    public function getScanfPlaceholdersCount(string $format) : int
+    public function getScanfPlaceholdersCount(string $format): int
     {
-        return $this->getPlaceholdersCount('(?:[cdDeEfinosuxX%s]|\\[[^\\]]+\\])', $format);
+        return $this->getPlaceholdersCount('(?:[cdDeEfinosuxX%s]|\[[^\]]+\])', $format);
     }
-    private function getPlaceholdersCount(string $specifiersPattern, string $format) : int
+    private function getPlaceholdersCount(string $specifiersPattern, string $format): int
     {
         $addSpecifier = '';
         if ($this->phpVersion->supportsHhPrintfSpecifier()) {
             $addSpecifier .= 'hH';
         }
         $specifiers = sprintf($specifiersPattern, $addSpecifier);
-        $pattern = '~(?<before>%*)%(?:(?<position>\\d+)\\$)?[-+]?(?:[ 0]|(?:\'[^%]))?(?<width>\\*)?-?\\d*(?:\\.(?:\\d+|(?<precision>\\*))?)?' . $specifiers . '~';
+        $pattern = '~(?<before>%*)%(?:(?<position>\d+)\$)?[-+]?(?:[ 0]|(?:\'[^%]))?(?<width>\*)?-?\d*(?:\.(?:\d+|(?<precision>\*))?)?' . $specifiers . '~';
         $matches = Strings::matchAll($format, $pattern, PREG_SET_ORDER);
         if (count($matches) === 0) {
             return 0;

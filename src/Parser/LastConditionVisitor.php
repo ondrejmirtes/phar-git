@@ -12,7 +12,7 @@ final class LastConditionVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isLastCondition';
     public const ATTRIBUTE_IS_MATCH_NAME = 'isMatch';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\If_ && $node->elseifs !== []) {
             $lastElseIf = count($node->elseifs) - 1;

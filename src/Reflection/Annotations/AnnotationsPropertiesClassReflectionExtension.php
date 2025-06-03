@@ -13,7 +13,7 @@ final class AnnotationsPropertiesClassReflectionExtension implements PropertiesC
 {
     /** @var ExtendedPropertyReflection[][] */
     private array $properties = [];
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         if (!isset($this->properties[$classReflection->getCacheKey()][$propertyName])) {
             $property = $this->findClassReflectionWithProperty($classReflection, $classReflection, $propertyName);
@@ -24,11 +24,11 @@ final class AnnotationsPropertiesClassReflectionExtension implements PropertiesC
         }
         return isset($this->properties[$classReflection->getCacheKey()][$propertyName]);
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : ExtendedPropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): ExtendedPropertyReflection
     {
         return $this->properties[$classReflection->getCacheKey()][$propertyName];
     }
-    private function findClassReflectionWithProperty(ClassReflection $classReflection, ClassReflection $declaringClass, string $propertyName) : ?ExtendedPropertyReflection
+    private function findClassReflectionWithProperty(ClassReflection $classReflection, ClassReflection $declaringClass, string $propertyName): ?ExtendedPropertyReflection
     {
         $propertyTags = $classReflection->getPropertyTags();
         if (isset($propertyTags[$propertyName])) {

@@ -11,7 +11,7 @@ final class ReflectionProviderFactory
     {
         $this->staticReflectionProvider = $staticReflectionProvider;
     }
-    public function create() : ReflectionProvider
+    public function create(): ReflectionProvider
     {
         return new \PHPStan\Reflection\ReflectionProvider\MemoizingReflectionProvider($this->staticReflectionProvider);
     }

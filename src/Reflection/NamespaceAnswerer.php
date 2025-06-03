@@ -9,5 +9,5 @@ interface NamespaceAnswerer
     /**
      * @return non-empty-string|null
      */
-    public function getNamespace() : ?string;
+    public function getNamespace(): ?string;
 }

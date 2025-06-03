@@ -28,7 +28,7 @@ interface Collector
     /**
      * @return class-string<TNodeType>
      */
-    public function getNodeType() : string;
+    public function getNodeType(): string;
     /**
      * @param TNodeType $node
      * @return TValue|null Collected data

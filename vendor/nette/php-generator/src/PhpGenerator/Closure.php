@@ -20,11 +20,11 @@ final class Closure
     use Traits\AttributeAware;
     /** @var Parameter[] */
     private $uses = [];
-    public static function from(\Closure $closure) : self
+    public static function from(\Closure $closure): self
     {
         return (new Factory())->fromFunctionReflection(new \ReflectionFunction($closure));
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return (new Printer())->printClosure($this);
@@ -40,18 +40,18 @@ final class Closure
      * @param  Parameter[]  $uses
      * @return static
      */
-    public function setUses(array $uses) : self
+    public function setUses(array $uses): self
     {
         (function (Parameter ...$uses) {
         })(...$uses);
         $this->uses = $uses;
         return $this;
     }
-    public function getUses() : array
+    public function getUses(): array
     {
         return $this->uses;
     }
-    public function addUse(string $name) : Parameter
+    public function addUse(string $name): Parameter
     {
         return $this->uses[] = new Parameter($name);
     }

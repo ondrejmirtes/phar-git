@@ -23,7 +23,7 @@ final class ReplacingNodeVisitor extends NodeVisitorAbstract
         $this->originalNode = $originalNode;
         $this->newNodeCallable = $newNodeCallable;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         $origNode = $node->getAttribute('origNode');
         if ($origNode !== $this->originalNode) {
@@ -37,7 +37,7 @@ final class ReplacingNodeVisitor extends NodeVisitorAbstract
         }
         return $newNode;
     }
-    public function isFound() : bool
+    public function isFound(): bool
     {
         return $this->found;
     }

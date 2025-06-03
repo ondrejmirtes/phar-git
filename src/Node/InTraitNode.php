@@ -20,26 +20,26 @@ final class InTraitNode extends Node\Stmt implements \PHPStan\Node\VirtualNode
         $this->implementingClassReflection = $implementingClassReflection;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getOriginalNode() : Node\Stmt\Trait_
+    public function getOriginalNode(): Node\Stmt\Trait_
     {
         return $this->originalNode;
     }
-    public function getTraitReflection() : ClassReflection
+    public function getTraitReflection(): ClassReflection
     {
         return $this->traitReflection;
     }
-    public function getImplementingClassReflection() : ClassReflection
+    public function getImplementingClassReflection(): ClassReflection
     {
         return $this->implementingClassReflection;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Stmt_InTraitNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

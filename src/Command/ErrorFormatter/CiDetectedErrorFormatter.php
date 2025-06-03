@@ -19,7 +19,7 @@ final class CiDetectedErrorFormatter implements \PHPStan\Command\ErrorFormatter\
         $this->githubErrorFormatter = $githubErrorFormatter;
         $this->teamcityErrorFormatter = $teamcityErrorFormatter;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $ciDetector = new CiDetector();
         try {

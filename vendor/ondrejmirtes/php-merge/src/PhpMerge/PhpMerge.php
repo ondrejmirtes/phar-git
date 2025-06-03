@@ -47,7 +47,7 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
     /**
      * {@inheritdoc}
      */
-    public function merge(string $base, string $remote, string $local) : string
+    public function merge(string $base, string $remote, string $local): string
     {
         // Skip merging if there is nothing to do.
         if ($merged = AbstractMergeBase::simpleMerge($base, $remote, $local)) {
@@ -83,7 +83,7 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
      * @return string[]
      *   The merged text.
      */
-    protected static function mergeHunks(array $base, array $remote, array $local, array &$conflicts = []) : array
+    protected static function mergeHunks(array $base, array $remote, array $local, array &$conflicts = []): array
     {
         $remote = new \ArrayObject($remote);
         $local = new \ArrayObject($local);
@@ -137,11 +137,8 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
                 }
                 $i = $aa->getEnd();
                 $a->next();
-            } else {
-                // Not dealing with a change, so return the line from the base.
-                if ($i >= 0) {
-                    $merged[] = $base[$i]->getContent();
-                }
+            } else if ($i >= 0) {
+                $merged[] = $base[$i]->getContent();
             }
             // Finally, advance the index.
             $i++;

@@ -31,11 +31,11 @@ final class NonexistentOffsetInArrayDimFetchRule implements Rule
         $this->nonexistentOffsetInArrayDimFetchCheck = $nonexistentOffsetInArrayDimFetchCheck;
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ArrayDimFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->dim !== null) {
             $dimType = $scope->getType($node->dim);

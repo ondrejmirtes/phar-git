@@ -26,11 +26,11 @@ final class TemplateMixedType extends MixedType implements \PHPStan\Type\Generic
         $this->bound = $bound;
         $this->default = $default;
     }
-    public function isSuperTypeOfMixed(MixedType $type) : IsSuperTypeOfResult
+    public function isSuperTypeOfMixed(MixedType $type): IsSuperTypeOfResult
     {
         return $this->isSuperTypeOf($type);
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         $isSuperType = $this->isSuperTypeOf($acceptingType)->toAcceptsResult();
         if ($isSuperType->no()) {
@@ -38,7 +38,7 @@ final class TemplateMixedType extends MixedType implements \PHPStan\Type\Generic
         }
         return AcceptsResult::createYes();
     }
-    public function toStrictMixedType() : \PHPStan\Type\Generic\TemplateStrictMixedType
+    public function toStrictMixedType(): \PHPStan\Type\Generic\TemplateStrictMixedType
     {
         return new \PHPStan\Type\Generic\TemplateStrictMixedType($this->scope, $this->strategy, $this->variance, $this->name, new StrictMixedType(), $this->default);
     }

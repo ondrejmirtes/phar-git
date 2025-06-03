@@ -33,11 +33,11 @@ final class PropertyWrite
     {
         return $this->fetch;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }
-    public function isPromotedPropertyWrite() : bool
+    public function isPromotedPropertyWrite(): bool
     {
         return $this->promotedPropertyWrite;
     }

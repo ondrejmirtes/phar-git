@@ -32,11 +32,11 @@ final class ExistingNamesInGroupUseRule implements Rule
         $this->checkFunctionNameCase = $checkFunctionNameCase;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\GroupUse::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->uses as $use) {
@@ -59,7 +59,7 @@ final class ExistingNamesInGroupUseRule implements Rule
         }
         return $errors;
     }
-    private function checkConstant(Node\Name $name) : ?IdentifierRuleError
+    private function checkConstant(Node\Name $name): ?IdentifierRuleError
     {
         if (!$this->reflectionProvider->hasConstant($name, null)) {
             $errorBuilder = RuleErrorBuilder::message(sprintf('Used constant %s not found.', (string) $name))->line($name->getStartLine())->identifier('constant.notFound');
@@ -70,7 +70,7 @@ final class ExistingNamesInGroupUseRule implements Rule
         }
         return null;
     }
-    private function checkFunction(Node\Name $name) : ?IdentifierRuleError
+    private function checkFunction(Node\Name $name): ?IdentifierRuleError
     {
         if (!$this->reflectionProvider->hasFunction($name, null)) {
             $errorBuilder = RuleErrorBuilder::message(sprintf('Used function %s not found.', (string) $name))->line($name->getStartLine())->identifier('function.notFound');
@@ -89,7 +89,7 @@ final class ExistingNamesInGroupUseRule implements Rule
         }
         return null;
     }
-    private function checkClass(Scope $scope, Node\Name $name) : ?IdentifierRuleError
+    private function checkClass(Scope $scope, Node\Name $name): ?IdentifierRuleError
     {
         $errors = $this->classCheck->checkClassNames($scope, [new ClassNameNodePair((string) $name, $name)], null);
         if (count($errors) === 0) {

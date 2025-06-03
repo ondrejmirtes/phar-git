@@ -72,7 +72,7 @@ final class BetterReflection
      * @var Standard|null
      */
     private $printer = null;
-    public static function populate(int $phpVersion, SourceLocator $sourceLocator, Reflector $classReflector, Parser $phpParser, SourceStubber $sourceStubber, Standard $printer) : void
+    public static function populate(int $phpVersion, SourceLocator $sourceLocator, Reflector $classReflector, Parser $phpParser, SourceStubber $sourceStubber, Standard $printer): void
     {
         self::$phpVersion = $phpVersion;
         self::$sharedSourceLocator = $sourceLocator;
@@ -89,34 +89,34 @@ final class BetterReflection
         $this->sourceStubber = self::$sharedSourceStubber;
         $this->printer = self::$sharedPrinter;
     }
-    public function sourceLocator() : SourceLocator
+    public function sourceLocator(): SourceLocator
     {
         $astLocator = $this->astLocator();
         $sourceStubber = $this->sourceStubber();
-        return $this->sourceLocator ?? ($this->sourceLocator = new MemoizingSourceLocator(new AggregateSourceLocator([new PhpInternalSourceLocator($astLocator, $sourceStubber), new EvaledCodeSourceLocator($astLocator, $sourceStubber), new AutoloadSourceLocator($astLocator, $this->phpParser())])));
+        return $this->sourceLocator ?? $this->sourceLocator = new MemoizingSourceLocator(new AggregateSourceLocator([new PhpInternalSourceLocator($astLocator, $sourceStubber), new EvaledCodeSourceLocator($astLocator, $sourceStubber), new AutoloadSourceLocator($astLocator, $this->phpParser())]));
     }
-    public function reflector() : Reflector
+    public function reflector(): Reflector
     {
-        return $this->reflector ?? ($this->reflector = new DefaultReflector($this->sourceLocator()));
+        return $this->reflector ?? $this->reflector = new DefaultReflector($this->sourceLocator());
     }
-    public function phpParser() : Parser
+    public function phpParser(): Parser
     {
-        return $this->phpParser ?? ($this->phpParser = (new ParserFactory())->createForNewestSupportedVersion());
+        return $this->phpParser ?? $this->phpParser = (new ParserFactory())->createForNewestSupportedVersion();
     }
-    public function astLocator() : AstLocator
+    public function astLocator(): AstLocator
     {
-        return $this->astLocator ?? ($this->astLocator = new AstLocator($this->phpParser()));
+        return $this->astLocator ?? $this->astLocator = new AstLocator($this->phpParser());
     }
-    public function findReflectionsOnLine() : FindReflectionOnLine
+    public function findReflectionsOnLine(): FindReflectionOnLine
     {
-        return $this->findReflectionOnLine ?? ($this->findReflectionOnLine = new FindReflectionOnLine($this->sourceLocator(), $this->astLocator()));
+        return $this->findReflectionOnLine ?? $this->findReflectionOnLine = new FindReflectionOnLine($this->sourceLocator(), $this->astLocator());
     }
-    public function sourceStubber() : SourceStubber
+    public function sourceStubber(): SourceStubber
     {
-        return $this->sourceStubber ?? ($this->sourceStubber = new AggregateSourceStubber(new PhpStormStubsSourceStubber($this->phpParser(), $this->printer(), self::$phpVersion), new ReflectionSourceStubber($this->printer())));
+        return $this->sourceStubber ?? $this->sourceStubber = new AggregateSourceStubber(new PhpStormStubsSourceStubber($this->phpParser(), $this->printer(), self::$phpVersion), new ReflectionSourceStubber($this->printer()));
     }
-    public function printer() : Standard
+    public function printer(): Standard
     {
-        return $this->printer ?? ($this->printer = new Standard(['shortArraySyntax' => \true]));
+        return $this->printer ?? $this->printer = new Standard(['shortArraySyntax' => \true]);
     }
 }

@@ -29,11 +29,11 @@ final class ImpossibleInstanceOfRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Instanceof_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $instanceofType = $this->treatPhpDocTypesAsCertain ? $scope->getType($node) : $scope->getNativeType($node);
         if (!$instanceofType instanceof ConstantBooleanType) {
@@ -49,7 +49,7 @@ final class ImpossibleInstanceOfRule implements Rule
                 return [RuleErrorBuilder::message(sprintf('Instanceof between %s and %s results in an error.', $scope->getType($node->expr)->describe(VerbosityLevel::typeOnly()), $classType->describe(VerbosityLevel::typeOnly())))->identifier('instanceof.invalidExprType')->build()];
             }
         }
-        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
             if (!$this->treatPhpDocTypesAsCertain) {
                 return $ruleErrorBuilder;
             }

@@ -28,11 +28,11 @@ final class BooleanOrConstantConditionRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return BooleanOrNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $originalNode = $node->getOriginalNode();
         $nodeText = $originalNode->getOperatorSigil();
@@ -40,7 +40,7 @@ final class BooleanOrConstantConditionRule implements Rule
         $leftType = $this->helper->getBooleanType($scope, $originalNode->left);
         $identifierType = $originalNode instanceof Node\Expr\BinaryOp\BooleanOr ? 'booleanOr' : 'logicalOr';
         if ($leftType instanceof ConstantBooleanType) {
-            $addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $originalNode) : RuleErrorBuilder {
+            $addTipLeft = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $originalNode): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }
@@ -65,7 +65,7 @@ final class BooleanOrConstantConditionRule implements Rule
         $rightScope = $node->getRightScope();
         $rightType = $this->helper->getBooleanType($rightScope, $originalNode->right);
         if ($rightType instanceof ConstantBooleanType && !$scope->isInFirstLevelStatement()) {
-            $addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use($rightScope, $originalNode) : RuleErrorBuilder {
+            $addTipRight = function (RuleErrorBuilder $ruleErrorBuilder) use ($rightScope, $originalNode): RuleErrorBuilder {
                 if (!$this->treatPhpDocTypesAsCertain) {
                     return $ruleErrorBuilder;
                 }
@@ -90,7 +90,7 @@ final class BooleanOrConstantConditionRule implements Rule
         if (count($messages) === 0 && !$scope->isInFirstLevelStatement()) {
             $nodeType = $this->treatPhpDocTypesAsCertain ? $scope->getType($originalNode) : $scope->getNativeType($originalNode);
             if ($nodeType instanceof ConstantBooleanType) {
-                $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $originalNode) : RuleErrorBuilder {
+                $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $originalNode): RuleErrorBuilder {
                     if (!$this->treatPhpDocTypesAsCertain) {
                         return $ruleErrorBuilder;
                     }

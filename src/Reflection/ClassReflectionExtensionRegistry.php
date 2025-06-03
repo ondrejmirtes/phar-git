@@ -37,29 +37,29 @@ final class ClassReflectionExtensionRegistry
     /**
      * @return PropertiesClassReflectionExtension[]
      */
-    public function getPropertiesClassReflectionExtensions() : array
+    public function getPropertiesClassReflectionExtensions(): array
     {
         return $this->propertiesClassReflectionExtensions;
     }
     /**
      * @return MethodsClassReflectionExtension[]
      */
-    public function getMethodsClassReflectionExtensions() : array
+    public function getMethodsClassReflectionExtensions(): array
     {
         return $this->methodsClassReflectionExtensions;
     }
     /**
      * @return AllowedSubTypesClassReflectionExtension[]
      */
-    public function getAllowedSubTypesClassReflectionExtensions() : array
+    public function getAllowedSubTypesClassReflectionExtensions(): array
     {
         return $this->allowedSubTypesClassReflectionExtensions;
     }
-    public function getRequireExtendsPropertyClassReflectionExtension() : RequireExtendsPropertiesClassReflectionExtension
+    public function getRequireExtendsPropertyClassReflectionExtension(): RequireExtendsPropertiesClassReflectionExtension
     {
         return $this->requireExtendsPropertiesClassReflectionExtension;
     }
-    public function getRequireExtendsMethodsClassReflectionExtension() : RequireExtendsMethodsClassReflectionExtension
+    public function getRequireExtendsMethodsClassReflectionExtension(): RequireExtendsMethodsClassReflectionExtension
     {
         return $this->requireExtendsMethodsClassReflectionExtension;
     }

@@ -25,11 +25,11 @@ final class InvalidKeyInArrayDimFetchRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ArrayDimFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->dim === null) {
             return [];

@@ -34,7 +34,7 @@ final class Patcher
      * @throws FileChangedException
      * @throws MergeConflictException
      */
-    public function applyDiffs(string $fileName, array $diffs) : string
+    public function applyDiffs(string $fileName, array $diffs): string
     {
         $fileContents = FileReader::read($fileName);
         $fileHash = sha1($fileContents);
@@ -67,7 +67,7 @@ final class Patcher
     /**
      * @return array<array{mixed, Differ::OLD|Differ::ADDED|Differ::REMOVED}>
      */
-    private function reconstructFullDiff(string $originalText, string $unifiedDiff) : array
+    private function reconstructFullDiff(string $originalText, string $unifiedDiff): array
     {
         $originalLines = self::splitStringByLines($originalText);
         $diffLines = self::splitStringByLines($unifiedDiff);
@@ -76,7 +76,7 @@ final class Patcher
         $diffPos = 0;
         while ($diffPos < count($diffLines)) {
             $line = $diffLines[$diffPos];
-            $matches = Strings::match($line, '/^@@ -(\\d+),?(\\d*) \\+(\\d+),?(\\d*) @@/');
+            $matches = Strings::match($line, '/^@@ -(\d+),?(\d*) \+(\d+),?(\d*) @@/');
             if ($matches !== null) {
                 // Parse hunk header
                 $origStart = (int) $matches[1] - 1;
@@ -121,8 +121,8 @@ final class Patcher
     /**
      * @return string[]
      */
-    private static function splitStringByLines(string $input) : array
+    private static function splitStringByLines(string $input): array
     {
-        return Strings::split($input, '/(.*\\R)/', PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        return Strings::split($input, '/(.*\R)/', PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
     }
 }

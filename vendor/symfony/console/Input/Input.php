@@ -52,7 +52,7 @@ abstract class Input implements InputInterface, StreamableInputInterface
     /**
      * Processes command line arguments.
      */
-    protected abstract function parse();
+    abstract protected function parse();
     /**
      * {@inheritdoc}
      */
@@ -60,7 +60,7 @@ abstract class Input implements InputInterface, StreamableInputInterface
     {
         $definition = $this->definition;
         $givenArguments = $this->arguments;
-        $missingArguments = \array_filter(\array_keys($definition->getArguments()), function ($argument) use($definition, $givenArguments) {
+        $missingArguments = \array_filter(\array_keys($definition->getArguments()), function ($argument) use ($definition, $givenArguments) {
             return !\array_key_exists($argument, $givenArguments) && $definition->getArgument($argument)->isRequired();
         });
         if (\count($missingArguments) > 0) {
@@ -128,7 +128,7 @@ abstract class Input implements InputInterface, StreamableInputInterface
     public function getOption(string $name)
     {
         if ($this->definition->hasNegation($name)) {
-            if (null === ($value = $this->getOption($this->definition->negationToName($name)))) {
+            if (null === $value = $this->getOption($this->definition->negationToName($name))) {
                 return $value;
             }
             return !$value;
@@ -165,7 +165,7 @@ abstract class Input implements InputInterface, StreamableInputInterface
      */
     public function escapeToken(string $token)
     {
-        return \preg_match('{^[\\w-]+$}', $token) ? $token : \escapeshellarg($token);
+        return \preg_match('{^[\w-]+$}', $token) ? $token : \escapeshellarg($token);
     }
     /**
      * {@inheritdoc}

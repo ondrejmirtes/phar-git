@@ -28,15 +28,15 @@ final class FetchedNode
     /**
      * @return T
      */
-    public function getNode() : Node
+    public function getNode(): Node
     {
         return $this->node;
     }
-    public function getNamespace() : ?Node\Stmt\Namespace_
+    public function getNamespace(): ?Node\Stmt\Namespace_
     {
         return $this->namespace;
     }
-    public function getLocatedSource() : LocatedSource
+    public function getLocatedSource(): LocatedSource
     {
         return $this->locatedSource;
     }

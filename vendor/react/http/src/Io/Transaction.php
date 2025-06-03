@@ -58,7 +58,7 @@ class Transaction
     public function send(RequestInterface $request)
     {
         $state = new ClientRequestState();
-        $deferred = new Deferred(function () use($state) {
+        $deferred = new Deferred(function () use ($state) {
             if ($state->pending !== null) {
                 $state->pending->cancel();
                 $state->pending = null;
@@ -67,14 +67,14 @@ class Transaction
         // use timeout from options or default to PHP's default_socket_timeout (60)
         $timeout = (float) ($this->timeout !== null ? $this->timeout : \ini_get("default_socket_timeout"));
         $loop = $this->loop;
-        $this->next($request, $deferred, $state)->then(function (ResponseInterface $response) use($state, $deferred, $loop, &$timeout) {
+        $this->next($request, $deferred, $state)->then(function (ResponseInterface $response) use ($state, $deferred, $loop, &$timeout) {
             if ($state->timeout !== null) {
                 $loop->cancelTimer($state->timeout);
                 $state->timeout = null;
             }
             $timeout = -1;
             $deferred->resolve($response);
-        }, function ($e) use($state, $deferred, $loop, &$timeout) {
+        }, function ($e) use ($state, $deferred, $loop, &$timeout) {
             if ($state->timeout !== null) {
                 $loop->cancelTimer($state->timeout);
                 $state->timeout = null;
@@ -88,7 +88,7 @@ class Transaction
         $body = $request->getBody();
         if ($body instanceof ReadableStreamInterface && $body->isReadable()) {
             $that = $this;
-            $body->on('close', function () use($that, $deferred, $state, &$timeout) {
+            $body->on('close', function () use ($that, $deferred, $state, &$timeout) {
                 if ($timeout >= 0) {
                     $that->applyTimeout($deferred, $state, $timeout);
                 }
@@ -105,7 +105,7 @@ class Transaction
      */
     public function applyTimeout(Deferred $deferred, ClientRequestState $state, $timeout)
     {
-        $state->timeout = $this->loop->addTimer($timeout, function () use($timeout, $deferred, $state) {
+        $state->timeout = $this->loop->addTimer($timeout, function () use ($timeout, $deferred, $state) {
             $deferred->reject(new \RuntimeException('Request timed out after ' . $timeout . ' seconds'));
             if ($state->pending !== null) {
                 $state->pending->cancel();
@@ -120,12 +120,12 @@ class Transaction
         ++$state->numRequests;
         $promise = $this->sender->send($request);
         if (!$this->streaming) {
-            $promise = $promise->then(function ($response) use($deferred, $state, $that) {
+            $promise = $promise->then(function ($response) use ($deferred, $state, $that) {
                 return $that->bufferResponse($response, $deferred, $state);
             });
         }
         $state->pending = $promise;
-        return $promise->then(function (ResponseInterface $response) use($request, $that, $deferred, $state) {
+        return $promise->then(function (ResponseInterface $response) use ($request, $that, $deferred, $state) {
             return $that->onResponse($response, $request, $deferred, $state);
         });
     }
@@ -148,14 +148,14 @@ class Transaction
         /** @var ?\Closure $closer */
         $closer = null;
         $maximumSize = $this->maximumSize;
-        return $state->pending = new Promise(function ($resolve, $reject) use($body, $maximumSize, $response, &$closer) {
+        return $state->pending = new Promise(function ($resolve, $reject) use ($body, $maximumSize, $response, &$closer) {
             // resolve with current buffer when stream closes successfully
             $buffer = '';
-            $body->on('close', $closer = function () use(&$buffer, $response, $maximumSize, $resolve, $reject) {
+            $body->on('close', $closer = function () use (&$buffer, $response, $maximumSize, $resolve, $reject) {
                 $resolve($response->withBody(new BufferedBody($buffer)));
             });
             // buffer response body data in memory
-            $body->on('data', function ($data) use(&$buffer, $maximumSize, $body, $closer, $reject) {
+            $body->on('data', function ($data) use (&$buffer, $maximumSize, $body, $closer, $reject) {
                 $buffer .= $data;
                 // close stream and reject promise if limit is exceeded
                 if (isset($buffer[$maximumSize])) {
@@ -167,10 +167,10 @@ class Transaction
                 }
             });
             // reject buffering if body emits error
-            $body->on('error', function (\Exception $e) use($reject) {
+            $body->on('error', function (\Exception $e) use ($reject) {
                 $reject(new \RuntimeException('Error while buffering response body: ' . $e->getMessage(), $e->getCode(), $e));
             });
-        }, function () use($body, &$closer) {
+        }, function () use ($body, &$closer) {
             // cancelled buffering: remove close handler to avoid resolving, then close and reject
             \assert($closer instanceof \Closure);
             $body->removeListener('close', $closer);

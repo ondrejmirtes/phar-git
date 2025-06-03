@@ -24,18 +24,18 @@ final class UnionTypeUnresolvedMethodPrototypeReflection implements \PHPStan\Ref
         $this->methodName = $methodName;
         $this->methodPrototypes = $methodPrototypes;
     }
-    public function doNotResolveTemplateTypeMapToBounds() : \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
+    public function doNotResolveTemplateTypeMapToBounds(): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
     {
         if ($this->cachedDoNotResolveTemplateTypeMapToBounds !== null) {
             return $this->cachedDoNotResolveTemplateTypeMapToBounds;
         }
         return $this->cachedDoNotResolveTemplateTypeMapToBounds = new self($this->methodName, array_map(static fn(\PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection $prototype): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection => $prototype->doNotResolveTemplateTypeMapToBounds(), $this->methodPrototypes));
     }
-    public function getNakedMethod() : ExtendedMethodReflection
+    public function getNakedMethod(): ExtendedMethodReflection
     {
         return $this->getTransformedMethod();
     }
-    public function getTransformedMethod() : ExtendedMethodReflection
+    public function getTransformedMethod(): ExtendedMethodReflection
     {
         if ($this->transformedMethod !== null) {
             return $this->transformedMethod;
@@ -43,7 +43,7 @@ final class UnionTypeUnresolvedMethodPrototypeReflection implements \PHPStan\Ref
         $methods = array_map(static fn(\PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection $prototype): MethodReflection => $prototype->getTransformedMethod(), $this->methodPrototypes);
         return $this->transformedMethod = new \PHPStan\Reflection\Type\UnionTypeMethodReflection($this->methodName, $methods);
     }
-    public function withCalledOnType(Type $type) : \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
+    public function withCalledOnType(Type $type): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
     {
         return new self($this->methodName, array_map(static fn(\PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection $prototype): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection => $prototype->withCalledOnType($type), $this->methodPrototypes));
     }

@@ -23,11 +23,11 @@ final class ExistingClassesInPropertyHookTypehintsRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InPropertyHookNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $hookReflection = $node->getHookReflection();
         if (!$hookReflection->isPropertyHook()) {

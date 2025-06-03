@@ -53,26 +53,26 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
     /**
      * @return TRule
      */
-    protected abstract function getRule() : Rule;
+    abstract protected function getRule(): Rule;
     /**
      * @return array<Collector<Node, mixed>>
      */
-    protected function getCollectors() : array
+    protected function getCollectors(): array
     {
         return [];
     }
     /**
      * @return ReadWritePropertiesExtension[]
      */
-    protected function getReadWritePropertiesExtensions() : array
+    protected function getReadWritePropertiesExtensions(): array
     {
         return [];
     }
-    protected function getTypeSpecifier() : TypeSpecifier
+    protected function getTypeSpecifier(): TypeSpecifier
     {
         return self::getContainer()->getService('typeSpecifier');
     }
-    private function getAnalyser(DirectRuleRegistry $ruleRegistry) : Analyser
+    private function getAnalyser(DirectRuleRegistry $ruleRegistry): Analyser
     {
         if ($this->analyser === null) {
             $collectorRegistry = new CollectorRegistry($this->getCollectors());
@@ -89,10 +89,10 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @param string[] $files
      * @param list<array{0: string, 1: int, 2?: string|null}> $expectedErrors
      */
-    public function analyse(array $files, array $expectedErrors) : void
+    public function analyse(array $files, array $expectedErrors): void
     {
         [$actualErrors, $delayedErrors] = $this->gatherAnalyserErrorsWithDelayedErrors($files);
-        $strictlyTypedSprintf = static function (int $line, string $message, ?string $tip) : string {
+        $strictlyTypedSprintf = static function (int $line, string $message, ?string $tip): string {
             $message = sprintf('%02d: %s', $line, $message);
             if ($tip !== null) {
                 $message .= "\n    💡 " . $tip;
@@ -100,7 +100,7 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
             return $message;
         };
         $expectedErrors = array_map(static fn(array $error): string => $strictlyTypedSprintf($error[1], $error[0], $error[2] ?? null), $expectedErrors);
-        $actualErrors = array_map(static function (Error $error) use($strictlyTypedSprintf) : string {
+        $actualErrors = array_map(static function (Error $error) use ($strictlyTypedSprintf): string {
             $line = $error->getLine();
             if ($line === null) {
                 return $strictlyTypedSprintf(-1, $error->getMessage(), $error->getTip());
@@ -123,7 +123,7 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
         }
         $this->assertSame($expectedErrorsString, $actualErrorsString);
     }
-    public function fix(string $file, string $expectedFile) : void
+    public function fix(string $file, string $expectedFile): void
     {
         [$errors] = $this->gatherAnalyserErrorsWithDelayedErrors([$file]);
         $diffs = [];
@@ -139,7 +139,7 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
         $fixedFileContents = FileReader::read($expectedFile);
         $this->assertSame($this->normalizeLineEndings($fixedFileContents), $this->normalizeLineEndings($newFileContents));
     }
-    private function normalizeLineEndings(string $string) : string
+    private function normalizeLineEndings(string $string): string
     {
         return str_replace("\r\n", "\n", $string);
     }
@@ -147,7 +147,7 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @param string[] $files
      * @return list<Error>
      */
-    public function gatherAnalyserErrors(array $files) : array
+    public function gatherAnalyserErrors(array $files): array
     {
         return $this->gatherAnalyserErrorsWithDelayedErrors($files)[0];
     }
@@ -155,7 +155,7 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @param string[] $files
      * @return array{list<Error>, list<IdentifierRuleError>}
      */
-    private function gatherAnalyserErrorsWithDelayedErrors(array $files) : array
+    private function gatherAnalyserErrorsWithDelayedErrors(array $files): array
     {
         $reflectionProvider = $this->createReflectionProvider();
         $classRule = new \PHPStan\Testing\DelayedRule(new \PHPStan\Testing\NonexistentAnalysedClassRule($reflectionProvider));
@@ -172,23 +172,23 @@ abstract class RuleTestCase extends \PHPStan\Testing\PHPStanTestCase
         $finalizer = new AnalyserResultFinalizer($ruleRegistry, new IgnoreErrorExtensionProvider(self::getContainer()), self::getContainer()->getByType(RuleErrorTransformer::class), $this->createScopeFactory($reflectionProvider, $this->getTypeSpecifier()), new LocalIgnoresProcessor(), \true);
         return [$finalizer->finalize($analyserResult, \false, \true)->getAnalyserResult()->getUnorderedErrors(), array_merge($classRule->getDelayedErrors(), $traitRule->getDelayedErrors())];
     }
-    protected function shouldPolluteScopeWithLoopInitialAssignments() : bool
+    protected function shouldPolluteScopeWithLoopInitialAssignments(): bool
     {
         return \true;
     }
-    protected function shouldPolluteScopeWithAlwaysIterableForeach() : bool
+    protected function shouldPolluteScopeWithAlwaysIterableForeach(): bool
     {
         return \true;
     }
-    protected function shouldFailOnPhpErrors() : bool
+    protected function shouldFailOnPhpErrors(): bool
     {
         return \true;
     }
-    protected function shouldNarrowMethodScopeFromConstructor() : bool
+    protected function shouldNarrowMethodScopeFromConstructor(): bool
     {
         return \false;
     }
-    public static function getAdditionalConfigFiles() : array
+    public static function getAdditionalConfigFiles(): array
     {
         return [__DIR__ . '/../../conf/bleedingEdge.neon'];
     }

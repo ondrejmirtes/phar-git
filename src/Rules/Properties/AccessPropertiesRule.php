@@ -17,11 +17,11 @@ final class AccessPropertiesRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->check->check($node, $scope, \false);
     }

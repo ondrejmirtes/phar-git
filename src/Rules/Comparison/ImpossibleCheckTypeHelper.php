@@ -58,7 +58,7 @@ final class ImpossibleCheckTypeHelper
         $this->universalObjectCratesClasses = $universalObjectCratesClasses;
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
     }
-    public function findSpecifiedType(Scope $scope, Expr $node) : ?bool
+    public function findSpecifiedType(Scope $scope, Expr $node): ?bool
     {
         if ($node instanceof FuncCall) {
             if ($node->isFirstClassCallable()) {
@@ -179,7 +179,7 @@ final class ImpossibleCheckTypeHelper
                                 return \false;
                             }
                         }
-                        $genericType = TypeTraverser::map($objectType, static function (Type $type, callable $traverse) : Type {
+                        $genericType = TypeTraverser::map($objectType, static function (Type $type, callable $traverse): Type {
                             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                                 return $traverse($type);
                             }
@@ -258,7 +258,7 @@ final class ImpossibleCheckTypeHelper
         $result = TrinaryLogic::createYes()->and(...$results);
         return $result->maybe() ? null : $result->yes();
     }
-    private static function isSpecified(Scope $scope, Expr $node, Expr $expr) : bool
+    private static function isSpecified(Scope $scope, Expr $node, Expr $expr): bool
     {
         if ($expr === $node) {
             return \true;
@@ -277,7 +277,7 @@ final class ImpossibleCheckTypeHelper
     /**
      * @param Node\Arg[] $args
      */
-    public function getArgumentsDescription(Scope $scope, array $args) : string
+    public function getArgumentsDescription(Scope $scope, array $args): string
     {
         if (count($args) === 0) {
             return '';
@@ -289,14 +289,14 @@ final class ImpossibleCheckTypeHelper
         $lastDescription = array_pop($descriptions);
         return sprintf(' with arguments %s and %s', implode(', ', $descriptions), $lastDescription);
     }
-    public function doNotTreatPhpDocTypesAsCertain() : self
+    public function doNotTreatPhpDocTypesAsCertain(): self
     {
         if (!$this->treatPhpDocTypesAsCertain) {
             return $this;
         }
         return new self($this->reflectionProvider, $this->typeSpecifier, $this->universalObjectCratesClasses, \false);
     }
-    private function determineContext(Scope $scope, Expr $node) : TypeSpecifierContext
+    private function determineContext(Scope $scope, Expr $node): TypeSpecifierContext
     {
         if ($node instanceof Expr\CallLike && $node->isFirstClassCallable()) {
             return TypeSpecifierContext::createTruthy();

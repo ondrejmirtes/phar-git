@@ -32,7 +32,7 @@ final class AttributesCheck
      * @param int-mask-of<Attribute::TARGET_*> $requiredTarget
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, array $attrGroups, int $requiredTarget, string $targetName) : array
+    public function check(Scope $scope, array $attrGroups, int $requiredTarget, string $targetName): array
     {
         $errors = [];
         $alreadyPresent = [];

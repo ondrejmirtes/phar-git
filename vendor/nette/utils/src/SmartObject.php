@@ -113,7 +113,7 @@ trait SmartObject
             throw new MemberAccessException("Cannot unset the property {$class}::\${$name}.");
         }
     }
-    public function __isset(string $name) : bool
+    public function __isset(string $name): bool
     {
         return isset(ObjectHelpers::getMagicProperties(static::class)[$name]);
     }

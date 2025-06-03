@@ -94,7 +94,7 @@ abstract class Llk
         $outRules = null;
         $outPragmas = null;
         $outExtra = null;
-        $escapeRuleName = function ($ruleName) use($parser) {
+        $escapeRuleName = function ($ruleName) use ($parser) {
             if (\true == $parser->getRule($ruleName)->isTransitional()) {
                 return $ruleName;
             }
@@ -145,7 +145,7 @@ abstract class Llk
                 $arguments['kept'] = $rule->isKept() ? 'true' : 'false';
             }
             // Default node ID.
-            if (null !== ($defaultNodeId = $rule->getDefaultId())) {
+            if (null !== $defaultNodeId = $rule->getDefaultId()) {
                 $defaultNodeOptions = $rule->getDefaultOptions();
                 if (!empty($defaultNodeOptions)) {
                     $defaultNodeId .= ':' . \implode('', $defaultNodeOptions);
@@ -153,7 +153,7 @@ abstract class Llk
                 $outExtra .= "\n" . '        $this->getRule(' . $arguments['name'] . ')->setDefaultId(' . '\'' . $defaultNodeId . '\'' . ');';
             }
             // PP representation.
-            if (null !== ($ppRepresentation = $rule->getPPRepresentation())) {
+            if (null !== $ppRepresentation = $rule->getPPRepresentation()) {
                 $outExtra .= "\n" . '        $this->getRule(' . $arguments['name'] . ')->setPPRepresentation(' . '\'' . \str_replace('\'', '\\\'', $ppRepresentation) . '\'' . ');';
             }
             $outRules .= "\n" . '                ' . $arguments['name'] . ' => new \\' . \get_class($rule) . '(' . \implode(', ', $arguments) . '),';
@@ -161,7 +161,7 @@ abstract class Llk
         foreach ($parser->getPragmas() as $pragmaName => $pragmaValue) {
             $outPragmas .= "\n" . '                \'' . $pragmaName . '\' => ' . (\is_bool($pragmaValue) ? \true === $pragmaValue ? 'true' : 'false' : (\is_int($pragmaValue) ? $pragmaValue : '\'' . $pragmaValue . '\'')) . ',';
         }
-        $out .= 'class ' . $className . ' extends \\Hoa\\Compiler\\Llk\\Parser' . "\n" . '{' . "\n" . '    public function __construct()' . "\n" . '    {' . "\n" . '        parent::__construct(' . "\n" . '            [' . "\n" . $outTokens . '            ],' . "\n" . '            [' . $outRules . "\n" . '            ],' . "\n" . '            [' . $outPragmas . "\n" . '            ]' . "\n" . '        );' . "\n" . $outExtra . "\n" . '    }' . "\n" . '}' . "\n";
+        $out .= 'class ' . $className . ' extends \Hoa\Compiler\Llk\Parser' . "\n" . '{' . "\n" . '    public function __construct()' . "\n" . '    {' . "\n" . '        parent::__construct(' . "\n" . '            [' . "\n" . $outTokens . '            ],' . "\n" . '            [' . $outRules . "\n" . '            ],' . "\n" . '            [' . $outPragmas . "\n" . '            ]' . "\n" . '        );' . "\n" . $outExtra . "\n" . '    }' . "\n" . '}' . "\n";
         return $out;
     }
     /**
@@ -187,7 +187,7 @@ abstract class Llk
                 continue;
             }
             if ('%' == $line[0]) {
-                if (0 !== \preg_match('#^%pragma\\h+([^\\h]+)\\h+(.*)$#u', $line, $matches)) {
+                if (0 !== \preg_match('#^%pragma\h+([^\h]+)\h+(.*)$#u', $line, $matches)) {
                     switch ($matches[2]) {
                         case 'true':
                             $pragmaValue = \true;
@@ -203,7 +203,7 @@ abstract class Llk
                             }
                     }
                     $pragmas[$matches[1]] = $pragmaValue;
-                } elseif (0 !== \preg_match('#^%skip\\h+(?:([^:]+):)?([^\\h]+)\\h+(.*)$#u', $line, $matches)) {
+                } elseif (0 !== \preg_match('#^%skip\h+(?:([^:]+):)?([^\h]+)\h+(.*)$#u', $line, $matches)) {
                     if (empty($matches[1])) {
                         $matches[1] = 'default';
                     }
@@ -215,7 +215,7 @@ abstract class Llk
                     } else {
                         $tokens[$matches[1]]['skip'] = '(?:' . $tokens[$matches[1]]['skip'] . '|' . $matches[3] . ')';
                     }
-                } elseif (0 !== \preg_match('#^%token\\h+(?:([^:]+):)?([^\\h]+)\\h+(.*?)(?:\\h+->\\h+(.*))?$#u', $line, $matches)) {
+                } elseif (0 !== \preg_match('#^%token\h+(?:([^:]+):)?([^\h]+)\h+(.*?)(?:\h+->\h+(.*))?$#u', $line, $matches)) {
                     if (empty($matches[1])) {
                         $matches[1] = 'default';
                     }
@@ -252,4 +252,4 @@ abstract class Llk
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Compiler\\Llk\\Llk');
+Consistency::flexEntity('Hoa\Compiler\Llk\Llk');

@@ -12,7 +12,7 @@ final class PhpDocLineHelper
      * - exact position is available only when bleedingEdge is enabled
      * - otherwise, it falls back to given node start line
      */
-    public static function detectLine(PhpParserNode $node, PhpDocNode $phpDocNode) : int
+    public static function detectLine(PhpParserNode $node, PhpDocNode $phpDocNode): int
     {
         $phpDocTagLine = $phpDocNode->getAttribute('startLine');
         $phpDoc = $node->getDocComment();

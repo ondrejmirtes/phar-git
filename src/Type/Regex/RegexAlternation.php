@@ -21,25 +21,25 @@ final class RegexAlternation
         $this->alternationId = $alternationId;
         $this->alternationsCount = $alternationsCount;
     }
-    public function getId() : int
+    public function getId(): int
     {
         return $this->alternationId;
     }
-    public function pushGroup(int $combinationIndex, \PHPStan\Type\Regex\RegexCapturingGroup $group) : void
+    public function pushGroup(int $combinationIndex, \PHPStan\Type\Regex\RegexCapturingGroup $group): void
     {
         if (!array_key_exists($combinationIndex, $this->groupCombinations)) {
             $this->groupCombinations[$combinationIndex] = [];
         }
         $this->groupCombinations[$combinationIndex][] = $group->getId();
     }
-    public function getAlternationsCount() : int
+    public function getAlternationsCount(): int
     {
         return $this->alternationsCount;
     }
     /**
      * @return array<int, list<int>>
      */
-    public function getGroupCombinations() : array
+    public function getGroupCombinations(): array
     {
         return $this->groupCombinations;
     }

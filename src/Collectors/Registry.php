@@ -26,7 +26,7 @@ final class Registry
      * @param class-string<TNodeType> $nodeType
      * @return array<Collector<TNodeType, mixed>>
      */
-    public function getCollectors(string $nodeType) : array
+    public function getCollectors(string $nodeType): array
     {
         if (!isset($this->cache[$nodeType])) {
             $parentNodeTypes = [$nodeType] + class_parents($nodeType) + class_implements($nodeType);

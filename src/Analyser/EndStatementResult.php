@@ -13,11 +13,11 @@ final class EndStatementResult
         $this->statement = $statement;
         $this->result = $result;
     }
-    public function getStatement() : Stmt
+    public function getStatement(): Stmt
     {
         return $this->statement;
     }
-    public function getResult() : \PHPStan\Analyser\StatementResult
+    public function getResult(): \PHPStan\Analyser\StatementResult
     {
         return $this->result;
     }

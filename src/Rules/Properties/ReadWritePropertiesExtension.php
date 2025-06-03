@@ -24,7 +24,7 @@ use PHPStan\Reflection\ExtendedPropertyReflection;
  */
 interface ReadWritePropertiesExtension
 {
-    public function isAlwaysRead(ExtendedPropertyReflection $property, string $propertyName) : bool;
-    public function isAlwaysWritten(ExtendedPropertyReflection $property, string $propertyName) : bool;
-    public function isInitialized(ExtendedPropertyReflection $property, string $propertyName) : bool;
+    public function isAlwaysRead(ExtendedPropertyReflection $property, string $propertyName): bool;
+    public function isAlwaysWritten(ExtendedPropertyReflection $property, string $propertyName): bool;
+    public function isInitialized(ExtendedPropertyReflection $property, string $propertyName): bool;
 }

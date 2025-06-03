@@ -14,11 +14,11 @@ abstract class CallLike extends Expr
      *
      * @return array<Arg|VariadicPlaceholder>
      */
-    public abstract function getRawArgs() : array;
+    abstract public function getRawArgs(): array;
     /**
      * Returns whether this call expression is actually a first class callable.
      */
-    public function isFirstClassCallable() : bool
+    public function isFirstClassCallable(): bool
     {
         $rawArgs = $this->getRawArgs();
         return \count($rawArgs) === 1 && \current($rawArgs) instanceof VariadicPlaceholder;
@@ -28,7 +28,7 @@ abstract class CallLike extends Expr
      *
      * @return Arg[]
      */
-    public function getArgs() : array
+    public function getArgs(): array
     {
         \assert(!$this->isFirstClassCallable());
         return $this->getRawArgs();

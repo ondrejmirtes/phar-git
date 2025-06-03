@@ -45,11 +45,11 @@ final class ClassConstantRule implements Rule
         $this->classCheck = $classCheck;
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassConstFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         if ($node->name instanceof Node\Identifier) {
@@ -70,7 +70,7 @@ final class ClassConstantRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleClassConstFetch(Scope $scope, ClassConstFetch $node, string $constantName) : array
+    private function processSingleClassConstFetch(Scope $scope, ClassConstFetch $node, string $constantName): array
     {
         $class = $node->class;
         $messages = [];

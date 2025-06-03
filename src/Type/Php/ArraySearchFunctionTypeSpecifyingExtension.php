@@ -18,11 +18,11 @@ use function strtolower;
 final class ArraySearchFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return strtolower($functionReflection->getName()) === 'array_search' && $context->true();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $arrayArg = $node->getArgs()[1]->value ?? null;
         if ($arrayArg === null) {
@@ -30,7 +30,7 @@ final class ArraySearchFunctionTypeSpecifyingExtension implements FunctionTypeSp
         }
         return $this->typeSpecifier->create($arrayArg, new NonEmptyArrayType(), $context, $scope);
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

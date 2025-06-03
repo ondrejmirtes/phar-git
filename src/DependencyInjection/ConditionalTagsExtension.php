@@ -15,12 +15,12 @@ use function is_array;
 use function sprintf;
 final class ConditionalTagsExtension extends CompilerExtension
 {
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         $tags = array_values(\PHPStan\DependencyInjection\ValidateServiceTagsExtension::INTERFACE_TAG_MAPPING);
         return Expect::arrayOf(Expect::structure(array_fill_keys($tags, Expect::anyOf(Expect::bool(), Expect::listOf(Expect::bool()))))->min(1));
     }
-    public function beforeCompile() : void
+    public function beforeCompile(): void
     {
         /** @var mixed[] $config */
         $config = $this->config;

@@ -28,14 +28,14 @@ final class InvalidExcludePathsException extends Exception
     /**
      * @return string[]
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
     /**
      * @return array{analyse?: list<string>, analyseAndScan?: list<string>}
      */
-    public function getSuggestOptional() : array
+    public function getSuggestOptional(): array
     {
         return $this->suggestOptional;
     }

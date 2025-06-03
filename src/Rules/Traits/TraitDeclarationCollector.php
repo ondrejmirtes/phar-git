@@ -11,7 +11,7 @@ use PHPStan\Collectors\Collector;
  */
 final class TraitDeclarationCollector implements Collector
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Trait_::class;
     }

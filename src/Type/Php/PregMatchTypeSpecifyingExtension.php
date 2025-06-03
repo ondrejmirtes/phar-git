@@ -24,15 +24,15 @@ final class PregMatchTypeSpecifyingExtension implements FunctionTypeSpecifyingEx
     {
         $this->regexShapeMatcher = $regexShapeMatcher;
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return in_array(strtolower($functionReflection->getName()), ['preg_match', 'preg_match_all'], \true) && !$context->null();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $args = $node->getArgs();
         $patternArg = $args[0] ?? null;

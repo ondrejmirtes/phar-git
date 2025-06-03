@@ -97,7 +97,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
      * @return  \Hoa\Protocol\Protocol
      * @throws  \Hoa\Protocol\Exception
      */
-    public function offsetSet($name, $node) : void
+    public function offsetSet($name, $node): void
     {
         if (!$node instanceof self) {
             throw new Protocol\Exception('Protocol node must extend %s.', 0, __CLASS__);
@@ -132,7 +132,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
      * @param   string  $name    Node's name.
      * @return  bool
      */
-    public function offsetExists($name) : bool
+    public function offsetExists($name): bool
     {
         return \true === \array_key_exists($name, $this->_children);
     }
@@ -142,7 +142,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
      * @param   string  $name    Node's name to remove.
      * @return  void
      */
-    public function offsetUnset($name) : void
+    public function offsetUnset($name): void
     {
         unset($this->_children[$name]);
         return;
@@ -211,7 +211,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
             return;
         }
         if (\false === \strpos($reach, RS)) {
-            if (\false !== ($pos = \strrpos($reach, "\r"))) {
+            if (\false !== $pos = \strrpos($reach, "\r")) {
                 $reach = \substr($reach, $pos + 1);
                 foreach ($accumulator as &$entry) {
                     $entry = null;
@@ -226,7 +226,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
         $ref = $accumulator;
         $accumulator = [];
         foreach ($choices as $choice) {
-            if (\false !== ($pos = \strrpos($choice, "\r"))) {
+            if (\false !== $pos = \strrpos($choice, "\r")) {
                 $choice = \substr($choice, $pos + 1);
                 foreach ($ref as $entry) {
                     $accumulator[] = $choice;
@@ -299,7 +299,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
      *
      * @return  \ArrayIterator
      */
-    public function getIterator() : \Traversable
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->_children);
     }
@@ -332,4 +332,4 @@ class Node implements \ArrayAccess, \IteratorAggregate
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Protocol\\Node\\Node');
+Consistency::flexEntity('Hoa\Protocol\Node\Node');

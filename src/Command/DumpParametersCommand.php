@@ -26,11 +26,11 @@ final class DumpParametersCommand extends Command
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
         parent::__construct();
     }
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName(self::NAME)->setDescription('Dumps all parameters')->setDefinition([new InputOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Path to project configuration file'), new InputOption(\PHPStan\Command\AnalyseCommand::OPTION_LEVEL, 'l', InputOption::VALUE_REQUIRED, 'Level of rule options - the higher the stricter'), new InputOption('autoload-file', 'a', InputOption::VALUE_REQUIRED, 'Project\'s additional autoload file path'), new InputOption('debug', null, InputOption::VALUE_NONE, 'Show debug information - which file is analysed, do not catch internal errors'), new InputOption('memory-limit', null, InputOption::VALUE_REQUIRED, 'Memory limit for clearing result cache'), new InputOption('json', null, InputOption::VALUE_NONE, 'Dump parameters as JSON instead of NEON')]);
     }
-    protected function initialize(InputInterface $input, OutputInterface $output) : void
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         if ((bool) $input->getOption('debug')) {
             $application = $this->getApplication();
@@ -41,7 +41,7 @@ final class DumpParametersCommand extends Command
             return;
         }
     }
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $memoryLimit = $input->getOption('memory-limit');
         $autoloadFile = $input->getOption('autoload-file');

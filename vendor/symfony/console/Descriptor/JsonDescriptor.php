@@ -89,15 +89,15 @@ class JsonDescriptor extends Descriptor
         $flags = $options['json_encoding'] ?? 0;
         $this->write(\json_encode($data, $flags));
     }
-    private function getInputArgumentData(InputArgument $argument) : array
+    private function getInputArgumentData(InputArgument $argument): array
     {
-        return ['name' => $argument->getName(), 'is_required' => $argument->isRequired(), 'is_array' => $argument->isArray(), 'description' => \preg_replace('/\\s*[\\r\\n]\\s*/', ' ', $argument->getDescription()), 'default' => \INF === $argument->getDefault() ? 'INF' : $argument->getDefault()];
+        return ['name' => $argument->getName(), 'is_required' => $argument->isRequired(), 'is_array' => $argument->isArray(), 'description' => \preg_replace('/\s*[\r\n]\s*/', ' ', $argument->getDescription()), 'default' => \INF === $argument->getDefault() ? 'INF' : $argument->getDefault()];
     }
-    private function getInputOptionData(InputOption $option, bool $negated = \false) : array
+    private function getInputOptionData(InputOption $option, bool $negated = \false): array
     {
-        return $negated ? ['name' => '--no-' . $option->getName(), 'shortcut' => '', 'accept_value' => \false, 'is_value_required' => \false, 'is_multiple' => \false, 'description' => 'Negate the "--' . $option->getName() . '" option', 'default' => \false] : ['name' => '--' . $option->getName(), 'shortcut' => $option->getShortcut() ? '-' . \str_replace('|', '|-', $option->getShortcut()) : '', 'accept_value' => $option->acceptValue(), 'is_value_required' => $option->isValueRequired(), 'is_multiple' => $option->isArray(), 'description' => \preg_replace('/\\s*[\\r\\n]\\s*/', ' ', $option->getDescription()), 'default' => \INF === $option->getDefault() ? 'INF' : $option->getDefault()];
+        return $negated ? ['name' => '--no-' . $option->getName(), 'shortcut' => '', 'accept_value' => \false, 'is_value_required' => \false, 'is_multiple' => \false, 'description' => 'Negate the "--' . $option->getName() . '" option', 'default' => \false] : ['name' => '--' . $option->getName(), 'shortcut' => $option->getShortcut() ? '-' . \str_replace('|', '|-', $option->getShortcut()) : '', 'accept_value' => $option->acceptValue(), 'is_value_required' => $option->isValueRequired(), 'is_multiple' => $option->isArray(), 'description' => \preg_replace('/\s*[\r\n]\s*/', ' ', $option->getDescription()), 'default' => \INF === $option->getDefault() ? 'INF' : $option->getDefault()];
     }
-    private function getInputDefinitionData(InputDefinition $definition) : array
+    private function getInputDefinitionData(InputDefinition $definition): array
     {
         $inputArguments = [];
         foreach ($definition->getArguments() as $name => $argument) {
@@ -112,7 +112,7 @@ class JsonDescriptor extends Descriptor
         }
         return ['arguments' => $inputArguments, 'options' => $inputOptions];
     }
-    private function getCommandData(Command $command, bool $short = \false) : array
+    private function getCommandData(Command $command, bool $short = \false): array
     {
         $data = ['name' => $command->getName(), 'description' => $command->getDescription()];
         if ($short) {

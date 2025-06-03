@@ -15,7 +15,7 @@ final class ProjectConfigHelper
      * @param array<mixed> $projectConfig
      * @return list<string>
      */
-    public static function getServiceClassNames(array $projectConfig) : array
+    public static function getServiceClassNames(array $projectConfig): array
     {
         $services = array_merge($projectConfig['services'] ?? [], $projectConfig['rules'] ?? []);
         $classes = [];
@@ -37,7 +37,7 @@ final class ProjectConfigHelper
      * @param mixed $definition
      * @return string[]
      */
-    private static function getClassesFromConfigDefinition($definition) : array
+    private static function getClassesFromConfigDefinition($definition): array
     {
         if (is_string($definition)) {
             return [$definition];

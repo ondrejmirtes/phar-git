@@ -470,7 +470,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getRealPath()
     {
-        if (\false === ($out = \realpath($this->getStreamName()))) {
+        if (\false === $out = \realpath($this->getStreamName())) {
             return $this->getStreamName();
         }
         return $out;

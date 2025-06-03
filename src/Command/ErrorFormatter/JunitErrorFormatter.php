@@ -17,7 +17,7 @@ final class JunitErrorFormatter implements \PHPStan\Command\ErrorFormatter\Error
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $totalFailuresCount = $analysisResult->getTotalErrorsCount();
         $totalTestsCount = $analysisResult->hasErrors() ? $totalFailuresCount : 1;
@@ -45,7 +45,7 @@ final class JunitErrorFormatter implements \PHPStan\Command\ErrorFormatter\Error
      *
      *
      */
-    private function createTestCase(string $reference, string $type, ?string $message = null) : string
+    private function createTestCase(string $reference, string $type, ?string $message = null): string
     {
         $result = sprintf('<testcase name="%s">', $this->escape($reference));
         if ($message !== null) {
@@ -58,7 +58,7 @@ final class JunitErrorFormatter implements \PHPStan\Command\ErrorFormatter\Error
      * Escapes values for using in XML
      *
      */
-    private function escape(string $string) : string
+    private function escape(string $string): string
     {
         return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
     }

@@ -26,5 +26,5 @@ interface ErrorFormatter
      *
      * @return int Error code.
      */
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int;
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int;
 }

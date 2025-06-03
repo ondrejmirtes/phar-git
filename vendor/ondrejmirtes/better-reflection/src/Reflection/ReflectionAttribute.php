@@ -40,37 +40,37 @@ class ReflectionAttribute
     }
     /** @internal
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass|\PHPStan\BetterReflection\Reflection\ReflectionMethod|\PHPStan\BetterReflection\Reflection\ReflectionFunction|\PHPStan\BetterReflection\Reflection\ReflectionClassConstant|\PHPStan\BetterReflection\Reflection\ReflectionEnumCase|\PHPStan\BetterReflection\Reflection\ReflectionProperty|\PHPStan\BetterReflection\Reflection\ReflectionParameter $owner */
-    public function withOwner($owner) : self
+    public function withOwner($owner): self
     {
         $clone = clone $this;
         $clone->owner = $owner;
         return $clone;
     }
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->reflector->reflectClass($this->getName());
     }
     /** @return array<int|string, Node\Expr> */
-    public function getArgumentsExpressions() : array
+    public function getArgumentsExpressions(): array
     {
         return $this->arguments;
     }
     /**
      * @return array<int|string, mixed>
      */
-    public function getArguments() : array
+    public function getArguments(): array
     {
         $compiler = new CompileNodeToValue();
         $context = new CompilerContext($this->reflector, $this->owner);
         return array_map(static fn(Node\Expr $value) => $compiler->__invoke($value, $context)->value, $this->arguments);
     }
     /** @return int-mask-of<Attribute::TARGET_*> */
-    public function getTarget() : int
+    public function getTarget(): int
     {
         switch (\true) {
             case $this->owner instanceof \PHPStan\BetterReflection\Reflection\ReflectionClass:
@@ -91,12 +91,12 @@ class ReflectionAttribute
                 throw new LogicException('unknown owner');
         }
     }
-    public function isRepeated() : bool
+    public function isRepeated(): bool
     {
         return $this->isRepeated;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionAttributeStringCast::toString($this);
     }

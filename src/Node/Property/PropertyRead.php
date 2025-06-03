@@ -31,7 +31,7 @@ final class PropertyRead
     {
         return $this->fetch;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }

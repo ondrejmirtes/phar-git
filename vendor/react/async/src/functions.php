@@ -58,13 +58,13 @@ function await(PromiseInterface $promise)
     $rejected = \false;
     /** @var bool $loopStarted */
     $loopStarted = \false;
-    $promise->then(function ($c) use(&$resolved, &$wait, &$loopStarted) {
+    $promise->then(function ($c) use (&$resolved, &$wait, &$loopStarted) {
         $resolved = $c;
         $wait = \false;
         if ($loopStarted) {
             Loop::stop();
         }
-    }, function ($error) use(&$exception, &$rejected, &$wait, &$loopStarted) {
+    }, function ($error) use (&$exception, &$rejected, &$wait, &$loopStarted) {
         $exception = $error;
         $rejected = \true;
         $wait = \false;
@@ -159,10 +159,10 @@ function await(PromiseInterface $promise)
  * @return void
  * @uses await()
  */
-function delay(float $seconds) : void
+function delay(float $seconds): void
 {
-    await(new Promise(function (callable $resolve) use($seconds) : void {
-        Loop::addTimer($seconds, function () use($resolve) : void {
+    await(new Promise(function (callable $resolve) use ($seconds): void {
+        Loop::addTimer($seconds, function () use ($resolve): void {
             $resolve(null);
         });
     }));
@@ -292,7 +292,7 @@ function delay(float $seconds) : void
  * @return PromiseInterface<T>
  * @since 3.0.0
  */
-function coroutine(callable $function, ...$args) : PromiseInterface
+function coroutine(callable $function, ...$args): PromiseInterface
 {
     try {
         $generator = $function(...$args);
@@ -303,7 +303,7 @@ function coroutine(callable $function, ...$args) : PromiseInterface
         return resolve($generator);
     }
     $promise = null;
-    $deferred = new Deferred(function () use(&$promise) {
+    $deferred = new Deferred(function () use (&$promise) {
         /** @var ?PromiseInterface<T> $promise */
         if ($promise instanceof PromiseInterface && \method_exists($promise, 'cancel')) {
             $promise->cancel();
@@ -311,7 +311,7 @@ function coroutine(callable $function, ...$args) : PromiseInterface
         $promise = null;
     });
     /** @var callable $next */
-    $next = function () use($deferred, $generator, &$next, &$promise) {
+    $next = function () use ($deferred, $generator, &$next, &$promise) {
         try {
             if (!$generator->valid()) {
                 $next = null;
@@ -331,13 +331,13 @@ function coroutine(callable $function, ...$args) : PromiseInterface
         }
         /** @var PromiseInterface<TYield> $promise */
         \assert($next instanceof \Closure);
-        $promise->then(function ($value) use($generator, $next) {
+        $promise->then(function ($value) use ($generator, $next) {
             $generator->send($value);
             $next();
-        }, function (\Throwable $reason) use($generator, $next) {
+        }, function (\Throwable $reason) use ($generator, $next) {
             $generator->throw($reason);
             $next();
-        })->then(null, function (\Throwable $reason) use($deferred, &$next) {
+        })->then(null, function (\Throwable $reason) use ($deferred, &$next) {
             $next = null;
             $deferred->reject($reason);
         });
@@ -350,11 +350,11 @@ function coroutine(callable $function, ...$args) : PromiseInterface
  * @param iterable<callable():(PromiseInterface<T>|T)> $tasks
  * @return PromiseInterface<array<T>>
  */
-function parallel(iterable $tasks) : PromiseInterface
+function parallel(iterable $tasks): PromiseInterface
 {
     /** @var array<int,PromiseInterface<T>> $pending */
     $pending = [];
-    $deferred = new Deferred(function () use(&$pending) {
+    $deferred = new Deferred(function () use (&$pending) {
         foreach ($pending as $promise) {
             if ($promise instanceof PromiseInterface && \method_exists($promise, 'cancel')) {
                 $promise->cancel();
@@ -364,7 +364,7 @@ function parallel(iterable $tasks) : PromiseInterface
     });
     $results = [];
     $continue = \true;
-    $taskErrback = function ($error) use(&$pending, $deferred, &$continue) {
+    $taskErrback = function ($error) use (&$pending, $deferred, &$continue) {
         $continue = \false;
         $deferred->reject($error);
         foreach ($pending as $promise) {
@@ -375,7 +375,7 @@ function parallel(iterable $tasks) : PromiseInterface
         $pending = [];
     };
     foreach ($tasks as $i => $task) {
-        $taskCallback = function ($result) use(&$results, &$pending, &$continue, $i, $deferred) {
+        $taskCallback = function ($result) use (&$results, &$pending, &$continue, $i, $deferred) {
             $results[$i] = $result;
             unset($pending[$i]);
             if (!$pending && !$continue) {
@@ -401,10 +401,10 @@ function parallel(iterable $tasks) : PromiseInterface
  * @param iterable<callable():(PromiseInterface<T>|T)> $tasks
  * @return PromiseInterface<array<T>>
  */
-function series(iterable $tasks) : PromiseInterface
+function series(iterable $tasks): PromiseInterface
 {
     $pending = null;
-    $deferred = new Deferred(function () use(&$pending) {
+    $deferred = new Deferred(function () use (&$pending) {
         /** @var ?PromiseInterface<T> $pending */
         if ($pending instanceof PromiseInterface && \method_exists($pending, 'cancel')) {
             $pending->cancel();
@@ -416,12 +416,12 @@ function series(iterable $tasks) : PromiseInterface
         $tasks = $tasks->getIterator();
         \assert($tasks instanceof \Iterator);
     }
-    $taskCallback = function ($result) use(&$results, &$next) {
+    $taskCallback = function ($result) use (&$results, &$next) {
         $results[] = $result;
         /** @var \Closure $next */
         $next();
     };
-    $next = function () use(&$tasks, $taskCallback, $deferred, &$results, &$pending) {
+    $next = function () use (&$tasks, $taskCallback, $deferred, &$results, &$pending) {
         if ($tasks instanceof \Iterator ? !$tasks->valid() : !$tasks) {
             $deferred->resolve($results);
             return;
@@ -447,10 +447,10 @@ function series(iterable $tasks) : PromiseInterface
  * @param iterable<(callable():(PromiseInterface<T>|T))|(callable(mixed):(PromiseInterface<T>|T))> $tasks
  * @return PromiseInterface<($tasks is non-empty-array|\Traversable ? T : null)>
  */
-function waterfall(iterable $tasks) : PromiseInterface
+function waterfall(iterable $tasks): PromiseInterface
 {
     $pending = null;
-    $deferred = new Deferred(function () use(&$pending) {
+    $deferred = new Deferred(function () use (&$pending) {
         /** @var ?PromiseInterface<T> $pending */
         if ($pending instanceof PromiseInterface && \method_exists($pending, 'cancel')) {
             $pending->cancel();
@@ -462,7 +462,7 @@ function waterfall(iterable $tasks) : PromiseInterface
         \assert($tasks instanceof \Iterator);
     }
     /** @var callable $next */
-    $next = function ($value = null) use(&$tasks, &$next, $deferred, &$pending) {
+    $next = function ($value = null) use (&$tasks, &$next, $deferred, &$pending) {
         if ($tasks instanceof \Iterator ? !$tasks->valid() : !$tasks) {
             $deferred->resolve($value);
             return;

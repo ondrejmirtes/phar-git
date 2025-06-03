@@ -12,14 +12,14 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class NoncapturingCatchRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Catch_::class;
     }
     /**
      * @param Node\Stmt\Catch_ $node
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($scope->getPhpVersion()->supportsNoncapturingCatches()->yes()) {
             return [];

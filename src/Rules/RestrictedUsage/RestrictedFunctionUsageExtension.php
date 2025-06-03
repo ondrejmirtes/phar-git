@@ -28,5 +28,5 @@ use PHPStan\Reflection\FunctionReflection;
 interface RestrictedFunctionUsageExtension
 {
     public const FUNCTION_EXTENSION_TAG = 'phpstan.restrictedFunctionUsageExtension';
-    public function isRestrictedFunctionUsage(FunctionReflection $functionReflection, Scope $scope) : ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+    public function isRestrictedFunctionUsage(FunctionReflection $functionReflection, Scope $scope): ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
 }

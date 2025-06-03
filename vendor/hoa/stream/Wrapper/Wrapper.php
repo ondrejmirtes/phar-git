@@ -116,4 +116,4 @@ class Wrapper
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Stream\\Wrapper\\Wrapper');
+Consistency::flexEntity('Hoa\Stream\Wrapper\Wrapper');

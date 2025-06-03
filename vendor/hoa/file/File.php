@@ -162,7 +162,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
             throw new \Hoa\File\Exception('Directory %s does not exist. Could not open file %s.', 1, [\dirname($streamName), \basename($streamName)]);
         }
         if (null === $context) {
-            if (\false === ($out = @\fopen($streamName, $this->getMode(), \true))) {
+            if (\false === $out = @\fopen($streamName, $this->getMode(), \true)) {
                 throw new \Hoa\File\Exception('Failed to open stream %s.', 2, $streamName);
             }
             return $out;
@@ -295,4 +295,4 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\File\\File');
+Consistency::flexEntity('Hoa\File\File');

@@ -12,11 +12,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class ClassAsClassConstantRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->consts as $const) {

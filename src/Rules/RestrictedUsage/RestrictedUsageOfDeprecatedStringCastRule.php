@@ -24,11 +24,11 @@ final class RestrictedUsageOfDeprecatedStringCastRule implements Rule
         $this->container = $container;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Cast\String_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         /** @var RestrictedMethodUsageExtension[] $extensions */
         $extensions = $this->container->getServicesByTag(\PHPStan\Rules\RestrictedUsage\RestrictedMethodUsageExtension::METHOD_EXTENSION_TAG);

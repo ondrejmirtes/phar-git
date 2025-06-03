@@ -15,7 +15,7 @@ final class LazyReadWritePropertiesExtensionProvider implements \PHPStan\Rules\P
     {
         $this->container = $container;
     }
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         if ($this->extensions === null) {
             $this->extensions = $this->container->getServicesByTag(\PHPStan\Rules\Properties\ReadWritePropertiesExtensionProvider::EXTENSION_TAG);

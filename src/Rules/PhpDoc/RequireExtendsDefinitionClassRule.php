@@ -20,11 +20,11 @@ final class RequireExtendsDefinitionClassRule implements Rule
     {
         $this->requireExtendsCheck = $requireExtendsCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $extendsTags = $classReflection->getRequireExtendsTags();

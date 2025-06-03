@@ -43,7 +43,7 @@ final class DefaultExceptionTypeResolver implements \PHPStan\Rules\Exceptions\Ex
         $this->checkedExceptionRegexes = $checkedExceptionRegexes;
         $this->checkedExceptionClasses = $checkedExceptionClasses;
     }
-    public function isCheckedException(string $className, Scope $scope) : bool
+    public function isCheckedException(string $className, Scope $scope): bool
     {
         foreach ($this->uncheckedExceptionRegexes as $regex) {
             if (Strings::match($className, $regex) !== null) {
@@ -67,7 +67,7 @@ final class DefaultExceptionTypeResolver implements \PHPStan\Rules\Exceptions\Ex
         }
         return $this->isCheckedExceptionInternal($className);
     }
-    private function isCheckedExceptionInternal(string $className) : bool
+    private function isCheckedExceptionInternal(string $className): bool
     {
         foreach ($this->checkedExceptionRegexes as $regex) {
             if (Strings::match($className, $regex) !== null) {

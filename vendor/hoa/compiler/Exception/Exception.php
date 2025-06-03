@@ -51,4 +51,4 @@ class Exception extends HoaException
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Compiler\\Exception\\Exception');
+Consistency::flexEntity('Hoa\Compiler\Exception\Exception');

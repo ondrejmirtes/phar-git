@@ -28,21 +28,21 @@ class DirectoriesSourceLocator implements \PHPStan\BetterReflection\SourceLocato
      */
     public function __construct(array $directories, Locator $astLocator)
     {
-        $this->aggregateSourceLocator = new \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator(array_map(static function (string $directory) use($astLocator) : \PHPStan\BetterReflection\SourceLocator\Type\FileIteratorSourceLocator {
+        $this->aggregateSourceLocator = new \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator(array_map(static function (string $directory) use ($astLocator): \PHPStan\BetterReflection\SourceLocator\Type\FileIteratorSourceLocator {
             if (!is_dir($directory)) {
                 throw InvalidDirectory::fromNonDirectory($directory);
             }
             return new \PHPStan\BetterReflection\SourceLocator\Type\FileIteratorSourceLocator(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS)), $astLocator);
         }, $directories));
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         return $this->aggregateSourceLocator->locateIdentifier($reflector, $identifier);
     }
     /**
      * {@inheritDoc}
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return $this->aggregateSourceLocator->locateIdentifiersByType($reflector, $identifierType);
     }

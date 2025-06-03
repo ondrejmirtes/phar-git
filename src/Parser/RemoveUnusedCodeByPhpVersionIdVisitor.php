@@ -15,7 +15,7 @@ final class RemoveUnusedCodeByPhpVersionIdVisitor extends NodeVisitorAbstract
     {
         $this->phpVersionString = $phpVersionString;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt\If_) {
             return null;
@@ -55,7 +55,7 @@ final class RemoveUnusedCodeByPhpVersionIdVisitor extends NodeVisitorAbstract
     /**
      * @return array{string, string}|null
      */
-    private function getOperands(Node\Expr $left, Node\Expr $right) : ?array
+    private function getOperands(Node\Expr $left, Node\Expr $right): ?array
     {
         if ($left instanceof Node\Scalar\Int_ && $right instanceof Node\Expr\ConstFetch && $right->name->toString() === 'PHP_VERSION_ID') {
             return [(new PhpVersion($left->value))->getVersionString(), $this->phpVersionString];

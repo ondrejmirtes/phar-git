@@ -26,11 +26,11 @@ final class OffsetAccessValueAssignmentRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Assign && !$node instanceof AssignOp && !$node instanceof Expr\AssignRef) {
             return [];
@@ -48,7 +48,7 @@ final class OffsetAccessValueAssignmentRule implements Rule
         } else {
             $assignedValueType = $scope->getType($node);
         }
-        $arrayTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->var, '', static function (Type $varType) use($assignedValueType) : bool {
+        $arrayTypeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $arrayDimFetch->var, '', static function (Type $varType) use ($assignedValueType): bool {
             $result = $varType->setOffsetValueType(new MixedType(), $assignedValueType);
             return !$result instanceof ErrorType;
         });

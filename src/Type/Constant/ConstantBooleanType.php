@@ -30,94 +30,94 @@ class ConstantBooleanType extends BooleanType implements ConstantScalarType
         $this->value = $value;
         parent::__construct();
     }
-    public function getValue() : bool
+    public function getValue(): bool
     {
         return $this->value;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return $this->value ? 'true' : 'false';
     }
-    public function getSmallerType(PhpVersion $phpVersion) : Type
+    public function getSmallerType(PhpVersion $phpVersion): Type
     {
         if ($this->value) {
             return StaticTypeFactory::falsey();
         }
         return new NeverType();
     }
-    public function getSmallerOrEqualType(PhpVersion $phpVersion) : Type
+    public function getSmallerOrEqualType(PhpVersion $phpVersion): Type
     {
         if ($this->value) {
             return new MixedType();
         }
         return StaticTypeFactory::falsey();
     }
-    public function getGreaterType(PhpVersion $phpVersion) : Type
+    public function getGreaterType(PhpVersion $phpVersion): Type
     {
         if ($this->value) {
             return new NeverType();
         }
         return StaticTypeFactory::truthy();
     }
-    public function getGreaterOrEqualType(PhpVersion $phpVersion) : Type
+    public function getGreaterOrEqualType(PhpVersion $phpVersion): Type
     {
         if ($this->value) {
             return StaticTypeFactory::truthy();
         }
         return new MixedType();
     }
-    public function toBoolean() : BooleanType
+    public function toBoolean(): BooleanType
     {
         return $this;
     }
-    public function toNumber() : Type
+    public function toNumber(): Type
     {
         return new \PHPStan\Type\Constant\ConstantIntegerType((int) $this->value);
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return $this->toNumber()->toAbsoluteNumber();
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return new \PHPStan\Type\Constant\ConstantStringType((string) $this->value);
     }
-    public function toInteger() : Type
+    public function toInteger(): Type
     {
         return new \PHPStan\Type\Constant\ConstantIntegerType((int) $this->value);
     }
-    public function toFloat() : Type
+    public function toFloat(): Type
     {
         return new \PHPStan\Type\Constant\ConstantFloatType((float) $this->value);
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return new \PHPStan\Type\Constant\ConstantIntegerType((int) $this->value);
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         if (!$strictTypes) {
             return TypeCombinator::union($this->toInteger(), $this->toFloat(), $this->toString(), $this);
         }
         return $this;
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->value === \true);
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->value === \false);
     }
-    public function generalize(GeneralizePrecision $precision) : Type
+    public function generalize(GeneralizePrecision $precision): Type
     {
         return new BooleanType();
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode($this->value ? 'true' : 'false');
     }
-    public function looseCompare(Type $type, PhpVersion $phpVersion) : BooleanType
+    public function looseCompare(Type $type, PhpVersion $phpVersion): BooleanType
     {
         if ($type->isObject()->yes()) {
             return $this;

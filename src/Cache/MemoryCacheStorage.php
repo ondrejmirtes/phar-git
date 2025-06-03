@@ -25,7 +25,7 @@ final class MemoryCacheStorage implements \PHPStan\Cache\CacheStorage
     /**
      * @param mixed $data
      */
-    public function save(string $key, string $variableKey, $data) : void
+    public function save(string $key, string $variableKey, $data): void
     {
         $item = new \PHPStan\Cache\CacheItem($variableKey, $data);
         @var_export($item, \true);

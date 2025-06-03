@@ -42,7 +42,7 @@ class MemoizeAttributeCollector
      * @param array<class-string, string> $classMap
      *     Where _key_ is a class and _value_ its pathname.
      */
-    public function collectAttributes(array $classMap) : TransientCollection
+    public function collectAttributes(array $classMap): TransientCollection
     {
         $filterClasses = [];
         $classAttributeCollector = $this->classAttributeCollector;

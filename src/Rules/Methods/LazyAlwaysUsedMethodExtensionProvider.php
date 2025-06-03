@@ -15,7 +15,7 @@ final class LazyAlwaysUsedMethodExtensionProvider implements \PHPStan\Rules\Meth
     {
         $this->container = $container;
     }
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->extensions ??= $this->container->getServicesByTag(static::EXTENSION_TAG);
     }

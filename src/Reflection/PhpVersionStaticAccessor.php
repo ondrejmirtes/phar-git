@@ -11,11 +11,11 @@ final class PhpVersionStaticAccessor
     private function __construct()
     {
     }
-    public static function registerInstance(PhpVersion $phpVersion) : void
+    public static function registerInstance(PhpVersion $phpVersion): void
     {
         self::$instance = $phpVersion;
     }
-    public static function getInstance() : PhpVersion
+    public static function getInstance(): PhpVersion
     {
         if (self::$instance === null) {
             throw new ShouldNotHappenException();

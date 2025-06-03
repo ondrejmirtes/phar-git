@@ -65,7 +65,7 @@ class RobotLoader
     /**
      * Register autoloader.
      */
-    public function register(bool $prepend = \false) : self
+    public function register(bool $prepend = \false): self
     {
         \spl_autoload_register([$this, 'tryLoad'], \true, $prepend);
         return $this;
@@ -73,7 +73,7 @@ class RobotLoader
     /**
      * Handles autoloading of classes, interfaces or traits.
      */
-    public function tryLoad(string $type) : void
+    public function tryLoad(string $type): void
     {
         $this->loadCache();
         $missing = $this->missingClasses[$type] ?? null;
@@ -110,7 +110,7 @@ class RobotLoader
      * Add path or paths to list.
      * @param  string  ...$paths  absolute path
      */
-    public function addDirectory(...$paths) : self
+    public function addDirectory(...$paths): self
     {
         if (\is_array($paths[0] ?? null)) {
             \trigger_error(__METHOD__ . '() use variadics ...$paths to add an array of paths.', \E_USER_WARNING);
@@ -119,7 +119,7 @@ class RobotLoader
         $this->scanPaths = \array_merge($this->scanPaths, $paths);
         return $this;
     }
-    public function reportParseErrors(bool $on = \true) : self
+    public function reportParseErrors(bool $on = \true): self
     {
         $this->reportParseErrors = $on;
         return $this;
@@ -128,7 +128,7 @@ class RobotLoader
      * Excludes path or paths from list.
      * @param  string  ...$paths  absolute path
      */
-    public function excludeDirectory(...$paths) : self
+    public function excludeDirectory(...$paths): self
     {
         if (\is_array($paths[0] ?? null)) {
             \trigger_error(__METHOD__ . '() use variadics ...$paths to add an array of paths.', \E_USER_WARNING);
@@ -140,7 +140,7 @@ class RobotLoader
     /**
      * @return array<string, string>  class => filename
      */
-    public function getIndexedClasses() : array
+    public function getIndexedClasses(): array
     {
         $this->loadCache();
         $res = [];
@@ -152,7 +152,7 @@ class RobotLoader
     /**
      * Rebuilds class list cache.
      */
-    public function rebuild() : void
+    public function rebuild(): void
     {
         $this->cacheLoaded = \true;
         $this->classes = $this->missingClasses = $this->emptyFiles = [];
@@ -164,7 +164,7 @@ class RobotLoader
     /**
      * Refreshes class list cache.
      */
-    public function refresh() : void
+    public function refresh(): void
     {
         $this->loadCache();
         if (!$this->refreshed) {
@@ -175,7 +175,7 @@ class RobotLoader
     /**
      * Refreshes $this->classes & $this->emptyFiles.
      */
-    private function refreshClasses() : void
+    private function refreshClasses(): void
     {
         $this->refreshed = \true;
         // prevents calling refreshClasses() or updateFile() in tryLoad()
@@ -212,7 +212,7 @@ class RobotLoader
      * Creates an iterator scaning directory for PHP files, subdirectories and 'netterobots.txt' files.
      * @throws Nette\IOException if path is not found
      */
-    private function createFileIterator(string $dir) : Nette\Utils\Finder
+    private function createFileIterator(string $dir): Nette\Utils\Finder
     {
         if (!\is_dir($dir)) {
             throw new Nette\IOException("File or directory '{$dir}' not found.");
@@ -221,7 +221,7 @@ class RobotLoader
         // realpath does not work in phar
         if (\is_string($ignoreDirs = $this->ignoreDirs)) {
             \trigger_error(self::class . ': $ignoreDirs must be an array.', \E_USER_WARNING);
-            $ignoreDirs = \preg_split('#[,\\s]+#', $ignoreDirs);
+            $ignoreDirs = \preg_split('#[,\s]+#', $ignoreDirs);
         }
         $disallow = [];
         foreach (\array_merge($ignoreDirs, $this->excludeDirs) as $item) {
@@ -231,18 +231,18 @@ class RobotLoader
         }
         if (\is_string($acceptFiles = $this->acceptFiles)) {
             \trigger_error(self::class . ': $acceptFiles must be an array.', \E_USER_WARNING);
-            $acceptFiles = \preg_split('#[,\\s]+#', $acceptFiles);
+            $acceptFiles = \preg_split('#[,\s]+#', $acceptFiles);
         }
-        $iterator = Nette\Utils\Finder::findFiles($acceptFiles)->filter(function (SplFileInfo $file) use(&$disallow) {
+        $iterator = Nette\Utils\Finder::findFiles($acceptFiles)->filter(function (SplFileInfo $file) use (&$disallow) {
             return $file->getRealPath() === \false ? \true : !isset($disallow[\str_replace('\\', '/', $file->getRealPath())]);
-        })->from($dir)->exclude($ignoreDirs)->filter($filter = function (SplFileInfo $dir) use(&$disallow) {
+        })->from($dir)->exclude($ignoreDirs)->filter($filter = function (SplFileInfo $dir) use (&$disallow) {
             if ($dir->getRealPath() === \false) {
                 return \true;
             }
             $path = \str_replace('\\', '/', $dir->getRealPath());
             if (\is_file("{$path}/netterobots.txt")) {
                 foreach (\file("{$path}/netterobots.txt") as $s) {
-                    if (\preg_match('#^(?:disallow\\s*:)?\\s*(\\S+)#i', $s, $matches)) {
+                    if (\preg_match('#^(?:disallow\s*:)?\s*(\S+)#i', $s, $matches)) {
                         $disallow[$path . \rtrim('/' . \ltrim($matches[1], '/'), '/')] = \true;
                     }
                 }
@@ -252,7 +252,7 @@ class RobotLoader
         $filter(new SplFileInfo($dir));
         return $iterator;
     }
-    private function updateFile(string $file) : void
+    private function updateFile(string $file): void
     {
         foreach ($this->classes as $class => [$prevFile]) {
             if ($file === $prevFile) {
@@ -277,7 +277,7 @@ class RobotLoader
      * Searches classes, interfaces and traits in PHP file.
      * @return string[]
      */
-    private function scanPhp(string $file) : array
+    private function scanPhp(string $file): array
     {
         $code = \file_get_contents($file);
         $expected = \false;
@@ -342,7 +342,7 @@ class RobotLoader
     /**
      * Sets auto-refresh mode.
      */
-    public function setAutoRefresh(bool $on = \true) : self
+    public function setAutoRefresh(bool $on = \true): self
     {
         $this->autoRebuild = $on;
         return $this;
@@ -350,7 +350,7 @@ class RobotLoader
     /**
      * Sets path to temporary directory.
      */
-    public function setTempDirectory(string $dir) : self
+    public function setTempDirectory(string $dir): self
     {
         Nette\Utils\FileSystem::createDir($dir);
         $this->tempDirectory = $dir;
@@ -359,7 +359,7 @@ class RobotLoader
     /**
      * Loads class list from cache.
      */
-    private function loadCache() : void
+    private function loadCache(): void
     {
         if ($this->cacheLoaded) {
             return;
@@ -371,7 +371,7 @@ class RobotLoader
         // so on Linux we include the file directly without shared lock, therefore, the file must be created atomically by renaming.
         // 2) On Windows file cannot be renamed-to while is open (ie by include() #11), so we have to acquire a lock.
         $lock = \defined('PHP_WINDOWS_VERSION_BUILD') ? $this->acquireLock("{$file}.lock", \LOCK_SH) : null;
-        $data = @(include $file);
+        $data = @include $file;
         // @ file may not exist
         if (\is_array($data)) {
             [$this->classes, $this->missingClasses, $this->emptyFiles] = $data;
@@ -383,7 +383,7 @@ class RobotLoader
         }
         $lock = $this->acquireLock("{$file}.lock", \LOCK_EX);
         // while waiting for exclusive lock, someone might have already created the cache
-        $data = @(include $file);
+        $data = @include $file;
         // @ file may not exist
         if (\is_array($data)) {
             [$this->classes, $this->missingClasses, $this->emptyFiles] = $data;
@@ -399,7 +399,7 @@ class RobotLoader
      * Writes class list to cache.
      * @param  resource  $lock
      */
-    private function saveCache($lock = null) : void
+    private function saveCache($lock = null): void
     {
         // we have to acquire a lock to be able safely rename file
         // on Linux: that another thread does not rename the same named file earlier
@@ -430,14 +430,14 @@ class RobotLoader
         }
         return $handle;
     }
-    private function getCacheFile() : string
+    private function getCacheFile(): string
     {
         if (!$this->tempDirectory) {
             throw new \LogicException('Set path to temporary directory using setTempDirectory().');
         }
         return $this->tempDirectory . '/' . \md5(\serialize($this->getCacheKey())) . '.php';
     }
-    protected function getCacheKey() : array
+    protected function getCacheKey(): array
     {
         return [$this->ignoreDirs, $this->acceptFiles, $this->scanPaths, $this->excludeDirs, 'v2'];
     }

@@ -22,34 +22,34 @@ final class RuleError63 implements RuleError, LineRuleError, FileRuleError, TipR
     public string $identifier;
     /** @var mixed[] */
     public array $metadata;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

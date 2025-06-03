@@ -45,15 +45,15 @@ final class PhpParameterFromParserNodeReflection implements ExtendedParameterRef
         $this->closureThisType = $closureThisType;
         $this->attributes = $attributes;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         if ($this->type === null) {
             $phpDocType = $this->phpDocType;
@@ -69,43 +69,43 @@ final class PhpParameterFromParserNodeReflection implements ExtendedParameterRef
         }
         return $this->type;
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->phpDocType ?? new MixedType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return !$this->realType instanceof MixedType || $this->realType->isExplicitMixed();
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return $this->realType;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }
-    public function getOutType() : ?Type
+    public function getOutType(): ?Type
     {
         return $this->outType;
     }
-    public function isImmediatelyInvokedCallable() : TrinaryLogic
+    public function isImmediatelyInvokedCallable(): TrinaryLogic
     {
         return $this->immediatelyInvokedCallable;
     }
-    public function getClosureThisType() : ?Type
+    public function getClosureThisType(): ?Type
     {
         return $this->closureThisType;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

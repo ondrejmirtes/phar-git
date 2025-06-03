@@ -19,11 +19,11 @@ final class FunctionAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->attributesCheck->check($scope, $node->getOriginalNode()->attrGroups, Attribute::TARGET_FUNCTION, 'function');
     }

@@ -32,11 +32,11 @@ class ConstantIntegerType extends IntegerType implements ConstantScalarType
         $this->value = $value;
         parent::__construct();
     }
-    public function getValue() : int
+    public function getValue(): int
     {
         return $this->value;
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return $this->value === $type->value ? IsSuperTypeOfResult::createYes() : IsSuperTypeOfResult::createNo();
@@ -57,41 +57,41 @@ class ConstantIntegerType extends IntegerType implements ConstantScalarType
         }
         return IsSuperTypeOfResult::createNo();
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return $level->handle(static fn(): string => 'int', fn(): string => sprintf('%s', $this->value));
     }
-    public function toFloat() : Type
+    public function toFloat(): Type
     {
         return new \PHPStan\Type\Constant\ConstantFloatType($this->value);
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return new self(abs($this->value));
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return new \PHPStan\Type\Constant\ConstantStringType((string) $this->value);
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return $this;
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         if (!$strictTypes) {
             return TypeCombinator::union($this, $this->toFloat(), $this->toString(), $this->toBoolean());
         }
         return TypeCombinator::union($this, $this->toFloat());
     }
-    public function generalize(GeneralizePrecision $precision) : Type
+    public function generalize(GeneralizePrecision $precision): Type
     {
         return new IntegerType();
     }
     /**
      * @return ConstTypeNode
      */
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ConstTypeNode(new ConstExprIntegerNode((string) $this->value));
     }

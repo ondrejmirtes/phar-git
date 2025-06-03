@@ -17,11 +17,11 @@ use function strtolower;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ArrayReplaceFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return strtolower($functionReflection->getName()) === 'array_replace';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $arrayTypes = $this->collectArrayTypes($functionCall, $scope);
         if (count($arrayTypes) === 0) {
@@ -29,7 +29,7 @@ final class ArrayReplaceFunctionReturnTypeExtension implements DynamicFunctionRe
         }
         return $this->getResultType(...$arrayTypes);
     }
-    private function getResultType(Type ...$arrayTypes) : Type
+    private function getResultType(Type ...$arrayTypes): Type
     {
         $keyTypes = [];
         $valueTypes = [];
@@ -49,7 +49,7 @@ final class ArrayReplaceFunctionReturnTypeExtension implements DynamicFunctionRe
     /**
      * @return Type[]
      */
-    private function collectArrayTypes(FuncCall $functionCall, Scope $scope) : array
+    private function collectArrayTypes(FuncCall $functionCall, Scope $scope): array
     {
         $args = $functionCall->getArgs();
         $arrayTypes = [];

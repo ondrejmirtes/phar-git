@@ -140,7 +140,7 @@ abstract class Sampler implements Zformat\Parameterizable
      * @param   int  $upper    Upper bound value.
      * @return  int
      */
-    protected abstract function _getInteger($lower, $upper);
+    abstract protected function _getInteger($lower, $upper);
     /**
      * Generate a continuous uniform distribution.
      *
@@ -178,7 +178,7 @@ abstract class Sampler implements Zformat\Parameterizable
      * @param   float      $upper    Upper bound value.
      * @return  float
      */
-    protected abstract function _getFloat($lower, $upper);
+    abstract protected function _getFloat($lower, $upper);
     /**
      * Get an exclude set.
      *
@@ -192,4 +192,4 @@ abstract class Sampler implements Zformat\Parameterizable
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Math\\Sampler\\Sampler');
+Consistency::flexEntity('Hoa\Math\Sampler\Sampler');

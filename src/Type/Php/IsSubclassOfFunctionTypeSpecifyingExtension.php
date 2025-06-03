@@ -25,11 +25,11 @@ final class IsSubclassOfFunctionTypeSpecifyingExtension implements FunctionTypeS
     {
         $this->isAFunctionTypeSpecifyingHelper = $isAFunctionTypeSpecifyingHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return strtolower($functionReflection->getName()) === 'is_subclass_of' && !$context->null();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         if (!$context->true() || count($node->getArgs()) < 2) {
             return new SpecifiedTypes();
@@ -49,7 +49,7 @@ final class IsSubclassOfFunctionTypeSpecifyingExtension implements FunctionTypeS
         }
         return $this->typeSpecifier->create($node->getArgs()[0]->value, $resultType, $context, $scope);
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

@@ -43,7 +43,7 @@ final class ClosureSourceLocator implements \PHPStan\BetterReflection\SourceLoca
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         return $this->getReflectionFunction($reflector, $identifier->getType());
     }
@@ -52,11 +52,11 @@ final class ClosureSourceLocator implements \PHPStan\BetterReflection\SourceLoca
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return array_filter([$this->getReflectionFunction($reflector, $identifierType)]);
     }
-    private function getReflectionFunction(Reflector $reflector, IdentifierType $identifierType) : ?\PHPStan\BetterReflection\Reflection\ReflectionFunction
+    private function getReflectionFunction(Reflector $reflector, IdentifierType $identifierType): ?\PHPStan\BetterReflection\Reflection\ReflectionFunction
     {
         if (!$identifierType->isFunction()) {
             return null;
@@ -114,7 +114,7 @@ final class ClosureSourceLocator implements \PHPStan\BetterReflection\SourceLoca
              * @throws NoClosureOnLine
              * @throws TwoClosuresOnSameLine
              */
-            public function getClosureNodes() : array
+            public function getClosureNodes(): array
             {
                 if ($this->closureNodes === []) {
                     throw NoClosureOnLine::create($this->fileName, $this->startLine);

@@ -25,7 +25,7 @@ final class FunctionReturnTypeCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkReturnType(Scope $scope, Type $returnType, ?Expr $returnValue, Node $returnNode, string $emptyReturnStatementMessage, string $voidMessage, string $typeMismatchMessage, string $neverMessage, bool $isGenerator) : array
+    public function checkReturnType(Scope $scope, Type $returnType, ?Expr $returnValue, Node $returnNode, string $emptyReturnStatementMessage, string $voidMessage, string $typeMismatchMessage, string $neverMessage, bool $isGenerator): array
     {
         $returnType = TypeUtils::resolveLateResolvableTypes($returnType);
         if ($returnType instanceof NeverType && $returnType->isExplicit()) {

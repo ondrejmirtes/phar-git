@@ -37,7 +37,7 @@ final class FileDatastore implements Datastore
             mkdir($dir);
         }
     }
-    public function get(string $key) : array
+    public function get(string $key): array
     {
         $filename = $this->formatFilename($key);
         if (!file_exists($filename)) {
@@ -45,7 +45,7 @@ final class FileDatastore implements Datastore
         }
         return self::safeGet($filename);
     }
-    public function set(string $key, array $data) : void
+    public function set(string $key, array $data): void
     {
         $filename = $this->formatFilename($key);
         file_put_contents($filename, serialize($data));
@@ -53,14 +53,14 @@ final class FileDatastore implements Datastore
     /**
      * @return mixed[]
      */
-    private function safeGet(string $filename) : array
+    private function safeGet(string $filename): array
     {
         $str = file_get_contents($filename);
         if ($str === \false) {
             return [];
         }
         $errored = \false;
-        set_error_handler(function (int $errno, string $errstr) use(&$errored, $filename) : bool {
+        set_error_handler(function (int $errno, string $errstr) use (&$errored, $filename): bool {
             $errored = \true;
             $this->io->warning("Unable to unserialize cache item {$filename}: {$errstr}");
             return \true;
@@ -72,7 +72,7 @@ final class FileDatastore implements Datastore
         }
         return $ar;
     }
-    private function formatFilename(string $key) : string
+    private function formatFilename(string $key): string
     {
         $major = Plugin::VERSION_MAJOR;
         $minor = Plugin::VERSION_MINOR;

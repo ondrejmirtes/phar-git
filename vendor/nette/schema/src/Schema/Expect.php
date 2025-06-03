@@ -29,7 +29,7 @@ use _PHPStan_checksum\Nette\Schema\Elements\Type;
 final class Expect
 {
     use Nette\SmartObject;
-    public static function __callStatic(string $name, array $args) : Type
+    public static function __callStatic(string $name, array $args): Type
     {
         $type = new Type($name);
         if ($args) {
@@ -37,28 +37,28 @@ final class Expect
         }
         return $type;
     }
-    public static function type(string $type) : Type
+    public static function type(string $type): Type
     {
         return new Type($type);
     }
     /**
      * @param  mixed|Schema  ...$set
      */
-    public static function anyOf(...$set) : AnyOf
+    public static function anyOf(...$set): AnyOf
     {
         return new AnyOf(...$set);
     }
     /**
      * @param  Schema[]  $items
      */
-    public static function structure(array $items) : Structure
+    public static function structure(array $items): Structure
     {
         return new Structure($items);
     }
     /**
      * @param  object  $object
      */
-    public static function from($object, array $items = []) : Structure
+    public static function from($object, array $items = []): Structure
     {
         $ro = new \ReflectionObject($object);
         foreach ($ro->getProperties() as $prop) {
@@ -86,14 +86,14 @@ final class Expect
      * @param  string|Schema  $valueType
      * @param  string|Schema|null  $keyType
      */
-    public static function arrayOf($valueType, $keyType = null) : Type
+    public static function arrayOf($valueType, $keyType = null): Type
     {
         return (new Type('array'))->items($valueType, $keyType);
     }
     /**
      * @param  string|Schema  $type
      */
-    public static function listOf($type) : Type
+    public static function listOf($type): Type
     {
         return (new Type('list'))->items($type);
     }

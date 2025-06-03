@@ -15,11 +15,11 @@ use function sprintf;
  */
 final class CallPrivateMethodThroughStaticRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return StaticCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Identifier) {
             return [];

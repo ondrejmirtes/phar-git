@@ -34,7 +34,7 @@ final class DefaultStubFilesProvider implements \PHPStan\PhpDoc\StubFilesProvide
         $this->stubFiles = $stubFiles;
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
     }
-    public function getStubFiles() : array
+    public function getStubFiles(): array
     {
         if ($this->cachedFiles !== null) {
             return $this->cachedFiles;
@@ -48,7 +48,7 @@ final class DefaultStubFilesProvider implements \PHPStan\PhpDoc\StubFilesProvide
         }
         return $this->cachedFiles = $files;
     }
-    public function getProjectStubFiles() : array
+    public function getProjectStubFiles(): array
     {
         if ($this->cachedProjectFiles !== null) {
             return $this->cachedProjectFiles;

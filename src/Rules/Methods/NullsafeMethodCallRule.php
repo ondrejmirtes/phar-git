@@ -14,11 +14,11 @@ use function sprintf;
  */
 final class NullsafeMethodCallRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\NullsafeMethodCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $calledOnType = $scope->getType($node->var);
         if (!$calledOnType->isNull()->no()) {

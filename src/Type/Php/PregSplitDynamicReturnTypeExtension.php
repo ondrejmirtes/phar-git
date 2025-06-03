@@ -44,11 +44,11 @@ final class PregSplitDynamicReturnTypeExtension implements DynamicFunctionReturn
     {
         $this->bitwiseFlagAnalyser = $bitwiseFlagAnalyser;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return strtolower($functionReflection->getName()) === 'preg_split';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) < 2) {
@@ -162,11 +162,11 @@ final class PregSplitDynamicReturnTypeExtension implements DynamicFunctionReturn
      * @param ConstantStringType[] $patternConstantArray
      * @param ConstantStringType[] $subjectConstantArray
      */
-    private function isPatternOrSubjectEmpty(array $patternConstantArray, array $subjectConstantArray) : bool
+    private function isPatternOrSubjectEmpty(array $patternConstantArray, array $subjectConstantArray): bool
     {
         return count($patternConstantArray) === 0 || count($subjectConstantArray) === 0;
     }
-    private function isValidPattern(string $pattern) : bool
+    private function isValidPattern(string $pattern): bool
     {
         try {
             Strings::match('', $pattern);
@@ -175,7 +175,7 @@ final class PregSplitDynamicReturnTypeExtension implements DynamicFunctionReturn
         }
         return \true;
     }
-    private function isIntOrStringValue(Type $type) : bool
+    private function isIntOrStringValue(Type $type): bool
     {
         return (new UnionType([new IntegerType(), new StringType()]))->isSuperTypeOf($type)->yes();
     }

@@ -31,11 +31,11 @@ final class ExistingNamesInUseRule implements Rule
         $this->checkFunctionNameCase = $checkFunctionNameCase;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Use_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->type === Node\Stmt\Use_::TYPE_UNKNOWN) {
             throw new ShouldNotHappenException();
@@ -57,7 +57,7 @@ final class ExistingNamesInUseRule implements Rule
      * @param Node\UseItem[] $uses
      * @return list<IdentifierRuleError>
      */
-    private function checkConstants(array $uses) : array
+    private function checkConstants(array $uses): array
     {
         $errors = [];
         foreach ($uses as $use) {
@@ -76,7 +76,7 @@ final class ExistingNamesInUseRule implements Rule
      * @param Node\UseItem[] $uses
      * @return list<IdentifierRuleError>
      */
-    private function checkFunctions(array $uses) : array
+    private function checkFunctions(array $uses): array
     {
         $errors = [];
         foreach ($uses as $use) {
@@ -101,7 +101,7 @@ final class ExistingNamesInUseRule implements Rule
      * @param Node\UseItem[] $uses
      * @return list<IdentifierRuleError>
      */
-    private function checkClasses(Scope $scope, array $uses) : array
+    private function checkClasses(Scope $scope, array $uses): array
     {
         return $this->classCheck->checkClassNames($scope, array_map(static fn(Node\UseItem $use): ClassNameNodePair => new ClassNameNodePair((string) $use->name, $use->name), $uses), null);
     }

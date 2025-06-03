@@ -37,7 +37,7 @@ final class ConstExprNodeResolver
         $this->reflectionProviderProvider = $reflectionProviderProvider;
         $this->initializerExprTypeResolver = $initializerExprTypeResolver;
     }
-    public function resolve(ConstExprNode $node, NameScope $nameScope) : Type
+    public function resolve(ConstExprNode $node, NameScope $nameScope): Type
     {
         if ($node instanceof ConstExprArrayNode) {
             return $this->resolveArrayNode($node, $nameScope);
@@ -100,7 +100,7 @@ final class ConstExprNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveArrayNode(ConstExprArrayNode $node, NameScope $nameScope) : Type
+    private function resolveArrayNode(ConstExprArrayNode $node, NameScope $nameScope): Type
     {
         $arrayBuilder = ConstantArrayTypeBuilder::createEmpty();
         foreach ($node->items as $item) {
@@ -113,7 +113,7 @@ final class ConstExprNodeResolver
         }
         return $arrayBuilder->getArray();
     }
-    private function getReflectionProvider() : ReflectionProvider
+    private function getReflectionProvider(): ReflectionProvider
     {
         return $this->reflectionProviderProvider->getReflectionProvider();
     }

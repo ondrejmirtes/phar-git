@@ -67,7 +67,7 @@ final class ValidateServiceTagsExtension extends CompilerExtension
     /**
      * @throws MissingImplementedInterfaceInServiceWithTagException
      */
-    public function beforeCompile() : void
+    public function beforeCompile(): void
     {
         $builder = $this->getContainerBuilder();
         $mappingCount = count(self::INTERFACE_TAG_MAPPING);

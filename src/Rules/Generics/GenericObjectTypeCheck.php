@@ -30,7 +30,7 @@ final class GenericObjectTypeCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Type $phpDocType, string $classNotGenericMessage, string $notEnoughTypesMessage, string $extraTypesMessage, string $typeIsNotSubtypeMessage, string $typeProjectionHasConflictingVarianceMessage, string $typeProjectionIsRedundantMessage) : array
+    public function check(Type $phpDocType, string $classNotGenericMessage, string $notEnoughTypesMessage, string $extraTypesMessage, string $typeIsNotSubtypeMessage, string $typeProjectionHasConflictingVarianceMessage, string $typeProjectionIsRedundantMessage): array
     {
         $genericTypes = $this->getGenericTypes($phpDocType);
         $messages = [];
@@ -102,10 +102,10 @@ final class GenericObjectTypeCheck
     /**
      * @return list<GenericObjectType|GenericStaticType>
      */
-    private function getGenericTypes(Type $phpDocType) : array
+    private function getGenericTypes(Type $phpDocType): array
     {
         $genericObjectTypes = [];
-        TypeTraverser::map($phpDocType, static function (Type $type, callable $traverse) use(&$genericObjectTypes) : Type {
+        TypeTraverser::map($phpDocType, static function (Type $type, callable $traverse) use (&$genericObjectTypes): Type {
             if ($type instanceof GenericObjectType || $type instanceof GenericStaticType) {
                 $resolvedType = TemplateTypeHelper::resolveToBounds($type);
                 if (!$resolvedType instanceof GenericObjectType && !$resolvedType instanceof GenericStaticType) {

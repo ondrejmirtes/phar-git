@@ -25,23 +25,23 @@ final class Psr4Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
     {
     }
     /** @param array<string, list<string>> $mappings */
-    public static function fromArrayMappings(array $mappings) : self
+    public static function fromArrayMappings(array $mappings): self
     {
         $instance = new self();
-        $instance->mappings = array_map(static function (array $directories) : array {
+        $instance->mappings = array_map(static function (array $directories): array {
             return array_map(static fn(string $directory): string => rtrim($directory, '/'), $directories);
         }, $mappings);
         return $instance;
     }
     /** {@inheritDoc} */
-    public function resolvePossibleFilePaths(Identifier $identifier) : array
+    public function resolvePossibleFilePaths(Identifier $identifier): array
     {
         if (!$identifier->isClass()) {
             return [];
         }
         $className = $identifier->getName();
         $matchingPrefixes = $this->matchingPrefixes($className);
-        return array_merge([], ...array_map(static function (array $paths, string $prefix) use($className) : array {
+        return array_merge([], ...array_map(static function (array $paths, string $prefix) use ($className): array {
             $subPath = ltrim(str_replace('\\', '/', substr($className, strlen($prefix))), '/');
             if ($subPath === '') {
                 return [];
@@ -50,9 +50,9 @@ final class Psr4Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
         }, $matchingPrefixes, array_keys($matchingPrefixes)));
     }
     /** @return array<string, list<string>> */
-    private function matchingPrefixes(string $className) : array
+    private function matchingPrefixes(string $className): array
     {
-        return array_filter($this->mappings, static function (string $prefix) use($className) : bool {
+        return array_filter($this->mappings, static function (string $prefix) use ($className): bool {
             if ($prefix === '') {
                 return \false;
             }
@@ -60,7 +60,7 @@ final class Psr4Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
         }, ARRAY_FILTER_USE_KEY);
     }
     /** {@inheritDoc} */
-    public function directories() : array
+    public function directories(): array
     {
         return array_values(array_unique(array_merge([], ...array_values($this->mappings))));
     }

@@ -29,11 +29,11 @@ final class Line
         $this->type = $type;
         $this->content = $content;
     }
-    public function getContent() : string
+    public function getContent(): string
     {
         return $this->content;
     }
-    public function getType() : int
+    public function getType(): int
     {
         return $this->type;
     }

@@ -93,7 +93,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
      *
      * @return  \Iterator
      */
-    public function getInnerIterator() : ?\Iterator
+    public function getInnerIterator(): ?\Iterator
     {
         return $this->_iterator;
     }
@@ -140,7 +140,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
      *
      * @return  void
      */
-    public function next() : void
+    public function next(): void
     {
         $innerIterator = $this->getInnerIterator();
         $buffer = $this->getBuffer();
@@ -174,7 +174,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
      *
      * @return  void
      */
-    public function rewind() : void
+    public function rewind(): void
     {
         $innerIterator = $this->getInnerIterator();
         $buffer = $this->getBuffer();
@@ -190,7 +190,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
      *
      * @return  bool
      */
-    public function valid() : bool
+    public function valid(): bool
     {
         return $this->getBuffer()->valid() && $this->getInnerIterator()->valid();
     }

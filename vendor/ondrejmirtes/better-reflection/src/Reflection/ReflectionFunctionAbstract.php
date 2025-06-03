@@ -80,12 +80,12 @@ trait ReflectionFunctionAbstract
     /** @psalm-allow-private-mutation */
     private bool $isGenerator = \false;
     /** @return non-empty-string */
-    public abstract function __toString() : string;
+    abstract public function __toString(): string;
     /** @return non-empty-string */
-    public abstract function getShortName() : string;
+    abstract public function getShortName(): string;
     /** @psalm-external-mutation-free
      * @param MethodNode|\PhpParser\Node\PropertyHook|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure|\PhpParser\Node\Expr\ArrowFunction $node */
-    private function fillFromNode($node) : void
+    private function fillFromNode($node): void
     {
         $this->parameters = $this->createParameters($node);
         $this->returnsReference = $node->returnsByRef();
@@ -118,7 +118,7 @@ trait ReflectionFunctionAbstract
     }
     /** @return array<non-empty-string, ReflectionParameter>
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\PropertyHook|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure|\PhpParser\Node\Expr\ArrowFunction $node */
-    private function createParameters($node) : array
+    private function createParameters($node): array
     {
         $parameters = [];
         /** @var list<Node\Param> $nodeParams */
@@ -135,7 +135,7 @@ trait ReflectionFunctionAbstract
      *
      * @return non-empty-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         $namespace = $this->getNamespaceName();
         if ($namespace === null) {
@@ -149,7 +149,7 @@ trait ReflectionFunctionAbstract
      *
      * @return non-empty-string|null
      */
-    public function getNamespaceName() : ?string
+    public function getNamespaceName(): ?string
     {
         return $this->namespace;
     }
@@ -157,7 +157,7 @@ trait ReflectionFunctionAbstract
      * Decide if this function is part of a namespace. Returns false if the class
      * is in the global namespace or does not have a specified namespace.
      */
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->namespace !== null;
     }
@@ -166,7 +166,7 @@ trait ReflectionFunctionAbstract
      *
      * @return positive-int|0
      */
-    public function getNumberOfParameters() : int
+    public function getNumberOfParameters(): int
     {
         return count($this->parameters);
     }
@@ -175,7 +175,7 @@ trait ReflectionFunctionAbstract
      *
      * @return positive-int|0
      */
-    public function getNumberOfRequiredParameters() : int
+    public function getNumberOfRequiredParameters(): int
     {
         return count(array_filter($this->parameters, static fn(\PHPStan\BetterReflection\Reflection\ReflectionParameter $p): bool => !$p->isOptional()));
     }
@@ -185,12 +185,12 @@ trait ReflectionFunctionAbstract
      *
      * @return list<ReflectionParameter>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return array_values($this->parameters);
     }
     /** @param list<Node\Param> $parameterNodes */
-    private function isParameterOptional(array $parameterNodes, int $parameterIndex) : bool
+    private function isParameterOptional(array $parameterNodes, int $parameterIndex): bool
     {
         foreach ($parameterNodes as $otherParameterIndex => $otherParameterNode) {
             if ($otherParameterIndex < $parameterIndex) {
@@ -210,36 +210,36 @@ trait ReflectionFunctionAbstract
      *
      * @param non-empty-string $parameterName
      */
-    public function getParameter(string $parameterName) : ?\PHPStan\BetterReflection\Reflection\ReflectionParameter
+    public function getParameter(string $parameterName): ?\PHPStan\BetterReflection\Reflection\ReflectionParameter
     {
         return $this->parameters[$parameterName] ?? null;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->locatedSource->getFileName();
     }
-    public function getLocatedSource() : LocatedSource
+    public function getLocatedSource(): LocatedSource
     {
         return $this->locatedSource;
     }
     /**
      * Is this function a closure?
      */
-    public function isClosure() : bool
+    public function isClosure(): bool
     {
         return $this->isClosure;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return DeprecatedHelper::isDeprecated($this);
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->locatedSource->isInternal();
     }
@@ -247,19 +247,19 @@ trait ReflectionFunctionAbstract
      * Is this a user-defined function (will always return the opposite of
      * whatever isInternal returns).
      */
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return !$this->isInternal();
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->locatedSource->getExtensionName();
     }
     /**
      * Check if the function has a variadic parameter.
      */
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         foreach ($this->parameters as $parameter) {
             if ($parameter->isVariadic()) {
@@ -269,14 +269,14 @@ trait ReflectionFunctionAbstract
         return \false;
     }
     /** Checks if the function/method contains `throw` expressions. */
-    public function couldThrow() : bool
+    public function couldThrow(): bool
     {
         return $this->couldThrow;
     }
     /**
      * @param MethodNode|\PhpParser\Node\PropertyHook|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\Closure|\PhpParser\Node\Expr\ArrowFunction $node
      */
-    private function computeCouldThrow($node) : bool
+    private function computeCouldThrow($node): bool
     {
         $statements = $node->getStmts();
         if ($statements === null) {
@@ -291,7 +291,7 @@ trait ReflectionFunctionAbstract
      * Recursively search an array of statements (PhpParser nodes) to find if a
      * yield expression exists anywhere (thus indicating this is a generator).
      */
-    private function nodeIsOrContainsYield(Node $node) : bool
+    private function nodeIsOrContainsYield(Node $node): bool
     {
         if ($node instanceof YieldNode) {
             return \true;
@@ -321,7 +321,7 @@ trait ReflectionFunctionAbstract
      * Check if this function can be used as a generator (i.e. contains the
      * "yield" keyword).
      */
-    public function isGenerator() : bool
+    public function isGenerator(): bool
     {
         return $this->isGenerator;
     }
@@ -332,7 +332,7 @@ trait ReflectionFunctionAbstract
      *
      * @throws CodeLocationMissing
      */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         if ($this->startLine === null) {
             throw CodeLocationMissing::create();
@@ -346,7 +346,7 @@ trait ReflectionFunctionAbstract
      *
      * @throws CodeLocationMissing
      */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         if ($this->endLine === null) {
             throw CodeLocationMissing::create();
@@ -358,7 +358,7 @@ trait ReflectionFunctionAbstract
      *
      * @throws CodeLocationMissing
      */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         if ($this->startColumn === null) {
             throw CodeLocationMissing::create();
@@ -370,7 +370,7 @@ trait ReflectionFunctionAbstract
      *
      * @throws CodeLocationMissing
      */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         if ($this->endColumn === null) {
             throw CodeLocationMissing::create();
@@ -380,7 +380,7 @@ trait ReflectionFunctionAbstract
     /**
      * Is this function declared as a reference.
      */
-    public function returnsReference() : bool
+    public function returnsReference(): bool
     {
         return $this->returnsReference;
     }
@@ -398,14 +398,14 @@ trait ReflectionFunctionAbstract
     /**
      * Do we have a return type declaration
      */
-    public function hasReturnType() : bool
+    public function hasReturnType(): bool
     {
         if ($this->hasTentativeReturnType()) {
             return \false;
         }
         return $this->returnType !== null;
     }
-    public function hasTentativeReturnType() : bool
+    public function hasTentativeReturnType(): bool
     {
         if ($this->isUserDefined()) {
             return \false;
@@ -436,12 +436,12 @@ trait ReflectionFunctionAbstract
         return \PHPStan\BetterReflection\Reflection\ReflectionType::createFromNode($this->reflector, $this, $returnType);
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return ReflectionAttributeHelper::filterAttributesByName($this->getAttributes(), $name);
     }
@@ -450,7 +450,7 @@ trait ReflectionFunctionAbstract
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return ReflectionAttributeHelper::filterAttributesByInstance($this->getAttributes(), $className);
     }

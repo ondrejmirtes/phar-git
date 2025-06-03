@@ -22,7 +22,7 @@ final class ReflectionConstantStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionConstant $constantReflection) : string
+    public static function toString(ReflectionConstant $constantReflection): string
     {
         /** @psalm-var scalar|array<scalar> $value */
         $value = $constantReflection->getValue();
@@ -36,7 +36,7 @@ final class ReflectionConstantStringCast
         return sprintf('Constant [ <%s> %s %s ] {%s %s }', self::sourceToString($constantReflection), gettype($value), $constantReflection->getName(), self::fileAndLinesToString($constantReflection), $valueAsString);
     }
     /** @psalm-pure */
-    private static function sourceToString(ReflectionConstant $constantReflection) : string
+    private static function sourceToString(ReflectionConstant $constantReflection): string
     {
         if ($constantReflection->isUserDefined()) {
             return 'user';
@@ -46,7 +46,7 @@ final class ReflectionConstantStringCast
         return sprintf('internal:%s', $extensionName);
     }
     /** @psalm-pure */
-    private static function fileAndLinesToString(ReflectionConstant $constantReflection) : string
+    private static function fileAndLinesToString(ReflectionConstant $constantReflection): string
     {
         if ($constantReflection->isInternal()) {
             return '';

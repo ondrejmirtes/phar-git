@@ -29,17 +29,17 @@ trait FunctionLike
     /** @var bool */
     private $returnNullable = \false;
     /** @return static */
-    public function setBody(string $code, ?array $args = null) : self
+    public function setBody(string $code, ?array $args = null): self
     {
         $this->body = $args === null ? $code : (new Dumper())->format($code, ...$args);
         return $this;
     }
-    public function getBody() : string
+    public function getBody(): string
     {
         return $this->body;
     }
     /** @return static */
-    public function addBody(string $code, ?array $args = null) : self
+    public function addBody(string $code, ?array $args = null): self
     {
         $this->body .= ($args === null ? $code : (new Dumper())->format($code, ...$args)) . "\n";
         return $this;
@@ -48,7 +48,7 @@ trait FunctionLike
      * @param  Parameter[]  $val
      * @return static
      */
-    public function setParameters(array $val) : self
+    public function setParameters(array $val): self
     {
         (function (Parameter ...$val) {
         })(...\array_values($val));
@@ -59,14 +59,14 @@ trait FunctionLike
         return $this;
     }
     /** @return Parameter[] */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
     /**
      * @param  string  $name without $
      */
-    public function addParameter(string $name, $defaultValue = null) : Parameter
+    public function addParameter(string $name, $defaultValue = null): Parameter
     {
         $param = new Parameter($name);
         if (\func_num_args() > 1) {
@@ -78,23 +78,23 @@ trait FunctionLike
      * @param  string  $name without $
      * @return static
      */
-    public function removeParameter(string $name) : self
+    public function removeParameter(string $name): self
     {
         unset($this->parameters[$name]);
         return $this;
     }
     /** @return static */
-    public function setVariadic(bool $state = \true) : self
+    public function setVariadic(bool $state = \true): self
     {
         $this->variadic = $state;
         return $this;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
     /** @return static */
-    public function setReturnType(?string $type) : self
+    public function setReturnType(?string $type): self
     {
         $this->returnType = Nette\PhpGenerator\Helpers::validateType($type, $this->returnNullable);
         return $this;
@@ -107,32 +107,32 @@ trait FunctionLike
         return $asObject && $this->returnType ? Type::fromString($this->returnType) : $this->returnType;
     }
     /** @return static */
-    public function setReturnReference(bool $state = \true) : self
+    public function setReturnReference(bool $state = \true): self
     {
         $this->returnReference = $state;
         return $this;
     }
-    public function getReturnReference() : bool
+    public function getReturnReference(): bool
     {
         return $this->returnReference;
     }
     /** @return static */
-    public function setReturnNullable(bool $state = \true) : self
+    public function setReturnNullable(bool $state = \true): self
     {
         $this->returnNullable = $state;
         return $this;
     }
-    public function isReturnNullable() : bool
+    public function isReturnNullable(): bool
     {
         return $this->returnNullable;
     }
     /** @deprecated  use isReturnNullable() */
-    public function getReturnNullable() : bool
+    public function getReturnNullable(): bool
     {
         return $this->returnNullable;
     }
     /** @deprecated */
-    public function setNamespace(?Nette\PhpGenerator\PhpNamespace $val = null) : self
+    public function setNamespace(?Nette\PhpGenerator\PhpNamespace $val = null): self
     {
         \trigger_error(__METHOD__ . '() is deprecated', \E_USER_DEPRECATED);
         return $this;

@@ -25,11 +25,11 @@ final class PhpStanNamespaceIn3rdPartyPackageRule implements Rule
     {
         $this->apiRuleHelper = $apiRuleHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Namespace_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $namespace = null;
         if ($node->name !== null) {
@@ -51,7 +51,7 @@ final class PhpStanNamespaceIn3rdPartyPackageRule implements Rule
     /**
      * @return mixed[]|null
      */
-    private function findComposerJsonContents(string $fromDirectory) : ?array
+    private function findComposerJsonContents(string $fromDirectory): ?array
     {
         if (!is_dir($fromDirectory)) {
             return null;

@@ -15,7 +15,7 @@ use const PATHINFO_BASENAME;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ApiRuleHelper
 {
-    public function isPhpStanCode(Scope $scope, string $namespace, ?string $declaringFile) : bool
+    public function isPhpStanCode(Scope $scope, string $namespace, ?string $declaringFile): bool
     {
         $scopeNamespace = $scope->getNamespace();
         if ($scopeNamespace === null) {
@@ -45,7 +45,7 @@ final class ApiRuleHelper
      * @param string[] $parts
      * @return string[]
      */
-    private function createAbsoluteDirectories(string $currentDirectory, array $parts) : array
+    private function createAbsoluteDirectories(string $currentDirectory, array $parts): array
     {
         $directories = [];
         foreach ($parts as $part) {
@@ -59,15 +59,15 @@ final class ApiRuleHelper
         }
         return $directories;
     }
-    public function isPhpStanName(string $namespace) : bool
+    public function isPhpStanName(string $namespace): bool
     {
         if (strtolower($namespace) === 'phpstan') {
             return \true;
         }
-        if (str_starts_with($namespace, 'PHPStan\\PhpDocParser\\')) {
+        if (str_starts_with($namespace, 'PHPStan\PhpDocParser\\')) {
             return \false;
         }
-        if (str_starts_with($namespace, 'PHPStan\\BetterReflection\\')) {
+        if (str_starts_with($namespace, 'PHPStan\BetterReflection\\')) {
             return \false;
         }
         return stripos($namespace, 'PHPStan\\') === 0;

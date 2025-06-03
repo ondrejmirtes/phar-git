@@ -33,11 +33,11 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         $this->methodName = $methodName;
         $this->methods = $methods;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->methods[0]->getDeclaringClass();
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         foreach ($this->methods as $method) {
             if (!$method->isStatic()) {
@@ -46,7 +46,7 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         }
         return \true;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         foreach ($this->methods as $method) {
             if ($method->isPrivate()) {
@@ -55,7 +55,7 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         }
         return \false;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         foreach ($this->methods as $method) {
             if (!$method->isPublic()) {
@@ -64,32 +64,32 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         }
         return \true;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->methodName;
     }
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         return $this;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         $variants = array_merge(...array_map(static fn(MethodReflection $method) => $method->getVariants(), $this->methods));
         return [ParametersAcceptorSelector::combineAcceptors($variants)];
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(MethodReflection $method): TrinaryLogic => $method->isDeprecated());
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         $descriptions = [];
         foreach ($this->methods as $method) {
@@ -107,23 +107,23 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         }
         return implode(' ', $descriptions);
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(MethodReflection $method): TrinaryLogic => $method->isFinal());
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => $method->isFinalByKeyword());
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => $method->isInternal());
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => is_bool($method->isBuiltin()) ? TrinaryLogic::createFromBoolean($method->isBuiltin()) : $method->isBuiltin());
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         $types = [];
         foreach ($this->methods as $method) {
@@ -138,39 +138,39 @@ final class UnionTypeMethodReflection implements ExtendedMethodReflection
         }
         return TypeCombinator::union(...$types);
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(MethodReflection $method): TrinaryLogic => $method->hasSideEffects());
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => $method->isPure());
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return Assertions::createEmpty();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => $method->acceptsNamedArguments());
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return null;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => $method->returnsByReference());
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::lazyExtremeIdentity($this->methods, static fn(ExtendedMethodReflection $method): TrinaryLogic => is_bool($method->isAbstract()) ? TrinaryLogic::createFromBoolean($method->isAbstract()) : $method->isAbstract());
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->methods[0]->getAttributes();
     }

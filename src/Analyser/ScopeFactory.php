@@ -15,7 +15,7 @@ final class ScopeFactory
     {
         $this->internalScopeFactory = $internalScopeFactory;
     }
-    public function create(\PHPStan\Analyser\ScopeContext $context) : \PHPStan\Analyser\MutatingScope
+    public function create(\PHPStan\Analyser\ScopeContext $context): \PHPStan\Analyser\MutatingScope
     {
         return $this->internalScopeFactory->create($context);
     }

@@ -13,7 +13,7 @@ final class SocketSelectStubFilesExtension implements \PHPStan\PhpDoc\StubFilesE
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getFiles() : array
+    public function getFiles(): array
     {
         if ($this->phpVersion->getVersionId() >= 80000) {
             return [__DIR__ . '/../../stubs/socket_select_php8.stub'];

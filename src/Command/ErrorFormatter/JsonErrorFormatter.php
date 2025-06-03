@@ -17,7 +17,7 @@ final class JsonErrorFormatter implements \PHPStan\Command\ErrorFormatter\ErrorF
     {
         $this->pretty = $pretty;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $errorsArray = ['totals' => ['errors' => count($analysisResult->getNotFileSpecificErrors()), 'file_errors' => count($analysisResult->getFileSpecificErrors())], 'files' => new stdClass(), 'errors' => []];
         $tipFormatter = new OutputFormatter(\false);

@@ -15,11 +15,11 @@ class Floats
 {
     use Nette\StaticClass;
     private const Epsilon = 1.0E-10;
-    public static function isZero(float $value) : bool
+    public static function isZero(float $value): bool
     {
         return \abs($value) < self::Epsilon;
     }
-    public static function isInteger(float $value) : bool
+    public static function isInteger(float $value): bool
     {
         return \abs(\round($value) - $value) < self::Epsilon;
     }
@@ -27,7 +27,7 @@ class Floats
      * Compare two floats. If $a < $b it returns -1, if they are equal it returns 0 and if $a > $b it returns 1
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function compare(float $a, float $b) : int
+    public static function compare(float $a, float $b): int
     {
         if (\is_nan($a) || \is_nan($b)) {
             throw new \LogicException('Trying to compare NAN');
@@ -44,7 +44,7 @@ class Floats
      * Returns true if $a = $b
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function areEqual(float $a, float $b) : bool
+    public static function areEqual(float $a, float $b): bool
     {
         return self::compare($a, $b) === 0;
     }
@@ -52,7 +52,7 @@ class Floats
      * Returns true if $a < $b
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function isLessThan(float $a, float $b) : bool
+    public static function isLessThan(float $a, float $b): bool
     {
         return self::compare($a, $b) < 0;
     }
@@ -60,7 +60,7 @@ class Floats
      * Returns true if $a <= $b
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function isLessThanOrEqualTo(float $a, float $b) : bool
+    public static function isLessThanOrEqualTo(float $a, float $b): bool
     {
         return self::compare($a, $b) <= 0;
     }
@@ -68,7 +68,7 @@ class Floats
      * Returns true if $a > $b
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function isGreaterThan(float $a, float $b) : bool
+    public static function isGreaterThan(float $a, float $b): bool
     {
         return self::compare($a, $b) > 0;
     }
@@ -76,7 +76,7 @@ class Floats
      * Returns true if $a >= $b
      * @throws \LogicException if one of parameters is NAN
      */
-    public static function isGreaterThanOrEqualTo(float $a, float $b) : bool
+    public static function isGreaterThanOrEqualTo(float $a, float $b): bool
     {
         return self::compare($a, $b) >= 0;
     }

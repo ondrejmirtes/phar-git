@@ -22,11 +22,11 @@ final class IncompatiblePropertyHookPhpDocTypeRule implements Rule
         $this->fileTypeMapper = $fileTypeMapper;
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InPropertyHookNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {
@@ -39,7 +39,7 @@ final class IncompatiblePropertyHookPhpDocTypeRule implements Rule
     /**
      * @return array<string, Type>
      */
-    private function getNativeParameterTypes(PhpMethodFromParserNodeReflection $node) : array
+    private function getNativeParameterTypes(PhpMethodFromParserNodeReflection $node): array
     {
         $parameters = [];
         foreach ($node->getParameters() as $parameter) {
@@ -50,7 +50,7 @@ final class IncompatiblePropertyHookPhpDocTypeRule implements Rule
     /**
      * @return array<string, false>
      */
-    private function getByRefParameters(PhpMethodFromParserNodeReflection $node) : array
+    private function getByRefParameters(PhpMethodFromParserNodeReflection $node): array
     {
         $parameters = [];
         foreach ($node->getParameters() as $parameter) {

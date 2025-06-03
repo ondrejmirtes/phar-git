@@ -30,14 +30,14 @@ final class RestrictedClassConstantUsageRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ClassConstFetch::class;
     }
     /**
      * @api
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Identifier) {
             return [];

@@ -16,7 +16,7 @@ final class IgnoreErrorExtensionProvider
     /**
      * @return IgnoreErrorExtension[]
      */
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->container->getServicesByTag(\PHPStan\Analyser\IgnoreErrorExtension::EXTENSION_TAG);
     }

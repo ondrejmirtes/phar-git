@@ -14,7 +14,7 @@ final class Parser
     private $tokens;
     /** @var int[] */
     private $posToLine = [];
-    public function parse(TokenStream $tokens) : Node
+    public function parse(TokenStream $tokens): Node
     {
         $this->tokens = $tokens;
         $this->initLines();
@@ -28,7 +28,7 @@ final class Parser
         }
         return $node;
     }
-    private function parseBlock(string $indent, bool $onlyBullets = \false) : Node
+    private function parseBlock(string $indent, bool $onlyBullets = \false): Node
     {
         $res = new Node\BlockArrayNode($indent);
         $this->injectPos($res);
@@ -101,7 +101,7 @@ final class Parser
         }
         goto loop;
     }
-    private function parseValue() : Node
+    private function parseValue(): Node
     {
         if ($token = $this->tokens->consume(Token::String)) {
             try {
@@ -121,7 +121,7 @@ final class Parser
         }
         return $this->parseEntity($node);
     }
-    private function parseEntity(Node $node) : Node
+    private function parseEntity(Node $node): Node
     {
         if (!$this->tokens->isNext('(')) {
             return $node;
@@ -141,7 +141,7 @@ final class Parser
         }
         return \count($entities) === 1 ? $entities[0] : $this->injectPos(new Node\EntityChainNode($entities), $node->startTokenPos, \end($entities)->endTokenPos);
     }
-    private function parseBraces() : Node\InlineArrayNode
+    private function parseBraces(): Node\InlineArrayNode
     {
         $token = $this->tokens->consume();
         $endBrace = ['[' => ']', '{' => '}', '(' => ')'][$token->value];
@@ -177,7 +177,7 @@ final class Parser
         goto loop;
     }
     /** @param  true[]  $arr */
-    private function checkArrayKey(Node $key, array &$arr) : void
+    private function checkArrayKey(Node $key, array &$arr): void
     {
         if (!$key instanceof Node\StringNode && !$key instanceof Node\LiteralNode || !\is_scalar($key->value)) {
             $this->tokens->error('Unacceptable key', $key->startTokenPos);
@@ -188,7 +188,7 @@ final class Parser
         }
         $arr[$k] = \true;
     }
-    private function injectPos(Node $node, ?int $start = null, ?int $end = null) : Node
+    private function injectPos(Node $node, ?int $start = null, ?int $end = null): Node
     {
         $node->startTokenPos = $start ?? $this->tokens->getPos();
         $node->startLine = $this->posToLine[$node->startTokenPos];
@@ -196,7 +196,7 @@ final class Parser
         $node->endLine = $this->posToLine[$node->endTokenPos + 1] ?? \end($this->posToLine);
         return $node;
     }
-    private function initLines() : void
+    private function initLines(): void
     {
         $this->posToLine = [];
         $line = 1;

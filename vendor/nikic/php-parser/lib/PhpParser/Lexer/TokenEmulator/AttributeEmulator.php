@@ -7,15 +7,15 @@ use PhpParser\PhpVersion;
 use PhpParser\Token;
 final class AttributeEmulator extends \PhpParser\Lexer\TokenEmulator\TokenEmulator
 {
-    public function getPhpVersion() : PhpVersion
+    public function getPhpVersion(): PhpVersion
     {
         return PhpVersion::fromComponents(8, 0);
     }
-    public function isEmulationNeeded(string $code) : bool
+    public function isEmulationNeeded(string $code): bool
     {
         return \strpos($code, '#[') !== \false;
     }
-    public function emulate(string $code, array $tokens) : array
+    public function emulate(string $code, array $tokens): array
     {
         // We need to manually iterate and manage a count because we'll change
         // the tokens array on the way.
@@ -29,15 +29,15 @@ final class AttributeEmulator extends \PhpParser\Lexer\TokenEmulator\TokenEmulat
         }
         return $tokens;
     }
-    public function reverseEmulate(string $code, array $tokens) : array
+    public function reverseEmulate(string $code, array $tokens): array
     {
         // TODO
         return $tokens;
     }
-    public function preprocessCode(string $code, array &$patches) : string
+    public function preprocessCode(string $code, array &$patches): string
     {
         $pos = 0;
-        while (\false !== ($pos = \strpos($code, '#[', $pos))) {
+        while (\false !== $pos = \strpos($code, '#[', $pos)) {
             // Replace #[ with %[
             $code[$pos] = '%';
             $patches[] = [$pos, 'replace', '#'];

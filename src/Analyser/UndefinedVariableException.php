@@ -21,15 +21,15 @@ final class UndefinedVariableException extends AnalysedCodeException
         $this->variableName = $variableName;
         parent::__construct(sprintf('Undefined variable: $%s', $variableName));
     }
-    public function getScope() : \PHPStan\Analyser\Scope
+    public function getScope(): \PHPStan\Analyser\Scope
     {
         return $this->scope;
     }
-    public function getVariableName() : string
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
-    public function getTip() : ?string
+    public function getTip(): ?string
     {
         return null;
     }

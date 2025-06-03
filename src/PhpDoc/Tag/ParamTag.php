@@ -16,15 +16,15 @@ final class ParamTag implements \PHPStan\PhpDoc\Tag\TypedTag
         $this->type = $type;
         $this->isVariadic = $isVariadic;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
-    public function withType(Type $type) : self
+    public function withType(Type $type): self
     {
         return new self($type, $this->isVariadic);
     }

@@ -51,7 +51,7 @@ final class ParallelAnalyser
      * @param (callable(list<Error>, list<Error>, string[]): void)|null $onFileAnalysisHandler
      * @return PromiseInterface<AnalyserResult>
      */
-    public function analyse(LoopInterface $loop, \PHPStan\Parallel\Schedule $schedule, string $mainScript, ?Closure $postFileCallback, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input, ?callable $onFileAnalysisHandler) : PromiseInterface
+    public function analyse(LoopInterface $loop, \PHPStan\Parallel\Schedule $schedule, string $mainScript, ?Closure $postFileCallback, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input, ?callable $onFileAnalysisHandler): PromiseInterface
     {
         $jobs = array_reverse($schedule->getJobs());
         $numberOfProcesses = $schedule->getNumberOfProcesses();
@@ -73,20 +73,20 @@ final class ParallelAnalyser
         /** @var Deferred<AnalyserResult> $deferred */
         $deferred = new Deferred();
         $server = new TcpServer('127.0.0.1:0', $loop);
-        $this->processPool = new \PHPStan\Parallel\ProcessPool($server, static function () use($deferred, &$jobs, &$internalErrors, &$internalErrorsCount, &$reachedInternalErrorsCountLimit, &$errors, &$filteredPhpErrors, &$allPhpErrors, &$locallyIgnoredErrors, &$linesToIgnore, &$unmatchedLineIgnores, &$collectedData, &$dependencies, &$usedTraitDependencies, &$exportedNodes, &$peakMemoryUsages) : void {
+        $this->processPool = new \PHPStan\Parallel\ProcessPool($server, static function () use ($deferred, &$jobs, &$internalErrors, &$internalErrorsCount, &$reachedInternalErrorsCountLimit, &$errors, &$filteredPhpErrors, &$allPhpErrors, &$locallyIgnoredErrors, &$linesToIgnore, &$unmatchedLineIgnores, &$collectedData, &$dependencies, &$usedTraitDependencies, &$exportedNodes, &$peakMemoryUsages): void {
             if (count($jobs) > 0 && $internalErrorsCount === 0) {
                 $internalErrors[] = new InternalError('Some parallel worker jobs have not finished.', 'running parallel worker', [], null, \true);
                 $internalErrorsCount++;
             }
             $deferred->resolve(new AnalyserResult($errors, $filteredPhpErrors, $allPhpErrors, $locallyIgnoredErrors, $linesToIgnore, $unmatchedLineIgnores, $internalErrors, $collectedData, $internalErrorsCount === 0 ? $dependencies : null, $internalErrorsCount === 0 ? $usedTraitDependencies : null, $exportedNodes, $reachedInternalErrorsCountLimit, array_sum($peakMemoryUsages)));
         });
-        $server->on('connection', function (ConnectionInterface $connection) use(&$jobs) : void {
+        $server->on('connection', function (ConnectionInterface $connection) use (&$jobs): void {
             // phpcs:disable SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
             $jsonInvalidUtf8Ignore = defined('JSON_INVALID_UTF8_IGNORE') ? \JSON_INVALID_UTF8_IGNORE : 0;
             // phpcs:enable
             $decoder = new Decoder($connection, \true, 512, $jsonInvalidUtf8Ignore, $this->decoderBufferSize);
             $encoder = new Encoder($connection, $jsonInvalidUtf8Ignore);
-            $decoder->on('data', function (array $data) use(&$jobs, $decoder, $encoder) : void {
+            $decoder->on('data', function (array $data) use (&$jobs, $decoder, $encoder): void {
                 if ($data['action'] !== 'hello') {
                     return;
                 }
@@ -105,7 +105,7 @@ final class ParallelAnalyser
         $serverAddress = $server->getAddress();
         /** @var int<0, 65535> $serverPort */
         $serverPort = parse_url($serverAddress, PHP_URL_PORT);
-        $handleError = function (Throwable $error) use(&$internalErrors, &$internalErrorsCount, &$reachedInternalErrorsCountLimit) : void {
+        $handleError = function (Throwable $error) use (&$internalErrors, &$internalErrorsCount, &$reachedInternalErrorsCountLimit): void {
             $internalErrors[] = new InternalError($error->getMessage(), 'communicating with parallel worker', InternalError::prepareTrace($error), $error->getTraceAsString(), !$error instanceof \PHPStan\Parallel\ProcessTimedOutException);
             $internalErrorsCount++;
             $reachedInternalErrorsCountLimit = \true;
@@ -124,7 +124,7 @@ final class ParallelAnalyser
                 $commandOptions[] = escapeshellarg($insteadOfFile);
             }
             $process = new \PHPStan\Parallel\Process(ProcessHelper::getWorkerCommand($mainScript, 'worker', $projectConfigFile, $commandOptions, $input), $loop, $this->processTimeout);
-            $process->start(function (array $json) use($process, &$internalErrors, &$errors, &$filteredPhpErrors, &$allPhpErrors, &$locallyIgnoredErrors, &$linesToIgnore, &$unmatchedLineIgnores, &$collectedData, &$dependencies, &$usedTraitDependencies, &$exportedNodes, &$peakMemoryUsages, &$jobs, $postFileCallback, &$internalErrorsCount, &$reachedInternalErrorsCountLimit, $processIdentifier, $onFileAnalysisHandler) : void {
+            $process->start(function (array $json) use ($process, &$internalErrors, &$errors, &$filteredPhpErrors, &$allPhpErrors, &$locallyIgnoredErrors, &$linesToIgnore, &$unmatchedLineIgnores, &$collectedData, &$dependencies, &$usedTraitDependencies, &$exportedNodes, &$peakMemoryUsages, &$jobs, $postFileCallback, &$internalErrorsCount, &$reachedInternalErrorsCountLimit, $processIdentifier, $onFileAnalysisHandler): void {
                 $fileErrors = [];
                 foreach ($json['errors'] as $jsonError) {
                     $fileErrors[] = Error::decode($jsonError);
@@ -192,7 +192,7 @@ final class ParallelAnalyser
                     if (count($fileExportedNodes) === 0) {
                         continue;
                     }
-                    $exportedNodes[$file] = array_map(static function (array $node) : RootExportedNode {
+                    $exportedNodes[$file] = array_map(static function (array $node): RootExportedNode {
                         $class = $node['type'];
                         return $class::decode($node['data']);
                     }, $fileExportedNodes);
@@ -214,7 +214,7 @@ final class ParallelAnalyser
                 }
                 $job = array_pop($jobs);
                 $process->request(['action' => 'analyse', 'files' => $job]);
-            }, $handleError, function ($exitCode, string $output) use(&$someChildEnded, &$peakMemoryUsages, &$internalErrors, &$internalErrorsCount, $processIdentifier) : void {
+            }, $handleError, function ($exitCode, string $output) use (&$someChildEnded, &$peakMemoryUsages, &$internalErrors, &$internalErrorsCount, $processIdentifier): void {
                 if ($someChildEnded === \false) {
                     $peakMemoryUsages['main'] = memory_get_usage(\true);
                 }

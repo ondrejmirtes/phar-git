@@ -103,7 +103,7 @@ class TraitUseAdaptation implements Builder
         }
         return $this;
     }
-    protected function setModifier(int $modifier) : void
+    protected function setModifier(int $modifier): void
     {
         if ($this->type === self::TYPE_UNDEFINED) {
             $this->type = self::TYPE_ALIAS;
@@ -122,7 +122,7 @@ class TraitUseAdaptation implements Builder
      *
      * @return Node The built node
      */
-    public function getNode() : Node
+    public function getNode(): Node
     {
         switch ($this->type) {
             case self::TYPE_ALIAS:

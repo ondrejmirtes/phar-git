@@ -17,7 +17,7 @@ final class SkipClassAliasSourceLocator implements SourceLocator
     {
         $this->sourceLocator = $sourceLocator;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if ($identifier->isClass()) {
             $className = $identifier->getName();
@@ -35,7 +35,7 @@ final class SkipClassAliasSourceLocator implements SourceLocator
         }
         return $this->sourceLocator->locateIdentifier($reflector, $identifier);
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return $this->sourceLocator->locateIdentifiersByType($reflector, $identifierType);
     }

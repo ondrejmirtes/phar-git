@@ -130,11 +130,11 @@ class Lexer
             }
             if (\true === $nextToken['keep']) {
                 $nextToken['offset'] = $offset;
-                (yield $nextToken);
+                yield $nextToken;
             }
             $offset += \strlen($nextToken['value']);
         }
-        (yield ['token' => 'EOF', 'value' => 'EOF', 'length' => 0, 'namespace' => 'default', 'keep' => \true, 'offset' => $offset]);
+        yield ['token' => 'EOF', 'value' => 'EOF', 'length' => 0, 'namespace' => 'default', 'keep' => \true, 'offset' => $offset];
     }
     /**
      * Compute the next token recognized at the beginning of the string.
@@ -157,9 +157,9 @@ class Lexer
                 $out['keep'] = 'skip' !== $lexeme;
                 if ($nextState !== $this->_lexerState) {
                     $shift = \false;
-                    if (null !== $this->_nsStack && 0 !== \preg_match('#^__shift__(?:\\s*\\*\\s*(\\d+))?$#', $nextState, $matches)) {
+                    if (null !== $this->_nsStack && 0 !== \preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
                         $i = isset($matches[1]) ? \intval($matches[1]) : 1;
-                        if ($i > ($c = \count($this->_nsStack))) {
+                        if ($i > $c = \count($this->_nsStack)) {
                             throw new Compiler\Exception\Lexer('Cannot shift namespace %d-times, from token ' . '%s in namespace %s, because the stack ' . 'contains only %d namespaces.', 1, [$i, $lexeme, $this->_lexerState, $c]);
                         }
                         while (1 <= $i--) {
@@ -192,8 +192,8 @@ class Lexer
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
-        $_regex = \str_replace('#', '\\#', $regex);
-        $preg = \preg_match('#\\G(?|' . $_regex . ')#' . $this->_pcreOptions, $this->_text, $matches, 0, $offset);
+        $_regex = \str_replace('#', '\#', $regex);
+        $preg = \preg_match('#\G(?|' . $_regex . ')#' . $this->_pcreOptions, $this->_text, $matches, 0, $offset);
         if (0 === $preg || $preg === \false) {
             return null;
         }

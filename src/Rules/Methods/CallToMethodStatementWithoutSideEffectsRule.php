@@ -24,11 +24,11 @@ final class CallToMethodStatementWithoutSideEffectsRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NoopExpressionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $methodCall = $node->getOriginalExpr();
         if ($methodCall instanceof Node\Expr\NullsafeMethodCall) {

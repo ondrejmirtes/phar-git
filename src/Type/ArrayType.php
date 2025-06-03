@@ -56,23 +56,23 @@ class ArrayType implements \PHPStan\Type\Type
         }
         $this->keyType = $keyType;
     }
-    public function getKeyType() : \PHPStan\Type\Type
+    public function getKeyType(): \PHPStan\Type\Type
     {
         return $this->keyType;
     }
-    public function getItemType() : \PHPStan\Type\Type
+    public function getItemType(): \PHPStan\Type\Type
     {
         return $this->itemType;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return array_merge($this->keyType->getReferencedClasses(), $this->getItemType()->getReferencedClasses());
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return [];
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
@@ -94,7 +94,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return \PHPStan\Type\AcceptsResult::createNo();
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self || $type instanceof ConstantArrayType) {
             return $this->getItemType()->isSuperTypeOf($type->getItemType())->and($this->getIterableKeyType()->isSuperTypeOf($type->getIterableKeyType()));
@@ -104,15 +104,15 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         return $type instanceof self && $this->getItemType()->equals($type->getIterableValueType()) && $this->keyType->equals($type->keyType);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         $isMixedKeyType = $this->keyType instanceof \PHPStan\Type\MixedType && $this->keyType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed' && !$this->keyType->isExplicitMixed();
         $isMixedItemType = $this->itemType instanceof \PHPStan\Type\MixedType && $this->itemType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed' && !$this->itemType->isExplicitMixed();
-        $valueHandler = function () use($level, $isMixedKeyType, $isMixedItemType) : string {
+        $valueHandler = function () use ($level, $isMixedKeyType, $isMixedItemType): string {
             if ($isMixedKeyType || $this->keyType instanceof \PHPStan\Type\NeverType) {
                 if ($isMixedItemType || $this->itemType instanceof \PHPStan\Type\NeverType) {
                     return 'array';
@@ -121,7 +121,7 @@ class ArrayType implements \PHPStan\Type\Type
             }
             return sprintf('array<%s, %s>', $this->keyType->describe($level), $this->itemType->describe($level));
         };
-        return $level->handle($valueHandler, $valueHandler, function () use($level, $isMixedKeyType, $isMixedItemType) : string {
+        return $level->handle($valueHandler, $valueHandler, function () use ($level, $isMixedKeyType, $isMixedItemType): string {
             if ($isMixedKeyType) {
                 if ($isMixedItemType) {
                     return 'array';
@@ -131,27 +131,27 @@ class ArrayType implements \PHPStan\Type\Type
             return sprintf('array<%s, %s>', $this->keyType->describe($level), $this->itemType->describe($level));
         });
     }
-    public function generalizeValues() : self
+    public function generalizeValues(): self
     {
         return new self($this->keyType, $this->itemType->generalize(\PHPStan\Type\GeneralizePrecision::lessSpecific()));
     }
-    public function getKeysArray() : \PHPStan\Type\Type
+    public function getKeysArray(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::intersect(new self(new \PHPStan\Type\IntegerType(), $this->getIterableKeyType()), new AccessoryArrayListType());
     }
-    public function getValuesArray() : \PHPStan\Type\Type
+    public function getValuesArray(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::intersect(new self(new \PHPStan\Type\IntegerType(), $this->itemType), new AccessoryArrayListType());
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getArraySize() : \PHPStan\Type\Type
+    public function getArraySize(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\IntegerRangeType::fromInterval(0, null);
     }
-    public function getIterableKeyType() : \PHPStan\Type\Type
+    public function getIterableKeyType(): \PHPStan\Type\Type
     {
         $keyType = $this->keyType;
         if ($keyType instanceof \PHPStan\Type\MixedType && !$keyType instanceof TemplateMixedType) {
@@ -162,49 +162,49 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $keyType;
     }
-    public function getFirstIterableKeyType() : \PHPStan\Type\Type
+    public function getFirstIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getIterableKeyType();
     }
-    public function getLastIterableKeyType() : \PHPStan\Type\Type
+    public function getLastIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getIterableKeyType();
     }
-    public function getIterableValueType() : \PHPStan\Type\Type
+    public function getIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function getFirstIterableValueType() : \PHPStan\Type\Type
+    public function getFirstIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function getLastIterableValueType() : \PHPStan\Type\Type
+    public function getLastIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         if (\PHPStan\Type\IntegerRangeType::fromInterval(0, null)->isSuperTypeOf($this->getKeyType())->no()) {
             return TrinaryLogic::createNo();
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         if ($type->isInteger()->yes()) {
             return new ConstantBooleanType(\false);
         }
         return new \PHPStan\Type\BooleanType();
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         $offsetType = $offsetType->toArrayKey();
         if ($this->getKeyType()->isSuperTypeOf($offsetType)->no() && ($offsetType->isString()->no() || !$offsetType->isConstantScalarValue()->no())) {
@@ -212,7 +212,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return TrinaryLogic::createMaybe();
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         $offsetType = $offsetType->toArrayKey();
         if ($this->getKeyType()->isSuperTypeOf($offsetType)->no() && ($offsetType->isString()->no() || !$offsetType->isConstantScalarValue()->no())) {
@@ -224,7 +224,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $type;
     }
-    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true) : \PHPStan\Type\Type
+    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true): \PHPStan\Type\Type
     {
         if ($offsetType === null) {
             $isKeyTypeInteger = $this->keyType->isInteger();
@@ -243,7 +243,7 @@ class ArrayType implements \PHPStan\Type\Type
                 }
             } else {
                 $integerTypes = [];
-                \PHPStan\Type\TypeTraverser::map($this->keyType, static function (\PHPStan\Type\Type $type, callable $traverse) use(&$integerTypes) : \PHPStan\Type\Type {
+                \PHPStan\Type\TypeTraverser::map($this->keyType, static function (\PHPStan\Type\Type $type, callable $traverse) use (&$integerTypes): \PHPStan\Type\Type {
                     if ($type instanceof \PHPStan\Type\UnionType) {
                         return $traverse($type);
                     }
@@ -272,11 +272,11 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return \PHPStan\Type\TypeCombinator::intersect(new self(\PHPStan\Type\TypeCombinator::union($this->keyType, $offsetType), $unionValues ? \PHPStan\Type\TypeCombinator::union($this->itemType, $valueType) : $valueType), new NonEmptyArrayType());
     }
-    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return new self($this->keyType, \PHPStan\Type\TypeCombinator::union($this->itemType, $valueType));
     }
-    public function unsetOffset(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function unsetOffset(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         $offsetType = $offsetType->toArrayKey();
         if (($offsetType instanceof ConstantIntegerType || $offsetType instanceof ConstantStringType) && !$this->keyType->isSuperTypeOf($offsetType)->no()) {
@@ -288,7 +288,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function fillKeysArray(\PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function fillKeysArray(\PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         $itemType = $this->getItemType();
         if ($itemType->isInteger()->no()) {
@@ -300,11 +300,11 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return new \PHPStan\Type\ArrayType($itemType, $valueType);
     }
-    public function flipArray() : \PHPStan\Type\Type
+    public function flipArray(): \PHPStan\Type\Type
     {
         return new self($this->getIterableValueType()->toArrayKey(), $this->getIterableKeyType());
     }
-    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType) : \PHPStan\Type\Type
+    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType): \PHPStan\Type\Type
     {
         $isKeySuperType = $otherArraysType->getIterableKeyType()->isSuperTypeOf($this->getIterableKeyType());
         if ($isKeySuperType->no()) {
@@ -315,27 +315,27 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return new self($otherArraysType->getIterableKeyType(), $this->getIterableValueType());
     }
-    public function popArray() : \PHPStan\Type\Type
+    public function popArray(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function reverseArray(TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function searchArray(\PHPStan\Type\Type $needleType) : \PHPStan\Type\Type
+    public function searchArray(\PHPStan\Type\Type $needleType): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union($this->getIterableKeyType(), new ConstantBooleanType(\false));
     }
-    public function shiftArray() : \PHPStan\Type\Type
+    public function shiftArray(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function shuffleArray() : \PHPStan\Type\Type
+    public function shuffleArray(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::intersect(new self(new \PHPStan\Type\IntegerType(), $this->itemType), new AccessoryArrayListType());
     }
-    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         if ((new ConstantIntegerType(0))->isSuperTypeOf($lengthType)->yes()) {
             return new ConstantArrayType([], []);
@@ -345,26 +345,26 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe()->and($this->itemType->isString());
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         if ($this->isCallable()->no()) {
             throw new ShouldNotHappenException();
         }
         return [new TrivialParametersAcceptor()];
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union(new ConstantIntegerType(0), new ConstantIntegerType(1));
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union(new ConstantFloatType(0.0), new ConstantFloatType(1.0));
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         if ($receivedType instanceof \PHPStan\Type\UnionType || $receivedType instanceof \PHPStan\Type\IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -376,12 +376,12 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return TemplateTypeMap::createEmpty();
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         $variance = $positionVariance->compose(TemplateTypeVariance::createCovariant());
         return array_merge($this->getIterableKeyType()->getReferencedTemplateTypes($variance), $this->getItemType()->getReferencedTemplateTypes($variance));
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $keyType = $cb($this->keyType);
         $itemType = $cb($this->itemType);
@@ -393,7 +393,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         $isMixedKeyType = $this->keyType instanceof \PHPStan\Type\MixedType && $this->keyType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed' && !$this->keyType->isExplicitMixed();
         $isMixedItemType = $this->itemType instanceof \PHPStan\Type\MixedType && $this->itemType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed' && !$this->itemType->isExplicitMixed();
@@ -405,7 +405,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return new GenericTypeNode(new IdentifierTypeNode('array'), [$this->keyType->toPhpDocNode(), $this->itemType->toPhpDocNode()]);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         $keyType = $cb($this->keyType, $right->getIterableKeyType());
         $itemType = $cb($this->itemType, $right->getIterableValueType());
@@ -417,7 +417,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return $this;
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($typeToRemove->isConstantArray()->yes() && $typeToRemove->isIterableAtLeastOnce()->no()) {
             return \PHPStan\Type\TypeCombinator::intersect($this, new NonEmptyArrayType());
@@ -427,7 +427,7 @@ class ArrayType implements \PHPStan\Type\Type
         }
         return null;
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }

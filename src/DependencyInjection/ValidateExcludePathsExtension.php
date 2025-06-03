@@ -17,7 +17,7 @@ final class ValidateExcludePathsExtension extends CompilerExtension
     /**
      * @throws InvalidExcludePathsException
      */
-    public function loadConfiguration() : void
+    public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();
         $excludePaths = $builder->parameters['excludePaths'];

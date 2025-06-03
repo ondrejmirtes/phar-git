@@ -33,7 +33,7 @@ class JsonDecoder
         }
         return $value;
     }
-    private function decodeArray(array $array) : array
+    private function decodeArray(array $array): array
     {
         $decodedArray = [];
         foreach ($array as $key => $value) {
@@ -41,7 +41,7 @@ class JsonDecoder
         }
         return $decodedArray;
     }
-    private function decodeNode(array $value) : \PhpParser\Node
+    private function decodeNode(array $value): \PhpParser\Node
     {
         $nodeType = $value['nodeType'];
         if (!\is_string($nodeType)) {
@@ -63,7 +63,7 @@ class JsonDecoder
         }
         return $node;
     }
-    private function decodeComment(array $value) : \PhpParser\Comment
+    private function decodeComment(array $value): \PhpParser\Comment
     {
         $className = $value['nodeType'] === 'Comment' ? \PhpParser\Comment::class : \PhpParser\Comment\Doc::class;
         if (!isset($value['text'])) {
@@ -72,7 +72,7 @@ class JsonDecoder
         return new $className($value['text'], $value['line'] ?? -1, $value['filePos'] ?? -1, $value['tokenPos'] ?? -1, $value['endLine'] ?? -1, $value['endFilePos'] ?? -1, $value['endTokenPos'] ?? -1);
     }
     /** @return \ReflectionClass<Node> */
-    private function reflectionClassFromNodeType(string $nodeType) : \ReflectionClass
+    private function reflectionClassFromNodeType(string $nodeType): \ReflectionClass
     {
         if (!isset($this->reflectionClassCache[$nodeType])) {
             $className = $this->classNameFromNodeType($nodeType);
@@ -81,9 +81,9 @@ class JsonDecoder
         return $this->reflectionClassCache[$nodeType];
     }
     /** @return class-string<Node> */
-    private function classNameFromNodeType(string $nodeType) : string
+    private function classNameFromNodeType(string $nodeType): string
     {
-        $className = 'PhpParser\\Node\\' . \strtr($nodeType, '_', '\\');
+        $className = 'PhpParser\Node\\' . \strtr($nodeType, '_', '\\');
         if (\class_exists($className)) {
             return $className;
         }

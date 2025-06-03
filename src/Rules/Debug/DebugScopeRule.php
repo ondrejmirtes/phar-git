@@ -25,11 +25,11 @@ final class DebugScopeRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -38,7 +38,7 @@ final class DebugScopeRule implements Rule
         if ($functionName === null) {
             return [];
         }
-        if (strtolower($functionName) !== 'phpstan\\debugscope') {
+        if (strtolower($functionName) !== 'phpstan\debugscope') {
             return [];
         }
         if (!$scope instanceof MutatingScope) {

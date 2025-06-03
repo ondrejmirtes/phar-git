@@ -27,11 +27,11 @@ class TryCatch extends Node\Stmt
         $this->catches = $catches;
         $this->finally = $finally;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['stmts', 'catches', 'finally'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Stmt_TryCatch';
     }

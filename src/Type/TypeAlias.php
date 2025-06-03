@@ -17,13 +17,13 @@ final class TypeAlias
         $this->typeNode = $typeNode;
         $this->nameScope = $nameScope;
     }
-    public static function invalid() : self
+    public static function invalid(): self
     {
         $self = new self(new IdentifierTypeNode('*ERROR*'), new NameScope(null, []));
         $self->resolvedType = new \PHPStan\Type\CircularTypeAliasErrorType();
         return $self;
     }
-    public function resolve(TypeNodeResolver $typeNodeResolver) : \PHPStan\Type\Type
+    public function resolve(TypeNodeResolver $typeNodeResolver): \PHPStan\Type\Type
     {
         if ($this->resolvedType === null) {
             $this->resolvedType = $typeNodeResolver->resolve($this->typeNode, $this->nameScope);

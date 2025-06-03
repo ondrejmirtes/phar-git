@@ -34,7 +34,7 @@ final class RequireExtendsCheck
      * @param  array<RequireExtendsTag> $extendsTags
      * @return list<IdentifierRuleError>
      */
-    public function checkExtendsTags(Scope $scope, Node $node, array $extendsTags) : array
+    public function checkExtendsTags(Scope $scope, Node $node, array $extendsTags): array
     {
         $errors = [];
         if (count($extendsTags) > 1) {

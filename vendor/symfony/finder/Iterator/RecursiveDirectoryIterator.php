@@ -55,7 +55,7 @@ class RecursiveDirectoryIterator extends \RecursiveDirectoryIterator
     public function current()
     {
         // the logic here avoids redoing the same work in all iterations
-        if (null === ($subPathname = $this->subPath)) {
+        if (null === $subPathname = $this->subPath) {
             $subPathname = $this->subPath = $this->getSubPath();
         }
         if ('' !== $subPathname) {

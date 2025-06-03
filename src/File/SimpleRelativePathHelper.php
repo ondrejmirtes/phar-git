@@ -14,7 +14,7 @@ final class SimpleRelativePathHelper implements \PHPStan\File\RelativePathHelper
     {
         $this->currentWorkingDirectory = $currentWorkingDirectory;
     }
-    public function getRelativePath(string $filename) : string
+    public function getRelativePath(string $filename): string
     {
         if ($this->currentWorkingDirectory !== '' && str_starts_with($filename, $this->currentWorkingDirectory)) {
             return str_replace('\\', '/', substr($filename, strlen($this->currentWorkingDirectory) + 1));

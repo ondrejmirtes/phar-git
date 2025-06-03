@@ -15,15 +15,15 @@ final class TypeAliasImportTag
         $this->importedFrom = $importedFrom;
         $this->importedAs = $importedAs;
     }
-    public function getImportedAlias() : string
+    public function getImportedAlias(): string
     {
         return $this->importedAlias;
     }
-    public function getImportedFrom() : string
+    public function getImportedFrom(): string
     {
         return $this->importedFrom;
     }
-    public function getImportedAs() : ?string
+    public function getImportedAs(): ?string
     {
         return $this->importedAs;
     }

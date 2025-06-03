@@ -65,19 +65,19 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         $this->attributes = $attributes;
         $this->isFinal = $isFinal;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function getDeclaringTrait() : ?ClassReflection
+    public function getDeclaringTrait(): ?ClassReflection
     {
         return $this->declaringTrait;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         $docComment = $this->reflection->getDocComment();
         if ($docComment === \false) {
@@ -85,34 +85,34 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return $docComment;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->reflection->isReadOnly();
     }
-    public function isReadOnlyByPhpDoc() : bool
+    public function isReadOnlyByPhpDoc(): bool
     {
         return $this->isReadOnlyByPhpDoc;
     }
-    public function getReadableType() : Type
+    public function getReadableType(): Type
     {
         if ($this->type === null) {
             $this->type = TypehintHelper::decideTypeFromReflection($this->nativeType, $this->phpDocType, $this->declaringClass);
         }
         return $this->type;
     }
-    public function getWritableType() : Type
+    public function getWritableType(): Type
     {
         if ($this->hasHook('set')) {
             $setHookVariant = $this->getHook('set')->getOnlyVariant();
@@ -123,7 +123,7 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return $this->getReadableType();
     }
-    public function canChangeTypeAfterAssignment() : bool
+    public function canChangeTypeAfterAssignment(): bool
     {
         if ($this->isStatic()) {
             return \true;
@@ -139,33 +139,33 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return \true;
     }
-    public function isPromoted() : bool
+    public function isPromoted(): bool
     {
         return $this->reflection->isPromoted();
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return $this->phpDocType !== null;
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         if ($this->phpDocType !== null) {
             return $this->phpDocType;
         }
         return new MixedType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->nativeType !== null;
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         if ($this->finalNativeType === null) {
             $this->finalNativeType = TypehintHelper::decideTypeFromReflection($this->nativeType, null, $this->declaringClass);
         }
         return $this->finalNativeType;
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         if ($this->isStatic()) {
             return \true;
@@ -175,7 +175,7 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return $this->hasHook('get');
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         if ($this->isStatic()) {
             return \true;
@@ -185,57 +185,57 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return $this->hasHook('set');
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated) {
             return $this->deprecatedDescription;
         }
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated);
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isInternal);
     }
-    public function isAllowedPrivateMutation() : bool
+    public function isAllowedPrivateMutation(): bool
     {
         return $this->isAllowedPrivateMutation;
     }
-    public function getNativeReflection() : ReflectionProperty
+    public function getNativeReflection(): ReflectionProperty
     {
         return $this->reflection;
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isAbstract());
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isFinal());
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isFinal);
     }
-    public function isVirtual() : TrinaryLogic
+    public function isVirtual(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isVirtual());
     }
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         if ($hookType === 'get') {
             return $this->getHook !== null;
         }
         return $this->setHook !== null;
     }
-    public function isHooked() : bool
+    public function isHooked(): bool
     {
         return $this->getHook !== null || $this->setHook !== null;
     }
-    public function getHook(string $hookType) : ExtendedMethodReflection
+    public function getHook(string $hookType): ExtendedMethodReflection
     {
         if ($hookType === 'get') {
             if ($this->getHook === null) {
@@ -248,15 +248,15 @@ final class PhpPropertyReflection implements ExtendedPropertyReflection
         }
         return $this->setHook;
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return $this->reflection->isProtectedSet();
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return $this->reflection->isPrivateSet();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

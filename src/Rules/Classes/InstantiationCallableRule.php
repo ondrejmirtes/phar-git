@@ -13,11 +13,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class InstantiationCallableRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InstantiationCallableNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return [RuleErrorBuilder::message('Cannot create callable from the new operator.')->identifier('callable.notSupported')->nonIgnorable()->build()];
     }

@@ -18,35 +18,35 @@ final class SymfonyOutput implements Output
         $this->symfonyOutput = $symfonyOutput;
         $this->style = $style;
     }
-    public function writeFormatted(string $message) : void
+    public function writeFormatted(string $message): void
     {
         $this->symfonyOutput->write($message, \false, OutputInterface::OUTPUT_NORMAL);
     }
-    public function writeLineFormatted(string $message) : void
+    public function writeLineFormatted(string $message): void
     {
         $this->symfonyOutput->writeln($message, OutputInterface::OUTPUT_NORMAL);
     }
-    public function writeRaw(string $message) : void
+    public function writeRaw(string $message): void
     {
         $this->symfonyOutput->write($message, \false, OutputInterface::OUTPUT_RAW);
     }
-    public function getStyle() : OutputStyle
+    public function getStyle(): OutputStyle
     {
         return $this->style;
     }
-    public function isVerbose() : bool
+    public function isVerbose(): bool
     {
         return $this->symfonyOutput->isVerbose();
     }
-    public function isVeryVerbose() : bool
+    public function isVeryVerbose(): bool
     {
         return $this->symfonyOutput->isVeryVerbose();
     }
-    public function isDebug() : bool
+    public function isDebug(): bool
     {
         return $this->symfonyOutput->isDebug();
     }
-    public function isDecorated() : bool
+    public function isDecorated(): bool
     {
         return $this->symfonyOutput->isDecorated();
     }

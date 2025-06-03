@@ -16,19 +16,19 @@ final class VarTag implements \PHPStan\PhpDoc\Tag\TypedTag
         $this->type = $type;
         $this->isExplicit = $isExplicit;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function withType(Type $type) : self
+    public function withType(Type $type): self
     {
         return new self($type, $this->isExplicit);
     }
-    public function isExplicit() : bool
+    public function isExplicit(): bool
     {
         return $this->isExplicit;
     }
-    public function toImplicit() : self
+    public function toImplicit(): self
     {
         return new self($this->type, \false);
     }

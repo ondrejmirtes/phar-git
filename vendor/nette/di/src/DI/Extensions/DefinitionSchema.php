@@ -103,10 +103,10 @@ class DefinitionSchema implements Schema
     public function completeDefault(Context $context)
     {
     }
-    private function sniffType($key, array $def) : string
+    private function sniffType($key, array $def): string
     {
         if (\is_string($key)) {
-            $name = \preg_match('#^@[\\w\\\\]+$#D', $key) ? $this->builder->getByType(\substr($key, 1), \false) : $key;
+            $name = \preg_match('#^@[\w\\\\]+$#D', $key) ? $this->builder->getByType(\substr($key, 1), \false) : $key;
             if ($name && $this->builder->hasDefinition($name)) {
                 return \get_class($this->builder->getDefinition($name));
             }
@@ -123,7 +123,7 @@ class DefinitionSchema implements Schema
             return Definitions\ServiceDefinition::class;
         }
     }
-    private function expandParameters(array $config) : array
+    private function expandParameters(array $config): array
     {
         $params = $this->builder->parameters;
         if (isset($config['parameters'])) {
@@ -134,29 +134,29 @@ class DefinitionSchema implements Schema
         }
         return Nette\DI\Helpers::expand($config, $params);
     }
-    private static function getSchema(string $type) : Schema
+    private static function getSchema(string $type): Schema
     {
         static $cache;
         $cache = $cache ?: [Definitions\ServiceDefinition::class => self::getServiceSchema(), Definitions\AccessorDefinition::class => self::getAccessorSchema(), Definitions\FactoryDefinition::class => self::getFactorySchema(), Definitions\LocatorDefinition::class => self::getLocatorSchema(), Definitions\ImportedDefinition::class => self::getImportedSchema()];
         return $cache[$type];
     }
-    private static function getServiceSchema() : Schema
+    private static function getServiceSchema(): Schema
     {
-        return Expect::structure(['type' => Expect::type('string'), 'create' => Expect::type('callable|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement'), 'arguments' => Expect::array(), 'setup' => Expect::listOf('callable|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement|array:1'), 'inject' => Expect::bool(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array(), 'reset' => Expect::array(), 'alteration' => Expect::bool()]);
+        return Expect::structure(['type' => Expect::type('string'), 'create' => Expect::type('callable|_PHPStan_checksum\Nette\DI\Definitions\Statement'), 'arguments' => Expect::array(), 'setup' => Expect::listOf('callable|_PHPStan_checksum\Nette\DI\Definitions\Statement|array:1'), 'inject' => Expect::bool(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array(), 'reset' => Expect::array(), 'alteration' => Expect::bool()]);
     }
-    private static function getAccessorSchema() : Schema
+    private static function getAccessorSchema(): Schema
     {
-        return Expect::structure(['type' => Expect::string(), 'implement' => Expect::string(), 'create' => Expect::type('callable|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement'), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array()]);
+        return Expect::structure(['type' => Expect::string(), 'implement' => Expect::string(), 'create' => Expect::type('callable|_PHPStan_checksum\Nette\DI\Definitions\Statement'), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array()]);
     }
-    private static function getFactorySchema() : Schema
+    private static function getFactorySchema(): Schema
     {
-        return Expect::structure(['type' => Expect::string(), 'create' => Expect::type('callable|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement'), 'implement' => Expect::string(), 'arguments' => Expect::array(), 'setup' => Expect::listOf('callable|_PHPStan_checksum\\Nette\\DI\\Definitions\\Statement|array:1'), 'parameters' => Expect::array(), 'references' => Expect::array(), 'tagged' => Expect::string(), 'inject' => Expect::bool(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array(), 'reset' => Expect::array()]);
+        return Expect::structure(['type' => Expect::string(), 'create' => Expect::type('callable|_PHPStan_checksum\Nette\DI\Definitions\Statement'), 'implement' => Expect::string(), 'arguments' => Expect::array(), 'setup' => Expect::listOf('callable|_PHPStan_checksum\Nette\DI\Definitions\Statement|array:1'), 'parameters' => Expect::array(), 'references' => Expect::array(), 'tagged' => Expect::string(), 'inject' => Expect::bool(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array(), 'reset' => Expect::array()]);
     }
-    private static function getLocatorSchema() : Schema
+    private static function getLocatorSchema(): Schema
     {
         return Expect::structure(['implement' => Expect::string(), 'references' => Expect::array(), 'tagged' => Expect::string(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array()]);
     }
-    private static function getImportedSchema() : Schema
+    private static function getImportedSchema(): Schema
     {
         return Expect::structure(['type' => Expect::string(), 'imported' => Expect::bool(), 'autowired' => Expect::type('bool|string|array'), 'tags' => Expect::array()]);
     }

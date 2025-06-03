@@ -12,7 +12,7 @@ final class ConstantNodeChecker
 {
     private const DEFINE_ARGUMENTS_COUNTS = [2, 3];
     /** @throws InvalidConstantNode */
-    public static function assertValidDefineFunctionCall(Node\Expr\FuncCall $node) : void
+    public static function assertValidDefineFunctionCall(Node\Expr\FuncCall $node): void
     {
         if (!$node->name instanceof Node\Name) {
             throw InvalidConstantNode::create($node);

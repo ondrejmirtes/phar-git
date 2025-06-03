@@ -33,30 +33,30 @@ class FunctionVariant implements \PHPStan\Reflection\ParametersAcceptor
         $this->returnType = $returnType;
         $this->callSiteVarianceMap = $callSiteVarianceMap ?? TemplateTypeVarianceMap::createEmpty();
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->templateTypeMap;
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return $this->resolvedTemplateTypeMap ?? TemplateTypeMap::createEmpty();
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return $this->callSiteVarianceMap;
     }
     /**
      * @return list<ParameterReflection>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return $this->returnType;
     }

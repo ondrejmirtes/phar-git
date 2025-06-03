@@ -112,7 +112,7 @@ final class InitializerExprTypeResolver
         $this->usePathConstantsAsConstantString = $usePathConstantsAsConstantString;
     }
     /** @api */
-    public function getType(Expr $expr, \PHPStan\Reflection\InitializerExprContext $context) : Type
+    public function getType(Expr $expr, \PHPStan\Reflection\InitializerExprContext $context): Type
     {
         if ($expr instanceof TypeExpr) {
             return $expr->getExprType();
@@ -337,13 +337,13 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getConcatType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getConcatType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
         return $this->resolveConcatType($leftType, $rightType);
     }
-    public function resolveConcatType(Type $left, Type $right) : Type
+    public function resolveConcatType(Type $left, Type $right): Type
     {
         $leftStringType = $left->toString();
         $rightStringType = $right->toString();
@@ -427,7 +427,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getArrayType(Expr\Array_ $expr, callable $getTypeCallback) : Type
+    public function getArrayType(Expr\Array_ $expr, callable $getTypeCallback): Type
     {
         if (count($expr->items) > ConstantArrayTypeBuilder::ARRAY_COUNT_LIMIT) {
             return $this->oversizedArrayBuilder->build($expr, $getTypeCallback);
@@ -478,7 +478,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getBitwiseAndType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getBitwiseAndType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -535,7 +535,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getBitwiseOrType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getBitwiseOrType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -584,7 +584,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getBitwiseXorType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getBitwiseXorType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -633,7 +633,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getSpaceshipType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getSpaceshipType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $callbackLeftType = $getTypeCallback($left);
         $callbackRightType = $getTypeCallback($right);
@@ -661,7 +661,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getDivType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getDivType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -707,7 +707,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getModType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getModType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -797,7 +797,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getPlusType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getPlusType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -912,7 +912,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getMinusType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getMinusType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -948,7 +948,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getMulType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getMulType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -998,7 +998,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getPowType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getPowType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -1015,7 +1015,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getShiftLeftType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getShiftLeftType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -1062,7 +1062,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getShiftRightType(Expr $left, Expr $right, callable $getTypeCallback) : Type
+    public function getShiftRightType(Expr $left, Expr $right, callable $getTypeCallback): Type
     {
         $leftType = $getTypeCallback($left);
         $rightType = $getTypeCallback($right);
@@ -1106,7 +1106,7 @@ final class InitializerExprTypeResolver
         }
         return $this->resolveCommonMath(new Expr\BinaryOp\ShiftRight($left, $right), $leftType, $rightType);
     }
-    private function optimizeScalarType(Type $type) : Type
+    private function optimizeScalarType(Type $type): Type
     {
         $types = [];
         if ($type->isInteger()->yes()) {
@@ -1132,7 +1132,7 @@ final class InitializerExprTypeResolver
     /**
      * @return TypeResult<BooleanType>
      */
-    public function resolveIdenticalType(Type $leftType, Type $rightType) : TypeResult
+    public function resolveIdenticalType(Type $leftType, Type $rightType): TypeResult
     {
         if ($leftType instanceof NeverType || $rightType instanceof NeverType) {
             return new TypeResult(new ConstantBooleanType(\false), []);
@@ -1158,7 +1158,7 @@ final class InitializerExprTypeResolver
     /**
      * @return TypeResult<BooleanType>
      */
-    public function resolveEqualType(Type $leftType, Type $rightType) : TypeResult
+    public function resolveEqualType(Type $leftType, Type $rightType): TypeResult
     {
         if ($leftType->isEnum()->yes() && $rightType->isTrue()->no() || $rightType->isEnum()->yes() && $leftType->isTrue()->no()) {
             return $this->resolveIdenticalType($leftType, $rightType);
@@ -1172,7 +1172,7 @@ final class InitializerExprTypeResolver
      * @param callable(Type, Type): TypeResult<BooleanType> $valueComparisonCallback
      * @return TypeResult<BooleanType>
      */
-    private function resolveConstantArrayTypeComparison(ConstantArrayType $leftType, ConstantArrayType $rightType, callable $valueComparisonCallback) : TypeResult
+    private function resolveConstantArrayTypeComparison(ConstantArrayType $leftType, ConstantArrayType $rightType, callable $valueComparisonCallback): TypeResult
     {
         $leftKeyTypes = $leftType->getKeyTypes();
         $rightKeyTypes = $rightType->getKeyTypes();
@@ -1231,7 +1231,7 @@ final class InitializerExprTypeResolver
         }
         return new TypeResult($resultType->toBoolean(), []);
     }
-    private function callOperatorTypeSpecifyingExtensions(Expr\BinaryOp $expr, Type $leftType, Type $rightType) : ?Type
+    private function callOperatorTypeSpecifyingExtensions(Expr\BinaryOp $expr, Type $leftType, Type $rightType): ?Type
     {
         $operatorSigil = $expr->getOperatorSigil();
         $operatorTypeSpecifyingExtensions = $this->operatorTypeSpecifyingExtensionRegistryProvider->getRegistry()->getOperatorTypeSpecifyingExtensions($operatorSigil, $leftType, $rightType);
@@ -1248,7 +1248,7 @@ final class InitializerExprTypeResolver
     /**
      * @param BinaryOp\Plus|BinaryOp\Minus|BinaryOp\Mul|BinaryOp\Div|BinaryOp\ShiftLeft|BinaryOp\ShiftRight $expr
      */
-    private function resolveCommonMath(Expr\BinaryOp $expr, Type $leftType, Type $rightType) : Type
+    private function resolveCommonMath(Expr\BinaryOp $expr, Type $leftType, Type $rightType): Type
     {
         $types = TypeCombinator::union($leftType, $rightType);
         $leftNumberType = $leftType->toNumber();
@@ -1308,7 +1308,7 @@ final class InitializerExprTypeResolver
      * @param ConstantIntegerType|IntegerRangeType $range
      * @param BinaryOp\Div|BinaryOp\Minus|BinaryOp\Mul|BinaryOp\Plus|BinaryOp\ShiftLeft|BinaryOp\ShiftRight $node
      */
-    private function integerRangeMath(Type $range, BinaryOp $node, Type $operand) : Type
+    private function integerRangeMath(Type $range, BinaryOp $node, Type $operand): Type
     {
         if ($range instanceof IntegerRangeType) {
             $rangeMin = $range->getMin();
@@ -1361,44 +1361,42 @@ final class InitializerExprTypeResolver
                 $min = $rangeMin !== null ? $rangeMin - $operand->getValue() : null;
                 /** @var int|float|null $max */
                 $max = $rangeMax !== null ? $rangeMax - $operand->getValue() : null;
+            } else if ($rangeMin === $rangeMax && $rangeMin !== null && ($operand->getMin() === null || $operand->getMax() === null)) {
+                $min = null;
+                $max = $rangeMin;
             } else {
-                if ($rangeMin === $rangeMax && $rangeMin !== null && ($operand->getMin() === null || $operand->getMax() === null)) {
+                if ($operand->getMin() === null) {
                     $min = null;
-                    $max = $rangeMin;
+                } elseif ($rangeMin !== null) {
+                    if ($operand->getMax() !== null) {
+                        /** @var int|float $min */
+                        $min = $rangeMin - $operand->getMax();
+                    } else {
+                        /** @var int|float $min */
+                        $min = $rangeMin - $operand->getMin();
+                    }
                 } else {
-                    if ($operand->getMin() === null) {
-                        $min = null;
-                    } elseif ($rangeMin !== null) {
-                        if ($operand->getMax() !== null) {
-                            /** @var int|float $min */
-                            $min = $rangeMin - $operand->getMax();
-                        } else {
-                            /** @var int|float $min */
-                            $min = $rangeMin - $operand->getMin();
-                        }
-                    } else {
-                        $min = null;
-                    }
-                    if ($operand->getMax() === null) {
-                        $min = null;
+                    $min = null;
+                }
+                if ($operand->getMax() === null) {
+                    $min = null;
+                    $max = null;
+                } elseif ($rangeMax !== null) {
+                    if ($rangeMin !== null && $operand->getMin() === null) {
+                        /** @var int|float $min */
+                        $min = $rangeMin - $operand->getMax();
                         $max = null;
-                    } elseif ($rangeMax !== null) {
-                        if ($rangeMin !== null && $operand->getMin() === null) {
-                            /** @var int|float $min */
-                            $min = $rangeMin - $operand->getMax();
-                            $max = null;
-                        } elseif ($operand->getMin() !== null) {
-                            /** @var int|float $max */
-                            $max = $rangeMax - $operand->getMin();
-                        } else {
-                            $max = null;
-                        }
+                    } elseif ($operand->getMin() !== null) {
+                        /** @var int|float $max */
+                        $max = $rangeMax - $operand->getMin();
                     } else {
                         $max = null;
                     }
-                    if ($min !== null && $max !== null && $min > $max) {
-                        [$min, $max] = [$max, $min];
-                    }
+                } else {
+                    $max = null;
+                }
+                if ($min !== null && $max !== null && $min > $max) {
+                    [$min, $max] = [$max, $min];
                 }
             }
         } elseif ($node instanceof Expr\BinaryOp\Mul) {
@@ -1509,7 +1507,7 @@ final class InitializerExprTypeResolver
      * @param callable(Expr): Type $getTypeCallback
      * @param \PhpParser\Node\Name|\PhpParser\Node\Expr $class
      */
-    public function getClassConstFetchTypeByReflection($class, string $constantName, ?\PHPStan\Reflection\ClassReflection $classReflection, callable $getTypeCallback) : Type
+    public function getClassConstFetchTypeByReflection($class, string $constantName, ?\PHPStan\Reflection\ClassReflection $classReflection, callable $getTypeCallback): Type
     {
         $isObject = \false;
         if ($class instanceof Name) {
@@ -1544,7 +1542,7 @@ final class InitializerExprTypeResolver
             $isObject = \true;
         }
         if (strtolower($constantName) === 'class') {
-            return TypeTraverser::map($constantClassType, function (Type $type, callable $traverse) : Type {
+            return TypeTraverser::map($constantClassType, function (Type $type, callable $traverse): Type {
                 if ($type instanceof UnionType || $type instanceof IntersectionType) {
                     return $traverse($type);
                 }
@@ -1640,7 +1638,7 @@ final class InitializerExprTypeResolver
      * @param callable(Expr): Type $getTypeCallback
      * @param \PhpParser\Node\Name|\PhpParser\Node\Expr $class
      */
-    public function getClassConstFetchType($class, string $constantName, ?string $className, callable $getTypeCallback) : Type
+    public function getClassConstFetchType($class, string $constantName, ?string $className, callable $getTypeCallback): Type
     {
         $classReflection = null;
         if ($className !== null && $this->getReflectionProvider()->hasClass($className)) {
@@ -1651,7 +1649,7 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getUnaryMinusType(Expr $expr, callable $getTypeCallback) : Type
+    public function getUnaryMinusType(Expr $expr, callable $getTypeCallback): Type
     {
         $type = $getTypeCallback($expr)->toNumber();
         $scalarValues = $type->getConstantScalarValues();
@@ -1679,10 +1677,10 @@ final class InitializerExprTypeResolver
     /**
      * @param callable(Expr): Type $getTypeCallback
      */
-    public function getBitwiseNotType(Expr $expr, callable $getTypeCallback) : Type
+    public function getBitwiseNotType(Expr $expr, callable $getTypeCallback): Type
     {
         $exprType = $getTypeCallback($expr);
-        return TypeTraverser::map($exprType, static function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($exprType, static function (Type $type, callable $traverse): Type {
             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                 return $traverse($type);
             }
@@ -1705,7 +1703,7 @@ final class InitializerExprTypeResolver
             return new ErrorType();
         });
     }
-    private function resolveName(Name $name, ?\PHPStan\Reflection\ClassReflection $classReflection) : string
+    private function resolveName(Name $name, ?\PHPStan\Reflection\ClassReflection $classReflection): string
     {
         $originalClass = (string) $name;
         if ($classReflection !== null) {
@@ -1720,7 +1718,7 @@ final class InitializerExprTypeResolver
         }
         return $originalClass;
     }
-    private function resolveTypeByName(Name $name, ?\PHPStan\Reflection\ClassReflection $classReflection) : TypeWithClassName
+    private function resolveTypeByName(Name $name, ?\PHPStan\Reflection\ClassReflection $classReflection): TypeWithClassName
     {
         if ($name->toLowerString() === 'static' && $classReflection !== null) {
             return new StaticType($classReflection);
@@ -1738,15 +1736,15 @@ final class InitializerExprTypeResolver
     /**
      * @param mixed $value
      */
-    private function getTypeFromValue($value) : Type
+    private function getTypeFromValue($value): Type
     {
         return ConstantTypeHelper::getTypeFromValue($value);
     }
-    private function getReflectionProvider() : \PHPStan\Reflection\ReflectionProvider
+    private function getReflectionProvider(): \PHPStan\Reflection\ReflectionProvider
     {
         return $this->reflectionProviderProvider->getReflectionProvider();
     }
-    private function getNeverType(Type $leftType, Type $rightType) : Type
+    private function getNeverType(Type $leftType, Type $rightType): Type
     {
         // make sure we don't lose the explicit flag in the process
         if ($leftType instanceof NeverType && $leftType->isExplicit()) {

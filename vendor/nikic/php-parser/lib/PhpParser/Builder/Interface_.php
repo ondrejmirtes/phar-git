@@ -80,7 +80,7 @@ class Interface_ extends \PhpParser\Builder\Declaration
      *
      * @return Stmt\Interface_ The built interface node
      */
-    public function getNode() : PhpParser\Node
+    public function getNode(): PhpParser\Node
     {
         return new Stmt\Interface_($this->name, ['extends' => $this->extends, 'stmts' => \array_merge($this->constants, $this->methods), 'attrGroups' => $this->attributeGroups], $this->attributes);
     }

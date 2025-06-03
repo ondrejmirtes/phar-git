@@ -47,7 +47,7 @@ final class ValidateIgnoredErrorsExtension extends CompilerExtension
     /**
      * @throws InvalidIgnoredErrorPatternsException
      */
-    public function loadConfiguration() : void
+    public function loadConfiguration(): void
     {
         $builder = $this->getContainerBuilder();
         if (!$builder->parameters['__validate']) {
@@ -68,23 +68,23 @@ final class ValidateIgnoredErrorsExtension extends CompilerExtension
         $phpDocParserConfig = new ParserConfig([]);
         $ignoredRegexValidator = new IgnoredRegexValidator($parser, new TypeStringResolver(new Lexer($phpDocParserConfig), new TypeParser($phpDocParserConfig, new ConstExprParser($phpDocParserConfig)), new TypeNodeResolver(new DirectTypeNodeResolverExtensionRegistryProvider(new class implements TypeNodeResolverExtensionRegistry
         {
-            public function getExtensions() : array
+            public function getExtensions(): array
             {
                 return [];
             }
         }), $reflectionProviderProvider, new DirectTypeAliasResolverProvider(new class implements TypeAliasResolver
         {
-            public function hasTypeAlias(string $aliasName, ?string $classNameScope) : bool
+            public function hasTypeAlias(string $aliasName, ?string $classNameScope): bool
             {
                 return \false;
             }
-            public function resolveTypeAlias(string $aliasName, NameScope $nameScope) : ?Type
+            public function resolveTypeAlias(string $aliasName, NameScope $nameScope): ?Type
             {
                 return null;
             }
         }), $constantResolver, new InitializerExprTypeResolver($constantResolver, $reflectionProviderProvider, new PhpVersion(PHP_VERSION_ID), new class implements OperatorTypeSpecifyingExtensionRegistryProvider
         {
-            public function getRegistry() : OperatorTypeSpecifyingExtensionRegistry
+            public function getRegistry(): OperatorTypeSpecifyingExtensionRegistry
             {
                 return new OperatorTypeSpecifyingExtensionRegistry([]);
             }
@@ -148,7 +148,7 @@ final class ValidateIgnoredErrorsExtension extends CompilerExtension
         }
         throw new \PHPStan\DependencyInjection\InvalidIgnoredErrorPatternsException($errors);
     }
-    private function validateMessage(IgnoredRegexValidator $ignoredRegexValidator, string $ignoreMessage) : ?string
+    private function validateMessage(IgnoredRegexValidator $ignoredRegexValidator, string $ignoreMessage): ?string
     {
         try {
             Strings::match('', $ignoreMessage);
@@ -171,11 +171,11 @@ final class ValidateIgnoredErrorsExtension extends CompilerExtension
     /**
      * @param array<string, string> $ignoredTypes
      */
-    private function createIgnoredTypesError(string $regex, array $ignoredTypes) : string
+    private function createIgnoredTypesError(string $regex, array $ignoredTypes): string
     {
         return sprintf("Ignored error %s has an unescaped '|' which leads to ignoring more errors than intended. Use '\\|' instead.\n%s", $regex, sprintf("It ignores all errors containing the following types:\n%s", implode("\n", array_map(static fn(string $typeDescription): string => sprintf('* %s', $typeDescription), array_keys($ignoredTypes)))));
     }
-    private function createAnchorInTheMiddleError(string $regex) : string
+    private function createAnchorInTheMiddleError(string $regex): string
     {
         return sprintf("Ignored error %s has an unescaped anchor '\$' in the middle. This leads to unintended behavior. Use '\\\$' instead.", $regex);
     }

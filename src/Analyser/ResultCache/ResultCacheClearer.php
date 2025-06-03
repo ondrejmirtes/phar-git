@@ -13,7 +13,7 @@ final class ResultCacheClearer
     {
         $this->cacheFilePath = $cacheFilePath;
     }
-    public function clear() : string
+    public function clear(): string
     {
         $dir = dirname($this->cacheFilePath);
         if (!is_file($this->cacheFilePath)) {

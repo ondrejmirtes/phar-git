@@ -20,7 +20,7 @@ final class IgnoredError
      * @param mixed[]|string $ignoredError
      * @return string Representation of the ignored error
      */
-    public static function stringifyPattern($ignoredError) : string
+    public static function stringifyPattern($ignoredError): string
     {
         if (!is_array($ignoredError)) {
             return $ignoredError;
@@ -53,7 +53,7 @@ final class IgnoredError
     /**
      * @return bool To ignore or not to ignore?
      */
-    public static function shouldIgnore(FileHelper $fileHelper, Error $error, ?string $ignoredErrorPattern, ?string $identifier, ?string $path) : bool
+    public static function shouldIgnore(FileHelper $fileHelper, Error $error, ?string $ignoredErrorPattern, ?string $identifier, ?string $path): bool
     {
         if ($identifier !== null) {
             if ($error->getIdentifier() !== $identifier) {
@@ -63,8 +63,8 @@ final class IgnoredError
         if ($ignoredErrorPattern !== null) {
             // normalize newlines to allow working with ignore-patterns independent of used OS newline-format
             $errorMessage = $error->getMessage();
-            $errorMessage = str_replace(['\\r\\n', '\\r'], '\\n', $errorMessage);
-            $ignoredErrorPattern = str_replace([preg_quote('\\r\\n'), preg_quote('\\r')], preg_quote('\\n'), $ignoredErrorPattern);
+            $errorMessage = str_replace(['\r\n', '\r'], '\n', $errorMessage);
+            $ignoredErrorPattern = str_replace([preg_quote('\r\n'), preg_quote('\r')], preg_quote('\n'), $ignoredErrorPattern);
             if (Strings::match($errorMessage, $ignoredErrorPattern) === null) {
                 return \false;
             }

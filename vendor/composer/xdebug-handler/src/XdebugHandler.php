@@ -81,7 +81,7 @@ class XdebugHandler
     /**
      * Activates status message output to a PSR3 logger
      */
-    public function setLogger(LoggerInterface $logger) : self
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->statusWriter->setLogger($logger);
         return $this;
@@ -89,7 +89,7 @@ class XdebugHandler
     /**
      * Sets the main script location if it cannot be called from argv
      */
-    public function setMainScript(string $script) : self
+    public function setMainScript(string $script): self
     {
         $this->script = $script;
         return $this;
@@ -97,7 +97,7 @@ class XdebugHandler
     /**
      * Persist the settings to keep Xdebug out of sub-processes
      */
-    public function setPersistent() : self
+    public function setPersistent(): self
     {
         $this->persistent = \true;
         return $this;
@@ -109,7 +109,7 @@ class XdebugHandler
      * environment variable to 1. This variable is used internally so that
      * the restarted process is created only once.
      */
-    public function check() : void
+    public function check(): void
     {
         $this->notify(Status::CHECK, self::$xdebugVersion . '|' . self::$xdebugMode);
         $envArgs = \explode('|', (string) \getenv($this->envAllowXdebug));
@@ -151,7 +151,7 @@ class XdebugHandler
      *
      * @return non-empty-list<string>
      */
-    public static function getAllIniFiles() : array
+    public static function getAllIniFiles(): array
     {
         if (self::$name !== null) {
             $env = \getenv(self::$name . self::SUFFIX_INIS);
@@ -174,7 +174,7 @@ class XdebugHandler
      *
      * @phpstan-return restartData|null
      */
-    public static function getRestartSettings() : ?array
+    public static function getRestartSettings(): ?array
     {
         $envArgs = \explode('|', (string) \getenv(self::RESTART_SETTINGS));
         if (\count($envArgs) !== 6 || !self::$inRestart && \php_ini_loaded_file() !== $envArgs[0]) {
@@ -185,7 +185,7 @@ class XdebugHandler
     /**
      * Returns the Xdebug version that triggered a successful restart
      */
-    public static function getSkippedVersion() : string
+    public static function getSkippedVersion(): string
     {
         return (string) self::$skipped;
     }
@@ -195,7 +195,7 @@ class XdebugHandler
      * true: if Xdebug is loaded and is running in an active mode.
      * false: if Xdebug is not loaded, or it is running with xdebug.mode=off.
      */
-    public static function isXdebugActive() : bool
+    public static function isXdebugActive(): bool
     {
         self::setXdebugDetails();
         return self::$xdebugActive;
@@ -205,7 +205,7 @@ class XdebugHandler
      *
      * The default is to restart if Xdebug is loaded and its mode is not "off".
      */
-    protected function requiresRestart(bool $default) : bool
+    protected function requiresRestart(bool $default): bool
     {
         return $default;
     }
@@ -214,7 +214,7 @@ class XdebugHandler
      *
      * @param non-empty-list<string> $command
      */
-    protected function restart(array $command) : void
+    protected function restart(array $command): void
     {
         $this->doRestart($command);
     }
@@ -224,7 +224,7 @@ class XdebugHandler
      * @param non-empty-list<string> $command
      * @phpstan-return never
      */
-    private function doRestart(array $command) : void
+    private function doRestart(array $command): void
     {
         if (\PHP_VERSION_ID >= 70400) {
             $cmd = $command;
@@ -267,7 +267,7 @@ class XdebugHandler
      *
      * @return non-empty-list<string>|null
      */
-    private function prepareRestart() : ?array
+    private function prepareRestart(): ?array
     {
         if (!$this->cli) {
             $this->notify(Status::ERROR, 'Unsupported SAPI: ' . \PHP_SAPI);
@@ -313,15 +313,15 @@ class XdebugHandler
      *
      * @param non-empty-list<string> $iniFiles All ini files used in the current process
      */
-    private function writeTmpIni(string $tmpFile, array $iniFiles, ?string &$error) : bool
+    private function writeTmpIni(string $tmpFile, array $iniFiles, ?string &$error): bool
     {
         // $iniFiles has at least one item and it may be empty
         if ($iniFiles[0] === '') {
             \array_shift($iniFiles);
         }
         $content = '';
-        $sectionRegex = '/^\\s*\\[(?:PATH|HOST)\\s*=/mi';
-        $xdebugRegex = '/^\\s*(zend_extension\\s*=.*xdebug.*)$/mi';
+        $sectionRegex = '/^\s*\[(?:PATH|HOST)\s*=/mi';
+        $xdebugRegex = '/^\s*(zend_extension\s*=.*xdebug.*)$/mi';
         foreach ($iniFiles as $file) {
             // Check for inaccessible ini files
             if (($data = @\file_get_contents($file)) === \false) {
@@ -352,7 +352,7 @@ class XdebugHandler
      * @param non-empty-list<string> $argv
      * @return non-empty-list<string>
      */
-    private function getCommand(array $argv, string $tmpIni, string $mainScript) : array
+    private function getCommand(array $argv, string $tmpIni, string $mainScript): array
     {
         $php = [\PHP_BINARY];
         $args = \array_slice($argv, 1);
@@ -369,7 +369,7 @@ class XdebugHandler
      *
      * @param non-empty-list<string> $iniFiles All ini files used in the current process
      */
-    private function setEnvironment(bool $scannedInis, array $iniFiles, string $tmpIni) : bool
+    private function setEnvironment(bool $scannedInis, array $iniFiles, string $tmpIni): bool
     {
         $scanDir = \getenv('PHP_INI_SCAN_DIR');
         $phprc = \getenv('PHPRC');
@@ -390,7 +390,7 @@ class XdebugHandler
     /**
      * Logs status messages
      */
-    private function notify(string $op, ?string $data = null) : void
+    private function notify(string $op, ?string $data = null): void
     {
         $this->statusWriter->report($op, $data);
     }
@@ -401,7 +401,7 @@ class XdebugHandler
      * @param mixed[] $iniConfig Settings from user ini files
      *
      */
-    private function mergeLoadedConfig(array $loadedConfig, array $iniConfig) : string
+    private function mergeLoadedConfig(array $loadedConfig, array $iniConfig): string
     {
         $content = '';
         foreach ($loadedConfig as $name => $value) {
@@ -411,7 +411,7 @@ class XdebugHandler
             }
             if (!isset($iniConfig[$name]) || $iniConfig[$name] !== $value) {
                 // Double-quote escape each value
-                $content .= $name . '="' . \addcslashes($value, '\\"') . '"' . \PHP_EOL;
+                $content .= $name . '="' . \addcslashes($value, '\"') . '"' . \PHP_EOL;
             }
         }
         return $content;
@@ -421,7 +421,7 @@ class XdebugHandler
      *
      * @param non-empty-list<string> $argv
      */
-    private function checkMainScript(string &$mainScript, array $argv) : bool
+    private function checkMainScript(string &$mainScript, array $argv): bool
     {
         if ($mainScript !== '') {
             // Allow an application to set -- for standard input
@@ -443,7 +443,7 @@ class XdebugHandler
      *
      * @param non-empty-list<string> $envArgs
      */
-    private function setEnvRestartSettings(array $envArgs) : void
+    private function setEnvRestartSettings(array $envArgs): void
     {
         $settings = [\php_ini_loaded_file(), $envArgs[2], $envArgs[3], $envArgs[4], \getenv($this->envOriginalInis), self::$skipped];
         Process::setEnv(self::RESTART_SETTINGS, \implode('|', $settings));
@@ -453,7 +453,7 @@ class XdebugHandler
      *
      * @phpstan-param restartData $settings
      */
-    private function syncSettings(array $settings) : void
+    private function syncSettings(array $settings): void
     {
         if (\false === \getenv($this->envOriginalInis)) {
             // Called by another app, so make original inis available
@@ -465,7 +465,7 @@ class XdebugHandler
     /**
      * Returns true if there are no known configuration issues
      */
-    private function checkConfiguration(?string &$info) : bool
+    private function checkConfiguration(?string &$info): bool
     {
         if (!\function_exists('proc_open')) {
             $info = 'proc_open function is disabled';
@@ -503,7 +503,7 @@ class XdebugHandler
      *
      * Available on Unix PHP 7.1+ with the pcntl extension and Windows PHP 7.4+.
      */
-    private function tryEnableSignals() : void
+    private function tryEnableSignals(): void
     {
         if (\function_exists('pcntl_async_signals') && \function_exists('pcntl_signal')) {
             \pcntl_async_signals(\true);
@@ -529,7 +529,7 @@ class XdebugHandler
      *
      * @return non-empty-list<string>|null
      */
-    private function checkServerArgv() : ?array
+    private function checkServerArgv(): ?array
     {
         $result = [];
         if (isset($_SERVER['argv']) && \is_array($_SERVER['argv'])) {
@@ -545,7 +545,7 @@ class XdebugHandler
     /**
      * Sets static properties $xdebugActive, $xdebugVersion and $xdebugMode
      */
-    private static function setXdebugDetails() : void
+    private static function setXdebugDetails(): void
     {
         if (self::$xdebugActive !== null) {
             return;

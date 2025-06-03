@@ -37,11 +37,11 @@ class For_ extends Node\Stmt
         $this->loop = $subNodes['loop'] ?? [];
         $this->stmts = $subNodes['stmts'] ?? [];
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['init', 'cond', 'loop', 'stmts'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Stmt_For';
     }

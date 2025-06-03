@@ -15,71 +15,71 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 trait NonObjectTypeTrait
 {
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): Type
     {
         return new ErrorType();
     }

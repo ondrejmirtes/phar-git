@@ -46,7 +46,7 @@ final class NeonAdapter implements Adapter
     /**
      * @return mixed[]
      */
-    public function load(string $file) : array
+    public function load(string $file): array
     {
         $contents = FileReader::read($file);
         try {
@@ -59,7 +59,7 @@ final class NeonAdapter implements Adapter
      * @param mixed[] $arr
      * @return mixed[]
      */
-    public function process(array $arr, string $fileKey, string $file) : array
+    public function process(array $arr, string $fileKey, string $file): array
     {
         $res = [];
         foreach ($arr as $key => $val) {
@@ -95,14 +95,12 @@ final class NeonAdapter implements Adapter
                         $tmp = new Statement($tmp === null ? $st->getEntity() : [$tmp, ltrim(implode('::', (array) $st->getEntity()), ':')], $st->arguments);
                     }
                     $val = $tmp;
+                } else if (in_array($keyToResolve, ['[parameters][excludePaths][]', '[parameters][excludePaths][analyse][]', '[parameters][excludePaths][analyseAndScan][]'], \true) && count($val->attributes) === 1 && $val->attributes[0] === '?' && is_string($val->value) && !str_contains($val->value, '%') && !str_starts_with($val->value, '*')) {
+                    $fileHelper = $this->createFileHelperByFile($file);
+                    $val = new OptionalPath($fileHelper->normalizePath($fileHelper->absolutizePath($val->value)));
                 } else {
-                    if (in_array($keyToResolve, ['[parameters][excludePaths][]', '[parameters][excludePaths][analyse][]', '[parameters][excludePaths][analyseAndScan][]'], \true) && count($val->attributes) === 1 && $val->attributes[0] === '?' && is_string($val->value) && !str_contains($val->value, '%') && !str_starts_with($val->value, '*')) {
-                        $fileHelper = $this->createFileHelperByFile($file);
-                        $val = new OptionalPath($fileHelper->normalizePath($fileHelper->absolutizePath($val->value)));
-                    } else {
-                        $tmp = $this->process([$val->value], $fileKeyToPass, $file);
-                        $val = new Statement($tmp[0], $this->process($val->attributes, $fileKeyToPass, $file));
-                    }
+                    $tmp = $this->process([$val->value], $fileKeyToPass, $file);
+                    $val = new Statement($tmp[0], $this->process($val->attributes, $fileKeyToPass, $file));
                 }
             }
             if (in_array($keyToResolve, $this->expandRelativePaths, \true) && is_string($val) && !str_contains($val, '%') && !str_starts_with($val, '*')) {
@@ -116,7 +114,7 @@ final class NeonAdapter implements Adapter
         }
         return $res;
     }
-    private function createFileHelperByFile(string $file) : FileHelper
+    private function createFileHelperByFile(string $file): FileHelper
     {
         $dir = dirname($file);
         if (!isset($this->fileHelpers[$dir])) {

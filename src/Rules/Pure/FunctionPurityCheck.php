@@ -33,7 +33,7 @@ final class FunctionPurityCheck
      * @return list<IdentifierRuleError>
      * @param \PHPStan\Reflection\FunctionReflection|\PHPStan\Reflection\ExtendedMethodReflection $functionReflection
      */
-    public function check(string $functionDescription, string $identifier, $functionReflection, array $parameters, Type $returnType, array $impurePoints, array $throwPoints, array $statements, bool $isConstructor) : array
+    public function check(string $functionDescription, string $identifier, $functionReflection, array $parameters, Type $returnType, array $impurePoints, array $throwPoints, array $statements, bool $isConstructor): array
     {
         $errors = [];
         $isPure = $functionReflection->isPure();
@@ -65,7 +65,7 @@ final class FunctionPurityCheck
                     $hasByRef = \true;
                     break;
                 }
-                $statements = array_filter($statements, static function (Stmt $stmt) : bool {
+                $statements = array_filter($statements, static function (Stmt $stmt): bool {
                     if ($stmt instanceof Stmt\Nop) {
                         return \false;
                     }

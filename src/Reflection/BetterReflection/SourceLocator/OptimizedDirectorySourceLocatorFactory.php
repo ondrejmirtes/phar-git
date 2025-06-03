@@ -34,7 +34,7 @@ final class OptimizedDirectorySourceLocatorFactory
         $this->extraTypes = $this->phpVersion->supportsEnums() ? '|enum' : '';
         $this->cleaner = new \PHPStan\Reflection\BetterReflection\SourceLocator\PhpFileCleaner();
     }
-    public function createByDirectory(string $directory) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
+    public function createByDirectory(string $directory): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
     {
         $files = $this->fileFinder->findFiles([$directory])->getFiles();
         $fileHashes = [];
@@ -77,7 +77,7 @@ final class OptimizedDirectorySourceLocatorFactory
     /**
      * @param string[] $files
      */
-    public function createByFiles(array $files) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
+    public function createByFiles(array $files): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocator
     {
         $symbols = [];
         foreach ($files as $file) {
@@ -91,7 +91,7 @@ final class OptimizedDirectorySourceLocatorFactory
      * @param array<string, array{string, string[], string[], string[]}> $symbols
      * @return array{array<string, string>, array<string, array<int, string>>, array<string, string>}
      */
-    private function changeStructure(array $symbols) : array
+    private function changeStructure(array $symbols): array
     {
         $classToFile = [];
         $constantToFile = [];
@@ -118,25 +118,25 @@ final class OptimizedDirectorySourceLocatorFactory
      *
      * @return array{string[], string[], string[]}
      */
-    private function findSymbols(string $file) : array
+    private function findSymbols(string $file): array
     {
         $contents = @php_strip_whitespace($file);
         if ($contents === '') {
             return [[], [], []];
         }
-        $matchResults = (bool) preg_match_all(sprintf('{\\b(?:(?:class|interface|trait|const|function%s)\\s)|(?:define\\s*\\()}i', $this->extraTypes), $contents, $matches);
+        $matchResults = (bool) preg_match_all(sprintf('{\b(?:(?:class|interface|trait|const|function%s)\s)|(?:define\s*\()}i', $this->extraTypes), $contents, $matches);
         if (!$matchResults) {
             return [[], [], []];
         }
         $contents = $this->cleaner->clean($contents, count($matches[0]));
         preg_match_all(sprintf('{
 			(?:
-				\\b(?<![\\$:>])(?:
-					(?: (?P<type>class|interface|trait%s) \\s++ (?P<name>[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff\\-]*+) )
-					| (?: (?P<function>function) \\s++ (?:&\\s*)? (?P<fname>[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff\\-]*+) \\s*+ [&\\(] )
-					| (?: (?P<constant>const) \\s++ (?P<cname>[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff\\-]*+) \\s*+ [^;] )
-					| (?: (?:\\\\)? (?P<define>define) \\s*+ \\( \\s*+ [\'"] (?P<dname>[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*+(?:[\\\\]{1,2}[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*+)*+) )
-					| (?: (?P<ns>namespace) (?P<nsname>\\s++[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*+(?:\\s*+\\\\\\s*+[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*+)*+)? \\s*+ [\\{;] )
+				\b(?<![\$:>])(?:
+					(?: (?P<type>class|interface|trait%s) \s++ (?P<name>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\-]*+) )
+					| (?: (?P<function>function) \s++ (?:&\s*)? (?P<fname>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\-]*+) \s*+ [&\(] )
+					| (?: (?P<constant>const) \s++ (?P<cname>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\-]*+) \s*+ [^;] )
+					| (?: (?:\\\\)? (?P<define>define) \s*+ \( \s*+ [\'"] (?P<dname>[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+(?:[\\\\]{1,2}[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+)*+) )
+					| (?: (?P<ns>namespace) (?P<nsname>\s++[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+(?:\s*+\\\\\\s*+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*+)*+)? \s*+ [\{;] )
 				)
 			)
 		}ix', $this->extraTypes), $contents, $matches);
@@ -146,7 +146,7 @@ final class OptimizedDirectorySourceLocatorFactory
         $namespace = '';
         for ($i = 0, $len = count($matches['type']); $i < $len; $i++) {
             if (isset($matches['ns'][$i]) && $matches['ns'][$i] !== '') {
-                $namespace = preg_replace('~\\s+~', '', strtolower($matches['nsname'][$i])) . '\\';
+                $namespace = preg_replace('~\s+~', '', strtolower($matches['nsname'][$i])) . '\\';
                 continue;
             }
             if ($matches['function'][$i] !== '') {

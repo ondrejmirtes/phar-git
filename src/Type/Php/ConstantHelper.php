@@ -16,7 +16,7 @@ use function ltrim;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ConstantHelper
 {
-    public function createExprFromConstantName(string $constantName) : ?Expr
+    public function createExprFromConstantName(string $constantName): ?Expr
     {
         if ($constantName === '') {
             return null;

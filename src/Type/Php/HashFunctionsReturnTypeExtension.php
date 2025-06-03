@@ -38,12 +38,12 @@ final class HashFunctionsReturnTypeExtension implements DynamicFunctionReturnTyp
         $this->phpVersion = $phpVersion;
         $this->hashAlgorithms = hash_algos();
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         $name = strtolower($functionReflection->getName());
         return isset(self::SUPPORTED_FUNCTIONS[$name]);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (!isset($functionCall->getArgs()[0])) {
             return null;
@@ -72,7 +72,7 @@ final class HashFunctionsReturnTypeExtension implements DynamicFunctionReturnTyp
         $neverType = new NeverType();
         $falseType = new ConstantBooleanType(\false);
         $invalidAlgorithmType = $this->phpVersion->throwsValueErrorForInternalFunctions() ? $neverType : $falseType;
-        $returnTypes = array_map(function (ConstantStringType $type) use($functionData, $stringReturnType, $invalidAlgorithmType) {
+        $returnTypes = array_map(function (ConstantStringType $type) use ($functionData, $stringReturnType, $invalidAlgorithmType) {
             $algorithm = strtolower($type->getValue());
             if (!in_array($algorithm, $this->hashAlgorithms, \true)) {
                 return $invalidAlgorithmType;

@@ -13,30 +13,30 @@ final class Lexer
     public const Patterns = [
         // strings
         Token::String => '
-			\'\'\'\\n (?:(?: [^\\n] | \\n(?![\\t\\ ]*+\'\'\') )*+ \\n)?[\\t\\ ]*+\'\'\' |
-			"""\\n (?:(?: [^\\n] | \\n(?![\\t\\ ]*+""") )*+ \\n)?[\\t\\ ]*+""" |
-			\' (?: \'\' | [^\'\\n] )*+ \' |
+			\'\'\'\n (?:(?: [^\n] | \n(?![\t\ ]*+\'\'\') )*+ \n)?[\t\ ]*+\'\'\' |
+			"""\n (?:(?: [^\n] | \n(?![\t\ ]*+""") )*+ \n)?[\t\ ]*+""" |
+			\' (?: \'\' | [^\'\n] )*+ \' |
 			" (?: \\\\. | [^"\\\\\\n] )*+ "
 		',
         // literal / boolean / integer / float
         Token::Literal => '
-			(?: [^#"\',:=[\\]{}()\\n\\t\\ `-] | (?<!["\']) [:-] [^"\',=[\\]{}()\\n\\t\\ ] )
+			(?: [^#"\',:=[\]{}()\n\t\ `-] | (?<!["\']) [:-] [^"\',=[\]{}()\n\t\ ] )
 			(?:
-				[^,:=\\]})(\\n\\t\\ ]++ |
-				:(?! [\\n\\t\\ ,\\]})] | $ ) |
-				[\\ \\t]++ [^#,:=\\]})(\\n\\t\\ ]
+				[^,:=\]})(\n\t\ ]++ |
+				:(?! [\n\t\ ,\]})] | $ ) |
+				[\ \t]++ [^#,:=\]})(\n\t\ ]
 			)*+
 		',
         // punctuation
-        Token::Char => '[,:=[\\]{}()-]',
+        Token::Char => '[,:=[\]{}()-]',
         // comment
-        Token::Comment => '\\#.*+',
+        Token::Comment => '\#.*+',
         // new line
-        Token::Newline => '\\n++',
+        Token::Newline => '\n++',
         // whitespace
-        Token::Whitespace => '[\\t\\ ]++',
+        Token::Whitespace => '[\t\ ]++',
     ];
-    public function tokenize(string $input) : TokenStream
+    public function tokenize(string $input): TokenStream
     {
         $input = \str_replace("\r", '', $input);
         $pattern = '~(' . \implode(')|(', self::Patterns) . ')~Amixu';
@@ -64,13 +64,13 @@ final class Lexer
         }
         $stream = new TokenStream($tokens);
         if ($offset !== \strlen($input)) {
-            $s = \str_replace("\n", '\\n', \substr($input, $offset, 40));
+            $s = \str_replace("\n", '\n', \substr($input, $offset, 40));
             $stream->error("Unexpected '{$s}'", \count($tokens));
         }
         return $stream;
     }
-    public static function requiresDelimiters(string $s) : bool
+    public static function requiresDelimiters(string $s): bool
     {
-        return \preg_match('~[\\x00-\\x1F]|^[+-.]?\\d|^(true|false|yes|no|on|off|null)$~Di', $s) || !\preg_match('~^' . self::Patterns[Token::Literal] . '$~Dx', $s);
+        return \preg_match('~[\x00-\x1F]|^[+-.]?\d|^(true|false|yes|no|on|off|null)$~Di', $s) || !\preg_match('~^' . self::Patterns[Token::Literal] . '$~Dx', $s);
     }
 }

@@ -72,21 +72,21 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     private const EXTRA_OFFSET_CLASSES = [
         'DOMNamedNodeMap',
         // Only read and existence
-        'Dom\\NamedNodeMap',
+        'Dom\NamedNodeMap',
         // Only read and existence
         'DOMNodeList',
         // Only read and existence
-        'Dom\\NodeList',
+        'Dom\NodeList',
         // Only read and existence
-        'Dom\\HTMLCollection',
+        'Dom\HTMLCollection',
         // Only read and existence
-        'Dom\\DtdNamedNodeMap',
+        'Dom\DtdNamedNodeMap',
         // Only read and existence
         'PDORow',
         // Only read and existence
         'ResourceBundle',
         // Only read
-        'FFI\\CData',
+        'FFI\CData',
         // Very funky and weird
         'SimpleXMLElement',
         'Threaded',
@@ -118,7 +118,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         $this->subtractedType = $subtractedType;
     }
-    public static function resetCaches() : void
+    public static function resetCaches(): void
     {
         self::$superTypes = [];
         self::$methods = [];
@@ -126,18 +126,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         self::$ancestors = [];
         self::$enumCases = [];
     }
-    private static function createFromReflection(ClassReflection $reflection) : self
+    private static function createFromReflection(ClassReflection $reflection): self
     {
         if (!$reflection->isGeneric()) {
             return new \PHPStan\Type\ObjectType($reflection->getName());
         }
         return new GenericObjectType($reflection->getName(), $reflection->typeMapToList($reflection->getActiveTemplateTypeMap()), null, null, $reflection->varianceMapToList($reflection->getCallSiteVarianceMap()));
     }
-    public function getClassName() : string
+    public function getClassName(): string
     {
         return $this->className;
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -155,11 +155,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createNo();
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         if (!$scope->isInClass()) {
             $canAccessProperty = 'no';
@@ -215,7 +215,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     /**
      * @deprecated Not in use anymore.
      */
-    public function getPropertyWithoutTransformingStatic(string $propertyName, ClassMemberAccessAnswerer $scope) : PropertyReflection
+    public function getPropertyWithoutTransformingStatic(string $propertyName, ClassMemberAccessAnswerer $scope): PropertyReflection
     {
         $classReflection = $this->getNakedClassReflection();
         if ($classReflection === null) {
@@ -229,18 +229,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $classReflection->getProperty($propertyName, $scope);
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [$this->className];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         if ($this->className === '') {
             return [];
         }
         return [$this->className];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -248,7 +248,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return [$classReflection];
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\StaticType) {
             return $this->checkSubclassAcceptability($type->getClassName());
@@ -271,7 +271,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->checkSubclassAcceptability($thatClassNames[0]);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         $thatClassNames = $type->getObjectClassNames();
         if (!$type instanceof \PHPStan\Type\CompoundType && $thatClassNames === [] && !$type instanceof \PHPStan\Type\ObjectWithoutClassType) {
@@ -365,7 +365,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return self::$superTypes[$thisDescription][$description] = \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
@@ -384,7 +384,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->subtractedType->equals($type->subtractedType);
     }
-    private function checkSubclassAcceptability(string $thatClass) : \PHPStan\Type\AcceptsResult
+    private function checkSubclassAcceptability(string $thatClass): \PHPStan\Type\AcceptsResult
     {
         if ($this->className === $thatClass) {
             return \PHPStan\Type\AcceptsResult::createYes();
@@ -404,23 +404,23 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return \PHPStan\Type\AcceptsResult::createFromBoolean($thatReflection->isSubclassOfClass($thisReflection));
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
-        $preciseNameCallback = function () : string {
+        $preciseNameCallback = function (): string {
             $reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
             if (!$reflectionProvider->hasClass($this->className)) {
                 return $this->className;
             }
             return $reflectionProvider->getClassName($this->className);
         };
-        $preciseWithSubtracted = function () use($level) : string {
+        $preciseWithSubtracted = function () use ($level): string {
             $description = $this->className;
             if ($this->subtractedType !== null) {
                 $description .= $this->subtractedType instanceof \PHPStan\Type\UnionType ? sprintf('~(%s)', $this->subtractedType->describe($level)) : sprintf('~%s', $this->subtractedType->describe($level));
             }
             return $description;
         };
-        return $level->handle($preciseNameCallback, $preciseNameCallback, $preciseWithSubtracted, function () use($preciseWithSubtracted) : string {
+        return $level->handle($preciseNameCallback, $preciseNameCallback, $preciseWithSubtracted, function () use ($preciseWithSubtracted): string {
             $reflection = $this->classReflection;
             $line = '';
             if ($reflection !== null) {
@@ -431,11 +431,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
             return $preciseWithSubtracted() . '-' . static::class . '-' . $line . $this->describeAdditionalCacheKey();
         });
     }
-    protected function describeAdditionalCacheKey() : string
+    protected function describeAdditionalCacheKey(): string
     {
         return '';
     }
-    private function describeCache() : string
+    private function describeCache(): string
     {
         if ($this->cachedDescription !== null) {
             return $this->cachedDescription;
@@ -466,18 +466,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->cachedDescription = $description;
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         if ($this->isInstanceOf('SimpleXMLElement')->yes()) {
             return new \PHPStan\Type\UnionType([new \PHPStan\Type\FloatType(), new \PHPStan\Type\IntegerType()]);
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return $this->toNumber()->toAbsoluteNumber();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         if ($this->isInstanceOf('SimpleXMLElement')->yes()) {
             return new \PHPStan\Type\IntegerType();
@@ -487,16 +487,16 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         if ($this->isInstanceOf('SimpleXMLElement')->yes()) {
             return new \PHPStan\Type\FloatType();
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
-        if ($this->isInstanceOf('BcMath\\Number')->yes()) {
+        if ($this->isInstanceOf('BcMath\Number')->yes()) {
             return new \PHPStan\Type\IntersectionType([new \PHPStan\Type\StringType(), new AccessoryNumericStringType(), new AccessoryNonEmptyStringType()]);
         }
         $classReflection = $this->getClassReflection();
@@ -508,7 +508,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -544,11 +544,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new ConstantArrayType($arrayKeys, $arrayValues);
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return $this->toString();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         if (!$strictTypes) {
             $classReflection = $this->getClassReflection();
@@ -559,18 +559,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this;
     }
-    public function toBoolean() : \PHPStan\Type\BooleanType
+    public function toBoolean(): \PHPStan\Type\BooleanType
     {
-        if ($this->isInstanceOf('SimpleXMLElement')->yes() || $this->isInstanceOf('BcMath\\Number')->yes()) {
+        if ($this->isInstanceOf('SimpleXMLElement')->yes() || $this->isInstanceOf('BcMath\Number')->yes()) {
             return new \PHPStan\Type\BooleanType();
         }
         return new ConstantBooleanType(\true);
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -584,18 +584,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createNo();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         if (strtolower($this->className) === 'stdclass') {
             return TrinaryLogic::createNo();
         }
         return TrinaryLogic::createYes();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -609,11 +609,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createMaybe();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         if (!$scope->isInClass()) {
             $canCallMethod = 'no';
@@ -648,11 +648,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return self::$methods[$description][$methodName][$canCallMethod] = new CalledOnTypeUnresolvedMethodPrototypeReflection($method, $resolvedClassReflection, \true, $this);
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         $class = $this->getClassReflection();
         if ($class === null) {
@@ -660,7 +660,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createFromBoolean($class->hasConstant($constantName));
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         $class = $this->getClassReflection();
         if ($class === null) {
@@ -668,7 +668,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $class->getConstant($constantName);
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : \PHPStan\Type\Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): \PHPStan\Type\Type
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -697,26 +697,26 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $type;
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return $this->isInstanceOf(Traversable::class);
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return $this->isInstanceOf(Traversable::class)->and(TrinaryLogic::createMaybe());
     }
-    public function getArraySize() : \PHPStan\Type\Type
+    public function getArraySize(): \PHPStan\Type\Type
     {
         if ($this->isInstanceOf(Countable::class)->no()) {
             return new \PHPStan\Type\ErrorType();
         }
         return \PHPStan\Type\IntegerRangeType::fromInterval(0, null);
     }
-    public function getIterableKeyType() : \PHPStan\Type\Type
+    public function getIterableKeyType(): \PHPStan\Type\Type
     {
         $isTraversable = \false;
         if ($this->isInstanceOf(IteratorAggregate::class)->yes()) {
@@ -747,15 +747,15 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function getFirstIterableKeyType() : \PHPStan\Type\Type
+    public function getFirstIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getIterableKeyType();
     }
-    public function getLastIterableKeyType() : \PHPStan\Type\Type
+    public function getLastIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getIterableKeyType();
     }
-    public function getIterableValueType() : \PHPStan\Type\Type
+    public function getIterableValueType(): \PHPStan\Type\Type
     {
         $isTraversable = \false;
         if ($this->isInstanceOf(IteratorAggregate::class)->yes()) {
@@ -786,110 +786,110 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function getFirstIterableValueType() : \PHPStan\Type\Type
+    public function getFirstIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getIterableValueType();
     }
-    public function getLastIterableValueType() : \PHPStan\Type\Type
+    public function getLastIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getIterableValueType();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [];
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         if ($type->isTrue()->yes()) {
             return new ConstantBooleanType(\true);
         }
         return $type->isFalse()->yes() ? new ConstantBooleanType(\false) : new \PHPStan\Type\BooleanType();
     }
-    private function isExtraOffsetAccessibleClass() : TrinaryLogic
+    private function isExtraOffsetAccessibleClass(): TrinaryLogic
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -908,18 +908,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return $this->isInstanceOf(ArrayAccess::class)->or($this->isExtraOffsetAccessibleClass());
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return $this->isOffsetAccessible();
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         if ($this->isInstanceOf(ArrayAccess::class)->yes()) {
-            $acceptedOffsetType = \PHPStan\Type\RecursionGuard::run($this, function () : \PHPStan\Type\Type {
+            $acceptedOffsetType = \PHPStan\Type\RecursionGuard::run($this, function (): \PHPStan\Type\Type {
                 $parameters = $this->getMethod('offsetSet', new OutOfClassScope())->getOnlyVariant()->getParameters();
                 if (count($parameters) < 2) {
                     throw new ShouldNotHappenException(sprintf('Method %s::%s() has less than 2 parameters.', $this->className, 'offsetSet'));
@@ -934,7 +934,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->isExtraOffsetAccessibleClass()->and(TrinaryLogic::createMaybe());
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         if (!$this->isExtraOffsetAccessibleClass()->no()) {
             return new \PHPStan\Type\MixedType();
@@ -944,14 +944,14 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true) : \PHPStan\Type\Type
+    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true): \PHPStan\Type\Type
     {
         if ($this->isOffsetAccessible()->no()) {
             return new \PHPStan\Type\ErrorType();
         }
         if ($this->isInstanceOf(ArrayAccess::class)->yes()) {
             $acceptedValueType = new \PHPStan\Type\NeverType();
-            $acceptedOffsetType = \PHPStan\Type\RecursionGuard::run($this, function () use(&$acceptedValueType) : \PHPStan\Type\Type {
+            $acceptedOffsetType = \PHPStan\Type\RecursionGuard::run($this, function () use (&$acceptedValueType): \PHPStan\Type\Type {
                 $parameters = $this->getMethod('offsetSet', new OutOfClassScope())->getOnlyVariant()->getParameters();
                 if (count($parameters) < 2) {
                     throw new ShouldNotHappenException(sprintf('Method %s::%s() has less than 2 parameters.', $this->className, 'offsetSet'));
@@ -970,21 +970,21 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         // in the future we may return intersection of $this and OffsetAccessibleType()
         return $this;
     }
-    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         if ($this->isOffsetAccessible()->no()) {
             return new \PHPStan\Type\ErrorType();
         }
         return $this;
     }
-    public function unsetOffset(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function unsetOffset(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         if ($this->isOffsetAccessible()->no()) {
             return new \PHPStan\Type\ErrorType();
         }
         return $this;
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -1018,7 +1018,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return self::$enumCases[$cacheKey] = $cases;
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         $parametersAcceptors = \PHPStan\Type\RecursionGuard::run($this, fn() => $this->findCallableParametersAcceptors());
         if ($parametersAcceptors === null) {
@@ -1032,7 +1032,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createYes();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         if ($this->className === Closure::class) {
             return [new TrivialParametersAcceptor('Closure')];
@@ -1046,7 +1046,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     /**
      * @return CallableParametersAcceptor[]|null
      */
-    private function findCallableParametersAcceptors() : ?array
+    private function findCallableParametersAcceptors(): ?array
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -1061,11 +1061,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return null;
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isInstanceOf(string $className) : TrinaryLogic
+    public function isInstanceOf(string $className): TrinaryLogic
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -1086,18 +1086,18 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return TrinaryLogic::createNo();
     }
-    public function subtract(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public function subtract(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if ($this->subtractedType !== null) {
             $type = \PHPStan\Type\TypeCombinator::union($this->subtractedType, $type);
         }
         return $this->changeSubtractedType($type);
     }
-    public function getTypeWithoutSubtractedType() : \PHPStan\Type\Type
+    public function getTypeWithoutSubtractedType(): \PHPStan\Type\Type
     {
         return $this->changeSubtractedType(null);
     }
-    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType) : \PHPStan\Type\Type
+    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType): \PHPStan\Type\Type
     {
         if ($subtractedType !== null) {
             $classReflection = $this->getClassReflection();
@@ -1140,11 +1140,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new self($this->className, $subtractedType);
     }
-    public function getSubtractedType() : ?\PHPStan\Type\Type
+    public function getSubtractedType(): ?\PHPStan\Type\Type
     {
         return $this->subtractedType;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $subtractedType = $this->subtractedType !== null ? $cb($this->subtractedType) : null;
         if ($subtractedType !== $this->subtractedType) {
@@ -1152,14 +1152,14 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if ($this->subtractedType === null) {
             return $this;
         }
         return new self($this->className);
     }
-    public function getNakedClassReflection() : ?ClassReflection
+    public function getNakedClassReflection(): ?ClassReflection
     {
         if ($this->classReflection !== null) {
             return $this->classReflection;
@@ -1170,7 +1170,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $reflectionProvider->getClass($this->className);
     }
-    public function getClassReflection() : ?ClassReflection
+    public function getClassReflection(): ?ClassReflection
     {
         if ($this->classReflection !== null) {
             return $this->classReflection;
@@ -1185,7 +1185,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $classReflection;
     }
-    public function getAncestorWithClassName(string $className) : ?self
+    public function getAncestorWithClassName(string $className): ?self
     {
         if ($this->className === $className) {
             return $this;
@@ -1227,7 +1227,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return self::$ancestors[$description][$className] = $this->currentAncestors[$className] = null;
     }
-    private function getParent() : ?\PHPStan\Type\ObjectType
+    private function getParent(): ?\PHPStan\Type\ObjectType
     {
         if ($this->cachedParent !== null) {
             return $this->cachedParent;
@@ -1243,7 +1243,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         return $this->cachedParent = self::createFromReflection($parentReflection);
     }
     /** @return ObjectType[] */
-    private function getInterfaces() : array
+    private function getInterfaces(): array
     {
         if ($this->cachedInterfaces !== null) {
             return $this->cachedInterfaces;
@@ -1254,7 +1254,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->cachedInterfaces = array_map(static fn(ClassReflection $interfaceReflection): self => self::createFromReflection($interfaceReflection), $thisReflection->getInterfaces());
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($typeToRemove instanceof \PHPStan\Type\ObjectType) {
             foreach (\PHPStan\Type\UnionType::EQUAL_UNION_CLASSES as $baseClass => $classes) {
@@ -1274,11 +1274,11 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return null;
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return $this->getEnumCases();
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         $object = new \PHPStan\Type\ObjectWithoutClassType();
         if (!$exponent instanceof \PHPStan\Type\NeverType && !$object->isSuperTypeOf($this)->no() && !$object->isSuperTypeOf($exponent)->no()) {
@@ -1286,7 +1286,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new \PHPStan\Type\ErrorType();
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode($this->getClassName());
     }

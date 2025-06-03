@@ -22,11 +22,11 @@ final class InvalidAssignVarRule implements Rule
     {
         $this->nullsafeCheck = $nullsafeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Assign && !$node instanceof AssignOp && !$node instanceof AssignRef) {
             return [];
@@ -42,7 +42,7 @@ final class InvalidAssignVarRule implements Rule
         }
         return [];
     }
-    private function containsNonAssignableExpression(Expr $expr) : bool
+    private function containsNonAssignableExpression(Expr $expr): bool
     {
         if ($expr instanceof Expr\Variable) {
             return \false;

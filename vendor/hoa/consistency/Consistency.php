@@ -193,7 +193,7 @@ class Consistency
      */
     public static function isIdentifier($id)
     {
-        return 0 !== \preg_match('#^[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x80-\\xff]*$#', $id);
+        return 0 !== \preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x80-\xff]*$#', $id);
     }
     /**
      * Register a register shutdown function.
@@ -276,4 +276,4 @@ if (50600 > \PHP_VERSION_ID) {
 /**
  * Flex entity.
  */
-\Hoa\Consistency\Consistency::flexEntity('Hoa\\Consistency\\Consistency');
+\Hoa\Consistency\Consistency::flexEntity('Hoa\Consistency\Consistency');

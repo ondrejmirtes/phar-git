@@ -19,18 +19,18 @@ final class ImportedDefinition extends Definition
     {
         return parent::setType($type);
     }
-    public function resolveType(Nette\DI\Resolver $resolver) : void
+    public function resolveType(Nette\DI\Resolver $resolver): void
     {
     }
-    public function complete(Nette\DI\Resolver $resolver) : void
+    public function complete(Nette\DI\Resolver $resolver): void
     {
     }
-    public function generateMethod(Nette\PhpGenerator\Method $method, PhpGenerator $generator) : void
+    public function generateMethod(Nette\PhpGenerator\Method $method, PhpGenerator $generator): void
     {
-        $method->setReturnType('void')->setBody('throw new Nette\\DI\\ServiceCreationException(?);', ["Unable to create imported service '{$this->getName()}', it must be added using addService()"]);
+        $method->setReturnType('void')->setBody('throw new Nette\DI\ServiceCreationException(?);', ["Unable to create imported service '{$this->getName()}', it must be added using addService()"]);
     }
     /** @deprecated use '$def instanceof ImportedDefinition' */
-    public function isDynamic() : bool
+    public function isDynamic(): bool
     {
         \trigger_error(\sprintf('Service %s: %s() is deprecated, use "instanceof ImportedDefinition".', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
         return \true;

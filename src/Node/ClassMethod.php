@@ -15,11 +15,11 @@ final class ClassMethod
         $this->node = $node;
         $this->isDeclaredInTrait = $isDeclaredInTrait;
     }
-    public function getNode() : \PhpParser\Node\Stmt\ClassMethod
+    public function getNode(): \PhpParser\Node\Stmt\ClassMethod
     {
         return $this->node;
     }
-    public function isDeclaredInTrait() : bool
+    public function isDeclaredInTrait(): bool
     {
         return $this->isDeclaredInTrait;
     }

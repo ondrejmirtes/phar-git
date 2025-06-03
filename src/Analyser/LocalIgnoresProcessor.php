@@ -19,7 +19,7 @@ final class LocalIgnoresProcessor
      * @param LinesToIgnore $linesToIgnore
      * @param LinesToIgnore $unmatchedLineIgnores
      */
-    public function process(array $temporaryFileErrors, array $linesToIgnore, array $unmatchedLineIgnores) : \PHPStan\Analyser\LocalIgnoresProcessorResult
+    public function process(array $temporaryFileErrors, array $linesToIgnore, array $unmatchedLineIgnores): \PHPStan\Analyser\LocalIgnoresProcessorResult
     {
         $fileErrors = [];
         $locallyIgnoredErrors = [];

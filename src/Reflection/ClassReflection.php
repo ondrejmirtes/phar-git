@@ -210,7 +210,7 @@ final class ClassReflection
     {
         return $this->reflection;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         if (!is_bool($this->filename)) {
             return $this->filename;
@@ -227,7 +227,7 @@ final class ClassReflection
         }
         return $this->filename = $fileName;
     }
-    public function getParentClass() : ?\PHPStan\Reflection\ClassReflection
+    public function getParentClass(): ?\PHPStan\Reflection\ClassReflection
     {
         if (!is_bool($this->cachedParentClass)) {
             return $this->cachedParentClass;
@@ -257,11 +257,11 @@ final class ClassReflection
     /**
      * @return class-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getDisplayName(bool $withTemplateTypes = \true) : string
+    public function getDisplayName(bool $withTemplateTypes = \true): string
     {
         if ($withTemplateTypes === \false || $this->resolvedTemplateTypeMap === null || count($this->resolvedTemplateTypeMap->getTypes()) === 0) {
             return $this->displayName;
@@ -277,7 +277,7 @@ final class ClassReflection
         }
         return $this->displayName . '<' . implode(',', $templateTypes) . '>';
     }
-    public function getCacheKey() : string
+    public function getCacheKey(): string
     {
         $cacheKey = $this->cacheKey;
         if ($cacheKey !== null) {
@@ -308,7 +308,7 @@ final class ClassReflection
     /**
      * @return int[]
      */
-    public function getClassHierarchyDistances() : array
+    public function getClassHierarchyDistances(): array
     {
         if ($this->classHierarchyDistances === null) {
             $distance = 0;
@@ -351,7 +351,7 @@ final class ClassReflection
      * @return list<ReflectionClass>
      * @param \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum $class
      */
-    private function collectTraits($class) : array
+    private function collectTraits($class): array
     {
         $traits = [];
         $traitsLeftToAnalyze = $class->getTraits();
@@ -368,7 +368,7 @@ final class ClassReflection
         }
         return $traits;
     }
-    public function allowsDynamicProperties() : bool
+    public function allowsDynamicProperties(): bool
     {
         if ($this->isEnum()) {
             return \false;
@@ -390,7 +390,7 @@ final class ClassReflection
         }
         return count($attributes) > 0;
     }
-    private function allowsDynamicPropertiesExtensions() : bool
+    private function allowsDynamicPropertiesExtensions(): bool
     {
         if ($this->allowsDynamicProperties()) {
             return \true;
@@ -415,7 +415,7 @@ final class ClassReflection
         }
         return \false;
     }
-    public function hasProperty(string $propertyName) : bool
+    public function hasProperty(string $propertyName): bool
     {
         if (array_key_exists($propertyName, $this->hasPropertyCache)) {
             return $this->hasPropertyCache[$propertyName];
@@ -436,7 +436,7 @@ final class ClassReflection
         }
         return $this->hasPropertyCache[$propertyName] = \false;
     }
-    public function hasMethod(string $methodName) : bool
+    public function hasMethod(string $methodName): bool
     {
         if (array_key_exists($methodName, $this->hasMethodCache)) {
             return $this->hasMethodCache[$methodName];
@@ -451,7 +451,7 @@ final class ClassReflection
         }
         return $this->hasMethodCache[$methodName] = \false;
     }
-    public function getMethod(string $methodName, \PHPStan\Reflection\ClassMemberAccessAnswerer $scope) : \PHPStan\Reflection\ExtendedMethodReflection
+    public function getMethod(string $methodName, \PHPStan\Reflection\ClassMemberAccessAnswerer $scope): \PHPStan\Reflection\ExtendedMethodReflection
     {
         $key = $methodName;
         if ($scope->isInClass()) {
@@ -480,36 +480,36 @@ final class ClassReflection
         }
         return $this->methods[$key];
     }
-    private function wrapExtendedMethod(\PHPStan\Reflection\MethodReflection $method) : \PHPStan\Reflection\ExtendedMethodReflection
+    private function wrapExtendedMethod(\PHPStan\Reflection\MethodReflection $method): \PHPStan\Reflection\ExtendedMethodReflection
     {
         if ($method instanceof \PHPStan\Reflection\ExtendedMethodReflection) {
             return $method;
         }
         return new \PHPStan\Reflection\WrappedExtendedMethodReflection($method);
     }
-    private function wrapExtendedProperty(string $propertyName, \PHPStan\Reflection\PropertyReflection $method) : \PHPStan\Reflection\ExtendedPropertyReflection
+    private function wrapExtendedProperty(string $propertyName, \PHPStan\Reflection\PropertyReflection $method): \PHPStan\Reflection\ExtendedPropertyReflection
     {
         if ($method instanceof \PHPStan\Reflection\ExtendedPropertyReflection) {
             return $method;
         }
         return new \PHPStan\Reflection\WrappedExtendedPropertyReflection($propertyName, $method);
     }
-    public function hasNativeMethod(string $methodName) : bool
+    public function hasNativeMethod(string $methodName): bool
     {
         return $this->getPhpExtension()->hasNativeMethod($this, $methodName);
     }
-    public function getNativeMethod(string $methodName) : \PHPStan\Reflection\ExtendedMethodReflection
+    public function getNativeMethod(string $methodName): \PHPStan\Reflection\ExtendedMethodReflection
     {
         if (!$this->hasNativeMethod($methodName)) {
             throw new \PHPStan\Reflection\MissingMethodFromReflectionException($this->getName(), $methodName);
         }
         return $this->getPhpExtension()->getNativeMethod($this, $methodName);
     }
-    public function hasConstructor() : bool
+    public function hasConstructor(): bool
     {
         return $this->findConstructor() !== null;
     }
-    public function getConstructor() : \PHPStan\Reflection\ExtendedMethodReflection
+    public function getConstructor(): \PHPStan\Reflection\ExtendedMethodReflection
     {
         $constructor = $this->findConstructor();
         if ($constructor === null) {
@@ -517,7 +517,7 @@ final class ClassReflection
         }
         return $this->getNativeMethod($constructor->getName());
     }
-    private function findConstructor() : ?ReflectionMethod
+    private function findConstructor(): ?ReflectionMethod
     {
         $constructor = $this->reflection->getConstructor();
         if ($constructor === null) {
@@ -531,7 +531,7 @@ final class ClassReflection
         }
         return $constructor;
     }
-    private function getPhpExtension() : PhpClassReflectionExtension
+    private function getPhpExtension(): PhpClassReflectionExtension
     {
         $extension = $this->methodsClassReflectionExtensions[0];
         if (!$extension instanceof PhpClassReflectionExtension) {
@@ -540,7 +540,7 @@ final class ClassReflection
         return $extension;
     }
     /** @internal */
-    public function evictPrivateSymbols() : void
+    public function evictPrivateSymbols(): void
     {
         foreach ($this->constants as $name => $constant) {
             if (!$constant->isPrivate()) {
@@ -562,7 +562,7 @@ final class ClassReflection
         }
         $this->getPhpExtension()->evictPrivateSymbols($this->getCacheKey());
     }
-    public function getProperty(string $propertyName, \PHPStan\Reflection\ClassMemberAccessAnswerer $scope) : \PHPStan\Reflection\ExtendedPropertyReflection
+    public function getProperty(string $propertyName, \PHPStan\Reflection\ClassMemberAccessAnswerer $scope): \PHPStan\Reflection\ExtendedPropertyReflection
     {
         if ($this->isEnum()) {
             return $this->getNativeProperty($propertyName);
@@ -597,26 +597,26 @@ final class ClassReflection
         }
         return $this->properties[$key];
     }
-    public function hasNativeProperty(string $propertyName) : bool
+    public function hasNativeProperty(string $propertyName): bool
     {
         return $this->getPhpExtension()->hasProperty($this, $propertyName);
     }
-    public function getNativeProperty(string $propertyName) : PhpPropertyReflection
+    public function getNativeProperty(string $propertyName): PhpPropertyReflection
     {
         if (!$this->hasNativeProperty($propertyName)) {
             throw new \PHPStan\Reflection\MissingPropertyFromReflectionException($this->getName(), $propertyName);
         }
         return $this->getPhpExtension()->getNativeProperty($this, $propertyName);
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->reflection->isAbstract();
     }
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->reflection->isInterface();
     }
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->reflection->isTrait();
     }
@@ -624,14 +624,14 @@ final class ClassReflection
      * @phpstan-assert-if-true ReflectionEnum $this->reflection
      * @phpstan-assert-if-true ReflectionEnum $this->getNativeReflection()
      */
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->reflection instanceof ReflectionEnum && $this->reflection->isEnum();
     }
     /**
      * @return 'Interface'|'Trait'|'Enum'|'Class'
      */
-    public function getClassTypeDescription() : string
+    public function getClassTypeDescription(): string
     {
         if ($this->isInterface()) {
             return 'Interface';
@@ -642,18 +642,18 @@ final class ClassReflection
         }
         return 'Class';
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->reflection->isReadOnly();
     }
-    public function isBackedEnum() : bool
+    public function isBackedEnum(): bool
     {
         if (!$this->reflection instanceof ReflectionEnum) {
             return \false;
         }
         return $this->reflection->isBacked();
     }
-    public function getBackedEnumType() : ?Type
+    public function getBackedEnumType(): ?Type
     {
         if (!$this->reflection instanceof ReflectionEnum) {
             return null;
@@ -663,7 +663,7 @@ final class ClassReflection
         }
         return TypehintHelper::decideTypeFromReflection($this->reflection->getBackingType());
     }
-    public function hasEnumCase(string $name) : bool
+    public function hasEnumCase(string $name): bool
     {
         if (!$this->isEnum()) {
             return \false;
@@ -673,7 +673,7 @@ final class ClassReflection
     /**
      * @return array<string, EnumCaseReflection>
      */
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         if (!$this->isEnum()) {
             throw new ShouldNotHappenException();
@@ -694,7 +694,7 @@ final class ClassReflection
         }
         return $this->enumCases = $cases;
     }
-    public function getEnumCase(string $name) : \PHPStan\Reflection\EnumCaseReflection
+    public function getEnumCase(string $name): \PHPStan\Reflection\EnumCaseReflection
     {
         if (!$this->hasEnumCase($name)) {
             throw new ShouldNotHappenException(sprintf('Enum case %s::%s does not exist.', $this->getDisplayName(), $name));
@@ -713,29 +713,29 @@ final class ClassReflection
         $attributes = $this->attributeReflectionFactory->fromNativeReflection($case->getAttributes(), \PHPStan\Reflection\InitializerExprContext::fromClass($this->getName(), $this->getFileName()));
         return new \PHPStan\Reflection\EnumCaseReflection($this, $case, $valueType, $attributes, $this->deprecationProvider);
     }
-    public function isClass() : bool
+    public function isClass(): bool
     {
         return !$this->isInterface() && !$this->isTrait() && !$this->isEnum();
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->anonymousFilename !== null;
     }
-    public function is(string $className) : bool
+    public function is(string $className): bool
     {
         return $this->getName() === $className || $this->isSubclassOf($className);
     }
     /**
      * @deprecated Use isSubclassOfClass instead.
      */
-    public function isSubclassOf(string $className) : bool
+    public function isSubclassOf(string $className): bool
     {
         if (!$this->reflectionProvider->hasClass($className)) {
             return \false;
         }
         return $this->isSubclassOfClass($this->reflectionProvider->getClass($className));
     }
-    public function isSubclassOfClass(self $class) : bool
+    public function isSubclassOfClass(self $class): bool
     {
         $cacheKey = $class->getCacheKey();
         if (isset($this->subclasses[$cacheKey])) {
@@ -750,7 +750,7 @@ final class ClassReflection
             return $this->subclasses[$cacheKey] = \false;
         }
     }
-    public function implementsInterface(string $className) : bool
+    public function implementsInterface(string $className): bool
     {
         try {
             return $this->reflection->implementsInterface($className);
@@ -761,7 +761,7 @@ final class ClassReflection
     /**
      * @return list<ClassReflection>
      */
-    public function getParents() : array
+    public function getParents(): array
     {
         $parents = [];
         $parent = $this->getParentClass();
@@ -774,7 +774,7 @@ final class ClassReflection
     /**
      * @return array<string, ClassReflection>
      */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         if ($this->cachedInterfaces !== null) {
             return $this->cachedInterfaces;
@@ -802,7 +802,7 @@ final class ClassReflection
     /**
      * @return array<string, ClassReflection>
      */
-    private function collectInterfaces(\PHPStan\Reflection\ClassReflection $interface) : array
+    private function collectInterfaces(\PHPStan\Reflection\ClassReflection $interface): array
     {
         $interfaces = [];
         foreach ($interface->getImmediateInterfaces() as $immediateInterface) {
@@ -816,7 +816,7 @@ final class ClassReflection
     /**
      * @return array<string, ClassReflection>
      */
-    public function getImmediateInterfaces() : array
+    public function getImmediateInterfaces(): array
     {
         $indirectInterfaceNames = [];
         $parent = $this->getParentClass();
@@ -865,7 +865,7 @@ final class ClassReflection
     /**
      * @return array<string, ClassReflection>
      */
-    public function getTraits(bool $recursive = \false) : array
+    public function getTraits(bool $recursive = \false): array
     {
         $traits = [];
         if ($recursive) {
@@ -887,7 +887,7 @@ final class ClassReflection
     /**
      * @return list<class-string>
      */
-    public function getParentClassesNames() : array
+    public function getParentClassesNames(): array
     {
         $parentNames = [];
         $parentClass = $this->getParentClass();
@@ -897,7 +897,7 @@ final class ClassReflection
         }
         return $parentNames;
     }
-    public function hasConstant(string $name) : bool
+    public function hasConstant(string $name): bool
     {
         if (!$this->getNativeReflection()->hasConstant($name)) {
             return \false;
@@ -908,7 +908,7 @@ final class ClassReflection
         }
         return $this->reflectionProvider->hasClass($reflectionConstant->getDeclaringClass()->getName());
     }
-    public function getConstant(string $name) : \PHPStan\Reflection\ClassConstantReflection
+    public function getConstant(string $name): \PHPStan\Reflection\ClassConstantReflection
     {
         if (!isset($this->constants[$name])) {
             $reflectionConstant = $this->getNativeReflection()->getReflectionConstant($name);
@@ -952,14 +952,14 @@ final class ClassReflection
         }
         return $this->constants[$name];
     }
-    public function hasTraitUse(string $traitName) : bool
+    public function hasTraitUse(string $traitName): bool
     {
         return in_array($traitName, $this->getTraitNames(), \true);
     }
     /**
      * @return list<string>
      */
-    private function getTraitNames() : array
+    private function getTraitNames(): array
     {
         $class = $this->reflection;
         $traitNames = array_map(static fn(ReflectionClass $class) => $class->getName(), $this->collectTraits($class));
@@ -972,7 +972,7 @@ final class ClassReflection
     /**
      * @return array<string, TypeAlias>
      */
-    public function getTypeAliases() : array
+    public function getTypeAliases(): array
     {
         if ($this->typeAliases === null) {
             $resolvedPhpDoc = $this->getResolvedPhpDoc();
@@ -986,7 +986,7 @@ final class ClassReflection
                 throw new CircularTypeAliasDefinitionException();
             }
             self::$resolvingTypeAliasImports[$this->getName()] = \true;
-            $importedAliases = array_map(function (TypeAliasImportTag $typeAliasImportTag) : ?TypeAlias {
+            $importedAliases = array_map(function (TypeAliasImportTag $typeAliasImportTag): ?TypeAlias {
                 $importedAlias = $typeAliasImportTag->getImportedAlias();
                 $importedFromClassName = $typeAliasImportTag->getImportedFrom();
                 if (!$this->reflectionProvider->hasClass($importedFromClassName)) {
@@ -1009,14 +1009,14 @@ final class ClassReflection
         }
         return $this->typeAliases;
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated === null) {
             $this->resolveDeprecation();
         }
         return $this->deprecatedDescription;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         if ($this->isDeprecated === null) {
             $this->resolveDeprecation();
@@ -1026,7 +1026,7 @@ final class ClassReflection
     /**
      * @phpstan-assert bool $this->isDeprecated
      */
-    private function resolveDeprecation() : void
+    private function resolveDeprecation(): void
     {
         $deprecation = $this->deprecationProvider->getClassDeprecation($this->reflection);
         if ($deprecation !== null) {
@@ -1043,11 +1043,11 @@ final class ClassReflection
         $this->isDeprecated = \false;
         $this->deprecatedDescription = null;
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return $this->reflection->isInternal();
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         if ($this->isInternal === null) {
             $resolvedPhpDoc = $this->getResolvedPhpDoc();
@@ -1055,7 +1055,7 @@ final class ClassReflection
         }
         return $this->isInternal;
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         if ($this->isFinalByKeyword()) {
             return \true;
@@ -1066,7 +1066,7 @@ final class ClassReflection
         }
         return $this->isFinal;
     }
-    public function isImmutable() : bool
+    public function isImmutable(): bool
     {
         if ($this->isImmutable === null) {
             $resolvedPhpDoc = $this->getResolvedPhpDoc();
@@ -1078,7 +1078,7 @@ final class ClassReflection
         }
         return $this->isImmutable;
     }
-    public function hasConsistentConstructor() : bool
+    public function hasConsistentConstructor(): bool
     {
         if ($this->hasConsistentConstructor === null) {
             $resolvedPhpDoc = $this->getResolvedPhpDoc();
@@ -1086,7 +1086,7 @@ final class ClassReflection
         }
         return $this->hasConsistentConstructor;
     }
-    public function acceptsNamedArguments() : bool
+    public function acceptsNamedArguments(): bool
     {
         if ($this->acceptsNamedArguments === null) {
             $resolvedPhpDoc = $this->getResolvedPhpDoc();
@@ -1094,11 +1094,11 @@ final class ClassReflection
         }
         return $this->acceptsNamedArguments;
     }
-    public function hasFinalByKeywordOverride() : bool
+    public function hasFinalByKeywordOverride(): bool
     {
         return $this->finalByKeywordOverride !== null;
     }
-    public function isFinalByKeyword() : bool
+    public function isFinalByKeyword(): bool
     {
         if ($this->isAnonymous()) {
             return \true;
@@ -1108,11 +1108,11 @@ final class ClassReflection
         }
         return $this->reflection->isFinal();
     }
-    public function isAttributeClass() : bool
+    public function isAttributeClass(): bool
     {
         return $this->findAttributeFlags() !== null;
     }
-    private function findAttributeFlags() : ?int
+    private function findAttributeFlags(): ?int
     {
         if ($this->isInterface() || $this->isTrait() || $this->isEnum()) {
             return null;
@@ -1155,11 +1155,11 @@ final class ClassReflection
     /**
      * @return list<AttributeReflection>
      */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributeReflectionFactory->fromNativeReflection($this->reflection->getAttributes(), \PHPStan\Reflection\InitializerExprContext::fromClass($this->getName(), $this->getFileName()));
     }
-    public function getAttributeClassFlags() : int
+    public function getAttributeClassFlags(): int
     {
         $flags = $this->findAttributeFlags();
         if ($flags === null) {
@@ -1167,7 +1167,7 @@ final class ClassReflection
         }
         return $flags;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         if ($this->templateTypeMap !== null) {
             return $this->templateTypeMap;
@@ -1182,7 +1182,7 @@ final class ClassReflection
         $this->templateTypeMap = $templateTypeMap;
         return $templateTypeMap;
     }
-    public function getActiveTemplateTypeMap() : TemplateTypeMap
+    public function getActiveTemplateTypeMap(): TemplateTypeMap
     {
         if ($this->activeTemplateTypeMap !== null) {
             return $this->activeTemplateTypeMap;
@@ -1190,7 +1190,7 @@ final class ClassReflection
         $resolved = $this->resolvedTemplateTypeMap;
         if ($resolved !== null) {
             $templateTypeMap = $this->getTemplateTypeMap();
-            return $this->activeTemplateTypeMap = $resolved->map(static function (string $name, Type $type) use($templateTypeMap) : Type {
+            return $this->activeTemplateTypeMap = $resolved->map(static function (string $name, Type $type) use ($templateTypeMap): Type {
                 if ($type instanceof ErrorType) {
                     $templateType = $templateTypeMap->getType($name);
                     if ($templateType !== null) {
@@ -1202,11 +1202,11 @@ final class ClassReflection
         }
         return $this->activeTemplateTypeMap = $this->getTemplateTypeMap();
     }
-    public function getPossiblyIncompleteActiveTemplateTypeMap() : TemplateTypeMap
+    public function getPossiblyIncompleteActiveTemplateTypeMap(): TemplateTypeMap
     {
         return $this->resolvedTemplateTypeMap ?? $this->getTemplateTypeMap();
     }
-    private function getDefaultCallSiteVarianceMap() : TemplateTypeVarianceMap
+    private function getDefaultCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         if ($this->defaultCallSiteVarianceMap !== null) {
             return $this->defaultCallSiteVarianceMap;
@@ -1223,11 +1223,11 @@ final class ClassReflection
         $this->defaultCallSiteVarianceMap = new TemplateTypeVarianceMap($map);
         return $this->defaultCallSiteVarianceMap;
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return $this->callSiteVarianceMap ??= $this->resolvedCallSiteVarianceMap ?? $this->getDefaultCallSiteVarianceMap();
     }
-    public function isGeneric() : bool
+    public function isGeneric(): bool
     {
         if ($this->isGeneric === null) {
             if ($this->isEnum()) {
@@ -1240,7 +1240,7 @@ final class ClassReflection
     /**
      * @param array<int, Type> $types
      */
-    public function typeMapFromList(array $types) : TemplateTypeMap
+    public function typeMapFromList(array $types): TemplateTypeMap
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1257,7 +1257,7 @@ final class ClassReflection
     /**
      * @param array<int, TemplateTypeVariance> $variances
      */
-    public function varianceMapFromList(array $variances) : TemplateTypeVarianceMap
+    public function varianceMapFromList(array $variances): TemplateTypeVarianceMap
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1272,7 +1272,7 @@ final class ClassReflection
         return new TemplateTypeVarianceMap($map);
     }
     /** @return list<Type> */
-    public function typeMapToList(TemplateTypeMap $typeMap) : array
+    public function typeMapToList(TemplateTypeMap $typeMap): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1285,7 +1285,7 @@ final class ClassReflection
         return $list;
     }
     /** @return list<TemplateTypeVariance> */
-    public function varianceMapToList(TemplateTypeVarianceMap $varianceMap) : array
+    public function varianceMapToList(TemplateTypeVarianceMap $varianceMap): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1300,18 +1300,18 @@ final class ClassReflection
     /**
      * @param array<int, Type> $types
      */
-    public function withTypes(array $types) : self
+    public function withTypes(array $types): self
     {
         return new self($this->reflectionProvider, $this->initializerExprTypeResolver, $this->fileTypeMapper, $this->stubPhpDocProvider, $this->phpDocInheritanceResolver, $this->phpVersion, $this->signatureMapProvider, $this->deprecationProvider, $this->attributeReflectionFactory, $this->propertiesClassReflectionExtensions, $this->methodsClassReflectionExtensions, $this->allowedSubTypesClassReflectionExtensions, $this->requireExtendsPropertiesClassReflectionExtension, $this->requireExtendsMethodsClassReflectionExtension, $this->displayName, $this->reflection, $this->anonymousFilename, $this->typeMapFromList($types), $this->stubPhpDocBlock, $this->universalObjectCratesClasses, null, $this->resolvedCallSiteVarianceMap, $this->finalByKeywordOverride);
     }
     /**
      * @param array<int, TemplateTypeVariance> $variances
      */
-    public function withVariances(array $variances) : self
+    public function withVariances(array $variances): self
     {
         return new self($this->reflectionProvider, $this->initializerExprTypeResolver, $this->fileTypeMapper, $this->stubPhpDocProvider, $this->phpDocInheritanceResolver, $this->phpVersion, $this->signatureMapProvider, $this->deprecationProvider, $this->attributeReflectionFactory, $this->propertiesClassReflectionExtensions, $this->methodsClassReflectionExtensions, $this->allowedSubTypesClassReflectionExtensions, $this->requireExtendsPropertiesClassReflectionExtension, $this->requireExtendsMethodsClassReflectionExtension, $this->displayName, $this->reflection, $this->anonymousFilename, $this->resolvedTemplateTypeMap, $this->stubPhpDocBlock, $this->universalObjectCratesClasses, null, $this->varianceMapFromList($variances), $this->finalByKeywordOverride);
     }
-    public function asFinal() : self
+    public function asFinal(): self
     {
         if ($this->getNativeReflection()->isFinal()) {
             return $this;
@@ -1327,7 +1327,7 @@ final class ClassReflection
         }
         return new self($this->reflectionProvider, $this->initializerExprTypeResolver, $this->fileTypeMapper, $this->stubPhpDocProvider, $this->phpDocInheritanceResolver, $this->phpVersion, $this->signatureMapProvider, $this->deprecationProvider, $this->attributeReflectionFactory, $this->propertiesClassReflectionExtensions, $this->methodsClassReflectionExtensions, $this->allowedSubTypesClassReflectionExtensions, $this->requireExtendsPropertiesClassReflectionExtension, $this->requireExtendsMethodsClassReflectionExtension, $this->displayName, $this->reflection, $this->anonymousFilename, $this->resolvedTemplateTypeMap, $this->stubPhpDocBlock, $this->universalObjectCratesClasses, null, $this->resolvedCallSiteVarianceMap, \true);
     }
-    public function getResolvedPhpDoc() : ?ResolvedPhpDocBlock
+    public function getResolvedPhpDoc(): ?ResolvedPhpDocBlock
     {
         if ($this->stubPhpDocBlock !== null) {
             return $this->stubPhpDocBlock;
@@ -1345,7 +1345,7 @@ final class ClassReflection
         }
         return $this->resolvedPhpDocBlock = $this->fileTypeMapper->getResolvedPhpDoc($fileName, $this->getName(), null, null, $this->reflectionDocComment);
     }
-    public function getTraitContextResolvedPhpDoc(self $implementingClass) : ?ResolvedPhpDocBlock
+    public function getTraitContextResolvedPhpDoc(self $implementingClass): ?ResolvedPhpDocBlock
     {
         if (!$this->isTrait()) {
             throw new ShouldNotHappenException();
@@ -1366,7 +1366,7 @@ final class ClassReflection
         }
         return $this->traitContextResolvedPhpDocBlock = $this->fileTypeMapper->getResolvedPhpDoc($fileName, $implementingClass->getName(), $this->getName(), null, $this->reflectionDocComment);
     }
-    private function getFirstExtendsTag() : ?ExtendsTag
+    private function getFirstExtendsTag(): ?ExtendsTag
     {
         foreach ($this->getExtendsTags() as $tag) {
             return $tag;
@@ -1374,7 +1374,7 @@ final class ClassReflection
         return null;
     }
     /** @return array<string, ExtendsTag> */
-    public function getExtendsTags() : array
+    public function getExtendsTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1383,7 +1383,7 @@ final class ClassReflection
         return $resolvedPhpDoc->getExtendsTags();
     }
     /** @return array<string, ImplementsTag> */
-    public function getImplementsTags() : array
+    public function getImplementsTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1392,7 +1392,7 @@ final class ClassReflection
         return $resolvedPhpDoc->getImplementsTags();
     }
     /** @return array<string,TemplateTag> */
-    public function getTemplateTags() : array
+    public function getTemplateTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1403,12 +1403,12 @@ final class ClassReflection
     /**
      * @return array<string,ClassReflection>
      */
-    public function getAncestors() : array
+    public function getAncestors(): array
     {
         $ancestors = $this->ancestors;
         if ($ancestors === null) {
             $ancestors = [$this->getName() => $this];
-            $addToAncestors = static function (string $name, \PHPStan\Reflection\ClassReflection $classReflection) use(&$ancestors) : void {
+            $addToAncestors = static function (string $name, \PHPStan\Reflection\ClassReflection $classReflection) use (&$ancestors): void {
                 if (array_key_exists($name, $ancestors)) {
                     return;
                 }
@@ -1437,14 +1437,14 @@ final class ClassReflection
         }
         return $ancestors;
     }
-    public function getAncestorWithClassName(string $className) : ?self
+    public function getAncestorWithClassName(string $className): ?self
     {
         return $this->getAncestors()[$className] ?? null;
     }
     /**
      * @param string[] $ancestorClasses
      */
-    private function isValidAncestorType(Type $type, array $ancestorClasses) : bool
+    private function isValidAncestorType(Type $type, array $ancestorClasses): bool
     {
         if (!$type instanceof GenericObjectType) {
             return \false;
@@ -1458,7 +1458,7 @@ final class ClassReflection
     /**
      * @return array<MixinTag>
      */
-    public function getMixinTags() : array
+    public function getMixinTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1469,7 +1469,7 @@ final class ClassReflection
     /**
      * @return array<RequireExtendsTag>
      */
-    public function getRequireExtendsTags() : array
+    public function getRequireExtendsTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1480,7 +1480,7 @@ final class ClassReflection
     /**
      * @return array<RequireImplementsTag>
      */
-    public function getRequireImplementsTags() : array
+    public function getRequireImplementsTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1491,7 +1491,7 @@ final class ClassReflection
     /**
      * @return array<string, PropertyTag>
      */
-    public function getPropertyTags() : array
+    public function getPropertyTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1502,7 +1502,7 @@ final class ClassReflection
     /**
      * @return array<string, MethodTag>
      */
-    public function getMethodTags() : array
+    public function getMethodTags(): array
     {
         $resolvedPhpDoc = $this->getResolvedPhpDoc();
         if ($resolvedPhpDoc === null) {
@@ -1513,7 +1513,7 @@ final class ClassReflection
     /**
      * @return list<Type>
      */
-    public function getResolvedMixinTypes() : array
+    public function getResolvedMixinTypes(): array
     {
         $types = [];
         foreach ($this->getMixinTags() as $mixinTag) {
@@ -1528,7 +1528,7 @@ final class ClassReflection
     /**
      * @return array<Type>|null
      */
-    public function getAllowedSubTypes() : ?array
+    public function getAllowedSubTypes(): ?array
     {
         foreach ($this->allowedSubTypesClassReflectionExtensions as $allowedSubTypesClassReflectionExtension) {
             if ($allowedSubTypesClassReflectionExtension->supports($this)) {

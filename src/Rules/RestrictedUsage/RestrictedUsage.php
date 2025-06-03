@@ -21,7 +21,7 @@ final class RestrictedUsage
         $this->errorMessage = $errorMessage;
         $this->identifier = $identifier;
     }
-    public static function create(string $errorMessage, string $identifier) : self
+    public static function create(string $errorMessage, string $identifier): self
     {
         return new self($errorMessage, $identifier);
     }

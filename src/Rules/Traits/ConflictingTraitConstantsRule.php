@@ -29,11 +29,11 @@ final class ConflictingTraitConstantsRule implements Rule
         $this->initializerExprTypeResolver = $initializerExprTypeResolver;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             return [];
@@ -61,7 +61,7 @@ final class ConflictingTraitConstantsRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleConstant(ClassReflection $classReflection, ReflectionClassConstant $traitConstant, Node\Stmt\ClassConst $classConst, Node\Expr $valueExpr) : array
+    private function processSingleConstant(ClassReflection $classReflection, ReflectionClassConstant $traitConstant, Node\Stmt\ClassConst $classConst, Node\Expr $valueExpr): array
     {
         $errors = [];
         if ($traitConstant->isPublic()) {

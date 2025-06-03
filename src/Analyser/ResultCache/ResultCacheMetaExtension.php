@@ -28,9 +28,9 @@ interface ResultCacheMetaExtension
     /**
      * Returns unique key for this result cache meta entry. This describes the source of the metadata.
      */
-    public function getKey() : string;
+    public function getKey(): string;
     /**
      * Returns hash of the result cache meta entry. This represents the current state of the additional meta source.
      */
-    public function getHash() : string;
+    public function getHash(): string;
 }

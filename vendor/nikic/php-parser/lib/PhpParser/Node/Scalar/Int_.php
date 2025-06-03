@@ -25,7 +25,7 @@ class Int_ extends Scalar
         $this->attributes = $attributes;
         $this->value = $value;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['value'];
     }
@@ -38,7 +38,7 @@ class Int_ extends Scalar
      *
      * @return Int_ The constructed LNumber, including kind attribute
      */
-    public static function fromString(string $str, array $attributes = [], bool $allowInvalidOctal = \false) : \PhpParser\Node\Scalar\Int_
+    public static function fromString(string $str, array $attributes = [], bool $allowInvalidOctal = \false): \PhpParser\Node\Scalar\Int_
     {
         $attributes['rawValue'] = $str;
         $str = \str_replace('_', '', $str);
@@ -65,7 +65,7 @@ class Int_ extends Scalar
         $attributes['kind'] = \PhpParser\Node\Scalar\Int_::KIND_OCT;
         return new \PhpParser\Node\Scalar\Int_(\intval($str, 8), $attributes);
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Scalar_Int';
     }

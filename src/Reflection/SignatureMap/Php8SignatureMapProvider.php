@@ -58,7 +58,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         $this->reflectionProviderProvider = $reflectionProviderProvider;
         $this->map = new Php8StubsMap($phpVersion->getVersionId());
     }
-    public function hasMethodSignature(string $className, string $methodName) : bool
+    public function hasMethodSignature(string $className, string $methodName): bool
     {
         $lowerClassName = strtolower($className);
         if ($lowerClassName === 'backedenum') {
@@ -75,7 +75,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
     /**
      * @return array{ClassMethod, string}|null
      */
-    private function findMethodNode(string $className, string $methodName) : ?array
+    private function findMethodNode(string $className, string $methodName): ?array
     {
         $lowerClassName = strtolower($className);
         $lowerMethodName = strtolower($methodName);
@@ -108,7 +108,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
     /**
      * @param AttributeGroup[] $attrGroups
      */
-    private function isForCurrentVersion(array $attrGroups) : bool
+    private function isForCurrentVersion(array $attrGroups): bool
     {
         foreach ($attrGroups as $attrGroup) {
             foreach ($attrGroup->attrs as $attr) {
@@ -139,7 +139,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return \true;
     }
-    public function hasFunctionSignature(string $name) : bool
+    public function hasFunctionSignature(string $name): bool
     {
         $lowerName = strtolower($name);
         if (!array_key_exists($lowerName, $this->map->functions)) {
@@ -147,7 +147,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return \true;
     }
-    public function getMethodSignatures(string $className, string $methodName, ?ReflectionMethod $reflectionMethod) : array
+    public function getMethodSignatures(string $className, string $methodName, ?ReflectionMethod $reflectionMethod): array
     {
         $lowerClassName = strtolower($className);
         if (!array_key_exists($lowerClassName, $this->map->classes)) {
@@ -168,7 +168,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
     /**
      * @param \ReflectionFunctionAbstract|null $reflectionFunction
      */
-    public function getFunctionSignatures(string $functionName, ?string $className, $reflectionFunction) : array
+    public function getFunctionSignatures(string $functionName, ?string $className, $reflectionFunction): array
     {
         $lowerName = strtolower($functionName);
         if (!array_key_exists($lowerName, $this->map->functions)) {
@@ -197,7 +197,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
      * @param array{positional: array<int, FunctionSignature>, named: ?array<int, FunctionSignature>} $functionMapSignatures
      * @return array{positional: array<int, FunctionSignature>, named: ?array<int, FunctionSignature>}
      */
-    private function getMergedSignatures(\PHPStan\Reflection\SignatureMap\FunctionSignature $nativeSignature, array $functionMapSignatures) : array
+    private function getMergedSignatures(\PHPStan\Reflection\SignatureMap\FunctionSignature $nativeSignature, array $functionMapSignatures): array
     {
         if (count($functionMapSignatures['positional']) === 1) {
             return ['positional' => [$this->mergeSignatures($nativeSignature, $functionMapSignatures['positional'][0])], 'named' => null];
@@ -240,7 +240,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return ['positional' => $functionMapSignatures['positional'], 'named' => $namedArgumentsVariants];
     }
-    private function mergeSignatures(\PHPStan\Reflection\SignatureMap\FunctionSignature $nativeSignature, \PHPStan\Reflection\SignatureMap\FunctionSignature $functionMapSignature) : \PHPStan\Reflection\SignatureMap\FunctionSignature
+    private function mergeSignatures(\PHPStan\Reflection\SignatureMap\FunctionSignature $nativeSignature, \PHPStan\Reflection\SignatureMap\FunctionSignature $functionMapSignature): \PHPStan\Reflection\SignatureMap\FunctionSignature
     {
         $parameters = [];
         foreach ($nativeSignature->getParameters() as $i => $nativeParameter) {
@@ -260,32 +260,32 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return new \PHPStan\Reflection\SignatureMap\FunctionSignature($parameters, $returnType, $nativeReturnType, $nativeSignature->isVariadic());
     }
-    public function hasMethodMetadata(string $className, string $methodName) : bool
+    public function hasMethodMetadata(string $className, string $methodName): bool
     {
         return $this->functionSignatureMapProvider->hasMethodMetadata($className, $methodName);
     }
-    public function hasFunctionMetadata(string $name) : bool
+    public function hasFunctionMetadata(string $name): bool
     {
         return $this->functionSignatureMapProvider->hasFunctionMetadata($name);
     }
     /**
      * @return array{hasSideEffects: bool}
      */
-    public function getMethodMetadata(string $className, string $methodName) : array
+    public function getMethodMetadata(string $className, string $methodName): array
     {
         return $this->functionSignatureMapProvider->getMethodMetadata($className, $methodName);
     }
     /**
      * @return array{hasSideEffects: bool}
      */
-    public function getFunctionMetadata(string $functionName) : array
+    public function getFunctionMetadata(string $functionName): array
     {
         return $this->functionSignatureMapProvider->getFunctionMetadata($functionName);
     }
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $function
      */
-    private function getSignature($function, ?string $className, string $stubFile) : \PHPStan\Reflection\SignatureMap\FunctionSignature
+    private function getSignature($function, ?string $className, string $stubFile): \PHPStan\Reflection\SignatureMap\FunctionSignature
     {
         $phpDocParameterTypes = null;
         $phpDocReturnType = null;
@@ -333,7 +333,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         $returnType = ParserNodeTypeToPHPStanType::resolve($function->getReturnType(), $classReflection);
         return new \PHPStan\Reflection\SignatureMap\FunctionSignature($parameters, TypehintHelper::decideType($returnType, $phpDocReturnType ?? null), $returnType, $variadic);
     }
-    public function hasClassConstantMetadata(string $className, string $constantName) : bool
+    public function hasClassConstantMetadata(string $className, string $constantName): bool
     {
         $lowerClassName = strtolower($className);
         if (!array_key_exists($lowerClassName, $this->map->classes)) {
@@ -341,7 +341,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return $this->findConstantType($className, $constantName) !== null;
     }
-    public function getClassConstantMetadata(string $className, string $constantName) : array
+    public function getClassConstantMetadata(string $className, string $constantName): array
     {
         $lowerClassName = strtolower($className);
         if (!array_key_exists($lowerClassName, $this->map->classes)) {
@@ -353,7 +353,7 @@ final class Php8SignatureMapProvider implements \PHPStan\Reflection\SignatureMap
         }
         return ['nativeType' => $type];
     }
-    private function findConstantType(string $className, string $constantName) : ?Type
+    private function findConstantType(string $className, string $constantName): ?Type
     {
         $lowerClassName = strtolower($className);
         $lowerConstantName = strtolower($constantName);

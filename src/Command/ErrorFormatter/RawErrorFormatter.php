@@ -10,7 +10,7 @@ use function sprintf;
 #[\PHPStan\DependencyInjection\AutowiredService('errorFormatter.raw')]
 final class RawErrorFormatter implements \PHPStan\Command\ErrorFormatter\ErrorFormatter
 {
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         foreach ($analysisResult->getNotFileSpecificErrors() as $notFileSpecificError) {
             $output->writeRaw(sprintf('?:?:%s', $notFileSpecificError));

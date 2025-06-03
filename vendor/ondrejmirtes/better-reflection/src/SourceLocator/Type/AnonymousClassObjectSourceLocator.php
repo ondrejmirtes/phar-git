@@ -42,7 +42,7 @@ final class AnonymousClassObjectSourceLocator implements \PHPStan\BetterReflecti
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         return $this->getReflectionClass($reflector, $identifier->getType());
     }
@@ -51,11 +51,11 @@ final class AnonymousClassObjectSourceLocator implements \PHPStan\BetterReflecti
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return array_filter([$this->getReflectionClass($reflector, $identifierType)]);
     }
-    private function getReflectionClass(Reflector $reflector, IdentifierType $identifierType) : ?\PHPStan\BetterReflection\Reflection\ReflectionClass
+    private function getReflectionClass(Reflector $reflector, IdentifierType $identifierType): ?\PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         if (!$identifierType->isClass()) {
             return null;
@@ -92,7 +92,7 @@ final class AnonymousClassObjectSourceLocator implements \PHPStan\BetterReflecti
                 $this->anonymousClassNodes[] = $node;
                 return null;
             }
-            public function getAnonymousClassNode() : Class_
+            public function getAnonymousClassNode(): Class_
             {
                 if ($this->anonymousClassNodes === []) {
                     throw NoAnonymousClassOnLine::create($this->fileName, $this->startLine);

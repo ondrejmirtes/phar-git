@@ -23,23 +23,23 @@ final class MethodTagParameter
         $this->isVariadic = $isVariadic;
         $this->defaultValue = $defaultValue;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->isOptional;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }

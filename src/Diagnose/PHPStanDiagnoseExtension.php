@@ -58,7 +58,7 @@ final class PHPStanDiagnoseExtension implements \PHPStan\Diagnose\DiagnoseExtens
         $this->allConfigFiles = $allConfigFiles;
         $this->composerPhpVersionFactory = $composerPhpVersionFactory;
     }
-    public function print(Output $output) : void
+    public function print(Output $output): void
     {
         $phpRuntimeVersion = new PhpVersion(PHP_VERSION_ID);
         $output->writeLineFormatted(sprintf('<info>PHP runtime version:</info> %s', $phpRuntimeVersion->getVersionString()));
@@ -84,21 +84,19 @@ final class PHPStanDiagnoseExtension implements \PHPStan\Diagnose\DiagnoseExtens
         $pharRunning = Phar::running(\false);
         if ($pharRunning !== '') {
             $output->writeLineFormatted(dirname($pharRunning));
+        } else if (isset($_SERVER['argv'][0]) && is_file($_SERVER['argv'][0])) {
+            $output->writeLineFormatted($_SERVER['argv'][0]);
         } else {
-            if (isset($_SERVER['argv'][0]) && is_file($_SERVER['argv'][0])) {
-                $output->writeLineFormatted($_SERVER['argv'][0]);
-            } else {
-                $output->writeLineFormatted('Unknown');
-            }
+            $output->writeLineFormatted('Unknown');
         }
         $output->writeLineFormatted('');
         $configFilesFromExtensionInstaller = [];
-        if (class_exists('PHPStan\\ExtensionInstaller\\GeneratedConfig')) {
+        if (class_exists('PHPStan\ExtensionInstaller\GeneratedConfig')) {
             $output->writeLineFormatted('<info>Extension installer:</info>');
             if (count(GeneratedConfig::EXTENSIONS) === 0) {
                 $output->writeLineFormatted('No extensions installed');
             }
-            $generatedConfigReflection = new ReflectionClass('PHPStan\\ExtensionInstaller\\GeneratedConfig');
+            $generatedConfigReflection = new ReflectionClass('PHPStan\ExtensionInstaller\GeneratedConfig');
             $generatedConfigDirectory = dirname($generatedConfigReflection->getFileName());
             foreach (GeneratedConfig::EXTENSIONS as $name => $extensionConfig) {
                 $output->writeLineFormatted(sprintf('%s: %s', $name, $extensionConfig['version'] ?? 'Unknown version'));
@@ -139,7 +137,7 @@ final class PHPStanDiagnoseExtension implements \PHPStan\Diagnose\DiagnoseExtens
                 if (!is_file($installedPath)) {
                     continue;
                 }
-                $installed = (require $installedPath);
+                $installed = require $installedPath;
                 $trimmed = substr($configFile, strlen($vendorDir) + 1);
                 $parts = explode('/', $trimmed);
                 $package = implode('/', array_slice($parts, 0, 2));

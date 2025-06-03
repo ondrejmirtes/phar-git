@@ -27,18 +27,18 @@ final class ExportedTraitUseAdaptation implements ExportedNode, JsonSerializable
         $this->newName = $newName;
         $this->insteadOfs = $insteadOfs;
     }
-    public static function createAlias(?string $traitName, string $method, ?int $newModifier, ?string $newName) : self
+    public static function createAlias(?string $traitName, string $method, ?int $newModifier, ?string $newName): self
     {
         return new self($traitName, $method, $newModifier, $newName, null);
     }
     /**
      * @param string[] $insteadOfs
      */
-    public static function createPrecedence(?string $traitName, string $method, array $insteadOfs) : self
+    public static function createPrecedence(?string $traitName, string $method, array $insteadOfs): self
     {
         return new self($traitName, $method, null, null, $insteadOfs);
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -48,14 +48,14 @@ final class ExportedTraitUseAdaptation implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['traitName'], $properties['method'], $properties['newModifier'], $properties['newName'], $properties['insteadOfs']);
     }
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
         return new self($data['traitName'], $data['method'], $data['newModifier'], $data['newName'], $data['insteadOfs']);
     }

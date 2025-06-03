@@ -18,11 +18,11 @@ use function sprintf;
  */
 final class IncompatibleClosureDefaultParameterTypeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClosureNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $parameters = $node->getClosureType()->getParameters();
         $errors = [];

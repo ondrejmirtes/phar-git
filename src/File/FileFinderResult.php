@@ -21,11 +21,11 @@ final class FileFinderResult
     /**
      * @return string[]
      */
-    public function getFiles() : array
+    public function getFiles(): array
     {
         return $this->files;
     }
-    public function isOnlyFiles() : bool
+    public function isOnlyFiles(): bool
     {
         return $this->onlyFiles;
     }

@@ -108,12 +108,12 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         self::$constantMap = array_change_key_case(PhpStormStubsMap::CONSTANTS);
         self::$mapsInitialized = \true;
     }
-    public function hasClass(string $className) : bool
+    public function hasClass(string $className): bool
     {
         $lowercaseClassName = strtolower($className);
         return array_key_exists($lowercaseClassName, self::$classMap);
     }
-    public function isPresentClass(string $className) : ?bool
+    public function isPresentClass(string $className): ?bool
     {
         $lowercaseClassName = strtolower($className);
         if (!array_key_exists($lowercaseClassName, self::$classMap)) {
@@ -122,7 +122,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         $classNode = $this->getClassNodeData($lowercaseClassName);
         return $classNode !== null;
     }
-    public function isPresentFunction(string $functionName) : ?bool
+    public function isPresentFunction(string $functionName): ?bool
     {
         $lowercaseFunctionName = strtolower($functionName);
         if (!array_key_exists($lowercaseFunctionName, self::$functionMap)) {
@@ -132,7 +132,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         return $functionNode !== null;
     }
     /** @param class-string|trait-string $className */
-    public function generateClassStub(string $className) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateClassStub(string $className): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         if (strtolower($className) === 'iterable') {
             return null;
@@ -156,7 +156,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         $stub = $this->createStub($classNode, $classNodeData[1]);
         if ($className === Traversable::class) {
             // See https://github.com/JetBrains/phpstorm-stubs/commit/0778a26992c47d7dbee4d0b0bfb7fad4344371b1#diff-575bacb45377d474336c71cbf53c1729
-            $stub = str_replace(' extends \\iterable', '', $stub);
+            $stub = str_replace(' extends \iterable', '', $stub);
         } elseif ($className === Generator::class) {
             $stub = str_replace('PS_UNRESERVE_PREFIX_throw', 'throw', $stub);
         }
@@ -183,7 +183,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @return array{0: Node\Stmt\Function_, 1: Node\Stmt\Namespace_|null}|null
      */
-    private function getFunctionNodeData(string $functionName) : ?array
+    private function getFunctionNodeData(string $functionName): ?array
     {
         $lowercaseFunctionName = strtolower($functionName);
         if (!array_key_exists($lowercaseFunctionName, self::$functionMap)) {
@@ -200,7 +200,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         }
         return $this->functionNodes[$lowercaseFunctionName];
     }
-    public function generateFunctionStub(string $functionName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateFunctionStub(string $functionName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         $functionNodeData = $this->getFunctionNodeData($functionName);
         if ($functionNodeData === null) {
@@ -210,7 +210,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         $extension = $this->getExtensionFromFilePath($filePath);
         return new \PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData($this->createStub($functionNodeData[0], $functionNodeData[1]), $extension, $this->getAbsoluteFilePath($filePath));
     }
-    public function generateConstantStub(string $constantName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateConstantStub(string $constantName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         $lowercaseConstantName = strtolower($constantName);
         if (!array_key_exists($lowercaseConstantName, self::$constantMap)) {
@@ -233,7 +233,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         $extension = $this->getExtensionFromFilePath($filePath);
         return new \PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData($this->createStub($constantNodeData[0], $constantNodeData[1]), $extension, $this->getAbsoluteFilePath($filePath));
     }
-    private function parseFile(string $filePath) : void
+    private function parseFile(string $filePath): void
     {
         $absoluteFilePath = $this->getAbsoluteFilePath($filePath);
         FileChecker::assertReadableFile($absoluteFilePath);
@@ -284,7 +284,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall $node
      */
-    private function createStub($node, ?\PhpParser\Node\Stmt\Namespace_ $namespaceNode) : string
+    private function createStub($node, ?\PhpParser\Node\Stmt\Namespace_ $namespaceNode): string
     {
         if ($node instanceof Node\Expr\FuncCall) {
             try {
@@ -314,14 +314,14 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         return sprintf("<?php\n\n%s%s\n", $this->prettyPrinter->prettyPrint([$node]), $node instanceof Node\Expr\FuncCall ? ';' : '');
     }
     /** @return non-empty-string */
-    private function getExtensionFromFilePath(string $filePath) : string
+    private function getExtensionFromFilePath(string $filePath): string
     {
         $extensionName = explode('/', $filePath)[0];
         assert($extensionName !== '');
         return $extensionName;
     }
     /** @return non-empty-string */
-    private function getAbsoluteFilePath(string $filePath) : string
+    private function getAbsoluteFilePath(string $filePath): string
     {
         return sprintf('%s/%s', $this->getStubsDirectory(), $filePath);
     }
@@ -332,7 +332,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
      *
      * @return list<Node\Name>
      */
-    private function replaceExtendsOrImplementsByPhpVersion(string $className, array $nameNodes) : array
+    private function replaceExtendsOrImplementsByPhpVersion(string $className, array $nameNodes): array
     {
         $modifiedNames = [];
         foreach ($nameNodes as $nameNode) {
@@ -379,7 +379,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
      *
      * @return list<Node\Stmt>
      */
-    private function modifyStmtsByPhpVersion(array $stmts) : array
+    private function modifyStmtsByPhpVersion(array $stmts): array
     {
         $newStmts = [];
         foreach ($stmts as $stmt) {
@@ -402,7 +402,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\Property|\PhpParser\Node\Param $stmt
      */
-    private function modifyStmtTypeByPhpVersion($stmt) : void
+    private function modifyStmtTypeByPhpVersion($stmt): void
     {
         $type = $this->getStmtType($stmt);
         if ($type === null) {
@@ -413,9 +413,9 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $function
      */
-    private function modifyFunctionReturnTypeByPhpVersion($function) : void
+    private function modifyFunctionReturnTypeByPhpVersion($function): void
     {
-        $isTentativeReturnType = $this->getNodeAttribute($function, 'JetBrains\\PhpStorm\\Internal\\TentativeType') !== null;
+        $isTentativeReturnType = $this->getNodeAttribute($function, 'JetBrains\PhpStorm\Internal\TentativeType') !== null;
         if ($isTentativeReturnType) {
             // Tentative types are the most correct in stubs
             // If the type is tentative in stubs, we should remove the type for PHP < 8.1
@@ -435,7 +435,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_ $function
      */
-    private function modifyFunctionParametersByPhpVersion($function) : void
+    private function modifyFunctionParametersByPhpVersion($function): void
     {
         $parameters = [];
         foreach ($function->getParams() as $parameterNode) {
@@ -453,7 +453,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
      */
     private function getStmtType($node)
     {
-        $languageLevelTypeAwareAttribute = $this->getNodeAttribute($node, 'JetBrains\\PhpStorm\\Internal\\LanguageLevelTypeAware');
+        $languageLevelTypeAwareAttribute = $this->getNodeAttribute($node, 'JetBrains\PhpStorm\Internal\LanguageLevelTypeAware');
         if ($languageLevelTypeAwareAttribute === null) {
             return null;
         }
@@ -475,7 +475,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function addDeprecatedDocComment($node) : void
+    private function addDeprecatedDocComment($node): void
     {
         if ($node instanceof Node\Expr\FuncCall) {
             if (!$this->isDeprecatedByPhpDocInPhpVersion($node)) {
@@ -495,13 +495,13 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function addAnnotationToDocComment($node, string $annotationName) : void
+    private function addAnnotationToDocComment($node, string $annotationName): void
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {
             $docCommentText = sprintf('/** @%s */', $annotationName);
         } else {
-            $docCommentText = preg_replace('~(\\r?\\n\\s*)\\*/~', sprintf('\\1* @%s\\1*/', $annotationName), $docComment->getText());
+            $docCommentText = preg_replace('~(\r?\n\s*)\*/~', sprintf('\1* @%s\1*/', $annotationName), $docComment->getText());
             assert($docCommentText !== null);
         }
         $node->setDocComment(new Doc($docCommentText));
@@ -509,7 +509,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function removeAnnotationFromDocComment($node, string $annotationName) : void
+    private function removeAnnotationFromDocComment($node, string $annotationName): void
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {
@@ -519,17 +519,17 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         assert($docCommentText !== null);
         $node->setDocComment(new Doc($docCommentText));
     }
-    private function isCoreExtension(string $extension) : bool
+    private function isCoreExtension(string $extension): bool
     {
         return in_array($extension, self::CORE_EXTENSIONS, \true);
     }
-    private function isDeprecatedByPhpDocInPhpVersion(Node\Expr\FuncCall $node) : bool
+    private function isDeprecatedByPhpDocInPhpVersion(Node\Expr\FuncCall $node): bool
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {
             return \false;
         }
-        if (preg_match('#@deprecated\\s+(\\d+)\\.(\\d+)(?:\\.(\\d+))?$#m', $docComment->getText(), $matches) === 1) {
+        if (preg_match('#@deprecated\s+(\d+)\.(\d+)(?:\.(\d+))?$#m', $docComment->getText(), $matches) === 1) {
             $major = $matches[1];
             $minor = $matches[2];
             $patch = $matches[3] ?? 0;
@@ -541,9 +541,9 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function isDeprecatedInPhpVersion($node) : bool
+    private function isDeprecatedInPhpVersion($node): bool
     {
-        $deprecatedAttribute = $this->getNodeAttribute($node, 'JetBrains\\PhpStorm\\Deprecated');
+        $deprecatedAttribute = $this->getNodeAttribute($node, 'JetBrains\PhpStorm\Deprecated');
         if ($deprecatedAttribute === null) {
             return \false;
         }
@@ -558,7 +558,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Param|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function isSupportedInPhpVersion($node) : bool
+    private function isSupportedInPhpVersion($node): bool
     {
         [$fromVersion, $toVersion] = $this->getSupportedPhpVersions($node);
         if ($fromVersion !== null && $fromVersion > $this->phpVersion) {
@@ -568,20 +568,20 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     }
     /** @return array{0: int|null, 1: int|null}
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Param|\PhpParser\Node\Stmt\EnumCase $node */
-    private function getSupportedPhpVersions($node) : array
+    private function getSupportedPhpVersions($node): array
     {
         $fromVersion = null;
         $toVersion = null;
         $docComment = $node->getDocComment();
         if ($docComment !== null) {
-            if (preg_match('~@since\\s+(?P<version>\\d+\\.\\d+(?:\\.\\d+)?)\\s+~', $docComment->getText(), $sinceMatches) === 1) {
+            if (preg_match('~@since\s+(?P<version>\d+\.\d+(?:\.\d+)?)\s+~', $docComment->getText(), $sinceMatches) === 1) {
                 $fromVersion = $this->parsePhpVersion($sinceMatches['version']);
             }
-            if (preg_match('~@removed\\s+(?P<version>\\d+\\.\\d+(?:\\.\\d+)?)\\s+~', $docComment->getText(), $removedMatches) === 1) {
+            if (preg_match('~@removed\s+(?P<version>\d+\.\d+(?:\.\d+)?)\s+~', $docComment->getText(), $removedMatches) === 1) {
                 $toVersion = $this->parsePhpVersion($removedMatches['version']) - 1;
             }
         }
-        $elementsAvailable = $this->getNodeAttribute($node, 'JetBrains\\PhpStorm\\Internal\\PhpStormStubsElementAvailable');
+        $elementsAvailable = $this->getNodeAttribute($node, 'JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable');
         if ($elementsAvailable !== null) {
             foreach ($elementsAvailable->args as $i => $attributeArg) {
                 $isFrom = \false;
@@ -614,7 +614,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     /**
      * @param \PhpParser\Node\Stmt\ClassLike|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Stmt\ClassConst|\PhpParser\Node\Stmt\Property|\PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Param|\PhpParser\Node\Stmt\EnumCase $node
      */
-    private function getNodeAttribute($node, string $attributeName) : ?\PhpParser\Node\Attribute
+    private function getNodeAttribute($node, string $attributeName): ?\PhpParser\Node\Attribute
     {
         if ($node instanceof Node\Expr\FuncCall || $node instanceof Node\Stmt\Const_) {
             return null;
@@ -628,7 +628,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         }
         return null;
     }
-    private function parsePhpVersion(string $version, int $defaultPatch = 0) : int
+    private function parsePhpVersion(string $version, int $defaultPatch = 0): int
     {
         $parts = array_map('intval', explode('.', $version));
         return $parts[0] * 10000 + $parts[1] * 100 + ($parts[2] ?? $defaultPatch);
@@ -645,7 +645,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
         /** @psalm-suppress InternalClass, InternalMethod */
         return BuilderHelpers::normalizeType($type);
     }
-    private function getStubsDirectory() : string
+    private function getStubsDirectory(): string
     {
         if ($this->stubsDirectory !== null) {
             return $this->stubsDirectory;

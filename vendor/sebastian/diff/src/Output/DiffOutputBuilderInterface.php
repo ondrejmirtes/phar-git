@@ -17,5 +17,5 @@ namespace _PHPStan_checksum\SebastianBergmann\Diff\Output;
  */
 interface DiffOutputBuilderInterface
 {
-    public function getDiff(array $diff) : string;
+    public function getDiff(array $diff): string;
 }

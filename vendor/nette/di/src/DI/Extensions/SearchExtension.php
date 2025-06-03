@@ -24,7 +24,7 @@ final class SearchExtension extends Nette\DI\CompilerExtension
     {
         $this->tempDir = $tempDir;
     }
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         return Expect::arrayOf(Expect::structure(['in' => Expect::string()->required(), 'files' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'classes' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'extends' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'implements' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'exclude' => Expect::structure(['classes' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'extends' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([]), 'implements' => Expect::anyOf(Expect::listOf('string'), Expect::string()->castTo('array'))->default([])]), 'tags' => Expect::array()]))->before(function ($val) {
             return \is_string($val['in'] ?? null) ? ['default' => $val] : $val;
@@ -41,7 +41,7 @@ final class SearchExtension extends Nette\DI\CompilerExtension
             }
         }
     }
-    public function findClasses(\stdClass $config) : array
+    public function findClasses(\stdClass $config): array
     {
         $robot = new RobotLoader();
         $robot->setTempDirectory($this->tempDir);
@@ -61,9 +61,9 @@ final class SearchExtension extends Nette\DI\CompilerExtension
                 throw new Nette\InvalidStateException(\sprintf('Class %s was found, but it cannot be loaded by autoloading.', $class));
             }
             $rc = new \ReflectionClass($class);
-            if (($rc->isInstantiable() || $rc->isInterface() && \count($methods = $rc->getMethods()) === 1 && $methods[0]->name === 'create') && (!$acceptRE || \preg_match($acceptRE, $rc->name)) && (!$rejectRE || !\preg_match($rejectRE, $rc->name)) && (!$acceptParent || Arrays::some($acceptParent, function ($nm) use($rc) {
+            if (($rc->isInstantiable() || $rc->isInterface() && \count($methods = $rc->getMethods()) === 1 && $methods[0]->name === 'create') && (!$acceptRE || \preg_match($acceptRE, $rc->name)) && (!$rejectRE || !\preg_match($rejectRE, $rc->name)) && (!$acceptParent || Arrays::some($acceptParent, function ($nm) use ($rc) {
                 return $rc->isSubclassOf($nm);
-            })) && (!$rejectParent || Arrays::every($rejectParent, function ($nm) use($rc) {
+            })) && (!$rejectParent || Arrays::every($rejectParent, function ($nm) use ($rc) {
                 return !$rc->isSubclassOf($nm);
             }))) {
                 $found[] = $rc->name;
@@ -84,15 +84,15 @@ final class SearchExtension extends Nette\DI\CompilerExtension
             $def->setTags(Arrays::normalize($tags, \true));
         }
     }
-    private static function buildNameRegexp(array $masks) : ?string
+    private static function buildNameRegexp(array $masks): ?string
     {
         $res = [];
         foreach ((array) $masks as $mask) {
             $mask = (\strpos($mask, '\\') === \false ? '**\\' : '') . $mask;
             $mask = \preg_quote($mask, '#');
-            $mask = \str_replace('\\*\\*\\\\', '(.*\\\\)?', $mask);
-            $mask = \str_replace('\\\\\\*\\*', '(\\\\.*)?', $mask);
-            $mask = \str_replace('\\*', '\\w*', $mask);
+            $mask = \str_replace('\*\*\\\\', '(.*\\\\)?', $mask);
+            $mask = \str_replace('\\\\\\*\*', '(\\\\.*)?', $mask);
+            $mask = \str_replace('\*', '\w*', $mask);
             $res[] = $mask;
         }
         return $res ? '#^(' . \implode('|', $res) . ')$#i' : null;

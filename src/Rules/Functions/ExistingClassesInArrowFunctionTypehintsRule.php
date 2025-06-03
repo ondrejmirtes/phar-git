@@ -24,11 +24,11 @@ final class ExistingClassesInArrowFunctionTypehintsRule implements Rule
         $this->check = $check;
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ArrowFunction::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $messages = [];
         if ($node->returnType !== null && !$this->phpVersion->supportsNeverReturnTypeInArrowFunction()) {

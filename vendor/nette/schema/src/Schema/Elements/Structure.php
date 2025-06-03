@@ -34,16 +34,16 @@ final class Structure implements Schema
         $this->castTo('object');
         $this->required = \true;
     }
-    public function default($value) : self
+    public function default($value): self
     {
         throw new Nette\InvalidStateException('Structure cannot have default value.');
     }
-    public function min(?int $min) : self
+    public function min(?int $min): self
     {
         $this->range[0] = $min;
         return $this;
     }
-    public function max(?int $max) : self
+    public function max(?int $max): self
     {
         $this->range[1] = $max;
         return $this;
@@ -51,12 +51,12 @@ final class Structure implements Schema
     /**
      * @param  string|Schema  $type
      */
-    public function otherItems($type = 'mixed') : self
+    public function otherItems($type = 'mixed'): self
     {
         $this->otherItems = $type instanceof Schema ? $type : new Type($type);
         return $this;
     }
-    public function skipDefaults(bool $state = \true) : self
+    public function skipDefaults(bool $state = \true): self
     {
         $this->skipDefaults = $state;
         return $this;
@@ -120,10 +120,10 @@ final class Structure implements Schema
         Helpers::validateType($value, 'array', $context);
         $isOk() && Helpers::validateRange($value, $this->range, $context);
         $isOk() && $this->validateItems($value, $context);
-        $isOk() && ($value = $this->doTransform($value, $context));
+        $isOk() && $value = $this->doTransform($value, $context);
         return $isOk() ? $value : null;
     }
-    private function validateItems(array &$value, Context $context) : void
+    private function validateItems(array &$value, Context $context): void
     {
         $items = $this->items;
         if ($extraKeys = \array_keys(\array_diff_key($value, $items))) {

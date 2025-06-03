@@ -28,7 +28,7 @@ final class NodeDependencies
      * @param array<string, true> $analysedFiles
      * @return string[]
      */
-    public function getFileDependencies(string $currentFile, array $analysedFiles) : array
+    public function getFileDependencies(string $currentFile, array $analysedFiles): array
     {
         $dependencies = [];
         foreach ($this->reflections as $dependencyReflection) {
@@ -47,7 +47,7 @@ final class NodeDependencies
         }
         return array_values($dependencies);
     }
-    public function getExportedNode() : ?\PHPStan\Dependency\RootExportedNode
+    public function getExportedNode(): ?\PHPStan\Dependency\RootExportedNode
     {
         return $this->exportedNode;
     }

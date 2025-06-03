@@ -144,7 +144,7 @@ final class TypeNodeResolver
         $this->initializerExprTypeResolver = $initializerExprTypeResolver;
     }
     /** @api */
-    public function resolve(TypeNode $typeNode, NameScope $nameScope) : Type
+    public function resolve(TypeNode $typeNode, NameScope $nameScope): Type
     {
         foreach ($this->extensionRegistryProvider->getRegistry()->getExtensions() as $extension) {
             $type = $extension->resolve($typeNode, $nameScope);
@@ -185,7 +185,7 @@ final class TypeNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveIdentifierTypeNode(IdentifierTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveIdentifierTypeNode(IdentifierTypeNode $typeNode, NameScope $nameScope): Type
     {
         switch (strtolower($typeNode->name)) {
             case 'int':
@@ -381,11 +381,11 @@ final class TypeNodeResolver
         }
         return new ObjectType($stringName);
     }
-    private function mightBeConstant(string $name) : bool
+    private function mightBeConstant(string $name): bool
     {
         return preg_match('((?:^|\\\\)[A-Z_][A-Z0-9_]*$)', $name) > 0;
     }
-    private function tryResolveConstant(string $name, NameScope $nameScope) : ?Type
+    private function tryResolveConstant(string $name, NameScope $nameScope): ?Type
     {
         foreach ($nameScope->resolveConstantNames($name) as $constName) {
             $nameNode = new Name\FullyQualified(explode('\\', $constName));
@@ -396,7 +396,7 @@ final class TypeNodeResolver
         }
         return null;
     }
-    private function tryResolvePseudoTypeClassType(IdentifierTypeNode $typeNode, NameScope $nameScope) : ?Type
+    private function tryResolvePseudoTypeClassType(IdentifierTypeNode $typeNode, NameScope $nameScope): ?Type
     {
         if ($nameScope->hasUseAlias($typeNode->name)) {
             return new ObjectType($nameScope->resolveStringName($typeNode->name));
@@ -410,7 +410,7 @@ final class TypeNodeResolver
         }
         return null;
     }
-    private function resolveThisTypeNode(ThisTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveThisTypeNode(ThisTypeNode $typeNode, NameScope $nameScope): Type
     {
         $className = $nameScope->getClassName();
         if ($className !== null) {
@@ -420,11 +420,11 @@ final class TypeNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveNullableTypeNode(NullableTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveNullableTypeNode(NullableTypeNode $typeNode, NameScope $nameScope): Type
     {
         return TypeCombinator::union($this->resolve($typeNode->type, $nameScope), new NullType());
     }
-    private function resolveUnionTypeNode(UnionTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveUnionTypeNode(UnionTypeNode $typeNode, NameScope $nameScope): Type
     {
         $iterableTypeNodes = [];
         $otherTypeNodes = [];
@@ -463,29 +463,29 @@ final class TypeNodeResolver
         }
         return TypeCombinator::union(...$otherTypeTypes);
     }
-    private function resolveIntersectionTypeNode(IntersectionTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveIntersectionTypeNode(IntersectionTypeNode $typeNode, NameScope $nameScope): Type
     {
         $types = $this->resolveMultiple($typeNode->types, $nameScope);
         return TypeCombinator::intersect(...$types);
     }
-    private function resolveConditionalTypeNode(ConditionalTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveConditionalTypeNode(ConditionalTypeNode $typeNode, NameScope $nameScope): Type
     {
         return new ConditionalType($this->resolve($typeNode->subjectType, $nameScope), $this->resolve($typeNode->targetType, $nameScope), $this->resolve($typeNode->if, $nameScope), $this->resolve($typeNode->else, $nameScope), $typeNode->negated);
     }
-    private function resolveConditionalTypeForParameterNode(ConditionalTypeForParameterNode $typeNode, NameScope $nameScope) : Type
+    private function resolveConditionalTypeForParameterNode(ConditionalTypeForParameterNode $typeNode, NameScope $nameScope): Type
     {
         return new ConditionalTypeForParameter($typeNode->parameterName, $this->resolve($typeNode->targetType, $nameScope), $this->resolve($typeNode->if, $nameScope), $this->resolve($typeNode->else, $nameScope), $typeNode->negated);
     }
-    private function resolveArrayTypeNode(ArrayTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveArrayTypeNode(ArrayTypeNode $typeNode, NameScope $nameScope): Type
     {
         $itemType = $this->resolve($typeNode->type, $nameScope);
         return new ArrayType(new BenevolentUnionType([new IntegerType(), new StringType()]), $itemType);
     }
-    private function resolveGenericTypeNode(GenericTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveGenericTypeNode(GenericTypeNode $typeNode, NameScope $nameScope): Type
     {
         $mainTypeName = strtolower($typeNode->type->name);
         $genericTypes = $this->resolveMultiple($typeNode->genericTypes, $nameScope);
-        $variances = array_map(static function (string $variance) : TemplateTypeVariance {
+        $variances = array_map(static function (string $variance): TemplateTypeVariance {
             switch ($variance) {
                 case GenericTypeNode::VARIANCE_INVARIANT:
                     return TemplateTypeVariance::createInvariant();
@@ -709,7 +709,7 @@ final class TypeNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveCallableTypeNode(CallableTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveCallableTypeNode(CallableTypeNode $typeNode, NameScope $nameScope): Type
     {
         $templateTags = [];
         if (count($typeNode->templateTypes) > 0) {
@@ -724,7 +724,7 @@ final class TypeNodeResolver
         }
         $mainType = $this->resolve($typeNode->identifier, $nameScope);
         $isVariadic = \false;
-        $parameters = array_values(array_map(function (CallableTypeParameterNode $parameterNode) use($nameScope, &$isVariadic) : NativeParameterReflection {
+        $parameters = array_values(array_map(function (CallableTypeParameterNode $parameterNode) use ($nameScope, &$isVariadic): NativeParameterReflection {
             $isVariadic = $isVariadic || $parameterNode->isVariadic;
             $parameterName = $parameterNode->parameterName;
             if (str_starts_with($parameterName, '$')) {
@@ -750,7 +750,7 @@ final class TypeNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveArrayShapeNode(ArrayShapeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveArrayShapeNode(ArrayShapeNode $typeNode, NameScope $nameScope): Type
     {
         $builder = ConstantArrayTypeBuilder::createEmpty();
         if (count($typeNode->items) > ConstantArrayTypeBuilder::ARRAY_COUNT_LIMIT) {
@@ -778,7 +778,7 @@ final class TypeNodeResolver
         }
         return $arrayType;
     }
-    private function resolveObjectShapeNode(ObjectShapeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveObjectShapeNode(ObjectShapeNode $typeNode, NameScope $nameScope): Type
     {
         $properties = [];
         $optionalProperties = [];
@@ -795,7 +795,7 @@ final class TypeNodeResolver
         }
         return new ObjectShapeType($properties, $optionalProperties);
     }
-    private function resolveConstTypeNode(ConstTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveConstTypeNode(ConstTypeNode $typeNode, NameScope $nameScope): Type
     {
         $constExpr = $typeNode->constExpr;
         if ($constExpr instanceof ConstExprArrayNode) {
@@ -838,7 +838,7 @@ final class TypeNodeResolver
             $constantName = $constExpr->name;
             if (Strings::contains($constantName, '*')) {
                 // convert * into .*? and escape everything else so the constants can be matched against the pattern
-                $pattern = '{^' . str_replace('\\*', '.*?', preg_quote($constantName)) . '$}D';
+                $pattern = '{^' . str_replace('\*', '.*?', preg_quote($constantName)) . '$}D';
                 $constantTypes = [];
                 foreach ($classReflection->getNativeReflection()->getReflectionConstants() as $reflectionConstant) {
                     $classConstantName = $reflectionConstant->getName();
@@ -884,7 +884,7 @@ final class TypeNodeResolver
         }
         return new ErrorType();
     }
-    private function resolveOffsetAccessNode(OffsetAccessTypeNode $typeNode, NameScope $nameScope) : Type
+    private function resolveOffsetAccessNode(OffsetAccessTypeNode $typeNode, NameScope $nameScope): Type
     {
         $type = $this->resolve($typeNode->type, $nameScope);
         $offset = $this->resolve($typeNode->offset, $nameScope);
@@ -893,7 +893,7 @@ final class TypeNodeResolver
         }
         return new OffsetAccessType($type, $offset);
     }
-    private function expandIntMaskToType(Type $type) : ?Type
+    private function expandIntMaskToType(Type $type): ?Type
     {
         $ints = array_map(static fn(ConstantIntegerType $type) => $type->getValue(), TypeUtils::getConstantIntegers($type));
         if (count($ints) === 0) {
@@ -925,7 +925,7 @@ final class TypeNodeResolver
      * @param TypeNode[] $typeNodes
      * @return list<Type>
      */
-    public function resolveMultiple(array $typeNodes, NameScope $nameScope) : array
+    public function resolveMultiple(array $typeNodes, NameScope $nameScope): array
     {
         $types = [];
         foreach ($typeNodes as $typeNode) {
@@ -933,11 +933,11 @@ final class TypeNodeResolver
         }
         return $types;
     }
-    private function getReflectionProvider() : ReflectionProvider
+    private function getReflectionProvider(): ReflectionProvider
     {
         return $this->reflectionProviderProvider->getReflectionProvider();
     }
-    private function getTypeAliasResolver() : TypeAliasResolver
+    private function getTypeAliasResolver(): TypeAliasResolver
     {
         return $this->typeAliasResolverProvider->getTypeAliasResolver();
     }

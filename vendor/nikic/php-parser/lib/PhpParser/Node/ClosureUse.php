@@ -23,11 +23,11 @@ class ClosureUse extends NodeAbstract
         $this->var = $var;
         $this->byRef = $byRef;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['var', 'byRef'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'ClosureUse';
     }

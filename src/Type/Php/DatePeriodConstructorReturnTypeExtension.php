@@ -21,15 +21,15 @@ use function strtolower;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class DatePeriodConstructorReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return DatePeriod::class;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === '__construct';
     }
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): Type
     {
         if (!isset($methodCall->getArgs()[0])) {
             return new ObjectType(DatePeriod::class);

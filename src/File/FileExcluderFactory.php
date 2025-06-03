@@ -22,7 +22,7 @@ final class FileExcluderFactory
         $this->fileExcluderRawFactory = $fileExcluderRawFactory;
         $this->excludePaths = $excludePaths;
     }
-    public function createAnalyseFileExcluder() : \PHPStan\File\FileExcluder
+    public function createAnalyseFileExcluder(): \PHPStan\File\FileExcluder
     {
         $paths = [];
         if (array_key_exists('analyse', $this->excludePaths)) {
@@ -33,7 +33,7 @@ final class FileExcluderFactory
         }
         return $this->fileExcluderRawFactory->create(array_values(array_unique($paths)));
     }
-    public function createScanFileExcluder() : \PHPStan\File\FileExcluder
+    public function createScanFileExcluder(): \PHPStan\File\FileExcluder
     {
         $paths = [];
         if (array_key_exists('analyseAndScan', $this->excludePaths)) {

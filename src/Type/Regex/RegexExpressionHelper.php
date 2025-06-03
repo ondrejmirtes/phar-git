@@ -31,7 +31,7 @@ final class RegexExpressionHelper
      *
      * see https://github.com/phpstan/phpstan-src/pull/3233#discussion_r1676938085
      */
-    public function resolvePatternConcat(Concat $concat, Scope $scope) : Type
+    public function resolvePatternConcat(Concat $concat, Scope $scope): Type
     {
         $resolver = new class($scope)
         {
@@ -40,7 +40,7 @@ final class RegexExpressionHelper
             {
                 $this->scope = $scope;
             }
-            public function resolve(Expr $expr) : Type
+            public function resolve(Expr $expr): Type
             {
                 // assume preg_quote() cannot create capturing groups or contain meta characters.
                 // replace it with a pattern which matches anything, does not affect $matches results
@@ -65,7 +65,7 @@ final class RegexExpressionHelper
         };
         return $this->initializerExprTypeResolver->getConcatType($concat->left, $concat->right, static fn(Expr $expr): Type => $resolver->resolve($expr));
     }
-    public function getPatternModifiers(string $pattern) : ?string
+    public function getPatternModifiers(string $pattern): ?string
     {
         $endDelimiterPos = $this->getEndDelimiterPos($pattern);
         if ($endDelimiterPos === \false) {
@@ -73,7 +73,7 @@ final class RegexExpressionHelper
         }
         return substr($pattern, $endDelimiterPos + 1);
     }
-    public function removeDelimitersAndModifiers(string $pattern) : string
+    public function removeDelimitersAndModifiers(string $pattern): string
     {
         $pattern = ltrim($pattern);
         $endDelimiterPos = $this->getEndDelimiterPos($pattern);
@@ -106,7 +106,7 @@ final class RegexExpressionHelper
      *
      * @return string[]
      */
-    public function getPatternDelimiters(Concat $concat, Scope $scope) : array
+    public function getPatternDelimiters(Concat $concat, Scope $scope): array
     {
         if ($concat->left instanceof Concat) {
             return $this->getPatternDelimiters($concat->left, $scope);
@@ -122,7 +122,7 @@ final class RegexExpressionHelper
         }
         return $delimiters;
     }
-    private function getPatternDelimiter(string $regex) : ?string
+    private function getPatternDelimiter(string $regex): ?string
     {
         $regex = ltrim($regex);
         if ($regex === '') {

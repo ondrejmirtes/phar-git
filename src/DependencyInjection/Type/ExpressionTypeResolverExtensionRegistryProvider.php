@@ -6,5 +6,5 @@ namespace PHPStan\DependencyInjection\Type;
 use PHPStan\Type\ExpressionTypeResolverExtensionRegistry;
 interface ExpressionTypeResolverExtensionRegistryProvider
 {
-    public function getRegistry() : ExpressionTypeResolverExtensionRegistry;
+    public function getRegistry(): ExpressionTypeResolverExtensionRegistry;
 }

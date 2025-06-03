@@ -17,7 +17,7 @@ final class ReflectionUnionType extends CoreReflectionUnionType
         $this->betterReflectionType = $betterReflectionType;
     }
     /** @return non-empty-list<ReflectionNamedType|ReflectionIntersectionType> */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return array_map(static function (BetterReflectionType $type) {
             $adapterType = \PHPStan\BetterReflection\Reflection\Adapter\ReflectionType::fromType($type);
@@ -26,11 +26,11 @@ final class ReflectionUnionType extends CoreReflectionUnionType
         }, $this->betterReflectionType->getTypes());
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionType->__toString();
     }
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->betterReflectionType->allowsNull();
     }

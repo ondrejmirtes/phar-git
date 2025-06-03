@@ -14,15 +14,15 @@ use PHPStan\Type\Type;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ClosureBindDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return Closure::class;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'bind';
     }
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         $closureType = $scope->getType($methodCall->getArgs()[0]->value);
         if (!$closureType instanceof ClosureType) {

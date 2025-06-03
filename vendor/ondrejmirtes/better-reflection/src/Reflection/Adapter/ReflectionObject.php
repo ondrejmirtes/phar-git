@@ -33,31 +33,31 @@ final class ReflectionObject extends CoreReflectionObject
         unset($this->name);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionObject->__toString();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionObject->getName();
     }
-    public function getBetterReflection() : BetterReflectionObject
+    public function getBetterReflection(): BetterReflectionObject
     {
         return $this->betterReflectionObject;
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->betterReflectionObject->isInternal();
     }
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return $this->betterReflectionObject->isUserDefined();
     }
-    public function isInstantiable() : bool
+    public function isInstantiable(): bool
     {
         return $this->betterReflectionObject->isInstantiable();
     }
-    public function isCloneable() : bool
+    public function isCloneable(): bool
     {
         return $this->betterReflectionObject->isCloneable();
     }
@@ -97,7 +97,7 @@ final class ReflectionObject extends CoreReflectionObject
     {
         return $this->betterReflectionObject->getDocComment() ?? \false;
     }
-    public function getConstructor() : ?\PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
+    public function getConstructor(): ?\PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
     {
         $constructor = $this->betterReflectionObject->getConstructor();
         if ($constructor === null) {
@@ -108,7 +108,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    public function hasMethod($name) : bool
+    public function hasMethod($name): bool
     {
         if ($name === '') {
             return \false;
@@ -118,7 +118,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    public function getMethod($name) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
+    public function getMethod($name): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
     {
         $method = $name !== '' ? $this->betterReflectionObject->getMethod($this->getMethodRealName($name)) : null;
         if ($method === null) {
@@ -131,7 +131,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return non-empty-string
      */
-    private function getMethodRealName(string $name) : string
+    private function getMethodRealName(string $name): string
     {
         $realMethodNames = array_map(static fn(BetterReflectionMethod $method): string => $method->getName(), $this->betterReflectionObject->getMethods());
         $methodNames = array_combine(array_map(static fn(string $methodName): string => strtolower($methodName), $realMethodNames), $realMethodNames);
@@ -142,14 +142,14 @@ final class ReflectionObject extends CoreReflectionObject
      * @param int-mask-of<ReflectionMethod::IS_*>|null $filter
      * @return list<ReflectionMethod>
      */
-    public function getMethods($filter = null) : array
+    public function getMethods($filter = null): array
     {
         return array_values(array_map(static fn(BetterReflectionMethod $method): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod($method), $this->betterReflectionObject->getMethods($filter ?? 0)));
     }
     /**
      * {@inheritDoc}
      */
-    public function hasProperty($name) : bool
+    public function hasProperty($name): bool
     {
         if ($name === '') {
             return \false;
@@ -160,7 +160,7 @@ final class ReflectionObject extends CoreReflectionObject
      * @param string $name
      * @return ReflectionProperty
      */
-    public function getProperty($name) : \ReflectionProperty
+    public function getProperty($name): \ReflectionProperty
     {
         $property = $name !== '' ? $this->betterReflectionObject->getProperty($name) : null;
         if ($property === null) {
@@ -172,14 +172,14 @@ final class ReflectionObject extends CoreReflectionObject
      * @param int-mask-of<ReflectionProperty::IS_*>|null $filter
      * @return list<ReflectionProperty>
      */
-    public function getProperties($filter = null) : array
+    public function getProperties($filter = null): array
     {
         return array_values(array_map(static fn(BetterReflectionProperty $property): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty($property), $this->betterReflectionObject->getProperties($filter ?? 0)));
     }
     /**
      * {@inheritDoc}
      */
-    public function hasConstant($name) : bool
+    public function hasConstant($name): bool
     {
         if ($name === '') {
             return \false;
@@ -191,7 +191,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return array<non-empty-string, mixed>
      */
-    public function getConstants(?int $filter = null) : array
+    public function getConstants(?int $filter = null): array
     {
         return array_map(static fn(BetterReflectionClassConstant $betterConstant) => $betterConstant->getValue(), $this->betterReflectionObject->getConstants($filter ?? 0));
     }
@@ -231,26 +231,26 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return list<ReflectionClassConstant>
      */
-    public function getReflectionConstants(?int $filter = null) : array
+    public function getReflectionConstants(?int $filter = null): array
     {
         return array_values(array_map(static fn(BetterReflectionClassConstant $betterConstant): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant($betterConstant), $this->betterReflectionObject->getConstants($filter ?? 0)));
     }
     /** @return array<class-string, ReflectionClass> */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         return array_map(static fn(BetterReflectionClass $interface): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($interface), $this->betterReflectionObject->getInterfaces());
     }
     /** @return list<class-string> */
-    public function getInterfaceNames() : array
+    public function getInterfaceNames(): array
     {
         return $this->betterReflectionObject->getInterfaceNames();
     }
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->betterReflectionObject->isInterface();
     }
     /** @return array<trait-string, ReflectionClass> */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         $traits = $this->betterReflectionObject->getTraits();
         /** @var list<trait-string> $traitNames */
@@ -258,39 +258,39 @@ final class ReflectionObject extends CoreReflectionObject
         return array_combine($traitNames, array_map(static fn(BetterReflectionClass $trait): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($trait), $traits));
     }
     /** @return list<trait-string> */
-    public function getTraitNames() : array
+    public function getTraitNames(): array
     {
         return $this->betterReflectionObject->getTraitNames();
     }
     /** @return array<non-empty-string, non-empty-string> */
-    public function getTraitAliases() : array
+    public function getTraitAliases(): array
     {
         return $this->betterReflectionObject->getTraitAliases();
     }
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->betterReflectionObject->isTrait();
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->betterReflectionObject->isAbstract();
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->betterReflectionObject->isFinal();
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->betterReflectionObject->isReadOnly();
     }
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->betterReflectionObject->getModifiers();
     }
     /**
      * {@inheritDoc}
      */
-    public function isInstance($object) : bool
+    public function isInstance($object): bool
     {
         return $this->betterReflectionObject->isInstance($object);
     }
@@ -326,7 +326,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return never
      */
-    public function newLazyGhost(callable $initializer, int $options = 0) : object
+    public function newLazyGhost(callable $initializer, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
@@ -335,36 +335,36 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return never
      */
-    public function newLazyProxy(callable $factory, int $options = 0) : object
+    public function newLazyProxy(callable $factory, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function markLazyObjectAsInitialized(object $object) : object
+    public function markLazyObjectAsInitialized(object $object): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
-    public function getLazyInitializer(object $object) : ?callable
-    {
-        throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
-    }
-    /** @return never */
-    public function initializeLazyObject(object $object) : object
+    public function getLazyInitializer(object $object): ?callable
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function isUninitializedLazyObject(object $object) : bool
+    public function initializeLazyObject(object $object): object
+    {
+        throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
+    }
+    /** @return never */
+    public function isUninitializedLazyObject(object $object): bool
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<ReflectionClass::SKIP_*> $options */
-    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0) : void
+    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<ReflectionClass::SKIP_*> $options */
-    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0) : void
+    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
@@ -385,7 +385,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    public function isSubclassOf($class) : bool
+    public function isSubclassOf($class): bool
     {
         $realParentClassNames = $this->betterReflectionObject->getParentClassNames();
         $parentClassNames = array_combine(array_map(static fn(string $parentClassName): string => strtolower($parentClassName), $realParentClassNames), $realParentClassNames);
@@ -399,7 +399,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         return $this->betterReflectionObject->getStaticProperties();
     }
@@ -425,7 +425,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    public function setStaticPropertyValue($name, $value) : void
+    public function setStaticPropertyValue($name, $value): void
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionObject->getProperty($name) : null;
         if ($betterReflectionProperty === null) {
@@ -438,22 +438,22 @@ final class ReflectionObject extends CoreReflectionObject
         $property->setValue($value);
     }
     /** @return array<string, scalar|array<scalar>|null> */
-    public function getDefaultProperties() : array
+    public function getDefaultProperties(): array
     {
         return $this->betterReflectionObject->getDefaultProperties();
     }
-    public function isIterateable() : bool
+    public function isIterateable(): bool
     {
         return $this->betterReflectionObject->isIterateable();
     }
-    public function isIterable() : bool
+    public function isIterable(): bool
     {
         return $this->isIterateable();
     }
     /**
      * @param \ReflectionClass|string $interface
      */
-    public function implementsInterface($interface) : bool
+    public function implementsInterface($interface): bool
     {
         $realInterfaceNames = $this->betterReflectionObject->getInterfaceNames();
         $interfaceNames = array_combine(array_map(static fn(string $interfaceName): string => strtolower($interfaceName), $realInterfaceNames), $realInterfaceNames);
@@ -462,7 +462,7 @@ final class ReflectionObject extends CoreReflectionObject
         $realInterfaceName = $interfaceNames[$lowercasedInterfaceName] ?? $interfaceName;
         return $this->betterReflectionObject->implementsInterface($realInterfaceName);
     }
-    public function getExtension() : ?CoreReflectionExtension
+    public function getExtension(): ?CoreReflectionExtension
     {
         throw new \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplemented('Not implemented');
     }
@@ -474,19 +474,19 @@ final class ReflectionObject extends CoreReflectionObject
     {
         return $this->betterReflectionObject->getExtensionName() ?? \false;
     }
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->betterReflectionObject->inNamespace();
     }
-    public function getNamespaceName() : string
+    public function getNamespaceName(): string
     {
         return $this->betterReflectionObject->getNamespaceName() ?? '';
     }
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->betterReflectionObject->getShortName();
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->betterReflectionObject->isAnonymous();
     }
@@ -495,7 +495,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(?string $name = null, int $flags = 0) : array
+    public function getAttributes(?string $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');
@@ -509,7 +509,7 @@ final class ReflectionObject extends CoreReflectionObject
         }
         return array_map(static fn(BetterReflectionAttribute $betterReflectionAttribute) => \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttributeFactory::create($betterReflectionAttribute), $attributes);
     }
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->betterReflectionObject->isEnum();
     }

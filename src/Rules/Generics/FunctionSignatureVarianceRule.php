@@ -19,11 +19,11 @@ final class FunctionSignatureVarianceRule implements Rule
     {
         $this->varianceCheck = $varianceCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $functionReflection = $node->getFunctionReflection();
         $functionName = $functionReflection->getName();

@@ -45,7 +45,7 @@ final class ExportedNodeResolver
         $this->fileTypeMapper = $fileTypeMapper;
         $this->exprPrinter = $exprPrinter;
     }
-    public function resolve(string $fileName, Node $node) : ?\PHPStan\Dependency\RootExportedNode
+    public function resolve(string $fileName, Node $node): ?\PHPStan\Dependency\RootExportedNode
     {
         if ($node instanceof Class_ && isset($node->namespacedName)) {
             $docComment = $node->getDocComment();
@@ -68,7 +68,7 @@ final class ExportedNodeResolver
                 }
             }
             $className = $node->namespacedName->toString();
-            return new ExportedClassNode($className, $this->exportPhpDocNode($fileName, $className, null, $docComment !== null ? $docComment->getText() : null), $node->isAbstract(), $node->isFinal(), $extendsName, $implementsNames, $usedTraits, array_map(static function (Node\Stmt\TraitUseAdaptation $adaptation) : ExportedTraitUseAdaptation {
+            return new ExportedClassNode($className, $this->exportPhpDocNode($fileName, $className, null, $docComment !== null ? $docComment->getText() : null), $node->isAbstract(), $node->isFinal(), $extendsName, $implementsNames, $usedTraits, array_map(static function (Node\Stmt\TraitUseAdaptation $adaptation): ExportedTraitUseAdaptation {
                 if ($adaptation instanceof Node\Stmt\TraitUseAdaptation\Alias) {
                     return ExportedTraitUseAdaptation::createAlias($adaptation->trait !== null ? $adaptation->trait->toString() : null, $adaptation->method->toString(), $adaptation->newModifier, $adaptation->newName !== null ? $adaptation->newName->toString() : null);
                 }
@@ -107,7 +107,7 @@ final class ExportedNodeResolver
                 }
             }
             $className = $node->namespacedName->toString();
-            return new ExportedTraitNode($className, $this->exportPhpDocNode($fileName, $className, null, $docComment !== null ? $docComment->getText() : null), $usedTraits, array_map(static function (Node\Stmt\TraitUseAdaptation $adaptation) : ExportedTraitUseAdaptation {
+            return new ExportedTraitNode($className, $this->exportPhpDocNode($fileName, $className, null, $docComment !== null ? $docComment->getText() : null), $usedTraits, array_map(static function (Node\Stmt\TraitUseAdaptation $adaptation): ExportedTraitUseAdaptation {
                 if ($adaptation instanceof Node\Stmt\TraitUseAdaptation\Alias) {
                     return ExportedTraitUseAdaptation::createAlias($adaptation->trait !== null ? $adaptation->trait->toString() : null, $adaptation->method->toString(), $adaptation->newModifier, $adaptation->newName !== null ? $adaptation->newName->toString() : null);
                 }
@@ -131,7 +131,7 @@ final class ExportedNodeResolver
      * @param Node\Param[] $params
      * @return ExportedParameterNode[]
      */
-    private function exportParameterNodes(array $params) : array
+    private function exportParameterNodes(array $params): array
     {
         $nodes = [];
         foreach ($params as $param) {
@@ -152,7 +152,7 @@ final class ExportedNodeResolver
         }
         return $nodes;
     }
-    private function exportPhpDocNode(string $file, ?string $className, ?string $functionName, ?string $text) : ?ExportedPhpDocNode
+    private function exportPhpDocNode(string $file, ?string $className, ?string $functionName, ?string $text): ?ExportedPhpDocNode
     {
         if ($text === null) {
             return null;
@@ -168,7 +168,7 @@ final class ExportedNodeResolver
      * @param Node\Stmt[] $statements
      * @return ExportedNode[]
      */
-    private function exportClassStatements(array $statements, string $fileName, string $namespacedName) : array
+    private function exportClassStatements(array $statements, string $fileName, string $namespacedName): array
     {
         $exportedNodes = [];
         foreach ($statements as $statement) {
@@ -180,7 +180,7 @@ final class ExportedNodeResolver
         }
         return $exportedNodes;
     }
-    private function exportClassStatement(Node\Stmt $node, string $fileName, string $namespacedName) : ?\PHPStan\Dependency\ExportedNode
+    private function exportClassStatement(Node\Stmt $node, string $fileName, string $namespacedName): ?\PHPStan\Dependency\ExportedNode
     {
         if ($node instanceof ClassMethod) {
             if ($node->isAbstract() || $node->isFinal() || !$node->isPrivate()) {
@@ -225,7 +225,7 @@ final class ExportedNodeResolver
      * @param Node\AttributeGroup[] $attributeGroups
      * @return ExportedAttributeNode[]
      */
-    private function exportAttributeNodes(array $attributeGroups) : array
+    private function exportAttributeNodes(array $attributeGroups): array
     {
         $nodes = [];
         foreach ($attributeGroups as $attributeGroup) {
@@ -243,7 +243,7 @@ final class ExportedNodeResolver
      * @param Node\PropertyHook[] $hooks
      * @return ExportedPropertyHookNode[]
      */
-    private function exportPropertyHooks(array $hooks, string $fileName, string $namespacedName) : array
+    private function exportPropertyHooks(array $hooks, string $fileName, string $namespacedName): array
     {
         $nodes = [];
         foreach ($hooks as $hook) {

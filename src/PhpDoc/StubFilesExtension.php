@@ -23,5 +23,5 @@ interface StubFilesExtension
 {
     public const EXTENSION_TAG = 'phpstan.stubFilesExtension';
     /** @return string[] */
-    public function getFiles() : array;
+    public function getFiles(): array;
 }

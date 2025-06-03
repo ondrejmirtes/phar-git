@@ -57,7 +57,7 @@ final class ConstantResolver
         $this->phpVersion = $phpVersion;
         $this->composerPhpVersionFactory = $composerPhpVersionFactory;
     }
-    public function resolveConstant(Name $name, ?NamespaceAnswerer $scope) : ?Type
+    public function resolveConstant(Name $name, ?NamespaceAnswerer $scope): ?Type
     {
         if (!$this->getReflectionProvider()->hasConstant($name, $scope)) {
             return null;
@@ -78,7 +78,7 @@ final class ConstantResolver
         unset($this->currentlyResolving[$resolvedConstantName]);
         return $type;
     }
-    public function resolvePredefinedConstant(string $resolvedConstantName) : ?Type
+    public function resolvePredefinedConstant(string $resolvedConstantName): ?Type
     {
         // core, https://www.php.net/manual/en/reserved.constants.php
         if ($resolvedConstantName === 'PHP_VERSION') {
@@ -250,7 +250,7 @@ final class ConstantResolver
         }
         return null;
     }
-    private function getMinPhpVersion() : ?PhpVersion
+    private function getMinPhpVersion(): ?PhpVersion
     {
         if (is_int($this->phpVersion)) {
             return null;
@@ -263,7 +263,7 @@ final class ConstantResolver
         }
         return $this->composerPhpVersionFactory->getMinVersion();
     }
-    private function getMaxPhpVersion() : ?PhpVersion
+    private function getMaxPhpVersion(): ?PhpVersion
     {
         if (is_int($this->phpVersion)) {
             return null;
@@ -276,14 +276,14 @@ final class ConstantResolver
         }
         return $this->composerPhpVersionFactory->getMaxVersion();
     }
-    public function resolveConstantType(string $constantName, Type $constantType) : Type
+    public function resolveConstantType(string $constantName, Type $constantType): Type
     {
         if ($constantType->isConstantValue()->yes() && in_array($constantName, $this->dynamicConstantNames, \true)) {
             return $constantType->generalize(GeneralizePrecision::lessSpecific());
         }
         return $constantType;
     }
-    public function resolveClassConstantType(string $className, string $constantName, Type $constantType, ?Type $nativeType) : Type
+    public function resolveClassConstantType(string $className, string $constantName, Type $constantType, ?Type $nativeType): Type
     {
         $lookupConstantName = sprintf('%s::%s', $className, $constantName);
         if (in_array($lookupConstantName, $this->dynamicConstantNames, \true)) {
@@ -296,14 +296,14 @@ final class ConstantResolver
         }
         return $constantType;
     }
-    private function createInteger(?int $min, ?int $max) : Type
+    private function createInteger(?int $min, ?int $max): Type
     {
         if ($min !== null && $min === $max) {
             return new ConstantIntegerType($min);
         }
         return IntegerRangeType::fromInterval($min, $max);
     }
-    private function getReflectionProvider() : ReflectionProvider
+    private function getReflectionProvider(): ReflectionProvider
     {
         return $this->reflectionProviderProvider->getReflectionProvider();
     }

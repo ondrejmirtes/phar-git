@@ -31,15 +31,15 @@ final class AdapterReflectionEnumDynamicReturnTypeExtension implements DynamicMe
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return ReflectionEnum::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return in_array($methodReflection->getName(), ['getFileName', 'getStartLine', 'getEndLine', 'getDocComment', 'getReflectionConstant', 'getParentClass', 'getExtensionName', 'getBackingType'], \true);
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if ($this->phpVersion->getVersionId() >= 80000) {
             return null;

@@ -21,11 +21,11 @@ final class TraitAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InTraitNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $originalNode = $node->getOriginalNode();
         $errors = $this->attributesCheck->check($scope, $originalNode->attrGroups, Attribute::TARGET_CLASS, 'class');

@@ -11,10 +11,10 @@ use PHPStan\Type\TypeTraverser;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class UnresolvableTypeHelper
 {
-    public function containsUnresolvableType(Type $type) : bool
+    public function containsUnresolvableType(Type $type): bool
     {
         $containsUnresolvable = \false;
-        TypeTraverser::map($type, static function (Type $type, callable $traverse) use(&$containsUnresolvable) : Type {
+        TypeTraverser::map($type, static function (Type $type, callable $traverse) use (&$containsUnresolvable): Type {
             if ($type instanceof ErrorType) {
                 $containsUnresolvable = \true;
                 return $type;

@@ -18,7 +18,7 @@ final class PhpStormStubsSourceStubberFactory
         $this->printer = $printer;
         $this->phpVersion = $phpVersion;
     }
-    public function create() : PhpStormStubsSourceStubber
+    public function create(): PhpStormStubsSourceStubber
     {
         return new PhpStormStubsSourceStubber($this->phpParser, $this->printer, $this->phpVersion->getVersionId());
     }

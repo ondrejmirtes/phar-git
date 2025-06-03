@@ -46,7 +46,7 @@ final class VarTagTypeRuleHelper
      * @param string[] $assignedVariables
      * @return list<IdentifierRuleError>
      */
-    public function checkVarType(Scope $scope, Node\Expr $var, Node\Expr $expr, array $varTags, array $assignedVariables) : array
+    public function checkVarType(Scope $scope, Node\Expr $var, Node\Expr $expr, array $varTags, array $assignedVariables): array
     {
         $errors = [];
         if ($var instanceof Expr\Variable && is_string($var->name)) {
@@ -79,7 +79,7 @@ final class VarTagTypeRuleHelper
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkExprType(Scope $scope, Node\Expr $expr, Type $varTagType) : array
+    public function checkExprType(Scope $scope, Node\Expr $expr, Type $varTagType): array
     {
         $errors = [];
         $exprNativeType = $scope->getNativeType($expr);
@@ -103,7 +103,7 @@ final class VarTagTypeRuleHelper
         }
         return $errors;
     }
-    private function containsPhpStanType(Type $type) : bool
+    private function containsPhpStanType(Type $type): bool
     {
         $classReflections = TypeUtils::toBenevolentUnion($type)->getObjectClassReflections();
         if (!$this->reflectionProvider->hasClass(Type::class)) {
@@ -118,7 +118,7 @@ final class VarTagTypeRuleHelper
         }
         return \false;
     }
-    private function shouldVarTagTypeBeReported(Scope $scope, Node\Expr $expr, Type $type, Type $varTagType) : bool
+    private function shouldVarTagTypeBeReported(Scope $scope, Node\Expr $expr, Type $type, Type $varTagType): bool
     {
         if ($expr instanceof Expr\Array_) {
             if ($expr->items === []) {
@@ -139,7 +139,7 @@ final class VarTagTypeRuleHelper
         }
         return $this->checkType($scope, $type, $varTagType);
     }
-    private function checkType(Scope $scope, Type $type, Type $varTagType, int $depth = 0) : bool
+    private function checkType(Scope $scope, Type $type, Type $varTagType, int $depth = 0): bool
     {
         if ($this->strictWideningCheck) {
             return !$this->isSuperTypeOfVarType($scope, $type, $varTagType);
@@ -166,7 +166,7 @@ final class VarTagTypeRuleHelper
         }
         return !$this->isSuperTypeOfVarType($scope, $type, $varTagType);
     }
-    private function isSuperTypeOfVarType(Scope $scope, Type $type, Type $varTagType) : bool
+    private function isSuperTypeOfVarType(Scope $scope, Type $type, Type $varTagType): bool
     {
         if ($type->isSuperTypeOf($varTagType)->yes()) {
             return \true;
@@ -178,7 +178,7 @@ final class VarTagTypeRuleHelper
         }
         return $type->isSuperTypeOf($varTagType)->yes();
     }
-    private function isAtLeastMaybeSuperTypeOfVarType(Scope $scope, Type $type, Type $varTagType) : bool
+    private function isAtLeastMaybeSuperTypeOfVarType(Scope $scope, Type $type, Type $varTagType): bool
     {
         if (!$type->isSuperTypeOf($varTagType)->no()) {
             return \true;
@@ -193,7 +193,7 @@ final class VarTagTypeRuleHelper
     /**
      * @throws NameScopeAlreadyBeingCreatedException
      */
-    private function createNameScope(Scope $scope) : NameScope
+    private function createNameScope(Scope $scope): NameScope
     {
         $function = $scope->getFunction();
         return $this->fileTypeMapper->getNameScope($scope->getFile(), $scope->isInClass() ? $scope->getClassReflection()->getName() : null, $scope->isInTrait() ? $scope->getTraitReflection()->getName() : null, $function !== null ? $function->getName() : null)->withoutNamespaceAndUses();

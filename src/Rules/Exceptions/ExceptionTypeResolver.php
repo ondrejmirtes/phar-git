@@ -33,5 +33,5 @@ use PHPStan\Analyser\Scope;
  */
 interface ExceptionTypeResolver
 {
-    public function isCheckedException(string $className, Scope $scope) : bool;
+    public function isCheckedException(string $className, Scope $scope): bool;
 }

@@ -26,5 +26,5 @@ interface EnumCaseDeprecationExtension
     /**
      * @param \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase $reflection
      */
-    public function getEnumCaseDeprecation($reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation;
+    public function getEnumCaseDeprecation($reflection): ?\PHPStan\Reflection\Deprecation\Deprecation;
 }

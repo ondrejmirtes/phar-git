@@ -57,8 +57,8 @@ abstract class AbstractMergeBase implements PhpMergeInterface
      *
      * @return array
      */
-    protected static function splitStringByLines(string $input) : array
+    protected static function splitStringByLines(string $input): array
     {
-        return \preg_split('/(.*\\R)/', $input, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+        return \preg_split('/(.*\R)/', $input, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
     }
 }

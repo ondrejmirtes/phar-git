@@ -18,11 +18,11 @@ final class ArrowFunctionReturnNullsafeByRefRule implements Rule
     {
         $this->nullsafeCheck = $nullsafeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\ArrowFunction::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->byRef) {
             return [];

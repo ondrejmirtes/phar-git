@@ -27,26 +27,26 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
         }
         $this->subtractedType = $subtractedType;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return \PHPStan\Type\AcceptsResult::createFromBoolean($type instanceof self || $type instanceof \PHPStan\Type\ObjectShapeType || $type->getObjectClassNames() !== []);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isSubTypeOf($this);
@@ -74,7 +74,7 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
         }
         return $this->subtractedType->isSuperTypeOf($type)->negate();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
@@ -90,9 +90,9 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
         }
         return $this->subtractedType->equals($type->subtractedType);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
-        return $level->handle(static fn(): string => 'object', static fn(): string => 'object', function () use($level) : string {
+        return $level->handle(static fn(): string => 'object', static fn(): string => 'object', function () use ($level): string {
             $description = 'object';
             if ($this->subtractedType !== null) {
                 $description .= $this->subtractedType instanceof \PHPStan\Type\UnionType ? sprintf('~(%s)', $this->subtractedType->describe($level)) : sprintf('~%s', $this->subtractedType->describe($level));
@@ -100,15 +100,15 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
             return $description;
         });
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function subtract(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public function subtract(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if ($type instanceof self) {
             return new \PHPStan\Type\NeverType();
@@ -118,19 +118,19 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
         }
         return new self($type);
     }
-    public function getTypeWithoutSubtractedType() : \PHPStan\Type\Type
+    public function getTypeWithoutSubtractedType(): \PHPStan\Type\Type
     {
         return new self();
     }
-    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType) : \PHPStan\Type\Type
+    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType): \PHPStan\Type\Type
     {
         return new self($subtractedType);
     }
-    public function getSubtractedType() : ?\PHPStan\Type\Type
+    public function getSubtractedType(): ?\PHPStan\Type\Type
     {
         return $this->subtractedType;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $subtractedType = $this->subtractedType !== null ? $cb($this->subtractedType) : null;
         if ($subtractedType !== $this->subtractedType) {
@@ -138,32 +138,32 @@ class ObjectWithoutClassType implements \PHPStan\Type\SubtractableType
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if ($this->subtractedType === null) {
             return $this;
         }
         return new self();
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($this->isSuperTypeOf($typeToRemove)->yes()) {
             return $this->subtract($typeToRemove);
         }
         return null;
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         if (!$exponent instanceof \PHPStan\Type\NeverType && !$this->isSuperTypeOf($exponent)->no()) {
             return \PHPStan\Type\TypeCombinator::union($this, $exponent);
         }
         return new \PHPStan\Type\BenevolentUnionType([new \PHPStan\Type\FloatType(), new \PHPStan\Type\IntegerType()]);
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('object');
     }

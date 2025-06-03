@@ -13,18 +13,18 @@ final class InForeachNode extends NodeAbstract implements \PHPStan\Node\VirtualN
         $this->originalNode = $originalNode;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getOriginalNode() : Foreach_
+    public function getOriginalNode(): Foreach_
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InForeachNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

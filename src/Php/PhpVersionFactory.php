@@ -20,7 +20,7 @@ final class PhpVersionFactory
         $this->versionId = $versionId;
         $this->composerPhpVersion = $composerPhpVersion;
     }
-    public function create() : \PHPStan\Php\PhpVersion
+    public function create(): \PHPStan\Php\PhpVersion
     {
         $versionId = $this->versionId;
         if ($versionId !== null) {

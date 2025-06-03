@@ -23,7 +23,7 @@ final class CachingVisitor extends NodeVisitorAbstract
     /** @var array<string, array<FetchedNode<Node\Stmt\Const_|Node\Expr\FuncCall>>> */
     private array $constantNodes;
     private ?Node\Stmt\Namespace_ $currentNamespaceNode = null;
-    public function enterNode(Node $node) : ?int
+    public function enterNode(Node $node): ?int
     {
         if ($node instanceof Namespace_) {
             $this->currentNamespaceNode = $node;
@@ -84,25 +84,25 @@ final class CachingVisitor extends NodeVisitorAbstract
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\ClassLike>>>
      */
-    public function getClassNodes() : array
+    public function getClassNodes(): array
     {
         return $this->classNodes;
     }
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\Function_>>>
      */
-    public function getFunctionNodes() : array
+    public function getFunctionNodes(): array
     {
         return $this->functionNodes;
     }
     /**
      * @return array<string, array<FetchedNode<Node\Stmt\Const_|Node\Expr\FuncCall>>>
      */
-    public function getConstantNodes() : array
+    public function getConstantNodes(): array
     {
         return $this->constantNodes;
     }
-    public function reset(string $fileName, string $contents) : void
+    public function reset(string $fileName, string $contents): void
     {
         $this->classNodes = [];
         $this->functionNodes = [];

@@ -24,7 +24,7 @@ class FileHelper
      *
      * @psalm-pure
      */
-    public static function normalizeWindowsPath(string $path) : string
+    public static function normalizeWindowsPath(string $path): string
     {
         $path = str_replace('\\', '/', $path);
         /** @phpstan-ignore function.alreadyNarrowedType, notIdentical.alwaysTrue */
@@ -38,12 +38,12 @@ class FileHelper
      *
      * @psalm-pure
      */
-    public static function normalizePath(string $originalPath, string $directorySeparator = DIRECTORY_SEPARATOR) : string
+    public static function normalizePath(string $originalPath, string $directorySeparator = DIRECTORY_SEPARATOR): string
     {
         $isLocalPath = $originalPath !== '' && $originalPath[0] === '/';
         $matches = null;
         if (!$isLocalPath) {
-            if (!preg_match('~^([a-z]+)\\:\\/\\/(.+)~', $originalPath, $matches)) {
+            if (!preg_match('~^([a-z]+)\:\/\/(.+)~', $originalPath, $matches)) {
                 $matches = null;
             }
         }
@@ -73,10 +73,10 @@ class FileHelper
         }
         return ($scheme !== null ? $scheme . '://' : '') . $pathRoot . implode($directorySeparator, $normalizedPathParts);
     }
-    public static function normalizeSystemPath(string $originalPath) : string
+    public static function normalizeSystemPath(string $originalPath): string
     {
         $path = self::normalizeWindowsPath($originalPath);
-        preg_match('~^([a-z]+)\\:\\/\\/(.+)~', $path, $matches);
+        preg_match('~^([a-z]+)\:\/\/(.+)~', $path, $matches);
         $scheme = null;
         if ($matches !== []) {
             [, $scheme, $path] = $matches;

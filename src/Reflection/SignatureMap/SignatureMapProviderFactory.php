@@ -17,7 +17,7 @@ final class SignatureMapProviderFactory
         $this->functionSignatureMapProvider = $functionSignatureMapProvider;
         $this->php8SignatureMapProvider = $php8SignatureMapProvider;
     }
-    public function create() : \PHPStan\Reflection\SignatureMap\SignatureMapProvider
+    public function create(): \PHPStan\Reflection\SignatureMap\SignatureMapProvider
     {
         if ($this->phpVersion->getVersionId() < 80000) {
             return $this->functionSignatureMapProvider;

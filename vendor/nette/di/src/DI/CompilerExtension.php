@@ -53,7 +53,7 @@ abstract class CompilerExtension
     /**
      * Returns configuration schema.
      */
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         return \is_object($this->config) ? Nette\Schema\Expect::from($this->config) : Nette\Schema\Expect::array();
     }
@@ -62,7 +62,7 @@ abstract class CompilerExtension
      * @throws Nette\InvalidStateException
      * @deprecated  use getConfigSchema()
      */
-    public function validateConfig(array $expected, ?array $config = null, ?string $name = null) : array
+    public function validateConfig(array $expected, ?array $config = null, ?string $name = null): array
     {
         if (\func_num_args() === 1) {
             return $this->config = $this->validateConfig($expected, $this->config);
@@ -74,14 +74,14 @@ abstract class CompilerExtension
         }
         return Nette\Schema\Helpers::merge($config, $expected);
     }
-    public function getContainerBuilder() : ContainerBuilder
+    public function getContainerBuilder(): ContainerBuilder
     {
         return $this->compiler->getContainerBuilder();
     }
     /**
      * Reads configuration from file.
      */
-    public function loadFromFile(string $file) : array
+    public function loadFromFile(string $file): array
     {
         $loader = $this->createLoader();
         $res = $loader->load($file);
@@ -92,7 +92,7 @@ abstract class CompilerExtension
      * Loads list of service definitions from configuration.
      * Prefixes its names and replaces @extension with name in definition.
      */
-    public function loadDefinitionsFromConfig(array $configList) : void
+    public function loadDefinitionsFromConfig(array $configList): void
     {
         $res = [];
         foreach ($configList as $key => $config) {
@@ -101,18 +101,18 @@ abstract class CompilerExtension
         }
         $this->compiler->loadDefinitionsFromConfig($res);
     }
-    protected function createLoader() : Config\Loader
+    protected function createLoader(): Config\Loader
     {
         return new Config\Loader();
     }
-    public function getInitialization() : Nette\PhpGenerator\Closure
+    public function getInitialization(): Nette\PhpGenerator\Closure
     {
         return $this->initialization;
     }
     /**
      * Prepend extension name to identifier or service name.
      */
-    public function prefix(string $id) : string
+    public function prefix(string $id): string
     {
         return \substr_replace($id, $this->name . '.', \substr($id, 0, 1) === '@' ? 1 : 0, 0);
     }

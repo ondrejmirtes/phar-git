@@ -128,18 +128,18 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         $this->phpDocClosureThisTypeParameters = $phpDocClosureThisTypeParameters;
         $this->attributes = $attributes;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function getDeclaringTrait() : ?ClassReflection
+    public function getDeclaringTrait(): ?ClassReflection
     {
         return $this->declaringTrait;
     }
     /**
      * @return self|MethodPrototypeReflection
      */
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         try {
             $prototypeMethod = $this->reflection->getPrototype();
@@ -159,11 +159,11 @@ final class PhpMethodReflection implements ExtendedMethodReflection
             return $this;
         }
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function getName() : string
+    public function getName(): string
     {
         $name = $this->reflection->getName();
         $lowercaseName = strtolower($name);
@@ -182,7 +182,7 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         }
         return $name;
     }
-    private function getMethodNameWithCorrectCase(string $lowercaseMethodName, string $traitTarget) : ?string
+    private function getMethodNameWithCorrectCase(string $lowercaseMethodName, string $traitTarget): ?string
     {
         $trait = explode('::', $traitTarget)[0];
         $traitReflection = $this->reflectionProvider->getClass($trait)->getNativeReflection();
@@ -200,32 +200,32 @@ final class PhpMethodReflection implements ExtendedMethodReflection
     /**
      * @return list<ExtendedParametersAcceptor>
      */
-    public function getVariants() : array
+    public function getVariants(): array
     {
         if ($this->variants === null) {
             $this->variants = [new ExtendedFunctionVariant($this->templateTypeMap, null, $this->getParameters(), $this->isVariadic(), $this->getReturnType(), $this->getPhpDocReturnType(), $this->getNativeReturnType())];
         }
         return $this->variants;
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
     /**
      * @return list<ExtendedParameterReflection>
      */
-    private function getParameters() : array
+    private function getParameters(): array
     {
         if ($this->parameters === null) {
             $this->parameters = array_map(fn(ReflectionParameter $reflection): \PHPStan\Reflection\Php\PhpParameterReflection => new \PHPStan\Reflection\Php\PhpParameterReflection($this->initializerExprTypeResolver, $reflection, $this->phpDocParameterTypes[$reflection->getName()] ?? null, $this->getDeclaringClass(), $this->phpDocParameterOutTypes[$reflection->getName()] ?? null, $this->immediatelyInvokedCallableParameters[$reflection->getName()] ?? TrinaryLogic::createMaybe(), $this->phpDocClosureThisTypeParameters[$reflection->getName()] ?? null, $this->attributeReflectionFactory->fromNativeReflection($reflection->getAttributes(), InitializerExprContext::fromReflectionParameter($reflection))), $this->reflection->getParameters());
         }
         return $this->parameters;
     }
-    private function isVariadic() : bool
+    private function isVariadic(): bool
     {
         $isNativelyVariadic = $this->reflection->isVariadic();
         $declaringClass = $this->declaringClass;
@@ -259,15 +259,15 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         }
         return $isNativelyVariadic;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    private function getReturnType() : Type
+    private function getReturnType(): Type
     {
         if ($this->returnType === null) {
             $name = strtolower($this->getName());
@@ -293,21 +293,21 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         }
         return $this->returnType;
     }
-    private function getPhpDocReturnType() : Type
+    private function getPhpDocReturnType(): Type
     {
         if ($this->phpDocReturnType !== null) {
             return $this->phpDocReturnType;
         }
         return new MixedType();
     }
-    private function getNativeReturnType() : Type
+    private function getNativeReturnType(): Type
     {
         if ($this->nativeReturnType === null) {
             $this->nativeReturnType = TypehintHelper::decideTypeFromReflection($this->reflection->getReturnType(), null, $this->declaringClass);
         }
         return $this->nativeReturnType;
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         if ($this->isDeprecated) {
             return $this->deprecatedDescription;
@@ -318,38 +318,38 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         }
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         if ($this->isDeprecated) {
             return TrinaryLogic::createYes();
         }
         return TrinaryLogic::createFromBoolean($this->reflection->isDeprecated());
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isInternal);
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isInternal());
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isFinal || $this->reflection->isFinal());
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->isFinal());
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->reflection->isAbstract();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->phpDocThrowType;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         if (strtolower($this->getName()) !== '__construct' && $this->getReturnType()->isVoid()->yes()) {
             return TrinaryLogic::createYes();
@@ -362,44 +362,44 @@ final class PhpMethodReflection implements ExtendedMethodReflection
         }
         return TrinaryLogic::createMaybe();
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->asserts;
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->declaringClass->acceptsNamedArguments() && $this->acceptsNamedArguments);
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return $this->selfOutType;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->phpDocComment;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->reflection->returnsReference());
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         if ($this->isPure === null) {
             return TrinaryLogic::createMaybe();
         }
         return TrinaryLogic::createFromBoolean($this->isPure);
     }
-    public function changePropertyGetHookPhpDocType(Type $phpDocType) : self
+    public function changePropertyGetHookPhpDocType(Type $phpDocType): self
     {
         return new self($this->initializerExprTypeResolver, $this->declaringClass, $this->declaringTrait, $this->reflection, $this->reflectionProvider, $this->attributeReflectionFactory, $this->parser, $this->templateTypeMap, $this->phpDocParameterTypes, $phpDocType, $this->phpDocThrowType, $this->deprecatedDescription, $this->isDeprecated, $this->isInternal, $this->isFinal, $this->isPure, $this->asserts, $this->acceptsNamedArguments, $this->selfOutType, $this->phpDocComment, $this->phpDocParameterOutTypes, $this->immediatelyInvokedCallableParameters, $this->phpDocClosureThisTypeParameters, $this->attributes);
     }
-    public function changePropertySetHookPhpDocType(string $parameterName, Type $phpDocType) : self
+    public function changePropertySetHookPhpDocType(string $parameterName, Type $phpDocType): self
     {
         $phpDocParameterTypes = $this->phpDocParameterTypes;
         $phpDocParameterTypes[$parameterName] = $phpDocType;
         return new self($this->initializerExprTypeResolver, $this->declaringClass, $this->declaringTrait, $this->reflection, $this->reflectionProvider, $this->attributeReflectionFactory, $this->parser, $this->templateTypeMap, $phpDocParameterTypes, $this->phpDocReturnType, $this->phpDocThrowType, $this->deprecatedDescription, $this->isDeprecated, $this->isInternal, $this->isFinal, $this->isPure, $this->asserts, $this->acceptsNamedArguments, $this->selfOutType, $this->phpDocComment, $this->phpDocParameterOutTypes, $this->immediatelyInvokedCallableParameters, $this->phpDocClosureThisTypeParameters, $this->attributes);
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

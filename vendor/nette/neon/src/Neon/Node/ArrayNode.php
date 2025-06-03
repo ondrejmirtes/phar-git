@@ -14,14 +14,14 @@ abstract class ArrayNode extends Node
     /** @var ArrayItemNode[] */
     public $items = [];
     /** @return mixed[] */
-    public function toValue() : array
+    public function toValue(): array
     {
         return ArrayItemNode::itemsToArray($this->items);
     }
-    public function &getIterator() : \Generator
+    public function &getIterator(): \Generator
     {
         foreach ($this->items as &$item) {
-            (yield $item);
+            yield $item;
         }
     }
 }

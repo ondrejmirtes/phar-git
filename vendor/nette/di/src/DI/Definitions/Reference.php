@@ -19,7 +19,7 @@ final class Reference
     public const SELF = self::Self;
     /** @var string */
     private $value;
-    public static function fromType(string $value) : self
+    public static function fromType(string $value): self
     {
         if (\strpos($value, '\\') === \false) {
             $value = '\\' . $value;
@@ -30,19 +30,19 @@ final class Reference
     {
         $this->value = $value;
     }
-    public function getValue() : string
+    public function getValue(): string
     {
         return $this->value;
     }
-    public function isName() : bool
+    public function isName(): bool
     {
         return \strpos($this->value, '\\') === \false && $this->value !== self::Self;
     }
-    public function isType() : bool
+    public function isType(): bool
     {
         return \strpos($this->value, '\\') !== \false;
     }
-    public function isSelf() : bool
+    public function isSelf(): bool
     {
         return $this->value === self::Self;
     }

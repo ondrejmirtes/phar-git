@@ -27,7 +27,7 @@ final class EvaledCodeSourceLocator extends \PHPStan\BetterReflection\SourceLoca
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         $classReflection = $this->getInternalReflectionClass($identifier);
         if ($classReflection === null) {
@@ -39,7 +39,7 @@ final class EvaledCodeSourceLocator extends \PHPStan\BetterReflection\SourceLoca
         }
         return new EvaledLocatedSource($stubData->getStub(), $classReflection->getName());
     }
-    private function getInternalReflectionClass(Identifier $identifier) : ?\ReflectionClass
+    private function getInternalReflectionClass(Identifier $identifier): ?\ReflectionClass
     {
         if (!$identifier->isClass()) {
             return null;

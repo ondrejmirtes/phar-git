@@ -20,11 +20,11 @@ final class InvalidKeyInArrayItemRule implements Rule
     {
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\ArrayItem::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->key === null) {
             return [];

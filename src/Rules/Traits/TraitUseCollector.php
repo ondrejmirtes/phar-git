@@ -13,14 +13,14 @@ use function array_values;
  */
 final class TraitUseCollector implements Collector
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\TraitUse::class;
     }
     /**
      * @return list<string>
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return array_values(array_map(static fn(Node\Name $traitName) => $traitName->toString(), $node->traits));
     }

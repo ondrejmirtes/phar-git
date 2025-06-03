@@ -17,11 +17,11 @@ final class ClassConstantFetch
         $this->node = $node;
         $this->scope = $scope;
     }
-    public function getNode() : ClassConstFetch
+    public function getNode(): ClassConstFetch
     {
         return $this->node;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }

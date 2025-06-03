@@ -18,11 +18,11 @@ final class ParamAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Param::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $targetName = 'parameter';
         $targetType = Attribute::TARGET_PARAMETER;

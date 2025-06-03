@@ -25,11 +25,11 @@ final class TemplateStrictMixedType extends StrictMixedType implements \PHPStan\
         $this->bound = $bound;
         $this->default = $default;
     }
-    public function isSuperTypeOfMixed(MixedType $type) : IsSuperTypeOfResult
+    public function isSuperTypeOfMixed(MixedType $type): IsSuperTypeOfResult
     {
         return $this->isSuperTypeOf($type);
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }

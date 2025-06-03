@@ -32,7 +32,7 @@ class NameContext
      *
      * @param Name|null $namespace Null is the global namespace
      */
-    public function startNamespace(?Name $namespace = null) : void
+    public function startNamespace(?Name $namespace = null): void
     {
         $this->namespace = $namespace;
         $this->origAliases = $this->aliases = [Stmt\Use_::TYPE_NORMAL => [], Stmt\Use_::TYPE_FUNCTION => [], Stmt\Use_::TYPE_CONSTANT => []];
@@ -45,7 +45,7 @@ class NameContext
      * @param Stmt\Use_::TYPE_* $type One of Stmt\Use_::TYPE_*
      * @param array<string, mixed> $errorAttrs Attributes to use to report an error
      */
-    public function addAlias(Name $name, string $aliasName, int $type, array $errorAttrs = []) : void
+    public function addAlias(Name $name, string $aliasName, int $type, array $errorAttrs = []): void
     {
         // Constant names are case sensitive, everything else case insensitive
         if ($type === Stmt\Use_::TYPE_CONSTANT) {
@@ -66,7 +66,7 @@ class NameContext
      *
      * @return null|Name Namespace (or null if global namespace)
      */
-    public function getNamespace() : ?Name
+    public function getNamespace(): ?Name
     {
         return $this->namespace;
     }
@@ -78,7 +78,7 @@ class NameContext
      *
      * @return null|Name Resolved name, or null if static resolution is not possible
      */
-    public function getResolvedName(Name $name, int $type) : ?Name
+    public function getResolvedName(Name $name, int $type): ?Name
     {
         // don't resolve special class names
         if ($type === Stmt\Use_::TYPE_NORMAL && $name->isSpecialClassName()) {
@@ -92,7 +92,7 @@ class NameContext
             return $name;
         }
         // Try to resolve aliases
-        if (null !== ($resolvedName = $this->resolveAlias($name, $type))) {
+        if (null !== $resolvedName = $this->resolveAlias($name, $type)) {
             return $resolvedName;
         }
         if ($type !== Stmt\Use_::TYPE_NORMAL && $name->isUnqualified()) {
@@ -113,7 +113,7 @@ class NameContext
      *
      * @return Name Resolved name
      */
-    public function getResolvedClassName(Name $name) : Name
+    public function getResolvedClassName(Name $name): Name
     {
         return $this->getResolvedName($name, Stmt\Use_::TYPE_NORMAL);
     }
@@ -125,7 +125,7 @@ class NameContext
      *
      * @return Name[] Possible representations of the name
      */
-    public function getPossibleNames(string $name, int $type) : array
+    public function getPossibleNames(string $name, int $type): array
     {
         $lcName = \strtolower($name);
         if ($type === Stmt\Use_::TYPE_NORMAL) {
@@ -136,7 +136,7 @@ class NameContext
         }
         // Collect possible ways to write this name, starting with the fully-qualified name
         $possibleNames = [new FullyQualified($name)];
-        if (null !== ($nsRelativeName = $this->getNamespaceRelativeName($name, $lcName, $type))) {
+        if (null !== $nsRelativeName = $this->getNamespaceRelativeName($name, $lcName, $type)) {
             // Make sure there is no alias that makes the normally namespace-relative name
             // into something else
             if (null === $this->resolveAlias($nsRelativeName, $type)) {
@@ -158,11 +158,8 @@ class NameContext
                 if ($normalizedOrig === $this->normalizeConstName($name)) {
                     $possibleNames[] = new Name($alias);
                 }
-            } else {
-                // Everything else is case-insensitive
-                if ($orig->toLowerString() === $lcName) {
-                    $possibleNames[] = new Name($alias);
-                }
+            } else if ($orig->toLowerString() === $lcName) {
+                $possibleNames[] = new Name($alias);
             }
         }
         return $possibleNames;
@@ -175,7 +172,7 @@ class NameContext
      *
      * @return Name Shortest representation
      */
-    public function getShortName(string $name, int $type) : Name
+    public function getShortName(string $name, int $type): Name
     {
         $possibleNames = $this->getPossibleNames($name, $type);
         // Find shortest name
@@ -190,7 +187,7 @@ class NameContext
         }
         return $shortestName;
     }
-    private function resolveAlias(Name $name, int $type) : ?FullyQualified
+    private function resolveAlias(Name $name, int $type): ?FullyQualified
     {
         $firstPart = $name->getFirst();
         if ($name->isQualified()) {
@@ -211,7 +208,7 @@ class NameContext
         // No applicable aliases
         return null;
     }
-    private function getNamespaceRelativeName(string $name, string $lcName, int $type) : ?Name
+    private function getNamespaceRelativeName(string $name, string $lcName, int $type): ?Name
     {
         if (null === $this->namespace) {
             return new Name($name);
@@ -229,7 +226,7 @@ class NameContext
         }
         return null;
     }
-    private function normalizeConstName(string $name) : string
+    private function normalizeConstName(string $name): string
     {
         $nsSep = \strrpos($name, '\\');
         if (\false === $nsSep) {

@@ -39,7 +39,7 @@ final class PhpNamespace
         }
         $this->name = $name;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -47,17 +47,17 @@ final class PhpNamespace
      * @return static
      * @internal
      */
-    public function setBracketedSyntax(bool $state = \true) : self
+    public function setBracketedSyntax(bool $state = \true): self
     {
         $this->bracketedSyntax = $state;
         return $this;
     }
-    public function hasBracketedSyntax() : bool
+    public function hasBracketedSyntax(): bool
     {
         return $this->bracketedSyntax;
     }
     /** @deprecated  use hasBracketedSyntax() */
-    public function getBracketedSyntax() : bool
+    public function getBracketedSyntax(): bool
     {
         return $this->bracketedSyntax;
     }
@@ -65,7 +65,7 @@ final class PhpNamespace
      * @throws InvalidStateException
      * @return static
      */
-    public function addUse(string $name, ?string $alias = null, string $of = self::NameNormal) : self
+    public function addUse(string $name, ?string $alias = null, string $of = self::NameNormal): self
     {
         if (!Helpers::isNamespaceIdentifier($name, \true) || Helpers::isIdentifier($name) && isset(Helpers::Keywords[\strtolower($name)])) {
             throw new Nette\InvalidArgumentException("Value '{$name}' is not valid class/function/constant name.");
@@ -94,7 +94,7 @@ final class PhpNamespace
         $this->aliases[$of][$alias] = $name;
         return $this;
     }
-    public function removeUse(string $name, string $of = self::NameNormal) : void
+    public function removeUse(string $name, string $of = self::NameNormal): void
     {
         foreach ($this->aliases[$of] as $alias => $item) {
             if (\strcasecmp($item, $name) === 0) {
@@ -103,17 +103,17 @@ final class PhpNamespace
         }
     }
     /** @return static */
-    public function addUseFunction(string $name, ?string $alias = null) : self
+    public function addUseFunction(string $name, ?string $alias = null): self
     {
         return $this->addUse($name, $alias, self::NameFunction);
     }
     /** @return static */
-    public function addUseConstant(string $name, ?string $alias = null) : self
+    public function addUseConstant(string $name, ?string $alias = null): self
     {
         return $this->addUse($name, $alias, self::NameConstant);
     }
     /** @return string[] */
-    public function getUses(string $of = self::NameNormal) : array
+    public function getUses(string $of = self::NameNormal): array
     {
         \asort($this->aliases[$of]);
         return \array_filter($this->aliases[$of], function ($name, $alias) {
@@ -121,11 +121,11 @@ final class PhpNamespace
         }, \ARRAY_FILTER_USE_BOTH);
     }
     /** @deprecated  use simplifyName() */
-    public function unresolveName(string $name) : string
+    public function unresolveName(string $name): string
     {
         return $this->simplifyName($name);
     }
-    public function resolveName(string $name, string $of = self::NameNormal) : string
+    public function resolveName(string $name, string $of = self::NameNormal): string
     {
         if (isset(Helpers::Keywords[\strtolower($name)]) || $name === '') {
             return $name;
@@ -139,13 +139,13 @@ final class PhpNamespace
         $parts = \explode('\\', $name, 2);
         return ($res = $aliases[\strtolower($parts[0])] ?? null) ? $res . (isset($parts[1]) ? '\\' . $parts[1] : '') : $this->name . ($this->name ? '\\' : '') . $name;
     }
-    public function simplifyType(string $type, string $of = self::NameNormal) : string
+    public function simplifyType(string $type, string $of = self::NameNormal): string
     {
-        return \preg_replace_callback('~[\\w\\x7f-\\xff\\\\]+~', function ($m) use($of) {
+        return \preg_replace_callback('~[\w\x7f-\xff\\\\]+~', function ($m) use ($of) {
             return $this->simplifyName($m[0], $of);
         }, $type);
     }
-    public function simplifyName(string $name, string $of = self::NameNormal) : string
+    public function simplifyName(string $name, string $of = self::NameNormal): string
     {
         if (isset(Helpers::Keywords[\strtolower($name)]) || $name === '') {
             return $name;
@@ -178,7 +178,7 @@ final class PhpNamespace
         return $relative ?? $shortest ?? ($this->name ? '\\' : '') . $name;
     }
     /** @return static */
-    public function add(ClassType $class) : self
+    public function add(ClassType $class): self
     {
         $name = $class->getName();
         if ($name === null) {
@@ -191,29 +191,29 @@ final class PhpNamespace
         $this->classes[$lower] = $class;
         return $this;
     }
-    public function addClass(string $name) : ClassType
+    public function addClass(string $name): ClassType
     {
         $this->add($class = new ClassType($name, $this));
         return $class;
     }
-    public function addInterface(string $name) : ClassType
+    public function addInterface(string $name): ClassType
     {
         return $this->addClass($name)->setType(ClassType::TYPE_INTERFACE);
     }
-    public function addTrait(string $name) : ClassType
+    public function addTrait(string $name): ClassType
     {
         return $this->addClass($name)->setType(ClassType::TYPE_TRAIT);
     }
-    public function addEnum(string $name) : ClassType
+    public function addEnum(string $name): ClassType
     {
         return $this->addClass($name)->setType(ClassType::TYPE_ENUM);
     }
-    public function removeClass(string $name) : self
+    public function removeClass(string $name): self
     {
         unset($this->classes[\strtolower($name)]);
         return $this;
     }
-    public function addFunction(string $name) : GlobalFunction
+    public function addFunction(string $name): GlobalFunction
     {
         $lower = \strtolower($name);
         if ($orig = \array_change_key_case($this->aliases[self::NameFunction])[$lower] ?? null) {
@@ -221,13 +221,13 @@ final class PhpNamespace
         }
         return $this->functions[$lower] = new GlobalFunction($name);
     }
-    public function removeFunction(string $name) : self
+    public function removeFunction(string $name): self
     {
         unset($this->functions[\strtolower($name)]);
         return $this;
     }
     /** @return ClassType[] */
-    public function getClasses() : array
+    public function getClasses(): array
     {
         $res = [];
         foreach ($this->classes as $class) {
@@ -236,7 +236,7 @@ final class PhpNamespace
         return $res;
     }
     /** @return GlobalFunction[] */
-    public function getFunctions() : array
+    public function getFunctions(): array
     {
         $res = [];
         foreach ($this->functions as $fn) {
@@ -244,11 +244,11 @@ final class PhpNamespace
         }
         return $res;
     }
-    private static function startsWith(string $a, string $b) : bool
+    private static function startsWith(string $a, string $b): bool
     {
         return \strncasecmp($a, $b, \strlen($b)) === 0;
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         try {
             return (new Printer())->printNamespace($this);

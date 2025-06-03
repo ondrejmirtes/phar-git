@@ -15,11 +15,11 @@ use function sprintf;
  */
 final class OverwrittenExitPointByFinallyRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FinallyExitPointsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (count($node->getTryCatchExitPoints()) === 0) {
             return [];
@@ -33,7 +33,7 @@ final class OverwrittenExitPointByFinallyRule implements Rule
         }
         return $errors;
     }
-    private function describeExitPoint(Node\Stmt $stmt) : string
+    private function describeExitPoint(Node\Stmt $stmt): string
     {
         if ($stmt instanceof Node\Stmt\Return_) {
             return 'return';

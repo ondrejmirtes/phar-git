@@ -50,50 +50,50 @@ final class ClosureReturnStatementsNode extends NodeAbstract implements \PHPStan
         parent::__construct($closureExpr->getAttributes());
         $this->closureExpr = $closureExpr;
     }
-    public function getClosureExpr() : Closure
+    public function getClosureExpr(): Closure
     {
         return $this->closureExpr;
     }
-    public function hasNativeReturnTypehint() : bool
+    public function hasNativeReturnTypehint(): bool
     {
         return $this->closureExpr->returnType !== null;
     }
-    public function getReturnStatements() : array
+    public function getReturnStatements(): array
     {
         return $this->returnStatements;
     }
-    public function getExecutionEnds() : array
+    public function getExecutionEnds(): array
     {
         return $this->executionEnds;
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
-    public function getYieldStatements() : array
+    public function getYieldStatements(): array
     {
         return $this->yieldStatements;
     }
-    public function isGenerator() : bool
+    public function isGenerator(): bool
     {
         return count($this->yieldStatements) > 0;
     }
-    public function getStatementResult() : StatementResult
+    public function getStatementResult(): StatementResult
     {
         return $this->statementResult;
     }
-    public function returnsByRef() : bool
+    public function returnsByRef(): bool
     {
         return $this->closureExpr->byRef;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClosureReturnStatementsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

@@ -19,65 +19,65 @@ use PHPStan\Type\MixedType;
 use PHPStan\Type\Type;
 trait MaybeObjectTypeTrait
 {
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): Type
     {
         return new MixedType();
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         $property = new DummyPropertyReflection($propertyName);
         return new CallbackUnresolvedPropertyPrototypeReflection($property, $property->getDeclaringClass(), \false, static fn(Type $type): Type => $type);
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         $method = new DummyMethodReflection($methodName);
         return new CallbackUnresolvedMethodPrototypeReflection($method, $method->getDeclaringClass(), \false, static fn(Type $type): Type => $type);
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         return new DummyClassConstantReflection($constantName);
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }

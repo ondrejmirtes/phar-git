@@ -16,19 +16,19 @@ final class ClosureCallUnresolvedMethodPrototypeReflection implements Unresolved
         $this->prototype = $prototype;
         $this->closure = $closure;
     }
-    public function doNotResolveTemplateTypeMapToBounds() : UnresolvedMethodPrototypeReflection
+    public function doNotResolveTemplateTypeMapToBounds(): UnresolvedMethodPrototypeReflection
     {
         return new self($this->prototype->doNotResolveTemplateTypeMapToBounds(), $this->closure);
     }
-    public function getNakedMethod() : ExtendedMethodReflection
+    public function getNakedMethod(): ExtendedMethodReflection
     {
         return $this->getTransformedMethod();
     }
-    public function getTransformedMethod() : ExtendedMethodReflection
+    public function getTransformedMethod(): ExtendedMethodReflection
     {
         return new \PHPStan\Reflection\Php\ClosureCallMethodReflection($this->prototype->getTransformedMethod(), $this->closure);
     }
-    public function withCalledOnType(Type $type) : UnresolvedMethodPrototypeReflection
+    public function withCalledOnType(Type $type): UnresolvedMethodPrototypeReflection
     {
         return new self($this->prototype->withCalledOnType($type), $this->closure);
     }

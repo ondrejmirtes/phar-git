@@ -8,75 +8,75 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 trait MaybeArrayTypeTrait
 {
-    public function getArrays() : array
+    public function getArrays(): array
     {
         return [];
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return [];
     }
-    public function isArray() : TrinaryLogic
+    public function isArray(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getKeysArray() : Type
+    public function getKeysArray(): Type
     {
         return new ErrorType();
     }
-    public function getValuesArray() : Type
+    public function getValuesArray(): Type
     {
         return new ErrorType();
     }
-    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return new ErrorType();
     }
-    public function fillKeysArray(Type $valueType) : Type
+    public function fillKeysArray(Type $valueType): Type
     {
         return new ErrorType();
     }
-    public function flipArray() : Type
+    public function flipArray(): Type
     {
         return new ErrorType();
     }
-    public function intersectKeyArray(Type $otherArraysType) : Type
+    public function intersectKeyArray(Type $otherArraysType): Type
     {
         return new ErrorType();
     }
-    public function popArray() : Type
+    public function popArray(): Type
     {
         return new ErrorType();
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : Type
+    public function reverseArray(TrinaryLogic $preserveKeys): Type
     {
         return new ErrorType();
     }
-    public function searchArray(Type $needleType) : Type
+    public function searchArray(Type $needleType): Type
     {
         return new ErrorType();
     }
-    public function shiftArray() : Type
+    public function shiftArray(): Type
     {
         return new ErrorType();
     }
-    public function shuffleArray() : Type
+    public function shuffleArray(): Type
     {
         return new ErrorType();
     }
-    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return new ErrorType();
     }

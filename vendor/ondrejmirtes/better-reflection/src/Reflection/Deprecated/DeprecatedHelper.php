@@ -16,7 +16,7 @@ final class DeprecatedHelper
 {
     /** @psalm-pure
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass|\PHPStan\BetterReflection\Reflection\ReflectionMethod|\PHPStan\BetterReflection\Reflection\ReflectionFunction|\PHPStan\BetterReflection\Reflection\ReflectionClassConstant|\PHPStan\BetterReflection\Reflection\ReflectionEnumCase|\PHPStan\BetterReflection\Reflection\ReflectionProperty $reflection */
-    public static function isDeprecated($reflection) : bool
+    public static function isDeprecated($reflection): bool
     {
         // We don't use Deprecated::class because the class is currently missing in stubs
         if (ReflectionAttributeHelper::filterAttributesByName($reflection->getAttributes(), 'Deprecated') !== []) {

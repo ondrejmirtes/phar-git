@@ -40,13 +40,13 @@ class WindowsPipes extends AbstractPipes
             $pipes = [Process::STDOUT => Process::OUT, Process::STDERR => Process::ERR];
             $tmpDir = \sys_get_temp_dir();
             $lastError = 'unknown reason';
-            \set_error_handler(function ($type, $msg) use(&$lastError) {
+            \set_error_handler(function ($type, $msg) use (&$lastError) {
                 $lastError = $msg;
             });
             for ($i = 0;; ++$i) {
                 foreach ($pipes as $pipe => $name) {
-                    $file = \sprintf('%s\\sf_proc_%02X.%s', $tmpDir, $i, $name);
-                    if (!($h = \fopen($file . '.lock', 'w'))) {
+                    $file = \sprintf('%s\sf_proc_%02X.%s', $tmpDir, $i, $name);
+                    if (!$h = \fopen($file . '.lock', 'w')) {
                         if (\file_exists($file . '.lock')) {
                             continue 2;
                         }
@@ -61,7 +61,7 @@ class WindowsPipes extends AbstractPipes
                         \fclose($this->lockHandles[$pipe]);
                     }
                     $this->lockHandles[$pipe] = $h;
-                    if (!($h = \fopen($file, 'w')) || !\fclose($h) || !($h = \fopen($file, 'r'))) {
+                    if (!($h = \fopen($file, 'w')) || !\fclose($h) || !$h = \fopen($file, 'r')) {
                         \flock($this->lockHandles[$pipe], \LOCK_UN);
                         \fclose($this->lockHandles[$pipe]);
                         unset($this->lockHandles[$pipe]);
@@ -76,7 +76,7 @@ class WindowsPipes extends AbstractPipes
         }
         parent::__construct($input);
     }
-    public function __sleep() : array
+    public function __sleep(): array
     {
         throw new \BadMethodCallException('Cannot serialize ' . __CLASS__);
     }
@@ -91,7 +91,7 @@ class WindowsPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getDescriptors() : array
+    public function getDescriptors(): array
     {
         if (!$this->haveReadSupport) {
             $nullstream = \fopen('NUL', 'c');
@@ -105,14 +105,14 @@ class WindowsPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function getFiles() : array
+    public function getFiles(): array
     {
         return $this->files;
     }
     /**
      * {@inheritdoc}
      */
-    public function readAndWrite(bool $blocking, bool $close = \false) : array
+    public function readAndWrite(bool $blocking, bool $close = \false): array
     {
         $this->unblock();
         $w = $this->write();
@@ -143,14 +143,14 @@ class WindowsPipes extends AbstractPipes
     /**
      * {@inheritdoc}
      */
-    public function haveReadSupport() : bool
+    public function haveReadSupport(): bool
     {
         return $this->haveReadSupport;
     }
     /**
      * {@inheritdoc}
      */
-    public function areOpen() : bool
+    public function areOpen(): bool
     {
         return $this->pipes && $this->fileHandles;
     }

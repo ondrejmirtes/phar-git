@@ -17,7 +17,7 @@ final class NeonLoader extends Loader
     /**
      * @return mixed[]
      */
-    public function load(string $file, ?bool $merge = \true) : array
+    public function load(string $file, ?bool $merge = \true): array
     {
         if ($this->generateBaselineFile === null) {
             return parent::load($file, $merge);

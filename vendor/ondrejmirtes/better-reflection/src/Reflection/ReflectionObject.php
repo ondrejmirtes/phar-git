@@ -39,7 +39,7 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
      * @throws ReflectionException
      * @throws IdentifierNotFound
      */
-    public static function createFromInstance(object $instance) : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public static function createFromInstance(object $instance): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         $className = \get_class($instance);
         $betterReflection = new BetterReflection();
@@ -59,7 +59,7 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
      *
      * @return array<non-empty-string, ReflectionProperty>
      */
-    private function getRuntimeProperties(int $filter = 0) : array
+    private function getRuntimeProperties(int $filter = 0): array
     {
         if (!$this->reflectionClass->isInstance($this->object)) {
             throw new InvalidArgumentException('Cannot reflect runtime properties of a separate class');
@@ -89,99 +89,99 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
      * Note that we don't copy across DocBlock, protected, private or static
      * because runtime properties can't have these attributes.
      */
-    private function createPropertyNodeFromRuntimePropertyReflection(CoreReflectionProperty $property, object $instance) : PropertyNode
+    private function createPropertyNodeFromRuntimePropertyReflection(CoreReflectionProperty $property, object $instance): PropertyNode
     {
         $builder = new PropertyNodeBuilder($property->getName());
         $builder->setDefault($property->getValue($instance));
         $builder->makePublic();
         return $builder->getNode();
     }
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->reflectionClass->getShortName();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflectionClass->getName();
     }
-    public function getNamespaceName() : ?string
+    public function getNamespaceName(): ?string
     {
         return $this->reflectionClass->getNamespaceName();
     }
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->reflectionClass->inNamespace();
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->reflectionClass->getExtensionName();
     }
     /**
      * {@inheritDoc}
      */
-    public function getMethods(int $filter = 0) : array
+    public function getMethods(int $filter = 0): array
     {
         return $this->reflectionClass->getMethods($filter);
     }
     /**
      * {@inheritDoc}
      */
-    public function getImmediateMethods(int $filter = 0) : array
+    public function getImmediateMethods(int $filter = 0): array
     {
         return $this->reflectionClass->getImmediateMethods($filter);
     }
     /** @param non-empty-string $methodName */
-    public function getMethod(string $methodName) : ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
+    public function getMethod(string $methodName): ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
     {
         return $this->reflectionClass->getMethod($methodName);
     }
     /** @param non-empty-string $methodName */
-    public function hasMethod(string $methodName) : bool
+    public function hasMethod(string $methodName): bool
     {
         return $this->reflectionClass->hasMethod($methodName);
     }
     /**
      * {@inheritDoc}
      */
-    public function getImmediateConstants(int $filter = 0) : array
+    public function getImmediateConstants(int $filter = 0): array
     {
         return $this->reflectionClass->getImmediateConstants($filter);
     }
     /**
      * {@inheritDoc}
      */
-    public function getConstants(int $filter = 0) : array
+    public function getConstants(int $filter = 0): array
     {
         return $this->reflectionClass->getConstants($filter);
     }
-    public function hasConstant(string $name) : bool
+    public function hasConstant(string $name): bool
     {
         return $this->reflectionClass->hasConstant($name);
     }
-    public function getConstant(string $name) : ?\PHPStan\BetterReflection\Reflection\ReflectionClassConstant
+    public function getConstant(string $name): ?\PHPStan\BetterReflection\Reflection\ReflectionClassConstant
     {
         return $this->reflectionClass->getConstant($name);
     }
-    public function getConstructor() : ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
+    public function getConstructor(): ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
     {
         return $this->reflectionClass->getConstructor();
     }
     /**
      * {@inheritDoc}
      */
-    public function getProperties(int $filter = 0) : array
+    public function getProperties(int $filter = 0): array
     {
         return array_merge($this->reflectionClass->getProperties($filter), $this->getRuntimeProperties($filter));
     }
     /**
      * {@inheritDoc}
      */
-    public function getImmediateProperties(int $filter = 0) : array
+    public function getImmediateProperties(int $filter = 0): array
     {
         return array_merge($this->reflectionClass->getImmediateProperties($filter), $this->getRuntimeProperties($filter));
     }
-    public function getProperty(string $name) : ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
+    public function getProperty(string $name): ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
     {
         $runtimeProperties = $this->getRuntimeProperties();
         if (isset($runtimeProperties[$name])) {
@@ -189,7 +189,7 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
         }
         return $this->reflectionClass->getProperty($name);
     }
-    public function hasProperty(string $name) : bool
+    public function hasProperty(string $name): bool
     {
         $runtimeProperties = $this->getRuntimeProperties();
         return isset($runtimeProperties[$name]) || $this->reflectionClass->hasProperty($name);
@@ -197,191 +197,191 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
     /**
      * {@inheritDoc}
      */
-    public function getDefaultProperties() : array
+    public function getDefaultProperties(): array
     {
         return array_map(static fn(\PHPStan\BetterReflection\Reflection\ReflectionProperty $property) => $property->getDefaultValue(), array_filter($this->getProperties(), static fn(\PHPStan\BetterReflection\Reflection\ReflectionProperty $property): bool => $property->isDefault()));
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->reflectionClass->getFileName();
     }
-    public function getLocatedSource() : LocatedSource
+    public function getLocatedSource(): LocatedSource
     {
         return $this->reflectionClass->getLocatedSource();
     }
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->reflectionClass->getStartLine();
     }
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->reflectionClass->getEndLine();
     }
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         return $this->reflectionClass->getStartColumn();
     }
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         return $this->reflectionClass->getEndColumn();
     }
-    public function getParentClass() : ?\PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getParentClass(): ?\PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->reflectionClass->getParentClass();
     }
     /** @return class-string|null */
-    public function getParentClassName() : ?string
+    public function getParentClassName(): ?string
     {
         return $this->reflectionClass->getParentClassName();
     }
     /**
      * {@inheritDoc}
      */
-    public function getParentClassNames() : array
+    public function getParentClassNames(): array
     {
         return $this->reflectionClass->getParentClassNames();
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->reflectionClass->getDocComment();
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->reflectionClass->isAnonymous();
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->reflectionClass->isInternal();
     }
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return $this->reflectionClass->isUserDefined();
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return $this->reflectionClass->isDeprecated();
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->reflectionClass->isAbstract();
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->reflectionClass->isFinal();
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->reflectionClass->isReadOnly();
     }
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->reflectionClass->getModifiers();
     }
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->reflectionClass->isTrait();
     }
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->reflectionClass->isInterface();
     }
     /**
      * {@inheritDoc}
      */
-    public function getTraitClassNames() : array
+    public function getTraitClassNames(): array
     {
         return $this->reflectionClass->getTraitClassNames();
     }
     /**
      * {@inheritDoc}
      */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         return $this->reflectionClass->getTraits();
     }
     /**
      * {@inheritDoc}
      */
-    public function getTraitNames() : array
+    public function getTraitNames(): array
     {
         return $this->reflectionClass->getTraitNames();
     }
     /**
      * {@inheritDoc}
      */
-    public function getTraitAliases() : array
+    public function getTraitAliases(): array
     {
         return $this->reflectionClass->getTraitAliases();
     }
     /**
      * {@inheritDoc}
      */
-    public function getInterfaceClassNames() : array
+    public function getInterfaceClassNames(): array
     {
         return $this->reflectionClass->getInterfaceClassNames();
     }
     /**
      * {@inheritDoc}
      */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         return $this->reflectionClass->getInterfaces();
     }
     /**
      * {@inheritDoc}
      */
-    public function getImmediateInterfaces() : array
+    public function getImmediateInterfaces(): array
     {
         return $this->reflectionClass->getImmediateInterfaces();
     }
     /**
      * {@inheritDoc}
      */
-    public function getInterfaceNames() : array
+    public function getInterfaceNames(): array
     {
         return $this->reflectionClass->getInterfaceNames();
     }
-    public function isInstance(object $object) : bool
+    public function isInstance(object $object): bool
     {
         return $this->reflectionClass->isInstance($object);
     }
-    public function isSubclassOf(string $className) : bool
+    public function isSubclassOf(string $className): bool
     {
         return $this->reflectionClass->isSubclassOf($className);
     }
-    public function implementsInterface(string $interfaceName) : bool
+    public function implementsInterface(string $interfaceName): bool
     {
         return $this->reflectionClass->implementsInterface($interfaceName);
     }
-    public function isInstantiable() : bool
+    public function isInstantiable(): bool
     {
         return $this->reflectionClass->isInstantiable();
     }
-    public function isCloneable() : bool
+    public function isCloneable(): bool
     {
         return $this->reflectionClass->isCloneable();
     }
-    public function isIterateable() : bool
+    public function isIterateable(): bool
     {
         return $this->reflectionClass->isIterateable();
     }
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->reflectionClass->isEnum();
     }
     /**
      * {@inheritDoc}
      */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         return $this->reflectionClass->getStaticProperties();
     }
     /**
      * @param mixed $value
      */
-    public function setStaticPropertyValue(string $propertyName, $value) : void
+    public function setStaticPropertyValue(string $propertyName, $value): void
     {
         $this->reflectionClass->setStaticPropertyValue($propertyName, $value);
     }
@@ -393,12 +393,12 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
         return $this->reflectionClass->getStaticPropertyValue($propertyName);
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->reflectionClass->getAttributes();
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return $this->reflectionClass->getAttributesByName($name);
     }
@@ -407,7 +407,7 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return $this->reflectionClass->getAttributesByInstance($className);
     }

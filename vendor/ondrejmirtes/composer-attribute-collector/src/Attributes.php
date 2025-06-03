@@ -12,7 +12,7 @@ final class Attributes
      */
     private static ?Closure $provider = null;
     private static ?Collection $collection;
-    public static function with(Closure $provider) : ?Closure
+    public static function with(Closure $provider): ?Closure
     {
         $previous = self::$provider;
         self::$collection = null;
@@ -26,7 +26,7 @@ final class Attributes
      *
      * @return TargetClass<T>[]
      */
-    public static function findTargetClasses(string $attribute) : array
+    public static function findTargetClasses(string $attribute): array
     {
         return self::getCollection()->findTargetClasses($attribute);
     }
@@ -37,7 +37,7 @@ final class Attributes
      *
      * @return TargetMethod<T>[]
      */
-    public static function findTargetMethods(string $attribute) : array
+    public static function findTargetMethods(string $attribute): array
     {
         return self::getCollection()->findTargetMethods($attribute);
     }
@@ -48,7 +48,7 @@ final class Attributes
      *
      * @return TargetProperty<T>[]
      */
-    public static function findTargetProperties(string $attribute) : array
+    public static function findTargetProperties(string $attribute): array
     {
         return self::getCollection()->findTargetProperties($attribute);
     }
@@ -57,7 +57,7 @@ final class Attributes
      *
      * @return array<TargetClass<object>>
      */
-    public static function filterTargetClasses(callable $predicate) : array
+    public static function filterTargetClasses(callable $predicate): array
     {
         return self::getCollection()->filterTargetClasses($predicate);
     }
@@ -66,7 +66,7 @@ final class Attributes
      *
      * @return array<TargetMethod<object>>
      */
-    public static function filterTargetMethods(callable $predicate) : array
+    public static function filterTargetMethods(callable $predicate): array
     {
         return self::getCollection()->filterTargetMethods($predicate);
     }
@@ -75,7 +75,7 @@ final class Attributes
      *
      * @return array<TargetProperty<object>>
      */
-    public static function filterTargetProperties(callable $predicate) : array
+    public static function filterTargetProperties(callable $predicate): array
     {
         return self::getCollection()->filterTargetProperties($predicate);
     }
@@ -84,7 +84,7 @@ final class Attributes
      *
      * @return Closure(class-string $attribute):bool
      */
-    public static function predicateForAttributeInstanceOf(string $class) : Closure
+    public static function predicateForAttributeInstanceOf(string $class): Closure
     {
         return fn(string $attribute): bool => is_a($attribute, $class, \true);
     }
@@ -97,11 +97,11 @@ final class Attributes
      *
      * @return ForClass
      */
-    public static function forClass(string $class) : ForClass
+    public static function forClass(string $class): ForClass
     {
         return self::$forClassCache[$class] ??= self::getCollection()->forClass($class);
     }
-    private static function getCollection() : Collection
+    private static function getCollection(): Collection
     {
         if (self::$collection !== null) {
             return self::$collection;

@@ -81,7 +81,7 @@ class ClientConnectionManager
         $this->idleUris[] = ($scheme === 'https' ? 'tls://' : '') . $uri->getHost() . ':' . $port;
         $this->idleConnections[] = $connection;
         $that = $this;
-        $cleanUp = function () use($connection, $that) {
+        $cleanUp = function () use ($connection, $that) {
             // call public method to support legacy PHP 5.3
             $that->cleanUpConnection($connection);
         };

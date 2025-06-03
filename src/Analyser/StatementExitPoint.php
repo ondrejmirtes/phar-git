@@ -16,11 +16,11 @@ final class StatementExitPoint
         $this->statement = $statement;
         $this->scope = $scope;
     }
-    public function getStatement() : Stmt
+    public function getStatement(): Stmt
     {
         return $this->statement;
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }

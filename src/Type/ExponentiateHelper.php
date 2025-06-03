@@ -12,7 +12,7 @@ use function is_string;
 use function pow;
 final class ExponentiateHelper
 {
-    public static function exponentiate(\PHPStan\Type\Type $base, \PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public static function exponentiate(\PHPStan\Type\Type $base, \PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         if ($exponent instanceof \PHPStan\Type\UnionType) {
             $results = [];
@@ -55,7 +55,7 @@ final class ExponentiateHelper
         }
         return new \PHPStan\Type\BenevolentUnionType([new \PHPStan\Type\FloatType(), new \PHPStan\Type\IntegerType()]);
     }
-    private static function exponentiateConstantScalar(\PHPStan\Type\ConstantScalarType $base, \PHPStan\Type\Type $exponent) : ?\PHPStan\Type\Type
+    private static function exponentiateConstantScalar(\PHPStan\Type\ConstantScalarType $base, \PHPStan\Type\Type $exponent): ?\PHPStan\Type\Type
     {
         if ($exponent instanceof \PHPStan\Type\IntegerRangeType) {
             $min = null;

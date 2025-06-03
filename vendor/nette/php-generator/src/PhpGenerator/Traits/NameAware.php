@@ -22,7 +22,7 @@ trait NameAware
         }
         $this->name = $name;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -30,7 +30,7 @@ trait NameAware
      * Returns clone with a different name.
      * @return static
      */
-    public function cloneWithName(string $name) : self
+    public function cloneWithName(string $name): self
     {
         $dolly = clone $this;
         $dolly->__construct($name);

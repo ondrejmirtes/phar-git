@@ -35,22 +35,22 @@ final class ThrowPoint
     /**
      * @param Node\Expr|Node\Stmt $node
      */
-    public static function createExplicit(\PHPStan\Analyser\MutatingScope $scope, Type $type, Node $node, bool $canContainAnyThrowable) : self
+    public static function createExplicit(\PHPStan\Analyser\MutatingScope $scope, Type $type, Node $node, bool $canContainAnyThrowable): self
     {
         return new self($scope, $type, $node, \true, $canContainAnyThrowable);
     }
     /**
      * @param Node\Expr|Node\Stmt $node
      */
-    public static function createImplicit(\PHPStan\Analyser\MutatingScope $scope, Node $node) : self
+    public static function createImplicit(\PHPStan\Analyser\MutatingScope $scope, Node $node): self
     {
         return new self($scope, new ObjectType(Throwable::class), $node, \false, \true);
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
@@ -61,15 +61,15 @@ final class ThrowPoint
     {
         return $this->node;
     }
-    public function isExplicit() : bool
+    public function isExplicit(): bool
     {
         return $this->explicit;
     }
-    public function canContainAnyThrowable() : bool
+    public function canContainAnyThrowable(): bool
     {
         return $this->canContainAnyThrowable;
     }
-    public function subtractCatchType(Type $catchType) : self
+    public function subtractCatchType(Type $catchType): self
     {
         return new self($this->scope, TypeCombinator::remove($this->type, $catchType), $this->node, $this->explicit, $this->canContainAnyThrowable);
     }

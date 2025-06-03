@@ -41,31 +41,31 @@ class IterableType implements \PHPStan\Type\CompoundType
         $this->keyType = $keyType;
         $this->itemType = $itemType;
     }
-    public function getKeyType() : \PHPStan\Type\Type
+    public function getKeyType(): \PHPStan\Type\Type
     {
         return $this->keyType;
     }
-    public function getItemType() : \PHPStan\Type\Type
+    public function getItemType(): \PHPStan\Type\Type
     {
         return $this->itemType;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return array_merge($this->keyType->getReferencedClasses(), $this->getItemType()->getReferencedClasses());
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type->isConstantArray()->yes() && $type->isIterableAtLeastOnce()->no()) {
             return \PHPStan\Type\AcceptsResult::createYes();
@@ -78,18 +78,18 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return \PHPStan\Type\AcceptsResult::createNo();
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isSubTypeOf($this);
         }
         return (new \PHPStan\Type\IsSuperTypeOfResult($type->isIterable(), []))->and($this->getIterableValueType()->isSuperTypeOf($type->getIterableValueType()))->and($this->getIterableKeyType()->isSuperTypeOf($type->getIterableKeyType()));
     }
-    public function isSuperTypeOfMixed(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOfMixed(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         return (new \PHPStan\Type\IsSuperTypeOfResult($type->isIterable(), []))->and($this->isNestedTypeSuperTypeOf($this->getIterableValueType(), $type->getIterableValueType()))->and($this->isNestedTypeSuperTypeOf($this->getIterableKeyType(), $type->getIterableKeyType()));
     }
-    private function isNestedTypeSuperTypeOf(\PHPStan\Type\Type $a, \PHPStan\Type\Type $b) : \PHPStan\Type\IsSuperTypeOfResult
+    private function isNestedTypeSuperTypeOf(\PHPStan\Type\Type $a, \PHPStan\Type\Type $b): \PHPStan\Type\IsSuperTypeOfResult
     {
         if (!$a instanceof \PHPStan\Type\MixedType || !$b instanceof \PHPStan\Type\MixedType) {
             return $a->isSuperTypeOf($b);
@@ -105,7 +105,7 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createYes();
     }
-    public function isSubTypeOf(\PHPStan\Type\Type $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSubTypeOf(\PHPStan\Type\Type $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($otherType instanceof \PHPStan\Type\IntersectionType || $otherType instanceof \PHPStan\Type\UnionType) {
             return $otherType->isSuperTypeOf(new \PHPStan\Type\UnionType([new \PHPStan\Type\ArrayType($this->keyType, $this->itemType), new \PHPStan\Type\IntersectionType([new \PHPStan\Type\ObjectType(Traversable::class), $this])]));
@@ -120,18 +120,18 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return $limit->and(new \PHPStan\Type\IsSuperTypeOfResult($otherType->isIterable(), []), $otherType->getIterableValueType()->isSuperTypeOf($this->itemType), $otherType->getIterableKeyType()->isSuperTypeOf($this->keyType));
     }
-    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (get_class($type) !== static::class) {
             return \false;
         }
         return $this->keyType->equals($type->keyType) && $this->itemType->equals($type->itemType);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         $isMixedKeyType = $this->keyType instanceof \PHPStan\Type\MixedType && $this->keyType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed';
         $isMixedItemType = $this->itemType instanceof \PHPStan\Type\MixedType && $this->itemType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed';
@@ -143,182 +143,182 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return sprintf('iterable<%s, %s>', $this->keyType->describe($level), $this->itemType->describe($level));
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         if ($this->getIterableKeyType()->isSuperTypeOf($offsetType)->no()) {
             return TrinaryLogic::createNo();
         }
         return TrinaryLogic::createMaybe();
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ArrayType($this->keyType, $this->getItemType());
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union($this, new \PHPStan\Type\ArrayType(\PHPStan\Type\TypeCombinator::intersect($this->keyType->toArrayKey(), new \PHPStan\Type\UnionType([new \PHPStan\Type\IntegerType(), new \PHPStan\Type\StringType()])), $this->itemType), new GenericObjectType(Traversable::class, [$this->keyType, $this->itemType]));
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getArraySize() : \PHPStan\Type\Type
+    public function getArraySize(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\IntegerRangeType::fromInterval(0, null);
     }
-    public function getIterableKeyType() : \PHPStan\Type\Type
+    public function getIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->keyType;
     }
-    public function getFirstIterableKeyType() : \PHPStan\Type\Type
+    public function getFirstIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->keyType;
     }
-    public function getLastIterableKeyType() : \PHPStan\Type\Type
+    public function getLastIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->keyType;
     }
-    public function getIterableValueType() : \PHPStan\Type\Type
+    public function getIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function getFirstIterableValueType() : \PHPStan\Type\Type
+    public function getFirstIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function getLastIterableValueType() : \PHPStan\Type\Type
+    public function getLastIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getItemType();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [];
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ObjectWithoutClassType();
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         return new \PHPStan\Type\BooleanType();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(\PHPStan\Type\Type $receivedType): TemplateTypeMap
     {
         if ($receivedType instanceof \PHPStan\Type\UnionType || $receivedType instanceof \PHPStan\Type\IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -330,12 +330,12 @@ class IterableType implements \PHPStan\Type\CompoundType
         $valueTypeMap = $this->getIterableValueType()->inferTemplateTypes($receivedType->getIterableValueType());
         return $keyTypeMap->union($valueTypeMap);
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         $variance = $positionVariance->compose(TemplateTypeVariance::createCovariant());
         return array_merge($this->getIterableKeyType()->getReferencedTemplateTypes($variance), $this->getIterableValueType()->getReferencedTemplateTypes($variance));
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $keyType = $cb($this->keyType);
         $itemType = $cb($this->itemType);
@@ -344,7 +344,7 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         $keyType = $cb($this->keyType, $right->getIterableKeyType());
         $itemType = $cb($this->itemType, $right->getIterableValueType());
@@ -353,7 +353,7 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return $this;
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         $arrayType = new \PHPStan\Type\ArrayType(new \PHPStan\Type\MixedType(), new \PHPStan\Type\MixedType());
         if ($typeToRemove->isSuperTypeOf($arrayType)->yes()) {
@@ -365,15 +365,15 @@ class IterableType implements \PHPStan\Type\CompoundType
         }
         return null;
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         $isMixedKeyType = $this->keyType instanceof \PHPStan\Type\MixedType && $this->keyType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed';
         $isMixedItemType = $this->itemType instanceof \PHPStan\Type\MixedType && $this->itemType->describe(\PHPStan\Type\VerbosityLevel::precise()) === 'mixed';

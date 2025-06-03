@@ -19,112 +19,112 @@ final class ObjectShapePropertyReflection implements ExtendedPropertyReflection
         $this->name = $name;
         $this->type = $type;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         $reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
         return $reflectionProvider->getClass(stdClass::class);
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return \false;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return \false;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return \true;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return \true;
     }
-    public function getPhpDocType() : \PHPStan\Type\Type
+    public function getPhpDocType(): \PHPStan\Type\Type
     {
         return $this->type;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return \false;
     }
-    public function getNativeType() : \PHPStan\Type\Type
+    public function getNativeType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\MixedType();
     }
-    public function getReadableType() : \PHPStan\Type\Type
+    public function getReadableType(): \PHPStan\Type\Type
     {
         return $this->type;
     }
-    public function getWritableType() : \PHPStan\Type\Type
+    public function getWritableType(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\NeverType();
     }
-    public function canChangeTypeAfterAssignment() : bool
+    public function canChangeTypeAfterAssignment(): bool
     {
         return \false;
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return \true;
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return \false;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isVirtual() : TrinaryLogic
+    public function isVirtual(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         return \false;
     }
-    public function getHook(string $hookType) : ExtendedMethodReflection
+    public function getHook(string $hookType): ExtendedMethodReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return \false;
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return \false;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

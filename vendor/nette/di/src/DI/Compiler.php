@@ -57,13 +57,13 @@ class Compiler
         $this->extensions[$name] = $extension->setCompiler($this, $name);
         return $this;
     }
-    public function getExtensions(?string $type = null) : array
+    public function getExtensions(?string $type = null): array
     {
-        return $type ? \array_filter($this->extensions, function ($item) use($type) : bool {
+        return $type ? \array_filter($this->extensions, function ($item) use ($type): bool {
             return $item instanceof $type;
         }) : $this->extensions;
     }
-    public function getContainerBuilder() : ContainerBuilder
+    public function getContainerBuilder(): ContainerBuilder
     {
         return $this->builder;
     }
@@ -104,7 +104,7 @@ class Compiler
      * Returns configuration.
      * @deprecated
      */
-    public function getConfig() : array
+    public function getConfig(): array
     {
         return $this->config;
     }
@@ -131,7 +131,7 @@ class Compiler
     /**
      * Exports dependencies.
      */
-    public function exportDependencies() : array
+    public function exportDependencies(): array
     {
         return $this->dependencies->export();
     }
@@ -153,14 +153,14 @@ class Compiler
         }
         return $this;
     }
-    public function compile() : string
+    public function compile(): string
     {
         $this->processExtensions();
         $this->processBeforeCompile();
         return $this->generateCode();
     }
     /** @internal */
-    public function processExtensions() : void
+    public function processExtensions(): void
     {
         $first = $this->getExtensions(Extensions\ParametersExtension::class) + $this->getExtensions(Extensions\ExtensionsExtension::class);
         foreach ($first as $name => $extension) {
@@ -193,7 +193,7 @@ class Compiler
             throw new InvalidConfigurationException(\sprintf("Found section '%s' in configuration, but corresponding extension is missing", $extra) . ($hint ? ", did you mean '{$hint}'?" : '.'));
         }
     }
-    private function processBeforeCompile() : void
+    private function processBeforeCompile(): void
     {
         $this->builder->resolve();
         foreach ($this->extensions as $extension) {
@@ -209,7 +209,7 @@ class Compiler
     private function processSchema(Schema\Schema $schema, array $configs, $name = null)
     {
         $processor = new Schema\Processor();
-        $processor->onNewContext[] = function (Schema\Context $context) use($name) {
+        $processor->onNewContext[] = function (Schema\Context $context) use ($name) {
             $context->path = $name ? [$name] : [];
             $context->dynamics =& $this->extensions[self::Parameters]->dynamicValidators;
         };
@@ -224,7 +224,7 @@ class Compiler
         return $res;
     }
     /** @internal */
-    public function generateCode() : string
+    public function generateCode(): string
     {
         $generator = $this->createPhpGenerator();
         $class = $generator->generate($this->className);
@@ -238,13 +238,13 @@ class Compiler
     /**
      * Loads list of service definitions from configuration.
      */
-    public function loadDefinitionsFromConfig(array $configList) : void
+    public function loadDefinitionsFromConfig(array $configList): void
     {
         $extension = $this->extensions[self::Services];
         \assert($extension instanceof Extensions\ServicesExtension);
         $extension->loadDefinitions($this->processSchema($extension->getConfigSchema(), [$configList]));
     }
-    protected function createPhpGenerator() : PhpGenerator
+    protected function createPhpGenerator(): PhpGenerator
     {
         return new PhpGenerator($this->builder);
     }

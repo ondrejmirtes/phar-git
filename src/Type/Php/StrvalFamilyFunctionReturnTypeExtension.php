@@ -20,11 +20,11 @@ use function in_array;
 final class StrvalFamilyFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private const FUNCTIONS = ['strval', 'intval', 'boolval', 'floatval', 'doubleval'];
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), self::FUNCTIONS, \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if (count($functionCall->getArgs()) === 0) {
             return new NullType();

@@ -17,11 +17,11 @@ use function strtolower;
  */
 final class NonClassAttributeClassRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $originalNode = $node->getOriginalNode();
         foreach ($originalNode->attrGroups as $attrGroup) {
@@ -37,7 +37,7 @@ final class NonClassAttributeClassRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function check(Scope $scope) : array
+    private function check(Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();

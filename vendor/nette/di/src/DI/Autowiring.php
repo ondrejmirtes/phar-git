@@ -32,7 +32,7 @@ class Autowiring
      * @throws MissingServiceException when not found
      * @throws ServiceCreationException when multiple found
      */
-    public function getByType(string $type, bool $throw = \false) : ?string
+    public function getByType(string $type, bool $throw = \false): ?string
     {
         $type = Helpers::normalizeClass($type);
         $types = $this->highPriority;
@@ -57,7 +57,7 @@ class Autowiring
      * Gets the service names and definitions of the specified type.
      * @return Definitions\Definition[]  service name is key
      */
-    public function findByType(string $type) : array
+    public function findByType(string $type): array
     {
         $type = Helpers::normalizeClass($type);
         $definitions = $this->builder->getDefinitions();
@@ -71,7 +71,7 @@ class Autowiring
     /**
      * @param  string[]  $types
      */
-    public function addExcludedClasses(array $types) : void
+    public function addExcludedClasses(array $types): void
     {
         foreach ($types as $type) {
             if (\class_exists($type) || \interface_exists($type)) {
@@ -80,15 +80,15 @@ class Autowiring
             }
         }
     }
-    public function getClassList() : array
+    public function getClassList(): array
     {
         return [$this->lowPriority, $this->highPriority];
     }
-    public function rebuild() : void
+    public function rebuild(): void
     {
         $this->lowPriority = $this->highPriority = $preferred = [];
         foreach ($this->builder->getDefinitions() as $name => $def) {
-            if (!($type = $def->getType())) {
+            if (!$type = $def->getType()) {
                 continue;
             }
             $autowired = $def->getAutowired();

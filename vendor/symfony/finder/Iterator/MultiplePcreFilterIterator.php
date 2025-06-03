@@ -98,5 +98,5 @@ abstract class MultiplePcreFilterIterator extends \FilterIterator
      *
      * @return string
      */
-    protected abstract function toRegex(string $str);
+    abstract protected function toRegex(string $str);
 }

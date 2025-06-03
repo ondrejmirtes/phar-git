@@ -34,36 +34,36 @@ final class ClassMethodsNode extends NodeAbstract implements \PHPStan\Node\Virtu
         $this->classReflection = $classReflection;
         parent::__construct($class->getAttributes());
     }
-    public function getClass() : ClassLike
+    public function getClass(): ClassLike
     {
         return $this->class;
     }
     /**
      * @return ClassMethod[]
      */
-    public function getMethods() : array
+    public function getMethods(): array
     {
         return $this->methods;
     }
     /**
      * @return array<int, MethodCall>
      */
-    public function getMethodCalls() : array
+    public function getMethodCalls(): array
     {
         return $this->methodCalls;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClassMethodsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }

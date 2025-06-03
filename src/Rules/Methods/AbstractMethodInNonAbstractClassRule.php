@@ -15,11 +15,11 @@ use function sprintf;
  */
 final class AbstractMethodInNonAbstractClassRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassMethod::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();

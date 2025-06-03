@@ -24,25 +24,25 @@ final class ProcessPool
         $this->server = $server;
         $this->onServerClose = $onServerClose;
     }
-    public function getProcess(string $identifier) : \PHPStan\Parallel\Process
+    public function getProcess(string $identifier): \PHPStan\Parallel\Process
     {
         if (!array_key_exists($identifier, $this->processes)) {
             throw new ShouldNotHappenException(sprintf('Process %s not found.', $identifier));
         }
         return $this->processes[$identifier];
     }
-    public function attachProcess(string $identifier, \PHPStan\Parallel\Process $process) : void
+    public function attachProcess(string $identifier, \PHPStan\Parallel\Process $process): void
     {
         $this->processes[$identifier] = $process;
     }
-    public function tryQuitProcess(string $identifier) : void
+    public function tryQuitProcess(string $identifier): void
     {
         if (!array_key_exists($identifier, $this->processes)) {
             return;
         }
         $this->quitProcess($identifier);
     }
-    private function quitProcess(string $identifier) : void
+    private function quitProcess(string $identifier): void
     {
         $process = $this->getProcess($identifier);
         $process->quit();
@@ -54,7 +54,7 @@ final class ProcessPool
         $callback = $this->onServerClose;
         $callback();
     }
-    public function quitAll() : void
+    public function quitAll(): void
     {
         foreach (array_keys($this->processes) as $identifier) {
             $this->quitProcess($identifier);

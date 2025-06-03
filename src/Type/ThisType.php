@@ -17,15 +17,15 @@ class ThisType extends \PHPStan\Type\StaticType
     {
         parent::__construct($classReflection, $subtractedType);
     }
-    public function changeBaseClass(ClassReflection $classReflection) : \PHPStan\Type\StaticType
+    public function changeBaseClass(ClassReflection $classReflection): \PHPStan\Type\StaticType
     {
         return new self($classReflection, $this->getSubtractedType());
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('$this(%s)', $this->getStaticObjectType()->describe($level));
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return $this->getStaticObjectType()->isSuperTypeOf($type);
@@ -36,7 +36,7 @@ class ThisType extends \PHPStan\Type\StaticType
         $parent = new parent($this->getClassReflection(), $this->getSubtractedType());
         return $parent->isSuperTypeOf($type)->and(\PHPStan\Type\IsSuperTypeOfResult::createMaybe());
     }
-    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType) : \PHPStan\Type\Type
+    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType): \PHPStan\Type\Type
     {
         $type = parent::changeSubtractedType($subtractedType);
         if ($type instanceof parent) {
@@ -44,7 +44,7 @@ class ThisType extends \PHPStan\Type\StaticType
         }
         return $type;
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $subtractedType = $this->getSubtractedType() !== null ? $cb($this->getSubtractedType()) : null;
         if ($subtractedType !== $this->getSubtractedType()) {
@@ -52,14 +52,14 @@ class ThisType extends \PHPStan\Type\StaticType
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if ($this->getSubtractedType() === null) {
             return $this;
         }
         return new self($this->getClassReflection());
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ThisTypeNode();
     }

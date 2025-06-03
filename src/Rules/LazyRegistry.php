@@ -24,7 +24,7 @@ final class LazyRegistry implements \PHPStan\Rules\Registry
      * @param class-string<TNodeType> $nodeType
      * @return array<Rule<TNodeType>>
      */
-    public function getRules(string $nodeType) : array
+    public function getRules(string $nodeType): array
     {
         if (!isset($this->cache[$nodeType])) {
             $parentNodeTypes = [$nodeType] + class_parents($nodeType) + class_implements($nodeType);
@@ -46,7 +46,7 @@ final class LazyRegistry implements \PHPStan\Rules\Registry
     /**
      * @return Rule[][]
      */
-    private function getRulesFromContainer() : array
+    private function getRulesFromContainer(): array
     {
         if ($this->rules !== null) {
             return $this->rules;

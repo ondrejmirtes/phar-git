@@ -22,7 +22,7 @@ final class VariadicFunctionsVisitor extends NodeVisitorAbstract
     /** @var array<string, bool> */
     private array $variadicFunctions = [];
     public const ATTRIBUTE_NAME = 'variadicFunctions';
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->topNode = null;
         $this->variadicFunctions = [];
@@ -30,7 +30,7 @@ final class VariadicFunctionsVisitor extends NodeVisitorAbstract
         $this->inFunction = null;
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($this->topNode === null) {
             $this->topNode = $node;
@@ -46,7 +46,7 @@ final class VariadicFunctionsVisitor extends NodeVisitorAbstract
         }
         return null;
     }
-    public function leaveNode(Node $node) : ?Node
+    public function leaveNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt\Namespace_ && $node->name !== null) {
             $this->inNamespace = null;
@@ -57,7 +57,7 @@ final class VariadicFunctionsVisitor extends NodeVisitorAbstract
         }
         return null;
     }
-    public function afterTraverse(array $nodes) : ?array
+    public function afterTraverse(array $nodes): ?array
     {
         if ($this->topNode !== null && $this->variadicFunctions !== []) {
             foreach ($this->variadicFunctions as $name => $variadic) {

@@ -6,5 +6,5 @@ namespace PHPStan\Reflection\BetterReflection\SourceLocator;
 use PHPStan\BetterReflection\SourceLocator\Type\Composer\Psr\PsrAutoloaderMapping;
 interface OptimizedPsrAutoloaderLocatorFactory
 {
-    public function create(PsrAutoloaderMapping $mapping) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedPsrAutoloaderLocator;
+    public function create(PsrAutoloaderMapping $mapping): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedPsrAutoloaderLocator;
 }

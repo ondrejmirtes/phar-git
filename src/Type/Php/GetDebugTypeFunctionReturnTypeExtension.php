@@ -19,11 +19,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GetDebugTypeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_debug_type';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;
@@ -38,7 +38,7 @@ final class GetDebugTypeFunctionReturnTypeExtension implements DynamicFunctionRe
      * @see https://www.php.net/manual/en/function.get-debug-type.php#refsect1-function.get-debug-type-returnvalues
      * @see https://github.com/php/php-src/commit/ef0e4478c51540510b67f7781ad240f5e0592ee4
      */
-    private static function resolveOneType(Type $type) : Type
+    private static function resolveOneType(Type $type): Type
     {
         if ($type->isNull()->yes()) {
             return new ConstantStringType('null');

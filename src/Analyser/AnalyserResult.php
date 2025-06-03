@@ -92,14 +92,14 @@ final class AnalyserResult
     /**
      * @return list<Error>
      */
-    public function getUnorderedErrors() : array
+    public function getUnorderedErrors(): array
     {
         return $this->unorderedErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         if (!isset($this->errors)) {
             $this->errors = $this->unorderedErrors;
@@ -110,78 +110,78 @@ final class AnalyserResult
     /**
      * @return list<Error>
      */
-    public function getFilteredPhpErrors() : array
+    public function getFilteredPhpErrors(): array
     {
         return $this->filteredPhpErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getAllPhpErrors() : array
+    public function getAllPhpErrors(): array
     {
         return $this->allPhpErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getLocallyIgnoredErrors() : array
+    public function getLocallyIgnoredErrors(): array
     {
         return $this->locallyIgnoredErrors;
     }
     /**
      * @return array<string, LinesToIgnore>
      */
-    public function getLinesToIgnore() : array
+    public function getLinesToIgnore(): array
     {
         return $this->linesToIgnore;
     }
     /**
      * @return array<string, LinesToIgnore>
      */
-    public function getUnmatchedLineIgnores() : array
+    public function getUnmatchedLineIgnores(): array
     {
         return $this->unmatchedLineIgnores;
     }
     /**
      * @return list<InternalError>
      */
-    public function getInternalErrors() : array
+    public function getInternalErrors(): array
     {
         return $this->internalErrors;
     }
     /**
      * @return CollectorData
      */
-    public function getCollectedData() : array
+    public function getCollectedData(): array
     {
         return $this->collectedData;
     }
     /**
      * @return array<string, array<string>>|null
      */
-    public function getDependencies() : ?array
+    public function getDependencies(): ?array
     {
         return $this->dependencies;
     }
     /**
      * @return array<string, array<string>>|null
      */
-    public function getUsedTraitDependencies() : ?array
+    public function getUsedTraitDependencies(): ?array
     {
         return $this->usedTraitDependencies;
     }
     /**
      * @return array<string, array<RootExportedNode>>
      */
-    public function getExportedNodes() : array
+    public function getExportedNodes(): array
     {
         return $this->exportedNodes;
     }
-    public function hasReachedInternalErrorsCountLimit() : bool
+    public function hasReachedInternalErrorsCountLimit(): bool
     {
         return $this->reachedInternalErrorsCountLimit;
     }
-    public function getPeakMemoryUsageBytes() : int
+    public function getPeakMemoryUsageBytes(): int
     {
         return $this->peakMemoryUsageBytes;
     }

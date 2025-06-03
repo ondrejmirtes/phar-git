@@ -27,11 +27,11 @@ final class MbSubstituteCharacterDynamicReturnTypeExtension implements DynamicFu
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'mb_substitute_character';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $minCodePoint = $this->phpVersion->getVersionId() < 80000 ? 1 : 0;
         $maxCodePoint = $this->phpVersion->supportsAllUnicodeScalarCodePointsInMbSubstituteCharacter() ? 0x10ffff : 0xfffe;

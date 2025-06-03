@@ -32,7 +32,7 @@ final class TypeTraverser
      * @api
      * @param callable(Type $type, callable(Type): Type $traverse): Type $cb
      */
-    public static function map(\PHPStan\Type\Type $type, callable $cb) : \PHPStan\Type\Type
+    public static function map(\PHPStan\Type\Type $type, callable $cb): \PHPStan\Type\Type
     {
         $self = new self($cb);
         return $self->mapInternal($type);
@@ -43,12 +43,12 @@ final class TypeTraverser
         $this->cb = $cb;
     }
     /** @internal */
-    public function mapInternal(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public function mapInternal(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         return ($this->cb)($type, [$this, 'traverseInternal']);
     }
     /** @internal */
-    public function traverseInternal(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public function traverseInternal(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         return $type->traverse([$this, 'mapInternal']);
     }

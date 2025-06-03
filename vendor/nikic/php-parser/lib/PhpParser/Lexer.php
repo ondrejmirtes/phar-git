@@ -22,7 +22,7 @@ class Lexer
      *                                        ErrorHandler\Throwing.
      * @return Token[] Tokens
      */
-    public function tokenize(string $code, ?\PhpParser\ErrorHandler $errorHandler = null) : array
+    public function tokenize(string $code, ?\PhpParser\ErrorHandler $errorHandler = null): array
     {
         if (null === $errorHandler) {
             $errorHandler = new \PhpParser\ErrorHandler\Throwing();
@@ -35,7 +35,7 @@ class Lexer
         }
         return $tokens;
     }
-    private function handleInvalidCharacter(\PhpParser\Token $token, \PhpParser\ErrorHandler $errorHandler) : void
+    private function handleInvalidCharacter(\PhpParser\Token $token, \PhpParser\ErrorHandler $errorHandler): void
     {
         $chr = $token->text;
         if ($chr === "\x00") {
@@ -46,14 +46,14 @@ class Lexer
         }
         $errorHandler->handleError(new \PhpParser\Error($errorMsg, ['startLine' => $token->line, 'endLine' => $token->line, 'startFilePos' => $token->pos, 'endFilePos' => $token->pos]));
     }
-    private function isUnterminatedComment(\PhpParser\Token $token) : bool
+    private function isUnterminatedComment(\PhpParser\Token $token): bool
     {
         return $token->is([\T_COMMENT, \T_DOC_COMMENT]) && \substr($token->text, 0, 2) === '/*' && \substr($token->text, -2) !== '*/';
     }
     /**
      * @param list<Token> $tokens
      */
-    protected function postprocessTokens(array &$tokens, \PhpParser\ErrorHandler $errorHandler) : void
+    protected function postprocessTokens(array &$tokens, \PhpParser\ErrorHandler $errorHandler): void
     {
         // This function reports errors (bad characters and unterminated comments) in the token
         // array, and performs certain canonicalizations:

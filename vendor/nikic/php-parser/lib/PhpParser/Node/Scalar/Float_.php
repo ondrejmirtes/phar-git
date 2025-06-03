@@ -19,14 +19,14 @@ class Float_ extends Scalar
         $this->attributes = $attributes;
         $this->value = $value;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['value'];
     }
     /**
      * @param mixed[] $attributes
      */
-    public static function fromString(string $str, array $attributes = []) : \PhpParser\Node\Scalar\Float_
+    public static function fromString(string $str, array $attributes = []): \PhpParser\Node\Scalar\Float_
     {
         $attributes['rawValue'] = $str;
         $float = self::parse($str);
@@ -41,7 +41,7 @@ class Float_ extends Scalar
      *
      * @return float The parsed number
      */
-    public static function parse(string $str) : float
+    public static function parse(string $str): float
     {
         $str = \str_replace('_', '', $str);
         // Check whether this is one of the special integer notations.
@@ -64,7 +64,7 @@ class Float_ extends Scalar
         // dec
         return (float) $str;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Scalar_Float';
     }

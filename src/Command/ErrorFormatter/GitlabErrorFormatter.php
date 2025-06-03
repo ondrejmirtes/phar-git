@@ -19,7 +19,7 @@ final class GitlabErrorFormatter implements \PHPStan\Command\ErrorFormatter\Erro
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $errorsArray = [];
         foreach ($analysisResult->getFileSpecificErrors() as $fileSpecificError) {

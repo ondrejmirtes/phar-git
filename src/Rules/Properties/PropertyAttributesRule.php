@@ -18,11 +18,11 @@ final class PropertyAttributesRule implements Rule
     {
         $this->attributesCheck = $attributesCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Property::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->attributesCheck->check($scope, $node->attrGroups, Attribute::TARGET_PROPERTY, 'property');
     }

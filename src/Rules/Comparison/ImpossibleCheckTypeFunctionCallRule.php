@@ -25,11 +25,11 @@ final class ImpossibleCheckTypeFunctionCallRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -39,7 +39,7 @@ final class ImpossibleCheckTypeFunctionCallRule implements Rule
         if ($isAlways === null) {
             return [];
         }
-        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
             if (!$this->treatPhpDocTypesAsCertain) {
                 return $ruleErrorBuilder;
             }

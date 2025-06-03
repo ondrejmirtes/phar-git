@@ -22,14 +22,14 @@ class ReadableBodyStream extends EventEmitter implements ReadableStreamInterface
         $this->size = $size;
         $that = $this;
         $pos =& $this->position;
-        $input->on('data', function ($data) use($that, &$pos, $size) {
+        $input->on('data', function ($data) use ($that, &$pos, $size) {
             $that->emit('data', array($data));
             $pos += \strlen($data);
             if ($size !== null && $pos >= $size) {
                 $that->handleEnd();
             }
         });
-        $input->on('error', function ($error) use($that) {
+        $input->on('error', function ($error) use ($that) {
             $that->emit('error', array($error));
             $that->close();
         });

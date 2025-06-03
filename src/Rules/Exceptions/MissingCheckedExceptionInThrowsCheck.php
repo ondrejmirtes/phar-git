@@ -23,7 +23,7 @@ final class MissingCheckedExceptionInThrowsCheck
      * @param ThrowPoint[] $throwPoints
      * @return array<int, array{string, Node\Expr|Node\Stmt}>
      */
-    public function check(?Type $throwType, array $throwPoints) : array
+    public function check(?Type $throwType, array $throwPoints): array
     {
         if ($throwType === null) {
             $throwType = new NeverType();

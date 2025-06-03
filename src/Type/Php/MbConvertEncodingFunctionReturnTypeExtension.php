@@ -22,11 +22,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class MbConvertEncodingFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'mb_convert_encoding';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (!isset($functionCall->getArgs()[0])) {
             return null;
@@ -39,7 +39,7 @@ final class MbConvertEncodingFunctionReturnTypeExtension implements DynamicFunct
         }
         return TypeCombinator::union($result, new ConstantBooleanType(\false));
     }
-    public function generalizeStringType(Type $type) : Type
+    public function generalizeStringType(Type $type): Type
     {
         if ($type instanceof UnionType) {
             return $type->traverse([$this, 'generalizeStringType']);

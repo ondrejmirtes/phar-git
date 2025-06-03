@@ -42,7 +42,7 @@ final class ClosureTypeFactory
     /**
      * @param Closure(): mixed $closure
      */
-    public function fromClosureObject(Closure $closure) : \PHPStan\Type\ClosureType
+    public function fromClosureObject(Closure $closure): \PHPStan\Type\ClosureType
     {
         $stubData = $this->reflectionSourceStubber->generateFunctionStubFromReflection(new ReflectionFunction($closure));
         if ($stubData === null) {
@@ -71,27 +71,27 @@ final class ClosureTypeFactory
                 $this->reflection = $reflection;
                 $this->initializerExprTypeResolver = $initializerExprTypeResolver;
             }
-            public function getName() : string
+            public function getName(): string
             {
                 return $this->reflection->getName();
             }
-            public function isOptional() : bool
+            public function isOptional(): bool
             {
                 return $this->reflection->isOptional();
             }
-            public function getType() : \PHPStan\Type\Type
+            public function getType(): \PHPStan\Type\Type
             {
                 return \PHPStan\Type\TypehintHelper::decideTypeFromReflection(ReflectionType::fromTypeOrNull($this->reflection->getType()), null, null, $this->reflection->isVariadic());
             }
-            public function passedByReference() : PassedByReference
+            public function passedByReference(): PassedByReference
             {
                 return $this->reflection->isPassedByReference() ? PassedByReference::createCreatesNewVariable() : PassedByReference::createNo();
             }
-            public function isVariadic() : bool
+            public function isVariadic(): bool
             {
                 return $this->reflection->isVariadic();
             }
-            public function getDefaultValue() : ?\PHPStan\Type\Type
+            public function getDefaultValue(): ?\PHPStan\Type\Type
             {
                 if (!$this->reflection->isDefaultValueAvailable()) {
                     return null;

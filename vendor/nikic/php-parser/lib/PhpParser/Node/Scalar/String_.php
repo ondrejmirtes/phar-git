@@ -27,7 +27,7 @@ class String_ extends Scalar
         $this->attributes = $attributes;
         $this->value = $value;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['value'];
     }
@@ -35,7 +35,7 @@ class String_ extends Scalar
      * @param array<string, mixed> $attributes
      * @param bool $parseUnicodeEscape Whether to parse PHP 7 \u escapes
      */
-    public static function fromString(string $str, array $attributes = [], bool $parseUnicodeEscape = \true) : self
+    public static function fromString(string $str, array $attributes = [], bool $parseUnicodeEscape = \true): self
     {
         $attributes['kind'] = $str[0] === "'" || $str[1] === "'" && ($str[0] === 'b' || $str[0] === 'B') ? Scalar\String_::KIND_SINGLE_QUOTED : Scalar\String_::KIND_DOUBLE_QUOTED;
         $attributes['rawValue'] = $str;
@@ -52,7 +52,7 @@ class String_ extends Scalar
      *
      * @return string The parsed string
      */
-    public static function parse(string $str, bool $parseUnicodeEscape = \true) : string
+    public static function parse(string $str, bool $parseUnicodeEscape = \true): string
     {
         $bLength = 0;
         if ('b' === $str[0] || 'B' === $str[0]) {
@@ -75,14 +75,14 @@ class String_ extends Scalar
      *
      * @return string String with escape sequences parsed
      */
-    public static function parseEscapeSequences(string $str, ?string $quote, bool $parseUnicodeEscape = \true) : string
+    public static function parseEscapeSequences(string $str, ?string $quote, bool $parseUnicodeEscape = \true): string
     {
         if (null !== $quote) {
             $str = \str_replace('\\' . $quote, $quote, $str);
         }
         $extra = '';
         if ($parseUnicodeEscape) {
-            $extra = '|u\\{([0-9a-fA-F]+)\\}';
+            $extra = '|u\{([0-9a-fA-F]+)\}';
         }
         return \preg_replace_callback('~\\\\([\\\\$nrtfve]|[xX][0-9a-fA-F]{1,2}|[0-7]{1,3}' . $extra . ')~', function ($matches) {
             $str = $matches[1];
@@ -108,7 +108,7 @@ class String_ extends Scalar
      *
      * @return string UTF-8 representation of code point
      */
-    private static function codePointToUtf8(int $num) : string
+    private static function codePointToUtf8(int $num): string
     {
         if ($num <= 0x7f) {
             return \chr($num);
@@ -124,7 +124,7 @@ class String_ extends Scalar
         }
         throw new Error('Invalid UTF-8 codepoint escape sequence: Codepoint too large');
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Scalar_String';
     }

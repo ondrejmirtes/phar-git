@@ -18,14 +18,14 @@ final class ReflectionFunctionStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionFunction $functionReflection) : string
+    public static function toString(ReflectionFunction $functionReflection): string
     {
         $parametersFormat = $functionReflection->getNumberOfParameters() > 0 || $functionReflection->hasReturnType() ? "\n\n  - Parameters [%d] {%s\n  }" : '';
         $returnTypeFormat = $functionReflection->hasReturnType() ? "\n  - Return [ %s ]" : '';
         return sprintf('Function [ <%s> function %s ] {%s' . $parametersFormat . $returnTypeFormat . "\n}", self::sourceToString($functionReflection), $functionReflection->getName(), self::fileAndLinesToString($functionReflection), count($functionReflection->getParameters()), self::parametersToString($functionReflection), self::returnTypeToString($functionReflection));
     }
     /** @psalm-pure */
-    private static function sourceToString(ReflectionFunction $functionReflection) : string
+    private static function sourceToString(ReflectionFunction $functionReflection): string
     {
         if ($functionReflection->isUserDefined()) {
             return 'user';
@@ -35,7 +35,7 @@ final class ReflectionFunctionStringCast
         return sprintf('internal:%s', $extensionName);
     }
     /** @psalm-pure */
-    private static function fileAndLinesToString(ReflectionFunction $functionReflection) : string
+    private static function fileAndLinesToString(ReflectionFunction $functionReflection): string
     {
         if ($functionReflection->isInternal()) {
             return '';
@@ -47,12 +47,12 @@ final class ReflectionFunctionStringCast
         return sprintf("\n  @@ %s %d - %d", $fileName, $functionReflection->getStartLine(), $functionReflection->getEndLine());
     }
     /** @psalm-pure */
-    private static function parametersToString(ReflectionFunction $functionReflection) : string
+    private static function parametersToString(ReflectionFunction $functionReflection): string
     {
         return array_reduce($functionReflection->getParameters(), static fn(string $string, ReflectionParameter $parameterReflection): string => $string . "\n    " . \PHPStan\BetterReflection\Reflection\StringCast\ReflectionParameterStringCast::toString($parameterReflection), '');
     }
     /** @psalm-pure */
-    private static function returnTypeToString(ReflectionFunction $methodReflection) : string
+    private static function returnTypeToString(ReflectionFunction $methodReflection): string
     {
         $type = $methodReflection->getReturnType();
         if ($type === null) {

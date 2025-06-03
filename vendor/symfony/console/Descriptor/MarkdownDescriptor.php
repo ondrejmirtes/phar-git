@@ -48,7 +48,7 @@ class MarkdownDescriptor extends Descriptor
      */
     protected function describeInputArgument(InputArgument $argument, array $options = [])
     {
-        $this->write('#### `' . ($argument->getName() ?: '<none>') . "`\n\n" . ($argument->getDescription() ? \preg_replace('/\\s*[\\r\\n]\\s*/', "\n", $argument->getDescription()) . "\n\n" : '') . '* Is required: ' . ($argument->isRequired() ? 'yes' : 'no') . "\n" . '* Is array: ' . ($argument->isArray() ? 'yes' : 'no') . "\n" . '* Default: `' . \str_replace("\n", '', \var_export($argument->getDefault(), \true)) . '`');
+        $this->write('#### `' . ($argument->getName() ?: '<none>') . "`\n\n" . ($argument->getDescription() ? \preg_replace('/\s*[\r\n]\s*/', "\n", $argument->getDescription()) . "\n\n" : '') . '* Is required: ' . ($argument->isRequired() ? 'yes' : 'no') . "\n" . '* Is array: ' . ($argument->isArray() ? 'yes' : 'no') . "\n" . '* Default: `' . \str_replace("\n", '', \var_export($argument->getDefault(), \true)) . '`');
     }
     /**
      * {@inheritdoc}
@@ -62,7 +62,7 @@ class MarkdownDescriptor extends Descriptor
         if ($option->getShortcut()) {
             $name .= '|-' . \str_replace('|', '|-', $option->getShortcut()) . '';
         }
-        $this->write('#### `' . $name . '`' . "\n\n" . ($option->getDescription() ? \preg_replace('/\\s*[\\r\\n]\\s*/', "\n", $option->getDescription()) . "\n\n" : '') . '* Accept value: ' . ($option->acceptValue() ? 'yes' : 'no') . "\n" . '* Is value required: ' . ($option->isValueRequired() ? 'yes' : 'no') . "\n" . '* Is multiple: ' . ($option->isArray() ? 'yes' : 'no') . "\n" . '* Is negatable: ' . ($option->isNegatable() ? 'yes' : 'no') . "\n" . '* Default: `' . \str_replace("\n", '', \var_export($option->getDefault(), \true)) . '`');
+        $this->write('#### `' . $name . '`' . "\n\n" . ($option->getDescription() ? \preg_replace('/\s*[\r\n]\s*/', "\n", $option->getDescription()) . "\n\n" : '') . '* Accept value: ' . ($option->acceptValue() ? 'yes' : 'no') . "\n" . '* Is value required: ' . ($option->isValueRequired() ? 'yes' : 'no') . "\n" . '* Is multiple: ' . ($option->isArray() ? 'yes' : 'no') . "\n" . '* Is negatable: ' . ($option->isNegatable() ? 'yes' : 'no') . "\n" . '* Default: `' . \str_replace("\n", '', \var_export($option->getDefault(), \true)) . '`');
     }
     /**
      * {@inheritdoc}
@@ -73,7 +73,7 @@ class MarkdownDescriptor extends Descriptor
             $this->write('### Arguments');
             foreach ($definition->getArguments() as $argument) {
                 $this->write("\n\n");
-                if (null !== ($describeInputArgument = $this->describeInputArgument($argument))) {
+                if (null !== $describeInputArgument = $this->describeInputArgument($argument)) {
                     $this->write($describeInputArgument);
                 }
             }
@@ -85,7 +85,7 @@ class MarkdownDescriptor extends Descriptor
             $this->write('### Options');
             foreach ($definition->getOptions() as $option) {
                 $this->write("\n\n");
-                if (null !== ($describeInputOption = $this->describeInputOption($option))) {
+                if (null !== $describeInputOption = $this->describeInputOption($option)) {
                     $this->write($describeInputOption);
                 }
             }
@@ -131,18 +131,18 @@ class MarkdownDescriptor extends Descriptor
                 $this->write('**' . $namespace['id'] . ':**');
             }
             $this->write("\n\n");
-            $this->write(\implode("\n", \array_map(function ($commandName) use($description) {
+            $this->write(\implode("\n", \array_map(function ($commandName) use ($description) {
                 return \sprintf('* [`%s`](#%s)', $commandName, \str_replace(':', '', $description->getCommand($commandName)->getName()));
             }, $namespace['commands'])));
         }
         foreach ($description->getCommands() as $command) {
             $this->write("\n\n");
-            if (null !== ($describeCommand = $this->describeCommand($command, $options))) {
+            if (null !== $describeCommand = $this->describeCommand($command, $options)) {
                 $this->write($describeCommand);
             }
         }
     }
-    private function getApplicationTitle(Application $application) : string
+    private function getApplicationTitle(Application $application): string
     {
         if ('UNKNOWN' !== $application->getName()) {
             if ('UNKNOWN' !== $application->getVersion()) {

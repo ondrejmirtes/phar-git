@@ -51,7 +51,7 @@ final class Server extends EventEmitter implements ServerInterface
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\\Argument #2 ($loop) expected null|React\\EventLoop\\LoopInterface');
+            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $loop = $loop ?: Loop::get();
         // sanitize TCP context options if not properly wrapped
@@ -75,10 +75,10 @@ final class Server extends EventEmitter implements ServerInterface
         }
         $this->server = $server;
         $that = $this;
-        $server->on('connection', function (ConnectionInterface $conn) use($that) {
+        $server->on('connection', function (ConnectionInterface $conn) use ($that) {
             $that->emit('connection', array($conn));
         });
-        $server->on('error', function (Exception $error) use($that) {
+        $server->on('error', function (Exception $error) use ($that) {
             $that->emit('error', array($error));
         });
     }

@@ -22,27 +22,27 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class StatDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension, DynamicMethodReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['stat', 'lstat', 'fstat', 'ssh2_sftp_stat'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         return TypeCombinator::union($this->getReturnType(), new ConstantBooleanType(\false));
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return SplFileObject::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'fstat';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): Type
     {
         return $this->getReturnType();
     }
-    private function getReturnType() : Type
+    private function getReturnType(): Type
     {
         $valueType = new IntegerType();
         $builder = ConstantArrayTypeBuilder::createEmpty();

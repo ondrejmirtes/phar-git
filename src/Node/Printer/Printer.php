@@ -24,55 +24,55 @@ use function sprintf;
  */
 final class Printer extends Standard
 {
-    protected function pPHPStan_Node_TypeExpr(TypeExpr $expr) : string
+    protected function pPHPStan_Node_TypeExpr(TypeExpr $expr): string
     {
         return sprintf('__phpstanType(%s)', $expr->getExprType()->describe(VerbosityLevel::precise()));
     }
-    protected function pPHPStan_Node_GetOffsetValueTypeExpr(GetOffsetValueTypeExpr $expr) : string
+    protected function pPHPStan_Node_GetOffsetValueTypeExpr(GetOffsetValueTypeExpr $expr): string
     {
         return sprintf('__phpstanGetOffsetValueType(%s, %s)', $this->p($expr->getVar()), $this->p($expr->getDim()));
     }
-    protected function pPHPStan_Node_UnsetOffsetExpr(UnsetOffsetExpr $expr) : string
+    protected function pPHPStan_Node_UnsetOffsetExpr(UnsetOffsetExpr $expr): string
     {
         return sprintf('__phpstanUnsetOffset(%s, %s)', $this->p($expr->getVar()), $this->p($expr->getDim()));
     }
-    protected function pPHPStan_Node_GetIterableValueTypeExpr(GetIterableValueTypeExpr $expr) : string
+    protected function pPHPStan_Node_GetIterableValueTypeExpr(GetIterableValueTypeExpr $expr): string
     {
         return sprintf('__phpstanGetIterableValueType(%s)', $this->p($expr->getExpr()));
     }
-    protected function pPHPStan_Node_GetIterableKeyTypeExpr(GetIterableKeyTypeExpr $expr) : string
+    protected function pPHPStan_Node_GetIterableKeyTypeExpr(GetIterableKeyTypeExpr $expr): string
     {
         return sprintf('__phpstanGetIterableKeyType(%s)', $this->p($expr->getExpr()));
     }
-    protected function pPHPStan_Node_ExistingArrayDimFetch(ExistingArrayDimFetch $expr) : string
+    protected function pPHPStan_Node_ExistingArrayDimFetch(ExistingArrayDimFetch $expr): string
     {
         return sprintf('__phpstanExistingArrayDimFetch(%s, %s)', $this->p($expr->getVar()), $this->p($expr->getDim()));
     }
-    protected function pPHPStan_Node_OriginalPropertyTypeExpr(OriginalPropertyTypeExpr $expr) : string
+    protected function pPHPStan_Node_OriginalPropertyTypeExpr(OriginalPropertyTypeExpr $expr): string
     {
         return sprintf('__phpstanOriginalPropertyType(%s)', $this->p($expr->getPropertyFetch()));
     }
-    protected function pPHPStan_Node_SetOffsetValueTypeExpr(SetOffsetValueTypeExpr $expr) : string
+    protected function pPHPStan_Node_SetOffsetValueTypeExpr(SetOffsetValueTypeExpr $expr): string
     {
         return sprintf('__phpstanSetOffsetValueType(%s, %s, %s)', $this->p($expr->getVar()), $expr->getDim() !== null ? $this->p($expr->getDim()) : 'null', $this->p($expr->getValue()));
     }
-    protected function pPHPStan_Node_SetExistingOffsetValueTypeExpr(SetExistingOffsetValueTypeExpr $expr) : string
+    protected function pPHPStan_Node_SetExistingOffsetValueTypeExpr(SetExistingOffsetValueTypeExpr $expr): string
     {
         return sprintf('__phpstanSetExistingOffsetValueType(%s, %s, %s)', $this->p($expr->getVar()), $this->p($expr->getDim()), $this->p($expr->getValue()));
     }
-    protected function pPHPStan_Node_AlwaysRememberedExpr(AlwaysRememberedExpr $expr) : string
+    protected function pPHPStan_Node_AlwaysRememberedExpr(AlwaysRememberedExpr $expr): string
     {
         return sprintf('__phpstanRembered(%s)', $this->p($expr->getExpr()));
     }
-    protected function pPHPStan_Node_PropertyInitializationExpr(PropertyInitializationExpr $expr) : string
+    protected function pPHPStan_Node_PropertyInitializationExpr(PropertyInitializationExpr $expr): string
     {
         return sprintf('__phpstanPropertyInitialization(%s)', $expr->getPropertyName());
     }
-    protected function pPHPStan_Node_ParameterVariableOriginalValueExpr(ParameterVariableOriginalValueExpr $expr) : string
+    protected function pPHPStan_Node_ParameterVariableOriginalValueExpr(ParameterVariableOriginalValueExpr $expr): string
     {
         return sprintf('__phpstanParameterVariableOriginalValue(%s)', $expr->getVariableName());
     }
-    protected function pPHPStan_Node_IssetExpr(IssetExpr $expr) : string
+    protected function pPHPStan_Node_IssetExpr(IssetExpr $expr): string
     {
         return sprintf('__phpstanIssetExpr(%s)', $this->p($expr->getExpr()));
     }

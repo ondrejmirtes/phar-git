@@ -25,11 +25,11 @@ final class MissingMethodParameterTypehintRule implements Rule
     {
         $this->missingTypehintCheck = $missingTypehintCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $methodReflection = $node->getMethodReflection();
         $messages = [];
@@ -54,7 +54,7 @@ final class MissingMethodParameterTypehintRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkMethodParameter(MethodReflection $methodReflection, string $parameterMessage, Type $parameterType) : array
+    private function checkMethodParameter(MethodReflection $methodReflection, string $parameterMessage, Type $parameterType): array
     {
         if ($parameterType instanceof MixedType && !$parameterType->isExplicitMixed()) {
             return [RuleErrorBuilder::message(sprintf('Method %s::%s() has %s with no type specified.', $methodReflection->getDeclaringClass()->getDisplayName(), $methodReflection->getName(), $parameterMessage))->identifier('missingType.parameter')->build()];

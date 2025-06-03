@@ -23,11 +23,11 @@ final class UnpackIterableInArrayRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return LiteralArrayNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->getItemNodes() as $itemNode) {

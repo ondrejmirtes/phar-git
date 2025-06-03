@@ -26,11 +26,11 @@ final class YieldFromTypeRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return YieldFrom::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $exprType = $scope->getType($node->expr);
         $isIterable = $exprType->isIterable();

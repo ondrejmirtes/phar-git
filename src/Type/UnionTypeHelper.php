@@ -18,12 +18,12 @@ final class UnionTypeHelper
      * @param Type[] $types
      * @return Type[]
      */
-    public static function sortTypes(array $types) : array
+    public static function sortTypes(array $types): array
     {
         if (count($types) > 1024) {
             return $types;
         }
-        usort($types, static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b) : int {
+        usort($types, static function (\PHPStan\Type\Type $a, \PHPStan\Type\Type $b): int {
             if ($a instanceof \PHPStan\Type\NullType) {
                 return 1;
             } elseif ($b instanceof \PHPStan\Type\NullType) {
@@ -96,7 +96,7 @@ final class UnionTypeHelper
         });
         return $types;
     }
-    private static function compareStrings(string $a, string $b) : int
+    private static function compareStrings(string $a, string $b): int
     {
         $cmp = strcasecmp($a, $b);
         if ($cmp !== 0) {

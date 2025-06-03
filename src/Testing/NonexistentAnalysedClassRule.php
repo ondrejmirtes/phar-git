@@ -20,11 +20,11 @@ final class NonexistentAnalysedClassRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $className = $node->getClassReflection()->getName();
         if ($this->reflectionProvider->hasClass($className)) {

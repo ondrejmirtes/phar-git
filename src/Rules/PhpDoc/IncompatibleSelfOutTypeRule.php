@@ -26,11 +26,11 @@ final class IncompatibleSelfOutTypeRule implements Rule
         $this->unresolvableTypeHelper = $unresolvableTypeHelper;
         $this->genericObjectTypeCheck = $genericObjectTypeCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         $selfOutType = $method->getSelfOutType();

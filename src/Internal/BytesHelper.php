@@ -9,7 +9,7 @@ use function end;
 use function round;
 final class BytesHelper
 {
-    public static function bytes(int $bytes) : string
+    public static function bytes(int $bytes): string
     {
         $bytes = round($bytes);
         $units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];

@@ -19,17 +19,17 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GettypeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'gettype';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;
         }
         $valueType = $scope->getType($functionCall->getArgs()[0]->value);
-        return TypeTraverser::map($valueType, static function (Type $valueType, callable $traverse) : Type {
+        return TypeTraverser::map($valueType, static function (Type $valueType, callable $traverse): Type {
             if ($valueType instanceof UnionType || $valueType instanceof IntersectionType) {
                 return $traverse($valueType);
             }

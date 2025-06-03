@@ -19,7 +19,7 @@ final class CheckstyleErrorFormatter implements \PHPStan\Command\ErrorFormatter\
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $output->writeRaw('<?xml version="1.0" encoding="UTF-8"?>');
         $output->writeLineFormatted('');
@@ -64,7 +64,7 @@ final class CheckstyleErrorFormatter implements \PHPStan\Command\ErrorFormatter\
      * Escapes values for using in XML
      *
      */
-    private function escape(string $string) : string
+    private function escape(string $string): string
     {
         return htmlspecialchars($string, ENT_XML1 | ENT_COMPAT, 'UTF-8');
     }
@@ -74,7 +74,7 @@ final class CheckstyleErrorFormatter implements \PHPStan\Command\ErrorFormatter\
      * @return array<string, array<Error>> Array that have as key the relative path of file
      * and as value an array with occurred errors.
      */
-    private function groupByFile(AnalysisResult $analysisResult) : array
+    private function groupByFile(AnalysisResult $analysisResult): array
     {
         $files = [];
         /** @var Error $fileSpecificError */

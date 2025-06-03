@@ -33,14 +33,14 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      * Returns an iterator over all items.
      * @return \RecursiveArrayIterator<array-key, T>
      */
-    public function getIterator() : \RecursiveArrayIterator
+    public function getIterator(): \RecursiveArrayIterator
     {
         return new \RecursiveArrayIterator((array) $this);
     }
     /**
      * Returns items count.
      */
-    public function count() : int
+    public function count(): int
     {
         return \count((array) $this);
     }
@@ -49,7 +49,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      * @param  array-key  $key
      * @param  T  $value
      */
-    public function offsetSet($key, $value) : void
+    public function offsetSet($key, $value): void
     {
         if (!\is_scalar($key)) {
             // prevents null
@@ -71,7 +71,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      * Determines whether a item exists.
      * @param  array-key  $key
      */
-    public function offsetExists($key) : bool
+    public function offsetExists($key): bool
     {
         return isset($this->{$key});
     }
@@ -79,7 +79,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      * Removes the element from this list.
      * @param  array-key  $key
      */
-    public function offsetUnset($key) : void
+    public function offsetUnset($key): void
     {
         unset($this->{$key});
     }

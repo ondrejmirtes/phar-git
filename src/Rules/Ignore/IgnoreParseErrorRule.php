@@ -15,11 +15,11 @@ use function sprintf;
  */
 final class IgnoreParseErrorRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FileNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $nodes = $node->getNodes();
         if (count($nodes) === 0) {

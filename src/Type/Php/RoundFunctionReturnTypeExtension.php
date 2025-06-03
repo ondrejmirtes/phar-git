@@ -31,11 +31,11 @@ final class RoundFunctionReturnTypeExtension implements DynamicFunctionReturnTyp
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['round', 'ceil', 'floor'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         // PHP 7 can return either a float or false.
         // PHP 8 can either return a float or fatal.

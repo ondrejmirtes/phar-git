@@ -30,25 +30,25 @@ final class MethodTag
         $this->parameters = $parameters;
         $this->templateTags = $templateTags;
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return $this->returnType;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->isStatic;
     }
     /**
      * @return array<string, MethodTagParameter>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
     /**
      * @return array<string, TemplateTag>
      */
-    public function getTemplateTags() : array
+    public function getTemplateTags(): array
     {
         return $this->templateTags;
     }

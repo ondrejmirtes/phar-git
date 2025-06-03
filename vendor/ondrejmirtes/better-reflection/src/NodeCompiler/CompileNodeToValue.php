@@ -31,7 +31,7 @@ class CompileNodeToValue
      *
      * @throws Exception\UnableToCompileNode
      */
-    public function __invoke(Node $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : \PHPStan\BetterReflection\NodeCompiler\CompiledValue
+    public function __invoke(Node $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): \PHPStan\BetterReflection\NodeCompiler\CompiledValue
     {
         if ($node instanceof Node\Stmt\Expression) {
             return $this($node->expr, $context);
@@ -42,7 +42,7 @@ class CompileNodeToValue
         } elseif ($node instanceof Node\Expr\ClassConstFetch) {
             $constantName = $this->resolveClassConstantName($node, $context);
         }
-        $constExprEvaluator = new ConstExprEvaluator(function (Node\Expr $node) use($context, $constantName) {
+        $constExprEvaluator = new ConstExprEvaluator(function (Node\Expr $node) use ($context, $constantName) {
             if ($node instanceof Node\Expr\ConstFetch) {
                 return $this->getConstantValue($node, $constantName, $context);
             }
@@ -135,12 +135,12 @@ class CompileNodeToValue
                 throw \PHPStan\BetterReflection\NodeCompiler\Exception\UnableToCompileNode::becauseOfInvalidEnumCasePropertyFetch($context, $class, $node);
         }
     }
-    private function resolveConstantName(Node\Expr\ConstFetch $constNode, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : string
+    private function resolveConstantName(Node\Expr\ConstFetch $constNode, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): string
     {
         $constantName = $constNode->name->toString();
         $namespace = $context->getNamespace() ?? '';
         if ($constNode->name->isUnqualified()) {
-            $namespacedConstantName = sprintf('%s\\%s', $namespace, $constantName);
+            $namespacedConstantName = sprintf('%s\%s', $namespace, $constantName);
             if ($this->constantExists($namespacedConstantName, $context)) {
                 return $namespacedConstantName;
             }
@@ -150,7 +150,7 @@ class CompileNodeToValue
         }
         throw \PHPStan\BetterReflection\NodeCompiler\Exception\UnableToCompileNode::becauseOfNotFoundConstantReference($context, $constNode, $constantName);
     }
-    private function constantExists(string $constantName, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : bool
+    private function constantExists(string $constantName, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): bool
     {
         if (defined($constantName)) {
             return \true;
@@ -175,7 +175,7 @@ class CompileNodeToValue
         }
         return $context->getReflector()->reflectConstant($constantName)->getValue();
     }
-    private function resolveClassConstantName(Node\Expr\ClassConstFetch $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : string
+    private function resolveClassConstantName(Node\Expr\ClassConstFetch $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): string
     {
         assert($node->name instanceof Node\Identifier);
         $constantName = $node->name->name;
@@ -214,7 +214,7 @@ class CompileNodeToValue
         }
         return $reflectionConstant->getValue();
     }
-    private function compileNew(Node\Expr\New_ $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : object
+    private function compileNew(Node\Expr\New_ $node, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): object
     {
         assert($node->class instanceof Node\Name);
         /** @psalm-var class-string $className */
@@ -231,7 +231,7 @@ class CompileNodeToValue
     /**
      * Compile a __DIR__ node
      */
-    private function compileDirConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context, Node\Scalar\MagicConst\Dir $node) : string
+    private function compileDirConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context, Node\Scalar\MagicConst\Dir $node): string
     {
         $fileName = $context->getFileName();
         if ($fileName === null) {
@@ -245,7 +245,7 @@ class CompileNodeToValue
     /**
      * Compile a __FILE__ node
      */
-    private function compileFileConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context, Node\Scalar\MagicConst\File $node) : string
+    private function compileFileConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context, Node\Scalar\MagicConst\File $node): string
     {
         $fileName = $context->getFileName();
         if ($fileName === null) {
@@ -259,11 +259,11 @@ class CompileNodeToValue
     /**
      * Compiles magic constant __CLASS__
      */
-    private function compileClassConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : string
+    private function compileClassConstant(\PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): string
     {
         return (($nullsafeVariable2 = $context->getClass()) ? $nullsafeVariable2->getName() : null) ?? '';
     }
-    private function resolveClassName(string $className, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context) : string
+    private function resolveClassName(string $className, \PHPStan\BetterReflection\NodeCompiler\CompilerContext $context): string
     {
         if ($className !== 'self' && $className !== 'static' && $className !== 'parent') {
             return $className;

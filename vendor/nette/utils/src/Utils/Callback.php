@@ -19,7 +19,7 @@ final class Callback
      * @param  string|object|callable  $callable  class, object, callable
      * @deprecated use Closure::fromCallable()
      */
-    public static function closure($callable, ?string $method = null) : \Closure
+    public static function closure($callable, ?string $method = null): \Closure
     {
         \trigger_error(__METHOD__ . '() is deprecated, use Closure::fromCallable().', \E_USER_DEPRECATED);
         try {
@@ -56,7 +56,7 @@ final class Callback
      */
     public static function invokeSafe(string $function, array $args, callable $onError)
     {
-        $prev = \set_error_handler(function ($severity, $message, $file) use($onError, &$prev, $function) : ?bool {
+        $prev = \set_error_handler(function ($severity, $message, $file) use ($onError, &$prev, $function): ?bool {
             if ($file === __FILE__) {
                 $msg = \ini_get('html_errors') ? Html::htmlToText($message) : $message;
                 $msg = \preg_replace("#^{$function}\\(.*?\\): #", '', $msg);
@@ -90,7 +90,7 @@ final class Callback
      * Converts PHP callback to textual form. Class or method may not exists.
      * @param  mixed  $callable
      */
-    public static function toString($callable) : string
+    public static function toString($callable): string
     {
         if ($callable instanceof \Closure) {
             $inner = self::unwrap($callable);
@@ -108,7 +108,7 @@ final class Callback
      * @return \ReflectionMethod|\ReflectionFunction
      * @throws \ReflectionException  if callback is not valid
      */
-    public static function toReflection($callable) : \ReflectionFunctionAbstract
+    public static function toReflection($callable): \ReflectionFunctionAbstract
     {
         if ($callable instanceof \Closure) {
             $callable = self::unwrap($callable);
@@ -126,7 +126,7 @@ final class Callback
     /**
      * Checks whether PHP callback is function or static method.
      */
-    public static function isStatic(callable $callable) : bool
+    public static function isStatic(callable $callable): bool
     {
         return is_string(is_array($callable) ? $callable[0] : $callable);
     }

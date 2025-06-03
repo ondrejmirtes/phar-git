@@ -37,39 +37,39 @@ class LocatedSource
         }
         $this->filename = $filename;
     }
-    public function getSource() : string
+    public function getSource(): string
     {
         return $this->source;
     }
-    public function getName() : ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->filename;
     }
     /**
      * Is the located source in PHP internals?
      */
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return \false;
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return null;
     }
     /**
      * Is the located source produced by eval() or \function_create()?
      */
-    public function isEvaled() : bool
+    public function isEvaled(): bool
     {
         return \false;
     }
-    public function getAliasName() : ?string
+    public function getAliasName(): ?string
     {
         return null;
     }

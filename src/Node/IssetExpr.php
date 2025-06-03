@@ -18,18 +18,18 @@ final class IssetExpr extends Expr implements \PHPStan\Node\VirtualNode
         $this->expr = $expr;
         parent::__construct([]);
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_IssetExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

@@ -45,15 +45,15 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         $this->subtractedType = $subtractedType;
         $this->baseClass = $classReflection->getName();
     }
-    public function getClassName() : string
+    public function getClassName(): string
     {
         return $this->baseClass;
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }
-    public function getAncestorWithClassName(string $className) : ?\PHPStan\Type\TypeWithClassName
+    public function getAncestorWithClassName(string $className): ?\PHPStan\Type\TypeWithClassName
     {
         $ancestor = $this->getStaticObjectType()->getAncestorWithClassName($className);
         if ($ancestor === null) {
@@ -65,7 +65,7 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return null;
     }
-    public function getStaticObjectType() : \PHPStan\Type\ObjectType
+    public function getStaticObjectType(): \PHPStan\Type\ObjectType
     {
         if ($this->staticObjectType === null) {
             if ($this->classReflection->isGeneric()) {
@@ -77,31 +77,31 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->staticObjectType;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return $this->getStaticObjectType()->getReferencedClasses();
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return $this->getStaticObjectType()->getObjectClassNames();
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return $this->getStaticObjectType()->getObjectClassReflections();
     }
-    public function getArrays() : array
+    public function getArrays(): array
     {
         return $this->getStaticObjectType()->getArrays();
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return $this->getStaticObjectType()->getConstantArrays();
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return $this->getStaticObjectType()->getConstantStrings();
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof \PHPStan\Type\CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
@@ -111,7 +111,7 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this->getStaticObjectType()->accepts($type->getStaticObjectType(), $strictTypes);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return $this->getStaticObjectType()->isSuperTypeOf($type);
@@ -134,42 +134,42 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         if (get_class($type) !== static::class) {
             return \false;
         }
         return $this->getStaticObjectType()->equals($type->getStaticObjectType());
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('static(%s)', $this->getStaticObjectType()->describe($level));
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : \PHPStan\Type\Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getTemplateType($ancestorClassName, $templateTypeName);
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isObject();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isEnum();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return $this->getStaticObjectType()->canAccessProperties();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return $this->getStaticObjectType()->hasProperty($propertyName);
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->getUnresolvedPropertyPrototype($propertyName, $scope)->getTransformedProperty();
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         $staticObject = $this->getStaticObjectType();
         $nakedProperty = $staticObject->getUnresolvedPropertyPrototype($propertyName, $scope)->getNakedProperty();
@@ -183,19 +183,19 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new CallbackUnresolvedPropertyPrototypeReflection($nakedProperty, $classReflection, \false, fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $this->transformStaticType($type, $scope));
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return $this->getStaticObjectType()->canCallMethods();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return $this->getStaticObjectType()->hasMethod($methodName);
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         $staticObject = $this->getStaticObjectType();
         $nakedMethod = $staticObject->getUnresolvedMethodPrototype($methodName, $scope)->getNakedMethod();
@@ -209,9 +209,9 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new CallbackUnresolvedMethodPrototypeReflection($nakedMethod, $classReflection, \false, fn(\PHPStan\Type\Type $type): \PHPStan\Type\Type => $this->transformStaticType($type, $scope));
     }
-    private function transformStaticType(\PHPStan\Type\Type $type, ClassMemberAccessAnswerer $scope) : \PHPStan\Type\Type
+    private function transformStaticType(\PHPStan\Type\Type $type, ClassMemberAccessAnswerer $scope): \PHPStan\Type\Type
     {
-        return \PHPStan\Type\TypeTraverser::map($type, function (\PHPStan\Type\Type $type, callable $traverse) use($scope) : \PHPStan\Type\Type {
+        return \PHPStan\Type\TypeTraverser::map($type, function (\PHPStan\Type\Type $type, callable $traverse) use ($scope): \PHPStan\Type\Type {
             if ($type instanceof \PHPStan\Type\StaticType) {
                 $classReflection = $this->classReflection;
                 $isFinal = \false;
@@ -228,295 +228,295 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
             return $traverse($type);
         });
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return $this->getStaticObjectType()->canAccessConstants();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return $this->getStaticObjectType()->hasConstant($constantName);
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         return $this->getStaticObjectType()->getConstant($constantName);
     }
-    public function changeBaseClass(ClassReflection $classReflection) : self
+    public function changeBaseClass(ClassReflection $classReflection): self
     {
         return new self($classReflection, $this->subtractedType);
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isIterable();
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isIterableAtLeastOnce();
     }
-    public function getArraySize() : \PHPStan\Type\Type
+    public function getArraySize(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getArraySize();
     }
-    public function getIterableKeyType() : \PHPStan\Type\Type
+    public function getIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getIterableKeyType();
     }
-    public function getFirstIterableKeyType() : \PHPStan\Type\Type
+    public function getFirstIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getFirstIterableKeyType();
     }
-    public function getLastIterableKeyType() : \PHPStan\Type\Type
+    public function getLastIterableKeyType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getLastIterableKeyType();
     }
-    public function getIterableValueType() : \PHPStan\Type\Type
+    public function getIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getIterableValueType();
     }
-    public function getFirstIterableValueType() : \PHPStan\Type\Type
+    public function getFirstIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getFirstIterableValueType();
     }
-    public function getLastIterableValueType() : \PHPStan\Type\Type
+    public function getLastIterableValueType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getLastIterableValueType();
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isOffsetAccessible();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isOffsetAccessLegal();
     }
-    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(\PHPStan\Type\Type $offsetType): TrinaryLogic
     {
         return $this->getStaticObjectType()->hasOffsetValueType($offsetType);
     }
-    public function getOffsetValueType(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function getOffsetValueType(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getOffsetValueType($offsetType);
     }
-    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true) : \PHPStan\Type\Type
+    public function setOffsetValueType(?\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType, bool $unionValues = \true): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->setOffsetValueType($offsetType, $valueType, $unionValues);
     }
-    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function setExistingOffsetValueType(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->setExistingOffsetValueType($offsetType, $valueType);
     }
-    public function unsetOffset(\PHPStan\Type\Type $offsetType) : \PHPStan\Type\Type
+    public function unsetOffset(\PHPStan\Type\Type $offsetType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->unsetOffset($offsetType);
     }
-    public function getKeysArray() : \PHPStan\Type\Type
+    public function getKeysArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getKeysArray();
     }
-    public function getValuesArray() : \PHPStan\Type\Type
+    public function getValuesArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getValuesArray();
     }
-    public function chunkArray(\PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function chunkArray(\PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->chunkArray($lengthType, $preserveKeys);
     }
-    public function fillKeysArray(\PHPStan\Type\Type $valueType) : \PHPStan\Type\Type
+    public function fillKeysArray(\PHPStan\Type\Type $valueType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->fillKeysArray($valueType);
     }
-    public function flipArray() : \PHPStan\Type\Type
+    public function flipArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->flipArray();
     }
-    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType) : \PHPStan\Type\Type
+    public function intersectKeyArray(\PHPStan\Type\Type $otherArraysType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->intersectKeyArray($otherArraysType);
     }
-    public function popArray() : \PHPStan\Type\Type
+    public function popArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->popArray();
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function reverseArray(TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->reverseArray($preserveKeys);
     }
-    public function searchArray(\PHPStan\Type\Type $needleType) : \PHPStan\Type\Type
+    public function searchArray(\PHPStan\Type\Type $needleType): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->searchArray($needleType);
     }
-    public function shiftArray() : \PHPStan\Type\Type
+    public function shiftArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->shiftArray();
     }
-    public function shuffleArray() : \PHPStan\Type\Type
+    public function shuffleArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->shuffleArray();
     }
-    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys) : \PHPStan\Type\Type
+    public function sliceArray(\PHPStan\Type\Type $offsetType, \PHPStan\Type\Type $lengthType, TrinaryLogic $preserveKeys): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->sliceArray($offsetType, $lengthType, $preserveKeys);
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isCallable();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return $this->getStaticObjectType()->getEnumCases();
     }
-    public function isArray() : TrinaryLogic
+    public function isArray(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isArray();
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isConstantArray();
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isOversizedArray();
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isList();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isNull();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isConstantValue();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isConstantScalarValue();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return $this->getStaticObjectType()->getConstantScalarTypes();
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return $this->getStaticObjectType()->getConstantScalarValues();
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isTrue();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isFalse();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isBoolean();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isFloat();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isInteger();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isString();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isNumericString();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isNonEmptyString();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isNonFalsyString();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isLiteralString();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isLowercaseString();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isUppercaseString();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isClassString();
     }
-    public function getClassStringObjectType() : \PHPStan\Type\Type
+    public function getClassStringObjectType(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->getClassStringObjectType();
     }
-    public function getObjectTypeOrClassStringObjectType() : \PHPStan\Type\Type
+    public function getObjectTypeOrClassStringObjectType(): \PHPStan\Type\Type
     {
         return $this;
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isVoid();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return $this->getStaticObjectType()->isScalar();
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         return new \PHPStan\Type\BooleanType();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return $this->getStaticObjectType()->getCallableParametersAcceptors($scope);
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function toNumber() : \PHPStan\Type\Type
+    public function toNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->toString();
     }
-    public function toInteger() : \PHPStan\Type\Type
+    public function toInteger(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toFloat() : \PHPStan\Type\Type
+    public function toFloat(): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ErrorType();
     }
-    public function toArray() : \PHPStan\Type\Type
+    public function toArray(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->toArray();
     }
-    public function toArrayKey() : \PHPStan\Type\Type
+    public function toArrayKey(): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->toArrayKey();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : \PHPStan\Type\Type
+    public function toCoercedArgumentType(bool $strictTypes): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->toCoercedArgumentType($strictTypes);
     }
-    public function toBoolean() : \PHPStan\Type\BooleanType
+    public function toBoolean(): \PHPStan\Type\BooleanType
     {
         return $this->getStaticObjectType()->toBoolean();
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $subtractedType = $this->subtractedType !== null ? $cb($this->subtractedType) : null;
         if ($subtractedType !== $this->subtractedType) {
@@ -524,25 +524,25 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return $this;
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if ($this->subtractedType === null) {
             return $this;
         }
         return new self($this->classReflection);
     }
-    public function subtract(\PHPStan\Type\Type $type) : \PHPStan\Type\Type
+    public function subtract(\PHPStan\Type\Type $type): \PHPStan\Type\Type
     {
         if ($this->subtractedType !== null) {
             $type = \PHPStan\Type\TypeCombinator::union($this->subtractedType, $type);
         }
         return $this->changeSubtractedType($type);
     }
-    public function getTypeWithoutSubtractedType() : \PHPStan\Type\Type
+    public function getTypeWithoutSubtractedType(): \PHPStan\Type\Type
     {
         return $this->changeSubtractedType(null);
     }
-    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType) : \PHPStan\Type\Type
+    public function changeSubtractedType(?\PHPStan\Type\Type $subtractedType): \PHPStan\Type\Type
     {
         if ($subtractedType !== null) {
             $classReflection = $this->getClassReflection();
@@ -559,26 +559,26 @@ class StaticType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
         }
         return new self($this->classReflection, $subtractedType);
     }
-    public function getSubtractedType() : ?\PHPStan\Type\Type
+    public function getSubtractedType(): ?\PHPStan\Type\Type
     {
         return $this->subtractedType;
     }
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if ($this->getStaticObjectType()->isSuperTypeOf($typeToRemove)->yes()) {
             return $this->subtract($typeToRemove);
         }
         return null;
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         return $this->getStaticObjectType()->exponentiate($exponent);
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return $this->getStaticObjectType()->getFiniteTypes();
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('static');
     }

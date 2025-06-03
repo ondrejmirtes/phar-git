@@ -39,11 +39,11 @@ final class StrSplitFunctionReturnTypeExtension implements DynamicFunctionReturn
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['str_split', 'mb_str_split'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 1) {
             return null;
@@ -97,7 +97,7 @@ final class StrSplitFunctionReturnTypeExtension implements DynamicFunctionReturn
     /**
      * @param string[] $constantArray
      */
-    private static function createConstantArrayFrom(array $constantArray, Scope $scope) : ConstantArrayType
+    private static function createConstantArrayFrom(array $constantArray, Scope $scope): ConstantArrayType
     {
         $keyTypes = [];
         $valueTypes = [];

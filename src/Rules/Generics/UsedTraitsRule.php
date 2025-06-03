@@ -27,11 +27,11 @@ final class UsedTraitsRule implements Rule
         $this->fileTypeMapper = $fileTypeMapper;
         $this->genericAncestorsCheck = $genericAncestorsCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\TraitUse::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope->isInClass()) {
             throw new ShouldNotHappenException();

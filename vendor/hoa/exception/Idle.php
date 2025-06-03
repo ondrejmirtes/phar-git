@@ -206,7 +206,7 @@ class Idle extends \Exception
         } catch (\Exception $e) {
             $out = $pre . '(' . $this->getCode() . ') ' . $message . "\n" . 'in ' . $file . ' around line ' . $line . '.';
         }
-        if (\true === $previous && null !== ($previous = $this->getPreviousThrow())) {
+        if (\true === $previous && null !== $previous = $this->getPreviousThrow()) {
             $out .= "\n\n" . '    ⬇' . "\n\n" . 'Nested exception (' . \get_class($previous) . '):' . "\n" . ($previous instanceof self ? $previous->raise(\true) : $previous->getMessage());
         }
         return $out;

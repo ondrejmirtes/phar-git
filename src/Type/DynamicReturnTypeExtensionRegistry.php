@@ -40,7 +40,7 @@ final class DynamicReturnTypeExtensionRegistry
     /**
      * @return DynamicMethodReturnTypeExtension[]
      */
-    public function getDynamicMethodReturnTypeExtensionsForClass(string $className) : array
+    public function getDynamicMethodReturnTypeExtensionsForClass(string $className): array
     {
         if ($this->dynamicMethodReturnTypeExtensionsByClass === null) {
             $byClass = [];
@@ -54,7 +54,7 @@ final class DynamicReturnTypeExtensionRegistry
     /**
      * @return DynamicStaticMethodReturnTypeExtension[]
      */
-    public function getDynamicStaticMethodReturnTypeExtensionsForClass(string $className) : array
+    public function getDynamicStaticMethodReturnTypeExtensionsForClass(string $className): array
     {
         if ($this->dynamicStaticMethodReturnTypeExtensionsByClass === null) {
             $byClass = [];
@@ -69,7 +69,7 @@ final class DynamicReturnTypeExtensionRegistry
      * @param DynamicMethodReturnTypeExtension[][]|DynamicStaticMethodReturnTypeExtension[][] $extensions
      * @return mixed[]
      */
-    private function getDynamicExtensionsForType(array $extensions, string $className) : array
+    private function getDynamicExtensionsForType(array $extensions, string $className): array
     {
         if (!$this->reflectionProvider->hasClass($className)) {
             return [];
@@ -88,7 +88,7 @@ final class DynamicReturnTypeExtensionRegistry
     /**
      * @return DynamicFunctionReturnTypeExtension[]
      */
-    public function getDynamicFunctionReturnTypeExtensions() : array
+    public function getDynamicFunctionReturnTypeExtensions(): array
     {
         return $this->dynamicFunctionReturnTypeExtensions;
     }

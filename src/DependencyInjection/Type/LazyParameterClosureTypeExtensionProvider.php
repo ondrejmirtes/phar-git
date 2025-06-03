@@ -14,15 +14,15 @@ final class LazyParameterClosureTypeExtensionProvider implements \PHPStan\Depend
     {
         $this->container = $container;
     }
-    public function getFunctionParameterClosureTypeExtensions() : array
+    public function getFunctionParameterClosureTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::FUNCTION_TAG);
     }
-    public function getMethodParameterClosureTypeExtensions() : array
+    public function getMethodParameterClosureTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::METHOD_TAG);
     }
-    public function getStaticMethodParameterClosureTypeExtensions() : array
+    public function getStaticMethodParameterClosureTypeExtensions(): array
     {
         return $this->container->getServicesByTag(self::STATIC_METHOD_TAG);
     }

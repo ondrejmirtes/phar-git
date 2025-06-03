@@ -40,20 +40,20 @@ class Container
             return \preg_match('#^createService.#', $s);
         }));
     }
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
     public function getParameter($key)
     {
         if (!\array_key_exists($key, $this->parameters)) {
-            $this->parameters[$key] = $this->preventDeadLock("%{$key}%", function () use($key) {
+            $this->parameters[$key] = $this->preventDeadLock("%{$key}%", function () use ($key) {
                 return $this->getDynamicParameter($key);
             });
         }
         return $this->parameters[$key];
     }
-    protected function getStaticParameters() : array
+    protected function getStaticParameters(): array
     {
         return [];
     }
@@ -94,7 +94,7 @@ class Container
     /**
      * Removes the service from the container.
      */
-    public function removeService(string $name) : void
+    public function removeService(string $name): void
     {
         $name = $this->aliases[$name] ?? $name;
         unset($this->instances[$name]);
@@ -103,7 +103,7 @@ class Container
      * Gets the service object by name.
      * @throws MissingServiceException
      */
-    public function getService(string $name) : object
+    public function getService(string $name): object
     {
         if (!isset($this->instances[$name])) {
             if (isset($this->aliases[$name])) {
@@ -117,7 +117,7 @@ class Container
      * Gets the service object by name.
      * @throws MissingServiceException
      */
-    public function getByName(string $name) : object
+    public function getByName(string $name): object
     {
         return $this->getService($name);
     }
@@ -125,7 +125,7 @@ class Container
      * Gets the service type by name.
      * @throws MissingServiceException
      */
-    public function getServiceType(string $name) : string
+    public function getServiceType(string $name): string
     {
         $method = self::getMethodName($name);
         if (isset($this->aliases[$name])) {
@@ -142,7 +142,7 @@ class Container
     /**
      * Does the service exist?
      */
-    public function hasService(string $name) : bool
+    public function hasService(string $name): bool
     {
         $name = $this->aliases[$name] ?? $name;
         return isset($this->methods[self::getMethodName($name)]) || isset($this->instances[$name]);
@@ -150,7 +150,7 @@ class Container
     /**
      * Is the service created?
      */
-    public function isCreated(string $name) : bool
+    public function isCreated(string $name): bool
     {
         if (!$this->hasService($name)) {
             throw new MissingServiceException(\sprintf("Service '%s' not found.", $name));
@@ -162,7 +162,7 @@ class Container
      * Creates new instance of the service.
      * @throws MissingServiceException
      */
-    public function createService(string $name, array $args = []) : object
+    public function createService(string $name, array $args = []): object
     {
         $name = $this->aliases[$name] ?? $name;
         $method = self::getMethodName($name);
@@ -170,7 +170,7 @@ class Container
         if ($callback === null) {
             throw new MissingServiceException(\sprintf("Service '%s' not found.", $name));
         }
-        $service = $this->preventDeadLock($name, function () use($callback, $args, $method) {
+        $service = $this->preventDeadLock($name, function () use ($callback, $args, $method) {
             return $callback instanceof \Closure ? $callback(...$args) : $this->{$method}(...$args);
         });
         if (!\is_object($service)) {
@@ -185,7 +185,7 @@ class Container
      * @return ?T
      * @throws MissingServiceException
      */
-    public function getByType(string $type, bool $throw = \true) : ?object
+    public function getByType(string $type, bool $throw = \true): ?object
     {
         $type = Helpers::normalizeClass($type);
         if (!empty($this->wiring[$type][0])) {
@@ -213,7 +213,7 @@ class Container
      * @return string[]
      * @internal
      */
-    public function findAutowired(string $type) : array
+    public function findAutowired(string $type): array
     {
         $type = Helpers::normalizeClass($type);
         return \array_merge($this->wiring[$type][0] ?? [], $this->wiring[$type][1] ?? []);
@@ -222,7 +222,7 @@ class Container
      * Gets the service names of the specified type.
      * @return string[]
      */
-    public function findByType(string $type) : array
+    public function findByType(string $type): array
     {
         $type = Helpers::normalizeClass($type);
         return empty($this->wiring[$type]) ? [] : \array_merge(...\array_values($this->wiring[$type]));
@@ -231,7 +231,7 @@ class Container
      * Gets the service names of the specified tag.
      * @return array of [service name => tag attributes]
      */
-    public function findByTag(string $tag) : array
+    public function findByTag(string $tag): array
     {
         return $this->tags[$tag] ?? [];
     }
@@ -252,7 +252,7 @@ class Container
      * Creates new instance using autowiring.
      * @throws Nette\InvalidArgumentException
      */
-    public function createInstance(string $class, array $args = []) : object
+    public function createInstance(string $class, array $args = []): object
     {
         $rc = new \ReflectionClass($class);
         if (!$rc->isInstantiable()) {
@@ -267,7 +267,7 @@ class Container
     /**
      * Calls all methods starting with with "inject" using autowiring.
      */
-    public function callInjects(object $service) : void
+    public function callInjects(object $service): void
     {
         Extensions\InjectExtension::callInjects($this, $service);
     }
@@ -279,20 +279,20 @@ class Container
     {
         return $function(...$this->autowireArguments(Nette\Utils\Callback::toReflection($function), $args));
     }
-    private function autowireArguments(\ReflectionFunctionAbstract $function, array $args = []) : array
+    private function autowireArguments(\ReflectionFunctionAbstract $function, array $args = []): array
     {
         return Resolver::autowireArguments($function, $args, function (string $type, bool $single) {
             return $single ? $this->getByType($type) : \array_map([$this, 'getService'], $this->findAutowired($type));
         });
     }
-    public static function getMethodName(string $name) : string
+    public static function getMethodName(string $name): string
     {
         if ($name === '') {
             throw new Nette\InvalidArgumentException('Service name must be a non-empty string.');
         }
         return 'createService' . \str_replace('.', '__', \ucfirst($name));
     }
-    public function initialize() : void
+    public function initialize(): void
     {
     }
 }

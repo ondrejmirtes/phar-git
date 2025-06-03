@@ -100,5 +100,5 @@ abstract class LateComputed extends \Hoa\Stream\Filter\Basic
      *
      * @return  string
      */
-    protected abstract function compute();
+    abstract protected function compute();
 }

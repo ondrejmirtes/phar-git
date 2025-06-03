@@ -51,7 +51,7 @@ final class StubPhpDocProvider
         $this->fileTypeMapper = $fileTypeMapper;
         $this->stubFilesProvider = $stubFilesProvider;
     }
-    public function findClassPhpDoc(string $className) : ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
+    public function findClassPhpDoc(string $className): ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
     {
         if (!$this->isKnownClass($className)) {
             return null;
@@ -66,7 +66,7 @@ final class StubPhpDocProvider
         }
         return null;
     }
-    public function findPropertyPhpDoc(string $className, string $propertyName) : ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
+    public function findPropertyPhpDoc(string $className, string $propertyName): ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
     {
         if (!$this->isKnownClass($className)) {
             return null;
@@ -81,7 +81,7 @@ final class StubPhpDocProvider
         }
         return null;
     }
-    public function findClassConstantPhpDoc(string $className, string $constantName) : ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
+    public function findClassConstantPhpDoc(string $className, string $constantName): ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
     {
         if (!$this->isKnownClass($className)) {
             return null;
@@ -99,7 +99,7 @@ final class StubPhpDocProvider
     /**
      * @param array<int, string> $positionalParameterNames
      */
-    public function findMethodPhpDoc(string $className, string $implementingClassName, string $methodName, array $positionalParameterNames) : ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
+    public function findMethodPhpDoc(string $className, string $implementingClassName, string $methodName, array $positionalParameterNames): ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
     {
         if (!$this->isKnownClass($className)) {
             return null;
@@ -132,7 +132,7 @@ final class StubPhpDocProvider
      * @param array<int, string> $positionalParameterNames
      * @throws ShouldNotHappenException
      */
-    public function findFunctionPhpDoc(string $functionName, array $positionalParameterNames) : ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
+    public function findFunctionPhpDoc(string $functionName, array $positionalParameterNames): ?\PHPStan\PhpDoc\ResolvedPhpDocBlock
     {
         if (!$this->isKnownFunction($functionName)) {
             return null;
@@ -159,7 +159,7 @@ final class StubPhpDocProvider
         }
         return null;
     }
-    public function isKnownClass(string $className) : bool
+    public function isKnownClass(string $className): bool
     {
         $this->initializeKnownElements();
         if (array_key_exists($className, $this->classMap)) {
@@ -167,7 +167,7 @@ final class StubPhpDocProvider
         }
         return array_key_exists($className, $this->knownClassesDocComments);
     }
-    private function isKnownFunction(string $functionName) : bool
+    private function isKnownFunction(string $functionName): bool
     {
         $this->initializeKnownElements();
         if (array_key_exists($functionName, $this->functionMap)) {
@@ -175,7 +175,7 @@ final class StubPhpDocProvider
         }
         return array_key_exists($functionName, $this->knownFunctionsDocComments);
     }
-    private function initializeKnownElements() : void
+    private function initializeKnownElements(): void
     {
         if ($this->initializing) {
             throw new ShouldNotHappenException();
@@ -196,7 +196,7 @@ final class StubPhpDocProvider
             $this->initialized = \true;
         }
     }
-    private function initializeKnownElementNode(string $stubFile, Node $node) : void
+    private function initializeKnownElementNode(string $stubFile, Node $node): void
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             foreach ($node->stmts as $stmt) {
@@ -211,7 +211,7 @@ final class StubPhpDocProvider
                 $this->functionMap[$functionName] = null;
                 return;
             }
-            $this->knownFunctionParameterNames[$functionName] = array_map(static function (Node\Param $param) : string {
+            $this->knownFunctionParameterNames[$functionName] = array_map(static function (Node\Param $param): string {
                 if (!$param->var instanceof Variable || !is_string($param->var->name)) {
                     throw new ShouldNotHappenException();
                 }
@@ -264,7 +264,7 @@ final class StubPhpDocProvider
                 }
                 $methodName = $stmt->name->toString();
                 $this->knownMethodsDocComments[$className][$methodName] = [$stubFile, $docComment->getText()];
-                $this->knownMethodsParameterNames[$className][$methodName] = array_map(static function (Node\Param $param) : string {
+                $this->knownMethodsParameterNames[$className][$methodName] = array_map(static function (Node\Param $param): string {
                     if (!$param->var instanceof Variable || !is_string($param->var->name)) {
                         throw new ShouldNotHappenException();
                     }

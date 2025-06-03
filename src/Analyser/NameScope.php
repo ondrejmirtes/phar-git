@@ -61,37 +61,37 @@ final class NameScope
         $this->typeAliasClassName = $typeAliasClassName;
         $this->templateTypeMap = $templateTypeMap ?? TemplateTypeMap::createEmpty();
     }
-    public function getNamespace() : ?string
+    public function getNamespace(): ?string
     {
         return $this->namespace;
     }
     /**
      * @return array<string, string>
      */
-    public function getUses() : array
+    public function getUses(): array
     {
         return $this->uses;
     }
-    public function hasUseAlias(string $name) : bool
+    public function hasUseAlias(string $name): bool
     {
         return isset($this->uses[strtolower($name)]);
     }
     /**
      * @return array<string, string>
      */
-    public function getConstUses() : array
+    public function getConstUses(): array
     {
         return $this->constUses;
     }
-    public function getClassName() : ?string
+    public function getClassName(): ?string
     {
         return $this->className;
     }
-    public function getClassNameForTypeAlias() : ?string
+    public function getClassNameForTypeAlias(): ?string
     {
         return $this->typeAliasClassName ?? $this->className;
     }
-    public function resolveStringName(string $name) : string
+    public function resolveStringName(string $name): string
     {
         if (str_starts_with($name, '\\')) {
             return ltrim($name, '\\');
@@ -103,17 +103,17 @@ final class NameScope
                 return $this->uses[$firstNamePart];
             }
             array_shift($nameParts);
-            return sprintf('%s\\%s', $this->uses[$firstNamePart], implode('\\', $nameParts));
+            return sprintf('%s\%s', $this->uses[$firstNamePart], implode('\\', $nameParts));
         }
         if ($this->namespace !== null) {
-            return sprintf('%s\\%s', $this->namespace, $name);
+            return sprintf('%s\%s', $this->namespace, $name);
         }
         return $name;
     }
     /**
      * @return non-empty-list<string>
      */
-    public function resolveConstantNames(string $name) : array
+    public function resolveConstantNames(string $name): array
     {
         if (str_starts_with($name, '\\')) {
             return [ltrim($name, '\\')];
@@ -123,17 +123,17 @@ final class NameScope
         if (count($nameParts) > 1) {
             if (isset($this->uses[$firstNamePart])) {
                 array_shift($nameParts);
-                return [sprintf('%s\\%s', $this->uses[$firstNamePart], implode('\\', $nameParts))];
+                return [sprintf('%s\%s', $this->uses[$firstNamePart], implode('\\', $nameParts))];
             }
         } elseif (isset($this->constUses[$firstNamePart])) {
             return [$this->constUses[$firstNamePart]];
         }
         if ($this->namespace !== null) {
-            return [sprintf('%s\\%s', $this->namespace, $name), $name];
+            return [sprintf('%s\%s', $this->namespace, $name), $name];
         }
         return [$name];
     }
-    public function getTemplateTypeScope() : ?TemplateTypeScope
+    public function getTemplateTypeScope(): ?TemplateTypeScope
     {
         if ($this->className !== null) {
             if ($this->functionName !== null) {
@@ -146,30 +146,30 @@ final class NameScope
         }
         return null;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->templateTypeMap;
     }
-    public function resolveTemplateTypeName(string $name) : ?Type
+    public function resolveTemplateTypeName(string $name): ?Type
     {
         return $this->templateTypeMap->getType($name);
     }
-    public function withTemplateTypeMap(TemplateTypeMap $map) : self
+    public function withTemplateTypeMap(TemplateTypeMap $map): self
     {
         if ($map->isEmpty() && $this->templateTypeMap->isEmpty()) {
             return $this;
         }
         return new self($this->namespace, $this->uses, $this->className, $this->functionName, new TemplateTypeMap(array_merge($this->templateTypeMap->getTypes(), $map->getTypes())), $this->typeAliasesMap, $this->bypassTypeAliases, $this->constUses);
     }
-    public function withoutNamespaceAndUses() : self
+    public function withoutNamespaceAndUses(): self
     {
         return new self(null, [], $this->className, $this->functionName, $this->templateTypeMap, $this->typeAliasesMap, $this->bypassTypeAliases, $this->constUses);
     }
-    public function withClassName(string $className) : self
+    public function withClassName(string $className): self
     {
         return new self($this->namespace, $this->uses, $className, $this->functionName, $this->templateTypeMap, $this->typeAliasesMap, $this->bypassTypeAliases, $this->constUses);
     }
-    public function unsetTemplateType(string $name) : self
+    public function unsetTemplateType(string $name): self
     {
         $map = $this->templateTypeMap;
         if (!$map->hasType($name)) {
@@ -177,15 +177,15 @@ final class NameScope
         }
         return new self($this->namespace, $this->uses, $this->className, $this->functionName, $this->templateTypeMap->unsetType($name), $this->typeAliasesMap, $this->bypassTypeAliases, $this->constUses);
     }
-    public function bypassTypeAliases() : self
+    public function bypassTypeAliases(): self
     {
         return new self($this->namespace, $this->uses, $this->className, $this->functionName, $this->templateTypeMap, $this->typeAliasesMap, \true, $this->constUses);
     }
-    public function shouldBypassTypeAliases() : bool
+    public function shouldBypassTypeAliases(): bool
     {
         return $this->bypassTypeAliases;
     }
-    public function hasTypeAlias(string $alias) : bool
+    public function hasTypeAlias(string $alias): bool
     {
         return array_key_exists($alias, $this->typeAliasesMap);
     }

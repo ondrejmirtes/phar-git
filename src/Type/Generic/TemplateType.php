@@ -10,13 +10,13 @@ use PHPStan\Type\Type;
 interface TemplateType extends CompoundType
 {
     /** @return non-empty-string */
-    public function getName() : string;
-    public function getScope() : \PHPStan\Type\Generic\TemplateTypeScope;
-    public function getBound() : Type;
-    public function getDefault() : ?Type;
-    public function toArgument() : \PHPStan\Type\Generic\TemplateType;
-    public function isArgument() : bool;
-    public function isValidVariance(Type $a, Type $b) : IsSuperTypeOfResult;
-    public function getVariance() : \PHPStan\Type\Generic\TemplateTypeVariance;
-    public function getStrategy() : \PHPStan\Type\Generic\TemplateTypeStrategy;
+    public function getName(): string;
+    public function getScope(): \PHPStan\Type\Generic\TemplateTypeScope;
+    public function getBound(): Type;
+    public function getDefault(): ?Type;
+    public function toArgument(): \PHPStan\Type\Generic\TemplateType;
+    public function isArgument(): bool;
+    public function isValidVariance(Type $a, Type $b): IsSuperTypeOfResult;
+    public function getVariance(): \PHPStan\Type\Generic\TemplateTypeVariance;
+    public function getStrategy(): \PHPStan\Type\Generic\TemplateTypeStrategy;
 }

@@ -12,11 +12,11 @@ use function sprintf;
 /** @implements Rule<InClassMethodNode> */
 final class MethodVisibilityInInterfaceRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         if ($method->isPublic()) {

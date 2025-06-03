@@ -41,7 +41,7 @@ final class LocatorDefinition extends Definition
         }
         return parent::setType($interface);
     }
-    public function getImplement() : ?string
+    public function getImplement(): ?string
     {
         return $this->getType();
     }
@@ -55,7 +55,7 @@ final class LocatorDefinition extends Definition
         return $this;
     }
     /** @return Reference[] */
-    public function getReferences() : array
+    public function getReferences(): array
     {
         return $this->references;
     }
@@ -65,14 +65,14 @@ final class LocatorDefinition extends Definition
         $this->tagged = $tagged;
         return $this;
     }
-    public function getTagged() : ?string
+    public function getTagged(): ?string
     {
         return $this->tagged;
     }
-    public function resolveType(Nette\DI\Resolver $resolver) : void
+    public function resolveType(Nette\DI\Resolver $resolver): void
     {
     }
-    public function complete(Nette\DI\Resolver $resolver) : void
+    public function complete(Nette\DI\Resolver $resolver): void
     {
         if ($this->tagged !== null) {
             $this->references = [];
@@ -87,7 +87,7 @@ final class LocatorDefinition extends Definition
             $this->references[$name] = $resolver->normalizeReference($ref);
         }
     }
-    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator) : void
+    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator): void
     {
         $class = (new Nette\PhpGenerator\ClassType())->addImplement($this->getType());
         $class->addProperty('container')->setPrivate();
@@ -102,7 +102,7 @@ final class LocatorDefinition extends Definition
                     return $item->getValue();
                 }, $this->references))->setPrivate();
                 $methodInner->setBody('if (!isset($this->mapping[$name])) {
-	' . ($nullable ? 'return null;' : 'throw new Nette\\DI\\MissingServiceException("Service \'$name\' is not defined.");') . '
+	' . ($nullable ? 'return null;' : 'throw new Nette\DI\MissingServiceException("Service \'$name\' is not defined.");') . '
 }
 return $this->container->' . $m[1] . 'Service($this->mapping[$name]);')->addParameter('name');
             } elseif (isset($this->references[$name])) {
@@ -113,7 +113,7 @@ return $this->container->' . $m[1] . 'Service($this->mapping[$name]);')->addPara
                     $methodInner->setBody('return $this->container->?();', [Nette\DI\Container::getMethodName($ref)]);
                 }
             } else {
-                $methodInner->setBody($nullable ? 'return null;' : 'throw new Nette\\DI\\MissingServiceException("Service is not defined.");');
+                $methodInner->setBody($nullable ? 'return null;' : 'throw new Nette\DI\MissingServiceException("Service is not defined.");');
             }
         }
         $method->setBody('return new class ($this) ' . $class . ';');

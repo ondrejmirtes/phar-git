@@ -5,5 +5,5 @@ namespace PHPStan\PhpDoc;
 
 interface TypeNodeResolverExtensionRegistryProvider
 {
-    public function getRegistry() : \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry;
+    public function getRegistry(): \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry;
 }

@@ -23,19 +23,19 @@ class IdentifierType
         }
         $this->name = $type;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isClass() : bool
+    public function isClass(): bool
     {
         return $this->name === self::IDENTIFIER_CLASS;
     }
-    public function isFunction() : bool
+    public function isFunction(): bool
     {
         return $this->name === self::IDENTIFIER_FUNCTION;
     }
-    public function isConstant() : bool
+    public function isConstant(): bool
     {
         return $this->name === self::IDENTIFIER_CONSTANT;
     }

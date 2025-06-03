@@ -18,13 +18,13 @@ final class EmptyRule implements Rule
     {
         $this->issetCheck = $issetCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Empty_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
-        $error = $this->issetCheck->check($node->expr, $scope, 'in empty()', 'empty', static function (Type $type) : ?string {
+        $error = $this->issetCheck->check($node->expr, $scope, 'in empty()', 'empty', static function (Type $type): ?string {
             $isNull = $type->isNull();
             if ($isNull->maybe()) {
                 return null;

@@ -19,11 +19,11 @@ final class MethodSignatureVarianceRule implements Rule
     {
         $this->varianceCheck = $varianceCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         return $this->varianceCheck->checkParametersAcceptor($method, sprintf('in parameter %%s of method %s::%s()', SprintfHelper::escapeFormatString($method->getDeclaringClass()->getDisplayName()), SprintfHelper::escapeFormatString($method->getName())), sprintf('in param-out type of parameter %%s of method %s::%s()', SprintfHelper::escapeFormatString($method->getDeclaringClass()->getDisplayName()), SprintfHelper::escapeFormatString($method->getName())), sprintf('in return type of method %s::%s()', $method->getDeclaringClass()->getDisplayName(), $method->getName()), sprintf('in method %s::%s()', $method->getDeclaringClass()->getDisplayName(), $method->getName()), $method->isStatic(), $method->isPrivate() || $method->getName() === '__construct', 'method');

@@ -21,26 +21,26 @@ final class ExecutionEndNode extends NodeAbstract implements \PHPStan\Node\Virtu
         $this->hasNativeReturnTypehint = $hasNativeReturnTypehint;
         parent::__construct($node->getAttributes());
     }
-    public function getNode() : Node\Stmt
+    public function getNode(): Node\Stmt
     {
         return $this->node;
     }
-    public function getStatementResult() : StatementResult
+    public function getStatementResult(): StatementResult
     {
         return $this->statementResult;
     }
-    public function hasNativeReturnTypehint() : bool
+    public function hasNativeReturnTypehint(): bool
     {
         return $this->hasNativeReturnTypehint;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ExecutionEndNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

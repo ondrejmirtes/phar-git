@@ -40,28 +40,28 @@ final class LocalIgnoresProcessorResult
     /**
      * @return list<Error>
      */
-    public function getFileErrors() : array
+    public function getFileErrors(): array
     {
         return $this->fileErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getLocallyIgnoredErrors() : array
+    public function getLocallyIgnoredErrors(): array
     {
         return $this->locallyIgnoredErrors;
     }
     /**
      * @return LinesToIgnore
      */
-    public function getLinesToIgnore() : array
+    public function getLinesToIgnore(): array
     {
         return $this->linesToIgnore;
     }
     /**
      * @return LinesToIgnore
      */
-    public function getUnmatchedLineIgnores() : array
+    public function getUnmatchedLineIgnores(): array
     {
         return $this->unmatchedLineIgnores;
     }

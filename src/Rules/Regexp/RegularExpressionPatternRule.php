@@ -25,11 +25,11 @@ final class RegularExpressionPatternRule implements Rule
     {
         $this->regexExpressionHelper = $regexExpressionHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $patterns = $this->extractPatterns($node, $scope);
         $errors = [];
@@ -45,7 +45,7 @@ final class RegularExpressionPatternRule implements Rule
     /**
      * @return string[]
      */
-    private function extractPatterns(FuncCall $functionCall, Scope $scope) : array
+    private function extractPatterns(FuncCall $functionCall, Scope $scope): array
     {
         if (!$functionCall->name instanceof Node\Name) {
             return [];
@@ -88,7 +88,7 @@ final class RegularExpressionPatternRule implements Rule
         }
         return $patternStrings;
     }
-    private function validatePattern(string $pattern) : ?string
+    private function validatePattern(string $pattern): ?string
     {
         try {
             Strings::match('', $pattern);

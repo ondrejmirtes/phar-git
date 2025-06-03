@@ -51,7 +51,7 @@ class Finder implements Iterator\Aggregate
      *
      * @var string
      */
-    protected $_splFileInfo = 'Hoa\\File\\SplFileInfo';
+    protected $_splFileInfo = 'Hoa\File\SplFileInfo';
     /**
      * Paths where to look for.
      *
@@ -116,7 +116,7 @@ class Finder implements Iterator\Aggregate
             $paths = [$paths];
         }
         foreach ($paths as $path) {
-            if (1 === \preg_match('/[\\*\\?\\[\\]]/', $path)) {
+            if (1 === \preg_match('/[\*\?\[\]]/', $path)) {
                 $iterator = new Iterator\CallbackFilter(new Iterator\Glob(\rtrim($path, DS)), function ($current) {
                     return $current->isDir();
                 });
@@ -195,7 +195,7 @@ class Finder implements Iterator\Aggregate
      */
     public function name($regex)
     {
-        $this->_filters[] = function (\SplFileInfo $current) use($regex) {
+        $this->_filters[] = function (\SplFileInfo $current) use ($regex) {
             return 0 !== \preg_match($regex, $current->getBasename());
         };
         return $this;
@@ -210,7 +210,7 @@ class Finder implements Iterator\Aggregate
      */
     public function notIn($regex)
     {
-        $this->_filters[] = function (\SplFileInfo $current) use($regex) {
+        $this->_filters[] = function (\SplFileInfo $current) use ($regex) {
             foreach (\explode(DS, $current->getPathname()) as $part) {
                 if (0 !== \preg_match($regex, $part)) {
                     return \false;
@@ -236,7 +236,7 @@ class Finder implements Iterator\Aggregate
      */
     public function size($size)
     {
-        if (0 === \preg_match('#^(<|<=|>|>=|=)\\s*(\\d+)\\s*((?:[KMGTPEZY])b)?$#', $size, $matches)) {
+        if (0 === \preg_match('#^(<|<=|>|>=|=)\s*(\d+)\s*((?:[KMGTPEZY])b)?$#', $size, $matches)) {
             return $this;
         }
         $number = \floatval($matches[2]);
@@ -281,27 +281,27 @@ class Finder implements Iterator\Aggregate
         $filter = null;
         switch ($operator) {
             case '<':
-                $filter = function (\SplFileInfo $current) use($number) {
+                $filter = function (\SplFileInfo $current) use ($number) {
                     return $current->getSize() < $number;
                 };
                 break;
             case '<=':
-                $filter = function (\SplFileInfo $current) use($number) {
+                $filter = function (\SplFileInfo $current) use ($number) {
                     return $current->getSize() <= $number;
                 };
                 break;
             case '>':
-                $filter = function (\SplFileInfo $current) use($number) {
+                $filter = function (\SplFileInfo $current) use ($number) {
                     return $current->getSize() > $number;
                 };
                 break;
             case '>=':
-                $filter = function (\SplFileInfo $current) use($number) {
+                $filter = function (\SplFileInfo $current) use ($number) {
                     return $current->getSize() >= $number;
                 };
                 break;
             case '=':
-                $filter = function (\SplFileInfo $current) use($number) {
+                $filter = function (\SplFileInfo $current) use ($number) {
                     return $current->getSize() === $number;
                 };
                 break;
@@ -332,7 +332,7 @@ class Finder implements Iterator\Aggregate
      */
     public function owner($owner)
     {
-        $this->_filters[] = function (\SplFileInfo $current) use($owner) {
+        $this->_filters[] = function (\SplFileInfo $current) use ($owner) {
             return $current->getOwner() === $owner;
         };
         return $this;
@@ -354,10 +354,10 @@ class Finder implements Iterator\Aggregate
     protected function formatDate($date, &$operator)
     {
         $operator = -1;
-        if (0 === \preg_match('#\\bago\\b#', $date)) {
+        if (0 === \preg_match('#\bago\b#', $date)) {
             $date .= ' ago';
         }
-        if (0 !== \preg_match('#^(since|until)\\b(.+)$#', $date, $matches)) {
+        if (0 !== \preg_match('#^(since|until)\b(.+)$#', $date, $matches)) {
             $time = \strtotime($matches[2]);
             if ('until' === $matches[1]) {
                 $operator = 1;
@@ -379,11 +379,11 @@ class Finder implements Iterator\Aggregate
     {
         $time = $this->formatDate($date, $operator);
         if (-1 === $operator) {
-            $this->_filters[] = function (\SplFileInfo $current) use($time) {
+            $this->_filters[] = function (\SplFileInfo $current) use ($time) {
                 return $current->getCTime() >= $time;
             };
         } else {
-            $this->_filters[] = function (\SplFileInfo $current) use($time) {
+            $this->_filters[] = function (\SplFileInfo $current) use ($time) {
                 return $current->getCTime() < $time;
             };
         }
@@ -401,11 +401,11 @@ class Finder implements Iterator\Aggregate
     {
         $time = $this->formatDate($date, $operator);
         if (-1 === $operator) {
-            $this->_filters[] = function (\SplFileInfo $current) use($time) {
+            $this->_filters[] = function (\SplFileInfo $current) use ($time) {
                 return $current->getMTime() >= $time;
             };
         } else {
-            $this->_filters[] = function (\SplFileInfo $current) use($time) {
+            $this->_filters[] = function (\SplFileInfo $current) use ($time) {
                 return $current->getMTime() < $time;
             };
         }
@@ -443,7 +443,7 @@ class Finder implements Iterator\Aggregate
     {
         if (\true === \class_exists('Collator', \false)) {
             $collator = new \Collator($locale);
-            $this->_sorts[] = function (\SplFileInfo $a, \SplFileInfo $b) use($collator) {
+            $this->_sorts[] = function (\SplFileInfo $a, \SplFileInfo $b) use ($collator) {
                 return $collator->compare($a->getPathname(), $b->getPathname());
             };
         } else {
@@ -505,7 +505,7 @@ class Finder implements Iterator\Aggregate
         $_iterator = new Iterator\Append();
         $types = $this->getTypes();
         if (!empty($types)) {
-            $this->_filters[] = function (\SplFileInfo $current) use($types) {
+            $this->_filters[] = function (\SplFileInfo $current) use ($types) {
                 return \in_array($current->getType(), $types);
             };
         }

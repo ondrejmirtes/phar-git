@@ -26,11 +26,11 @@ final class MixinMethodsClassReflectionExtension implements MethodsClassReflecti
     {
         $this->mixinExcludeClasses = $mixinExcludeClasses;
     }
-    public function hasMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $this->findMethod($classReflection, $methodName) !== null;
     }
-    public function getMethod(ClassReflection $classReflection, string $methodName) : MethodReflection
+    public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
     {
         $method = $this->findMethod($classReflection, $methodName);
         if ($method === null) {
@@ -38,7 +38,7 @@ final class MixinMethodsClassReflectionExtension implements MethodsClassReflecti
         }
         return $method;
     }
-    private function findMethod(ClassReflection $classReflection, string $methodName) : ?MethodReflection
+    private function findMethod(ClassReflection $classReflection, string $methodName): ?MethodReflection
     {
         $mixinTypes = $classReflection->getResolvedMixinTypes();
         foreach ($mixinTypes as $type) {

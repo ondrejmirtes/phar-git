@@ -52,19 +52,19 @@ final class NativeFunctionReflection implements FunctionReflection
         $this->assertions = $assertions ?? Assertions::createEmpty();
         $this->returnsByReference = $returnsByReference ?? TrinaryLogic::createMaybe();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return null;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         return $this->variants;
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         $variants = $this->getVariants();
         if (count($variants) !== 1) {
@@ -72,41 +72,41 @@ final class NativeFunctionReflection implements FunctionReflection
         }
         return $variants[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return $this->namedArgumentsVariants;
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->throwType;
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->isDeprecated);
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         if ($this->isVoid()) {
             return TrinaryLogic::createYes();
         }
         return $this->hasSideEffects;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         if ($this->hasSideEffects()->yes()) {
             return TrinaryLogic::createNo();
         }
         return $this->hasSideEffects->negate();
     }
-    private function isVoid() : bool
+    private function isVoid(): bool
     {
         foreach ($this->variants as $variant) {
             if (!$variant->getReturnType()->isVoid()->yes()) {
@@ -115,27 +115,27 @@ final class NativeFunctionReflection implements FunctionReflection
         }
         return \true;
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return \true;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->assertions;
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->phpDocComment;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return $this->returnsByReference;
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->acceptsNamedArguments);
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

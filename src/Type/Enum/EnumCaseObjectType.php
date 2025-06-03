@@ -35,27 +35,27 @@ class EnumCaseObjectType extends ObjectType
         $this->enumCaseName = $enumCaseName;
         parent::__construct($className, null, $classReflection);
     }
-    public function getEnumCaseName() : string
+    public function getEnumCaseName(): string
     {
         return $this->enumCaseName;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         $parent = parent::describe($level);
         return sprintf('%s::%s', $parent, $this->enumCaseName);
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
         }
         return $this->enumCaseName === $type->enumCaseName && $this->getClassName() === $type->getClassName();
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         return $this->isSuperTypeOf($type)->toAcceptsResult();
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return IsSuperTypeOfResult::createFromBoolean($this->enumCaseName === $type->enumCaseName && $this->getClassName() === $type->getClassName());
@@ -72,33 +72,33 @@ class EnumCaseObjectType extends ObjectType
         $parent = new parent($this->getClassName(), $this->getSubtractedType(), $this->getClassReflection());
         return $parent->isSuperTypeOf($type)->and(IsSuperTypeOfResult::createMaybe());
     }
-    public function subtract(Type $type) : Type
+    public function subtract(Type $type): Type
     {
         return $this->changeSubtractedType($type);
     }
-    public function getTypeWithoutSubtractedType() : Type
+    public function getTypeWithoutSubtractedType(): Type
     {
         return $this;
     }
-    public function changeSubtractedType(?Type $subtractedType) : Type
+    public function changeSubtractedType(?Type $subtractedType): Type
     {
         if ($subtractedType === null || !$this->equals($subtractedType)) {
             return $this;
         }
         return new NeverType();
     }
-    public function getSubtractedType() : ?Type
+    public function getSubtractedType(): ?Type
     {
         return null;
     }
-    public function tryRemove(Type $typeToRemove) : ?Type
+    public function tryRemove(Type $typeToRemove): ?Type
     {
         if ($this->isSuperTypeOf($typeToRemove)->yes()) {
             return $this->subtract($typeToRemove);
         }
         return null;
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -119,7 +119,7 @@ class EnumCaseObjectType extends ObjectType
         }
         return parent::getUnresolvedPropertyPrototype($propertyName, $scope);
     }
-    public function getBackingValueType() : ?Type
+    public function getBackingValueType(): ?Type
     {
         $classReflection = $this->getClassReflection();
         if ($classReflection === null) {
@@ -134,23 +134,23 @@ class EnumCaseObjectType extends ObjectType
         }
         return null;
     }
-    public function generalize(GeneralizePrecision $precision) : Type
+    public function generalize(GeneralizePrecision $precision): Type
     {
         return new parent($this->getClassName(), null, $this->getClassReflection());
     }
-    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [$this];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ConstTypeNode(new ConstFetchNode($this->getClassName(), $this->getEnumCaseName()));
     }

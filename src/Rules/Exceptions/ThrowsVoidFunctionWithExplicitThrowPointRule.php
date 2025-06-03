@@ -24,11 +24,11 @@ final class ThrowsVoidFunctionWithExplicitThrowPointRule implements Rule
         $this->exceptionTypeResolver = $exceptionTypeResolver;
         $this->missingCheckedExceptionInThrows = $missingCheckedExceptionInThrows;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $statementResult = $node->getStatementResult();
         $functionReflection = $node->getFunctionReflection();

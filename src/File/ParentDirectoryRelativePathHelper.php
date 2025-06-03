@@ -21,14 +21,14 @@ final class ParentDirectoryRelativePathHelper implements \PHPStan\File\RelativeP
     {
         $this->parentDirectory = $parentDirectory;
     }
-    public function getRelativePath(string $filename) : string
+    public function getRelativePath(string $filename): string
     {
         return implode('/', $this->getFilenameParts($filename));
     }
     /**
      * @return string[]
      */
-    public function getFilenameParts(string $filename) : array
+    public function getFilenameParts(string $filename): array
     {
         $schemePosition = strpos($filename, '://');
         if ($schemePosition !== \false) {

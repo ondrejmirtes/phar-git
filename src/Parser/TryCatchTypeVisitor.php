@@ -15,12 +15,12 @@ final class TryCatchTypeVisitor extends NodeVisitorAbstract
     public const ATTRIBUTE_NAME = 'tryCatchTypes';
     /** @var array<int, array<int, string>|null> */
     private array $typeStack = [];
-    public function beforeTraverse(array $nodes) : ?array
+    public function beforeTraverse(array $nodes): ?array
     {
         $this->typeStack = [];
         return null;
     }
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Stmt || $node instanceof Node\Expr\Match_) {
             if (count($this->typeStack) > 0) {
@@ -49,7 +49,7 @@ final class TryCatchTypeVisitor extends NodeVisitorAbstract
         }
         return null;
     }
-    public function leaveNode(Node $node) : ?Node
+    public function leaveNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Stmt\TryCatch && !$node instanceof Node\FunctionLike) {
             return null;

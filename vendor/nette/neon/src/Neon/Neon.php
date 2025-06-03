@@ -19,7 +19,7 @@ final class Neon
     /**
      * Returns value converted to NEON.
      */
-    public static function encode($value, bool $blockMode = \false, string $indentation = "\t") : string
+    public static function encode($value, bool $blockMode = \false, string $indentation = "\t"): string
     {
         $encoder = new Encoder();
         $encoder->blockMode = $blockMode;
@@ -44,7 +44,7 @@ final class Neon
         $input = @\file_get_contents($file);
         // @ is escalated to exception
         if ($input === \false) {
-            $error = \preg_replace('#^\\w+\\(.*?\\): #', '', \error_get_last()['message'] ?? '');
+            $error = \preg_replace('#^\w+\(.*?\): #', '', \error_get_last()['message'] ?? '');
             throw new Exception("Unable to read file '{$file}'. {$error}");
         }
         if (\substr($input, 0, 3) === "﻿") {

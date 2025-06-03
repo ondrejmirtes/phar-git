@@ -13,19 +13,19 @@ final class EnumUnresolvedPropertyPrototypeReflection implements UnresolvedPrope
     {
         $this->property = $property;
     }
-    public function doNotResolveTemplateTypeMapToBounds() : UnresolvedPropertyPrototypeReflection
+    public function doNotResolveTemplateTypeMapToBounds(): UnresolvedPropertyPrototypeReflection
     {
         return $this;
     }
-    public function getNakedProperty() : ExtendedPropertyReflection
+    public function getNakedProperty(): ExtendedPropertyReflection
     {
         return $this->property;
     }
-    public function getTransformedProperty() : ExtendedPropertyReflection
+    public function getTransformedProperty(): ExtendedPropertyReflection
     {
         return $this->property;
     }
-    public function withFechedOnType(Type $type) : UnresolvedPropertyPrototypeReflection
+    public function withFechedOnType(Type $type): UnresolvedPropertyPrototypeReflection
     {
         return $this;
     }

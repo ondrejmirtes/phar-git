@@ -33,7 +33,7 @@ final class NonexistentOffsetInArrayDimFetchCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, Expr $var, string $unknownClassPattern, Type $dimType) : array
+    public function check(Scope $scope, Expr $var, string $unknownClassPattern, Type $dimType): array
     {
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, NullsafeOperatorHelper::getNullsafeShortcircuitedExprRespectingScope($scope, $var), $unknownClassPattern, static fn(Type $type): bool => $type->hasOffsetValueType($dimType)->yes());
         $type = $typeResult->getType();

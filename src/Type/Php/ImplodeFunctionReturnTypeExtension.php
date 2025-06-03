@@ -27,11 +27,11 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ImplodeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['implode', 'join'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $args = $functionCall->getArgs();
         if (count($args) === 1) {
@@ -47,7 +47,7 @@ final class ImplodeFunctionReturnTypeExtension implements DynamicFunctionReturnT
         $arrayType = $scope->getType($args[1]->value);
         return $this->implode($arrayType, $separatorType);
     }
-    private function implode(Type $arrayType, Type $separatorType) : Type
+    private function implode(Type $arrayType, Type $separatorType): Type
     {
         if (count($arrayType->getConstantArrays()) > 0 && count($separatorType->getConstantStrings()) > 0) {
             $result = [];
@@ -91,7 +91,7 @@ final class ImplodeFunctionReturnTypeExtension implements DynamicFunctionReturnT
         }
         return new StringType();
     }
-    private function inferConstantType(ConstantArrayType $arrayType, ConstantStringType $separatorType) : ?Type
+    private function inferConstantType(ConstantArrayType $arrayType, ConstantStringType $separatorType): ?Type
     {
         $strings = [];
         foreach ($arrayType->getAllArrays() as $array) {

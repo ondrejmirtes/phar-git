@@ -11,7 +11,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 final class ClosureBindToVarVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'closureBindToVar';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\MethodCall && $node->name instanceof Identifier && $node->name->toLowerString() === 'bindto' && !$node->isFirstClassCallable()) {
             $args = $node->getArgs();

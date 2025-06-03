@@ -59,7 +59,7 @@ class Question
     /**
      * Returns whether the user response accepts newline characters.
      */
-    public function isMultiline() : bool
+    public function isMultiline(): bool
     {
         return $this->multiline;
     }
@@ -68,7 +68,7 @@ class Question
      *
      * @return $this
      */
-    public function setMultiline(bool $multiline) : self
+    public function setMultiline(bool $multiline): self
     {
         $this->multiline = $multiline;
         return $this;
@@ -137,13 +137,13 @@ class Question
     {
         if (\is_array($values)) {
             $values = $this->isAssoc($values) ? \array_merge(\array_keys($values), \array_values($values)) : \array_values($values);
-            $callback = static function () use($values) {
+            $callback = static function () use ($values) {
                 return $values;
             };
         } elseif ($values instanceof \Traversable) {
             $valueCache = null;
-            $callback = static function () use($values, &$valueCache) {
-                return $valueCache ?? ($valueCache = \iterator_to_array($values, \false));
+            $callback = static function () use ($values, &$valueCache) {
+                return $valueCache ?? $valueCache = \iterator_to_array($values, \false);
             };
         } else {
             $callback = null;
@@ -153,7 +153,7 @@ class Question
     /**
      * Gets the callback function used for the autocompleter.
      */
-    public function getAutocompleterCallback() : ?callable
+    public function getAutocompleterCallback(): ?callable
     {
         return $this->autocompleterCallback;
     }
@@ -164,7 +164,7 @@ class Question
      *
      * @return $this
      */
-    public function setAutocompleterCallback(?callable $callback = null) : self
+    public function setAutocompleterCallback(?callable $callback = null): self
     {
         if ($this->hidden && null !== $callback) {
             throw new LogicException('A hidden question cannot use the autocompleter.');
@@ -246,14 +246,14 @@ class Question
     {
         return (bool) \count(\array_filter(\array_keys($array), 'is_string'));
     }
-    public function isTrimmable() : bool
+    public function isTrimmable(): bool
     {
         return $this->trimmable;
     }
     /**
      * @return $this
      */
-    public function setTrimmable(bool $trimmable) : self
+    public function setTrimmable(bool $trimmable): self
     {
         $this->trimmable = $trimmable;
         return $this;

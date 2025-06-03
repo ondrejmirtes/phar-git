@@ -15,31 +15,31 @@ final class GeneralizePrecision
     {
         $this->value = $value;
     }
-    private static function create(int $value) : self
+    private static function create(int $value): self
     {
         self::$registry[$value] ??= new self($value);
         return self::$registry[$value];
     }
     /** @api */
-    public static function lessSpecific() : self
+    public static function lessSpecific(): self
     {
         return self::create(self::LESS_SPECIFIC);
     }
     /** @api */
-    public static function moreSpecific() : self
+    public static function moreSpecific(): self
     {
         return self::create(self::MORE_SPECIFIC);
     }
     /** @api */
-    public static function templateArgument() : self
+    public static function templateArgument(): self
     {
         return self::create(self::TEMPLATE_ARGUMENT);
     }
-    public function isMoreSpecific() : bool
+    public function isMoreSpecific(): bool
     {
         return $this->value === self::MORE_SPECIFIC;
     }
-    public function isTemplateArgument() : bool
+    public function isTemplateArgument(): bool
     {
         return $this->value === self::TEMPLATE_ARGUMENT;
     }

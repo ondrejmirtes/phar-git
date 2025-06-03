@@ -17,7 +17,7 @@ final class PhpParserFactory
         $this->lexer = $lexer;
         $this->phpVersion = $phpVersion;
     }
-    public function create() : ParserAbstract
+    public function create(): ParserAbstract
     {
         $phpVersion = \PhpParser\PhpVersion::fromString($this->phpVersion->getVersionString());
         if ($this->phpVersion->getVersionId() >= 80000) {

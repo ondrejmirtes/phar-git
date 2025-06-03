@@ -21,11 +21,11 @@ final class CallToConstructorStatementWithoutSideEffectsRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NoopExpressionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $instantiation = $node->getOriginalExpr();
         if (!$instantiation instanceof Node\Expr\New_) {

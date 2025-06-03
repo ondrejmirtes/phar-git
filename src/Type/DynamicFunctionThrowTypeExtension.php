@@ -25,6 +25,6 @@ use PHPStan\Reflection\FunctionReflection;
  */
 interface DynamicFunctionThrowTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool;
-    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool;
+    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, Scope $scope): ?\PHPStan\Type\Type;
 }

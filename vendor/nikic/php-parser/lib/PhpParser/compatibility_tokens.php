@@ -3,8 +3,8 @@
 declare (strict_types=1);
 namespace PhpParser;
 
-if (!\function_exists('PhpParser\\defineCompatibilityTokens')) {
-    function defineCompatibilityTokens() : void
+if (!\function_exists('PhpParser\defineCompatibilityTokens')) {
+    function defineCompatibilityTokens(): void
     {
         $compatTokens = [
             // PHP 8.0

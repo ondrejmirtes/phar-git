@@ -27,7 +27,7 @@ final class RegexGroupList implements Countable, IteratorAggregate
     {
         $this->groups = $groups;
     }
-    public function countTrailingOptionals() : int
+    public function countTrailingOptionals(): int
     {
         $trailingOptionals = 0;
         foreach (array_reverse($this->groups) as $captureGroup) {
@@ -38,15 +38,15 @@ final class RegexGroupList implements Countable, IteratorAggregate
         }
         return $trailingOptionals;
     }
-    public function forceGroupNonOptional(\PHPStan\Type\Regex\RegexCapturingGroup $group) : self
+    public function forceGroupNonOptional(\PHPStan\Type\Regex\RegexCapturingGroup $group): self
     {
         return $this->cloneAndReParentList($group);
     }
-    public function forceGroupTypeAndNonOptional(\PHPStan\Type\Regex\RegexCapturingGroup $group, Type $type) : self
+    public function forceGroupTypeAndNonOptional(\PHPStan\Type\Regex\RegexCapturingGroup $group, Type $type): self
     {
         return $this->cloneAndReParentList($group, $type);
     }
-    private function cloneAndReParentList(\PHPStan\Type\Regex\RegexCapturingGroup $target, ?Type $type = null) : self
+    private function cloneAndReParentList(\PHPStan\Type\Regex\RegexCapturingGroup $target, ?Type $type = null): self
     {
         $groups = [];
         $forcedGroup = null;
@@ -79,7 +79,7 @@ final class RegexGroupList implements Countable, IteratorAggregate
         }
         return new self($groups);
     }
-    public function removeGroup(\PHPStan\Type\Regex\RegexCapturingGroup $remove) : self
+    public function removeGroup(\PHPStan\Type\Regex\RegexCapturingGroup $remove): self
     {
         $groups = [];
         foreach ($this->groups as $i => $group) {
@@ -90,7 +90,7 @@ final class RegexGroupList implements Countable, IteratorAggregate
         }
         return new self($groups);
     }
-    public function getOnlyOptionalTopLevelGroup() : ?\PHPStan\Type\Regex\RegexCapturingGroup
+    public function getOnlyOptionalTopLevelGroup(): ?\PHPStan\Type\Regex\RegexCapturingGroup
     {
         $group = null;
         foreach ($this->groups as $captureGroup) {
@@ -107,7 +107,7 @@ final class RegexGroupList implements Countable, IteratorAggregate
         }
         return $group;
     }
-    public function getOnlyTopLevelAlternation() : ?\PHPStan\Type\Regex\RegexAlternation
+    public function getOnlyTopLevelAlternation(): ?\PHPStan\Type\Regex\RegexAlternation
     {
         $alternation = null;
         foreach ($this->groups as $captureGroup) {
@@ -128,14 +128,14 @@ final class RegexGroupList implements Countable, IteratorAggregate
         }
         return $alternation;
     }
-    public function count() : int
+    public function count(): int
     {
         return count($this->groups);
     }
     /**
      * @return ArrayIterator<int, RegexCapturingGroup>
      */
-    public function getIterator() : ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->groups);
     }

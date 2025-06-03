@@ -171,7 +171,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
     {
         // parse request line like "GET /path HTTP/1.1"
         $start = array();
-        if (!\preg_match('#^(?<method>[^ ]+) (?<target>[^ ]+) HTTP/(?<version>\\d\\.\\d)#m', $message, $start)) {
+        if (!\preg_match('#^(?<method>[^ ]+) (?<target>[^ ]+) HTTP/(?<version>\d\.\d)#m', $message, $start)) {
             throw new \InvalidArgumentException('Unable to parse invalid request-line');
         }
         // only support HTTP/1.1 and HTTP/1.0 requests
@@ -211,19 +211,16 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
                 throw new \InvalidArgumentException('CONNECT method MUST use authority-form request target');
             }
             $uri = $scheme . $start['target'];
+        } else if ($start['target'][0] === '/') {
+            $uri = $scheme . $host . $start['target'];
         } else {
-            // support absolute-form or origin-form for proxy requests
-            if ($start['target'][0] === '/') {
-                $uri = $scheme . $host . $start['target'];
-            } else {
-                // ensure absolute-form request-target contains a valid URI
-                $parts = \parse_url($start['target']);
-                // make sure value contains valid host component (IP or hostname), but no fragment
-                if (!isset($parts['scheme'], $parts['host']) || $parts['scheme'] !== 'http' || isset($parts['fragment'])) {
-                    throw new \InvalidArgumentException('Invalid absolute-form request-target');
-                }
-                $uri = $start['target'];
+            // ensure absolute-form request-target contains a valid URI
+            $parts = \parse_url($start['target']);
+            // make sure value contains valid host component (IP or hostname), but no fragment
+            if (!isset($parts['scheme'], $parts['host']) || $parts['scheme'] !== 'http' || isset($parts['fragment'])) {
+                throw new \InvalidArgumentException('Invalid absolute-form request-target');
             }
+            $uri = $start['target'];
         }
         $request = new self($start['method'], $uri, $headers, '', $start['version'], $serverParams);
         // only assign request target if it is not in origin-form (happy path for most normal requests)

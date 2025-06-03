@@ -67,7 +67,7 @@ final class ReflectionClass extends CoreReflectionClass
         return $this->betterReflectionClass;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionClass->__toString();
     }
@@ -85,32 +85,32 @@ final class ReflectionClass extends CoreReflectionClass
      * @psalm-mutation-free
      * @return class-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionClass->getName();
     }
     /** @psalm-mutation-free */
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->betterReflectionClass->isAnonymous();
     }
     /** @psalm-mutation-free */
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->betterReflectionClass->isInternal();
     }
     /** @psalm-mutation-free */
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return $this->betterReflectionClass->isUserDefined();
     }
     /** @psalm-mutation-free */
-    public function isInstantiable() : bool
+    public function isInstantiable(): bool
     {
         return $this->betterReflectionClass->isInstantiable();
     }
     /** @psalm-mutation-free */
-    public function isCloneable() : bool
+    public function isCloneable(): bool
     {
         return $this->betterReflectionClass->isCloneable();
     }
@@ -154,7 +154,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @psalm-mutation-free
      * @return ReflectionMethod|null
      */
-    public function getConstructor() : ?CoreReflectionMethod
+    public function getConstructor(): ?CoreReflectionMethod
     {
         $constructor = $this->betterReflectionClass->getConstructor();
         if ($constructor === null) {
@@ -165,7 +165,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    public function hasMethod($name) : bool
+    public function hasMethod($name): bool
     {
         if ($name === '') {
             return \false;
@@ -176,7 +176,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param string $name
      * @return ReflectionMethod
      */
-    public function getMethod($name) : CoreReflectionMethod
+    public function getMethod($name): CoreReflectionMethod
     {
         $method = $name !== '' ? $this->betterReflectionClass->getMethod($name) : null;
         if ($method === null) {
@@ -188,7 +188,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param int-mask-of<ReflectionMethod::IS_*>|null $filter
      * @return list<ReflectionMethod>
      */
-    public function getMethods($filter = null) : array
+    public function getMethods($filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_values(array_map(static fn(BetterReflectionMethod $method): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod($method), $this->betterReflectionClass->getMethods($filter ?? 0)));
@@ -196,7 +196,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    public function hasProperty($name) : bool
+    public function hasProperty($name): bool
     {
         if ($name === '') {
             return \false;
@@ -207,7 +207,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param string $name
      * @return ReflectionProperty
      */
-    public function getProperty($name) : \ReflectionProperty
+    public function getProperty($name): \ReflectionProperty
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionClass->getProperty($name) : null;
         if ($betterReflectionProperty === null) {
@@ -219,7 +219,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param int-mask-of<ReflectionProperty::IS_*>|null $filter
      * @return list<ReflectionProperty>
      */
-    public function getProperties($filter = null) : array
+    public function getProperties($filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_values(array_map(static fn(BetterReflectionProperty $property): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty($property), $this->betterReflectionClass->getProperties($filter ?? 0)));
@@ -227,7 +227,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    public function hasConstant($name) : bool
+    public function hasConstant($name): bool
     {
         if ($name === '') {
             return \false;
@@ -244,7 +244,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getConstants(?int $filter = null) : array
+    public function getConstants(?int $filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(fn($betterConstantOrEnumCase) => $this->getConstantValue($betterConstantOrEnumCase), $this->filterBetterReflectionClassConstants($filter));
@@ -309,7 +309,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getReflectionConstants(?int $filter = null) : array
+    public function getReflectionConstants(?int $filter = null): array
     {
         return array_values(array_map(static fn($betterConstantOrEnum): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant($betterConstantOrEnum), $this->filterBetterReflectionClassConstants($filter)));
     }
@@ -320,7 +320,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    private function filterBetterReflectionClassConstants(?int $filter) : array
+    private function filterBetterReflectionClassConstants(?int $filter): array
     {
         $reflectionConstants = $this->betterReflectionClass->getConstants($filter ?? 0);
         if ($this->betterReflectionClass instanceof BetterReflectionEnum && ($filter === null || $filter & \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant::IS_PUBLIC_COMPATIBILITY)) {
@@ -329,7 +329,7 @@ final class ReflectionClass extends CoreReflectionClass
         return $reflectionConstants;
     }
     /** @return list<class-string> */
-    public function getInterfaceClassNames() : array
+    public function getInterfaceClassNames(): array
     {
         return $this->betterReflectionClass->getInterfaceClassNames();
     }
@@ -337,7 +337,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @psalm-mutation-free
      * @return array<class-string, self>
      */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(static fn(BetterReflectionClass $interface): self => new self($interface), $this->betterReflectionClass->getInterfaces());
@@ -347,17 +347,17 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getInterfaceNames() : array
+    public function getInterfaceNames(): array
     {
         return $this->betterReflectionClass->getInterfaceNames();
     }
     /** @psalm-mutation-free */
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->betterReflectionClass->isInterface();
     }
     /** @return list<trait-string> */
-    public function getTraitClassNames() : array
+    public function getTraitClassNames(): array
     {
         return $this->betterReflectionClass->getTraitClassNames();
     }
@@ -365,7 +365,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @psalm-mutation-free
      * @return array<trait-string, self>
      */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         $traits = $this->betterReflectionClass->getTraits();
         /** @var list<trait-string> $traitNames */
@@ -378,7 +378,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getTraitNames() : array
+    public function getTraitNames(): array
     {
         return $this->betterReflectionClass->getTraitNames();
     }
@@ -387,39 +387,39 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getTraitAliases() : array
+    public function getTraitAliases(): array
     {
         return $this->betterReflectionClass->getTraitAliases();
     }
     /** @psalm-mutation-free */
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->betterReflectionClass->isTrait();
     }
     /** @psalm-mutation-free */
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->betterReflectionClass->isAbstract();
     }
     /** @psalm-mutation-free */
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->betterReflectionClass->isFinal();
     }
     /** @psalm-mutation-free */
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->betterReflectionClass->isReadOnly();
     }
     /** @psalm-mutation-free */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->betterReflectionClass->getModifiers();
     }
     /**
      * {@inheritDoc}
      */
-    public function isInstance($object) : bool
+    public function isInstance($object): bool
     {
         return $this->betterReflectionClass->isInstance($object);
     }
@@ -435,13 +435,13 @@ final class ReflectionClass extends CoreReflectionClass
         $reflection = new CoreReflectionClass($this->getName());
         return $reflection->newInstance(...func_get_args());
     }
-    public function newInstanceWithoutConstructor() : object
+    public function newInstanceWithoutConstructor(): object
     {
         ClassExistenceChecker::classExists($this->getName(), \true);
         $reflection = new CoreReflectionClass($this->getName());
         return $reflection->newInstanceWithoutConstructor();
     }
-    public function newInstanceArgs(?array $args = null) : object
+    public function newInstanceArgs(?array $args = null): object
     {
         ClassExistenceChecker::classExists($this->getName(), \true);
         $reflection = new CoreReflectionClass($this->getName());
@@ -452,7 +452,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @return never
      */
-    public function newLazyGhost(callable $initializer, int $options = 0) : object
+    public function newLazyGhost(callable $initializer, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
@@ -461,41 +461,41 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @return never
      */
-    public function newLazyProxy(callable $factory, int $options = 0) : object
+    public function newLazyProxy(callable $factory, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function markLazyObjectAsInitialized(object $object) : object
+    public function markLazyObjectAsInitialized(object $object): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
-    public function getLazyInitializer(object $object) : ?callable
-    {
-        throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
-    }
-    /** @return never */
-    public function initializeLazyObject(object $object) : object
+    public function getLazyInitializer(object $object): ?callable
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function isUninitializedLazyObject(object $object) : bool
+    public function initializeLazyObject(object $object): object
+    {
+        throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
+    }
+    /** @return never */
+    public function isUninitializedLazyObject(object $object): bool
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<self::SKIP_*> $options */
-    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0) : void
+    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<self::SKIP_*> $options */
-    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0) : void
+    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return class-string|null */
-    public function getParentClassName() : ?string
+    public function getParentClassName(): ?string
     {
         return $this->betterReflectionClass->getParentClassName();
     }
@@ -516,7 +516,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    public function isSubclassOf($class) : bool
+    public function isSubclassOf($class): bool
     {
         $realParentClassNames = $this->betterReflectionClass->getParentClassNames();
         $parentClassNames = array_combine(array_map(static fn(string $parentClassName): string => strtolower($parentClassName), $realParentClassNames), $realParentClassNames);
@@ -533,7 +533,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         return $this->betterReflectionClass->getStaticProperties();
     }
@@ -559,7 +559,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    public function setStaticPropertyValue($name, $value) : void
+    public function setStaticPropertyValue($name, $value): void
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionClass->getProperty($name) : null;
         if ($betterReflectionProperty === null) {
@@ -576,24 +576,24 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @psalm-mutation-free
      */
-    public function getDefaultProperties() : array
+    public function getDefaultProperties(): array
     {
         return $this->betterReflectionClass->getDefaultProperties();
     }
     /** @psalm-mutation-free */
-    public function isIterateable() : bool
+    public function isIterateable(): bool
     {
         return $this->betterReflectionClass->isIterateable();
     }
     /** @psalm-mutation-free */
-    public function isIterable() : bool
+    public function isIterable(): bool
     {
         return $this->isIterateable();
     }
     /**
      * @param \ReflectionClass|string $interface
      */
-    public function implementsInterface($interface) : bool
+    public function implementsInterface($interface): bool
     {
         $realInterfaceNames = $this->betterReflectionClass->getInterfaceNames();
         $interfaceNames = array_combine(array_map(static fn(string $interfaceName): string => strtolower($interfaceName), $realInterfaceNames), $realInterfaceNames);
@@ -603,7 +603,7 @@ final class ReflectionClass extends CoreReflectionClass
         return $this->betterReflectionClass->implementsInterface($realInterfaceName);
     }
     /** @psalm-mutation-free */
-    public function getExtension() : ?CoreReflectionExtension
+    public function getExtension(): ?CoreReflectionExtension
     {
         throw new \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplemented('Not implemented');
     }
@@ -616,17 +616,17 @@ final class ReflectionClass extends CoreReflectionClass
         return $this->betterReflectionClass->getExtensionName() ?? \false;
     }
     /** @psalm-mutation-free */
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->betterReflectionClass->inNamespace();
     }
     /** @psalm-mutation-free */
-    public function getNamespaceName() : string
+    public function getNamespaceName(): string
     {
         return $this->betterReflectionClass->getNamespaceName() ?? '';
     }
     /** @psalm-mutation-free */
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->betterReflectionClass->getShortName();
     }
@@ -635,7 +635,7 @@ final class ReflectionClass extends CoreReflectionClass
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(?string $name = null, int $flags = 0) : array
+    public function getAttributes(?string $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');
@@ -651,7 +651,7 @@ final class ReflectionClass extends CoreReflectionClass
         return array_map(static fn(BetterReflectionAttribute $betterReflectionAttribute) => \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttributeFactory::create($betterReflectionAttribute), $attributes);
     }
     /** @psalm-mutation-free */
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->betterReflectionClass->isEnum();
     }

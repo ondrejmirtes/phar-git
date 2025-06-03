@@ -38,7 +38,7 @@ final class RichParser implements \PHPStan\Parser\Parser
     private IgnoreLexer $ignoreLexer;
     public const VISITOR_SERVICE_TAG = 'phpstan.parser.richParserNodeVisitor';
     private const PHPDOC_TAG_REGEX = '(@(?:[a-z][a-z0-9-\\\\]+:)?[a-z][a-z0-9-\\\\]*+)';
-    private const PHPDOC_DOCTRINE_TAG_REGEX = '(@[a-z_\\\\][a-z0-9_\\:\\\\]*[a-z_][a-z0-9_]*)';
+    private const PHPDOC_DOCTRINE_TAG_REGEX = '(@[a-z_\\\\][a-z0-9_\:\\\\]*[a-z_][a-z0-9_]*)';
     public function __construct(\PhpParser\Parser $parser, NameResolver $nameResolver, Container $container, IgnoreLexer $ignoreLexer)
     {
         $this->parser = $parser;
@@ -50,7 +50,7 @@ final class RichParser implements \PHPStan\Parser\Parser
      * @param string $file path to a file to parse
      * @return Node\Stmt[]
      */
-    public function parseFile(string $file) : array
+    public function parseFile(string $file): array
     {
         try {
             return $this->parseString(FileReader::read($file));
@@ -61,7 +61,7 @@ final class RichParser implements \PHPStan\Parser\Parser
     /**
      * @return Node\Stmt[]
      */
-    public function parseString(string $sourceCode) : array
+    public function parseString(string $sourceCode): array
     {
         $errorHandler = new Collecting();
         $nodes = $this->parser->parse($sourceCode, $errorHandler);
@@ -102,7 +102,7 @@ final class RichParser implements \PHPStan\Parser\Parser
      * @param Token[] $tokens
      * @return array{lines: array<int, non-empty-list<string>|null>, errors: array<int, non-empty-list<string>>}
      */
-    private function getLinesToIgnore(array $tokens) : array
+    private function getLinesToIgnore(array $tokens): array
     {
         $lines = [];
         $previousToken = null;
@@ -209,7 +209,7 @@ final class RichParser implements \PHPStan\Parser\Parser
     /**
      * @return array<int, null>
      */
-    private function getLinesToIgnoreForTokenByIgnoreComment(string $tokenText, int $tokenLine, string $ignoreComment, bool $ignoreNextLine) : array
+    private function getLinesToIgnoreForTokenByIgnoreComment(string $tokenText, int $tokenLine, string $ignoreComment, bool $ignoreNextLine): array
     {
         $lines = [];
         $positionsOfIgnoreComment = [];
@@ -228,7 +228,7 @@ final class RichParser implements \PHPStan\Parser\Parser
      * @return non-empty-list<string>
      * @throws IgnoreParseException
      */
-    private function parseIdentifiers(string $text, int $ignorePos) : array
+    private function parseIdentifiers(string $text, int $ignorePos): array
     {
         $text = substr($text, $ignorePos + strlen('@phpstan-ignore'));
         $originalTokens = $this->ignoreLexer->tokenize($text);

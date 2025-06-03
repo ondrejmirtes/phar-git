@@ -17,14 +17,14 @@ use function strtolower;
  */
 final class DateTimeInstantiationRule implements \PHPStan\Rules\Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return New_::class;
     }
     /**
      * @param New_ $node
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->class instanceof Node\Name) {
             return [];

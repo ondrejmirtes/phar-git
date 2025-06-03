@@ -187,7 +187,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      * @return  resource
      * @throws  \Hoa\Exception\Exception
      */
-    protected abstract function &_open($streamName, ?\Hoa\Stream\Context $context = null);
+    abstract protected function &_open($streamName, ?\Hoa\Stream\Context $context = null);
     /**
      * Close the current stream.
      * Note: this method is protected, but do not forget that it could be
@@ -195,14 +195,14 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      *
      * @return  bool
      */
-    protected abstract function _close();
+    abstract protected function _close();
     /**
      * Open the stream.
      *
      * @return  \Hoa\Stream
      * @throws  \Hoa\Stream\Exception
      */
-    public final function open()
+    final public function open()
     {
         $context = $this->_context;
         if (\true === $this->hasBeenDeferred()) {
@@ -227,7 +227,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      *
      * @return  void
      */
-    public final function close()
+    final public function close()
     {
         $streamName = $this->getStreamName();
         $name = \md5($streamName);
@@ -410,7 +410,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function getStreamWrapperName()
     {
-        if (\false === ($pos = \strpos($this->getStreamName(), '://'))) {
+        if (\false === $pos = \strpos($this->getStreamName(), '://')) {
             return 'file';
         }
         return \substr($this->getStreamName(), 0, $pos);
@@ -462,7 +462,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      *
      * @return  void
      */
-    public static final function _Hoa_Stream()
+    final public static function _Hoa_Stream()
     {
         foreach (self::$_register as $entry) {
             $entry[self::HANDLER]->close();
@@ -522,7 +522,7 @@ class _Protocol extends Protocol\Node
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Stream\\Stream');
+Consistency::flexEntity('Hoa\Stream\Stream');
 /**
  * Add the `hoa://Library/Stream` node. Should be use to reach/get an entry
  * in the stream register.

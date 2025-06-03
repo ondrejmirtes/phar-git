@@ -23,7 +23,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @throws IdentifierNotFound
      */
-    public function reflectClass(string $identifierName) : ReflectionClass
+    public function reflectClass(string $identifierName): ReflectionClass
     {
         $identifier = new Identifier($identifierName, new IdentifierType(IdentifierType::IDENTIFIER_CLASS));
         $classInfo = $this->sourceLocator->locateIdentifier($this, $identifier);
@@ -38,7 +38,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @return list<ReflectionClass>
      */
-    public function reflectAllClasses() : iterable
+    public function reflectAllClasses(): iterable
     {
         /** @var list<ReflectionClass> $allClasses */
         $allClasses = $this->sourceLocator->locateIdentifiersByType($this, new IdentifierType(IdentifierType::IDENTIFIER_CLASS));
@@ -49,7 +49,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @throws IdentifierNotFound
      */
-    public function reflectFunction(string $identifierName) : ReflectionFunction
+    public function reflectFunction(string $identifierName): ReflectionFunction
     {
         $identifier = new Identifier($identifierName, new IdentifierType(IdentifierType::IDENTIFIER_FUNCTION));
         $functionInfo = $this->sourceLocator->locateIdentifier($this, $identifier);
@@ -64,7 +64,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @return list<ReflectionFunction>
      */
-    public function reflectAllFunctions() : iterable
+    public function reflectAllFunctions(): iterable
     {
         /** @var list<ReflectionFunction> $allFunctions */
         $allFunctions = $this->sourceLocator->locateIdentifiersByType($this, new IdentifierType(IdentifierType::IDENTIFIER_FUNCTION));
@@ -75,7 +75,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @throws IdentifierNotFound
      */
-    public function reflectConstant(string $identifierName) : ReflectionConstant
+    public function reflectConstant(string $identifierName): ReflectionConstant
     {
         $identifier = new Identifier($identifierName, new IdentifierType(IdentifierType::IDENTIFIER_CONSTANT));
         $constantInfo = $this->sourceLocator->locateIdentifier($this, $identifier);
@@ -90,7 +90,7 @@ final class DefaultReflector implements \PHPStan\BetterReflection\Reflector\Refl
      *
      * @return list<ReflectionConstant>
      */
-    public function reflectAllConstants() : iterable
+    public function reflectAllConstants(): iterable
     {
         /** @var list<ReflectionConstant> $allConstants */
         $allConstants = $this->sourceLocator->locateIdentifiersByType($this, new IdentifierType(IdentifierType::IDENTIFIER_CONSTANT));

@@ -9,5 +9,5 @@ interface ReadWritePropertiesExtensionProvider
     /**
      * @return ReadWritePropertiesExtension[]
      */
-    public function getExtensions() : array;
+    public function getExtensions(): array;
 }

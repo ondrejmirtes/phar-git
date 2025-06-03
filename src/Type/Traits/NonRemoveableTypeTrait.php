@@ -6,7 +6,7 @@ namespace PHPStan\Type\Traits;
 use PHPStan\Type\Type;
 trait NonRemoveableTypeTrait
 {
-    public function tryRemove(Type $typeToRemove) : ?Type
+    public function tryRemove(Type $typeToRemove): ?Type
     {
         return null;
     }

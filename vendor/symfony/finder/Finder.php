@@ -559,7 +559,7 @@ class Finder implements \IteratorAggregate, \Countable
         }
         $iterator = new \AppendIterator();
         foreach ($this->dirs as $dir) {
-            $iterator->append(new \IteratorIterator(new LazyIterator(function () use($dir) {
+            $iterator->append(new \IteratorIterator(new LazyIterator(function () use ($dir) {
                 return $this->searchInDirectory($dir);
             })));
         }
@@ -620,7 +620,7 @@ class Finder implements \IteratorAggregate, \Countable
     {
         return \iterator_count($this->getIterator());
     }
-    private function searchInDirectory(string $dir) : \Iterator
+    private function searchInDirectory(string $dir): \Iterator
     {
         $exclude = $this->exclude;
         $notPaths = $this->notPaths;
@@ -628,7 +628,7 @@ class Finder implements \IteratorAggregate, \Countable
             $exclude = \array_merge($exclude, self::$vcsPatterns);
         }
         if (static::IGNORE_DOT_FILES === (static::IGNORE_DOT_FILES & $this->ignore)) {
-            $notPaths[] = '#(^|/)\\..+(/|$)#';
+            $notPaths[] = '#(^|/)\..+(/|$)#';
         }
         $minDepth = 0;
         $maxDepth = \PHP_INT_MAX;
@@ -693,13 +693,13 @@ class Finder implements \IteratorAggregate, \Countable
      *
      * Excluding: (s)ftp:// or ssh2.(s)ftp:// wrapper
      */
-    private function normalizeDir(string $dir) : string
+    private function normalizeDir(string $dir): string
     {
         if ('/' === $dir) {
             return $dir;
         }
         $dir = \rtrim($dir, '/' . \DIRECTORY_SEPARATOR);
-        if (\preg_match('#^(ssh2\\.)?s?ftp://#', $dir)) {
+        if (\preg_match('#^(ssh2\.)?s?ftp://#', $dir)) {
             $dir .= '/';
         }
         return $dir;

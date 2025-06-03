@@ -15,15 +15,15 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class DsMapDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
-        return 'Ds\\Map';
+        return 'Ds\Map';
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return in_array($methodReflection->getName(), ['get', 'remove'], \true);
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         $argsCount = count($methodCall->getArgs());
         if ($argsCount > 1) {
@@ -36,7 +36,7 @@ final class DsMapDynamicReturnTypeExtension implements DynamicMethodReturnTypeEx
         if (!$mapType instanceof TypeWithClassName) {
             return null;
         }
-        $mapAncestor = $mapType->getAncestorWithClassName('Ds\\Map');
+        $mapAncestor = $mapType->getAncestorWithClassName('Ds\Map');
         if ($mapAncestor === null) {
             return null;
         }

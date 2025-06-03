@@ -13,47 +13,47 @@ use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\ShouldNotHappenException;
 final class DummyReflectionProvider implements ReflectionProvider
 {
-    public function hasClass(string $className) : bool
+    public function hasClass(string $className): bool
     {
         return \false;
     }
-    public function getClass(string $className) : ClassReflection
+    public function getClass(string $className): ClassReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getClassName(string $className) : string
+    public function getClassName(string $className): string
     {
         return $className;
     }
-    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope) : ClassReflection
+    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope): ClassReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function getUniversalObjectCratesClasses() : array
+    public function getUniversalObjectCratesClasses(): array
     {
         return [];
     }
-    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return \false;
     }
-    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : FunctionReflection
+    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): FunctionReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         return null;
     }
-    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return \false;
     }
-    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ConstantReflection
+    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ConstantReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         return null;
     }

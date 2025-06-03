@@ -43,7 +43,7 @@ final class ServiceDefinition extends Definition
     /**
      * Alias for getCreator()
      */
-    public function getFactory() : Statement
+    public function getFactory(): Statement
     {
         return $this->getCreator();
     }
@@ -56,7 +56,7 @@ final class ServiceDefinition extends Definition
         $this->creator = $creator instanceof Statement ? $creator : new Statement($creator, $args);
         return $this;
     }
-    public function getCreator() : Statement
+    public function getCreator(): Statement
     {
         return $this->creator;
     }
@@ -85,14 +85,14 @@ final class ServiceDefinition extends Definition
     {
         foreach ($setup as $v) {
             if (!$v instanceof Statement) {
-                throw new Nette\InvalidArgumentException('Argument must be Nette\\DI\\Definitions\\Statement[].');
+                throw new Nette\InvalidArgumentException('Argument must be Nette\DI\Definitions\Statement[].');
             }
         }
         $this->setup = $setup;
         return $this;
     }
     /** @return Statement[] */
-    public function getSetup() : array
+    public function getSetup(): array
     {
         return $this->setup;
     }
@@ -105,7 +105,7 @@ final class ServiceDefinition extends Definition
         $this->setup[] = $entity instanceof Statement ? $entity : new Statement($entity, $args);
         return $this;
     }
-    public function resolveType(Nette\DI\Resolver $resolver) : void
+    public function resolveType(Nette\DI\Resolver $resolver): void
     {
         if (!$this->getEntity()) {
             if (!$this->getType()) {
@@ -125,7 +125,7 @@ final class ServiceDefinition extends Definition
             $this->setAutowired(\false);
         }
     }
-    public function complete(Nette\DI\Resolver $resolver) : void
+    public function complete(Nette\DI\Resolver $resolver): void
     {
         $entity = $this->creator->getEntity();
         if ($entity instanceof Reference && !$this->creator->arguments && !$this->setup) {
@@ -141,7 +141,7 @@ final class ServiceDefinition extends Definition
             $setup = $resolver->completeStatement($setup, \true);
         }
     }
-    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator) : void
+    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator): void
     {
         $entity = $this->creator->getEntity();
         $code = $generator->formatStatement($this->creator) . ";\n";

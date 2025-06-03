@@ -25,12 +25,12 @@ final class TraitUse
         }
         $this->name = $name;
     }
-    public function addResolution(string $resolution) : self
+    public function addResolution(string $resolution): self
     {
         $this->resolutions[] = $resolution;
         return $this;
     }
-    public function getResolutions() : array
+    public function getResolutions(): array
     {
         return $this->resolutions;
     }

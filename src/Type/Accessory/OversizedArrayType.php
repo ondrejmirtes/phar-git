@@ -39,38 +39,38 @@ class OversizedArrayType implements CompoundType, \PHPStan\Type\Accessory\Access
     public function __construct()
     {
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    public function getArrays() : array
+    public function getArrays(): array
     {
         return [];
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return [];
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return [];
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return new AcceptsResult($type->isArray()->and($type->isIterableAtLeastOnce()), []);
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($this->equals($type)) {
             return IsSuperTypeOfResult::createYes();
@@ -80,294 +80,294 @@ class OversizedArrayType implements CompoundType, \PHPStan\Type\Accessory\Access
         }
         return new IsSuperTypeOfResult($type->isArray()->and($type->isOversizedArray()), []);
     }
-    public function isSubTypeOf(Type $otherType) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $otherType): IsSuperTypeOfResult
     {
         if ($otherType instanceof UnionType || $otherType instanceof IntersectionType) {
             return $otherType->isSuperTypeOf($this);
         }
         return (new IsSuperTypeOfResult($otherType->isArray()->and($otherType->isOversizedArray()), []))->and($otherType instanceof self ? IsSuperTypeOfResult::createYes() : IsSuperTypeOfResult::createMaybe());
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self;
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return 'oversized-array';
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function hasOffsetValueType(Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(Type $offsetType): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getOffsetValueType(Type $offsetType) : Type
+    public function getOffsetValueType(Type $offsetType): Type
     {
         return new MixedType();
     }
-    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true) : Type
+    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true): Type
     {
         return $this;
     }
-    public function setExistingOffsetValueType(Type $offsetType, Type $valueType) : Type
+    public function setExistingOffsetValueType(Type $offsetType, Type $valueType): Type
     {
         return $this;
     }
-    public function unsetOffset(Type $offsetType) : Type
+    public function unsetOffset(Type $offsetType): Type
     {
         return new ErrorType();
     }
-    public function getKeysArray() : Type
+    public function getKeysArray(): Type
     {
         return $this;
     }
-    public function getValuesArray() : Type
+    public function getValuesArray(): Type
     {
         return $this;
     }
-    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return $this;
     }
-    public function fillKeysArray(Type $valueType) : Type
+    public function fillKeysArray(Type $valueType): Type
     {
         return $this;
     }
-    public function flipArray() : Type
+    public function flipArray(): Type
     {
         return $this;
     }
-    public function intersectKeyArray(Type $otherArraysType) : Type
+    public function intersectKeyArray(Type $otherArraysType): Type
     {
         return $this;
     }
-    public function popArray() : Type
+    public function popArray(): Type
     {
         return $this;
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : Type
+    public function reverseArray(TrinaryLogic $preserveKeys): Type
     {
         return $this;
     }
-    public function searchArray(Type $needleType) : Type
+    public function searchArray(Type $needleType): Type
     {
         return new MixedType();
     }
-    public function shiftArray() : Type
+    public function shiftArray(): Type
     {
         return $this;
     }
-    public function shuffleArray() : Type
+    public function shuffleArray(): Type
     {
         return $this;
     }
-    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return $this;
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getArraySize() : Type
+    public function getArraySize(): Type
     {
         return IntegerRangeType::fromInterval(0, null);
     }
-    public function getIterableKeyType() : Type
+    public function getIterableKeyType(): Type
     {
         return new MixedType();
     }
-    public function getFirstIterableKeyType() : Type
+    public function getFirstIterableKeyType(): Type
     {
         return new MixedType();
     }
-    public function getLastIterableKeyType() : Type
+    public function getLastIterableKeyType(): Type
     {
         return new MixedType();
     }
-    public function getIterableValueType() : Type
+    public function getIterableValueType(): Type
     {
         return new MixedType();
     }
-    public function getFirstIterableValueType() : Type
+    public function getFirstIterableValueType(): Type
     {
         return new MixedType();
     }
-    public function getLastIterableValueType() : Type
+    public function getLastIterableValueType(): Type
     {
         return new MixedType();
     }
-    public function isArray() : TrinaryLogic
+    public function isArray(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [];
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getClassStringObjectType() : Type
+    public function getClassStringObjectType(): Type
     {
         return new ErrorType();
     }
-    public function getObjectTypeOrClassStringObjectType() : Type
+    public function getObjectTypeOrClassStringObjectType(): Type
     {
         return new ErrorType();
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function looseCompare(Type $type, PhpVersion $phpVersion) : BooleanType
+    public function looseCompare(Type $type, PhpVersion $phpVersion): BooleanType
     {
         return new BooleanType();
     }
-    public function toNumber() : Type
+    public function toNumber(): Type
     {
         return new ErrorType();
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return new ErrorType();
     }
-    public function toInteger() : Type
+    public function toInteger(): Type
     {
         return new ConstantIntegerType(1);
     }
-    public function toFloat() : Type
+    public function toFloat(): Type
     {
         return new ConstantFloatType(1.0);
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return new ErrorType();
     }
-    public function toArray() : Type
+    public function toArray(): Type
     {
         return new MixedType();
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return new ErrorType();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         return $this;
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         return $this;
     }
-    public function exponentiate(Type $exponent) : Type
+    public function exponentiate(Type $exponent): Type
     {
         return new ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('');
         // no PHPDoc representation

@@ -62,12 +62,12 @@ class ReflectionEnumCase
         $this->endColumn = CalculateReflectionColumn::getEndColumn($this->enum->getLocatedSource()->getSource(), $node);
     }
     /** @internal */
-    public static function createFromNode(Reflector $reflector, EnumCase $node, \PHPStan\BetterReflection\Reflection\ReflectionEnum $enum) : self
+    public static function createFromNode(Reflector $reflector, EnumCase $node, \PHPStan\BetterReflection\Reflection\ReflectionEnum $enum): self
     {
         return new self($reflector, $node, $enum);
     }
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -76,7 +76,7 @@ class ReflectionEnumCase
      *
      * @throws LogicException
      */
-    public function getValueExpression() : Node\Expr
+    public function getValueExpression(): Node\Expr
     {
         if ($this->value === null) {
             throw new LogicException('This enum case does not have a value');
@@ -97,7 +97,7 @@ class ReflectionEnumCase
      *
      * @throws LogicException
      */
-    private function getCompiledValue() : CompiledValue
+    private function getCompiledValue(): CompiledValue
     {
         if ($this->value === null) {
             throw new LogicException('This enum case does not have a value');
@@ -108,49 +108,49 @@ class ReflectionEnumCase
         return $this->compiledValue;
     }
     /** @return positive-int */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
     /** @return positive-int */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
     /** @return positive-int */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         return $this->startColumn;
     }
     /** @return positive-int */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         return $this->endColumn;
     }
-    public function getDeclaringEnum() : \PHPStan\BetterReflection\Reflection\ReflectionEnum
+    public function getDeclaringEnum(): \PHPStan\BetterReflection\Reflection\ReflectionEnum
     {
         return $this->enum;
     }
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->enum;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return DeprecatedHelper::isDeprecated($this);
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return ReflectionAttributeHelper::filterAttributesByName($this->getAttributes(), $name);
     }
@@ -159,12 +159,12 @@ class ReflectionEnumCase
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return ReflectionAttributeHelper::filterAttributesByInstance($this->getAttributes(), $className);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionEnumCaseStringCast::toString($this);
     }

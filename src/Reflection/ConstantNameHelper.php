@@ -12,7 +12,7 @@ use function str_contains;
 use function strtolower;
 final class ConstantNameHelper
 {
-    public static function normalize(string $name) : string
+    public static function normalize(string $name): string
     {
         if (!str_contains($name, '\\')) {
             return $name;

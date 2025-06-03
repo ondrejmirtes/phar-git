@@ -9,5 +9,5 @@ interface MetadataRuleError extends \PHPStan\Rules\RuleError
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array;
+    public function getMetadata(): array;
 }

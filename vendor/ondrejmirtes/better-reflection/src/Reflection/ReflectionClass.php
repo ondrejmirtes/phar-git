@@ -66,7 +66,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      */
     private $namespace = null;
     public const ANONYMOUS_CLASS_NAME_PREFIX = 'class@anonymous';
-    public const ANONYMOUS_CLASS_NAME_PREFIX_REGEXP = '~^(?:class|[\\w\\\\]+)@anonymous~';
+    public const ANONYMOUS_CLASS_NAME_PREFIX_REGEXP = '~^(?:class|[\w\\\\]+)@anonymous~';
     private const ANONYMOUS_CLASS_NAME_SUFFIX = '@anonymous';
     /** @var class-string|trait-string|null */
     private $name;
@@ -205,7 +205,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         $this->traitsData = $this->computeTraitsData($node);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionClassStringCast::toString($this);
     }
@@ -219,7 +219,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @throws IdentifierNotFound
      * @throws ReflectionException
      */
-    public static function createFromInstance(object $instance) : self
+    public static function createFromInstance(object $instance): self
     {
         return \PHPStan\BetterReflection\Reflection\ReflectionObject::createFromInstance($instance);
     }
@@ -231,7 +231,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node      Node has to be processed by the PhpParser\NodeVisitor\NameResolver
      * @param non-empty-string|null                      $namespace optional - if omitted, we assume it is global namespaced class
      */
-    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null) : self
+    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null): self
     {
         return new self($reflector, $node, $locatedSource, $namespace);
     }
@@ -241,7 +241,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return non-empty-string
      */
-    public function getShortName() : string
+    public function getShortName(): string
     {
         if ($this->shortName !== null) {
             return $this->shortName;
@@ -256,7 +256,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * PHP creates the name of the anonymous class based on first parent
      * or implemented interface.
      */
-    private function getAnonymousClassNamePrefix() : string
+    private function getAnonymousClassNamePrefix(): string
     {
         if ($this->parentClassName !== null) {
             return $this->parentClassName;
@@ -272,7 +272,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return class-string|trait-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         if ($this->cachedName !== null) {
             return $this->cachedName;
@@ -285,7 +285,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return $this->cachedName = $this->name;
     }
     /** @return class-string|null */
-    public function getParentClassName() : ?string
+    public function getParentClassName(): ?string
     {
         return $this->parentClassName;
     }
@@ -295,7 +295,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return non-empty-string|null
      */
-    public function getNamespaceName() : ?string
+    public function getNamespaceName(): ?string
     {
         return $this->namespace;
     }
@@ -303,12 +303,12 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * Decide if this class is part of a namespace. Returns false if the class
      * is in the global namespace or does not have a specified namespace.
      */
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->namespace !== null;
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->locatedSource->getExtensionName();
     }
@@ -317,7 +317,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<ReflectionMethod>
      */
-    private function createMethodsFromTrait(\PHPStan\BetterReflection\Reflection\ReflectionMethod $method, array $currentMethods) : array
+    private function createMethodsFromTrait(\PHPStan\BetterReflection\Reflection\ReflectionMethod $method, array $currentMethods): array
     {
         $methodModifiers = $method->getModifiers();
         $lowerCasedMethodHash = $this->lowerCasedMethodHash($method->getImplementingClass()->getName(), $method->getName());
@@ -350,7 +350,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
                 $methodModifiers |= CoreReflectionMethod::IS_FINAL;
             }
         }
-        $createMethod = function (?string $aliasMethodName, int $methodModifiers) use($method) : \PHPStan\BetterReflection\Reflection\ReflectionMethod {
+        $createMethod = function (?string $aliasMethodName, int $methodModifiers) use ($method): \PHPStan\BetterReflection\Reflection\ReflectionMethod {
             assert($aliasMethodName === null || $aliasMethodName !== '');
             /** @var int-mask-of<ReflectionMethodAdapter::IS_*> $methodModifiers */
             $methodModifiers = $methodModifiers;
@@ -407,7 +407,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<lowercase-string, ReflectionMethod> indexed by method name
      */
-    private function getMethodsIndexedByLowercasedName(AlreadyVisitedClasses $alreadyVisitedClasses) : array
+    private function getMethodsIndexedByLowercasedName(AlreadyVisitedClasses $alreadyVisitedClasses): array
     {
         if ($this->cachedMethods !== null) {
             return $this->cachedMethods;
@@ -478,7 +478,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionMethod>
      */
-    public function getMethods(int $filter = 0) : array
+    public function getMethods(int $filter = 0): array
     {
         $methods = $this->getMethodsIndexedByLowercasedName(AlreadyVisitedClasses::createEmpty());
         if ($filter !== 0) {
@@ -496,7 +496,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionMethod>
      */
-    public function getImmediateMethods(int $filter = 0) : array
+    public function getImmediateMethods(int $filter = 0): array
     {
         if ($filter === 0) {
             return $this->immediateMethods;
@@ -505,7 +505,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
     }
     /** @return array<non-empty-string, ReflectionMethod>
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node */
-    private function createImmediateMethods($node, Reflector $reflector) : array
+    private function createImmediateMethods($node, Reflector $reflector): array
     {
         $methods = [];
         foreach ($node->getMethods() as $methodNode) {
@@ -525,10 +525,10 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionMethod>
      */
-    private function addEnumMethods(EnumNode $node, array $methods) : array
+    private function addEnumMethods(EnumNode $node, array $methods): array
     {
         $internalLocatedSource = new InternalLocatedSource('', $this->getName(), 'Core', $this->getFileName());
-        $createMethod = function (string $name, array $params, $returnType) use($internalLocatedSource) : \PHPStan\BetterReflection\Reflection\ReflectionMethod {
+        $createMethod = function (string $name, array $params, $returnType) use ($internalLocatedSource): \PHPStan\BetterReflection\Reflection\ReflectionMethod {
             assert($name !== '');
             /** @var array{flags: int, params: Node\Param[], returnType: Node\Identifier|Node\NullableType} $classMethodSubnodes */
             $classMethodSubnodes = ['flags' => Modifiers::PUBLIC | Modifiers::STATIC, 'params' => $params, 'returnType' => $returnType];
@@ -548,7 +548,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $methodName
      */
-    public function getMethod(string $methodName) : ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
+    public function getMethod(string $methodName): ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
     {
         $lowercaseMethodName = strtolower($methodName);
         $methods = $this->getMethodsIndexedByLowercasedName(AlreadyVisitedClasses::createEmpty());
@@ -559,7 +559,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $methodName
      */
-    public function hasMethod(string $methodName) : bool
+    public function hasMethod(string $methodName): bool
     {
         return $this->getMethod($methodName) !== null;
     }
@@ -571,7 +571,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionClassConstant> indexed by name
      */
-    public function getImmediateConstants(int $filter = 0) : array
+    public function getImmediateConstants(int $filter = 0): array
     {
         if ($filter === 0) {
             return $this->immediateConstants;
@@ -583,7 +583,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $name
      */
-    public function hasConstant(string $name) : bool
+    public function hasConstant(string $name): bool
     {
         return $this->getConstant($name) !== null;
     }
@@ -594,13 +594,13 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $name
      */
-    public function getConstant(string $name) : ?\PHPStan\BetterReflection\Reflection\ReflectionClassConstant
+    public function getConstant(string $name): ?\PHPStan\BetterReflection\Reflection\ReflectionClassConstant
     {
         return $this->getConstants()[$name] ?? null;
     }
     /** @return array<non-empty-string, ReflectionClassConstant>
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node */
-    private function createImmediateConstants($node, Reflector $reflector) : array
+    private function createImmediateConstants($node, Reflector $reflector): array
     {
         $constants = [];
         foreach ($node->getConstants() as $constantsNode) {
@@ -620,7 +620,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionClassConstant> indexed by name
      */
-    public function getConstants(int $filter = 0) : array
+    public function getConstants(int $filter = 0): array
     {
         $constants = $this->getConstantsConsideringAlreadyVisitedClasses(AlreadyVisitedClasses::createEmpty());
         if ($filter === 0) {
@@ -629,7 +629,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return array_filter($constants, static fn(\PHPStan\BetterReflection\Reflection\ReflectionClassConstant $constant): bool => (bool) ($filter & $constant->getModifiers()));
     }
     /** @return array<non-empty-string, ReflectionClassConstant> indexed by name */
-    private function getConstantsConsideringAlreadyVisitedClasses(AlreadyVisitedClasses $alreadyVisitedClasses) : array
+    private function getConstantsConsideringAlreadyVisitedClasses(AlreadyVisitedClasses $alreadyVisitedClasses): array
     {
         if ($this->cachedConstants !== null) {
             return $this->cachedConstants;
@@ -673,7 +673,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
     /**
      * Get the constructor method for this class.
      */
-    public function getConstructor() : ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
+    public function getConstructor(): ?\PHPStan\BetterReflection\Reflection\ReflectionMethod
     {
         if ($this->cachedConstructor !== null) {
             return $this->cachedConstructor;
@@ -691,7 +691,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionProperty>
      */
-    public function getImmediateProperties(int $filter = 0) : array
+    public function getImmediateProperties(int $filter = 0): array
     {
         if ($filter === 0) {
             return $this->immediateProperties;
@@ -700,7 +700,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
     }
     /** @return array<non-empty-string, ReflectionProperty>
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node */
-    private function createImmediateProperties($node, Reflector $reflector) : array
+    private function createImmediateProperties($node, Reflector $reflector): array
     {
         $properties = [];
         foreach ($node->getProperties() as $propertiesNode) {
@@ -737,9 +737,9 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @return array<non-empty-string, ReflectionProperty>
      * @param EnumNode|InterfaceNode $node
      */
-    private function addEnumProperties(array $properties, $node, Reflector $reflector) : array
+    private function addEnumProperties(array $properties, $node, Reflector $reflector): array
     {
-        $createProperty = function (string $name, $type) use($reflector) : \PHPStan\BetterReflection\Reflection\ReflectionProperty {
+        $createProperty = function (string $name, $type) use ($reflector): \PHPStan\BetterReflection\Reflection\ReflectionProperty {
             $propertyNode = new Node\Stmt\Property(Modifiers::PUBLIC | Modifiers::READONLY, [new Node\PropertyItem($name)], [], $type);
             return \PHPStan\BetterReflection\Reflection\ReflectionProperty::createFromNode($reflector, $propertyNode, $propertyNode->props[0], $this, $this);
         };
@@ -775,7 +775,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<non-empty-string, ReflectionProperty>
      */
-    public function getProperties(int $filter = 0) : array
+    public function getProperties(int $filter = 0): array
     {
         $properties = $this->getPropertiesConsideringAlreadyVisitedClasses(AlreadyVisitedClasses::createEmpty());
         if ($filter === 0) {
@@ -784,7 +784,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return array_filter($properties, static fn(\PHPStan\BetterReflection\Reflection\ReflectionProperty $property): bool => (bool) ($filter & $property->getModifiers()));
     }
     /** @return array<non-empty-string, ReflectionProperty> */
-    private function getPropertiesConsideringAlreadyVisitedClasses(AlreadyVisitedClasses $alreadyVisitedClasses) : array
+    private function getPropertiesConsideringAlreadyVisitedClasses(AlreadyVisitedClasses $alreadyVisitedClasses): array
     {
         if ($this->cachedProperties !== null) {
             return $this->cachedProperties;
@@ -815,7 +815,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $name
      */
-    public function getProperty(string $name) : ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
+    public function getProperty(string $name): ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
     {
         $properties = $this->getProperties();
         if (!isset($properties[$name])) {
@@ -828,21 +828,21 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @param non-empty-string $name
      */
-    public function hasProperty(string $name) : bool
+    public function hasProperty(string $name): bool
     {
         return $this->getProperty($name) !== null;
     }
     /** @return array<non-empty-string, mixed> */
-    public function getDefaultProperties() : array
+    public function getDefaultProperties(): array
     {
         return array_map(static fn(\PHPStan\BetterReflection\Reflection\ReflectionProperty $property) => $property->getDefaultValue(), $this->getProperties());
     }
     /** @return non-empty-string|null */
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->locatedSource->getFileName();
     }
-    public function getLocatedSource() : LocatedSource
+    public function getLocatedSource(): LocatedSource
     {
         return $this->locatedSource;
     }
@@ -851,7 +851,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return positive-int
      */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
@@ -860,24 +860,24 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return positive-int
      */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
     /** @return positive-int */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         return $this->startColumn;
     }
     /** @return positive-int */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         return $this->endColumn;
     }
     /**
      * Get the parent class, if it is defined.
      */
-    public function getParentClass() : ?\PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getParentClass(): ?\PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         $parentClassName = $this->getParentClassName();
         if ($parentClassName === null) {
@@ -897,12 +897,12 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<class-string> A numerical array with parent class names as the values.
      */
-    public function getParentClassNames() : array
+    public function getParentClassNames(): array
     {
         return array_map(static fn(self $parentClass): string => $parentClass->getName(), $this->getParentClasses());
     }
     /** @return list<ReflectionClass> */
-    private function getParentClasses() : array
+    private function getParentClasses(): array
     {
         if ($this->cachedParentClasses === null) {
             $parentClasses = [];
@@ -924,18 +924,18 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return $this->cachedParentClasses;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->name === null;
     }
     /**
      * Is this an internal class?
      */
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->locatedSource->isInternal();
     }
@@ -943,32 +943,32 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * Is this a user-defined function (will always return the opposite of
      * whatever isInternal returns).
      */
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return !$this->isInternal();
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return DeprecatedHelper::isDeprecated($this);
     }
     /**
      * Is this class an abstract class.
      */
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionClass::IS_EXPLICIT_ABSTRACT);
     }
     /**
      * Is this class a final class.
      */
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         if ($this->isEnum) {
             return \true;
         }
         return (bool) ($this->modifiers & CoreReflectionClass::IS_FINAL);
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return (bool) ($this->modifiers & ReflectionClassAdapter::IS_READONLY_COMPATIBILITY);
     }
@@ -977,7 +977,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return int-mask-of<ReflectionClassAdapter::IS_*>
      */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }
@@ -987,7 +987,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @phpstan-ignore-next-line return.unusedType
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node
      */
-    private function computeModifiers($node) : int
+    private function computeModifiers($node): int
     {
         if (!$node instanceof ClassNode) {
             return 0;
@@ -1000,14 +1000,14 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
     /**
      * Is this reflection a trait?
      */
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->isTrait;
     }
     /**
      * Is this reflection an interface?
      */
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->isInterface;
     }
@@ -1017,7 +1017,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<ReflectionClass>
      */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         if ($this->cachedTraits !== null) {
             return $this->cachedTraits;
@@ -1037,7 +1037,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<class-string, self>
      */
-    private function addStringableInterface(array $interfaces) : array
+    private function addStringableInterface(array $interfaces): array
     {
         if (BetterReflection::$phpVersion < 80000) {
             return $interfaces;
@@ -1068,7 +1068,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @psalm-suppress MoreSpecificReturnType
      */
-    private function addEnumInterfaces(array $interfaces) : array
+    private function addEnumInterfaces(array $interfaces): array
     {
         assert($this->isEnum === \true);
         $interfaces[UnitEnum::class] = $this->reflector->reflectClass(UnitEnum::class);
@@ -1079,7 +1079,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return $interfaces;
     }
     /** @return list<trait-string> */
-    public function getTraitClassNames() : array
+    public function getTraitClassNames(): array
     {
         return $this->traitClassNames;
     }
@@ -1090,9 +1090,9 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<trait-string>
      */
-    public function getTraitNames() : array
+    public function getTraitNames(): array
     {
-        return array_map(static function (\PHPStan\BetterReflection\Reflection\ReflectionClass $trait) : string {
+        return array_map(static function (\PHPStan\BetterReflection\Reflection\ReflectionClass $trait): string {
             /** @psalm-var trait-string $traitName */
             $traitName = $trait->getName();
             return $traitName;
@@ -1117,7 +1117,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * // This method would return
      * //   ['myAliasedMethod' => 'MyTrait::myTraitMethod']
      */
-    public function getTraitAliases() : array
+    public function getTraitAliases(): array
     {
         if ($this->traitsData['aliases'] === []) {
             return [];
@@ -1193,7 +1193,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * }
      * @param ClassNode|InterfaceNode|TraitNode|EnumNode $node
      */
-    private function computeTraitsData($node) : array
+    private function computeTraitsData($node): array
     {
         $traitsData = ['aliases' => [], 'modifiers' => [], 'precedences' => [], 'hashes' => []];
         foreach ($node->getTraitUses() as $traitUsage) {
@@ -1222,7 +1222,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *     hashes: array<non-empty-string, non-empty-string>,
      * }
      */
-    private function processTraitAdaptation(Node\Stmt\TraitUseAdaptation $adaptation, array $usedTraits, array $traitsData) : array
+    private function processTraitAdaptation(Node\Stmt\TraitUseAdaptation $adaptation, array $usedTraits, array $traitsData): array
     {
         foreach ($usedTraits as $usedTrait) {
             $methodHash = $this->methodHash($usedTrait->toString(), $adaptation->method->toString());
@@ -1255,17 +1255,17 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @psalm-pure
      */
-    private function methodHash(string $className, string $methodName) : string
+    private function methodHash(string $className, string $methodName): string
     {
         return sprintf('%s::%s', $className, $methodName);
     }
     /** @return non-empty-string */
-    private function lowerCasedMethodHash(string $className, string $methodName) : string
+    private function lowerCasedMethodHash(string $className, string $methodName): string
     {
         return strtolower($this->methodHash($className, $methodName));
     }
     /** @return list<class-string> */
-    public function getInterfaceClassNames() : array
+    public function getInterfaceClassNames(): array
     {
         return $this->implementsClassNames;
     }
@@ -1277,7 +1277,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @return array<class-string, self> An associative array of interfaces, with keys as interface names and the array
      *                                        values as {@see ReflectionClass} objects.
      */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         if ($this->cachedInterfaces !== null) {
             return $this->cachedInterfaces;
@@ -1291,7 +1291,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<class-string, self>
      */
-    public function getImmediateInterfaces() : array
+    public function getImmediateInterfaces(): array
     {
         if ($this->isTrait) {
             return [];
@@ -1316,7 +1316,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<class-string> A numerical array with interface names as the values.
      */
-    public function getInterfaceNames() : array
+    public function getInterfaceNames(): array
     {
         if ($this->cachedInterfaceNames !== null) {
             return $this->cachedInterfaceNames;
@@ -1328,7 +1328,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.isinstance.php
      */
-    public function isInstance(object $object) : bool
+    public function isInstance(object $object): bool
     {
         $className = $this->getName();
         // note: since $object was loaded, we can safely assume that $className is available in the current
@@ -1340,7 +1340,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.isinstance.php
      */
-    public function isSubclassOf(string $className) : bool
+    public function isSubclassOf(string $className): bool
     {
         return in_array(ltrim($className, '\\'), $this->getParentClassNames(), \true);
     }
@@ -1349,7 +1349,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.implementsinterface.php
      */
-    public function implementsInterface(string $interfaceName) : bool
+    public function implementsInterface(string $interfaceName): bool
     {
         return in_array(ltrim($interfaceName, '\\'), $this->getInterfaceNames(), \true);
     }
@@ -1358,7 +1358,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.isinstantiable.php
      */
-    public function isInstantiable() : bool
+    public function isInstantiable(): bool
     {
         // @TODO doesn't consider internal non-instantiable classes yet.
         if ($this->isAbstract()) {
@@ -1381,7 +1381,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.iscloneable.php
      */
-    public function isCloneable() : bool
+    public function isCloneable(): bool
     {
         if (!$this->isInstantiable()) {
             return \false;
@@ -1397,16 +1397,16 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @link https://php.net/manual/en/reflectionclass.isiterateable.php
      */
-    public function isIterateable() : bool
+    public function isIterateable(): bool
     {
         return $this->isInstantiable() && $this->implementsInterface(Traversable::class);
     }
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->isEnum;
     }
     /** @return array<class-string, ReflectionClass> */
-    private function getCurrentClassImplementedInterfacesIndexedByName() : array
+    private function getCurrentClassImplementedInterfacesIndexedByName(): array
     {
         if ($this->isTrait) {
             return [];
@@ -1436,7 +1436,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return array<class-string, ReflectionClass> parent interfaces of this interface
      */
-    private function getInterfacesHierarchy(AlreadyVisitedClasses $alreadyVisitedClasses) : array
+    private function getInterfacesHierarchy(AlreadyVisitedClasses $alreadyVisitedClasses): array
     {
         if (!$this->isInterface) {
             return [];
@@ -1485,7 +1485,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      * @throws ObjectNotInstanceOfClass
      * @param mixed $value
      */
-    public function setStaticPropertyValue(string $propertyName, $value) : void
+    public function setStaticPropertyValue(string $propertyName, $value): void
     {
         $property = $this->getProperty($propertyName);
         if (!$property || !$property->isStatic()) {
@@ -1494,7 +1494,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         $property->setValue($value);
     }
     /** @return array<non-empty-string, mixed> */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         $staticProperties = [];
         foreach ($this->getProperties() as $property) {
@@ -1507,12 +1507,12 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
         return $staticProperties;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return ReflectionAttributeHelper::filterAttributesByName($this->getAttributes(), $name);
     }
@@ -1521,7 +1521,7 @@ class ReflectionClass implements \PHPStan\BetterReflection\Reflection\Reflection
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return ReflectionAttributeHelper::filterAttributesByInstance($this->getAttributes(), $className);
     }

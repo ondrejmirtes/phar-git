@@ -32,21 +32,21 @@ final class IgnoredErrorHelperProcessedResult
     /**
      * @return list<Error>
      */
-    public function getNotIgnoredErrors() : array
+    public function getNotIgnoredErrors(): array
     {
         return $this->notIgnoredErrors;
     }
     /**
      * @return list<array{Error, mixed[]|string}>
      */
-    public function getIgnoredErrors() : array
+    public function getIgnoredErrors(): array
     {
         return $this->ignoredErrors;
     }
     /**
      * @return list<string>
      */
-    public function getOtherIgnoreMessages() : array
+    public function getOtherIgnoreMessages(): array
     {
         return $this->otherIgnoreMessages;
     }

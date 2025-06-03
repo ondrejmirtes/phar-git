@@ -29,7 +29,7 @@ final class IgnoredErrorHelper
         $this->ignoreErrors = $ignoreErrors;
         $this->reportUnmatchedIgnoredErrors = $reportUnmatchedIgnoredErrors;
     }
-    public function initialize() : \PHPStan\Analyser\Ignore\IgnoredErrorHelperResult
+    public function initialize(): \PHPStan\Analyser\Ignore\IgnoredErrorHelperResult
     {
         $otherIgnoreErrors = [];
         $ignoreErrorsByFile = [];

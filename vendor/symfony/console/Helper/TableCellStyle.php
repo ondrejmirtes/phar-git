@@ -30,7 +30,7 @@ class TableCellStyle
         }
         $this->options = \array_merge($this->options, $options);
     }
-    public function getOptions() : array
+    public function getOptions(): array
     {
         return $this->options;
     }
@@ -52,7 +52,7 @@ class TableCellStyle
     {
         return self::ALIGN_MAP[$this->getOptions()['align']];
     }
-    public function getCellFormat() : ?string
+    public function getCellFormat(): ?string
     {
         return $this->getOptions()['cellFormat'];
     }

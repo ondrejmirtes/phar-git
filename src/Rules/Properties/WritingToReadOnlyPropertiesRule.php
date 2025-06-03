@@ -26,11 +26,11 @@ final class WritingToReadOnlyPropertiesRule implements Rule
         $this->propertyReflectionFinder = $propertyReflectionFinder;
         $this->checkThisOnly = $checkThisOnly;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyAssignNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $propertyFetch = $node->getPropertyFetch();
         if ($propertyFetch instanceof Node\Expr\PropertyFetch && $this->checkThisOnly && !$this->ruleLevelHelper->isThis($propertyFetch->var)) {

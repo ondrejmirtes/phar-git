@@ -33,7 +33,7 @@ class ComposerSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         if ($identifier->getType()->getName() !== IdentifierType::IDENTIFIER_CLASS) {
             return null;

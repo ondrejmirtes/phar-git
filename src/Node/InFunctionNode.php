@@ -18,22 +18,22 @@ final class InFunctionNode extends Node\Stmt implements \PHPStan\Node\VirtualNod
         $this->originalNode = $originalNode;
         parent::__construct($originalNode->getAttributes());
     }
-    public function getFunctionReflection() : PhpFunctionFromParserNodeReflection
+    public function getFunctionReflection(): PhpFunctionFromParserNodeReflection
     {
         return $this->functionReflection;
     }
-    public function getOriginalNode() : Node\Stmt\Function_
+    public function getOriginalNode(): Node\Stmt\Function_
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Stmt_InFunctionNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

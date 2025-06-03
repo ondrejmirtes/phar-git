@@ -29,7 +29,7 @@ final class StubSourceLocatorFactory
         $this->optimizedPsrAutoloaderLocatorFactory = $optimizedPsrAutoloaderLocatorFactory;
         $this->stubFilesProvider = $stubFilesProvider;
     }
-    public function create() : SourceLocator
+    public function create(): SourceLocator
     {
         $locators = [];
         $astPhp8Locator = new Locator($this->php8Parser);

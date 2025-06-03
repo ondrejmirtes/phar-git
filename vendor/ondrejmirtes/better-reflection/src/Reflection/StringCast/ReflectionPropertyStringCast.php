@@ -13,7 +13,7 @@ final class ReflectionPropertyStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionProperty $propertyReflection, bool $indentDocComment = \true) : string
+    public static function toString(ReflectionProperty $propertyReflection, bool $indentDocComment = \true): string
     {
         $stateModifier = '';
         if (!$propertyReflection->isStatic()) {
@@ -23,7 +23,7 @@ final class ReflectionPropertyStringCast
         return sprintf('%sProperty [%s %s%s%s%s $%s ]', \PHPStan\BetterReflection\Reflection\StringCast\ReflectionStringCastHelper::docCommentToString($propertyReflection, $indentDocComment), $stateModifier, self::visibilityToString($propertyReflection), $propertyReflection->isStatic() ? ' static' : '', $propertyReflection->isReadOnly() ? ' readonly' : '', $type !== null ? sprintf(' %s', \PHPStan\BetterReflection\Reflection\StringCast\ReflectionTypeStringCast::toString($type)) : '', $propertyReflection->getName());
     }
     /** @psalm-pure */
-    private static function visibilityToString(ReflectionProperty $propertyReflection) : string
+    private static function visibilityToString(ReflectionProperty $propertyReflection): string
     {
         if ($propertyReflection->isProtected()) {
             return 'protected';

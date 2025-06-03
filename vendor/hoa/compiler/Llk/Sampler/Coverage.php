@@ -415,17 +415,15 @@ class Coverage extends \Hoa\Compiler\Llk\Sampler\Sampler implements Iterator
         if ($rule instanceof Compiler\Llk\Rule\Repetition) {
             if (0 === $child) {
                 $this->_coveredRules[$ruleName][$child] = 1;
-            } else {
-                if (\true === $this->allCovered($children) || \true === $this->checkRuleRoot($children)) {
-                    $this->_coveredRules[$ruleName][$child] = 1;
-                    foreach ($this->_coveredRules[$ruleName] as $child => $value) {
-                        if (0.5 == $value) {
-                            $this->_coveredRules[$ruleName][$child] = 1;
-                        }
+            } else if (\true === $this->allCovered($children) || \true === $this->checkRuleRoot($children)) {
+                $this->_coveredRules[$ruleName][$child] = 1;
+                foreach ($this->_coveredRules[$ruleName] as $child => $value) {
+                    if (0.5 == $value) {
+                        $this->_coveredRules[$ruleName][$child] = 1;
                     }
-                } else {
-                    $this->_coveredRules[$ruleName][$child] = 0.5;
                 }
+            } else {
+                $this->_coveredRules[$ruleName][$child] = 0.5;
             }
         } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
             if (\true === $this->allCovered($children[$child]) || \true === $this->checkRuleRoot($children[$child])) {

@@ -64,7 +64,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?\PHPStan\BetterReflection\SourceLocator\Located\LocatedSource
     {
         $locatedData = $this->attemptAutoloadForIdentifier($identifier);
         if ($locatedData === null) {
@@ -87,7 +87,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      *
      * @throws ReflectionException
      */
-    private function attemptAutoloadForIdentifier(Identifier $identifier) : ?array
+    private function attemptAutoloadForIdentifier(Identifier $identifier): ?array
     {
         if ($identifier->isClass()) {
             return $this->locateClassByName($identifier->getName());
@@ -123,7 +123,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      *
      * @throws ReflectionException
      */
-    private function locateClassByName(string $className) : ?array
+    private function locateClassByName(string $className): ?array
     {
         if (ClassExistenceChecker::exists($className, \false)) {
             $classReflection = new ReflectionClass($className);
@@ -135,7 +135,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
         }
         $this->silenceErrors();
         try {
-            $locatedFile = FileReadTrapStreamWrapper::withStreamWrapperOverride(static function () use($className) : ?string {
+            $locatedFile = FileReadTrapStreamWrapper::withStreamWrapperOverride(static function () use ($className): ?string {
                 foreach (spl_autoload_functions() as $preExistingAutoloader) {
                     $preExistingAutoloader($className);
                     /**
@@ -158,7 +158,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
             restore_error_handler();
         }
     }
-    private function silenceErrors() : void
+    private function silenceErrors(): void
     {
         set_error_handler(static fn(): bool => \true);
     }
@@ -172,7 +172,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      *
      * @throws ReflectionException
      */
-    private function locateFunctionByName(string $functionName) : ?array
+    private function locateFunctionByName(string $functionName): ?array
     {
         if (!function_exists($functionName)) {
             return null;
@@ -190,7 +190,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
      *
      * @return array{fileName: string, name: string}|null
      */
-    private function locateConstantByName(string $constantName) : ?array
+    private function locateConstantByName(string $constantName): ?array
     {
         if (!defined($constantName)) {
             return null;
@@ -236,7 +236,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
         }
         return ['fileName' => $constantFileName, 'name' => $constantName];
     }
-    private function createConstantVisitor() : NodeVisitorAbstract
+    private function createConstantVisitor(): NodeVisitorAbstract
     {
         return new class extends NodeVisitorAbstract
         {
@@ -248,7 +248,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
              * @var \PhpParser\Node\Stmt\Const_|\PhpParser\Node\Expr\FuncCall|null
              */
             private $node = null;
-            public function enterNode(Node $node) : ?int
+            public function enterNode(Node $node): ?int
             {
                 if ($node instanceof Node\Stmt\Const_) {
                     foreach ($node->consts as $constNode) {
@@ -277,7 +277,7 @@ class AutoloadSourceLocator extends \PHPStan\BetterReflection\SourceLocator\Type
                 }
                 return null;
             }
-            public function setConstantName(string $constantName) : void
+            public function setConstantName(string $constantName): void
             {
                 $this->constantName = $constantName;
             }

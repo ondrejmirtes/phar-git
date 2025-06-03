@@ -41,7 +41,7 @@ final class RuleErrorTransformer
     /**
      * @param Node\Stmt[] $fileNodes
      */
-    public function transform(RuleError $ruleError, \PHPStan\Analyser\Scope $scope, array $fileNodes, Node $node) : \PHPStan\Analyser\Error
+    public function transform(RuleError $ruleError, \PHPStan\Analyser\Scope $scope, array $fileNodes, Node $node): \PHPStan\Analyser\Error
     {
         $line = $node->getStartLine();
         $canBeIgnored = \true;

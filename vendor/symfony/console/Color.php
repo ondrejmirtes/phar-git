@@ -33,11 +33,11 @@ final class Color
             $this->options[$option] = self::AVAILABLE_OPTIONS[$option];
         }
     }
-    public function apply(string $text) : string
+    public function apply(string $text): string
     {
         return $this->set() . $text . $this->unset();
     }
-    public function set() : string
+    public function set(): string
     {
         $setCodes = [];
         if ('' !== $this->foreground) {
@@ -54,7 +54,7 @@ final class Color
         }
         return \sprintf("\x1b[%sm", \implode(';', $setCodes));
     }
-    public function unset() : string
+    public function unset(): string
     {
         $unsetCodes = [];
         if ('' !== $this->foreground) {
@@ -71,7 +71,7 @@ final class Color
         }
         return \sprintf("\x1b[%sm", \implode(';', $unsetCodes));
     }
-    private function parseColor(string $color, bool $background = \false) : string
+    private function parseColor(string $color, bool $background = \false): string
     {
         if ('' === $color) {
             return '';
@@ -94,7 +94,7 @@ final class Color
         }
         throw new InvalidArgumentException(\sprintf('Invalid "%s" color; expected one of (%s).', $color, \implode(', ', \array_merge(\array_keys(self::COLORS), \array_keys(self::BRIGHT_COLORS)))));
     }
-    private function convertHexColorToAnsi(int $color) : string
+    private function convertHexColorToAnsi(int $color): string
     {
         $r = $color >> 16 & 255;
         $g = $color >> 8 & 255;
@@ -105,20 +105,20 @@ final class Color
         }
         return \sprintf('8;2;%d;%d;%d', $r, $g, $b);
     }
-    private function degradeHexColorToAnsi(int $r, int $g, int $b) : int
+    private function degradeHexColorToAnsi(int $r, int $g, int $b): int
     {
         if (0 === \round($this->getSaturation($r, $g, $b) / 50)) {
             return 0;
         }
         return \round($b / 255) << 2 | \round($g / 255) << 1 | \round($r / 255);
     }
-    private function getSaturation(int $r, int $g, int $b) : int
+    private function getSaturation(int $r, int $g, int $b): int
     {
         $r = $r / 255;
         $g = $g / 255;
         $b = $b / 255;
         $v = \max($r, $g, $b);
-        if (0 === ($diff = $v - \min($r, $g, $b))) {
+        if (0 === $diff = $v - \min($r, $g, $b)) {
             return 0;
         }
         return (int) $diff * 100 / $v;

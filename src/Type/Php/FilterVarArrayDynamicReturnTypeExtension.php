@@ -37,11 +37,11 @@ final class FilterVarArrayDynamicReturnTypeExtension implements DynamicFunctionR
         $this->filterFunctionReturnTypeHelper = $filterFunctionReturnTypeHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array(strtolower($functionReflection->getName()), ['filter_var_array', 'filter_input_array'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) < 2) {
             return null;
@@ -140,7 +140,7 @@ final class FilterVarArrayDynamicReturnTypeExtension implements DynamicFunctionR
         return $valueTypesBuilder->getArray();
     }
     /** @return array{?Type, ?Type} */
-    public function fetchFilter(Type $type) : array
+    public function fetchFilter(Type $type): array
     {
         if (!$type->isArray()->yes()) {
             return [$type, null];

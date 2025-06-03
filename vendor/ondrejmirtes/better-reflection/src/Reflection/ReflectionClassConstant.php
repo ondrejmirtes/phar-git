@@ -74,12 +74,12 @@ class ReflectionClassConstant
      *
      * @internal
      */
-    public static function createFromNode(Reflector $reflector, ClassConst $node, int $positionInNode, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass) : self
+    public static function createFromNode(Reflector $reflector, ClassConst $node, int $positionInNode, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass): self
     {
         return new self($reflector, $node, $positionInNode, $declaringClass, $implementingClass);
     }
     /** @internal */
-    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass) : self
+    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass): self
     {
         $clone = clone $this;
         $clone->implementingClass = $implementingClass;
@@ -93,7 +93,7 @@ class ReflectionClassConstant
      *
      * @return non-empty-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -116,11 +116,11 @@ class ReflectionClassConstant
     {
         return $this->type;
     }
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return $this->type !== null;
     }
-    public function getValueExpression() : Node\Expr
+    public function getValueExpression(): Node\Expr
     {
         return $this->value;
     }
@@ -138,14 +138,14 @@ class ReflectionClassConstant
     /**
      * Constant is public
      */
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return (bool) ($this->modifiers & ReflectionClassConstantAdapter::IS_PUBLIC_COMPATIBILITY);
     }
     /**
      * Constant is private
      */
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         // Private constant cannot be final
         return $this->modifiers === ReflectionClassConstantAdapter::IS_PRIVATE_COMPATIBILITY;
@@ -153,11 +153,11 @@ class ReflectionClassConstant
     /**
      * Constant is protected
      */
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return (bool) ($this->modifiers & ReflectionClassConstantAdapter::IS_PROTECTED_COMPATIBILITY);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         $final = (bool) ($this->modifiers & ReflectionClassConstantAdapter::IS_FINAL_COMPATIBILITY);
         if ($final) {
@@ -173,7 +173,7 @@ class ReflectionClassConstant
      *
      * @return int-mask-of<ReflectionClassConstantAdapter::IS_*>
      */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }
@@ -182,7 +182,7 @@ class ReflectionClassConstant
      *
      * @return positive-int
      */
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
@@ -191,55 +191,55 @@ class ReflectionClassConstant
      *
      * @return positive-int
      */
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
     /** @return positive-int */
-    public function getStartColumn() : int
+    public function getStartColumn(): int
     {
         return $this->startColumn;
     }
     /** @return positive-int */
-    public function getEndColumn() : int
+    public function getEndColumn(): int
     {
         return $this->endColumn;
     }
     /**
      * Get the declaring class
      */
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->declaringClass;
     }
     /**
      * Get the class that implemented the method based on trait use.
      */
-    public function getImplementingClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getImplementingClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->implementingClass;
     }
     /** @return non-empty-string|null */
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->docComment;
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return DeprecatedHelper::isDeprecated($this);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionClassConstantStringCast::toString($this);
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
     /** @return list<ReflectionAttribute> */
-    public function getAttributesByName(string $name) : array
+    public function getAttributesByName(string $name): array
     {
         return ReflectionAttributeHelper::filterAttributesByName($this->getAttributes(), $name);
     }
@@ -248,12 +248,12 @@ class ReflectionClassConstant
      *
      * @return list<ReflectionAttribute>
      */
-    public function getAttributesByInstance(string $className) : array
+    public function getAttributesByInstance(string $className): array
     {
         return ReflectionAttributeHelper::filterAttributesByInstance($this->getAttributes(), $className);
     }
     /** @return int-mask-of<ReflectionClassConstantAdapter::IS_*> */
-    private function computeModifiers(ClassConst $node) : int
+    private function computeModifiers(ClassConst $node): int
     {
         $modifiers = $node->isFinal() ? ReflectionClassConstantAdapter::IS_FINAL_COMPATIBILITY : 0;
         $modifiers += $node->isPrivate() ? ReflectionClassConstantAdapter::IS_PRIVATE_COMPATIBILITY : 0;

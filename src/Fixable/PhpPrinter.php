@@ -14,7 +14,7 @@ final class PhpPrinter extends Standard
     /**
      * @param Node[] $nodes
      */
-    protected function pCommaSeparated(array $nodes) : string
+    protected function pCommaSeparated(array $nodes): string
     {
         $result = parent::pCommaSeparated($nodes);
         if (count($nodes) === 0) {

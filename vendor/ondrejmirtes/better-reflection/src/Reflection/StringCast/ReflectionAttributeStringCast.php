@@ -19,7 +19,7 @@ final class ReflectionAttributeStringCast
      *
      * @psalm-pure
      */
-    public static function toString(ReflectionAttribute $attributeReflection) : string
+    public static function toString(ReflectionAttribute $attributeReflection): string
     {
         $arguments = $attributeReflection->getArguments();
         $argumentsFormat = $arguments !== [] ? " {\n  - Arguments [%d] {%s\n  }\n}" : '';
@@ -30,7 +30,7 @@ final class ReflectionAttributeStringCast
      *
      * @psalm-pure
      */
-    private static function argumentsToString(array $arguments) : string
+    private static function argumentsToString(array $arguments): string
     {
         $string = '';
         $argumentNo = 0;
@@ -43,7 +43,7 @@ final class ReflectionAttributeStringCast
     }
     /** @psalm-pure
      * @param mixed $value */
-    private static function argumentValueToString($value) : string
+    private static function argumentValueToString($value): string
     {
         if (is_array($value)) {
             return 'Array';

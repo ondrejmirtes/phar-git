@@ -14,7 +14,7 @@ final class ExtendsTag
     {
         $this->type = $type;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }

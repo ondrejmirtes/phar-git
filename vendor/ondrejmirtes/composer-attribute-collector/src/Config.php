@@ -49,7 +49,7 @@ final class Config
      * If a path starts with this placeholder, it is replaced with the absolute path to the vendor directory.
      */
     public const VENDOR_PLACEHOLDER = '{vendor}';
-    public static function from(PartialComposer $composer) : self
+    public static function from(PartialComposer $composer): self
     {
         $vendorDir = self::resolveVendorDir($composer);
         $composerFile = Factory::getComposerFile();
@@ -68,7 +68,7 @@ final class Config
     /**
      * @return non-empty-string
      */
-    public static function resolveVendorDir(PartialComposer $composer) : string
+    public static function resolveVendorDir(PartialComposer $composer): string
     {
         $vendorDir = $composer->getConfig()->get('vendor-dir');
         if (!is_string($vendorDir) || !$vendorDir) {
@@ -105,7 +105,7 @@ final class Config
      *
      * @return non-empty-string
      */
-    private static function compileExclude(array $exclude) : string
+    private static function compileExclude(array $exclude): string
     {
         $regexp = implode('|', array_map(fn(string $path) => preg_quote($path), $exclude));
         return "({$regexp})";
@@ -117,7 +117,7 @@ final class Config
      *
      * @return non-empty-string[]
      */
-    private static function expandPaths(array $paths, string $vendorDir, string $rootDir) : array
+    private static function expandPaths(array $paths, string $vendorDir, string $rootDir): array
     {
         if (str_ends_with($vendorDir, DIRECTORY_SEPARATOR)) {
             throw new InvalidArgumentException("vendorDir must not end with a directory separator, given: {$vendorDir}");

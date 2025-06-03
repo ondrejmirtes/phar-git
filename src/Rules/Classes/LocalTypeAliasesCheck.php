@@ -63,7 +63,7 @@ final class LocalTypeAliasesCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, ClassReflection $reflection, ClassLike $node) : array
+    public function check(Scope $scope, ClassReflection $reflection, ClassLike $node): array
     {
         $errors = [];
         foreach ($this->checkInTraitDefinitionContext($reflection) as $error) {
@@ -77,14 +77,14 @@ final class LocalTypeAliasesCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitDefinitionContext(ClassReflection $reflection) : array
+    public function checkInTraitDefinitionContext(ClassReflection $reflection): array
     {
         $phpDoc = $reflection->getResolvedPhpDoc();
         if ($phpDoc === null) {
             return [];
         }
         $nameScope = $phpDoc->getNullableNameScope();
-        $resolveName = static function (string $name) use($nameScope) : string {
+        $resolveName = static function (string $name) use ($nameScope): string {
             if ($nameScope === null) {
                 return $name;
             }
@@ -183,7 +183,7 @@ final class LocalTypeAliasesCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitUseContext(Scope $scope, ClassReflection $reflection, ClassReflection $implementingClassReflection, ClassLike $node) : array
+    public function checkInTraitUseContext(Scope $scope, ClassReflection $reflection, ClassReflection $implementingClassReflection, ClassLike $node): array
     {
         if ($reflection->getNativeReflection()->getName() === $implementingClassReflection->getName()) {
             $phpDoc = $reflection->getResolvedPhpDoc();
@@ -222,7 +222,7 @@ final class LocalTypeAliasesCheck
         }
         return $errors;
     }
-    private function isAliasNameValid(string $aliasName, ?NameScope $nameScope) : bool
+    private function isAliasNameValid(string $aliasName, ?NameScope $nameScope): bool
     {
         if ($nameScope === null) {
             return \true;
@@ -235,10 +235,10 @@ final class LocalTypeAliasesCheck
      * @param list<IdentifierRuleError> $errors
      * @param-out list<IdentifierRuleError> $errors
      */
-    private function hasErrorType(Type $type, string $aliasName, array &$errors) : bool
+    private function hasErrorType(Type $type, string $aliasName, array &$errors): bool
     {
         $foundError = \false;
-        TypeTraverser::map($type, static function (Type $type, callable $traverse) use(&$errors, &$foundError, $aliasName) : Type {
+        TypeTraverser::map($type, static function (Type $type, callable $traverse) use (&$errors, &$foundError, $aliasName): Type {
             if ($foundError) {
                 return $type;
             }

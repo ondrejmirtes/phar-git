@@ -58,7 +58,7 @@ final class TestCaseSourceLocatorFactory
         $this->fileExtensions = $fileExtensions;
         $this->excludePaths = $excludePaths;
     }
-    public function create() : SourceLocator
+    public function create(): SourceLocator
     {
         $classLoaders = ClassLoader::getRegisteredLoaders();
         $classLoaderReflection = new ReflectionClass(ClassLoader::class);

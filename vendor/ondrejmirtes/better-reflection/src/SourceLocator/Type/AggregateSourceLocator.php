@@ -20,7 +20,7 @@ class AggregateSourceLocator implements \PHPStan\BetterReflection\SourceLocator\
     {
         $this->sourceLocators = $sourceLocators;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         foreach ($this->sourceLocators as $sourceLocator) {
             $located = $sourceLocator->locateIdentifier($reflector, $identifier);
@@ -33,7 +33,7 @@ class AggregateSourceLocator implements \PHPStan\BetterReflection\SourceLocator\
     /**
      * {@inheritDoc}
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return array_merge([], ...array_map(static fn(\PHPStan\BetterReflection\SourceLocator\Type\SourceLocator $sourceLocator): array => $sourceLocator->locateIdentifiersByType($reflector, $identifierType), $this->sourceLocators));
     }

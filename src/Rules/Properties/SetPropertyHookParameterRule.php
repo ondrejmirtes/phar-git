@@ -27,11 +27,11 @@ final class SetPropertyHookParameterRule implements Rule
         $this->checkPhpDocMethodSignatures = $checkPhpDocMethodSignatures;
         $this->checkMissingTypehints = $checkMissingTypehints;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InPropertyHookNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $hookReflection = $node->getHookReflection();
         if (!$hookReflection->isPropertyHook()) {
@@ -54,10 +54,8 @@ final class SetPropertyHookParameterRule implements Rule
             }
         } elseif (!$parameter->hasNativeType()) {
             $errors[] = RuleErrorBuilder::message(sprintf('Parameter $%s of set hook does not have a native type but the property %s::$%s does.', $parameter->getName(), $classReflection->getDisplayName(), $hookReflection->getHookedPropertyName()))->identifier('propertySetHook.nativeParameterType')->nonIgnorable()->build();
-        } else {
-            if (!$parameter->getNativeType()->isSuperTypeOf($propertyReflection->getNativeType())->yes()) {
-                $errors[] = RuleErrorBuilder::message(sprintf('Native type %s of set hook parameter $%s is not contravariant with native type %s of property %s::$%s.', $parameter->getNativeType()->describe(VerbosityLevel::typeOnly()), $parameter->getName(), $propertyReflection->getNativeType()->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $hookReflection->getHookedPropertyName()))->identifier('propertySetHook.nativeParameterType')->nonIgnorable()->build();
-            }
+        } else if (!$parameter->getNativeType()->isSuperTypeOf($propertyReflection->getNativeType())->yes()) {
+            $errors[] = RuleErrorBuilder::message(sprintf('Native type %s of set hook parameter $%s is not contravariant with native type %s of property %s::$%s.', $parameter->getNativeType()->describe(VerbosityLevel::typeOnly()), $parameter->getName(), $propertyReflection->getNativeType()->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $hookReflection->getHookedPropertyName()))->identifier('propertySetHook.nativeParameterType')->nonIgnorable()->build();
         }
         if (!$this->checkPhpDocMethodSignatures || count($errors) > 0) {
             return $errors;

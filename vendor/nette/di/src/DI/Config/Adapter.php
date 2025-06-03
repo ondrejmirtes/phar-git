@@ -15,6 +15,6 @@ interface Adapter
     /**
      * Reads configuration from file.
      */
-    function load(string $file) : array;
+    function load(string $file): array;
 }
 \class_exists(IAdapter::class);

@@ -18,11 +18,11 @@ use function count;
  */
 final class FileWhitespaceRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FileNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $nodes = $node->getNodes();
         if (count($nodes) === 0) {
@@ -60,7 +60,7 @@ final class FileWhitespaceRule implements Rule
             /**
              * @return Node[]
              */
-            public function getLastNodes() : array
+            public function getLastNodes(): array
             {
                 return $this->lastNodes;
             }
@@ -70,7 +70,7 @@ final class FileWhitespaceRule implements Rule
         $lastNodes = $visitor->getLastNodes();
         $lastNodes[] = $nodes[count($nodes) - 1];
         foreach ($lastNodes as $lastNode) {
-            if (!$lastNode instanceof Node\Stmt\InlineHTML || Strings::match($lastNode->value, '#^(\\s+)$#') === null) {
+            if (!$lastNode instanceof Node\Stmt\InlineHTML || Strings::match($lastNode->value, '#^(\s+)$#') === null) {
                 continue;
             }
             $messages[] = RuleErrorBuilder::message('File ends with a trailing whitespace. This may cause problems when running the code in the web browser. Remove the closing ?> mark or remove the whitespace.')->line($lastNode->getStartLine())->identifier('whitespace.fileEnd')->build();

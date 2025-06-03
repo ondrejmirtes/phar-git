@@ -19,16 +19,16 @@ final class Psr0Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
     {
     }
     /** @param array<string, list<string>> $mappings */
-    public static function fromArrayMappings(array $mappings) : self
+    public static function fromArrayMappings(array $mappings): self
     {
         $instance = new self();
-        $instance->mappings = array_map(static function (array $directories) : array {
+        $instance->mappings = array_map(static function (array $directories): array {
             return array_map(static fn(string $directory): string => rtrim($directory, '/'), $directories);
         }, $mappings);
         return $instance;
     }
     /** {@inheritDoc} */
-    public function resolvePossibleFilePaths(Identifier $identifier) : array
+    public function resolvePossibleFilePaths(Identifier $identifier): array
     {
         if (!$identifier->isClass()) {
             return [];
@@ -45,7 +45,7 @@ final class Psr0Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
         return [];
     }
     /** {@inheritDoc} */
-    public function directories() : array
+    public function directories(): array
     {
         return array_values(array_unique(array_merge([], ...array_values($this->mappings))));
     }

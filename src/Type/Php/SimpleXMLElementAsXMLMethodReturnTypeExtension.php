@@ -18,15 +18,15 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SimpleXMLElementAsXMLMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return SimpleXMLElement::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'asXML';
     }
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): Type
     {
         if (count($methodCall->getArgs()) === 1) {
             return new BooleanType();

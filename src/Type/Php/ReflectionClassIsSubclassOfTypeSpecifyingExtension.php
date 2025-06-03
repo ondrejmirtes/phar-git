@@ -20,19 +20,19 @@ use ReflectionClass;
 final class ReflectionClassIsSubclassOfTypeSpecifyingExtension implements MethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function getClass() : string
+    public function getClass(): string
     {
         return ReflectionClass::class;
     }
-    public function isMethodSupported(MethodReflection $methodReflection, MethodCall $node, TypeSpecifierContext $context) : bool
+    public function isMethodSupported(MethodReflection $methodReflection, MethodCall $node, TypeSpecifierContext $context): bool
     {
         return $methodReflection->getName() === 'isSubclassOf' && isset($node->getArgs()[0]) && !$context->null();
     }
-    public function specifyTypes(MethodReflection $methodReflection, MethodCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(MethodReflection $methodReflection, MethodCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $calledOnType = $scope->getType($node->var);
         $reflectionType = $calledOnType->getTemplateType(ReflectionClass::class, 'T');

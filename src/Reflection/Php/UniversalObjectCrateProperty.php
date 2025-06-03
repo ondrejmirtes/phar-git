@@ -23,111 +23,111 @@ final class UniversalObjectCrateProperty implements ExtendedPropertyReflection
         $this->readableType = $readableType;
         $this->writableType = $writableType;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return \false;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return \false;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return \true;
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return \false;
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return new MixedType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return \false;
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return new MixedType();
     }
-    public function getReadableType() : Type
+    public function getReadableType(): Type
     {
         return $this->readableType;
     }
-    public function getWritableType() : Type
+    public function getWritableType(): Type
     {
         return $this->writableType;
     }
-    public function canChangeTypeAfterAssignment() : bool
+    public function canChangeTypeAfterAssignment(): bool
     {
         return \true;
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return \true;
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return \true;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isVirtual() : TrinaryLogic
+    public function isVirtual(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         return \false;
     }
-    public function getHook(string $hookType) : ExtendedMethodReflection
+    public function getHook(string $hookType): ExtendedMethodReflection
     {
         throw new ShouldNotHappenException();
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return \false;
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return \false;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

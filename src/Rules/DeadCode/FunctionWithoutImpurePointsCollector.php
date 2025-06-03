@@ -13,7 +13,7 @@ use function count;
  */
 final class FunctionWithoutImpurePointsCollector implements Collector
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionReturnStatementsNode::class;
     }

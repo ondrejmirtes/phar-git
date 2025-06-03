@@ -34,11 +34,11 @@ final class SubstrDynamicReturnTypeExtension implements DynamicFunctionReturnTyp
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['substr', 'mb_substr'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) < 2) {
@@ -66,12 +66,10 @@ final class SubstrDynamicReturnTypeExtension implements DynamicFunctionReturnTyp
                     } else {
                         $substr = substr($constantString->getValue(), $offset->getValue(), $length->getValue());
                     }
+                } else if ($functionReflection->getName() === 'mb_substr') {
+                    $substr = mb_substr($constantString->getValue(), $offset->getValue());
                 } else {
-                    if ($functionReflection->getName() === 'mb_substr') {
-                        $substr = mb_substr($constantString->getValue(), $offset->getValue());
-                    } else {
-                        $substr = substr($constantString->getValue(), $offset->getValue());
-                    }
+                    $substr = substr($constantString->getValue(), $offset->getValue());
                 }
                 if (is_bool($substr)) {
                     $results[] = new ConstantBooleanType($substr);

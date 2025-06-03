@@ -32,7 +32,7 @@ abstract class AbstractRequest extends AbstractMessage implements RequestInterfa
         if (\is_string($uri)) {
             $uri = new Uri($uri);
         } elseif (!$uri instanceof UriInterface) {
-            throw new \InvalidArgumentException('_PHPStan_checksum\\Argument #2 ($uri) expected string|Psr\\Http\\Message\\UriInterface');
+            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($uri) expected string|Psr\Http\Message\UriInterface');
         }
         // assign default `Host` request header from URI unless already given explicitly
         $host = $uri->getHost();

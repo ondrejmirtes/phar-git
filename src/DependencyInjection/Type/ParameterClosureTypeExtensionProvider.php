@@ -9,9 +9,9 @@ use PHPStan\Type\StaticMethodParameterClosureTypeExtension;
 interface ParameterClosureTypeExtensionProvider
 {
     /** @return FunctionParameterClosureTypeExtension[] */
-    public function getFunctionParameterClosureTypeExtensions() : array;
+    public function getFunctionParameterClosureTypeExtensions(): array;
     /** @return MethodParameterClosureTypeExtension[] */
-    public function getMethodParameterClosureTypeExtensions() : array;
+    public function getMethodParameterClosureTypeExtensions(): array;
     /** @return StaticMethodParameterClosureTypeExtension[] */
-    public function getStaticMethodParameterClosureTypeExtensions() : array;
+    public function getStaticMethodParameterClosureTypeExtensions(): array;
 }

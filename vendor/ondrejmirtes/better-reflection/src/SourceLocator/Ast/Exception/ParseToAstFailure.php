@@ -16,7 +16,7 @@ use function min;
 use function sprintf;
 class ParseToAstFailure extends RuntimeException
 {
-    public static function fromLocatedSource(LocatedSource $locatedSource, Throwable $previous) : self
+    public static function fromLocatedSource(LocatedSource $locatedSource, Throwable $previous): self
     {
         $additionalInformation = '';
         $fileName = $locatedSource->getFileName();

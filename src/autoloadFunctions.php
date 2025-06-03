@@ -6,7 +6,7 @@ namespace PHPStan;
 /**
  * @return array<int, callable(string): void>
  */
-function autoloadFunctions() : array
+function autoloadFunctions(): array
 {
     return $GLOBALS['__phpstanAutoloadFunctions'] ?? [];
 }

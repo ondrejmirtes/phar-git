@@ -18,7 +18,7 @@ final class PhpDocStringResolver
         $this->phpDocLexer = $phpDocLexer;
         $this->phpDocParser = $phpDocParser;
     }
-    public function resolve(string $phpDocString) : PhpDocNode
+    public function resolve(string $phpDocString): PhpDocNode
     {
         $tokens = new TokenIterator($this->phpDocLexer->tokenize($phpDocString));
         $phpDocNode = $this->phpDocParser->parse($tokens);

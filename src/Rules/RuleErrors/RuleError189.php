@@ -25,41 +25,41 @@ final class RuleError189 implements RuleError, FileRuleError, TipRuleError, Iden
     public Node $originalNode;
     /** @var callable(Node): Node */
     public $newNodeCallable;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }
-    public function getOriginalNode() : Node
+    public function getOriginalNode(): Node
     {
         return $this->originalNode;
     }
     /**
      * @return callable(Node): Node
      */
-    public function getNewNodeCallable() : callable
+    public function getNewNodeCallable(): callable
     {
         return $this->newNodeCallable;
     }

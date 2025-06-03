@@ -24,6 +24,6 @@ use PHPStan\Reflection\ParameterReflection;
  */
 interface FunctionParameterOutTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter) : bool;
-    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool;
+    public function getParameterOutTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, ParameterReflection $parameter, Scope $scope): ?\PHPStan\Type\Type;
 }

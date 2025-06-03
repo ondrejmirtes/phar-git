@@ -75,36 +75,36 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
         $this->classReflection = $classReflection;
         parent::__construct($class->getAttributes());
     }
-    public function getClass() : ClassLike
+    public function getClass(): ClassLike
     {
         return $this->class;
     }
     /**
      * @return ClassPropertyNode[]
      */
-    public function getProperties() : array
+    public function getProperties(): array
     {
         return $this->properties;
     }
     /**
      * @return array<int, PropertyRead|PropertyWrite>
      */
-    public function getPropertyUsages() : array
+    public function getPropertyUsages(): array
     {
         return $this->propertyUsages;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClassPropertiesNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }
@@ -112,7 +112,7 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
      * @param string[] $constructors
      * @return array{array<string, ClassPropertyNode>, array<array{string, int, ClassPropertyNode, string, string}>, array<array{string, int, ClassPropertyNode}>}
      */
-    public function getUninitializedProperties(Scope $scope, array $constructors) : array
+    public function getUninitializedProperties(Scope $scope, array $constructors): array
     {
         if (!$this->getClass() instanceof Class_) {
             return [[], [], []];
@@ -234,7 +234,7 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
      * @param array<string, ClassPropertyNode> $uninitializedProperties
      * @return array<string, ClassPropertyNode>
      */
-    private function collectUninitializedProperties(array $constructors, array $uninitializedProperties) : array
+    private function collectUninitializedProperties(array $constructors, array $uninitializedProperties): array
     {
         foreach ($constructors as $constructor) {
             $lowerConstructorName = strtolower($constructor);
@@ -287,7 +287,7 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
      *
      * @return array<string, array<string, TrinaryLogic>>
      */
-    private function getMethodsCalledFromConstructor(ClassReflection $classReflection, array $initialInitializedProperties, array $initializedProperties, array $methods, array $initializedInConstructorProperties) : array
+    private function getMethodsCalledFromConstructor(ClassReflection $classReflection, array $initialInitializedProperties, array $initializedProperties, array $methods, array $initializedInConstructorProperties): array
     {
         $originalMap = $initializedProperties;
         $originalMethods = $methods;
@@ -349,7 +349,7 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
      * @param array<string, TrinaryLogic> $initialInitializedProperties
      * @return array<string, TrinaryLogic>
      */
-    private function getInitializedProperties(Scope $scope, array $initialInitializedProperties) : array
+    private function getInitializedProperties(Scope $scope, array $initialInitializedProperties): array
     {
         foreach ($initialInitializedProperties as $propertyName => $isInitialized) {
             $initialInitializedProperties[$propertyName] = $isInitialized->or($scope->hasExpressionType(new PropertyInitializationExpr($propertyName)));
@@ -359,7 +359,7 @@ final class ClassPropertiesNode extends NodeAbstract implements \PHPStan\Node\Vi
     /**
      * @return list<PropertyAssign>
      */
-    public function getPropertyAssigns() : array
+    public function getPropertyAssigns(): array
     {
         return $this->propertyAssigns;
     }

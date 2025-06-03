@@ -12,7 +12,7 @@ use function count;
 final class ClosureBindArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'closureBindArg';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if ($node instanceof Node\Expr\StaticCall && $node->class instanceof Node\Name && $node->class->toLowerString() === 'closure' && $node->name instanceof Identifier && $node->name->toLowerString() === 'bind' && !$node->isFirstClassCallable()) {
             $args = $node->getArgs();

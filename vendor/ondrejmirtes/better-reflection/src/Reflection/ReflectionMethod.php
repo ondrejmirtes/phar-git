@@ -72,7 +72,7 @@ class ReflectionMethod
      * @param non-empty-string|null $aliasName
      * @param non-empty-string|null $namespace
      */
-    public static function createFromMethodNode(Reflector $reflector, MethodNode $node, LocatedSource $locatedSource, ?string $namespace, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass, ?string $aliasName = null) : self
+    public static function createFromMethodNode(Reflector $reflector, MethodNode $node, LocatedSource $locatedSource, ?string $namespace, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass, ?string $aliasName = null): self
     {
         return new self($reflector, $node, $locatedSource, $node->name->name, $namespace, $declaringClass, $implementingClass, $currentClass, $aliasName);
     }
@@ -82,7 +82,7 @@ class ReflectionMethod
      * @param non-empty-string $name
      * @param \PhpParser\Node\Identifier|\PhpParser\Node\Name|\PhpParser\Node\NullableType|\PhpParser\Node\UnionType|\PhpParser\Node\IntersectionType|null $type
      */
-    public static function createFromPropertyHook(Reflector $reflector, Node\PropertyHook $node, LocatedSource $locatedSource, string $name, $type, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass, \PHPStan\BetterReflection\Reflection\ReflectionProperty $hookProperty) : self
+    public static function createFromPropertyHook(Reflector $reflector, Node\PropertyHook $node, LocatedSource $locatedSource, string $name, $type, \PHPStan\BetterReflection\Reflection\ReflectionClass $declaringClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, \PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass, \PHPStan\BetterReflection\Reflection\ReflectionProperty $hookProperty): self
     {
         $method = new self($reflector, $node, $locatedSource, $name, null, $declaringClass, $implementingClass, $currentClass, null, $hookProperty);
         if ($node->name->name === 'set') {
@@ -105,7 +105,7 @@ class ReflectionMethod
      * @throws IdentifierNotFound
      * @throws OutOfBoundsException
      */
-    public static function createFromInstance(object $instance, string $methodName) : self
+    public static function createFromInstance(object $instance, string $methodName): self
     {
         $method = \PHPStan\BetterReflection\Reflection\ReflectionClass::createFromInstance($instance)->getMethod($methodName);
         if ($method === null) {
@@ -119,7 +119,7 @@ class ReflectionMethod
      * @param non-empty-string|null                      $aliasName
      * @param int-mask-of<ReflectionMethodAdapter::IS_*> $modifiers
      */
-    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, ?string $aliasName, int $modifiers) : self
+    public function withImplementingClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $implementingClass, ?string $aliasName, int $modifiers): self
     {
         $clone = clone $this;
         $clone->aliasName = $aliasName;
@@ -134,7 +134,7 @@ class ReflectionMethod
         return $clone;
     }
     /** @internal */
-    public function withCurrentClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass) : self
+    public function withCurrentClass(\PHPStan\BetterReflection\Reflection\ReflectionClass $currentClass): self
     {
         $clone = clone $this;
         /** @phpstan-ignore property.readOnlyByPhpDocAssignNotInConstructor */
@@ -146,7 +146,7 @@ class ReflectionMethod
         return $clone;
     }
     /** @return non-empty-string */
-    public function getShortName() : string
+    public function getShortName(): string
     {
         if ($this->aliasName !== null) {
             return $this->aliasName;
@@ -154,7 +154,7 @@ class ReflectionMethod
         return $this->name;
     }
     /** @return non-empty-string|null */
-    public function getAliasName() : ?string
+    public function getAliasName(): ?string
     {
         return $this->aliasName;
     }
@@ -164,7 +164,7 @@ class ReflectionMethod
      *
      * @throws Exception\MethodPrototypeNotFound
      */
-    public function getPrototype() : self
+    public function getPrototype(): self
     {
         $currentClass = $this->getImplementingClass();
         foreach ($currentClass->getImmediateInterfaces() as $interface) {
@@ -182,7 +182,7 @@ class ReflectionMethod
         }
         throw new \PHPStan\BetterReflection\Reflection\Exception\MethodPrototypeNotFound(sprintf('Method %s::%s does not have a prototype', $this->getDeclaringClass()->getName(), $this->getName()));
     }
-    private function findPrototype() : ?self
+    private function findPrototype(): ?self
     {
         if ($this->isAbstract()) {
             return $this;
@@ -201,13 +201,13 @@ class ReflectionMethod
      *
      * @return int-mask-of<ReflectionMethodAdapter::IS_*>
      */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }
     /** @return int-mask-of<ReflectionMethodAdapter::IS_*>
      * @param MethodNode|\PhpParser\Node\PropertyHook $node */
-    private function computeModifiers($node) : int
+    private function computeModifiers($node): int
     {
         $modifiers = 0;
         if ($node instanceof MethodNode) {
@@ -221,68 +221,68 @@ class ReflectionMethod
         return $modifiers;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionMethodStringCast::toString($this);
     }
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return \false;
     }
-    public function getNamespaceName() : ?string
+    public function getNamespaceName(): ?string
     {
         return null;
     }
-    public function isClosure() : bool
+    public function isClosure(): bool
     {
         return \false;
     }
     /**
      * Is the method abstract.
      */
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_ABSTRACT) || $this->declaringClass->isInterface();
     }
     /**
      * Is the method final.
      */
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_FINAL);
     }
     /**
      * Is the method private visibility.
      */
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_PRIVATE);
     }
     /**
      * Is the method protected visibility.
      */
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_PROTECTED);
     }
     /**
      * Is the method public visibility.
      */
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_PUBLIC);
     }
     /**
      * Is the method static.
      */
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return (bool) ($this->modifiers & CoreReflectionMethod::IS_STATIC);
     }
     /**
      * Is the method a constructor.
      */
-    public function isConstructor() : bool
+    public function isConstructor(): bool
     {
         if (strtolower($this->getName()) === '__construct') {
             return \true;
@@ -296,21 +296,21 @@ class ReflectionMethod
     /**
      * Is the method a destructor.
      */
-    public function isDestructor() : bool
+    public function isDestructor(): bool
     {
         return strtolower($this->getName()) === '__destruct';
     }
     /**
      * Get the class that declares this method.
      */
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->declaringClass;
     }
     /**
      * Get the class that implemented the method based on trait use.
      */
-    public function getImplementingClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getImplementingClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->implementingClass;
     }
@@ -319,7 +319,7 @@ class ReflectionMethod
      *
      * @internal
      */
-    public function getCurrentClass() : \PHPStan\BetterReflection\Reflection\ReflectionClass
+    public function getCurrentClass(): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
         return $this->currentClass;
     }
@@ -328,7 +328,7 @@ class ReflectionMethod
      * @throws NoObjectProvided
      * @throws ObjectNotInstanceOfClass
      */
-    public function getClosure(?object $object = null) : Closure
+    public function getClosure(?object $object = null): Closure
     {
         $declaringClassName = $this->getDeclaringClass()->getName();
         if ($this->isStatic()) {
@@ -339,11 +339,11 @@ class ReflectionMethod
         return fn(...$args) => $this->callObjectMethod($instance, $args);
     }
     /** @psalm-assert-if-true !null $this->getHookProperty() */
-    public function isHook() : bool
+    public function isHook(): bool
     {
         return $this->hookProperty !== null;
     }
-    public function getHookProperty() : ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
+    public function getHookProperty(): ?\PHPStan\BetterReflection\Reflection\ReflectionProperty
     {
         return $this->hookProperty;
     }
@@ -397,7 +397,7 @@ class ReflectionMethod
         return $closure->__invoke($object, $this->getName(), $args);
     }
     /** @throws ClassDoesNotExist */
-    private function assertClassExist(string $className) : void
+    private function assertClassExist(string $className): void
     {
         if (!ClassExistenceChecker::classExists($className, \true) && !ClassExistenceChecker::traitExists($className, \true)) {
             throw new ClassDoesNotExist(sprintf('Method of class %s cannot be used as the class does not exist', $className));
@@ -407,7 +407,7 @@ class ReflectionMethod
      * @throws NoObjectProvided
      * @throws ObjectNotInstanceOfClass
      */
-    private function assertObject(?object $object) : object
+    private function assertObject(?object $object): object
     {
         if ($object === null) {
             throw NoObjectProvided::create();

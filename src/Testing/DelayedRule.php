@@ -25,18 +25,18 @@ final class DelayedRule implements Rule
     {
         $this->registry = new DirectRegistry([$rule]);
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node::class;
     }
     /**
      * @return list<IdentifierRuleError>
      */
-    public function getDelayedErrors() : array
+    public function getDelayedErrors(): array
     {
         return $this->errors;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $nodeType = get_class($node);
         foreach ($this->registry->getRules($nodeType) as $rule) {

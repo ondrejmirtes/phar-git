@@ -28,11 +28,11 @@ final class ApiInstanceofRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Instanceof_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->class instanceof Node\Name) {
             return [];
@@ -61,7 +61,7 @@ final class ApiInstanceofRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processCoveredClass(Node\Expr\Instanceof_ $node, Scope $scope, ClassReflection $classReflection) : array
+    private function processCoveredClass(Node\Expr\Instanceof_ $node, Scope $scope, ClassReflection $classReflection): array
     {
         if ($classReflection->is(Type::class)) {
             return [];

@@ -16,22 +16,22 @@ final class VarTagChangedExpressionTypeNode extends NodeAbstract implements \PHP
         $this->expr = $expr;
         parent::__construct($expr->getAttributes());
     }
-    public function getVarTag() : VarTag
+    public function getVarTag(): VarTag
     {
         return $this->varTag;
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_VarTagChangedExpressionType';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

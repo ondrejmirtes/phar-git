@@ -275,16 +275,14 @@ class Intervals
                         $branches['exclude'] = \true;
                         $branches['names'] = \array_diff($b['names'], $branches['names']);
                     }
+                } else if ($branches['exclude']) {
+                    // disjunctive constraint so exclude all names which are not explicitly included in the alternative
+                    // !=a,!=b || (==b || ==c) => !=a
+                    $branches['names'] = \array_diff($branches['names'], $b['names']);
                 } else {
-                    if ($branches['exclude']) {
-                        // disjunctive constraint so exclude all names which are not explicitly included in the alternative
-                        // !=a,!=b || (==b || ==c) => !=a
-                        $branches['names'] = \array_diff($branches['names'], $b['names']);
-                    } else {
-                        // disjunctive constraint, so just add all the other branches
-                        // (==a || ==b) || ==c => ==a || ==b || ==c
-                        $branches['names'] = \array_merge($branches['names'], $b['names']);
-                    }
+                    // disjunctive constraint, so just add all the other branches
+                    // (==a || ==b) || ==c => ==a || ==b || ==c
+                    $branches['names'] = \array_merge($branches['names'], $b['names']);
                 }
             }
         } else {
@@ -300,17 +298,15 @@ class Intervals
                         // (==a||==c) && !=a,!=b => ==c
                         $branches['names'] = \array_diff($branches['names'], $b['names']);
                     }
+                } else if ($branches['exclude']) {
+                    // conjunctive, so only keep included names which are not excluded
+                    // !=a,!=b && (==a||==c) => ==c
+                    $branches['names'] = \array_diff($b['names'], $branches['names']);
+                    $branches['exclude'] = \false;
                 } else {
-                    if ($branches['exclude']) {
-                        // conjunctive, so only keep included names which are not excluded
-                        // !=a,!=b && (==a||==c) => ==c
-                        $branches['names'] = \array_diff($b['names'], $branches['names']);
-                        $branches['exclude'] = \false;
-                    } else {
-                        // conjunctive, so only keep names that are included in both
-                        // (==a||==b) && (==a||==c) => ==a
-                        $branches['names'] = \array_intersect($branches['names'], $b['names']);
-                    }
+                    // conjunctive, so only keep names that are included in both
+                    // (==a||==b) && (==a||==c) => ==a
+                    $branches['names'] = \array_intersect($branches['names'], $b['names']);
                 }
             }
         }
@@ -326,7 +322,7 @@ class Intervals
             }
         }
         $opSortOrder = self::$opSortOrder;
-        \usort($borders, function ($a, $b) use($opSortOrder) {
+        \usort($borders, function ($a, $b) use ($opSortOrder) {
             $order = \version_compare($a['version'], $b['version']);
             if ($order === 0) {
                 return $opSortOrder[$a['operator']] - $opSortOrder[$b['operator']];

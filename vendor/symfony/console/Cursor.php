@@ -29,7 +29,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveUp(int $lines = 1) : self
+    public function moveUp(int $lines = 1): self
     {
         $this->output->write(\sprintf("\x1b[%dA", $lines));
         return $this;
@@ -37,7 +37,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveDown(int $lines = 1) : self
+    public function moveDown(int $lines = 1): self
     {
         $this->output->write(\sprintf("\x1b[%dB", $lines));
         return $this;
@@ -45,7 +45,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveRight(int $columns = 1) : self
+    public function moveRight(int $columns = 1): self
     {
         $this->output->write(\sprintf("\x1b[%dC", $columns));
         return $this;
@@ -53,7 +53,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveLeft(int $columns = 1) : self
+    public function moveLeft(int $columns = 1): self
     {
         $this->output->write(\sprintf("\x1b[%dD", $columns));
         return $this;
@@ -61,7 +61,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveToColumn(int $column) : self
+    public function moveToColumn(int $column): self
     {
         $this->output->write(\sprintf("\x1b[%dG", $column));
         return $this;
@@ -69,7 +69,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function moveToPosition(int $column, int $row) : self
+    public function moveToPosition(int $column, int $row): self
     {
         $this->output->write(\sprintf("\x1b[%d;%dH", $row + 1, $column));
         return $this;
@@ -77,7 +77,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function savePosition() : self
+    public function savePosition(): self
     {
         $this->output->write("\x1b7");
         return $this;
@@ -85,7 +85,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function restorePosition() : self
+    public function restorePosition(): self
     {
         $this->output->write("\x1b8");
         return $this;
@@ -93,7 +93,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function hide() : self
+    public function hide(): self
     {
         $this->output->write("\x1b[?25l");
         return $this;
@@ -101,7 +101,7 @@ final class Cursor
     /**
      * @return $this
      */
-    public function show() : self
+    public function show(): self
     {
         $this->output->write("\x1b[?25h\x1b[?0c");
         return $this;
@@ -111,7 +111,7 @@ final class Cursor
      *
      * @return $this
      */
-    public function clearLine() : self
+    public function clearLine(): self
     {
         $this->output->write("\x1b[2K");
         return $this;
@@ -119,7 +119,7 @@ final class Cursor
     /**
      * Clears all the output from the current line after the current position.
      */
-    public function clearLineAfter() : self
+    public function clearLineAfter(): self
     {
         $this->output->write("\x1b[K");
         return $this;
@@ -129,7 +129,7 @@ final class Cursor
      *
      * @return $this
      */
-    public function clearOutput() : self
+    public function clearOutput(): self
     {
         $this->output->write("\x1b[0J");
         return $this;
@@ -139,7 +139,7 @@ final class Cursor
      *
      * @return $this
      */
-    public function clearScreen() : self
+    public function clearScreen(): self
     {
         $this->output->write("\x1b[2J");
         return $this;
@@ -147,7 +147,7 @@ final class Cursor
     /**
      * Returns the current cursor position as x,y coordinates.
      */
-    public function getCurrentPosition() : array
+    public function getCurrentPosition(): array
     {
         static $isTtySupported;
         if (null === $isTtySupported && \function_exists('proc_open')) {

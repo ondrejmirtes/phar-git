@@ -12,7 +12,7 @@ final class NodeTypePrinter
     /**
      * @param \PhpParser\Node\Name|\PhpParser\Node\Identifier|\PhpParser\Node\ComplexType|null $type
      */
-    public static function printType($type) : ?string
+    public static function printType($type): ?string
     {
         if ($type === null) {
             return null;
@@ -21,7 +21,7 @@ final class NodeTypePrinter
             return '?' . self::printType($type->type);
         }
         if ($type instanceof Node\UnionType) {
-            return implode('|', array_map(static function ($innerType) : string {
+            return implode('|', array_map(static function ($innerType): string {
                 $printedType = self::printType($innerType);
                 if ($printedType === null) {
                     throw new ShouldNotHappenException();
@@ -30,7 +30,7 @@ final class NodeTypePrinter
             }, $type->types));
         }
         if ($type instanceof Node\IntersectionType) {
-            return implode('&', array_map(static function ($innerType) : string {
+            return implode('&', array_map(static function ($innerType): string {
                 $printedType = self::printType($innerType);
                 if ($printedType === null) {
                     throw new ShouldNotHappenException();

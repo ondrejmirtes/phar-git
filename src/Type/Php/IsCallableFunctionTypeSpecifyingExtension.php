@@ -28,11 +28,11 @@ final class IsCallableFunctionTypeSpecifyingExtension implements FunctionTypeSpe
     {
         $this->methodExistsExtension = $methodExistsExtension;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return strtolower($functionReflection->getName()) === 'is_callable' && !$context->null();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         if ($context->null()) {
             throw new ShouldNotHappenException();
@@ -48,7 +48,7 @@ final class IsCallableFunctionTypeSpecifyingExtension implements FunctionTypeSpe
         }
         return $this->typeSpecifier->create($value, new CallableType(), $context, $scope);
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }

@@ -52,20 +52,20 @@ class QuestionHelper extends Helper
         if (!$input->isInteractive()) {
             return $this->getDefaultAnswer($question);
         }
-        if ($input instanceof StreamableInputInterface && ($stream = $input->getStream())) {
+        if ($input instanceof StreamableInputInterface && $stream = $input->getStream()) {
             $this->inputStream = $stream;
         }
         try {
             if (!$question->getValidator()) {
                 return $this->doAsk($output, $question);
             }
-            $interviewer = function () use($output, $question) {
+            $interviewer = function () use ($output, $question) {
                 return $this->doAsk($output, $question);
             };
             return $this->validateAttempts($interviewer, $output, $question);
         } catch (MissingInputException $exception) {
             $input->setInteractive(\false);
-            if (null === ($fallbackOutput = $this->getDefaultAnswer($question))) {
+            if (null === $fallbackOutput = $this->getDefaultAnswer($question)) {
                 throw $exception;
             }
             return $fallbackOutput;
@@ -204,7 +204,7 @@ class QuestionHelper extends Helper
      *
      * @param resource $inputStream
      */
-    private function autocomplete(OutputInterface $output, Question $question, $inputStream, callable $autocomplete) : string
+    private function autocomplete(OutputInterface $output, Question $question, $inputStream, callable $autocomplete): string
     {
         $cursor = new Cursor($output, $inputStream);
         $fullChoice = '';
@@ -271,7 +271,7 @@ class QuestionHelper extends Helper
                         $output->write($remainingCharacters);
                         $fullChoice .= $remainingCharacters;
                         $i = \false === ($encoding = \mb_detect_encoding($fullChoice, null, \true)) ? \strlen($fullChoice) : \mb_strlen($fullChoice, $encoding);
-                        $matches = \array_filter($autocomplete($ret), function ($match) use($ret) {
+                        $matches = \array_filter($autocomplete($ret), function ($match) use ($ret) {
                             return '' === $ret || \str_starts_with($match, $ret);
                         });
                         $numMatches = \count($matches);
@@ -318,14 +318,14 @@ class QuestionHelper extends Helper
         \shell_exec('stty ' . $sttyMode);
         return $fullChoice;
     }
-    private function mostRecentlyEnteredValue(string $entered) : string
+    private function mostRecentlyEnteredValue(string $entered): string
     {
         // Determine the most recent value that the user entered
         if (!\str_contains($entered, ',')) {
             return $entered;
         }
         $choices = \explode(',', $entered);
-        if ('' !== ($lastChoice = \trim($choices[\count($choices) - 1]))) {
+        if ('' !== $lastChoice = \trim($choices[\count($choices) - 1])) {
             return $lastChoice;
         }
         return $entered;
@@ -338,7 +338,7 @@ class QuestionHelper extends Helper
      *
      * @throws RuntimeException In case the fallback is deactivated and the response cannot be hidden
      */
-    private function getHiddenResponse(OutputInterface $output, $inputStream, bool $trimmable = \true) : string
+    private function getHiddenResponse(OutputInterface $output, $inputStream, bool $trimmable = \true): string
     {
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $exe = __DIR__ . '/../Resources/bin/hiddeninput.exe';
@@ -401,7 +401,7 @@ class QuestionHelper extends Helper
         }
         throw $error;
     }
-    private function isInteractiveInput($inputStream) : bool
+    private function isInteractiveInput($inputStream): bool
     {
         if ('php://stdin' !== (\stream_get_meta_data($inputStream)['uri'] ?? null)) {
             return \false;
@@ -432,7 +432,7 @@ class QuestionHelper extends Helper
         }
         $ret = '';
         $cp = $this->setIOCodepage();
-        while (\false !== ($char = \fgetc($multiLineStreamReader))) {
+        while (\false !== $char = \fgetc($multiLineStreamReader)) {
             if (\PHP_EOL === "{$ret}{$char}") {
                 break;
             }
@@ -445,7 +445,7 @@ class QuestionHelper extends Helper
      *
      * @return int Previous code page in IBM/EBCDIC format
      */
-    private function setIOCodepage() : int
+    private function setIOCodepage(): int
     {
         if (\function_exists('sapi_windows_cp_set')) {
             $cp = \sapi_windows_cp_get();

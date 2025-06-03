@@ -30,70 +30,70 @@ final class ClosureCallMethodReflection implements ExtendedMethodReflection
         $this->nativeMethodReflection = $nativeMethodReflection;
         $this->closureType = $closureType;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->nativeMethodReflection->getDeclaringClass();
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->nativeMethodReflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->nativeMethodReflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->nativeMethodReflection->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->nativeMethodReflection->getDocComment();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->nativeMethodReflection->getName();
     }
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         return $this->nativeMethodReflection->getPrototype();
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         $parameters = $this->closureType->getParameters();
         $newThis = new NativeParameterReflection('newThis', \false, new ObjectWithoutClassType(), PassedByReference::createNo(), \false, null);
         array_unshift($parameters, $newThis);
         return [new ExtendedFunctionVariant($this->closureType->getTemplateTypeMap(), $this->closureType->getResolvedTemplateTypeMap(), array_map(static fn(ParameterReflection $parameter): ExtendedParameterReflection => new \PHPStan\Reflection\Php\ExtendedDummyParameter($parameter->getName(), $parameter->getType(), $parameter->isOptional(), $parameter->passedByReference(), $parameter->isVariadic(), $parameter->getDefaultValue(), new MixedType(), $parameter->getType(), null, TrinaryLogic::createMaybe(), null, []), $parameters), $this->closureType->isVariadic(), $this->closureType->getReturnType(), $this->closureType->getReturnType(), new MixedType(), $this->closureType->getCallSiteVarianceMap())];
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->nativeMethodReflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->nativeMethodReflection->getDeprecatedDescription();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->nativeMethodReflection->isFinal();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->nativeMethodReflection->isFinalByKeyword();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->nativeMethodReflection->isInternal();
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         $builtin = $this->nativeMethodReflection->isBuiltin();
         if (is_bool($builtin)) {
@@ -101,31 +101,31 @@ final class ClosureCallMethodReflection implements ExtendedMethodReflection
         }
         return $builtin;
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->nativeMethodReflection->getThrowType();
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return $this->nativeMethodReflection->hasSideEffects();
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return $this->nativeMethodReflection->getAsserts();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->nativeMethodReflection->acceptsNamedArguments();
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return $this->nativeMethodReflection->getSelfOutType();
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return $this->nativeMethodReflection->returnsByReference();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         $abstract = $this->nativeMethodReflection->isAbstract();
         if (is_bool($abstract)) {
@@ -133,11 +133,11 @@ final class ClosureCallMethodReflection implements ExtendedMethodReflection
         }
         return $abstract;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->nativeMethodReflection->isPure();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->nativeMethodReflection->getAttributes();
     }

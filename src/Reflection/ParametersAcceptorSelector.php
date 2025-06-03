@@ -65,7 +65,7 @@ final class ParametersAcceptorSelector
      * @param ParametersAcceptor[] $parametersAcceptors
      * @param ParametersAcceptor[]|null $namedArgumentsVariants
      */
-    public static function selectFromArgs(Scope $scope, array $args, array $parametersAcceptors, ?array $namedArgumentsVariants = null) : \PHPStan\Reflection\ParametersAcceptor
+    public static function selectFromArgs(Scope $scope, array $args, array $parametersAcceptors, ?array $namedArgumentsVariants = null): \PHPStan\Reflection\ParametersAcceptor
     {
         $types = [];
         $unpack = \false;
@@ -237,7 +237,7 @@ final class ParametersAcceptorSelector
         }
         return self::selectFromTypes($types, $parametersAcceptors, $unpack);
     }
-    private static function hasAcceptorTemplateOrLateResolvableType(\PHPStan\Reflection\ParametersAcceptor $acceptor) : bool
+    private static function hasAcceptorTemplateOrLateResolvableType(\PHPStan\Reflection\ParametersAcceptor $acceptor): bool
     {
         if (self::hasTemplateOrLateResolvableType($acceptor->getReturnType())) {
             return \true;
@@ -256,10 +256,10 @@ final class ParametersAcceptorSelector
         }
         return \false;
     }
-    private static function hasTemplateOrLateResolvableType(Type $type) : bool
+    private static function hasTemplateOrLateResolvableType(Type $type): bool
     {
         $has = \false;
-        TypeTraverser::map($type, static function (Type $type, callable $traverse) use(&$has) : Type {
+        TypeTraverser::map($type, static function (Type $type, callable $traverse) use (&$has): Type {
             if ($type instanceof TemplateType || $type instanceof LateResolvableType) {
                 $has = \true;
                 return $type;
@@ -272,7 +272,7 @@ final class ParametersAcceptorSelector
      * @param array<int|string, Type> $types
      * @param ParametersAcceptor[] $parametersAcceptors
      */
-    public static function selectFromTypes(array $types, array $parametersAcceptors, bool $unpack) : \PHPStan\Reflection\ParametersAcceptor
+    public static function selectFromTypes(array $types, array $parametersAcceptors, bool $unpack): \PHPStan\Reflection\ParametersAcceptor
     {
         if (count($parametersAcceptors) === 1) {
             return \PHPStan\Reflection\GenericParametersAcceptorResolver::resolve($types, $parametersAcceptors[0]);
@@ -353,7 +353,7 @@ final class ParametersAcceptorSelector
     /**
      * @param ParametersAcceptor[] $acceptors
      */
-    public static function combineAcceptors(array $acceptors) : \PHPStan\Reflection\ExtendedParametersAcceptor
+    public static function combineAcceptors(array $acceptors): \PHPStan\Reflection\ExtendedParametersAcceptor
     {
         if (count($acceptors) === 0) {
             throw new ShouldNotHappenException('getVariants() must return at least one variant.');
@@ -460,7 +460,7 @@ final class ParametersAcceptorSelector
         }
         return new \PHPStan\Reflection\ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), null, array_values($parameters), $isVariadic, $returnType, $phpDocReturnType ?? $returnType, $nativeReturnType ?? new MixedType());
     }
-    private static function wrapAcceptor(\PHPStan\Reflection\ParametersAcceptor $acceptor) : \PHPStan\Reflection\ExtendedParametersAcceptor
+    private static function wrapAcceptor(\PHPStan\Reflection\ParametersAcceptor $acceptor): \PHPStan\Reflection\ExtendedParametersAcceptor
     {
         if ($acceptor instanceof \PHPStan\Reflection\ExtendedParametersAcceptor) {
             return $acceptor;
@@ -470,11 +470,11 @@ final class ParametersAcceptorSelector
         }
         return new \PHPStan\Reflection\ExtendedFunctionVariant($acceptor->getTemplateTypeMap(), $acceptor->getResolvedTemplateTypeMap(), array_map(static fn(\PHPStan\Reflection\ParameterReflection $parameter): \PHPStan\Reflection\ExtendedParameterReflection => self::wrapParameter($parameter), $acceptor->getParameters()), $acceptor->isVariadic(), $acceptor->getReturnType(), $acceptor->getReturnType(), new MixedType(), TemplateTypeVarianceMap::createEmpty());
     }
-    private static function wrapParameter(\PHPStan\Reflection\ParameterReflection $parameter) : \PHPStan\Reflection\ExtendedParameterReflection
+    private static function wrapParameter(\PHPStan\Reflection\ParameterReflection $parameter): \PHPStan\Reflection\ExtendedParameterReflection
     {
         return $parameter instanceof \PHPStan\Reflection\ExtendedParameterReflection ? $parameter : new ExtendedDummyParameter($parameter->getName(), $parameter->getType(), $parameter->isOptional(), $parameter->passedByReference(), $parameter->isVariadic(), $parameter->getDefaultValue(), new MixedType(), $parameter->getType(), null, TrinaryLogic::createMaybe(), null, []);
     }
-    private static function getCurlOptValueType(int $curlOpt) : ?Type
+    private static function getCurlOptValueType(int $curlOpt): ?Type
     {
         if (defined('CURLOPT_SSL_VERIFYHOST') && $curlOpt === CURLOPT_SSL_VERIFYHOST) {
             return new UnionType([new ConstantIntegerType(0), new ConstantIntegerType(2)]);

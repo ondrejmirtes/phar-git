@@ -18,11 +18,11 @@ final class DateFunctionReturnTypeExtension implements DynamicFunctionReturnType
     {
         $this->dateFunctionReturnTypeHelper = $dateFunctionReturnTypeHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'date';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) === 0) {
             return null;

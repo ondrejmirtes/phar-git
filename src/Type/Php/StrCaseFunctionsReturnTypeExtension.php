@@ -34,11 +34,11 @@ final class StrCaseFunctionsReturnTypeExtension implements DynamicFunctionReturn
      * [function name => minimum arity]
      */
     private const FUNCTIONS = ['strtoupper' => 1, 'strtolower' => 1, 'mb_strtoupper' => 1, 'mb_strtolower' => 1, 'lcfirst' => 1, 'ucfirst' => 1, 'mb_lcfirst' => 1, 'mb_ucfirst' => 1, 'ucwords' => 1, 'mb_convert_case' => 2, 'mb_convert_kana' => 1];
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return isset(self::FUNCTIONS[$functionReflection->getName()]);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $fnName = $functionReflection->getName();
         $args = $functionCall->getArgs();

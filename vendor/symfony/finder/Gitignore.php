@@ -23,21 +23,21 @@ class Gitignore
      *
      * Format specification: https://git-scm.com/docs/gitignore#_pattern_format
      */
-    public static function toRegex(string $gitignoreFileContent) : string
+    public static function toRegex(string $gitignoreFileContent): string
     {
         return self::buildRegex($gitignoreFileContent, \false);
     }
-    public static function toRegexMatchingNegatedPatterns(string $gitignoreFileContent) : string
+    public static function toRegexMatchingNegatedPatterns(string $gitignoreFileContent): string
     {
         return self::buildRegex($gitignoreFileContent, \true);
     }
-    private static function buildRegex(string $gitignoreFileContent, bool $inverted) : string
+    private static function buildRegex(string $gitignoreFileContent, bool $inverted): string
     {
-        $gitignoreFileContent = \preg_replace('~(?<!\\\\)#[^\\n\\r]*~', '', $gitignoreFileContent);
-        $gitignoreLines = \preg_split('~\\r\\n?|\\n~', $gitignoreFileContent);
+        $gitignoreFileContent = \preg_replace('~(?<!\\\\)#[^\n\r]*~', '', $gitignoreFileContent);
+        $gitignoreLines = \preg_split('~\r\n?|\n~', $gitignoreFileContent);
         $res = self::lineToRegex('');
         foreach ($gitignoreLines as $line) {
-            $line = \preg_replace('~(?<!\\\\)[ \\t]+$~', '', $line);
+            $line = \preg_replace('~(?<!\\\\)[ \t]+$~', '', $line);
             if ('!' === \substr($line, 0, 1)) {
                 $line = \substr($line, 1);
                 $isNegative = \true;
@@ -54,7 +54,7 @@ class Gitignore
         }
         return '~^(?:' . $res . ')~s';
     }
-    private static function lineToRegex(string $gitignoreLine) : string
+    private static function lineToRegex(string $gitignoreLine): string
     {
         if ('' === $gitignoreLine) {
             return '$f';
@@ -70,8 +70,8 @@ class Gitignore
             $isAbsolute = \false;
         }
         $regex = \preg_quote(\str_replace('\\', '', $gitignoreLine), '~');
-        $regex = \preg_replace_callback('~\\\\\\[((?:\\\\!)?)([^\\[\\]]*)\\\\\\]~', function (array $matches) : string {
-            return '[' . ('' !== $matches[1] ? '^' : '') . \str_replace('\\-', '-', $matches[2]) . ']';
+        $regex = \preg_replace_callback('~\\\\\\[((?:\\\\!)?)([^\[\]]*)\\\\\\]~', function (array $matches): string {
+            return '[' . ('' !== $matches[1] ? '^' : '') . \str_replace('\-', '-', $matches[2]) . ']';
         }, $regex);
         $regex = \preg_replace('~(?:(?:\\\\\\*){2,}(/?))+~', '(?:(?:(?!//).(?<!//))+$1)?', $regex);
         $regex = \preg_replace('~\\\\\\*~', '[^/]*', $regex);

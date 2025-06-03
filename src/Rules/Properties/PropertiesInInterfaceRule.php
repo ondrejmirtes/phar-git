@@ -19,11 +19,11 @@ final class PropertiesInInterfaceRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getClassReflection()->isInterface()) {
             return [];
@@ -60,7 +60,7 @@ final class PropertiesInInterfaceRule implements Rule
         }
         return [];
     }
-    private function hasAnyHookBody(ClassPropertyNode $node) : bool
+    private function hasAnyHookBody(ClassPropertyNode $node): bool
     {
         foreach ($node->getHooks() as $hook) {
             if ($hook->body !== null) {

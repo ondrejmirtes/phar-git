@@ -34,15 +34,15 @@ final class TypeSpecifyingFunctionsDynamicReturnTypeExtension implements Dynamic
         $this->treatPhpDocTypesAsCertain = $treatPhpDocTypesAsCertain;
         $this->universalObjectCratesClasses = $universalObjectCratesClasses;
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['array_key_exists', 'key_exists', 'in_array', 'is_subclass_of'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) === 0) {
             return null;
@@ -53,7 +53,7 @@ final class TypeSpecifyingFunctionsDynamicReturnTypeExtension implements Dynamic
         }
         return new ConstantBooleanType($isAlways);
     }
-    private function getHelper() : ImpossibleCheckTypeHelper
+    private function getHelper(): ImpossibleCheckTypeHelper
     {
         if ($this->helper === null) {
             $this->helper = new ImpossibleCheckTypeHelper($this->reflectionProvider, $this->typeSpecifier, $this->universalObjectCratesClasses, $this->treatPhpDocTypesAsCertain);

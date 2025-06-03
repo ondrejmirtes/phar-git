@@ -29,11 +29,11 @@ final class PhpVersion
     /**
      * @return self::SOURCE_*
      */
-    public function getSource() : int
+    public function getSource(): int
     {
         return $this->source;
     }
-    public function getSourceLabel() : string
+    public function getSourceLabel(): string
     {
         switch ($this->source) {
             case self::SOURCE_RUNTIME:
@@ -45,292 +45,292 @@ final class PhpVersion
         }
         return 'unknown';
     }
-    public function getVersionId() : int
+    public function getVersionId(): int
     {
         return $this->versionId;
     }
-    public function getMajorVersionId() : int
+    public function getMajorVersionId(): int
     {
         return (int) floor($this->versionId / 10000);
     }
-    public function getMinorVersionId() : int
+    public function getMinorVersionId(): int
     {
         return (int) floor($this->versionId % 10000 / 100);
     }
-    public function getPatchVersionId() : int
+    public function getPatchVersionId(): int
     {
         return (int) floor($this->versionId % 100);
     }
-    public function getVersionString() : string
+    public function getVersionString(): string
     {
         $first = $this->getMajorVersionId();
         $second = $this->getMinorVersionId();
         $third = $this->getPatchVersionId();
         return $first . '.' . $second . ($third !== 0 ? '.' . $third : '');
     }
-    public function supportsNullCoalesceAssign() : bool
+    public function supportsNullCoalesceAssign(): bool
     {
         return $this->versionId >= 70400;
     }
-    public function supportsParameterContravariance() : bool
+    public function supportsParameterContravariance(): bool
     {
         return $this->versionId >= 70400;
     }
-    public function supportsReturnCovariance() : bool
+    public function supportsReturnCovariance(): bool
     {
         return $this->versionId >= 70400;
     }
-    public function supportsNoncapturingCatches() : bool
+    public function supportsNoncapturingCatches(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsNativeUnionTypes() : bool
+    public function supportsNativeUnionTypes(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function deprecatesRequiredParameterAfterOptional() : bool
+    public function deprecatesRequiredParameterAfterOptional(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function deprecatesRequiredParameterAfterOptionalNullableAndDefaultNull() : bool
+    public function deprecatesRequiredParameterAfterOptionalNullableAndDefaultNull(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function deprecatesRequiredParameterAfterOptionalUnionOrMixed() : bool
+    public function deprecatesRequiredParameterAfterOptionalUnionOrMixed(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsLessOverridenParametersWithVariadic() : bool
+    public function supportsLessOverridenParametersWithVariadic(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsThrowExpression() : bool
+    public function supportsThrowExpression(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsClassConstantOnExpression() : bool
+    public function supportsClassConstantOnExpression(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsLegacyConstructor() : bool
+    public function supportsLegacyConstructor(): bool
     {
         return $this->versionId < 80000;
     }
-    public function supportsPromotedProperties() : bool
+    public function supportsPromotedProperties(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsParameterTypeWidening() : bool
+    public function supportsParameterTypeWidening(): bool
     {
         return $this->versionId >= 70200;
     }
-    public function supportsUnsetCast() : bool
+    public function supportsUnsetCast(): bool
     {
         return $this->versionId < 80000;
     }
-    public function supportsNamedArguments() : bool
+    public function supportsNamedArguments(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function throwsTypeErrorForInternalFunctions() : bool
+    public function throwsTypeErrorForInternalFunctions(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function throwsValueErrorForInternalFunctions() : bool
+    public function throwsValueErrorForInternalFunctions(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsHhPrintfSpecifier() : bool
+    public function supportsHhPrintfSpecifier(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function isEmptyStringValidAliasForNoneInMbSubstituteCharacter() : bool
+    public function isEmptyStringValidAliasForNoneInMbSubstituteCharacter(): bool
     {
         return $this->versionId < 80000;
     }
-    public function supportsAllUnicodeScalarCodePointsInMbSubstituteCharacter() : bool
+    public function supportsAllUnicodeScalarCodePointsInMbSubstituteCharacter(): bool
     {
         return $this->versionId >= 70200;
     }
-    public function isNumericStringValidArgInMbSubstituteCharacter() : bool
+    public function isNumericStringValidArgInMbSubstituteCharacter(): bool
     {
         return $this->versionId < 80000;
     }
-    public function isNullValidArgInMbSubstituteCharacter() : bool
+    public function isNullValidArgInMbSubstituteCharacter(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function isInterfaceConstantImplicitlyFinal() : bool
+    public function isInterfaceConstantImplicitlyFinal(): bool
     {
         return $this->versionId < 80100;
     }
-    public function supportsFinalConstants() : bool
+    public function supportsFinalConstants(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsReadOnlyProperties() : bool
+    public function supportsReadOnlyProperties(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsEnums() : bool
+    public function supportsEnums(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsPureIntersectionTypes() : bool
+    public function supportsPureIntersectionTypes(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsCaseInsensitiveConstantNames() : bool
+    public function supportsCaseInsensitiveConstantNames(): bool
     {
         return $this->versionId < 80000;
     }
-    public function hasStricterRoundFunctions() : bool
+    public function hasStricterRoundFunctions(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function hasTentativeReturnTypes() : bool
+    public function hasTentativeReturnTypes(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsFirstClassCallables() : bool
+    public function supportsFirstClassCallables(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function supportsArrayUnpackingWithStringKeys() : bool
+    public function supportsArrayUnpackingWithStringKeys(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function throwsOnInvalidMbStringEncoding() : bool
+    public function throwsOnInvalidMbStringEncoding(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsPassNoneEncodings() : bool
+    public function supportsPassNoneEncodings(): bool
     {
         return $this->versionId < 70300;
     }
-    public function producesWarningForFinalPrivateMethods() : bool
+    public function producesWarningForFinalPrivateMethods(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function deprecatesDynamicProperties() : bool
+    public function deprecatesDynamicProperties(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function strSplitReturnsEmptyArray() : bool
+    public function strSplitReturnsEmptyArray(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function supportsDisjunctiveNormalForm() : bool
+    public function supportsDisjunctiveNormalForm(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function serializableRequiresMagicMethods() : bool
+    public function serializableRequiresMagicMethods(): bool
     {
         return $this->versionId >= 80100;
     }
-    public function arrayFunctionsReturnNullWithNonArray() : bool
+    public function arrayFunctionsReturnNullWithNonArray(): bool
     {
         return $this->versionId < 80000;
     }
-    public function castsNumbersToStringsOnLooseComparison() : bool
+    public function castsNumbersToStringsOnLooseComparison(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function nonNumericStringAndIntegerIsFalseOnLooseComparison() : bool
+    public function nonNumericStringAndIntegerIsFalseOnLooseComparison(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsCallableInstanceMethods() : bool
+    public function supportsCallableInstanceMethods(): bool
     {
         return $this->versionId < 80000;
     }
-    public function supportsJsonValidate() : bool
+    public function supportsJsonValidate(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsConstantsInTraits() : bool
+    public function supportsConstantsInTraits(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function supportsNativeTypesInClassConstants() : bool
+    public function supportsNativeTypesInClassConstants(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsAbstractTraitMethods() : bool
+    public function supportsAbstractTraitMethods(): bool
     {
         return $this->versionId >= 80000;
     }
-    public function supportsOverrideAttribute() : bool
+    public function supportsOverrideAttribute(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsDynamicClassConstantFetch() : bool
+    public function supportsDynamicClassConstantFetch(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsReadOnlyClasses() : bool
+    public function supportsReadOnlyClasses(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function supportsReadOnlyAnonymousClasses() : bool
+    public function supportsReadOnlyAnonymousClasses(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function supportsNeverReturnTypeInArrowFunction() : bool
+    public function supportsNeverReturnTypeInArrowFunction(): bool
     {
         return $this->versionId >= 80200;
     }
-    public function supportsPregUnmatchedAsNull() : bool
+    public function supportsPregUnmatchedAsNull(): bool
     {
         // while PREG_UNMATCHED_AS_NULL is defined in php-src since 7.2.x it starts working as expected with 7.4.x
         // https://3v4l.org/v3HE4
         return $this->versionId >= 70400;
     }
-    public function supportsPregCaptureOnlyNamedGroups() : bool
+    public function supportsPregCaptureOnlyNamedGroups(): bool
     {
         // https://php.watch/versions/8.2/preg-n-no-capture-modifier
         return $this->versionId >= 80200;
     }
-    public function supportsPropertyHooks() : bool
+    public function supportsPropertyHooks(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function supportsFinalProperties() : bool
+    public function supportsFinalProperties(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function supportsAsymmetricVisibility() : bool
+    public function supportsAsymmetricVisibility(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function supportsLazyObjects() : bool
+    public function supportsLazyObjects(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function hasDateTimeExceptions() : bool
+    public function hasDateTimeExceptions(): bool
     {
         return $this->versionId >= 80300;
     }
-    public function isCurloptUrlCheckingFileSchemeWithOpenBasedir() : bool
+    public function isCurloptUrlCheckingFileSchemeWithOpenBasedir(): bool
     {
         // Before PHP 8.0, when setting CURLOPT_URL, an unparsable URL or a file:// scheme would fail if open_basedir is used
         // https://github.com/php/php-src/blob/php-7.4.33/ext/curl/interface.c#L139-L158
         // https://github.com/php/php-src/blob/php-8.0.0/ext/curl/interface.c#L128-L130
         return $this->versionId < 80000;
     }
-    public function highlightStringDoesNotReturnFalse() : bool
+    public function highlightStringDoesNotReturnFalse(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function deprecatesImplicitlyNullableParameterTypes() : bool
+    public function deprecatesImplicitlyNullableParameterTypes(): bool
     {
         return $this->versionId >= 80400;
     }
-    public function substrReturnFalseInsteadOfEmptyString() : bool
+    public function substrReturnFalseInsteadOfEmptyString(): bool
     {
         return $this->versionId < 80000;
     }
-    public function supportsBcMathNumberOperatorOverloading() : bool
+    public function supportsBcMathNumberOperatorOverloading(): bool
     {
         return $this->versionId >= 80400;
     }

@@ -19,26 +19,26 @@ final class RuleError139 implements RuleError, LineRuleError, TipRuleError, Fixa
     public Node $originalNode;
     /** @var callable(Node): Node */
     public $newNodeCallable;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
-    public function getOriginalNode() : Node
+    public function getOriginalNode(): Node
     {
         return $this->originalNode;
     }
     /**
      * @return callable(Node): Node
      */
-    public function getNewNodeCallable() : callable
+    public function getNewNodeCallable(): callable
     {
         return $this->newNodeCallable;
     }

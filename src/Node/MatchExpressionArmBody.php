@@ -17,11 +17,11 @@ final class MatchExpressionArmBody
         $this->scope = $scope;
         $this->body = $body;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }
-    public function getBody() : Expr
+    public function getBody(): Expr
     {
         return $this->body;
     }

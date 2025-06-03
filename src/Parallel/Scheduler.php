@@ -41,7 +41,7 @@ final class Scheduler implements DiagnoseExtension
     /**
      * @param array<string> $files
      */
-    public function scheduleWork(int $cpuCores, array $files) : \PHPStan\Parallel\Schedule
+    public function scheduleWork(int $cpuCores, array $files): \PHPStan\Parallel\Schedule
     {
         $jobs = array_chunk($files, $this->jobSize);
         $numberOfProcesses = min(max((int) floor(count($jobs) / $this->minimumNumberOfJobsPerProcess), 1), $cpuCores);
@@ -49,7 +49,7 @@ final class Scheduler implements DiagnoseExtension
         $this->storedData = [$cpuCores, count($files), count($jobs), $usedNumberOfProcesses];
         return new \PHPStan\Parallel\Schedule($usedNumberOfProcesses, $jobs);
     }
-    public function print(Output $output) : void
+    public function print(Output $output): void
     {
         if ($this->storedData === null) {
             return;

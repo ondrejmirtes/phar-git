@@ -28,5 +28,5 @@ use PHPStan\Reflection\ClassConstantReflection;
 interface RestrictedClassConstantUsageExtension
 {
     public const CLASS_CONSTANT_EXTENSION_TAG = 'phpstan.restrictedClassConstantUsageExtension';
-    public function isRestrictedClassConstantUsage(ClassConstantReflection $constantReflection, Scope $scope) : ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+    public function isRestrictedClassConstantUsage(ClassConstantReflection $constantReflection, Scope $scope): ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
 }

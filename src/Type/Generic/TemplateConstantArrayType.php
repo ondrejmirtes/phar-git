@@ -25,7 +25,7 @@ final class TemplateConstantArrayType extends ConstantArrayType implements \PHPS
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

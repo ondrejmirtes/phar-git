@@ -21,12 +21,12 @@ final class TooWideThrowTypeCheck
      * @param ThrowPoint[] $throwPoints
      * @return string[]
      */
-    public function check(Type $throwType, array $throwPoints) : array
+    public function check(Type $throwType, array $throwPoints): array
     {
         if ($throwType->isVoid()->yes()) {
             return [];
         }
-        $throwPointType = TypeCombinator::union(...array_map(function (ThrowPoint $throwPoint) : Type {
+        $throwPointType = TypeCombinator::union(...array_map(function (ThrowPoint $throwPoint): Type {
             if (!$this->implicitThrows && !$throwPoint->isExplicit()) {
                 return new NeverType();
             }

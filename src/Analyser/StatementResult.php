@@ -45,19 +45,19 @@ final class StatementResult
         $this->impurePoints = $impurePoints;
         $this->endStatements = $endStatements;
     }
-    public function getScope() : \PHPStan\Analyser\MutatingScope
+    public function getScope(): \PHPStan\Analyser\MutatingScope
     {
         return $this->scope;
     }
-    public function hasYield() : bool
+    public function hasYield(): bool
     {
         return $this->hasYield;
     }
-    public function isAlwaysTerminating() : bool
+    public function isAlwaysTerminating(): bool
     {
         return $this->isAlwaysTerminating;
     }
-    public function filterOutLoopExitPoints() : self
+    public function filterOutLoopExitPoints(): self
     {
         if (!$this->isAlwaysTerminating) {
             return $this;
@@ -81,7 +81,7 @@ final class StatementResult
     /**
      * @return StatementExitPoint[]
      */
-    public function getExitPoints() : array
+    public function getExitPoints(): array
     {
         return $this->exitPoints;
     }
@@ -89,7 +89,7 @@ final class StatementResult
      * @param class-string<Stmt\Continue_>|class-string<Stmt\Break_> $stmtClass
      * @return list<StatementExitPoint>
      */
-    public function getExitPointsByType(string $stmtClass) : array
+    public function getExitPointsByType(string $stmtClass): array
     {
         $exitPoints = [];
         foreach ($this->exitPoints as $exitPoint) {
@@ -117,7 +117,7 @@ final class StatementResult
     /**
      * @return list<StatementExitPoint>
      */
-    public function getExitPointsForOuterLoop() : array
+    public function getExitPointsForOuterLoop(): array
     {
         $exitPoints = [];
         foreach ($this->exitPoints as $exitPoint) {
@@ -152,14 +152,14 @@ final class StatementResult
     /**
      * @return ThrowPoint[]
      */
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return $this->throwPoints;
     }
     /**
      * @return ImpurePoint[]
      */
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
@@ -179,7 +179,7 @@ final class StatementResult
      *
      * @return EndStatementResult[]
      */
-    public function getEndStatements() : array
+    public function getEndStatements(): array
     {
         return $this->endStatements;
     }

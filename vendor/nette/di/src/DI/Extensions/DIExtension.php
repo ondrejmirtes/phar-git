@@ -64,13 +64,13 @@ final class DIExtension extends Nette\DI\CompilerExtension
             $this->enableTracyIntegration();
         }
     }
-    private function restrictParameters(Nette\PhpGenerator\ClassType $class) : void
+    private function restrictParameters(Nette\PhpGenerator\ClassType $class): void
     {
         if (!$this->config->export->parameters) {
             $class->removeMethod('getStaticParameters');
         }
     }
-    private function restrictTags(Nette\PhpGenerator\ClassType $class) : void
+    private function restrictTags(Nette\PhpGenerator\ClassType $class): void
     {
         $option = $this->config->export->tags;
         if ($option === \true) {
@@ -80,7 +80,7 @@ final class DIExtension extends Nette\DI\CompilerExtension
             $prop->setValue(\array_intersect_key($prop->getValue(), $this->exportedTags + \array_flip((array) $option)));
         }
     }
-    private function restrictTypes(Nette\PhpGenerator\ClassType $class) : void
+    private function restrictTypes(Nette\PhpGenerator\ClassType $class): void
     {
         $option = $this->config->export->types;
         if ($option === \true) {
@@ -89,9 +89,9 @@ final class DIExtension extends Nette\DI\CompilerExtension
         $prop = $class->getProperty('wiring');
         $prop->setValue(\array_intersect_key($prop->getValue(), $this->exportedTypes + (\is_array($option) ? \array_flip($option) : [])));
     }
-    private function enableTracyIntegration() : void
+    private function enableTracyIntegration(): void
     {
         Nette\Bridges\DITracy\ContainerPanel::$compilationTime = $this->time;
-        $this->initialization->addBody($this->getContainerBuilder()->formatPhp('?;', [new Nette\DI\Definitions\Statement('@Tracy\\Bar::addPanel', [new Nette\DI\Definitions\Statement(Nette\Bridges\DITracy\ContainerPanel::class)])]));
+        $this->initialization->addBody($this->getContainerBuilder()->formatPhp('?;', [new Nette\DI\Definitions\Statement('@Tracy\Bar::addPanel', [new Nette\DI\Definitions\Statement(Nette\Bridges\DITracy\ContainerPanel::class)])]));
     }
 }

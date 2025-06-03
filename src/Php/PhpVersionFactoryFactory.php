@@ -32,7 +32,7 @@ final class PhpVersionFactoryFactory
         $this->phpVersion = $phpVersion;
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
     }
-    public function create() : \PHPStan\Php\PhpVersionFactory
+    public function create(): \PHPStan\Php\PhpVersionFactory
     {
         $composerPhpVersion = null;
         if (count($this->composerAutoloaderProjectPaths) > 0) {

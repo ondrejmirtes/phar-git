@@ -68,7 +68,7 @@ final class FileAnalyser
      * @param array<string, true> $analysedFiles
      * @param callable(Node $node, Scope $scope): void|null $outerNodeCallback
      */
-    public function analyseFile(string $file, array $analysedFiles, RuleRegistry $ruleRegistry, CollectorRegistry $collectorRegistry, ?callable $outerNodeCallback) : \PHPStan\Analyser\FileAnalyserResult
+    public function analyseFile(string $file, array $analysedFiles, RuleRegistry $ruleRegistry, CollectorRegistry $collectorRegistry, ?callable $outerNodeCallback): \PHPStan\Analyser\FileAnalyserResult
     {
         /** @var list<Error> $fileErrors */
         $fileErrors = [];
@@ -87,7 +87,7 @@ final class FileAnalyser
                 $parserNodes = $this->parser->parseFile($file);
                 $linesToIgnore = $unmatchedLineIgnores = [$file => $this->getLinesToIgnoreFromTokens($parserNodes)];
                 $temporaryFileErrors = [];
-                $nodeCallback = function (Node $node, \PHPStan\Analyser\Scope $scope) use(&$fileErrors, &$fileCollectedData, &$fileDependencies, &$usedTraitFileDependencies, &$exportedNodes, $file, $ruleRegistry, $collectorRegistry, $outerNodeCallback, $analysedFiles, &$linesToIgnore, &$unmatchedLineIgnores, &$temporaryFileErrors, $parserNodes) : void {
+                $nodeCallback = function (Node $node, \PHPStan\Analyser\Scope $scope) use (&$fileErrors, &$fileCollectedData, &$fileDependencies, &$usedTraitFileDependencies, &$exportedNodes, $file, $ruleRegistry, $collectorRegistry, $outerNodeCallback, $analysedFiles, &$linesToIgnore, &$unmatchedLineIgnores, &$temporaryFileErrors, $parserNodes): void {
                     if ($node instanceof Node\Stmt\Trait_) {
                         foreach (array_keys($linesToIgnore[$file] ?? []) as $lineToIgnore) {
                             if ($lineToIgnore < $node->getStartLine() || $lineToIgnore > $node->getEndLine()) {
@@ -235,7 +235,7 @@ final class FileAnalyser
      * @param Node[] $nodes
      * @return array<int, non-empty-list<string>|null>
      */
-    private function getLinesToIgnoreFromTokens(array $nodes) : array
+    private function getLinesToIgnoreFromTokens(array $nodes): array
     {
         if (!isset($nodes[0])) {
             return [];
@@ -246,11 +246,11 @@ final class FileAnalyser
     /**
      * @param array<string, true> $analysedFiles
      */
-    private function collectErrors(array $analysedFiles) : void
+    private function collectErrors(array $analysedFiles): void
     {
         $this->filteredPhpErrors = [];
         $this->allPhpErrors = [];
-        set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) use($analysedFiles) : bool {
+        set_error_handler(function (int $errno, string $errstr, string $errfile, int $errline) use ($analysedFiles): bool {
             if ((error_reporting() & $errno) === 0) {
                 // silence @ operator
                 return \true;
@@ -267,11 +267,11 @@ final class FileAnalyser
             return \true;
         });
     }
-    private function restoreCollectErrorsHandler() : void
+    private function restoreCollectErrorsHandler(): void
     {
         restore_error_handler();
     }
-    private function getErrorLabel(int $errno) : string
+    private function getErrorLabel(int $errno): string
     {
         switch ($errno) {
             case E_ERROR:

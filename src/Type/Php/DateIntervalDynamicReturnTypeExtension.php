@@ -18,15 +18,15 @@ use function in_array;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class DateIntervalDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
-    public function getClass() : string
+    public function getClass(): string
     {
         return DateInterval::class;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'createFromDateString';
     }
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         $arguments = $methodCall->getArgs();
         if (!isset($arguments[0])) {

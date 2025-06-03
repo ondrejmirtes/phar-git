@@ -61,7 +61,7 @@ final class FunctionCallParametersCheck
      * @return list<IdentifierRuleError>
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Expr\MethodCall|\PhpParser\Node\Expr\StaticCall|\PhpParser\Node\Expr\New_ $funcCall
      */
-    public function check(ParametersAcceptor $parametersAcceptor, Scope $scope, bool $isBuiltin, $funcCall, string $nodeType, TrinaryLogic $acceptsNamedArguments, string $singleInsufficientParameterMessage, string $pluralInsufficientParametersMessage, string $singleInsufficientParameterInVariadicFunctionMessage, string $pluralInsufficientParametersInVariadicFunctionMessage, string $singleInsufficientParameterWithOptionalParametersMessage, string $pluralInsufficientParametersWithOptionalParametersMessage, string $wrongArgumentTypeMessage, string $voidReturnTypeUsed, string $parameterPassedByReferenceMessage, string $unresolvableTemplateTypeMessage, string $missingParameterMessage, string $unknownParameterMessage, string $unresolvableReturnTypeMessage, string $unresolvableParameterTypeMessage, string $namedArgumentMessage) : array
+    public function check(ParametersAcceptor $parametersAcceptor, Scope $scope, bool $isBuiltin, $funcCall, string $nodeType, TrinaryLogic $acceptsNamedArguments, string $singleInsufficientParameterMessage, string $pluralInsufficientParametersMessage, string $singleInsufficientParameterInVariadicFunctionMessage, string $pluralInsufficientParametersInVariadicFunctionMessage, string $singleInsufficientParameterWithOptionalParametersMessage, string $pluralInsufficientParametersWithOptionalParametersMessage, string $wrongArgumentTypeMessage, string $voidReturnTypeUsed, string $parameterPassedByReferenceMessage, string $unresolvableTemplateTypeMessage, string $missingParameterMessage, string $unknownParameterMessage, string $unresolvableReturnTypeMessage, string $unresolvableParameterTypeMessage, string $namedArgumentMessage): array
     {
         $functionParametersMinCount = 0;
         $functionParametersMaxCount = 0;
@@ -272,7 +272,7 @@ final class FunctionCallParametersCheck
             $resolvedTypes = $parametersAcceptor->getResolvedTemplateTypeMap()->getTypes();
             if (count($resolvedTypes) > 0) {
                 $returnTemplateTypes = [];
-                TypeTraverser::map($parametersAcceptor->getReturnTypeWithUnresolvableTemplateTypes(), static function (Type $type, callable $traverse) use(&$returnTemplateTypes) : Type {
+                TypeTraverser::map($parametersAcceptor->getReturnTypeWithUnresolvableTemplateTypes(), static function (Type $type, callable $traverse) use (&$returnTemplateTypes): Type {
                     while ($type instanceof ConditionalType && $type->isResolvable()) {
                         $type = $type->resolve();
                     }
@@ -284,7 +284,7 @@ final class FunctionCallParametersCheck
                 });
                 $parameterTemplateTypes = [];
                 foreach ($originalParametersAcceptor->getParameters() as $parameter) {
-                    TypeTraverser::map($parameter->getType(), static function (Type $type, callable $traverse) use(&$parameterTemplateTypes) : Type {
+                    TypeTraverser::map($parameter->getType(), static function (Type $type, callable $traverse) use (&$parameterTemplateTypes): Type {
                         if ($type instanceof TemplateType && $type->getDefault() === null) {
                             $parameterTemplateTypes[$type->getName()] = \true;
                             return $type;
@@ -315,7 +315,7 @@ final class FunctionCallParametersCheck
      * @param array<int, array{Expr, Type|null, bool, string|null, int}> $arguments
      * @return array{list<IdentifierRuleError>, array<int, array{Expr, Type|null, bool, (string|null), int, (ParameterReflection|null), (ParameterReflection|null)}>}
      */
-    private function processArguments(ParametersAcceptor $parametersAcceptor, int $line, bool $isBuiltin, array $arguments, bool $hasNamedArguments, string $missingParameterMessage, string $unknownParameterMessage) : array
+    private function processArguments(ParametersAcceptor $parametersAcceptor, int $line, bool $isBuiltin, array $arguments, bool $hasNamedArguments, string $missingParameterMessage, string $unknownParameterMessage): array
     {
         $parameters = $parametersAcceptor->getParameters();
         $originalParameters = $parametersAcceptor instanceof ResolvedFunctionVariant ? $parametersAcceptor->getOriginalParametersAcceptor()->getParameters() : array_fill(0, count($parameters), null);
@@ -391,7 +391,7 @@ final class FunctionCallParametersCheck
     /**
      * @param int|string|null $positionOrNamed
      */
-    private function describeParameter(ParameterReflection $parameter, $positionOrNamed) : string
+    private function describeParameter(ParameterReflection $parameter, $positionOrNamed): string
     {
         $parts = [];
         if (is_int($positionOrNamed)) {

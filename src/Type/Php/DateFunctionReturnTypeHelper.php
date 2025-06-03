@@ -21,7 +21,7 @@ use const STR_PAD_LEFT;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class DateFunctionReturnTypeHelper
 {
-    public function getTypeFromFormatType(Type $formatType, bool $useMicrosec) : Type
+    public function getTypeFromFormatType(Type $formatType, bool $useMicrosec): Type
     {
         $types = [];
         foreach ($formatType->getConstantStrings() as $formatString) {
@@ -36,7 +36,7 @@ final class DateFunctionReturnTypeHelper
         }
         return $type;
     }
-    public function buildReturnTypeFromFormat(string $formatString, bool $useMicrosec) : Type
+    public function buildReturnTypeFromFormat(string $formatString, bool $useMicrosec): Type
     {
         // see see https://www.php.net/manual/en/datetime.format.php
         switch ($formatString) {
@@ -81,7 +81,7 @@ final class DateFunctionReturnTypeHelper
         }
         return new IntersectionType([new StringType(), new AccessoryNonFalsyStringType()]);
     }
-    private function buildNumericRangeType(int $min, int $max, bool $zeroPad) : Type
+    private function buildNumericRangeType(int $min, int $max, bool $zeroPad): Type
     {
         $types = [];
         for ($i = $min; $i <= $max; $i++) {

@@ -29,11 +29,11 @@ final class DuplicateKeysInLiteralArraysRule implements Rule
     {
         $this->exprPrinter = $exprPrinter;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return LiteralArrayNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $duplicateKeys = [];
         $printedValues = [];

@@ -29,11 +29,11 @@ final class InvalidPhpDocTagValueRule implements Rule
         $this->phpDocLexer = $phpDocLexer;
         $this->phpDocParser = $phpDocParser;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return NodeAbstract::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         // mirrored with InvalidPHPStanDocTagRule
         if ($node instanceof VirtualNode) {

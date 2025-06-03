@@ -16,18 +16,18 @@ final class InvalidateExprNode extends NodeAbstract implements \PHPStan\Node\Vir
         $this->expr = $expr;
         parent::__construct($expr->getAttributes());
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InvalidateExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

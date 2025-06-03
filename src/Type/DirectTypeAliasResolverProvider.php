@@ -10,7 +10,7 @@ final class DirectTypeAliasResolverProvider implements \PHPStan\Type\TypeAliasRe
     {
         $this->typeAliasResolver = $typeAliasResolver;
     }
-    public function getTypeAliasResolver() : \PHPStan\Type\TypeAliasResolver
+    public function getTypeAliasResolver(): \PHPStan\Type\TypeAliasResolver
     {
         return $this->typeAliasResolver;
     }

@@ -36,7 +36,7 @@ final class DeprecationProvider
     {
         $this->container = $container;
     }
-    public function getPropertyDeprecation(ReflectionProperty $reflectionProperty) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getPropertyDeprecation(ReflectionProperty $reflectionProperty): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->propertyDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\PropertyDeprecationExtension::PROPERTY_EXTENSION_TAG);
         foreach ($this->propertyDeprecationExtensions as $extension) {
@@ -47,7 +47,7 @@ final class DeprecationProvider
         }
         return null;
     }
-    public function getMethodDeprecation(ReflectionMethod $methodReflection) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getMethodDeprecation(ReflectionMethod $methodReflection): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->methodDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\MethodDeprecationExtension::METHOD_EXTENSION_TAG);
         foreach ($this->methodDeprecationExtensions as $extension) {
@@ -58,7 +58,7 @@ final class DeprecationProvider
         }
         return null;
     }
-    public function getClassConstantDeprecation(ReflectionClassConstant $reflectionConstant) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getClassConstantDeprecation(ReflectionClassConstant $reflectionConstant): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->classConstantDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\ClassConstantDeprecationExtension::CLASS_CONSTANT_EXTENSION_TAG);
         foreach ($this->classConstantDeprecationExtensions as $extension) {
@@ -72,7 +72,7 @@ final class DeprecationProvider
     /**
      * @param \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum $reflection
      */
-    public function getClassDeprecation($reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getClassDeprecation($reflection): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->classDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\ClassDeprecationExtension::CLASS_EXTENSION_TAG);
         foreach ($this->classDeprecationExtensions as $extension) {
@@ -83,7 +83,7 @@ final class DeprecationProvider
         }
         return null;
     }
-    public function getFunctionDeprecation(ReflectionFunction $reflectionFunction) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getFunctionDeprecation(ReflectionFunction $reflectionFunction): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->functionDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\FunctionDeprecationExtension::FUNCTION_EXTENSION_TAG);
         foreach ($this->functionDeprecationExtensions as $extension) {
@@ -94,7 +94,7 @@ final class DeprecationProvider
         }
         return null;
     }
-    public function getConstantDeprecation(ReflectionConstant $constantReflection) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getConstantDeprecation(ReflectionConstant $constantReflection): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->constantDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\ConstantDeprecationExtension::CONSTANT_EXTENSION_TAG);
         foreach ($this->constantDeprecationExtensions as $extension) {
@@ -108,7 +108,7 @@ final class DeprecationProvider
     /**
      * @param \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase $enumCaseReflection
      */
-    public function getEnumCaseDeprecation($enumCaseReflection) : ?\PHPStan\Reflection\Deprecation\Deprecation
+    public function getEnumCaseDeprecation($enumCaseReflection): ?\PHPStan\Reflection\Deprecation\Deprecation
     {
         $this->enumCaseDeprecationExtensions ??= $this->container->getServicesByTag(\PHPStan\Reflection\Deprecation\EnumCaseDeprecationExtension::ENUM_CASE_EXTENSION_TAG);
         foreach ($this->enumCaseDeprecationExtensions as $extension) {

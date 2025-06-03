@@ -18,11 +18,11 @@ final class PureFunctionRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $function = $node->getFunctionReflection();
         return $this->check->check(sprintf('Function %s()', $function->getName()), 'Function', $function, $function->getParameters(), $function->getReturnType(), $node->getImpurePoints(), $node->getStatementResult()->getThrowPoints(), $node->getStatements(), \false);

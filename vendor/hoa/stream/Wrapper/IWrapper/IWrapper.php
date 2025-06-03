@@ -56,4 +56,4 @@ interface IWrapper extends \Hoa\Stream\Wrapper\IWrapper\File, \Hoa\Stream\Wrappe
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Stream\\Wrapper\\IWrapper\\IWrapper');
+Consistency::flexEntity('Hoa\Stream\Wrapper\IWrapper\IWrapper');

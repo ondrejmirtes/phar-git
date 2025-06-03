@@ -36,11 +36,11 @@ final class RegularExpressionQuotingRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->regexExpressionHelper = $regexExpressionHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -70,7 +70,7 @@ final class RegularExpressionQuotingRule implements Rule
      *
      * @return list<IdentifierRuleError>
      */
-    private function validateQuoteDelimiters(Concat $concat, Scope $scope, array $patternDelimiters) : array
+    private function validateQuoteDelimiters(Concat $concat, Scope $scope, array $patternDelimiters): array
     {
         if ($patternDelimiters === []) {
             return [];
@@ -97,7 +97,7 @@ final class RegularExpressionQuotingRule implements Rule
     /**
      * @param string[] $patternDelimiters
      */
-    private function validatePregQuote(FuncCall $pregQuote, Scope $scope, array $patternDelimiters) : ?IdentifierRuleError
+    private function validatePregQuote(FuncCall $pregQuote, Scope $scope, array $patternDelimiters): ?IdentifierRuleError
     {
         if (!$pregQuote->name instanceof Node\Name) {
             return null;
@@ -146,11 +146,11 @@ final class RegularExpressionQuotingRule implements Rule
      *
      * @return list<string>
      */
-    private function removeDefaultEscapedDelimiters(array $delimiters) : array
+    private function removeDefaultEscapedDelimiters(array $delimiters): array
     {
         return array_values(array_filter($delimiters, fn(string $delimiter): bool => !$this->isDefaultEscaped($delimiter)));
     }
-    private function isDefaultEscaped(string $delimiter) : bool
+    private function isDefaultEscaped(string $delimiter): bool
     {
         if (strlen($delimiter) !== 1) {
             return \false;
@@ -165,7 +165,7 @@ final class RegularExpressionQuotingRule implements Rule
     /**
      * @return Node\Arg[]|null
      */
-    private function getNormalizedArgs(FuncCall $functionCall, Scope $scope, FunctionReflection $functionReflection) : ?array
+    private function getNormalizedArgs(FuncCall $functionCall, Scope $scope, FunctionReflection $functionReflection): ?array
     {
         $parametersAcceptor = ParametersAcceptorSelector::selectFromArgs($scope, $functionCall->getArgs(), $functionReflection->getVariants(), $functionReflection->getNamedArgumentsVariants());
         $normalizedFuncCall = ArgumentsNormalizer::reorderFuncArguments($parametersAcceptor, $functionCall);

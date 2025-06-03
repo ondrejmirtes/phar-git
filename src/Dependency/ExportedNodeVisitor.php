@@ -21,7 +21,7 @@ final class ExportedNodeVisitor extends NodeVisitorAbstract
     {
         $this->exportedNodeResolver = $exportedNodeResolver;
     }
-    public function reset(string $fileName) : void
+    public function reset(string $fileName): void
     {
         $this->fileName = $fileName;
         $this->currentNodes = [];
@@ -29,11 +29,11 @@ final class ExportedNodeVisitor extends NodeVisitorAbstract
     /**
      * @return RootExportedNode[]
      */
-    public function getExportedNodes() : array
+    public function getExportedNodes(): array
     {
         return $this->currentNodes;
     }
-    public function enterNode(Node $node) : ?int
+    public function enterNode(Node $node): ?int
     {
         if ($this->fileName === null) {
             throw new ShouldNotHappenException();

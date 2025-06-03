@@ -15,19 +15,19 @@ class Type
     public const String = 'string', Int = 'int', Float = 'float', Bool = 'bool', Array = 'array', Object = 'object', Callable = 'callable', Iterable = 'iterable', Void = 'void', Never = 'never', Mixed = 'mixed', False = 'false', Null = 'null', Self = 'self', Parent = 'parent', Static = 'static';
     /** @deprecated */
     public const STRING = self::String, INT = self::Int, FLOAT = self::Float, BOOL = self::Bool, ARRAY = self::Array, OBJECT = self::Object, CALLABLE = self::Callable, ITERABLE = self::Iterable, VOID = self::Void, NEVER = self::Never, MIXED = self::Mixed, FALSE = self::False, NULL = self::Null, SELF = self::Self, PARENT = self::Parent, STATIC = self::Static;
-    public static function nullable(string $type, bool $state = \true) : string
+    public static function nullable(string $type, bool $state = \true): string
     {
         return ($state ? '?' : '') . \ltrim($type, '?');
     }
-    public static function union(string ...$types) : string
+    public static function union(string ...$types): string
     {
         return \implode('|', $types);
     }
-    public static function intersection(string ...$types) : string
+    public static function intersection(string ...$types): string
     {
         return \implode('&', $types);
     }
-    public static function getType($value) : ?string
+    public static function getType($value): ?string
     {
         if (\is_object($value)) {
             return \get_class($value);

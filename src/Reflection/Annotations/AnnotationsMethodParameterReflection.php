@@ -25,55 +25,55 @@ final class AnnotationsMethodParameterReflection implements ExtendedParameterRef
         $this->isVariadic = $isVariadic;
         $this->defaultValue = $defaultValue;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->isOptional;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->type;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return \false;
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return new MixedType();
     }
-    public function getOutType() : ?Type
+    public function getOutType(): ?Type
     {
         return null;
     }
-    public function isImmediatelyInvokedCallable() : TrinaryLogic
+    public function isImmediatelyInvokedCallable(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getClosureThisType() : ?Type
+    public function getClosureThisType(): ?Type
     {
         return null;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

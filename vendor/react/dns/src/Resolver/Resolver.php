@@ -26,7 +26,7 @@ final class Resolver implements ResolverInterface
     {
         $query = new Query($domain, $type, Message::CLASS_IN);
         $that = $this;
-        return $this->executor->query($query)->then(function (Message $response) use($query, $that) {
+        return $this->executor->query($query)->then(function (Message $response) use ($query, $that) {
             return $that->extractValues($query, $response);
         });
     }
@@ -108,7 +108,7 @@ final class Resolver implements ResolverInterface
     private function filterByField(array $answers, $field, $value)
     {
         $value = \strtolower($value);
-        return \array_filter($answers, function ($answer) use($field, $value) {
+        return \array_filter($answers, function ($answer) use ($field, $value) {
             return $value === \strtolower($answer->{$field});
         });
     }

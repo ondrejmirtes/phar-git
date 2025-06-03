@@ -16,11 +16,11 @@ use function sprintf;
  */
 final class RequireImplementsRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $errors = [];

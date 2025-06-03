@@ -17,7 +17,7 @@ use _PHPStan_checksum\Nette\DI\Helpers;
 final class ServicesExtension extends Nette\DI\CompilerExtension
 {
     use Nette\SmartObject;
-    public function getConfigSchema() : Nette\Schema\Schema
+    public function getConfigSchema(): Nette\Schema\Schema
     {
         return Nette\Schema\Expect::arrayOf(new DefinitionSchema($this->getContainerBuilder()));
     }
@@ -37,7 +37,7 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
     /**
      * Loads service definition from normalized configuration.
      */
-    private function loadDefinition(?string $name, \stdClass $config) : void
+    private function loadDefinition(?string $name, \stdClass $config): void
     {
         try {
             if ((array) $config === [\false]) {
@@ -57,7 +57,7 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
     /**
      * Updates service definition according to normalized configuration.
      */
-    private function updateServiceDefinition(Definitions\ServiceDefinition $definition, \stdClass $config) : void
+    private function updateServiceDefinition(Definitions\ServiceDefinition $definition, \stdClass $config): void
     {
         if ($config->create) {
             $definition->setCreator(Helpers::filterArguments([$config->create])[0]);
@@ -88,7 +88,7 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
             $definition->addTag(InjectExtension::TagInject, $config->inject);
         }
     }
-    private function updateAccessorDefinition(Definitions\AccessorDefinition $definition, \stdClass $config) : void
+    private function updateAccessorDefinition(Definitions\AccessorDefinition $definition, \stdClass $config): void
     {
         if (isset($config->implement)) {
             $definition->setImplement($config->implement);
@@ -97,7 +97,7 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
             $definition->setReference($ref);
         }
     }
-    private function updateFactoryDefinition(Definitions\FactoryDefinition $definition, \stdClass $config) : void
+    private function updateFactoryDefinition(Definitions\FactoryDefinition $definition, \stdClass $config): void
     {
         $resultDef = $definition->getResultDefinition();
         if (isset($config->implement)) {
@@ -135,7 +135,7 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
             $definition->addTag(InjectExtension::TagInject, $config->inject);
         }
     }
-    private function updateLocatorDefinition(Definitions\LocatorDefinition $definition, \stdClass $config) : void
+    private function updateLocatorDefinition(Definitions\LocatorDefinition $definition, \stdClass $config): void
     {
         if (isset($config->implement)) {
             $definition->setImplement($config->implement);
@@ -147,13 +147,13 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
             $definition->setTagged($config->tagged);
         }
     }
-    private function updateImportedDefinition(Definitions\ImportedDefinition $definition, \stdClass $config) : void
+    private function updateImportedDefinition(Definitions\ImportedDefinition $definition, \stdClass $config): void
     {
         if ($config->type) {
             $definition->setType($config->type);
         }
     }
-    private function updateDefinition(Definitions\Definition $definition, \stdClass $config) : void
+    private function updateDefinition(Definitions\Definition $definition, \stdClass $config): void
     {
         if (isset($config->autowired)) {
             $definition->setAutowired($config->autowired);
@@ -171,16 +171,16 @@ final class ServicesExtension extends Nette\DI\CompilerExtension
             }
         }
     }
-    private function convertKeyToName($key) : ?string
+    private function convertKeyToName($key): ?string
     {
         if (\is_int($key)) {
             return null;
-        } elseif (\preg_match('#^@[\\w\\\\]+$#D', $key)) {
+        } elseif (\preg_match('#^@[\w\\\\]+$#D', $key)) {
             return $this->getContainerBuilder()->getByType(\substr($key, 1), \true);
         }
         return $key;
     }
-    private function retrieveDefinition(?string $name, \stdClass $config) : Definitions\Definition
+    private function retrieveDefinition(?string $name, \stdClass $config): Definitions\Definition
     {
         $builder = $this->getContainerBuilder();
         if (!empty($config->reset['all'])) {

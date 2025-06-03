@@ -42,7 +42,7 @@ class ApplicationDescription
         $this->namespace = $namespace;
         $this->showHidden = $showHidden;
     }
-    public function getNamespaces() : array
+    public function getNamespaces(): array
     {
         if (null === $this->namespaces) {
             $this->inspectApplication();
@@ -52,7 +52,7 @@ class ApplicationDescription
     /**
      * @return Command[]
      */
-    public function getCommands() : array
+    public function getCommands(): array
     {
         if (null === $this->commands) {
             $this->inspectApplication();
@@ -62,7 +62,7 @@ class ApplicationDescription
     /**
      * @throws CommandNotFoundException
      */
-    public function getCommand(string $name) : Command
+    public function getCommand(string $name): Command
     {
         if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
             throw new CommandNotFoundException(\sprintf('Command "%s" does not exist.', $name));
@@ -91,7 +91,7 @@ class ApplicationDescription
             $this->namespaces[$namespace] = ['id' => $namespace, 'commands' => $names];
         }
     }
-    private function sortCommands(array $commands) : array
+    private function sortCommands(array $commands): array
     {
         $namespacedCommands = [];
         $globalCommands = [];

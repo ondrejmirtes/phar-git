@@ -25,7 +25,7 @@ final class TypeNodeResolverExtensionAwareRegistry implements \PHPStan\PhpDoc\Ty
     /**
      * @return TypeNodeResolverExtension[]
      */
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->extensions;
     }

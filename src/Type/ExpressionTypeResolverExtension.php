@@ -22,5 +22,5 @@ use PHPStan\Analyser\Scope;
  */
 interface ExpressionTypeResolverExtension
 {
-    public function getType(Expr $expr, Scope $scope) : ?\PHPStan\Type\Type;
+    public function getType(Expr $expr, Scope $scope): ?\PHPStan\Type\Type;
 }

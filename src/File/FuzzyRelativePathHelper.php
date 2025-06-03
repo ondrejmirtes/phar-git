@@ -32,7 +32,7 @@ final class FuzzyRelativePathHelper implements \PHPStan\File\RelativePathHelper
         $this->directorySeparator = $directorySeparator;
         $pathBeginning = null;
         $pathToTrimArray = null;
-        $trimBeginning = static function (string $path) : array {
+        $trimBeginning = static function (string $path): array {
             if (str_starts_with($path, '/')) {
                 return ['/', substr($path, 1)];
             } elseif (substr($path, 1, 1) === ':') {
@@ -77,7 +77,7 @@ final class FuzzyRelativePathHelper implements \PHPStan\File\RelativePathHelper
         }
         $this->pathToTrim = $pathToTrim;
     }
-    public function getRelativePath(string $filename) : string
+    public function getRelativePath(string $filename): string
     {
         if ($this->pathToTrim !== null && str_starts_with($filename, $this->pathToTrim)) {
             return ltrim(substr($filename, strlen($this->pathToTrim)), $this->directorySeparator);

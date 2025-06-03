@@ -32,7 +32,7 @@ final class ExportedParameterNode implements ExportedNode, JsonSerializable
         $this->hasDefault = $hasDefault;
         $this->attributes = $attributes;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -50,7 +50,7 @@ final class ExportedParameterNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['name'], $properties['type'], $properties['byRef'], $properties['variadic'], $properties['hasDefault'], $properties['attributes']);
     }
@@ -65,9 +65,9 @@ final class ExportedParameterNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
-        return new self($data['name'], $data['type'], $data['byRef'], $data['variadic'], $data['hasDefault'], array_map(static function (array $attributeData) : \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
+        return new self($data['name'], $data['type'], $data['byRef'], $data['variadic'], $data['hasDefault'], array_map(static function (array $attributeData): \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
             if ($attributeData['type'] !== \PHPStan\Dependency\ExportedNode\ExportedAttributeNode::class) {
                 throw new ShouldNotHappenException();
             }

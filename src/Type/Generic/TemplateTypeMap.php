@@ -35,7 +35,7 @@ final class TemplateTypeMap
         $this->types = $types;
         $this->lowerBoundTypes = $lowerBoundTypes;
     }
-    public function convertToLowerBoundTypes() : self
+    public function convertToLowerBoundTypes(): self
     {
         $lowerBoundTypes = $this->types;
         foreach ($this->lowerBoundTypes as $name => $type) {
@@ -51,7 +51,7 @@ final class TemplateTypeMap
         }
         return new self([], $lowerBoundTypes);
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         $empty = self::$empty;
         if ($empty !== null) {
@@ -61,16 +61,16 @@ final class TemplateTypeMap
         self::$empty = $empty;
         return $empty;
     }
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return $this->count() === 0;
     }
-    public function count() : int
+    public function count(): int
     {
         return count($this->types + $this->lowerBoundTypes);
     }
     /** @return array<string, Type> */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         $types = $this->types;
         foreach ($this->lowerBoundTypes as $name => $type) {
@@ -81,15 +81,15 @@ final class TemplateTypeMap
         }
         return $types;
     }
-    public function hasType(string $name) : bool
+    public function hasType(string $name): bool
     {
         return array_key_exists($name, $this->getTypes());
     }
-    public function getType(string $name) : ?Type
+    public function getType(string $name): ?Type
     {
         return $this->getTypes()[$name] ?? null;
     }
-    public function unsetType(string $name) : self
+    public function unsetType(string $name): self
     {
         if (!$this->hasType($name)) {
             return $this;
@@ -103,7 +103,7 @@ final class TemplateTypeMap
         }
         return new self($types, $lowerBoundTypes);
     }
-    public function union(self $other) : self
+    public function union(self $other): self
     {
         $result = $this->types;
         foreach ($other->types as $name => $type) {
@@ -127,7 +127,7 @@ final class TemplateTypeMap
         }
         return new self($result, $resultLowerBoundTypes);
     }
-    public function benevolentUnion(self $other) : self
+    public function benevolentUnion(self $other): self
     {
         $result = $this->types;
         foreach ($other->types as $name => $type) {
@@ -151,7 +151,7 @@ final class TemplateTypeMap
         }
         return new self($result, $resultLowerBoundTypes);
     }
-    public function intersect(self $other) : self
+    public function intersect(self $other): self
     {
         $result = $this->types;
         foreach ($other->types as $name => $type) {
@@ -172,7 +172,7 @@ final class TemplateTypeMap
         return new self($result, $resultLowerBoundTypes);
     }
     /** @param callable(string,Type):Type $cb */
-    public function map(callable $cb) : self
+    public function map(callable $cb): self
     {
         $types = [];
         foreach ($this->getTypes() as $name => $type) {
@@ -180,7 +180,7 @@ final class TemplateTypeMap
         }
         return new self($types);
     }
-    public function resolveToBounds() : self
+    public function resolveToBounds(): self
     {
         if ($this->resolvedToBounds !== null) {
             return $this->resolvedToBounds;

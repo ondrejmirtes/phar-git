@@ -15,19 +15,19 @@ final class RuleError13 implements RuleError, FileRuleError, TipRuleError
     public string $file;
     public string $fileDescription;
     public string $tip;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }

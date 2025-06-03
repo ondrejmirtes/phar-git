@@ -21,5 +21,5 @@ use PHPStan\Reflection\ExtendedMethodReflection;
  */
 interface AlwaysUsedMethodExtension
 {
-    public function isAlwaysUsed(ExtendedMethodReflection $methodReflection) : bool;
+    public function isAlwaysUsed(ExtendedMethodReflection $methodReflection): bool;
 }

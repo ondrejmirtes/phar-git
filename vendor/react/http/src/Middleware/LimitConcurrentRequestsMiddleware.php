@@ -124,7 +124,7 @@ final class LimitConcurrentRequestsMiddleware
         $queue[] = null;
         \end($queue);
         $id = \key($queue);
-        $deferred = new Deferred(function ($_, $reject) use(&$queue, $id) {
+        $deferred = new Deferred(function ($_, $reject) use (&$queue, $id) {
             // queued promise cancelled before its next handler is invoked
             // remove from queue and reject explicitly
             unset($queue[$id]);
@@ -134,7 +134,7 @@ final class LimitConcurrentRequestsMiddleware
         $queue[$id] = $deferred;
         $pending =& $this->pending;
         $that = $this;
-        return $deferred->promise()->then(function () use($request, $next, $body, &$pending, $that) {
+        return $deferred->promise()->then(function () use ($request, $next, $body, &$pending, $that) {
             // invoke next request handler
             ++$pending;
             try {
@@ -166,10 +166,10 @@ final class LimitConcurrentRequestsMiddleware
     public function await(PromiseInterface $promise)
     {
         $that = $this;
-        return $promise->then(function ($response) use($that) {
+        return $promise->then(function ($response) use ($that) {
             $that->processQueue();
             return $response;
-        }, function ($error) use($that) {
+        }, function ($error) use ($that) {
             $that->processQueue();
             return Promise\reject($error);
         });

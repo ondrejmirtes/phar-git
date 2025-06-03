@@ -20,11 +20,11 @@ final class FunctionNotFoundException extends AnalysedCodeException
         $this->functionName = $functionName;
         parent::__construct(sprintf('Function %s not found while trying to analyse it - discovering symbols is probably not configured properly.', $functionName));
     }
-    public function getFunctionName() : string
+    public function getFunctionName(): string
     {
         return $this->functionName;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return 'Learn more at https://phpstan.org/user-guide/discovering-symbols';
     }

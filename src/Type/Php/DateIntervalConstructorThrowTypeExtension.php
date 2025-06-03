@@ -23,11 +23,11 @@ final class DateIntervalConstructorThrowTypeExtension implements DynamicStaticMe
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === '__construct' && $methodReflection->getDeclaringClass()->getName() === DateInterval::class;
     }
-    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) === 0) {
             return $methodReflection->getThrowType();
@@ -48,7 +48,7 @@ final class DateIntervalConstructorThrowTypeExtension implements DynamicStaticMe
         }
         return null;
     }
-    private function exceptionType() : Type
+    private function exceptionType(): Type
     {
         if ($this->phpVersion->hasDateTimeExceptions()) {
             return new ObjectType('DateMalformedIntervalStringException');

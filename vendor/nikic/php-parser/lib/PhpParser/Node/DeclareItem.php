@@ -24,11 +24,11 @@ class DeclareItem extends NodeAbstract
         $this->key = \is_string($key) ? new Node\Identifier($key) : $key;
         $this->value = $value;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['key', 'value'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'DeclareItem';
     }

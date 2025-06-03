@@ -20,11 +20,11 @@ final class ConstantNotFoundException extends AnalysedCodeException
         $this->constantName = $constantName;
         parent::__construct(sprintf('Constant %s not found.', $constantName));
     }
-    public function getConstantName() : string
+    public function getConstantName(): string
     {
         return $this->constantName;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return 'Learn more at https://phpstan.org/user-guide/discovering-symbols';
     }

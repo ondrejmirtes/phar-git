@@ -39,18 +39,18 @@ final class CollectedData implements JsonSerializable
     {
         return $this->data;
     }
-    public function getFilePath() : string
+    public function getFilePath(): string
     {
         return $this->filePath;
     }
-    public function changeFilePath(string $newFilePath) : self
+    public function changeFilePath(string $newFilePath): self
     {
         return new self($this->data, $newFilePath, $this->collectorType);
     }
     /**
      * @return class-string<Collector<Node, mixed>>
      */
-    public function getCollectorType() : string
+    public function getCollectorType(): string
     {
         return $this->collectorType;
     }
@@ -65,14 +65,14 @@ final class CollectedData implements JsonSerializable
     /**
      * @param mixed[] $json
      */
-    public static function decode(array $json) : self
+    public static function decode(array $json): self
     {
         return new self($json['data'], $json['filePath'], $json['collectorType']);
     }
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['data'], $properties['filePath'], $properties['collectorType']);
     }

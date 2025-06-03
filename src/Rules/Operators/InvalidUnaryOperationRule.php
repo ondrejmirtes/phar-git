@@ -25,11 +25,11 @@ final class InvalidUnaryOperationRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\UnaryPlus && !$node instanceof Node\Expr\UnaryMinus && !$node instanceof Node\Expr\BitwiseNot) {
             return [];

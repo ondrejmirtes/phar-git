@@ -39,7 +39,7 @@ final class Factory
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\\Argument #2 ($loop) expected null|React\\EventLoop\\LoopInterface');
+            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $executor = $this->decorateHostsFileExecutor($this->createExecutor($config, $loop ?: Loop::get()));
         return new Resolver($executor);
@@ -64,11 +64,11 @@ final class Factory
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\\Argument #2 ($loop) expected null|React\\EventLoop\\LoopInterface');
+            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         if ($cache !== null && !$cache instanceof CacheInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\\Argument #3 ($cache) expected null|React\\Cache\\CacheInterface');
+            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #3 ($cache) expected null|React\Cache\CacheInterface');
         }
         // default to keeping maximum of 256 responses in cache unless explicitly given
         if (!$cache instanceof CacheInterface) {

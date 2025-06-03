@@ -40,7 +40,7 @@ final class AnalyserRunner
      * @param Closure(string $file): void|null $preFileCallback
      * @param Closure(int ): void|null $postFileCallback
      */
-    public function runAnalyser(array $files, array $allAnalysedFiles, ?Closure $preFileCallback, ?Closure $postFileCallback, bool $debug, bool $allowParallel, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input) : AnalyserResult
+    public function runAnalyser(array $files, array $allAnalysedFiles, ?Closure $preFileCallback, ?Closure $postFileCallback, bool $debug, bool $allowParallel, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input): AnalyserResult
     {
         $filesCount = count($files);
         if ($filesCount === 0) {
@@ -55,7 +55,7 @@ final class AnalyserRunner
             $loop = new StreamSelectLoop();
             $result = null;
             $promise = $this->parallelAnalyser->analyse($loop, $schedule, $mainScript, $postFileCallback, $projectConfigFile, $tmpFile, $insteadOfFile, $input, null);
-            $promise->then(static function (AnalyserResult $tmp) use(&$result) : void {
+            $promise->then(static function (AnalyserResult $tmp) use (&$result): void {
                 $result = $tmp;
             });
             $loop->run();
@@ -70,7 +70,7 @@ final class AnalyserRunner
      * @param string[] $analysedFiles
      * @return string[]
      */
-    private function switchTmpFile(array $analysedFiles, ?string $insteadOfFile, ?string $tmpFile) : array
+    private function switchTmpFile(array $analysedFiles, ?string $insteadOfFile, ?string $tmpFile): array
     {
         if ($insteadOfFile === null) {
             return $analysedFiles;

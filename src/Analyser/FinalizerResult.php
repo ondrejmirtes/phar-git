@@ -27,25 +27,25 @@ final class FinalizerResult
     /**
      * @return list<Error>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->analyserResult->getErrors();
     }
-    public function getAnalyserResult() : \PHPStan\Analyser\AnalyserResult
+    public function getAnalyserResult(): \PHPStan\Analyser\AnalyserResult
     {
         return $this->analyserResult;
     }
     /**
      * @return list<Error>
      */
-    public function getCollectorErrors() : array
+    public function getCollectorErrors(): array
     {
         return $this->collectorErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getLocallyIgnoredCollectorErrors() : array
+    public function getLocallyIgnoredCollectorErrors(): array
     {
         return $this->locallyIgnoredCollectorErrors;
     }

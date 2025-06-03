@@ -15,31 +15,31 @@ final class OutOfClassScope implements ClassMemberAccessAnswerer
     public function __construct()
     {
     }
-    public function isInClass() : bool
+    public function isInClass(): bool
     {
         return \false;
     }
-    public function getClassReflection() : ?ClassReflection
+    public function getClassReflection(): ?ClassReflection
     {
         return null;
     }
-    public function canAccessProperty(PropertyReflection $propertyReflection) : bool
+    public function canAccessProperty(PropertyReflection $propertyReflection): bool
     {
         return $propertyReflection->isPublic();
     }
-    public function canReadProperty(ExtendedPropertyReflection $propertyReflection) : bool
+    public function canReadProperty(ExtendedPropertyReflection $propertyReflection): bool
     {
         return $propertyReflection->isPublic();
     }
-    public function canWriteProperty(ExtendedPropertyReflection $propertyReflection) : bool
+    public function canWriteProperty(ExtendedPropertyReflection $propertyReflection): bool
     {
         return $propertyReflection->isPublic() && !$propertyReflection->isProtectedSet() && !$propertyReflection->isPrivateSet();
     }
-    public function canCallMethod(MethodReflection $methodReflection) : bool
+    public function canCallMethod(MethodReflection $methodReflection): bool
     {
         return $methodReflection->isPublic();
     }
-    public function canAccessConstant(ClassConstantReflection $constantReflection) : bool
+    public function canAccessConstant(ClassConstantReflection $constantReflection): bool
     {
         return $constantReflection->isPublic();
     }

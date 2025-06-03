@@ -32,54 +32,54 @@ final class ConditionalType implements \PHPStan\Type\CompoundType, \PHPStan\Type
         $this->else = $else;
         $this->negated = $negated;
     }
-    public function getSubject() : \PHPStan\Type\Type
+    public function getSubject(): \PHPStan\Type\Type
     {
         return $this->subject;
     }
-    public function getTarget() : \PHPStan\Type\Type
+    public function getTarget(): \PHPStan\Type\Type
     {
         return $this->target;
     }
-    public function getIf() : \PHPStan\Type\Type
+    public function getIf(): \PHPStan\Type\Type
     {
         return $this->if;
     }
-    public function getElse() : \PHPStan\Type\Type
+    public function getElse(): \PHPStan\Type\Type
     {
         return $this->else;
     }
-    public function isNegated() : bool
+    public function isNegated(): bool
     {
         return $this->negated;
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return $this->if->isSuperTypeOf($type->if)->and($this->else->isSuperTypeOf($type->else));
         }
         return $this->isSuperTypeOfDefault($type);
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return array_merge($this->subject->getReferencedClasses(), $this->target->getReferencedClasses(), $this->if->getReferencedClasses(), $this->else->getReferencedClasses());
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         return array_merge($this->subject->getReferencedTemplateTypes($positionVariance), $this->target->getReferencedTemplateTypes($positionVariance), $this->if->getReferencedTemplateTypes($positionVariance), $this->else->getReferencedTemplateTypes($positionVariance));
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         return $type instanceof self && $this->subject->equals($type->subject) && $this->target->equals($type->target) && $this->if->equals($type->if) && $this->else->equals($type->else);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('(%s %s %s ? %s : %s)', $this->subject->describe($level), $this->negated ? 'is not' : 'is', $this->target->describe($level), $this->if->describe($level), $this->else->describe($level));
     }
-    public function isResolvable() : bool
+    public function isResolvable(): bool
     {
         return !\PHPStan\Type\TypeUtils::containsTemplateType($this->subject) && !\PHPStan\Type\TypeUtils::containsTemplateType($this->target);
     }
-    protected function getResult() : \PHPStan\Type\Type
+    protected function getResult(): \PHPStan\Type\Type
     {
         $isSuperType = $this->target->isSuperTypeOf($this->subject);
         if ($isSuperType->yes()) {
@@ -90,7 +90,7 @@ final class ConditionalType implements \PHPStan\Type\CompoundType, \PHPStan\Type
         }
         return \PHPStan\Type\TypeCombinator::union($this->getNormalizedIf(), $this->getNormalizedElse());
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $subject = $cb($this->subject);
         $target = $cb($this->target);
@@ -101,7 +101,7 @@ final class ConditionalType implements \PHPStan\Type\CompoundType, \PHPStan\Type
         }
         return new self($subject, $target, $if, $else, $this->negated);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if (!$right instanceof self) {
             return $this;
@@ -115,23 +115,23 @@ final class ConditionalType implements \PHPStan\Type\CompoundType, \PHPStan\Type
         }
         return new self($subject, $target, $if, $else, $this->negated);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ConditionalTypeNode($this->subject->toPhpDocNode(), $this->target->toPhpDocNode(), $this->if->toPhpDocNode(), $this->else->toPhpDocNode(), $this->negated);
     }
-    private function getNormalizedIf() : \PHPStan\Type\Type
+    private function getNormalizedIf(): \PHPStan\Type\Type
     {
         return $this->normalizedIf ??= \PHPStan\Type\TypeTraverser::map($this->if, fn(\PHPStan\Type\Type $type, callable $traverse) => $type === $this->subject ? !$this->negated ? $this->getSubjectWithTargetIntersectedType() : $this->getSubjectWithTargetRemovedType() : $traverse($type));
     }
-    private function getNormalizedElse() : \PHPStan\Type\Type
+    private function getNormalizedElse(): \PHPStan\Type\Type
     {
         return $this->normalizedElse ??= \PHPStan\Type\TypeTraverser::map($this->else, fn(\PHPStan\Type\Type $type, callable $traverse) => $type === $this->subject ? !$this->negated ? $this->getSubjectWithTargetRemovedType() : $this->getSubjectWithTargetIntersectedType() : $traverse($type));
     }
-    private function getSubjectWithTargetIntersectedType() : \PHPStan\Type\Type
+    private function getSubjectWithTargetIntersectedType(): \PHPStan\Type\Type
     {
         return $this->subjectWithTargetIntersectedType ??= \PHPStan\Type\TypeCombinator::intersect($this->subject, $this->target);
     }
-    private function getSubjectWithTargetRemovedType() : \PHPStan\Type\Type
+    private function getSubjectWithTargetRemovedType(): \PHPStan\Type\Type
     {
         return $this->subjectWithTargetRemovedType ??= \PHPStan\Type\TypeCombinator::remove($this->subject, $this->target);
     }

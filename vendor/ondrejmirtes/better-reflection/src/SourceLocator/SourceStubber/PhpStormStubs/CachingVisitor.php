@@ -40,7 +40,7 @@ class CachingVisitor extends NodeVisitorAbstract
     {
         $this->builderFactory = $builderFactory;
     }
-    public function enterNode(Node $node) : ?int
+    public function enterNode(Node $node): ?int
     {
         if ($node instanceof Node\Stmt\Namespace_) {
             $this->currentNamespace = $node;
@@ -130,21 +130,21 @@ class CachingVisitor extends NodeVisitorAbstract
         return null;
     }
     /** @return array<string, array{0: Node\Stmt\ClassLike, 1: Node\Stmt\Namespace_|null}> */
-    public function getClassNodes() : array
+    public function getClassNodes(): array
     {
         return $this->classNodes;
     }
     /** @return array<string, list<array{0: Node\Stmt\Function_, 1: Node\Stmt\Namespace_|null}>> */
-    public function getFunctionNodes() : array
+    public function getFunctionNodes(): array
     {
         return $this->functionNodes;
     }
     /** @return array<string, array{0: Node\Stmt\Const_|Node\Expr\FuncCall, 1: Node\Stmt\Namespace_|null}> */
-    public function getConstantNodes() : array
+    public function getConstantNodes(): array
     {
         return $this->constantNodes;
     }
-    public function clearNodes() : void
+    public function clearNodes(): void
     {
         $this->classNodes = [];
         $this->functionNodes = [];
@@ -154,7 +154,7 @@ class CachingVisitor extends NodeVisitorAbstract
      * Some constants have different values on different systems, some are not actual in stubs.
      * @param \PhpParser\Node\Expr\FuncCall|\PhpParser\Node\Const_ $node
      */
-    private function updateConstantValue($node, string $constantName) : void
+    private function updateConstantValue($node, string $constantName): void
     {
         // prevent autoloading while discovering class constants
         $parts = explode('::', $constantName, 2);

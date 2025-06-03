@@ -29,7 +29,7 @@ final class ArrayColumnHelper
     /**
      * @return array{Type, TrinaryLogic}
      */
-    public function getReturnValueType(Type $arrayType, Type $columnType, Scope $scope) : array
+    public function getReturnValueType(Type $arrayType, Type $columnType, Scope $scope): array
     {
         $iterableAtLeastOnce = $arrayType->isIterableAtLeastOnce();
         if ($iterableAtLeastOnce->no()) {
@@ -46,7 +46,7 @@ final class ArrayColumnHelper
         }
         return [$returnValueType, $iterableAtLeastOnce];
     }
-    public function getReturnIndexType(Type $arrayType, Type $indexType, Scope $scope) : Type
+    public function getReturnIndexType(Type $arrayType, Type $indexType, Scope $scope): Type
     {
         if (!$indexType->isNull()->yes()) {
             $iterableValueType = $arrayType->getIterableValueType();
@@ -61,7 +61,7 @@ final class ArrayColumnHelper
         }
         return new IntegerType();
     }
-    public function handleAnyArray(Type $arrayType, Type $columnType, Type $indexType, Scope $scope) : Type
+    public function handleAnyArray(Type $arrayType, Type $columnType, Type $indexType, Scope $scope): Type
     {
         [$returnValueType, $iterableAtLeastOnce] = $this->getReturnValueType($arrayType, $columnType, $scope);
         if ($returnValueType instanceof NeverType) {
@@ -77,7 +77,7 @@ final class ArrayColumnHelper
         }
         return $returnType;
     }
-    public function handleConstantArray(ConstantArrayType $arrayType, Type $columnType, Type $indexType, Scope $scope) : ?Type
+    public function handleConstantArray(ConstantArrayType $arrayType, Type $columnType, Type $indexType, Scope $scope): ?Type
     {
         $builder = ConstantArrayTypeBuilder::createEmpty();
         foreach ($arrayType->getValueTypes() as $i => $iterableValueType) {
@@ -110,7 +110,7 @@ final class ArrayColumnHelper
         }
         return $builder->getArray();
     }
-    private function getOffsetOrProperty(Type $type, Type $offsetOrProperty, Scope $scope, bool $allowMaybe) : ?Type
+    private function getOffsetOrProperty(Type $type, Type $offsetOrProperty, Scope $scope, bool $allowMaybe): ?Type
     {
         $offsetIsNull = $offsetOrProperty->isNull();
         if ($offsetIsNull->yes()) {
@@ -151,7 +151,7 @@ final class ArrayColumnHelper
         }
         return TypeCombinator::union(...$returnTypes);
     }
-    private function castToArrayKeyType(Type $type) : Type
+    private function castToArrayKeyType(Type $type): Type
     {
         $isArray = $type->isArray();
         if ($isArray->yes()) {

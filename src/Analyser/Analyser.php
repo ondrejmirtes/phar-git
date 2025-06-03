@@ -36,7 +36,7 @@ final class Analyser
      * @param Closure(int ): void|null $postFileCallback
      * @param string[]|null $allAnalysedFiles
      */
-    public function analyse(array $files, ?Closure $preFileCallback = null, ?Closure $postFileCallback = null, bool $debug = \false, ?array $allAnalysedFiles = null) : \PHPStan\Analyser\AnalyserResult
+    public function analyse(array $files, ?Closure $preFileCallback = null, ?Closure $postFileCallback = null, bool $debug = \false, ?array $allAnalysedFiles = null): \PHPStan\Analyser\AnalyserResult
     {
         if ($allAnalysedFiles === null) {
             $allAnalysedFiles = $files;

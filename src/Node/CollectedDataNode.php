@@ -33,7 +33,7 @@ final class CollectedDataNode extends NodeAbstract implements \PHPStan\Node\Virt
      * @param class-string<TCollector> $collectorType
      * @return array<string, list<TValue>>
      */
-    public function get(string $collectorType) : array
+    public function get(string $collectorType): array
     {
         $result = [];
         foreach ($this->collectedData as $filePath => $collectedDataPerCollector) {
@@ -51,18 +51,18 @@ final class CollectedDataNode extends NodeAbstract implements \PHPStan\Node\Virt
      *
      * True being returned strongly suggests that it's a partial analysis, not full project analysis.
      */
-    public function isOnlyFilesAnalysis() : bool
+    public function isOnlyFilesAnalysis(): bool
     {
         return $this->onlyFiles;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_CollectedDataNode';
     }
     /**
      * @return array{}
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

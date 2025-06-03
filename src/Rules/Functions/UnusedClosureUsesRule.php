@@ -19,11 +19,11 @@ final class UnusedClosureUsesRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Closure::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (count($node->uses) === 0) {
             return [];

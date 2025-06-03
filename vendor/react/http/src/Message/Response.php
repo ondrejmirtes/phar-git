@@ -339,7 +339,7 @@ final class Response extends AbstractMessage implements ResponseInterface, Statu
     public static function parseMessage($message)
     {
         $start = array();
-        if (!\preg_match('#^HTTP/(?<version>\\d\\.\\d) (?<status>\\d{3})(?: (?<reason>[^\\r\\n]*+))?[\\r]?+\\n#m', $message, $start)) {
+        if (!\preg_match('#^HTTP/(?<version>\d\.\d) (?<status>\d{3})(?: (?<reason>[^\r\n]*+))?[\r]?+\n#m', $message, $start)) {
             throw new \InvalidArgumentException('Unable to parse invalid status-line');
         }
         // only support HTTP/1.1 and HTTP/1.0 requests

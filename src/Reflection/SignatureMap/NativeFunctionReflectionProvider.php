@@ -41,7 +41,7 @@ final class NativeFunctionReflectionProvider
         $this->stubPhpDocProvider = $stubPhpDocProvider;
         $this->attributeReflectionFactory = $attributeReflectionFactory;
     }
-    public function findFunctionReflection(string $functionName) : ?NativeFunctionReflection
+    public function findFunctionReflection(string $functionName): ?NativeFunctionReflection
     {
         $lowerCasedFunctionName = strtolower($functionName);
         $realFunctionName = $lowerCasedFunctionName;
@@ -98,7 +98,7 @@ final class NativeFunctionReflectionProvider
         $variantsByType = ['positional' => []];
         foreach ($functionSignaturesResult as $signatureType => $functionSignatures) {
             foreach ($functionSignatures ?? [] as $functionSignature) {
-                $variantsByType[$signatureType][] = new ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), null, array_map(static function (\PHPStan\Reflection\SignatureMap\ParameterSignature $parameterSignature) use($phpDoc) : ExtendedNativeParameterReflection {
+                $variantsByType[$signatureType][] = new ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), null, array_map(static function (\PHPStan\Reflection\SignatureMap\ParameterSignature $parameterSignature) use ($phpDoc): ExtendedNativeParameterReflection {
                     $type = $parameterSignature->getType();
                     $phpDocType = null;
                     $immediatelyInvokedCallable = TrinaryLogic::createMaybe();
@@ -127,7 +127,7 @@ final class NativeFunctionReflectionProvider
         $this->functionMap[$lowerCasedFunctionName] = $functionReflection;
         return $functionReflection;
     }
-    private function getReturnTypeFromPhpDoc(ResolvedPhpDocBlock $phpDoc) : ?Type
+    private function getReturnTypeFromPhpDoc(ResolvedPhpDocBlock $phpDoc): ?Type
     {
         $returnTag = $phpDoc->getReturnTag();
         if ($returnTag === null) {
@@ -135,7 +135,7 @@ final class NativeFunctionReflectionProvider
         }
         return $returnTag->getType();
     }
-    private static function getParamOutTypeFromPhpDoc(string $paramName, ResolvedPhpDocBlock $stubPhpDoc) : ?Type
+    private static function getParamOutTypeFromPhpDoc(string $paramName, ResolvedPhpDocBlock $stubPhpDoc): ?Type
     {
         $paramOutTags = $stubPhpDoc->getParamOutTags();
         if (array_key_exists($paramName, $paramOutTags)) {

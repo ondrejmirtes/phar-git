@@ -25,5 +25,5 @@ use PhpParser\Node;
 interface IgnoreErrorExtension
 {
     public const EXTENSION_TAG = 'phpstan.ignoreErrorExtension';
-    public function shouldIgnore(\PHPStan\Analyser\Error $error, Node $node, \PHPStan\Analyser\Scope $scope) : bool;
+    public function shouldIgnore(\PHPStan\Analyser\Error $error, Node $node, \PHPStan\Analyser\Scope $scope): bool;
 }

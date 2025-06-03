@@ -54,7 +54,7 @@ final class FileMonitor
     /**
      * @param array<string> $filePaths
      */
-    public function initialize(array $filePaths) : void
+    public function initialize(array $filePaths): void
     {
         $finderResult = $this->analyseFileFinder->findFiles($this->analysedPaths);
         $fileHashes = [];
@@ -64,7 +64,7 @@ final class FileMonitor
         $this->fileHashes = $fileHashes;
         $this->filePaths = $filePaths;
     }
-    public function getChanges() : \PHPStan\File\FileMonitorResult
+    public function getChanges(): \PHPStan\File\FileMonitorResult
     {
         if ($this->fileHashes === null || $this->filePaths === null) {
             throw new ShouldNotHappenException();
@@ -96,7 +96,7 @@ final class FileMonitor
         }
         return new \PHPStan\File\FileMonitorResult($newFiles, $changedFiles, $deletedFiles);
     }
-    private function getFileHash(string $filePath) : string
+    private function getFileHash(string $filePath): string
     {
         $hash = sha1_file($filePath);
         if ($hash === \false) {
@@ -108,7 +108,7 @@ final class FileMonitor
      * @param string[] $allAnalysedFiles
      * @return array<string>
      */
-    private function getScannedFiles(array $allAnalysedFiles) : array
+    private function getScannedFiles(array $allAnalysedFiles): array
     {
         $scannedFiles = $this->scanFiles;
         $analysedDirectories = [];

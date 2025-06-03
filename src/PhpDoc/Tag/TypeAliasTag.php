@@ -20,11 +20,11 @@ final class TypeAliasTag
         $this->typeNode = $typeNode;
         $this->nameScope = $nameScope;
     }
-    public function getAliasName() : string
+    public function getAliasName(): string
     {
         return $this->aliasName;
     }
-    public function getTypeAlias() : TypeAlias
+    public function getTypeAlias(): TypeAlias
     {
         return new TypeAlias($this->typeNode, $this->nameScope);
     }

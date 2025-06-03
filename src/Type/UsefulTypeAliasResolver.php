@@ -37,7 +37,7 @@ final class UsefulTypeAliasResolver implements \PHPStan\Type\TypeAliasResolver
         $this->typeNodeResolver = $typeNodeResolver;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function hasTypeAlias(string $aliasName, ?string $classNameScope) : bool
+    public function hasTypeAlias(string $aliasName, ?string $classNameScope): bool
     {
         $hasGlobalTypeAlias = array_key_exists($aliasName, $this->globalTypeAliases);
         if ($hasGlobalTypeAlias) {
@@ -50,11 +50,11 @@ final class UsefulTypeAliasResolver implements \PHPStan\Type\TypeAliasResolver
         $localTypeAliases = $classReflection->getTypeAliases();
         return array_key_exists($aliasName, $localTypeAliases);
     }
-    public function resolveTypeAlias(string $aliasName, NameScope $nameScope) : ?\PHPStan\Type\Type
+    public function resolveTypeAlias(string $aliasName, NameScope $nameScope): ?\PHPStan\Type\Type
     {
         return $this->resolveLocalTypeAlias($aliasName, $nameScope) ?? $this->resolveGlobalTypeAlias($aliasName, $nameScope);
     }
-    private function resolveLocalTypeAlias(string $aliasName, NameScope $nameScope) : ?\PHPStan\Type\Type
+    private function resolveLocalTypeAlias(string $aliasName, NameScope $nameScope): ?\PHPStan\Type\Type
     {
         if (array_key_exists($aliasName, $this->globalTypeAliases)) {
             return null;
@@ -100,7 +100,7 @@ final class UsefulTypeAliasResolver implements \PHPStan\Type\TypeAliasResolver
         unset($this->inProcess[$aliasNameInClassScope]);
         return $resolvedAliasType;
     }
-    private function resolveGlobalTypeAlias(string $aliasName, NameScope $nameScope) : ?\PHPStan\Type\Type
+    private function resolveGlobalTypeAlias(string $aliasName, NameScope $nameScope): ?\PHPStan\Type\Type
     {
         if (!array_key_exists($aliasName, $this->globalTypeAliases)) {
             return null;

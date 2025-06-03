@@ -64,7 +64,7 @@ final class MergeException extends \RuntimeException
      * @return string
      *   The merged text.
      */
-    public function getMerged() : string
+    public function getMerged(): string
     {
         return $this->merged;
     }

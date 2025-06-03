@@ -45,7 +45,7 @@ final class InitializerExprContext implements \PHPStan\Reflection\NamespaceAnswe
         $this->method = $method;
         $this->property = $property;
     }
-    public static function fromScope(Scope $scope) : self
+    public static function fromScope(Scope $scope): self
     {
         $function = $scope->getFunction();
         return new self($scope->getFile(), $scope->getNamespace(), $scope->isInClass() ? $scope->getClassReflection()->getName() : null, $scope->isInTrait() ? $scope->getTraitReflection()->getName() : null, $scope->isInAnonymousFunction() ? '{closure}' : ($function !== null ? $function->getName() : null), $scope->isInAnonymousFunction() ? '{closure}' : ($function instanceof \PHPStan\Reflection\MethodReflection ? sprintf('%s::%s', $function->getDeclaringClass()->getName(), $function->getName()) : ($function instanceof \PHPStan\Reflection\FunctionReflection ? $function->getName() : null)), $function instanceof PhpMethodFromParserNodeReflection && $function->isPropertyHook() ? $function->getHookedPropertyName() : null);
@@ -53,7 +53,7 @@ final class InitializerExprContext implements \PHPStan\Reflection\NamespaceAnswe
     /**
      * @return non-empty-string|null
      */
-    private static function parseNamespace(string $name) : ?string
+    private static function parseNamespace(string $name): ?string
     {
         $parts = explode('\\', $name);
         if (count($parts) > 1) {
@@ -65,23 +65,23 @@ final class InitializerExprContext implements \PHPStan\Reflection\NamespaceAnswe
         }
         return null;
     }
-    public static function fromClassReflection(\PHPStan\Reflection\ClassReflection $classReflection) : self
+    public static function fromClassReflection(\PHPStan\Reflection\ClassReflection $classReflection): self
     {
         return self::fromClass($classReflection->getName(), $classReflection->getFileName());
     }
-    public static function fromClass(string $className, ?string $fileName) : self
+    public static function fromClass(string $className, ?string $fileName): self
     {
         return new self($fileName, self::parseNamespace($className), $className, null, null, null, null);
     }
-    public static function fromFunction(string $functionName, ?string $fileName) : self
+    public static function fromFunction(string $functionName, ?string $fileName): self
     {
         return new self($fileName, self::parseNamespace($functionName), null, null, $functionName, $functionName, null);
     }
-    public static function fromClassMethod(string $className, ?string $traitName, string $methodName, ?string $fileName) : self
+    public static function fromClassMethod(string $className, ?string $traitName, string $methodName, ?string $fileName): self
     {
         return new self($fileName, self::parseNamespace($className), $className, $traitName, $methodName, sprintf('%s::%s', $className, $methodName), null);
     }
-    public static function fromReflectionParameter(ReflectionParameter $parameter) : self
+    public static function fromReflectionParameter(ReflectionParameter $parameter): self
     {
         $declaringFunction = $parameter->getDeclaringFunction();
         if ($declaringFunction instanceof ReflectionFunction) {
@@ -95,15 +95,13 @@ final class InitializerExprContext implements \PHPStan\Reflection\NamespaceAnswe
     /**
      * @param \PhpParser\Node\Stmt\ClassMethod|\PhpParser\Node\Stmt\Function_|\PhpParser\Node\PropertyHook $function
      */
-    public static function fromStubParameter(?string $className, string $stubFile, $function) : self
+    public static function fromStubParameter(?string $className, string $stubFile, $function): self
     {
         $namespace = null;
         if ($className !== null) {
             $namespace = self::parseNamespace($className);
-        } else {
-            if ($function instanceof Function_ && $function->namespacedName !== null) {
-                $namespace = self::parseNamespace($function->namespacedName->toString());
-            }
+        } else if ($function instanceof Function_ && $function->namespacedName !== null) {
+            $namespace = self::parseNamespace($function->namespacedName->toString());
         }
         $functionName = null;
         $propertyName = null;
@@ -126,39 +124,39 @@ final class InitializerExprContext implements \PHPStan\Reflection\NamespaceAnswe
         }
         return new self($stubFile, $namespace, $className, null, $functionName, $methodName, $propertyName);
     }
-    public static function fromGlobalConstant(ReflectionConstant $constant) : self
+    public static function fromGlobalConstant(ReflectionConstant $constant): self
     {
         return new self($constant->getFileName(), $constant->getNamespaceName(), null, null, null, null, null);
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         return new self(null, null, null, null, null, null, null);
     }
-    public function getFile() : ?string
+    public function getFile(): ?string
     {
         return $this->file;
     }
-    public function getClassName() : ?string
+    public function getClassName(): ?string
     {
         return $this->className;
     }
-    public function getNamespace() : ?string
+    public function getNamespace(): ?string
     {
         return $this->namespace;
     }
-    public function getTraitName() : ?string
+    public function getTraitName(): ?string
     {
         return $this->traitName;
     }
-    public function getFunction() : ?string
+    public function getFunction(): ?string
     {
         return $this->function;
     }
-    public function getMethod() : ?string
+    public function getMethod(): ?string
     {
         return $this->method;
     }
-    public function getProperty() : ?string
+    public function getProperty(): ?string
     {
         return $this->property;
     }

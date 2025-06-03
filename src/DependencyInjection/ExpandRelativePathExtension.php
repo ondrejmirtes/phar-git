@@ -8,7 +8,7 @@ use _PHPStan_checksum\Nette\Schema\Expect;
 use _PHPStan_checksum\Nette\Schema\Schema;
 final class ExpandRelativePathExtension extends CompilerExtension
 {
-    public function getConfigSchema() : Schema
+    public function getConfigSchema(): Schema
     {
         return Expect::listOf('string');
     }

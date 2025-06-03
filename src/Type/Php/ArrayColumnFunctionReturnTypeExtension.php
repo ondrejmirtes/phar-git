@@ -19,11 +19,11 @@ final class ArrayColumnFunctionReturnTypeExtension implements DynamicFunctionRet
     {
         $this->arrayColumnHelper = $arrayColumnHelper;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_column';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $numArgs = count($functionCall->getArgs());
         if ($numArgs < 2) {

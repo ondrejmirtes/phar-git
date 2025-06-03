@@ -70,7 +70,7 @@ final class FindReflectionOnLine
      * @throws ParseToAstFailure
      * @throws InvalidFileLocation
      */
-    private function computeReflections(string $filename) : array
+    private function computeReflections(string $filename): array
     {
         $singleFileSourceLocator = new SingleFileSourceLocator($filename, $this->astLocator);
         $reflector = new DefaultReflector(new AggregateSourceLocator([$singleFileSourceLocator, $this->sourceLocator]));
@@ -80,7 +80,7 @@ final class FindReflectionOnLine
      * Check to see if the line is within the boundaries of the reflection specified.
      * @param \PHPStan\BetterReflection\Reflection\ReflectionClass|\PHPStan\BetterReflection\Reflection\ReflectionMethod|\PHPStan\BetterReflection\Reflection\ReflectionFunction|\PHPStan\BetterReflection\Reflection\ReflectionConstant $reflection
      */
-    private function containsLine($reflection, int $lineNumber) : bool
+    private function containsLine($reflection, int $lineNumber): bool
     {
         return $lineNumber >= $reflection->getStartLine() && $lineNumber <= $reflection->getEndLine();
     }

@@ -89,7 +89,7 @@ final class BetterReflectionSourceLocatorFactory
         $this->playgroundMode = $playgroundMode;
         $this->singleReflectionFile = $singleReflectionFile;
     }
-    public function create() : SourceLocator
+    public function create(): SourceLocator
     {
         $locators = [];
         if ($this->singleReflectionFile !== null) {
@@ -129,11 +129,11 @@ final class BetterReflectionSourceLocatorFactory
         if (extension_loaded('phar')) {
             $pharProtocolPath = Phar::running();
             if ($pharProtocolPath !== '') {
-                $mappings = ['PHPStan\\BetterReflection\\' => [$pharProtocolPath . '/vendor/ondrejmirtes/better-reflection/src/']];
+                $mappings = ['PHPStan\BetterReflection\\' => [$pharProtocolPath . '/vendor/ondrejmirtes/better-reflection/src/']];
                 if ($this->playgroundMode) {
                     $mappings['PHPStan\\'] = [$pharProtocolPath . '/src/'];
                 } else {
-                    $mappings['PHPStan\\Testing\\'] = [$pharProtocolPath . '/src/Testing/'];
+                    $mappings['PHPStan\Testing\\'] = [$pharProtocolPath . '/src/Testing/'];
                 }
                 $fileLocators[] = $this->optimizedPsrAutoloaderLocatorFactory->create(Psr4Mapping::fromArrayMappings($mappings));
             }

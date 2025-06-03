@@ -17,11 +17,11 @@ final class NullsafePropertyFetchRule implements Rule
     public function __construct()
     {
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\NullsafePropertyFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $calledOnType = $scope->getType($node->var);
         if (!$calledOnType->isNull()->no()) {

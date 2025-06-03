@@ -21,7 +21,7 @@ final class TypehintHelper
 {
     /** @api
      *  @param \PHPStan\Reflection\ClassReflection|null $selfClass */
-    public static function decideTypeFromReflection(?ReflectionType $reflectionType, ?\PHPStan\Type\Type $phpDocType = null, $selfClass = null, bool $isVariadic = \false) : \PHPStan\Type\Type
+    public static function decideTypeFromReflection(?ReflectionType $reflectionType, ?\PHPStan\Type\Type $phpDocType = null, $selfClass = null, bool $isVariadic = \false): \PHPStan\Type\Type
     {
         if ($reflectionType === null) {
             if ($isVariadic && ($phpDocType instanceof \PHPStan\Type\ArrayType || $phpDocType instanceof ConstantArrayType)) {
@@ -58,7 +58,7 @@ final class TypehintHelper
         }
         return self::decideType($type, $phpDocType);
     }
-    public static function decideType(\PHPStan\Type\Type $type, ?\PHPStan\Type\Type $phpDocType) : \PHPStan\Type\Type
+    public static function decideType(\PHPStan\Type\Type $type, ?\PHPStan\Type\Type $phpDocType): \PHPStan\Type\Type
     {
         if ($phpDocType !== null && $type->isNull()->no()) {
             $phpDocType = \PHPStan\Type\TypeCombinator::removeNull($phpDocType);

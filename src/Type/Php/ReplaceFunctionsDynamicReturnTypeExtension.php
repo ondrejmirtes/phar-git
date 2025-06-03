@@ -28,11 +28,11 @@ final class ReplaceFunctionsDynamicReturnTypeExtension implements DynamicFunctio
 {
     private const FUNCTIONS_SUBJECT_POSITION = ['preg_replace' => 2, 'preg_replace_callback' => 2, 'preg_replace_callback_array' => 1, 'str_replace' => 2, 'str_ireplace' => 2, 'substr_replace' => 0, 'strtr' => 0];
     private const FUNCTIONS_REPLACE_POSITION = ['preg_replace' => 1, 'str_replace' => 1, 'str_ireplace' => 1, 'substr_replace' => 1, 'strtr' => 2];
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return array_key_exists($functionReflection->getName(), self::FUNCTIONS_SUBJECT_POSITION);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $type = $this->getPreliminarilyResolvedTypeFromFunctionCall($functionReflection, $functionCall, $scope);
         if ($this->canReturnNull($functionReflection, $functionCall, $scope)) {
@@ -40,7 +40,7 @@ final class ReplaceFunctionsDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $type;
     }
-    private function getPreliminarilyResolvedTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    private function getPreliminarilyResolvedTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $subjectArgumentType = $this->getSubjectType($functionReflection, $functionCall, $scope);
         $defaultReturnType = ParametersAcceptorSelector::selectFromArgs($scope, $functionCall->getArgs(), $functionReflection->getVariants())->getReturnType();
@@ -106,7 +106,7 @@ final class ReplaceFunctionsDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $defaultReturnType;
     }
-    private function getSubjectType(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    private function getSubjectType(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $argumentPosition = self::FUNCTIONS_SUBJECT_POSITION[$functionReflection->getName()];
         if (count($functionCall->getArgs()) <= $argumentPosition) {
@@ -114,7 +114,7 @@ final class ReplaceFunctionsDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $scope->getType($functionCall->getArgs()[$argumentPosition]->value);
     }
-    private function canReturnNull(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : bool
+    private function canReturnNull(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): bool
     {
         if (in_array($functionReflection->getName(), ['preg_replace', 'preg_replace_callback', 'preg_replace_callback_array'], \true) && count($functionCall->getArgs()) > 0) {
             $subjectArgumentType = $this->getSubjectType($functionReflection, $functionCall, $scope);

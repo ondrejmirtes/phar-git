@@ -58,7 +58,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
             }
         }
         /** @var array $m legacy PHP 5.3 only */
-        if (!\preg_match('#^\\S+ \\S+ HTTP/1\\.[01]\\r\\n#m', $headers) || \substr_count($headers, "\n") !== $expected + 1 || (\PHP_VERSION_ID >= 50400 ? \preg_match_all(AbstractMessage::REGEX_HEADERS, $headers) : \preg_match_all(AbstractMessage::REGEX_HEADERS, $headers, $m)) !== $expected) {
+        if (!\preg_match('#^\S+ \S+ HTTP/1\.[01]\r\n#m', $headers) || \substr_count($headers, "\n") !== $expected + 1 || (\PHP_VERSION_ID >= 50400 ? \preg_match_all(AbstractMessage::REGEX_HEADERS, $headers) : \preg_match_all(AbstractMessage::REGEX_HEADERS, $headers, $m)) !== $expected) {
             $this->closeError(new \InvalidArgumentException('Unable to send request with invalid request headers'));
             return;
         }
@@ -67,7 +67,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
         $pendingWrites =& $this->pendingWrites;
         $that = $this;
         $promise = $this->connectionManager->connect($this->request->getUri());
-        $promise->then(function (ConnectionInterface $connection) use($headers, &$connectionRef, &$stateRef, &$pendingWrites, $that) {
+        $promise->then(function (ConnectionInterface $connection) use ($headers, &$connectionRef, &$stateRef, &$pendingWrites, $that) {
             $connectionRef = $connection;
             \assert($connectionRef instanceof ConnectionInterface);
             $connection->on('drain', array($that, 'handleDrain'));
@@ -86,7 +86,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
                 }
             }
         }, array($this, 'closeError'));
-        $this->on('close', function () use($promise) {
+        $this->on('close', function () use ($promise) {
             $promise->cancel();
         });
     }
@@ -113,10 +113,8 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
         }
         if (null !== $data) {
             $this->write($data);
-        } else {
-            if (self::STATE_WRITING_HEAD > $this->state) {
-                $this->writeHead();
-            }
+        } else if (self::STATE_WRITING_HEAD > $this->state) {
+            $this->writeHead();
         }
         $this->ended = \true;
     }
@@ -161,7 +159,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
             $connectionManager = $this->connectionManager;
             $successfulEndReceived = \false;
             $input = $body = new CloseProtectionStream($connection);
-            $input->on('close', function () use($connection, $that, $connectionManager, $request, $response, &$successfulEndReceived) {
+            $input->on('close', function () use ($connection, $that, $connectionManager, $request, $response, &$successfulEndReceived) {
                 // only reuse connection after successful response and both request and response allow keep alive
                 if ($successfulEndReceived && $connection->isReadable() && $that->hasMessageKeepAliveEnabled($response) && $that->hasMessageKeepAliveEnabled($request)) {
                     $connectionManager->keepAlive($request->getUri(), $connection);
@@ -181,7 +179,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
                 $length = (int) $response->getHeaderLine('Content-Length');
             }
             $response = $response->withBody($body = new ReadableBodyStream($body, $length));
-            $body->on('end', function () use(&$successfulEndReceived) {
+            $body->on('end', function () use (&$successfulEndReceived) {
                 $successfulEndReceived = \true;
             });
             // emit response with streaming response body (see `Sender`)

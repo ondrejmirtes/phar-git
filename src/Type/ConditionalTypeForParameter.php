@@ -28,66 +28,66 @@ final class ConditionalTypeForParameter implements \PHPStan\Type\CompoundType, \
         $this->else = $else;
         $this->negated = $negated;
     }
-    public function getParameterName() : string
+    public function getParameterName(): string
     {
         return $this->parameterName;
     }
-    public function getTarget() : \PHPStan\Type\Type
+    public function getTarget(): \PHPStan\Type\Type
     {
         return $this->target;
     }
-    public function getIf() : \PHPStan\Type\Type
+    public function getIf(): \PHPStan\Type\Type
     {
         return $this->if;
     }
-    public function getElse() : \PHPStan\Type\Type
+    public function getElse(): \PHPStan\Type\Type
     {
         return $this->else;
     }
-    public function isNegated() : bool
+    public function isNegated(): bool
     {
         return $this->negated;
     }
-    public function changeParameterName(string $parameterName) : self
+    public function changeParameterName(string $parameterName): self
     {
         return new self($parameterName, $this->target, $this->if, $this->else, $this->negated);
     }
-    public function toConditional(\PHPStan\Type\Type $subject) : \PHPStan\Type\Type
+    public function toConditional(\PHPStan\Type\Type $subject): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\ConditionalType($subject, $this->target, $this->if, $this->else, $this->negated);
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return $this->if->isSuperTypeOf($type->if)->and($this->else->isSuperTypeOf($type->else));
         }
         return $this->isSuperTypeOfDefault($type);
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return array_merge($this->target->getReferencedClasses(), $this->if->getReferencedClasses(), $this->else->getReferencedClasses());
     }
-    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(TemplateTypeVariance $positionVariance): array
     {
         return array_merge($this->target->getReferencedTemplateTypes($positionVariance), $this->if->getReferencedTemplateTypes($positionVariance), $this->else->getReferencedTemplateTypes($positionVariance));
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         return $type instanceof self && $this->parameterName === $type->parameterName && $this->target->equals($type->target) && $this->if->equals($type->if) && $this->else->equals($type->else);
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('(%s %s %s ? %s : %s)', $this->parameterName, $this->negated ? 'is not' : 'is', $this->target->describe($level), $this->if->describe($level), $this->else->describe($level));
     }
-    public function isResolvable() : bool
+    public function isResolvable(): bool
     {
         return \false;
     }
-    protected function getResult() : \PHPStan\Type\Type
+    protected function getResult(): \PHPStan\Type\Type
     {
         return \PHPStan\Type\TypeCombinator::union($this->if, $this->else);
     }
-    public function traverse(callable $cb) : \PHPStan\Type\Type
+    public function traverse(callable $cb): \PHPStan\Type\Type
     {
         $target = $cb($this->target);
         $if = $cb($this->if);
@@ -97,7 +97,7 @@ final class ConditionalTypeForParameter implements \PHPStan\Type\CompoundType, \
         }
         return new self($this->parameterName, $target, $if, $else, $this->negated);
     }
-    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb) : \PHPStan\Type\Type
+    public function traverseSimultaneously(\PHPStan\Type\Type $right, callable $cb): \PHPStan\Type\Type
     {
         if (!$right instanceof self) {
             return $this;
@@ -110,7 +110,7 @@ final class ConditionalTypeForParameter implements \PHPStan\Type\CompoundType, \
         }
         return new self($this->parameterName, $target, $if, $else, $this->negated);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new ConditionalTypeForParameterNode($this->parameterName, $this->target->toPhpDocNode(), $this->if->toPhpDocNode(), $this->else->toPhpDocNode(), $this->negated);
     }

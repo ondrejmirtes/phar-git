@@ -28,11 +28,11 @@ final class ImpossibleCheckTypeMethodCallRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\MethodCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Identifier) {
             return [];
@@ -41,7 +41,7 @@ final class ImpossibleCheckTypeMethodCallRule implements Rule
         if ($isAlways === null) {
             return [];
         }
-        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node) : RuleErrorBuilder {
+        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node): RuleErrorBuilder {
             if (!$this->treatPhpDocTypesAsCertain) {
                 return $ruleErrorBuilder;
             }
@@ -70,7 +70,7 @@ final class ImpossibleCheckTypeMethodCallRule implements Rule
         $errorBuilder->identifier('method.alreadyNarrowedType');
         return [$errorBuilder->build()];
     }
-    private function getMethod(Expr $var, string $methodName, Scope $scope) : MethodReflection
+    private function getMethod(Expr $var, string $methodName, Scope $scope): MethodReflection
     {
         $calledOnType = $scope->getType($var);
         $method = $scope->getMethodReflection($calledOnType, $methodName);

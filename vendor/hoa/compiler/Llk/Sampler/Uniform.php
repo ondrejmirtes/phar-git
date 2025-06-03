@@ -124,7 +124,7 @@ class Uniform extends \Hoa\Compiler\Llk\Sampler\Sampler
             $b = 0;
             $i = $this->_sampler->getInteger(1, $computed);
             foreach ($stat as $α => $st) {
-                if ($i <= ($b += $st['n'])) {
+                if ($i <= $b += $st['n']) {
                     break;
                 }
             }

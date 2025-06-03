@@ -25,7 +25,7 @@ final class TemplateIntegerType extends IntegerType implements \PHPStan\Type\Gen
         $this->bound = $bound;
         $this->default = $default;
     }
-    protected function shouldGeneralizeInferredType() : bool
+    protected function shouldGeneralizeInferredType(): bool
     {
         return \false;
     }

@@ -13,7 +13,7 @@ final class SystemAgnosticSimpleRelativePathHelper implements \PHPStan\File\Rela
     {
         $this->fileHelper = $fileHelper;
     }
-    public function getRelativePath(string $filename) : string
+    public function getRelativePath(string $filename): string
     {
         $cwd = $this->fileHelper->getWorkingDirectory();
         if ($cwd !== '' && str_starts_with($filename, $cwd)) {

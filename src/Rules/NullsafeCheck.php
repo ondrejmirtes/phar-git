@@ -8,7 +8,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class NullsafeCheck
 {
-    public function containsNullSafe(Expr $expr) : bool
+    public function containsNullSafe(Expr $expr): bool
     {
         if ($expr instanceof Expr\NullsafePropertyFetch || $expr instanceof Expr\NullsafeMethodCall) {
             return \true;

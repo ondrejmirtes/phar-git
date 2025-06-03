@@ -79,70 +79,70 @@ final class FileAnalyserResult
     /**
      * @return list<Error>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
     /**
      * @return list<Error>
      */
-    public function getFilteredPhpErrors() : array
+    public function getFilteredPhpErrors(): array
     {
         return $this->filteredPhpErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getAllPhpErrors() : array
+    public function getAllPhpErrors(): array
     {
         return $this->allPhpErrors;
     }
     /**
      * @return list<Error>
      */
-    public function getLocallyIgnoredErrors() : array
+    public function getLocallyIgnoredErrors(): array
     {
         return $this->locallyIgnoredErrors;
     }
     /**
      * @return CollectorData
      */
-    public function getCollectedData() : array
+    public function getCollectedData(): array
     {
         return $this->collectedData;
     }
     /**
      * @return list<string>
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return $this->dependencies;
     }
     /**
      * @return list<string>
      */
-    public function getUsedTraitDependencies() : array
+    public function getUsedTraitDependencies(): array
     {
         return $this->usedTraitDependencies;
     }
     /**
      * @return list<RootExportedNode>
      */
-    public function getExportedNodes() : array
+    public function getExportedNodes(): array
     {
         return $this->exportedNodes;
     }
     /**
      * @return LinesToIgnore
      */
-    public function getLinesToIgnore() : array
+    public function getLinesToIgnore(): array
     {
         return $this->linesToIgnore;
     }
     /**
      * @return LinesToIgnore
      */
-    public function getUnmatchedLineIgnores() : array
+    public function getUnmatchedLineIgnores(): array
     {
         return $this->unmatchedLineIgnores;
     }

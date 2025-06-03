@@ -20,7 +20,7 @@ final class Cache
     /**
      * @param mixed $data
      */
-    public function save(string $key, string $variableKey, $data) : void
+    public function save(string $key, string $variableKey, $data): void
     {
         $this->storage->save($key, $variableKey, $data);
     }

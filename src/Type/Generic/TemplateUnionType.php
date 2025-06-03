@@ -23,7 +23,7 @@ final class TemplateUnionType extends UnionType implements \PHPStan\Type\Generic
         $this->bound = $bound;
         $this->default = $default;
     }
-    public function filterTypes(callable $filterCb) : Type
+    public function filterTypes(callable $filterCb): Type
     {
         $result = parent::filterTypes($filterCb);
         if (!$result instanceof \PHPStan\Type\Generic\TemplateType) {

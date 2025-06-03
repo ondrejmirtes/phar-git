@@ -61,7 +61,7 @@ class Fromcode extends Console\Dispatcher\Kit
     public function main()
     {
         $base = 16;
-        while (\false !== ($c = $this->getOption($v))) {
+        while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'b':
                     $base = \intval($v);
@@ -93,4 +93,5 @@ class Fromcode extends Console\Dispatcher\Kit
 }
 __halt_compiler();
 Get a character from its code.
+
 

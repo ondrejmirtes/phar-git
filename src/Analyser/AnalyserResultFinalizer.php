@@ -31,7 +31,7 @@ final class AnalyserResultFinalizer
         $this->localIgnoresProcessor = $localIgnoresProcessor;
         $this->reportUnmatchedIgnoredErrors = $reportUnmatchedIgnoredErrors;
     }
-    public function finalize(\PHPStan\Analyser\AnalyserResult $analyserResult, bool $onlyFiles, bool $debug) : \PHPStan\Analyser\FinalizerResult
+    public function finalize(\PHPStan\Analyser\AnalyserResult $analyserResult, bool $onlyFiles, bool $debug): \PHPStan\Analyser\FinalizerResult
     {
         if (count($analyserResult->getCollectedData()) === 0) {
             return $this->addUnmatchedIgnoredErrors($this->mergeFilteredPhpErrors($analyserResult), [], []);
@@ -101,7 +101,7 @@ final class AnalyserResultFinalizer
         }
         return $this->addUnmatchedIgnoredErrors(new \PHPStan\Analyser\AnalyserResult(array_merge($errors, $analyserResult->getFilteredPhpErrors()), [], $analyserResult->getAllPhpErrors(), $locallyIgnoredErrors, $allLinesToIgnore, $allUnmatchedLineIgnores, $internalErrors, $analyserResult->getCollectedData(), $analyserResult->getDependencies(), $analyserResult->getUsedTraitDependencies(), $analyserResult->getExportedNodes(), $analyserResult->hasReachedInternalErrorsCountLimit(), $analyserResult->getPeakMemoryUsageBytes()), $collectorErrors, $locallyIgnoredCollectorErrors);
     }
-    private function mergeFilteredPhpErrors(\PHPStan\Analyser\AnalyserResult $analyserResult) : \PHPStan\Analyser\AnalyserResult
+    private function mergeFilteredPhpErrors(\PHPStan\Analyser\AnalyserResult $analyserResult): \PHPStan\Analyser\AnalyserResult
     {
         return new \PHPStan\Analyser\AnalyserResult(array_merge($analyserResult->getUnorderedErrors(), $analyserResult->getFilteredPhpErrors()), [], $analyserResult->getAllPhpErrors(), $analyserResult->getLocallyIgnoredErrors(), $analyserResult->getLinesToIgnore(), $analyserResult->getUnmatchedLineIgnores(), $analyserResult->getInternalErrors(), $analyserResult->getCollectedData(), $analyserResult->getDependencies(), $analyserResult->getUsedTraitDependencies(), $analyserResult->getExportedNodes(), $analyserResult->hasReachedInternalErrorsCountLimit(), $analyserResult->getPeakMemoryUsageBytes());
     }
@@ -109,7 +109,7 @@ final class AnalyserResultFinalizer
      * @param list<Error> $collectorErrors
      * @param list<Error> $locallyIgnoredCollectorErrors
      */
-    private function addUnmatchedIgnoredErrors(\PHPStan\Analyser\AnalyserResult $analyserResult, array $collectorErrors, array $locallyIgnoredCollectorErrors) : \PHPStan\Analyser\FinalizerResult
+    private function addUnmatchedIgnoredErrors(\PHPStan\Analyser\AnalyserResult $analyserResult, array $collectorErrors, array $locallyIgnoredCollectorErrors): \PHPStan\Analyser\FinalizerResult
     {
         if (!$this->reportUnmatchedIgnoredErrors) {
             return new \PHPStan\Analyser\FinalizerResult($analyserResult, $collectorErrors, $locallyIgnoredCollectorErrors);

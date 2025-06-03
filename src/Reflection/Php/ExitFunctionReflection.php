@@ -25,75 +25,75 @@ final class ExitFunctionReflection implements FunctionReflection
     {
         $this->name = $name;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return null;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         $parameterType = new UnionType([new StringType(), new IntegerType()]);
         return [new ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), TemplateTypeMap::createEmpty(), [new \PHPStan\Reflection\Php\ExtendedDummyParameter('status', $parameterType, \true, PassedByReference::createNo(), \false, new ConstantIntegerType(0), $parameterType, new MixedType(), null, TrinaryLogic::createNo(), null, [])], \false, new NeverType(\true), new MixedType(), new NeverType(\true), TemplateTypeVarianceMap::createEmpty())];
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
     /**
      * @return list<ExtendedParametersAcceptor>
      */
-    public function getNamedArgumentsVariants() : array
+    public function getNamedArgumentsVariants(): array
     {
         return $this->getVariants();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return null;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return \true;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return Assertions::createEmpty();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

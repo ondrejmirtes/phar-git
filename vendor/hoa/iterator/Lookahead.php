@@ -84,7 +84,7 @@ class Lookahead extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\
      *
      * @return  \Iterator
      */
-    public function getInnerIterator() : ?\Iterator
+    public function getInnerIterator(): ?\Iterator
     {
         return $this->_iterator;
     }
@@ -142,7 +142,7 @@ class Lookahead extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\
      *
      * @return  bool
      */
-    public function valid() : bool
+    public function valid(): bool
     {
         return $this->_valid;
     }

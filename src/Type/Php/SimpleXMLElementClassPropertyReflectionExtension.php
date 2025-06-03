@@ -14,11 +14,11 @@ use PHPStan\Type\ObjectType;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SimpleXMLElementClassPropertyReflectionExtension implements PropertiesClassReflectionExtension
 {
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         return $classReflection->is('SimpleXMLElement');
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : PropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): PropertyReflection
     {
         return new SimpleXMLElementProperty($propertyName, $classReflection, new BenevolentUnionType([new ObjectType($classReflection->getName()), new NullType()]));
     }

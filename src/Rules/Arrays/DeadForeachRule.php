@@ -12,11 +12,11 @@ use PHPStan\Rules\RuleErrorBuilder;
  */
 final class DeadForeachRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Foreach_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $iterableType = $scope->getType($node->expr);
         if ($iterableType->isIterable()->no()) {

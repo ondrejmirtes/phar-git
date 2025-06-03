@@ -22,16 +22,16 @@ class InternalLocatedSource extends \PHPStan\BetterReflection\SourceLocator\Loca
         $this->aliasName = $aliasName;
         parent::__construct($source, $name, $fileName);
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return \true;
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->extensionName;
     }
-    public function getAliasName() : ?string
+    public function getAliasName(): ?string
     {
         return $this->aliasName;
     }

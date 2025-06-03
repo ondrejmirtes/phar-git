@@ -26,7 +26,7 @@ final class PsrAutoloaderLocator implements SourceLocator
         $this->mapping = $mapping;
         $this->astLocator = $astLocator;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         /** @phpstan-var non-empty-string $file */
         foreach ($this->mapping->resolvePossibleFilePaths($identifier) as $file) {
@@ -48,7 +48,7 @@ final class PsrAutoloaderLocator implements SourceLocator
      *
      * @return list<Reflection>
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return (new DirectoriesSourceLocator($this->mapping->directories(), $this->astLocator))->locateIdentifiersByType($reflector, $identifierType);
     }

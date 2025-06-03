@@ -29,7 +29,7 @@ final class OptimizedSingleFileSourceLocator implements SourceLocator
         $this->fileNodesFetcher = $fileNodesFetcher;
         $this->fileName = $fileName;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if ($this->presentSymbols !== null) {
             if ($identifier->isClass()) {
@@ -128,7 +128,7 @@ final class OptimizedSingleFileSourceLocator implements SourceLocator
         }
         throw new ShouldNotHappenException();
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         $fetchedNodesResult = $this->fileNodesFetcher->fetchNodes($this->fileName);
         $nodeToReflection = new NodeToReflection();

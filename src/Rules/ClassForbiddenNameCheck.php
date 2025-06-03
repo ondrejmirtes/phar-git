@@ -26,7 +26,7 @@ final class ClassForbiddenNameCheck
      * @param ClassNameNodePair[] $pairs
      * @return list<IdentifierRuleError>
      */
-    public function checkClassNames(array $pairs) : array
+    public function checkClassNames(array $pairs): array
     {
         $extensions = $this->container->getServicesByTag(ForbiddenClassNameExtension::EXTENSION_TAG);
         $classPrefixes = array_merge(self::INTERNAL_CLASS_PREFIXES, ...array_map(static fn(ForbiddenClassNameExtension $extension): array => $extension->getClassPrefixes(), $extensions));

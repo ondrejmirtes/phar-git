@@ -48,27 +48,27 @@ final class ExtendedCallableFunctionVariant extends \PHPStan\Reflection\Extended
         $this->acceptsNamedArguments = $acceptsNamedArguments;
         parent::__construct($templateTypeMap, $resolvedTemplateTypeMap, $parameters, $isVariadic, $returnType, $phpDocReturnType, $nativeReturnType, $callSiteVarianceMap);
     }
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         return $this->throwPoints;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->isPure;
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         return $this->impurePoints;
     }
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return $this->invalidateExpressions;
     }
-    public function getUsedVariables() : array
+    public function getUsedVariables(): array
     {
         return $this->usedVariables;
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->acceptsNamedArguments;
     }

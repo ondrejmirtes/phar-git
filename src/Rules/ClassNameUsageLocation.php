@@ -63,63 +63,63 @@ final class ClassNameUsageLocation
      * @param self::* $value
      * @param mixed[] $data
      */
-    public static function from(string $value, array $data = []) : self
+    public static function from(string $value, array $data = []): self
     {
         return new self($value, $data);
     }
-    public function getMethod() : ?ExtendedMethodReflection
+    public function getMethod(): ?ExtendedMethodReflection
     {
         return $this->data['method'] ?? null;
     }
-    public function getProperty() : ?ExtendedPropertyReflection
+    public function getProperty(): ?ExtendedPropertyReflection
     {
         return $this->data['property'] ?? null;
     }
-    public function getFunction() : ?FunctionReflection
+    public function getFunction(): ?FunctionReflection
     {
         return $this->data['function'] ?? null;
     }
-    public function getPhpDocTagName() : ?string
+    public function getPhpDocTagName(): ?string
     {
         return $this->data['phpDocTagName'] ?? null;
     }
-    public function getAssertedExprString() : ?string
+    public function getAssertedExprString(): ?string
     {
         return $this->data['assertedExprString'] ?? null;
     }
-    public function getClassConstant() : ?ClassConstantReflection
+    public function getClassConstant(): ?ClassConstantReflection
     {
         return $this->data['classConstant'] ?? null;
     }
-    public function getCurrentClassName() : ?string
+    public function getCurrentClassName(): ?string
     {
         return $this->data['currentClassName'] ?? null;
     }
-    public function getParameterName() : ?string
+    public function getParameterName(): ?string
     {
         return $this->data['parameterName'] ?? null;
     }
-    public function getTypeAliasName() : ?string
+    public function getTypeAliasName(): ?string
     {
         return $this->data['typeAliasName'] ?? null;
     }
-    public function getMethodTagName() : ?string
+    public function getMethodTagName(): ?string
     {
         return $this->data['methodTagName'] ?? null;
     }
-    public function getPropertyTagName() : ?string
+    public function getPropertyTagName(): ?string
     {
         return $this->data['propertyTagName'] ?? null;
     }
-    public function getTemplateTagName() : ?string
+    public function getTemplateTagName(): ?string
     {
         return $this->data['templateTagName'] ?? null;
     }
-    public function isInAnomyousFunction() : bool
+    public function isInAnomyousFunction(): bool
     {
         return $this->data['isInAnonymousFunction'] ?? \false;
     }
-    public function createMessage(string $part) : string
+    public function createMessage(string $part): string
     {
         switch ($this->value) {
             case self::TRAIT_USE:
@@ -254,7 +254,7 @@ final class ClassNameUsageLocation
                 return sprintf('PHPDoc tag @template default references %s.', $part);
         }
     }
-    public function createIdentifier(string $secondPart) : string
+    public function createIdentifier(string $secondPart): string
     {
         if ($this->value === self::CLASS_IMPLEMENTS) {
             return sprintf('class.implements%s', ucfirst($secondPart));

@@ -27,11 +27,11 @@ final class DefinedVariableRule implements Rule
         $this->cliArgumentsVariablesRegistered = $cliArgumentsVariablesRegistered;
         $this->checkMaybeUndefinedVariables = $checkMaybeUndefinedVariables;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Variable::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         if (is_string($node->name)) {
@@ -52,7 +52,7 @@ final class DefinedVariableRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleVariable(Scope $scope, Variable $node, string $variableName) : array
+    private function processSingleVariable(Scope $scope, Variable $node, string $variableName): array
     {
         if ($this->cliArgumentsVariablesRegistered && in_array($variableName, ['argc', 'argv'], \true)) {
             $isInMain = !$scope->isInClass() && !$scope->isInAnonymousFunction() && $scope->getFunction() === null;

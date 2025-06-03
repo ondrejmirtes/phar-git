@@ -23,33 +23,33 @@ final class RuleError243 implements RuleError, LineRuleError, IdentifierRuleErro
     public Node $originalNode;
     /** @var callable(Node): Node */
     public $newNodeCallable;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }
-    public function getOriginalNode() : Node
+    public function getOriginalNode(): Node
     {
         return $this->originalNode;
     }
     /**
      * @return callable(Node): Node
      */
-    public function getNewNodeCallable() : callable
+    public function getNewNodeCallable(): callable
     {
         return $this->newNodeCallable;
     }

@@ -114,7 +114,7 @@ final class StubValidator
      * @param string[] $stubFiles
      * @return list<Error>
      */
-    public function validate(array $stubFiles, bool $debug) : array
+    public function validate(array $stubFiles, bool $debug): array
     {
         if (count($stubFiles) === 0) {
             return [];
@@ -133,7 +133,7 @@ final class StubValidator
         $errors = [];
         foreach ($stubFiles as $stubFile) {
             try {
-                $tmpErrors = $fileAnalyser->analyseFile($stubFile, $analysedFiles, $ruleRegistry, $collectorRegistry, static function () : void {
+                $tmpErrors = $fileAnalyser->analyseFile($stubFile, $analysedFiles, $ruleRegistry, $collectorRegistry, static function (): void {
                 })->getErrors();
                 foreach ($tmpErrors as $tmpError) {
                     $errors[] = $tmpError->withoutTip()->doNotIgnore();
@@ -151,7 +151,7 @@ final class StubValidator
         ObjectType::resetCaches();
         return $errors;
     }
-    private function getRuleRegistry(Container $container) : RuleRegistry
+    private function getRuleRegistry(Container $container): RuleRegistry
     {
         $fileTypeMapper = $container->getByType(FileTypeMapper::class);
         $genericObjectTypeCheck = $container->getByType(GenericObjectTypeCheck::class);
@@ -241,7 +241,7 @@ final class StubValidator
         ];
         return new DirectRuleRegistry($rules);
     }
-    private function getCollectorRegistry(Container $container) : CollectorRegistry
+    private function getCollectorRegistry(Container $container): CollectorRegistry
     {
         return new CollectorRegistry([]);
     }

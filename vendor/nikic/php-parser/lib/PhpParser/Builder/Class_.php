@@ -131,7 +131,7 @@ class Class_ extends \PhpParser\Builder\Declaration
      *
      * @return Stmt\Class_ The built class node
      */
-    public function getNode() : PhpParser\Node
+    public function getNode(): PhpParser\Node
     {
         return new Stmt\Class_($this->name, ['flags' => $this->flags, 'extends' => $this->extends, 'implements' => $this->implements, 'stmts' => \array_merge($this->uses, $this->constants, $this->properties, $this->methods), 'attrGroups' => $this->attributeGroups], $this->attributes);
     }

@@ -10,7 +10,7 @@ use PHPStan\Type\Constant\ConstantIntegerType;
 use PHPStan\Type\Constant\ConstantStringType;
 final class StaticTypeFactory
 {
-    public static function falsey() : \PHPStan\Type\Type
+    public static function falsey(): \PHPStan\Type\Type
     {
         static $falsey;
         if ($falsey === null) {
@@ -18,7 +18,7 @@ final class StaticTypeFactory
         }
         return $falsey;
     }
-    public static function truthy() : \PHPStan\Type\Type
+    public static function truthy(): \PHPStan\Type\Type
     {
         static $truthy;
         if ($truthy === null) {

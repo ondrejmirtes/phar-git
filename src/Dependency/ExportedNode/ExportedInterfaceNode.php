@@ -32,7 +32,7 @@ final class ExportedInterfaceNode implements RootExportedNode, JsonSerializable
         $this->extends = $extends;
         $this->statements = $statements;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -62,7 +62,7 @@ final class ExportedInterfaceNode implements RootExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['name'], $properties['phpDoc'], $properties['extends'], $properties['statements']);
     }
@@ -77,9 +77,9 @@ final class ExportedInterfaceNode implements RootExportedNode, JsonSerializable
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
-        return new self($data['name'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['extends'], array_map(static function (array $node) : ExportedNode {
+        return new self($data['name'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['extends'], array_map(static function (array $node): ExportedNode {
             $nodeType = $node['type'];
             return $nodeType::decode($node['data']);
         }, $data['statements']));
@@ -87,11 +87,11 @@ final class ExportedInterfaceNode implements RootExportedNode, JsonSerializable
     /**
      * @return self::TYPE_INTERFACE
      */
-    public function getType() : string
+    public function getType(): string
     {
         return self::TYPE_INTERFACE;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }

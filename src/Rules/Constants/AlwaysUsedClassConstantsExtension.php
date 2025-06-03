@@ -24,5 +24,5 @@ use PHPStan\Reflection\ClassConstantReflection;
  */
 interface AlwaysUsedClassConstantsExtension
 {
-    public function isAlwaysUsed(ClassConstantReflection $constant) : bool;
+    public function isAlwaysUsed(ClassConstantReflection $constant): bool;
 }

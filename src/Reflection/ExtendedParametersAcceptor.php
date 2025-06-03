@@ -11,8 +11,8 @@ interface ExtendedParametersAcceptor extends \PHPStan\Reflection\ParametersAccep
     /**
      * @return list<ExtendedParameterReflection>
      */
-    public function getParameters() : array;
-    public function getPhpDocReturnType() : Type;
-    public function getNativeReturnType() : Type;
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap;
+    public function getParameters(): array;
+    public function getPhpDocReturnType(): Type;
+    public function getNativeReturnType(): Type;
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap;
 }

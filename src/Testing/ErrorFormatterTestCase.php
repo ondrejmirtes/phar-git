@@ -34,7 +34,7 @@ abstract class ErrorFormatterTestCase extends \PHPStan\Testing\PHPStanTestCase
     private array $outputStream = [];
     /** @var array<string, Output> */
     private array $output = [];
-    private function getOutputStream(bool $decorated = \false, bool $verbose = \false) : StreamOutput
+    private function getOutputStream(bool $decorated = \false, bool $verbose = \false): StreamOutput
     {
         $kind = $decorated ? self::KIND_DECORATED : self::KIND_PLAIN;
         $kind .= $verbose ? self::KIND_VERBOSE : self::KIND_NOT_VERBOSE;
@@ -48,7 +48,7 @@ abstract class ErrorFormatterTestCase extends \PHPStan\Testing\PHPStanTestCase
         }
         return $this->outputStream[$kind];
     }
-    protected function getOutput(bool $decorated = \false, bool $verbose = \false) : Output
+    protected function getOutput(bool $decorated = \false, bool $verbose = \false): Output
     {
         $kind = $decorated ? self::KIND_DECORATED : self::KIND_PLAIN;
         $kind .= $verbose ? self::KIND_VERBOSE : self::KIND_NOT_VERBOSE;
@@ -59,7 +59,7 @@ abstract class ErrorFormatterTestCase extends \PHPStan\Testing\PHPStanTestCase
         }
         return $this->output[$kind];
     }
-    protected function getOutputContent(bool $decorated = \false, bool $verbose = \false) : string
+    protected function getOutputContent(bool $decorated = \false, bool $verbose = \false): string
     {
         rewind($this->getOutputStream($decorated, $verbose)->getStream());
         $contents = stream_get_contents($this->getOutputStream($decorated, $verbose)->getStream());
@@ -71,7 +71,7 @@ abstract class ErrorFormatterTestCase extends \PHPStan\Testing\PHPStanTestCase
     /**
      * @param array{int, int}|int $numFileErrors
      */
-    protected function getAnalysisResult($numFileErrors, int $numGenericErrors) : AnalysisResult
+    protected function getAnalysisResult($numFileErrors, int $numGenericErrors): AnalysisResult
     {
         if (is_int($numFileErrors)) {
             $offsetFileErrors = 0;
@@ -81,11 +81,11 @@ abstract class ErrorFormatterTestCase extends \PHPStan\Testing\PHPStanTestCase
         if (!in_array($numFileErrors, range(0, 6), \true) || !in_array($offsetFileErrors, range(0, 6), \true) || !in_array($numGenericErrors, range(0, 2), \true)) {
             throw new ShouldNotHappenException();
         }
-        $fileErrors = array_slice([new Error('Foo', self::DIRECTORY_PATH . '/folder with unicode 😃/file name with "spaces" and unicode 😃.php', 4), new Error('Foo<Bar>', self::DIRECTORY_PATH . '/foo.php', 1), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/foo.php', 5, \true, null, null, 'a tip'), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/folder with unicode 😃/file name with "spaces" and unicode 😃.php', 2), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/foo.php', null), new Error('Foobar\\Buz', self::DIRECTORY_PATH . '/foo.php', 5, \true, null, null, 'a tip', null, null, 'foobar.buz')], $offsetFileErrors, $numFileErrors);
+        $fileErrors = array_slice([new Error('Foo', self::DIRECTORY_PATH . '/folder with unicode 😃/file name with "spaces" and unicode 😃.php', 4), new Error('Foo<Bar>', self::DIRECTORY_PATH . '/foo.php', 1), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/foo.php', 5, \true, null, null, 'a tip'), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/folder with unicode 😃/file name with "spaces" and unicode 😃.php', 2), new Error("Bar\nBar2", self::DIRECTORY_PATH . '/foo.php', null), new Error('Foobar\Buz', self::DIRECTORY_PATH . '/foo.php', 5, \true, null, null, 'a tip', null, null, 'foobar.buz')], $offsetFileErrors, $numFileErrors);
         $genericErrors = array_slice(['first generic error', 'second generic<error>'], 0, $numGenericErrors);
         return new AnalysisResult($fileErrors, $genericErrors, [], [], [], \false, null, \true, 0, \false, []);
     }
-    private function rtrimMultiline(string $output) : string
+    private function rtrimMultiline(string $output): string
     {
         $result = array_map(static fn(string $line): string => rtrim($line, " \r\n"), explode("\n", $output));
         return implode("\n", $result);

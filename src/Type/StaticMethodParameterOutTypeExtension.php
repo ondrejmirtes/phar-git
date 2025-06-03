@@ -24,6 +24,6 @@ use PHPStan\Reflection\ParameterReflection;
  */
 interface StaticMethodParameterOutTypeExtension
 {
-    public function isStaticMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter) : bool;
-    public function getParameterOutTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, ParameterReflection $parameter, Scope $scope) : ?\PHPStan\Type\Type;
+    public function isStaticMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter): bool;
+    public function getParameterOutTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, ParameterReflection $parameter, Scope $scope): ?\PHPStan\Type\Type;
 }

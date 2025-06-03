@@ -24,31 +24,31 @@ final class NativeParameterReflection implements ParameterReflection
         $this->variadic = $variadic;
         $this->defaultValue = $defaultValue;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }
-    public function union(self $other) : self
+    public function union(self $other): self
     {
         return new self($this->name, $this->optional && $other->optional, TypeCombinator::union($this->type, $other->type), $this->passedByReference->combine($other->passedByReference), $this->variadic && $other->variadic, $this->optional && $other->optional ? $this->defaultValue : null);
     }

@@ -23,5 +23,5 @@ interface AdditionalConstructorsExtension
 {
     public const EXTENSION_TAG = 'phpstan.additionalConstructorsExtension';
     /** @return string[] */
-    public function getAdditionalConstructors(\PHPStan\Reflection\ClassReflection $classReflection) : array;
+    public function getAdditionalConstructors(\PHPStan\Reflection\ClassReflection $classReflection): array;
 }

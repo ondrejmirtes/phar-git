@@ -25,11 +25,11 @@ final class UselessFunctionReturnValueRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FuncCall::class;
     }
-    public function processNode(Node $funcCall, Scope $scope) : array
+    public function processNode(Node $funcCall, Scope $scope): array
     {
         if (!$funcCall->name instanceof Node\Name || $scope->isInFirstLevelStatement()) {
             return [];

@@ -18,14 +18,14 @@ final class ConstantsInTraitsRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\ClassConst::class;
     }
     /**
      * @param Node\Stmt\ClassConst $node
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($this->phpVersion->supportsConstantsInTraits()) {
             return [];

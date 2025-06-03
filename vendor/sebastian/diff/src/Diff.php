@@ -34,25 +34,25 @@ final class Diff
         $this->to = $to;
         $this->chunks = $chunks;
     }
-    public function getFrom() : string
+    public function getFrom(): string
     {
         return $this->from;
     }
-    public function getTo() : string
+    public function getTo(): string
     {
         return $this->to;
     }
     /**
      * @return Chunk[]
      */
-    public function getChunks() : array
+    public function getChunks(): array
     {
         return $this->chunks;
     }
     /**
      * @param Chunk[] $chunks
      */
-    public function setChunks(array $chunks) : void
+    public function setChunks(array $chunks): void
     {
         $this->chunks = $chunks;
     }

@@ -41,7 +41,7 @@ final class ExportedEnumNode implements RootExportedNode, JsonSerializable
         $this->statements = $statements;
         $this->attributes = $attributes;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -79,7 +79,7 @@ final class ExportedEnumNode implements RootExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['name'], $properties['scalarType'], $properties['phpDoc'], $properties['implements'], $properties['statements'], $properties['attributes']);
     }
@@ -94,12 +94,12 @@ final class ExportedEnumNode implements RootExportedNode, JsonSerializable
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
-        return new self($data['name'], $data['scalarType'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['implements'], array_map(static function (array $node) : ExportedNode {
+        return new self($data['name'], $data['scalarType'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['implements'], array_map(static function (array $node): ExportedNode {
             $nodeType = $node['type'];
             return $nodeType::decode($node['data']);
-        }, $data['statements']), array_map(static function (array $attributeData) : \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
+        }, $data['statements']), array_map(static function (array $attributeData): \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
             if ($attributeData['type'] !== \PHPStan\Dependency\ExportedNode\ExportedAttributeNode::class) {
                 throw new ShouldNotHappenException();
             }
@@ -109,11 +109,11 @@ final class ExportedEnumNode implements RootExportedNode, JsonSerializable
     /**
      * @return self::TYPE_ENUM
      */
-    public function getType() : string
+    public function getType(): string
     {
         return self::TYPE_ENUM;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }

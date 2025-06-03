@@ -35,7 +35,7 @@ final class IssetCheck
      * @param ErrorIdentifier $identifier
      * @param callable(Type): ?string $typeMessageCallback
      */
-    public function check(Expr $expr, Scope $scope, string $operatorDescription, string $identifier, callable $typeMessageCallback, ?\PHPStan\Rules\IdentifierRuleError $error = null) : ?\PHPStan\Rules\IdentifierRuleError
+    public function check(Expr $expr, Scope $scope, string $operatorDescription, string $identifier, callable $typeMessageCallback, ?\PHPStan\Rules\IdentifierRuleError $error = null): ?\PHPStan\Rules\IdentifierRuleError
     {
         // mirrored in PHPStan\Analyser\MutatingScope::issetCheck()
         if ($expr instanceof Node\Expr\Variable && is_string($expr->name)) {
@@ -104,7 +104,7 @@ final class IssetCheck
             }
             if ($propertyReflection->hasNativeType() && !$propertyReflection->isVirtual()->yes()) {
                 if ($expr instanceof Node\Expr\PropertyFetch && $expr->name instanceof Node\Identifier && $expr->var instanceof Expr\Variable && $expr->var->name === 'this' && $scope->hasExpressionType(new PropertyInitializationExpr($propertyReflection->getName()))->yes()) {
-                    return $this->generateError($propertyReflection->getNativeType(), sprintf('%s %s', $this->propertyDescriptor->describeProperty($propertyReflection, $scope, $expr), $operatorDescription), static function (Type $type) use($typeMessageCallback) : ?string {
+                    return $this->generateError($propertyReflection->getNativeType(), sprintf('%s %s', $this->propertyDescriptor->describeProperty($propertyReflection, $scope, $expr), $operatorDescription), static function (Type $type) use ($typeMessageCallback): ?string {
                         $originalMessage = $typeMessageCallback($type);
                         if ($originalMessage === null) {
                             return null;
@@ -171,7 +171,7 @@ final class IssetCheck
     /**
      * @param ErrorIdentifier $identifier
      */
-    private function checkUndefined(Expr $expr, Scope $scope, string $operatorDescription, string $identifier) : ?\PHPStan\Rules\IdentifierRuleError
+    private function checkUndefined(Expr $expr, Scope $scope, string $operatorDescription, string $identifier): ?\PHPStan\Rules\IdentifierRuleError
     {
         if ($expr instanceof Node\Expr\Variable && is_string($expr->name)) {
             $hasVariable = $scope->hasVariableType($expr->name);
@@ -205,7 +205,7 @@ final class IssetCheck
      * @param ErrorIdentifier $identifier
      * @param 'variable'|'offset'|'property'|'expr'|'initializedProperty' $identifierSecondPart
      */
-    private function generateError(Type $type, string $message, callable $typeMessageCallback, string $identifier, string $identifierSecondPart) : ?\PHPStan\Rules\IdentifierRuleError
+    private function generateError(Type $type, string $message, callable $typeMessageCallback, string $identifier, string $identifierSecondPart): ?\PHPStan\Rules\IdentifierRuleError
     {
         $typeMessage = $typeMessageCallback($type);
         if ($typeMessage === null) {

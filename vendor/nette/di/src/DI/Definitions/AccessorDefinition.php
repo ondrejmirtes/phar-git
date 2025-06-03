@@ -38,7 +38,7 @@ final class AccessorDefinition extends Definition
         }
         return parent::setType($interface);
     }
-    public function getImplement() : ?string
+    public function getImplement(): ?string
     {
         return $this->getType();
     }
@@ -55,14 +55,14 @@ final class AccessorDefinition extends Definition
         }
         return $this;
     }
-    public function getReference() : ?Reference
+    public function getReference(): ?Reference
     {
         return $this->reference;
     }
-    public function resolveType(Nette\DI\Resolver $resolver) : void
+    public function resolveType(Nette\DI\Resolver $resolver): void
     {
     }
-    public function complete(Nette\DI\Resolver $resolver) : void
+    public function complete(Nette\DI\Resolver $resolver): void
     {
         if (!$this->reference) {
             $interface = $this->getType();
@@ -72,7 +72,7 @@ final class AccessorDefinition extends Definition
         }
         $this->reference = $resolver->normalizeReference($this->reference);
     }
-    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator) : void
+    public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator): void
     {
         $class = (new Nette\PhpGenerator\ClassType())->addImplement($this->getType());
         $class->addProperty('container')->setPrivate();

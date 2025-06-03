@@ -21,103 +21,103 @@ final class DummyConstructorReflection implements ExtendedMethodReflection
     {
         $this->declaringClass = $declaringClass;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         return $this->declaringClass;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return \false;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return \false;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return \true;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return '__construct';
     }
-    public function getPrototype() : ClassMemberReflection
+    public function getPrototype(): ClassMemberReflection
     {
         return $this;
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         return [new ExtendedFunctionVariant(TemplateTypeMap::createEmpty(), null, [], \false, new VoidType(), new MixedType(), new MixedType(), null)];
     }
-    public function getOnlyVariant() : ExtendedParametersAcceptor
+    public function getOnlyVariant(): ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         return null;
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return null;
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function getAsserts() : Assertions
+    public function getAsserts(): Assertions
     {
         return Assertions::createEmpty();
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return TrinaryLogic::createFromBoolean($this->declaringClass->acceptsNamedArguments());
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         return null;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

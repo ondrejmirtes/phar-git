@@ -17,11 +17,11 @@ use function sprintf;
  */
 final class SetNonVirtualPropertyHookAssignRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyHookReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $hookNode = $node->getPropertyHookNode();
         if ($hookNode->name->toLowerString() !== 'set') {

@@ -16,11 +16,11 @@ final class CrossCheckInterfacesHelper
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(ClassReflection $classReflection) : array
+    public function check(ClassReflection $classReflection): array
     {
         $interfaceTemplateTypeMaps = [];
         $errors = [];
-        $check = static function (ClassReflection $classReflection, bool $first) use(&$interfaceTemplateTypeMaps, &$check, &$errors) : void {
+        $check = static function (ClassReflection $classReflection, bool $first) use (&$interfaceTemplateTypeMaps, &$check, &$errors): void {
             foreach ($classReflection->getInterfaces() as $interface) {
                 if (!$interface->isGeneric()) {
                     continue;

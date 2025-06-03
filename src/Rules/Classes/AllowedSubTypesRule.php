@@ -16,14 +16,14 @@ use function strtolower;
  */
 final class AllowedSubTypesRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
     /**
      * @param InClassNode $node
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $className = $classReflection->getName();

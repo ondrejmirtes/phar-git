@@ -35,7 +35,7 @@ class MemoizeClassMapFilter
      *
      * @return array<class-string, non-empty-string>
      */
-    public function filter(array $classMap, Closure $filter) : array
+    public function filter(array $classMap, Closure $filter): array
     {
         $filtered = [];
         $paths = [];

@@ -11,7 +11,7 @@ use function count;
 final class ArrowFunctionArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'arrowFunctionCallArgs';
-    public function enterNode(Node $node) : ?Node
+    public function enterNode(Node $node): ?Node
     {
         if (!$node instanceof Node\Expr\FuncCall) {
             return null;

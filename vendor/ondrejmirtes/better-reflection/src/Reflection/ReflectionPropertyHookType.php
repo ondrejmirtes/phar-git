@@ -16,7 +16,7 @@ class ReflectionPropertyHookType
 {
     const Get = 'get';
     const Set = 'set';
-    public static function fromCoreReflectionPropertyHookType(CoreReflectionPropertyHookType $hookType) : string
+    public static function fromCoreReflectionPropertyHookType(CoreReflectionPropertyHookType $hookType): string
     {
         if ($hookType === CoreReflectionPropertyHookType::Get) {
             return self::Get;

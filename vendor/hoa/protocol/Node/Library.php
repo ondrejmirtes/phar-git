@@ -59,7 +59,7 @@ class Library extends \Hoa\Protocol\Node\Node
         }
         if (!empty($queue)) {
             $head = $queue;
-            if (\false !== ($pos = \strpos($queue, '/'))) {
+            if (\false !== $pos = \strpos($queue, '/')) {
                 $head = \substr($head, 0, $pos);
                 $queue = \DIRECTORY_SEPARATOR . \substr($queue, $pos + 1);
             } else {

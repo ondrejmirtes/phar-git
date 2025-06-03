@@ -15,7 +15,7 @@ final class LazyAlwaysUsedClassConstantsExtensionProvider implements \PHPStan\Ru
     {
         $this->container = $container;
     }
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         if ($this->extensions === null) {
             $this->extensions = $this->container->getServicesByTag(\PHPStan\Rules\Constants\AlwaysUsedClassConstantsExtensionProvider::EXTENSION_TAG);

@@ -31,11 +31,11 @@ final class CaughtExceptionExistenceRule implements Rule
         $this->checkClassCaseSensitivity = $checkClassCaseSensitivity;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Catch_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->types as $class) {

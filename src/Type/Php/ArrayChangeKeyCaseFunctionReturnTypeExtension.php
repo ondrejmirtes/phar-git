@@ -33,11 +33,11 @@ use const CASE_UPPER;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class ArrayChangeKeyCaseFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'array_change_key_case';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (!isset($functionCall->getArgs()[0])) {
             return null;
@@ -77,7 +77,7 @@ final class ArrayChangeKeyCaseFunctionReturnTypeExtension implements DynamicFunc
             $newArrayType = TypeCombinator::union(...$arrayTypes);
         } else {
             $keysType = $arrayType->getIterableKeyType();
-            $keysType = TypeTraverser::map($keysType, function (Type $type, callable $traverse) use($case) : Type {
+            $keysType = TypeTraverser::map($keysType, function (Type $type, callable $traverse) use ($case): Type {
                 if ($type instanceof UnionType) {
                     return $traverse($type);
                 }
@@ -111,7 +111,7 @@ final class ArrayChangeKeyCaseFunctionReturnTypeExtension implements DynamicFunc
         }
         return $newArrayType;
     }
-    private function mapConstantString(ConstantStringType $type, ?int $case) : Type
+    private function mapConstantString(ConstantStringType $type, ?int $case): Type
     {
         if ($case === CASE_LOWER) {
             return new ConstantStringType(strtolower($type->getValue()));

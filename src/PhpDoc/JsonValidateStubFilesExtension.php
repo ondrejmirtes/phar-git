@@ -13,7 +13,7 @@ final class JsonValidateStubFilesExtension implements \PHPStan\PhpDoc\StubFilesE
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getFiles() : array
+    public function getFiles(): array
     {
         if (!$this->phpVersion->supportsJsonValidate()) {
             return [];

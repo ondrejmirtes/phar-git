@@ -56,7 +56,7 @@ class Configurator
         // compatibility
         return $this;
     }
-    public function isDebugMode() : bool
+    public function isDebugMode(): bool
     {
         return $this->staticParameters['debugMode'];
     }
@@ -115,7 +115,7 @@ class Configurator
         $this->services = $services + $this->services;
         return $this;
     }
-    protected function getDefaultParameters() : array
+    protected function getDefaultParameters(): array
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
         $last = \end($trace);
@@ -123,7 +123,7 @@ class Configurator
         $loaderRc = \class_exists(ClassLoader::class) ? new \ReflectionClass(ClassLoader::class) : null;
         return ['appDir' => isset($trace[1]['file']) ? \dirname($trace[1]['file']) : null, 'wwwDir' => isset($last['file']) ? \dirname($last['file']) : null, 'vendorDir' => $loaderRc ? \dirname($loaderRc->getFileName(), 2) : null, 'debugMode' => $debugMode, 'productionMode' => !$debugMode, 'consoleMode' => \PHP_SAPI === 'cli'];
     }
-    public function enableTracy(?string $logDirectory = null, ?string $email = null) : void
+    public function enableTracy(?string $logDirectory = null, ?string $email = null): void
     {
         if (!\class_exists(Tracy\Debugger::class)) {
             throw new Nette\NotSupportedException('Tracy not found, do you have `tracy/tracy` package installed?');
@@ -138,14 +138,14 @@ class Configurator
     /**
      * Alias for enableTracy()
      */
-    public function enableDebugger(?string $logDirectory = null, ?string $email = null) : void
+    public function enableDebugger(?string $logDirectory = null, ?string $email = null): void
     {
         $this->enableTracy($logDirectory, $email);
     }
     /**
      * @throws Nette\NotSupportedException if RobotLoader is not available
      */
-    public function createRobotLoader() : Nette\Loaders\RobotLoader
+    public function createRobotLoader(): Nette\Loaders\RobotLoader
     {
         if (!\class_exists(Nette\Loaders\RobotLoader::class)) {
             throw new Nette\NotSupportedException('RobotLoader not found, do you have `nette/robot-loader` package installed?');
@@ -172,7 +172,7 @@ class Configurator
     /**
      * Returns system DI container.
      */
-    public function createContainer(bool $initialize = \true) : DI\Container
+    public function createContainer(bool $initialize = \true): DI\Container
     {
         $class = $this->loadContainer();
         $container = new $class($this->dynamicParameters);
@@ -187,7 +187,7 @@ class Configurator
     /**
      * Loads system DI container class and returns its name.
      */
-    public function loadContainer() : string
+    public function loadContainer(): string
     {
         $loader = new DI\ContainerLoader($this->getCacheDirectory() . '/nette.configurator', $this->staticParameters['debugMode']);
         return $loader->load([$this, 'generateContainer'], $this->generateContainerKey());
@@ -195,7 +195,7 @@ class Configurator
     /**
      * @internal
      */
-    public function generateContainer(DI\Compiler $compiler) : void
+    public function generateContainer(DI\Compiler $compiler): void
     {
         $loader = $this->createLoader();
         $loader->setParameters($this->staticParameters);
@@ -219,11 +219,11 @@ class Configurator
         }
         Nette\Utils\Arrays::invoke($this->onCompile, $this, $compiler);
     }
-    protected function createLoader() : DI\Config\Loader
+    protected function createLoader(): DI\Config\Loader
     {
         return new DI\Config\Loader();
     }
-    protected function generateContainerKey() : array
+    protected function generateContainerKey(): array
     {
         return [
             $this->staticParameters,
@@ -234,7 +234,7 @@ class Configurator
             \class_exists(ClassLoader::class) ? \filemtime((new \ReflectionClass(ClassLoader::class))->getFilename()) : null,
         ];
     }
-    protected function getCacheDirectory() : string
+    protected function getCacheDirectory(): string
     {
         if (empty($this->staticParameters['tempDir'])) {
             throw new Nette\InvalidStateException('Set path to temporary directory using setTempDirectory().');
@@ -248,11 +248,11 @@ class Configurator
      * Detects debug mode by IP addresses or computer names whitelist detection.
      * @param  string|array  $list
      */
-    public static function detectDebugMode($list = null) : bool
+    public static function detectDebugMode($list = null): bool
     {
         $addr = $_SERVER['REMOTE_ADDR'] ?? \php_uname('n');
         $secret = \is_string($_COOKIE[self::CookieSecret] ?? null) ? $_COOKIE[self::CookieSecret] : null;
-        $list = \is_string($list) ? \preg_split('#[,\\s]+#', $list) : (array) $list;
+        $list = \is_string($list) ? \preg_split('#[,\s]+#', $list) : (array) $list;
         if (!isset($_SERVER['HTTP_X_FORWARDED_FOR']) && !isset($_SERVER['HTTP_FORWARDED'])) {
             $list[] = '127.0.0.1';
             $list[] = '::1';

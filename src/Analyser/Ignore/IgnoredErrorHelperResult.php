@@ -51,7 +51,7 @@ final class IgnoredErrorHelperResult
     /**
      * @return list<string>
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -59,58 +59,56 @@ final class IgnoredErrorHelperResult
      * @param Error[] $errors
      * @param string[] $analysedFiles
      */
-    public function process(array $errors, bool $onlyFiles, array $analysedFiles, bool $hasInternalErrors) : \PHPStan\Analyser\Ignore\IgnoredErrorHelperProcessedResult
+    public function process(array $errors, bool $onlyFiles, array $analysedFiles, bool $hasInternalErrors): \PHPStan\Analyser\Ignore\IgnoredErrorHelperProcessedResult
     {
         $unmatchedIgnoredErrors = $this->ignoreErrors;
         $stringErrors = [];
-        $processIgnoreError = function (Error $error, int $i, $ignore) use(&$unmatchedIgnoredErrors, &$stringErrors) : bool {
+        $processIgnoreError = function (Error $error, int $i, $ignore) use (&$unmatchedIgnoredErrors, &$stringErrors): bool {
             $shouldBeIgnored = \false;
             if (is_string($ignore)) {
                 $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore, null, null);
                 if ($shouldBeIgnored) {
                     unset($unmatchedIgnoredErrors[$i]);
                 }
-            } else {
-                if (isset($ignore['path'])) {
-                    $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, $ignore['path']);
-                    if ($shouldBeIgnored) {
-                        if (isset($ignore['count'])) {
-                            $realCount = $unmatchedIgnoredErrors[$i]['realCount'] ?? 0;
-                            $realCount++;
-                            $unmatchedIgnoredErrors[$i]['realCount'] = $realCount;
-                            if (!isset($unmatchedIgnoredErrors[$i]['file'])) {
-                                $unmatchedIgnoredErrors[$i]['file'] = $error->getFile();
-                                $unmatchedIgnoredErrors[$i]['line'] = $error->getLine();
-                            }
-                            if ($realCount > $ignore['count']) {
-                                $shouldBeIgnored = \false;
-                            }
-                        } else {
+            } else if (isset($ignore['path'])) {
+                $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, $ignore['path']);
+                if ($shouldBeIgnored) {
+                    if (isset($ignore['count'])) {
+                        $realCount = $unmatchedIgnoredErrors[$i]['realCount'] ?? 0;
+                        $realCount++;
+                        $unmatchedIgnoredErrors[$i]['realCount'] = $realCount;
+                        if (!isset($unmatchedIgnoredErrors[$i]['file'])) {
+                            $unmatchedIgnoredErrors[$i]['file'] = $error->getFile();
+                            $unmatchedIgnoredErrors[$i]['line'] = $error->getLine();
+                        }
+                        if ($realCount > $ignore['count']) {
+                            $shouldBeIgnored = \false;
+                        }
+                    } else {
+                        unset($unmatchedIgnoredErrors[$i]);
+                    }
+                }
+            } elseif (isset($ignore['paths'])) {
+                foreach ($ignore['paths'] as $j => $ignorePath) {
+                    $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, $ignorePath);
+                    if (!$shouldBeIgnored) {
+                        continue;
+                    }
+                    if (isset($unmatchedIgnoredErrors[$i])) {
+                        if (!is_array($unmatchedIgnoredErrors[$i])) {
+                            throw new ShouldNotHappenException();
+                        }
+                        unset($unmatchedIgnoredErrors[$i]['paths'][$j]);
+                        if (isset($unmatchedIgnoredErrors[$i]['paths']) && count($unmatchedIgnoredErrors[$i]['paths']) === 0) {
                             unset($unmatchedIgnoredErrors[$i]);
                         }
                     }
-                } elseif (isset($ignore['paths'])) {
-                    foreach ($ignore['paths'] as $j => $ignorePath) {
-                        $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, $ignorePath);
-                        if (!$shouldBeIgnored) {
-                            continue;
-                        }
-                        if (isset($unmatchedIgnoredErrors[$i])) {
-                            if (!is_array($unmatchedIgnoredErrors[$i])) {
-                                throw new ShouldNotHappenException();
-                            }
-                            unset($unmatchedIgnoredErrors[$i]['paths'][$j]);
-                            if (isset($unmatchedIgnoredErrors[$i]['paths']) && count($unmatchedIgnoredErrors[$i]['paths']) === 0) {
-                                unset($unmatchedIgnoredErrors[$i]);
-                            }
-                        }
-                        break;
-                    }
-                } else {
-                    $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, null);
-                    if ($shouldBeIgnored) {
-                        unset($unmatchedIgnoredErrors[$i]);
-                    }
+                    break;
+                }
+            } else {
+                $shouldBeIgnored = \PHPStan\Analyser\Ignore\IgnoredError::shouldIgnore($this->fileHelper, $error, $ignore['message'] ?? null, $ignore['identifier'] ?? null, null);
+                if ($shouldBeIgnored) {
+                    unset($unmatchedIgnoredErrors[$i]);
                 }
             }
             if ($shouldBeIgnored) {

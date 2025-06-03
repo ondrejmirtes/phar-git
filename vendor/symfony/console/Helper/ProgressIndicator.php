@@ -154,7 +154,7 @@ class ProgressIndicator
             return $matches[0];
         }, $this->format ?? ''));
     }
-    private function determineBestFormat() : string
+    private function determineBestFormat(): string
     {
         switch ($this->output->getVerbosity()) {
             // OutputInterface::VERBOSITY_QUIET: display is disabled anyway
@@ -179,11 +179,11 @@ class ProgressIndicator
             $this->output->writeln($message);
         }
     }
-    private function getCurrentTimeInMilliseconds() : float
+    private function getCurrentTimeInMilliseconds(): float
     {
         return \round(\microtime(\true) * 1000);
     }
-    private static function initPlaceholderFormatters() : array
+    private static function initPlaceholderFormatters(): array
     {
         return ['indicator' => function (self $indicator) {
             return $indicator->indicatorValues[$indicator->indicatorCurrent % \count($indicator->indicatorValues)];

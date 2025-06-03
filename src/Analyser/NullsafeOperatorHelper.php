@@ -7,7 +7,7 @@ use PhpParser\Node\Expr;
 use PHPStan\Type\TypeCombinator;
 final class NullsafeOperatorHelper
 {
-    public static function getNullsafeShortcircuitedExprRespectingScope(\PHPStan\Analyser\Scope $scope, Expr $expr) : Expr
+    public static function getNullsafeShortcircuitedExprRespectingScope(\PHPStan\Analyser\Scope $scope, Expr $expr): Expr
     {
         if (!TypeCombinator::containsNull($scope->getType($expr))) {
             // We're in most likely in context of a null-safe operator ($scope->moreSpecificType is defined for $expr)
@@ -19,7 +19,7 @@ final class NullsafeOperatorHelper
     /**
      * @internal Use NullsafeOperatorHelper::getNullsafeShortcircuitedExprRespectingScope
      */
-    public static function getNullsafeShortcircuitedExpr(Expr $expr) : Expr
+    public static function getNullsafeShortcircuitedExpr(Expr $expr): Expr
     {
         if ($expr instanceof Expr\NullsafeMethodCall) {
             return new Expr\MethodCall(self::getNullsafeShortcircuitedExpr($expr->var), $expr->name, $expr->args);

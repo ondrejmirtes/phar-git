@@ -33,11 +33,11 @@ final class ExistingClassInInstanceOfRule implements Rule
         $this->checkClassCaseSensitivity = $checkClassCaseSensitivity;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Instanceof_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $class = $node->class;
         if (!$class instanceof Node\Name) {

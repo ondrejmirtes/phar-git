@@ -24,48 +24,48 @@ final class TrinaryLogic
     {
         $this->value = $value;
     }
-    public static function createYes() : self
+    public static function createYes(): self
     {
         return self::$registry[self::YES] ??= new self(self::YES);
     }
-    public static function createNo() : self
+    public static function createNo(): self
     {
         return self::$registry[self::NO] ??= new self(self::NO);
     }
-    public static function createMaybe() : self
+    public static function createMaybe(): self
     {
         return self::$registry[self::MAYBE] ??= new self(self::MAYBE);
     }
-    public static function createFromBoolean(bool $value) : self
+    public static function createFromBoolean(bool $value): self
     {
         $yesNo = $value ? self::YES : self::NO;
         return self::$registry[$yesNo] ??= new self($yesNo);
     }
-    private static function create(int $value) : self
+    private static function create(int $value): self
     {
         self::$registry[$value] ??= new self($value);
         return self::$registry[$value];
     }
-    public function yes() : bool
+    public function yes(): bool
     {
         return $this->value === self::YES;
     }
-    public function maybe() : bool
+    public function maybe(): bool
     {
         return $this->value === self::MAYBE;
     }
-    public function no() : bool
+    public function no(): bool
     {
         return $this->value === self::NO;
     }
-    public function toBooleanType() : BooleanType
+    public function toBooleanType(): BooleanType
     {
         if ($this->value === self::MAYBE) {
             return new BooleanType();
         }
         return new ConstantBooleanType($this->value === self::YES);
     }
-    public function and(self ...$operands) : self
+    public function and(self ...$operands): self
     {
         $min = $this->value;
         foreach ($operands as $operand) {
@@ -81,7 +81,7 @@ final class TrinaryLogic
      * @param T[] $objects
      * @param callable(T): self $callback
      */
-    public function lazyAnd(array $objects, callable $callback) : self
+    public function lazyAnd(array $objects, callable $callback): self
     {
         if ($this->no()) {
             return $this;
@@ -96,7 +96,7 @@ final class TrinaryLogic
         }
         return $this->and(...$results);
     }
-    public function or(self ...$operands) : self
+    public function or(self ...$operands): self
     {
         $operandValues = array_column($operands, 'value');
         $operandValues[] = $this->value;
@@ -107,7 +107,7 @@ final class TrinaryLogic
      * @param T[] $objects
      * @param callable(T): self $callback
      */
-    public function lazyOr(array $objects, callable $callback) : self
+    public function lazyOr(array $objects, callable $callback): self
     {
         if ($this->yes()) {
             return $this;
@@ -122,7 +122,7 @@ final class TrinaryLogic
         }
         return $this->or(...$results);
     }
-    public static function extremeIdentity(self ...$operands) : self
+    public static function extremeIdentity(self ...$operands): self
     {
         if ($operands === []) {
             throw new \PHPStan\ShouldNotHappenException();
@@ -137,7 +137,7 @@ final class TrinaryLogic
      * @param T[] $objects
      * @param callable(T): self $callback
      */
-    public static function lazyExtremeIdentity(array $objects, callable $callback) : self
+    public static function lazyExtremeIdentity(array $objects, callable $callback): self
     {
         if ($objects === []) {
             throw new \PHPStan\ShouldNotHappenException();
@@ -156,7 +156,7 @@ final class TrinaryLogic
         }
         return $lastResult;
     }
-    public static function maxMin(self ...$operands) : self
+    public static function maxMin(self ...$operands): self
     {
         if ($operands === []) {
             throw new \PHPStan\ShouldNotHappenException();
@@ -169,7 +169,7 @@ final class TrinaryLogic
      * @param T[] $objects
      * @param callable(T): self $callback
      */
-    public static function lazyMaxMin(array $objects, callable $callback) : self
+    public static function lazyMaxMin(array $objects, callable $callback): self
     {
         $results = [];
         foreach ($objects as $object) {
@@ -181,15 +181,15 @@ final class TrinaryLogic
         }
         return self::maxMin(...$results);
     }
-    public function negate() : self
+    public function negate(): self
     {
         return self::create(-$this->value);
     }
-    public function equals(self $other) : bool
+    public function equals(self $other): bool
     {
         return $this === $other;
     }
-    public function compareTo(self $other) : ?self
+    public function compareTo(self $other): ?self
     {
         if ($this->value > $other->value) {
             return $this;
@@ -198,7 +198,7 @@ final class TrinaryLogic
         }
         return null;
     }
-    public function describe() : string
+    public function describe(): string
     {
         static $labels = [self::NO => 'No', self::MAYBE => 'Maybe', self::YES => 'Yes'];
         return $labels[$this->value];

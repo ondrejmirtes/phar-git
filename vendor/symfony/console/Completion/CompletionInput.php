@@ -38,9 +38,9 @@ final class CompletionInput extends ArgvInput
      *
      * This is required for shell completions without COMP_WORDS support.
      */
-    public static function fromString(string $inputStr, int $currentIndex) : self
+    public static function fromString(string $inputStr, int $currentIndex): self
     {
-        \preg_match_all('/(?<=^|\\s)([\'"]?)(.+?)(?<!\\\\)\\1(?=$|\\s)/', $inputStr, $tokens);
+        \preg_match_all('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $inputStr, $tokens);
         return self::fromTokens($tokens[0], $currentIndex);
     }
     /**
@@ -49,7 +49,7 @@ final class CompletionInput extends ArgvInput
      * @param string[] $tokens       the set of split tokens (e.g. COMP_WORDS or argv)
      * @param int      $currentIndex the index of the cursor (e.g. COMP_CWORD)
      */
-    public static function fromTokens(array $tokens, int $currentIndex) : self
+    public static function fromTokens(array $tokens, int $currentIndex): self
     {
         $input = new self($tokens);
         $input->tokens = $tokens;
@@ -59,7 +59,7 @@ final class CompletionInput extends ArgvInput
     /**
      * {@inheritdoc}
      */
-    public function bind(InputDefinition $definition) : void
+    public function bind(InputDefinition $definition): void
     {
         parent::bind($definition);
         $relevantToken = $this->getRelevantToken();
@@ -126,7 +126,7 @@ final class CompletionInput extends ArgvInput
      *
      * @return string One of self::TYPE_* constants. TYPE_OPTION_NAME and TYPE_NONE are already implemented by the Console component
      */
-    public function getCompletionType() : string
+    public function getCompletionType(): string
     {
         return $this->completionType;
     }
@@ -135,26 +135,26 @@ final class CompletionInput extends ArgvInput
      *
      * @return string|null returns null when completing an option name
      */
-    public function getCompletionName() : ?string
+    public function getCompletionName(): ?string
     {
         return $this->completionName;
     }
     /**
      * The value already typed by the user (or empty string).
      */
-    public function getCompletionValue() : string
+    public function getCompletionValue(): string
     {
         return $this->completionValue;
     }
-    public function mustSuggestOptionValuesFor(string $optionName) : bool
+    public function mustSuggestOptionValuesFor(string $optionName): bool
     {
         return self::TYPE_OPTION_VALUE === $this->getCompletionType() && $optionName === $this->getCompletionName();
     }
-    public function mustSuggestArgumentValuesFor(string $argumentName) : bool
+    public function mustSuggestArgumentValuesFor(string $argumentName): bool
     {
         return self::TYPE_ARGUMENT_VALUE === $this->getCompletionType() && $argumentName === $this->getCompletionName();
     }
-    protected function parseToken(string $token, bool $parseOptions) : bool
+    protected function parseToken(string $token, bool $parseOptions): bool
     {
         try {
             return parent::parseToken($token, $parseOptions);
@@ -163,7 +163,7 @@ final class CompletionInput extends ArgvInput
         }
         return $parseOptions;
     }
-    private function getOptionFromToken(string $optionToken) : ?InputOption
+    private function getOptionFromToken(string $optionToken): ?InputOption
     {
         $optionName = \ltrim($optionToken, '-');
         if (!$optionName) {
@@ -179,14 +179,14 @@ final class CompletionInput extends ArgvInput
     /**
      * The token of the cursor, or the last token if the cursor is at the end of the input.
      */
-    private function getRelevantToken() : string
+    private function getRelevantToken(): string
     {
         return $this->tokens[$this->isCursorFree() ? $this->currentIndex - 1 : $this->currentIndex];
     }
     /**
      * Whether the cursor is "free" (i.e. at the end of the input preceded by a space).
      */
-    private function isCursorFree() : bool
+    private function isCursorFree(): bool
     {
         $nrOfTokens = \count($this->tokens);
         if ($this->currentIndex > $nrOfTokens) {

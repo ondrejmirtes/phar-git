@@ -10,11 +10,11 @@ final class ReflectionProviderStaticAccessor
     private function __construct()
     {
     }
-    public static function registerInstance(\PHPStan\Reflection\ReflectionProvider $reflectionProvider) : void
+    public static function registerInstance(\PHPStan\Reflection\ReflectionProvider $reflectionProvider): void
     {
         self::$instance = $reflectionProvider;
     }
-    public static function getInstance() : \PHPStan\Reflection\ReflectionProvider
+    public static function getInstance(): \PHPStan\Reflection\ReflectionProvider
     {
         if (self::$instance === null) {
             throw new ShouldNotHappenException();

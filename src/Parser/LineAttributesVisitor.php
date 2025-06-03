@@ -14,7 +14,7 @@ final class LineAttributesVisitor extends NodeVisitorAbstract
         $this->startLine = $startLine;
         $this->endLine = $endLine;
     }
-    public function enterNode(Node $node) : Node
+    public function enterNode(Node $node): Node
     {
         if ($node->getStartLine() === -1) {
             $node->setAttribute('startLine', $this->startLine);

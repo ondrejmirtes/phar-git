@@ -27,7 +27,7 @@ final class AttributeReflectionFactory
      * @param list<ReflectionAttribute|FakeReflectionAttribute> $reflections
      * @return list<AttributeReflection>
      */
-    public function fromNativeReflection(array $reflections, \PHPStan\Reflection\InitializerExprContext $context) : array
+    public function fromNativeReflection(array $reflections, \PHPStan\Reflection\InitializerExprContext $context): array
     {
         $attributes = [];
         foreach ($reflections as $reflection) {
@@ -43,7 +43,7 @@ final class AttributeReflectionFactory
      * @param AttributeGroup[] $attrGroups
      * @return list<AttributeReflection>
      */
-    public function fromAttrGroups(array $attrGroups, \PHPStan\Reflection\InitializerExprContext $context) : array
+    public function fromAttrGroups(array $attrGroups, \PHPStan\Reflection\InitializerExprContext $context): array
     {
         $attributes = [];
         foreach ($attrGroups as $attrGroup) {
@@ -69,7 +69,7 @@ final class AttributeReflectionFactory
     /**
      * @param array<int|string, Expr> $arguments
      */
-    private function fromNameAndArgumentExpressions(string $name, array $arguments, \PHPStan\Reflection\InitializerExprContext $context) : ?\PHPStan\Reflection\AttributeReflection
+    private function fromNameAndArgumentExpressions(string $name, array $arguments, \PHPStan\Reflection\InitializerExprContext $context): ?\PHPStan\Reflection\AttributeReflection
     {
         if (count($arguments) === 0) {
             return new \PHPStan\Reflection\AttributeReflection($name, []);

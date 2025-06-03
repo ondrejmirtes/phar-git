@@ -8,7 +8,7 @@ use _PHPStan_checksum\olvlvl\ComposerAttributeCollector\Attributes;
 use ReflectionClass;
 final class AutowiredAttributeServicesExtension extends CompilerExtension
 {
-    public function loadConfiguration() : void
+    public function loadConfiguration(): void
     {
         require_once __DIR__ . '/../../vendor/attributes.php';
         $autowiredServiceClasses = Attributes::findTargetClasses(\PHPStan\DependencyInjection\AutowiredService::class);

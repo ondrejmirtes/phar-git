@@ -18,11 +18,11 @@ final class UnsetCastRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Cast\Unset_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($this->phpVersion->supportsUnsetCast()) {
             return [];

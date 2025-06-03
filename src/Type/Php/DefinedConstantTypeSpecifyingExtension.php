@@ -24,15 +24,15 @@ final class DefinedConstantTypeSpecifyingExtension implements FunctionTypeSpecif
     {
         $this->constantHelper = $constantHelper;
     }
-    public function setTypeSpecifier(TypeSpecifier $typeSpecifier) : void
+    public function setTypeSpecifier(TypeSpecifier $typeSpecifier): void
     {
         $this->typeSpecifier = $typeSpecifier;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection, FuncCall $node, TypeSpecifierContext $context): bool
     {
         return $functionReflection->getName() === 'defined' && count($node->getArgs()) >= 1 && $context->true();
     }
-    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context) : SpecifiedTypes
+    public function specifyTypes(FunctionReflection $functionReflection, FuncCall $node, Scope $scope, TypeSpecifierContext $context): SpecifiedTypes
     {
         $constantName = $scope->getType($node->getArgs()[0]->value);
         if (!$constantName instanceof ConstantStringType || $constantName->getValue() === '') {

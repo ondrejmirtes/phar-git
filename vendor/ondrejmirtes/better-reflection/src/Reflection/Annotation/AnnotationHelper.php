@@ -9,19 +9,19 @@ final class AnnotationHelper
 {
     public const TENTATIVE_RETURN_TYPE_ANNOTATION = 'betterReflectionTentativeReturnType';
     /** @psalm-pure */
-    public static function isDeprecated(?string $docComment) : bool
+    public static function isDeprecated(?string $docComment): bool
     {
         if ($docComment === null) {
             return \false;
         }
-        return preg_match('~\\*\\s*@deprecated(?=\\s|\\*)~', $docComment) === 1;
+        return preg_match('~\*\s*@deprecated(?=\s|\*)~', $docComment) === 1;
     }
     /** @psalm-pure */
-    public static function hasTentativeReturnType(?string $docComment) : bool
+    public static function hasTentativeReturnType(?string $docComment): bool
     {
         if ($docComment === null) {
             return \false;
         }
-        return preg_match('~\\*\\s*@' . self::TENTATIVE_RETURN_TYPE_ANNOTATION . '(?=\\s|\\*)~', $docComment) === 1;
+        return preg_match('~\*\s*@' . self::TENTATIVE_RETURN_TYPE_ANNOTATION . '(?=\s|\*)~', $docComment) === 1;
     }
 }

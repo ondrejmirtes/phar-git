@@ -23,11 +23,11 @@ final class YieldTypeRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Yield_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $anonymousFunctionReturnType = $scope->getAnonymousFunctionReturnType();
         $scopeFunction = $scope->getFunction();

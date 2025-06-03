@@ -35,36 +35,36 @@ final class ClassConstantsNode extends NodeAbstract implements \PHPStan\Node\Vir
         $this->classReflection = $classReflection;
         parent::__construct($class->getAttributes());
     }
-    public function getClass() : ClassLike
+    public function getClass(): ClassLike
     {
         return $this->class;
     }
     /**
      * @return ClassConst[]
      */
-    public function getConstants() : array
+    public function getConstants(): array
     {
         return $this->constants;
     }
     /**
      * @return ClassConstantFetch[]
      */
-    public function getFetches() : array
+    public function getFetches(): array
     {
         return $this->fetches;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClassConstantsNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }

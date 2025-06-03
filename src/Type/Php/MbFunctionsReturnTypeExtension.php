@@ -33,11 +33,11 @@ final class MbFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeE
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return array_key_exists($functionReflection->getName(), $this->encodingPositionMap);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $returnType = ParametersAcceptorSelector::selectFromArgs($scope, $functionCall->getArgs(), $functionReflection->getVariants())->getReturnType();
         $positionEncodingParam = $this->encodingPositionMap[$functionReflection->getName()];

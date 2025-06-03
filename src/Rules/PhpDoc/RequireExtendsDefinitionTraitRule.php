@@ -19,11 +19,11 @@ final class RequireExtendsDefinitionTraitRule implements Rule
         $this->reflectionProvider = $reflectionProvider;
         $this->requireExtendsCheck = $requireExtendsCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Trait_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->namespacedName === null || !$this->reflectionProvider->hasClass($node->namespacedName->toString())) {
             return [];

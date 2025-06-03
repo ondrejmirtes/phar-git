@@ -22,35 +22,35 @@ use PHPStan\Type\Type;
 trait LateResolvableTypeTrait
 {
     private ?Type $result = null;
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return $this->resolve()->getObjectClassNames();
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return $this->resolve()->getObjectClassReflections();
     }
-    public function getArrays() : array
+    public function getArrays(): array
     {
         return $this->resolve()->getArrays();
     }
-    public function getConstantArrays() : array
+    public function getConstantArrays(): array
     {
         return $this->resolve()->getConstantArrays();
     }
-    public function getConstantStrings() : array
+    public function getConstantStrings(): array
     {
         return $this->resolve()->getConstantStrings();
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         return $this->resolve()->accepts($type, $strictTypes);
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         return $this->isSuperTypeOfDefault($type);
     }
-    private function isSuperTypeOfDefault(Type $type) : IsSuperTypeOfResult
+    private function isSuperTypeOfDefault(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof NeverType) {
             return IsSuperTypeOfResult::createYes();
@@ -64,367 +64,367 @@ trait LateResolvableTypeTrait
         }
         return $isSuperType;
     }
-    public function getTemplateType(string $ancestorClassName, string $templateTypeName) : Type
+    public function getTemplateType(string $ancestorClassName, string $templateTypeName): Type
     {
         return $this->resolve()->getTemplateType($ancestorClassName, $templateTypeName);
     }
-    public function isObject() : TrinaryLogic
+    public function isObject(): TrinaryLogic
     {
         return $this->resolve()->isObject();
     }
-    public function isEnum() : TrinaryLogic
+    public function isEnum(): TrinaryLogic
     {
         return $this->resolve()->isEnum();
     }
-    public function canAccessProperties() : TrinaryLogic
+    public function canAccessProperties(): TrinaryLogic
     {
         return $this->resolve()->canAccessProperties();
     }
-    public function hasProperty(string $propertyName) : TrinaryLogic
+    public function hasProperty(string $propertyName): TrinaryLogic
     {
         return $this->resolve()->hasProperty($propertyName);
     }
-    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope) : ExtendedPropertyReflection
+    public function getProperty(string $propertyName, ClassMemberAccessAnswerer $scope): ExtendedPropertyReflection
     {
         return $this->resolve()->getProperty($propertyName, $scope);
     }
-    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope) : UnresolvedPropertyPrototypeReflection
+    public function getUnresolvedPropertyPrototype(string $propertyName, ClassMemberAccessAnswerer $scope): UnresolvedPropertyPrototypeReflection
     {
         return $this->resolve()->getUnresolvedPropertyPrototype($propertyName, $scope);
     }
-    public function canCallMethods() : TrinaryLogic
+    public function canCallMethods(): TrinaryLogic
     {
         return $this->resolve()->canCallMethods();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         return $this->resolve()->hasMethod($methodName);
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->resolve()->getMethod($methodName, $scope);
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         return $this->resolve()->getUnresolvedMethodPrototype($methodName, $scope);
     }
-    public function canAccessConstants() : TrinaryLogic
+    public function canAccessConstants(): TrinaryLogic
     {
         return $this->resolve()->canAccessConstants();
     }
-    public function hasConstant(string $constantName) : TrinaryLogic
+    public function hasConstant(string $constantName): TrinaryLogic
     {
         return $this->resolve()->hasConstant($constantName);
     }
-    public function getConstant(string $constantName) : ClassConstantReflection
+    public function getConstant(string $constantName): ClassConstantReflection
     {
         return $this->resolve()->getConstant($constantName);
     }
-    public function isIterable() : TrinaryLogic
+    public function isIterable(): TrinaryLogic
     {
         return $this->resolve()->isIterable();
     }
-    public function isIterableAtLeastOnce() : TrinaryLogic
+    public function isIterableAtLeastOnce(): TrinaryLogic
     {
         return $this->resolve()->isIterableAtLeastOnce();
     }
-    public function getArraySize() : Type
+    public function getArraySize(): Type
     {
         return $this->resolve()->getArraySize();
     }
-    public function getIterableKeyType() : Type
+    public function getIterableKeyType(): Type
     {
         return $this->resolve()->getIterableKeyType();
     }
-    public function getFirstIterableKeyType() : Type
+    public function getFirstIterableKeyType(): Type
     {
         return $this->resolve()->getFirstIterableKeyType();
     }
-    public function getLastIterableKeyType() : Type
+    public function getLastIterableKeyType(): Type
     {
         return $this->resolve()->getLastIterableKeyType();
     }
-    public function getIterableValueType() : Type
+    public function getIterableValueType(): Type
     {
         return $this->resolve()->getIterableValueType();
     }
-    public function getFirstIterableValueType() : Type
+    public function getFirstIterableValueType(): Type
     {
         return $this->resolve()->getFirstIterableValueType();
     }
-    public function getLastIterableValueType() : Type
+    public function getLastIterableValueType(): Type
     {
         return $this->resolve()->getLastIterableValueType();
     }
-    public function isArray() : TrinaryLogic
+    public function isArray(): TrinaryLogic
     {
         return $this->resolve()->isArray();
     }
-    public function isConstantArray() : TrinaryLogic
+    public function isConstantArray(): TrinaryLogic
     {
         return $this->resolve()->isConstantArray();
     }
-    public function isOversizedArray() : TrinaryLogic
+    public function isOversizedArray(): TrinaryLogic
     {
         return $this->resolve()->isOversizedArray();
     }
-    public function isList() : TrinaryLogic
+    public function isList(): TrinaryLogic
     {
         return $this->resolve()->isList();
     }
-    public function isOffsetAccessible() : TrinaryLogic
+    public function isOffsetAccessible(): TrinaryLogic
     {
         return $this->resolve()->isOffsetAccessible();
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return $this->resolve()->isOffsetAccessLegal();
     }
-    public function hasOffsetValueType(Type $offsetType) : TrinaryLogic
+    public function hasOffsetValueType(Type $offsetType): TrinaryLogic
     {
         return $this->resolve()->hasOffsetValueType($offsetType);
     }
-    public function getOffsetValueType(Type $offsetType) : Type
+    public function getOffsetValueType(Type $offsetType): Type
     {
         return $this->resolve()->getOffsetValueType($offsetType);
     }
-    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true) : Type
+    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $unionValues = \true): Type
     {
         return $this->resolve()->setOffsetValueType($offsetType, $valueType, $unionValues);
     }
-    public function setExistingOffsetValueType(Type $offsetType, Type $valueType) : Type
+    public function setExistingOffsetValueType(Type $offsetType, Type $valueType): Type
     {
         return $this->resolve()->setExistingOffsetValueType($offsetType, $valueType);
     }
-    public function unsetOffset(Type $offsetType) : Type
+    public function unsetOffset(Type $offsetType): Type
     {
         return $this->resolve()->unsetOffset($offsetType);
     }
-    public function getKeysArray() : Type
+    public function getKeysArray(): Type
     {
         return $this->resolve()->getKeysArray();
     }
-    public function getValuesArray() : Type
+    public function getValuesArray(): Type
     {
         return $this->resolve()->getValuesArray();
     }
-    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function chunkArray(Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return $this->resolve()->chunkArray($lengthType, $preserveKeys);
     }
-    public function fillKeysArray(Type $valueType) : Type
+    public function fillKeysArray(Type $valueType): Type
     {
         return $this->resolve()->fillKeysArray($valueType);
     }
-    public function flipArray() : Type
+    public function flipArray(): Type
     {
         return $this->resolve()->flipArray();
     }
-    public function intersectKeyArray(Type $otherArraysType) : Type
+    public function intersectKeyArray(Type $otherArraysType): Type
     {
         return $this->resolve()->intersectKeyArray($otherArraysType);
     }
-    public function popArray() : Type
+    public function popArray(): Type
     {
         return $this->resolve()->popArray();
     }
-    public function reverseArray(TrinaryLogic $preserveKeys) : Type
+    public function reverseArray(TrinaryLogic $preserveKeys): Type
     {
         return $this->resolve()->reverseArray($preserveKeys);
     }
-    public function searchArray(Type $needleType) : Type
+    public function searchArray(Type $needleType): Type
     {
         return $this->resolve()->searchArray($needleType);
     }
-    public function shiftArray() : Type
+    public function shiftArray(): Type
     {
         return $this->resolve()->shiftArray();
     }
-    public function shuffleArray() : Type
+    public function shuffleArray(): Type
     {
         return $this->resolve()->shuffleArray();
     }
-    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys) : Type
+    public function sliceArray(Type $offsetType, Type $lengthType, TrinaryLogic $preserveKeys): Type
     {
         return $this->resolve()->sliceArray($offsetType, $lengthType, $preserveKeys);
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return $this->resolve()->isCallable();
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return $this->resolve()->getEnumCases();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return $this->resolve()->getCallableParametersAcceptors($scope);
     }
-    public function isCloneable() : TrinaryLogic
+    public function isCloneable(): TrinaryLogic
     {
         return $this->resolve()->isCloneable();
     }
-    public function toBoolean() : BooleanType
+    public function toBoolean(): BooleanType
     {
         return $this->resolve()->toBoolean();
     }
-    public function toNumber() : Type
+    public function toNumber(): Type
     {
         return $this->resolve()->toNumber();
     }
-    public function toAbsoluteNumber() : Type
+    public function toAbsoluteNumber(): Type
     {
         return $this->resolve()->toAbsoluteNumber();
     }
-    public function toInteger() : Type
+    public function toInteger(): Type
     {
         return $this->resolve()->toInteger();
     }
-    public function toFloat() : Type
+    public function toFloat(): Type
     {
         return $this->resolve()->toFloat();
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         return $this->resolve()->toString();
     }
-    public function toArray() : Type
+    public function toArray(): Type
     {
         return $this->resolve()->toArray();
     }
-    public function toArrayKey() : Type
+    public function toArrayKey(): Type
     {
         return $this->resolve()->toArrayKey();
     }
-    public function toCoercedArgumentType(bool $strictTypes) : Type
+    public function toCoercedArgumentType(bool $strictTypes): Type
     {
         return $this->resolve()->toCoercedArgumentType($strictTypes);
     }
-    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->resolve()->isSmallerThan($otherType, $phpVersion);
     }
-    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return $this->resolve()->isSmallerThanOrEqual($otherType, $phpVersion);
     }
-    public function isNull() : TrinaryLogic
+    public function isNull(): TrinaryLogic
     {
         return $this->resolve()->isNull();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return $this->resolve()->isConstantValue();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return $this->resolve()->isConstantScalarValue();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return $this->resolve()->getConstantScalarTypes();
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return $this->resolve()->getConstantScalarValues();
     }
-    public function isTrue() : TrinaryLogic
+    public function isTrue(): TrinaryLogic
     {
         return $this->resolve()->isTrue();
     }
-    public function isFalse() : TrinaryLogic
+    public function isFalse(): TrinaryLogic
     {
         return $this->resolve()->isFalse();
     }
-    public function isBoolean() : TrinaryLogic
+    public function isBoolean(): TrinaryLogic
     {
         return $this->resolve()->isBoolean();
     }
-    public function isFloat() : TrinaryLogic
+    public function isFloat(): TrinaryLogic
     {
         return $this->resolve()->isFloat();
     }
-    public function isInteger() : TrinaryLogic
+    public function isInteger(): TrinaryLogic
     {
         return $this->resolve()->isInteger();
     }
-    public function isString() : TrinaryLogic
+    public function isString(): TrinaryLogic
     {
         return $this->resolve()->isString();
     }
-    public function isNumericString() : TrinaryLogic
+    public function isNumericString(): TrinaryLogic
     {
         return $this->resolve()->isNumericString();
     }
-    public function isNonEmptyString() : TrinaryLogic
+    public function isNonEmptyString(): TrinaryLogic
     {
         return $this->resolve()->isNonEmptyString();
     }
-    public function isNonFalsyString() : TrinaryLogic
+    public function isNonFalsyString(): TrinaryLogic
     {
         return $this->resolve()->isNonFalsyString();
     }
-    public function isLiteralString() : TrinaryLogic
+    public function isLiteralString(): TrinaryLogic
     {
         return $this->resolve()->isLiteralString();
     }
-    public function isLowercaseString() : TrinaryLogic
+    public function isLowercaseString(): TrinaryLogic
     {
         return $this->resolve()->isLowercaseString();
     }
-    public function isUppercaseString() : TrinaryLogic
+    public function isUppercaseString(): TrinaryLogic
     {
         return $this->resolve()->isUppercaseString();
     }
-    public function isClassString() : TrinaryLogic
+    public function isClassString(): TrinaryLogic
     {
         return $this->resolve()->isClassString();
     }
-    public function getClassStringObjectType() : Type
+    public function getClassStringObjectType(): Type
     {
         return $this->resolve()->getClassStringObjectType();
     }
-    public function getObjectTypeOrClassStringObjectType() : Type
+    public function getObjectTypeOrClassStringObjectType(): Type
     {
         return $this->resolve()->getObjectTypeOrClassStringObjectType();
     }
-    public function isVoid() : TrinaryLogic
+    public function isVoid(): TrinaryLogic
     {
         return $this->resolve()->isVoid();
     }
-    public function isScalar() : TrinaryLogic
+    public function isScalar(): TrinaryLogic
     {
         return $this->resolve()->isScalar();
     }
-    public function looseCompare(Type $type, PhpVersion $phpVersion) : BooleanType
+    public function looseCompare(Type $type, PhpVersion $phpVersion): BooleanType
     {
         return new BooleanType();
     }
-    public function getSmallerType(PhpVersion $phpVersion) : Type
+    public function getSmallerType(PhpVersion $phpVersion): Type
     {
         return $this->resolve()->getSmallerType($phpVersion);
     }
-    public function getSmallerOrEqualType(PhpVersion $phpVersion) : Type
+    public function getSmallerOrEqualType(PhpVersion $phpVersion): Type
     {
         return $this->resolve()->getSmallerOrEqualType($phpVersion);
     }
-    public function getGreaterType(PhpVersion $phpVersion) : Type
+    public function getGreaterType(PhpVersion $phpVersion): Type
     {
         return $this->resolve()->getGreaterType($phpVersion);
     }
-    public function getGreaterOrEqualType(PhpVersion $phpVersion) : Type
+    public function getGreaterOrEqualType(PhpVersion $phpVersion): Type
     {
         return $this->resolve()->getGreaterOrEqualType($phpVersion);
     }
-    public function inferTemplateTypes(Type $receivedType) : TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): TemplateTypeMap
     {
         return $this->resolve()->inferTemplateTypes($receivedType);
     }
-    public function tryRemove(Type $typeToRemove) : ?Type
+    public function tryRemove(Type $typeToRemove): ?Type
     {
         return $this->resolve()->tryRemove($typeToRemove);
     }
-    public function isSubTypeOf(Type $otherType) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $otherType): IsSuperTypeOfResult
     {
         $result = $this->resolve();
         if ($result instanceof CompoundType) {
@@ -432,7 +432,7 @@ trait LateResolvableTypeTrait
         }
         return $otherType->isSuperTypeOf($result);
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         $result = $this->resolve();
         if ($result instanceof CompoundType) {
@@ -440,7 +440,7 @@ trait LateResolvableTypeTrait
         }
         return $acceptingType->accepts($result, $strictTypes);
     }
-    public function isGreaterThan(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThan(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         $result = $this->resolve();
         if ($result instanceof CompoundType) {
@@ -448,7 +448,7 @@ trait LateResolvableTypeTrait
         }
         return $otherType->isSmallerThan($result, $phpVersion);
     }
-    public function isGreaterThanOrEqual(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThanOrEqual(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         $result = $this->resolve();
         if ($result instanceof CompoundType) {
@@ -456,20 +456,20 @@ trait LateResolvableTypeTrait
         }
         return $otherType->isSmallerThanOrEqual($result, $phpVersion);
     }
-    public function exponentiate(Type $exponent) : Type
+    public function exponentiate(Type $exponent): Type
     {
         return $this->resolve()->exponentiate($exponent);
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return $this->resolve()->getFiniteTypes();
     }
-    public function resolve() : Type
+    public function resolve(): Type
     {
         if ($this->result === null) {
             return $this->result = $this->getResult();
         }
         return $this->result;
     }
-    protected abstract function getResult() : Type;
+    abstract protected function getResult(): Type;
 }

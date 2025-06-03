@@ -21,22 +21,22 @@ final class StatementContext
     /**
      * @api
      */
-    public static function createTopLevel() : self
+    public static function createTopLevel(): self
     {
         return new self(\true);
     }
     /**
      * @api
      */
-    public static function createDeep() : self
+    public static function createDeep(): self
     {
         return new self(\false);
     }
-    public function isTopLevel() : bool
+    public function isTopLevel(): bool
     {
         return $this->isTopLevel;
     }
-    public function enterDeep() : self
+    public function enterDeep(): self
     {
         if ($this->isTopLevel) {
             return self::createDeep();

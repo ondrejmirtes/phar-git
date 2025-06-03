@@ -45,7 +45,7 @@ class ClassAttributeCollector
      *
      * @throws ReflectionException
      */
-    public function collectAttributes(string $class) : array
+    public function collectAttributes(string $class): array
     {
         $classReflection = new ReflectionClass($class);
         if ($this->isAttribute($classReflection)) {
@@ -90,7 +90,7 @@ class ClassAttributeCollector
      *
      * @param ReflectionClass<object> $classReflection
      */
-    private function isAttribute(ReflectionClass $classReflection) : bool
+    private function isAttribute(ReflectionClass $classReflection): bool
     {
         foreach ($this->getClassAttributes($classReflection) as $attribute) {
             if ($attribute->getName() === Attribute::class) {
@@ -99,7 +99,7 @@ class ClassAttributeCollector
         }
         return \false;
     }
-    private static function isAttributeIgnored(string $name) : bool
+    private static function isAttributeIgnored(string $name): bool
     {
         static $ignored = [\ReturnTypeWillChange::class => \true, \_PHPStan_checksum\Override::class => \true, \SensitiveParameter::class => \true, \_PHPStan_checksum\Deprecated::class => \true, \AllowDynamicProperties::class];
         return isset($ignored[$name]);
@@ -109,7 +109,7 @@ class ClassAttributeCollector
      * @param ReflectionClass<object> $classReflection
      * @return ReflectionAttribute<object>[]
      */
-    private function getClassAttributes(ReflectionClass $classReflection) : array
+    private function getClassAttributes(ReflectionClass $classReflection): array
     {
         if (PHP_VERSION_ID >= 80000) {
             return $classReflection->getAttributes();
@@ -146,7 +146,7 @@ class ClassAttributeCollector
     /**
      * @return Node[]
      */
-    private function parse(string $file) : array
+    private function parse(string $file): array
     {
         if (isset($this->parserCache[$file])) {
             return $this->parserCache[$file];
@@ -164,7 +164,7 @@ class ClassAttributeCollector
      * @param Node\AttributeGroup[] $attrGroups
      * @return ReflectionAttribute<object>[]
      */
-    private function attrGroupsToAttributes(array $attrGroups) : array
+    private function attrGroupsToAttributes(array $attrGroups): array
     {
         $evaluator = new ConstExprEvaluator(function (Expr $expr) {
             if ($expr instanceof Expr\ClassConstFetch && $expr->class instanceof Node\Name && $expr->name instanceof Node\Identifier) {
@@ -192,7 +192,7 @@ class ClassAttributeCollector
     /**
      * @return ReflectionAttribute<object>[]
      */
-    private function getPropertyAttributes(ReflectionProperty $propertyReflection) : array
+    private function getPropertyAttributes(ReflectionProperty $propertyReflection): array
     {
         if (PHP_VERSION_ID >= 80000) {
             return $propertyReflection->getAttributes();
@@ -211,7 +211,7 @@ class ClassAttributeCollector
                 $this->className = $className;
                 $this->propertyName = $propertyName;
             }
-            public function enterNode(Node $node) : ?int
+            public function enterNode(Node $node): ?int
             {
                 if ($node instanceof ClassLike) {
                     if ($node->namespacedName === null) {
@@ -241,7 +241,7 @@ class ClassAttributeCollector
     /**
      * @return ReflectionAttribute<object>[]
      */
-    private function getMethodAttributes(\ReflectionMethod $methodReflection) : array
+    private function getMethodAttributes(\ReflectionMethod $methodReflection): array
     {
         if (PHP_VERSION_ID >= 80000) {
             return $methodReflection->getAttributes();
@@ -260,7 +260,7 @@ class ClassAttributeCollector
                 $this->className = $className;
                 $this->methodName = $methodName;
             }
-            public function enterNode(Node $node) : ?int
+            public function enterNode(Node $node): ?int
             {
                 if ($node instanceof ClassLike) {
                     if ($node->namespacedName === null) {

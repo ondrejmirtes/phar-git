@@ -139,7 +139,7 @@ final class ResultCacheManager
      * @param string[] $allAnalysedFiles
      * @param mixed[]|null $projectConfigArray
      */
-    public function restore(array $allAnalysedFiles, bool $debug, bool $onlyFiles, ?array $projectConfigArray, Output $output) : \PHPStan\Analyser\ResultCache\ResultCache
+    public function restore(array $allAnalysedFiles, bool $debug, bool $onlyFiles, ?array $projectConfigArray, Output $output): \PHPStan\Analyser\ResultCache\ResultCache
     {
         $startTime = microtime(\true);
         $currentFileHashes = [];
@@ -169,7 +169,7 @@ final class ResultCacheManager
             return new \PHPStan\Analyser\ResultCache\ResultCache($allAnalysedFiles, \true, time(), $this->getMeta($allAnalysedFiles, $projectConfigArray), [], [], [], [], [], [], [], [], [], $currentFileHashes);
         }
         try {
-            $data = (require $cacheFilePath);
+            $data = require $cacheFilePath;
         } catch (Throwable $e) {
             if ($output->isVeryVerbose()) {
                 $output->writeLineFormatted(sprintf('Result cache not used because an error occurred while loading the cache file: %s', $e->getMessage()));
@@ -351,7 +351,7 @@ final class ResultCacheManager
      * @param mixed[] $cachedMeta
      * @param mixed[] $currentMeta
      */
-    private function isMetaDifferent(array $cachedMeta, array $currentMeta) : bool
+    private function isMetaDifferent(array $cachedMeta, array $currentMeta): bool
     {
         $projectConfig = $currentMeta['projectConfig'];
         if ($projectConfig !== null) {
@@ -366,7 +366,7 @@ final class ResultCacheManager
      *
      * @return string[]
      */
-    private function getMetaKeyDifferences(array $cachedMeta, array $currentMeta) : array
+    private function getMetaKeyDifferences(array $cachedMeta, array $currentMeta): array
     {
         $diffs = [];
         foreach ($cachedMeta as $key => $value) {
@@ -390,7 +390,7 @@ final class ResultCacheManager
      * @param array<int, RootExportedNode> $cachedFileExportedNodes
      * @return bool|null null means nothing changed, true means new root symbol appeared, false means nested node changed
      */
-    private function exportedNodesChanged(string $analysedFile, array $cachedFileExportedNodes) : ?bool
+    private function exportedNodesChanged(string $analysedFile, array $cachedFileExportedNodes): ?bool
     {
         if (array_key_exists($analysedFile, $this->fileReplacements)) {
             $analysedFile = $this->fileReplacements[$analysedFile];
@@ -418,7 +418,7 @@ final class ResultCacheManager
         }
         return null;
     }
-    public function process(AnalyserResult $analyserResult, \PHPStan\Analyser\ResultCache\ResultCache $resultCache, Output $output, bool $onlyFiles, bool $save) : \PHPStan\Analyser\ResultCache\ResultCacheProcessResult
+    public function process(AnalyserResult $analyserResult, \PHPStan\Analyser\ResultCache\ResultCache $resultCache, Output $output, bool $onlyFiles, bool $save): \PHPStan\Analyser\ResultCache\ResultCacheProcessResult
     {
         $internalErrors = $analyserResult->getInternalErrors();
         $freshErrorsByFile = [];
@@ -435,7 +435,7 @@ final class ResultCacheManager
         if ($projectConfigArray !== null) {
             $meta['projectConfig'] = Neon::encode($projectConfigArray);
         }
-        $doSave = function (array $errorsByFile, $locallyIgnoredErrorsByFile, $linesToIgnore, $unmatchedLineIgnores, $collectedDataByFile, ?array $dependencies, ?array $usedTraitDependencies, array $exportedNodes, array $projectExtensionFiles) use($internalErrors, $resultCache, $output, $onlyFiles, $meta) : bool {
+        $doSave = function (array $errorsByFile, $locallyIgnoredErrorsByFile, $linesToIgnore, $unmatchedLineIgnores, $collectedDataByFile, ?array $dependencies, ?array $usedTraitDependencies, array $exportedNodes, array $projectExtensionFiles) use ($internalErrors, $resultCache, $output, $onlyFiles, $meta): bool {
             if ($onlyFiles) {
                 if ($output->isVeryVerbose()) {
                     $output->writeLineFormatted('Result cache was not saved because only files were passed as analysed paths.');
@@ -491,10 +491,8 @@ final class ResultCacheManager
                     $projectExtensionFiles = $this->getProjectExtensionFiles($projectConfigArray, $analyserResult->getDependencies());
                 }
                 $saved = $doSave($freshErrorsByFile, $freshLocallyIgnoredErrorsByFile, $analyserResult->getLinesToIgnore(), $analyserResult->getUnmatchedLineIgnores(), $freshCollectedDataByFile, $analyserResult->getDependencies(), $analyserResult->getUsedTraitDependencies(), $analyserResult->getExportedNodes(), $projectExtensionFiles);
-            } else {
-                if ($output->isVeryVerbose()) {
-                    $output->writeLineFormatted('Result cache was not saved because it was not requested.');
-                }
+            } else if ($output->isVeryVerbose()) {
+                $output->writeLineFormatted('Result cache was not saved because it was not requested.');
             }
             return new \PHPStan\Analyser\ResultCache\ResultCacheProcessResult($analyserResult, $saved);
         }
@@ -546,7 +544,7 @@ final class ResultCacheManager
      * @param array<string, list<Error>> $freshErrorsByFile
      * @return array<string, list<Error>>
      */
-    private function mergeErrors(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshErrorsByFile) : array
+    private function mergeErrors(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshErrorsByFile): array
     {
         $errorsByFile = $resultCache->getErrors();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -566,7 +564,7 @@ final class ResultCacheManager
      * @param array<string, list<Error>> $freshLocallyIgnoredErrorsByFile
      * @return array<string, list<Error>>
      */
-    private function mergeLocallyIgnoredErrors(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshLocallyIgnoredErrorsByFile) : array
+    private function mergeLocallyIgnoredErrors(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshLocallyIgnoredErrorsByFile): array
     {
         $errorsByFile = $resultCache->getLocallyIgnoredErrors();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -586,7 +584,7 @@ final class ResultCacheManager
      * @param CollectorData $freshCollectedDataByFile
      * @return CollectorData
      */
-    private function mergeCollectedData(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshCollectedDataByFile) : array
+    private function mergeCollectedData(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshCollectedDataByFile): array
     {
         $collectedDataByFile = $resultCache->getCollectedData();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -608,7 +606,7 @@ final class ResultCacheManager
      * @param array<string, array<string>>|null $freshDependencies
      * @return array<string, array<string>>|null
      */
-    private function mergeDependencies(array $resultCacheDependencies, array $filesToAnalyse, ?array $freshDependencies) : ?array
+    private function mergeDependencies(array $resultCacheDependencies, array $filesToAnalyse, ?array $freshDependencies): ?array
     {
         if ($freshDependencies === null) {
             return null;
@@ -645,7 +643,7 @@ final class ResultCacheManager
      * @param array<string, array<RootExportedNode>> $freshExportedNodes
      * @return array<string, array<RootExportedNode>>
      */
-    private function mergeExportedNodes(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshExportedNodes) : array
+    private function mergeExportedNodes(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshExportedNodes): array
     {
         $newExportedNodes = $resultCache->getExportedNodes();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -665,7 +663,7 @@ final class ResultCacheManager
      * @param array<string, LinesToIgnore> $freshLinesToIgnore
      * @return array<string, LinesToIgnore>
      */
-    private function mergeLinesToIgnore(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshLinesToIgnore) : array
+    private function mergeLinesToIgnore(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshLinesToIgnore): array
     {
         $newLinesToIgnore = $resultCache->getLinesToIgnore();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -685,7 +683,7 @@ final class ResultCacheManager
      * @param array<string, LinesToIgnore> $freshUnmatchedLineIgnores
      * @return array<string, LinesToIgnore>
      */
-    private function mergeUnmatchedLineIgnores(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshUnmatchedLineIgnores) : array
+    private function mergeUnmatchedLineIgnores(\PHPStan\Analyser\ResultCache\ResultCache $resultCache, array $freshUnmatchedLineIgnores): array
     {
         $newUnmatchedLineIgnores = $resultCache->getUnmatchedLineIgnores();
         foreach ($resultCache->getFilesToAnalyse() as $file) {
@@ -714,7 +712,7 @@ final class ResultCacheManager
      * @param array<string, string> $currentFileHashes
      * @param mixed[] $meta
      */
-    private function save(int $lastFullAnalysisTime, array $errors, array $locallyIgnoredErrors, array $linesToIgnore, array $unmatchedLineIgnores, array $collectedData, array $dependencies, array $usedTraitDependencies, array $exportedNodes, array $projectExtensionFiles, array $currentFileHashes, array $meta) : void
+    private function save(int $lastFullAnalysisTime, array $errors, array $locallyIgnoredErrors, array $linesToIgnore, array $unmatchedLineIgnores, array $collectedData, array $dependencies, array $usedTraitDependencies, array $exportedNodes, array $projectExtensionFiles, array $currentFileHashes, array $meta): void
     {
         $invertedDependencies = [];
         $filesNoOneIsDependingOn = array_fill_keys(array_keys($dependencies), \true);
@@ -776,7 +774,7 @@ final class ResultCacheManager
      * @param array<string, mixed> $dependencies
      * @return array<string, array{string, bool, string}>
      */
-    private function getProjectExtensionFiles(?array $projectConfig, array $dependencies) : array
+    private function getProjectExtensionFiles(?array $projectConfig, array $dependencies): array
     {
         $this->alreadyProcessed = [];
         $projectExtensionFiles = [];
@@ -828,7 +826,7 @@ final class ResultCacheManager
      * @param array<string, array<int, string>> $dependencies
      * @return array<int, string>
      */
-    private function getAllDependencies(string $fileName, array $dependencies) : array
+    private function getAllDependencies(string $fileName, array $dependencies): array
     {
         if (!array_key_exists($fileName, $dependencies)) {
             return [];
@@ -852,7 +850,7 @@ final class ResultCacheManager
      * @param mixed[]|null $projectConfigArray
      * @return mixed[]
      */
-    private function getMeta(array $allAnalysedFiles, ?array $projectConfigArray) : array
+    private function getMeta(array $allAnalysedFiles, ?array $projectConfigArray): array
     {
         $extensions = array_values(array_filter(get_loaded_extensions(), static fn(string $extension): bool => $extension !== 'xdebug'));
         sort($extensions);
@@ -865,7 +863,7 @@ final class ResultCacheManager
         }
         return ['cacheVersion' => self::CACHE_VERSION, 'phpstanVersion' => ComposerHelper::getPhpStanVersion(), 'metaExtensions' => $this->getMetaFromPhpStanExtensions(), 'phpVersion' => PHP_VERSION_ID, 'projectConfig' => $projectConfigArray, 'analysedPaths' => $this->analysedPaths, 'scannedFiles' => $this->getScannedFiles($allAnalysedFiles), 'composerLocks' => $this->getComposerLocks(), 'composerInstalled' => $this->getComposerInstalled(), 'executedFilesHashes' => $this->getExecutedFileHashes(), 'phpExtensions' => $extensions, 'stubFiles' => $this->getStubFiles(), 'level' => $this->usedLevel];
     }
-    private function getFileHash(string $path) : string
+    private function getFileHash(string $path): string
     {
         if (array_key_exists($path, $this->fileReplacements)) {
             $path = $this->fileReplacements[$path];
@@ -884,7 +882,7 @@ final class ResultCacheManager
      * @param string[] $allAnalysedFiles
      * @return array<string, string>
      */
-    private function getScannedFiles(array $allAnalysedFiles) : array
+    private function getScannedFiles(array $allAnalysedFiles): array
     {
         $scannedFiles = $this->scanFiles;
         $analysedDirectories = [];
@@ -911,7 +909,7 @@ final class ResultCacheManager
     /**
      * @return array<string, string>
      */
-    private function getExecutedFileHashes() : array
+    private function getExecutedFileHashes(): array
     {
         $hashes = [];
         if ($this->cliAutoloadFile !== null) {
@@ -926,7 +924,7 @@ final class ResultCacheManager
     /**
      * @return array<string, string>
      */
-    private function getComposerLocks() : array
+    private function getComposerLocks(): array
     {
         $locks = [];
         foreach ($this->composerAutoloaderProjectPaths as $autoloadPath) {
@@ -941,7 +939,7 @@ final class ResultCacheManager
     /**
      * @return array<string, string>
      */
-    private function getComposerInstalled() : array
+    private function getComposerInstalled(): array
     {
         $data = [];
         foreach ($this->composerAutoloaderProjectPaths as $autoloadPath) {
@@ -953,7 +951,7 @@ final class ResultCacheManager
             if (!is_file($filePath)) {
                 continue;
             }
-            $installed = (require $filePath);
+            $installed = require $filePath;
             $rootName = $installed['root']['name'];
             unset($installed['root']);
             unset($installed['versions'][$rootName]);
@@ -964,7 +962,7 @@ final class ResultCacheManager
     /**
      * @return array<string, string>
      */
-    private function getStubFiles() : array
+    private function getStubFiles(): array
     {
         $stubFiles = [];
         foreach ($this->stubFilesProvider->getProjectStubFiles() as $stubFile) {
@@ -977,7 +975,7 @@ final class ResultCacheManager
      * @return array<string, string>
      * @throws ShouldNotHappenException
      */
-    private function getMetaFromPhpStanExtensions() : array
+    private function getMetaFromPhpStanExtensions(): array
     {
         $meta = [];
         /** @var ResultCacheMetaExtension $extension */

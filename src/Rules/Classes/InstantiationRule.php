@@ -47,11 +47,11 @@ final class InstantiationRule implements Rule
         $this->classCheck = $classCheck;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return New_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($this->getClassNames($node, $scope) as [$class, $isName]) {
@@ -63,7 +63,7 @@ final class InstantiationRule implements Rule
      * @param Node\Expr\New_ $node
      * @return list<IdentifierRuleError>
      */
-    private function checkClassName(string $class, bool $isName, Node $node, Scope $scope) : array
+    private function checkClassName(string $class, bool $isName, Node $node, Scope $scope): array
     {
         $lowercasedClass = strtolower($class);
         $messages = [];
@@ -178,7 +178,7 @@ final class InstantiationRule implements Rule
      * @param Node\Expr\New_ $node
      * @return array<int, array{string, bool}>
      */
-    private function getClassNames(Node $node, Scope $scope) : array
+    private function getClassNames(Node $node, Scope $scope): array
     {
         if ($node->class instanceof Node\Name) {
             return [[(string) $node->class, \true]];

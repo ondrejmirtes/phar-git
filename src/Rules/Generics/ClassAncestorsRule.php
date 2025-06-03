@@ -26,11 +26,11 @@ final class ClassAncestorsRule implements Rule
         $this->genericAncestorsCheck = $genericAncestorsCheck;
         $this->crossCheckInterfacesHelper = $crossCheckInterfacesHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $originalNode = $node->getOriginalNode();
         if (!$originalNode instanceof Node\Stmt\Class_) {

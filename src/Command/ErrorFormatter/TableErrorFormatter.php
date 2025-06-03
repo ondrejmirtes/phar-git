@@ -39,7 +39,7 @@ final class TableErrorFormatter implements \PHPStan\Command\ErrorFormatter\Error
         $this->editorUrlTitle = $editorUrlTitle;
     }
     /** @api */
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $this->ciDetectedErrorFormatter->formatErrors($analysisResult, $output);
         $projectConfigFile = 'phpstan.neon';
@@ -132,7 +132,7 @@ final class TableErrorFormatter implements \PHPStan\Command\ErrorFormatter\Error
         }
         return $analysisResult->getTotalErrorsCount() > 0 ? 1 : 0;
     }
-    private function formatLineNumber(?int $lineNumber) : string
+    private function formatLineNumber(?int $lineNumber): string
     {
         if ($lineNumber === null) {
             return '';

@@ -6,5 +6,5 @@ namespace PHPStan\Rules;
 /** @api */
 interface LineRuleError extends \PHPStan\Rules\RuleError
 {
-    public function getLine() : int;
+    public function getLine(): int;
 }

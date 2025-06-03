@@ -116,7 +116,7 @@ final class BetterReflectionProvider implements ReflectionProvider
         $this->attributeReflectionFactory = $attributeReflectionFactory;
         $this->universalObjectCratesClasses = $universalObjectCratesClasses;
     }
-    public function hasClass(string $className) : bool
+    public function hasClass(string $className): bool
     {
         if (isset(self::$anonymousClasses[$className])) {
             return \true;
@@ -133,7 +133,7 @@ final class BetterReflectionProvider implements ReflectionProvider
             return \false;
         }
     }
-    public function getClass(string $className) : ClassReflection
+    public function getClass(string $className): ClassReflection
     {
         if (isset(self::$anonymousClasses[$className])) {
             return self::$anonymousClasses[$className];
@@ -152,7 +152,7 @@ final class BetterReflectionProvider implements ReflectionProvider
         $this->classReflections[$reflectionClassName] = $classReflection;
         return $classReflection;
     }
-    public function getClassName(string $className) : string
+    public function getClassName(string $className): string
     {
         if (!$this->hasClass($className)) {
             throw new ClassNotFoundException($className);
@@ -163,7 +163,7 @@ final class BetterReflectionProvider implements ReflectionProvider
         $reflectionClass = $this->reflector->reflectClass($className);
         return $reflectionClass->getName();
     }
-    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope) : ClassReflection
+    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope): ClassReflection
     {
         if (isset($classNode->namespacedName)) {
             throw new ShouldNotHappenException();
@@ -205,15 +205,15 @@ final class BetterReflectionProvider implements ReflectionProvider
         $this->classReflections[$className] = self::$anonymousClasses[$className];
         return self::$anonymousClasses[$className];
     }
-    public function getUniversalObjectCratesClasses() : array
+    public function getUniversalObjectCratesClasses(): array
     {
         return $this->universalObjectCratesClasses;
     }
-    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return $this->resolveFunctionName($nameNode, $namespaceAnswerer) !== null;
     }
-    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : FunctionReflection
+    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): FunctionReflection
     {
         $functionName = $this->resolveFunctionName($nameNode, $namespaceAnswerer);
         if ($functionName === null) {
@@ -234,7 +234,7 @@ final class BetterReflectionProvider implements ReflectionProvider
         $this->functionReflections[$lowerCasedFunctionName] = $this->getCustomFunction($functionName);
         return $this->functionReflections[$lowerCasedFunctionName];
     }
-    private function getCustomFunction(string $functionName) : PhpFunctionReflection
+    private function getCustomFunction(string $functionName): PhpFunctionReflection
     {
         $reflectionFunction = new ReflectionFunction($this->reflector->reflectFunction($functionName));
         $templateTypeMap = TemplateTypeMap::createEmpty();
@@ -279,13 +279,13 @@ final class BetterReflectionProvider implements ReflectionProvider
         }
         return $this->functionReflectionFactory->create($reflectionFunction, $templateTypeMap, $phpDocParameterTypes, $phpDocReturnTag !== null ? $phpDocReturnTag->getType() : null, $phpDocThrowsTag !== null ? $phpDocThrowsTag->getType() : null, $deprecationDescription, $isDeprecated, $isInternal, $reflectionFunction->getFileName() !== \false ? $reflectionFunction->getFileName() : null, $isPure, $asserts, $acceptsNamedArguments, $phpDocComment, array_map(static fn(ParamOutTag $paramOutTag): Type => $paramOutTag->getType(), $phpDocParameterOutTags), $phpDocParameterImmediatelyInvokedCallable, array_map(static fn(ParamClosureThisTag $tag): Type => $tag->getType(), $phpDocParameterClosureThisTypeTags), $this->attributeReflectionFactory->fromNativeReflection($reflectionFunction->getAttributes(), InitializerExprContext::fromFunction($reflectionFunction->getName(), $reflectionFunction->getFileName() !== \false ? $reflectionFunction->getFileName() : null)));
     }
-    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         $name = $nameNode->toLowerString();
         if (in_array($name, ['exit', 'die'], \true)) {
             return $name;
         }
-        return $this->resolveName($nameNode, function (string $name) : bool {
+        return $this->resolveName($nameNode, function (string $name): bool {
             try {
                 $this->reflector->reflectFunction($name);
                 return \true;
@@ -300,11 +300,11 @@ final class BetterReflectionProvider implements ReflectionProvider
             return \false;
         }, $namespaceAnswerer);
     }
-    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return $this->resolveConstantName($nameNode, $namespaceAnswerer) !== null;
     }
-    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ConstantReflection
+    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ConstantReflection
     {
         $constantName = $this->resolveConstantName($nameNode, $namespaceAnswerer);
         if ($constantName === null) {
@@ -325,7 +325,7 @@ final class BetterReflectionProvider implements ReflectionProvider
             $isDeprecated = $resolvedPhpDoc->isDeprecated();
             if ($isDeprecated && $resolvedPhpDoc->getDeprecatedTag() !== null) {
                 $deprecatedMessage = $resolvedPhpDoc->getDeprecatedTag()->getMessage();
-                $matches = Strings::match($deprecatedMessage ?? '', '#^(\\d+)\\.(\\d+)(?:\\.(\\d+))?$#');
+                $matches = Strings::match($deprecatedMessage ?? '', '#^(\d+)\.(\d+)(?:\.(\d+))?$#');
                 if ($matches !== null) {
                     $major = $matches[1];
                     $minor = $matches[2];
@@ -341,9 +341,9 @@ final class BetterReflectionProvider implements ReflectionProvider
         }
         return $this->cachedConstants[$constantName] = new RuntimeConstantReflection($constantName, $constantValueType, $fileName, TrinaryLogic::createFromBoolean($isDeprecated), $deprecatedDescription);
     }
-    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
-        return $this->resolveName($nameNode, function (string $name) : bool {
+        return $this->resolveName($nameNode, function (string $name): bool {
             try {
                 $this->reflector->reflectConstant($name);
                 return \true;
@@ -358,11 +358,11 @@ final class BetterReflectionProvider implements ReflectionProvider
     /**
      * @param Closure(string $name): bool $existsCallback
      */
-    private function resolveName(Node\Name $nameNode, Closure $existsCallback, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    private function resolveName(Node\Name $nameNode, Closure $existsCallback, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         $name = (string) $nameNode;
         if ($namespaceAnswerer !== null && $namespaceAnswerer->getNamespace() !== null && !$nameNode->isFullyQualified()) {
-            $namespacedName = sprintf('%s\\%s', $namespaceAnswerer->getNamespace(), $name);
+            $namespacedName = sprintf('%s\%s', $namespaceAnswerer->getNamespace(), $name);
             if ($existsCallback($namespacedName)) {
                 return $namespacedName;
             }

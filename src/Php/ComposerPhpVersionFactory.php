@@ -27,7 +27,7 @@ final class ComposerPhpVersionFactory
     {
         $this->composerAutoloaderProjectPaths = $composerAutoloaderProjectPaths;
     }
-    private function initializeVersions() : void
+    private function initializeVersions(): void
     {
         $this->initialized = \true;
         // don't limit minVersion... PHPStan can analyze even PHP5
@@ -50,21 +50,21 @@ final class ComposerPhpVersionFactory
         }
         $this->maxVersion = $this->buildVersion($constraint->getUpperBound()->getVersion(), \true);
     }
-    public function getMinVersion() : ?\PHPStan\Php\PhpVersion
+    public function getMinVersion(): ?\PHPStan\Php\PhpVersion
     {
         if ($this->initialized === \false) {
             $this->initializeVersions();
         }
         return $this->minVersion;
     }
-    public function getMaxVersion() : ?\PHPStan\Php\PhpVersion
+    public function getMaxVersion(): ?\PHPStan\Php\PhpVersion
     {
         if ($this->initialized === \false) {
             $this->initializeVersions();
         }
         return $this->maxVersion;
     }
-    private function getComposerRequireVersion() : ?string
+    private function getComposerRequireVersion(): ?string
     {
         $composerPhpVersion = null;
         if (count($this->composerAutoloaderProjectPaths) > 0) {
@@ -78,9 +78,9 @@ final class ComposerPhpVersionFactory
         }
         return $composerPhpVersion;
     }
-    private function buildVersion(string $version, bool $isMaxVersion) : ?\PHPStan\Php\PhpVersion
+    private function buildVersion(string $version, bool $isMaxVersion): ?\PHPStan\Php\PhpVersion
     {
-        $matches = Strings::match($version, '#^(\\d+)\\.(\\d+)(?:\\.(\\d+))?#');
+        $matches = Strings::match($version, '#^(\d+)\.(\d+)(?:\.(\d+))?#');
         if ($matches === null) {
             return null;
         }

@@ -29,7 +29,7 @@ final class ExportedPhpDocNode implements ExportedNode, JsonSerializable
         $this->uses = $uses;
         $this->constUses = $constUses;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -47,14 +47,14 @@ final class ExportedPhpDocNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['phpDocString'], $properties['namespace'], $properties['uses'], $properties['constUses'] ?? []);
     }
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
         return new self($data['phpDocString'], $data['namespace'], $data['uses'], $data['constUses'] ?? []);
     }

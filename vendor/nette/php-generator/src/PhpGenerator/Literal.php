@@ -21,12 +21,12 @@ class Literal
         $this->value = $value;
         $this->args = $args;
     }
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->formatWith(new Dumper());
     }
     /** @internal */
-    public function formatWith(Dumper $dumper) : string
+    public function formatWith(Dumper $dumper): string
     {
         return $this->args === null ? $this->value : $dumper->format($this->value, ...$this->args);
     }

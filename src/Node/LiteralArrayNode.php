@@ -25,18 +25,18 @@ final class LiteralArrayNode extends NodeAbstract implements \PHPStan\Node\Virtu
     /**
      * @return LiteralArrayItem[]
      */
-    public function getItemNodes() : array
+    public function getItemNodes(): array
     {
         return $this->itemNodes;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_LiteralArray';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

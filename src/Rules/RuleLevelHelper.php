@@ -45,11 +45,11 @@ final class RuleLevelHelper
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
     /** @api */
-    public function isThis(Expr $expression) : bool
+    public function isThis(Expr $expression): bool
     {
         return $expression instanceof Expr\Variable && $expression->name === 'this';
     }
-    private function transformCommonType(Type $type) : Type
+    private function transformCommonType(Type $type): Type
     {
         if (!$this->checkExplicitMixed && !$this->checkImplicitMixed) {
             return $type;
@@ -69,10 +69,10 @@ final class RuleLevelHelper
     /**
      * @return array{Type, bool}
      */
-    private function transformAcceptedType(Type $acceptingType, Type $acceptedType) : array
+    private function transformAcceptedType(Type $acceptingType, Type $acceptedType): array
     {
         $checkForUnion = $this->checkUnionTypes;
-        $acceptedType = TypeTraverser::map($acceptedType, function (Type $acceptedType, callable $traverse) use($acceptingType, &$checkForUnion) : Type {
+        $acceptedType = TypeTraverser::map($acceptedType, function (Type $acceptedType, callable $traverse) use ($acceptingType, &$checkForUnion): Type {
             if ($acceptedType instanceof CallableType) {
                 if ($acceptedType->isCommonCallable()) {
                     return $acceptedType;
@@ -99,7 +99,7 @@ final class RuleLevelHelper
         return [$acceptedType, $checkForUnion];
     }
     /** @api */
-    public function accepts(Type $acceptingType, Type $acceptedType, bool $strictTypes) : \PHPStan\Rules\RuleLevelHelperAcceptsResult
+    public function accepts(Type $acceptingType, Type $acceptedType, bool $strictTypes): \PHPStan\Rules\RuleLevelHelperAcceptsResult
     {
         [$acceptedType, $checkForUnion] = $this->transformAcceptedType($acceptingType, $acceptedType);
         $acceptingType = $this->transformCommonType($acceptingType);
@@ -110,7 +110,7 @@ final class RuleLevelHelper
      * @api
      * @param callable(Type $type): bool $unionTypeCriteriaCallback
      */
-    public function findTypeToCheck(Scope $scope, Expr $var, string $unknownClassErrorPattern, callable $unionTypeCriteriaCallback) : \PHPStan\Rules\FoundTypeResult
+    public function findTypeToCheck(Scope $scope, Expr $var, string $unknownClassErrorPattern, callable $unionTypeCriteriaCallback): \PHPStan\Rules\FoundTypeResult
     {
         if ($this->checkThisOnly && !$this->isThis($var)) {
             return new \PHPStan\Rules\FoundTypeResult(new ErrorType(), [], [], null);
@@ -119,7 +119,7 @@ final class RuleLevelHelper
         return $this->findTypeToCheckImplementation($scope, $var, $type, $unknownClassErrorPattern, $unionTypeCriteriaCallback, \true);
     }
     /** @param callable(Type $type): bool $unionTypeCriteriaCallback */
-    private function findTypeToCheckImplementation(Scope $scope, Expr $var, Type $type, string $unknownClassErrorPattern, callable $unionTypeCriteriaCallback, bool $isTopLevel = \false) : \PHPStan\Rules\FoundTypeResult
+    private function findTypeToCheckImplementation(Scope $scope, Expr $var, Type $type, string $unknownClassErrorPattern, callable $unionTypeCriteriaCallback, bool $isTopLevel = \false): \PHPStan\Rules\FoundTypeResult
     {
         if (!$this->checkNullables && !$type->isNull()->yes()) {
             $type = TypeCombinator::removeNull($type);
@@ -192,7 +192,7 @@ final class RuleLevelHelper
             }
         }
         $tip = null;
-        if ($type instanceof UnionType && count($type->getTypes()) === 2 && $type->isObject()->yes() && $type->getTypes()[0]->getObjectClassNames() === ['PhpParser\\Node\\Arg'] && $type->getTypes()[1]->getObjectClassNames() === ['PhpParser\\Node\\VariadicPlaceholder'] && !$unionTypeCriteriaCallback($type)) {
+        if ($type instanceof UnionType && count($type->getTypes()) === 2 && $type->isObject()->yes() && $type->getTypes()[0]->getObjectClassNames() === ['PhpParser\Node\Arg'] && $type->getTypes()[1]->getObjectClassNames() === ['PhpParser\Node\VariadicPlaceholder'] && !$unionTypeCriteriaCallback($type)) {
             $tip = 'Use <fg=cyan>->getArgs()</> instead of <fg=cyan>->args</>.';
         }
         return new \PHPStan\Rules\FoundTypeResult($type, $directClassNames, [], $tip);

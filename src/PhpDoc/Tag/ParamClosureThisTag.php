@@ -14,11 +14,11 @@ final class ParamClosureThisTag implements \PHPStan\PhpDoc\Tag\TypedTag
     {
         $this->type = $type;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function withType(Type $type) : self
+    public function withType(Type $type): self
     {
         return new self($type);
     }

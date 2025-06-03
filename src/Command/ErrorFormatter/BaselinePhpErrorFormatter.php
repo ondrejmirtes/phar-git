@@ -20,7 +20,7 @@ final class BaselinePhpErrorFormatter
     {
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function formatErrors(AnalysisResult $analysisResult, Output $output) : int
+    public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         if (!$analysisResult->hasErrors()) {
             $php = '<?php declare(strict_types = 1);';

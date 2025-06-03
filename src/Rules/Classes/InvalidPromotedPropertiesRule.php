@@ -21,11 +21,11 @@ final class InvalidPromotedPropertiesRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\FunctionLike::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $hasPromotedProperties = \false;
         foreach ($node->getParams() as $param) {

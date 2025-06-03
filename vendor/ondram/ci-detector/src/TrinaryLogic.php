@@ -22,36 +22,36 @@ final class TrinaryLogic
     {
         $this->value = $value;
     }
-    public static function createMaybe() : self
+    public static function createMaybe(): self
     {
         return self::create(self::MAYBE);
     }
-    public static function createFromBoolean(bool $value) : self
+    public static function createFromBoolean(bool $value): self
     {
         return self::create($value ? self::YES : self::NO);
     }
-    private static function create(int $value) : self
+    private static function create(int $value): self
     {
         return self::$registry[$value] = self::$registry[$value] ?? new self($value);
     }
     /**
      * Return true if its known for sure that the value is true
      */
-    public function yes() : bool
+    public function yes(): bool
     {
         return $this->value === self::YES;
     }
     /**
      * Return true if its not known for sure whether the value is true or false
      */
-    public function maybe() : bool
+    public function maybe(): bool
     {
         return $this->value === self::MAYBE;
     }
     /**
      * Return true if its known for sure that the value is false
      */
-    public function no() : bool
+    public function no(): bool
     {
         return $this->value === self::NO;
     }
@@ -59,7 +59,7 @@ final class TrinaryLogic
      * Return string representation of the value.
      * "Yes" when the value is true, "No" when its false, "Maybe" when its not known for sure whether its true or false.
      */
-    public function describe() : string
+    public function describe(): string
     {
         static $labels = [self::NO => 'No', self::MAYBE => 'Maybe', self::YES => 'Yes'];
         return $labels[$this->value];

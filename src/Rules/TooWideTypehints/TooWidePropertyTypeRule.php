@@ -29,11 +29,11 @@ final class TooWidePropertyTypeRule implements Rule
         $this->extensionProvider = $extensionProvider;
         $this->propertyReflectionFinder = $propertyReflectionFinder;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertiesNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         $classReflection = $node->getClassReflection();
@@ -102,7 +102,7 @@ final class TooWidePropertyTypeRule implements Rule
         }
         return $errors;
     }
-    private function describePropertyByName(PropertyReflection $property, string $propertyName) : string
+    private function describePropertyByName(PropertyReflection $property, string $propertyName): string
     {
         if (!$property->isStatic()) {
             return sprintf('Property %s::$%s', $property->getDeclaringClass()->getDisplayName(), $propertyName);

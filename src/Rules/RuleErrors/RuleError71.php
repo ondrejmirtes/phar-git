@@ -16,19 +16,19 @@ final class RuleError71 implements RuleError, LineRuleError, FileRuleError, NonI
     public int $line;
     public string $file;
     public string $fileDescription;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }

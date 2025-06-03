@@ -26,11 +26,11 @@ final class DynamicClassConstantFetchRule implements Rule
         $this->phpVersion = $phpVersion;
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassConstFetch::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Expr) {
             return [];

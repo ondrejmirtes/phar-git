@@ -19,11 +19,11 @@ class Finally_ extends Node\Stmt
         $this->attributes = $attributes;
         $this->stmts = $stmts;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['stmts'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Stmt_Finally';
     }

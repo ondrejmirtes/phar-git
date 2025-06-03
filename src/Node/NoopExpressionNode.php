@@ -15,22 +15,22 @@ final class NoopExpressionNode extends NodeAbstract implements \PHPStan\Node\Vir
         $this->hasAssign = $hasAssign;
         parent::__construct($this->originalExpr->getAttributes());
     }
-    public function getOriginalExpr() : Expr
+    public function getOriginalExpr(): Expr
     {
         return $this->originalExpr;
     }
-    public function hasAssign() : bool
+    public function hasAssign(): bool
     {
         return $this->hasAssign;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_NoopExpressionNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

@@ -26,53 +26,53 @@ final class ReflectionEnumUnitCase extends CoreReflectionEnumUnitCase
      * Get the name of the reflection (e.g. if this is a ReflectionClass this
      * will be the class name).
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionEnumCase->getName();
     }
-    public function getBetterReflection() : BetterReflectionEnumCase
+    public function getBetterReflection(): BetterReflectionEnumCase
     {
         return $this->betterReflectionEnumCase;
     }
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return \false;
     }
-    public function getType() : ?\PHPStan\BetterReflection\Reflection\Adapter\ReflectionType
+    public function getType(): ?\PHPStan\BetterReflection\Reflection\Adapter\ReflectionType
     {
         return null;
     }
     /** @return never */
-    public function getValue() : UnitEnum
+    public function getValue(): UnitEnum
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return \true;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return \false;
     }
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return \false;
     }
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return self::IS_PUBLIC;
     }
-    public function getDeclaringClass() : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass
+    public function getDeclaringClass(): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass
     {
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($this->betterReflectionEnumCase->getDeclaringClass());
     }
-    public function getDocComment() : string|false
+    public function getDocComment(): string|false
     {
         return $this->betterReflectionEnumCase->getDocComment() ?? \false;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionEnumCase->__toString();
     }
@@ -81,7 +81,7 @@ final class ReflectionEnumUnitCase extends CoreReflectionEnumUnitCase
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(string|null $name = null, int $flags = 0) : array
+    public function getAttributes(string|null $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');
@@ -96,23 +96,23 @@ final class ReflectionEnumUnitCase extends CoreReflectionEnumUnitCase
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(static fn(BetterReflectionAttribute $betterReflectionAttribute): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute|\PHPStan\BetterReflection\Reflection\Adapter\FakeReflectionAttribute => \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttributeFactory::create($betterReflectionAttribute), $attributes);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return \true;
     }
-    public function isEnumCase() : bool
+    public function isEnumCase(): bool
     {
         return \true;
     }
-    public function getEnum() : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum
+    public function getEnum(): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum
     {
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnum($this->betterReflectionEnumCase->getDeclaringEnum());
     }
-    public function isDeprecated() : bool
+    public function isDeprecated(): bool
     {
         return $this->betterReflectionEnumCase->isDeprecated();
     }
-    public function __get(string $name) : mixed
+    public function __get(string $name): mixed
     {
         if ($name === 'name') {
             return $this->betterReflectionEnumCase->getName();

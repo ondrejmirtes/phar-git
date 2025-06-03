@@ -44,15 +44,15 @@ final class Helpers
             return $value;
         }
     }
-    public static function getPropertyType(\ReflectionProperty $prop) : ?string
+    public static function getPropertyType(\ReflectionProperty $prop): ?string
     {
         if (!\class_exists(Nette\Utils\Type::class)) {
             throw new Nette\NotSupportedException('Expect::from() requires nette/utils 3.x');
         } elseif ($type = Nette\Utils\Type::fromReflection($prop)) {
             return (string) $type;
-        } elseif ($type = \preg_replace('#\\s.*#', '', (string) self::parseAnnotation($prop, 'var'))) {
+        } elseif ($type = \preg_replace('#\s.*#', '', (string) self::parseAnnotation($prop, 'var'))) {
             $class = Reflection::getPropertyDeclaringClass($prop);
-            return \preg_replace_callback('#[\\w\\\\]+#', function ($m) use($class) {
+            return \preg_replace_callback('#[\w\\\\]+#', function ($m) use ($class) {
                 return Reflection::expandClassName($m[0], $class);
             }, $type);
         }
@@ -62,12 +62,12 @@ final class Helpers
      * Returns an annotation value.
      * @param  \ReflectionProperty  $ref
      */
-    public static function parseAnnotation(\Reflector $ref, string $name) : ?string
+    public static function parseAnnotation(\Reflector $ref, string $name): ?string
     {
         if (!Reflection::areCommentsAvailable()) {
             throw new Nette\InvalidStateException('You have to enable phpDoc comments in opcode cache.');
         }
-        $re = '#[\\s*]@' . \preg_quote($name, '#') . '(?=\\s|$)(?:[ \\t]+([^@\\s]\\S*))?#';
+        $re = '#[\s*]@' . \preg_quote($name, '#') . '(?=\s|$)(?:[ \t]+([^@\s]\S*))?#';
         if ($ref->getDocComment() && \preg_match($re, \trim($ref->getDocComment(), '/*'), $m)) {
             return $m[1] ?? '';
         }
@@ -76,7 +76,7 @@ final class Helpers
     /**
      * @param  mixed  $value
      */
-    public static function formatValue($value) : string
+    public static function formatValue($value): string
     {
         if (\is_object($value)) {
             return 'object ' . \get_class($value);
@@ -88,7 +88,7 @@ final class Helpers
             return \strtolower(\gettype($value));
         }
     }
-    public static function validateType($value, string $expected, Context $context) : void
+    public static function validateType($value, string $expected, Context $context): void
     {
         if (!Nette\Utils\Validators::is($value, $expected)) {
             $expected = \str_replace(DynamicParameter::class . '|', '', $expected);
@@ -96,7 +96,7 @@ final class Helpers
             $context->addError('The %label% %path% expects to be %expected%, %value% given.', Message::TypeMismatch, ['value' => $value, 'expected' => $expected]);
         }
     }
-    public static function validateRange($value, array $range, Context $context, string $types = '') : void
+    public static function validateRange($value, array $range, Context $context, string $types = ''): void
     {
         if (\is_array($value) || \is_string($value)) {
             [$length, $label] = \is_array($value) ? [\count($value), 'items'] : (\in_array('unicode', \explode('|', $types), \true) ? [Nette\Utils\Strings::length($value), 'characters'] : [\strlen($value), 'bytes']);
@@ -107,32 +107,32 @@ final class Helpers
             $context->addError('The %label% %path% expects to be in range %expected%, %value% given.', Message::ValueOutOfRange, ['value' => $value, 'expected' => \implode('..', $range)]);
         }
     }
-    public static function isInRange($value, array $range) : bool
+    public static function isInRange($value, array $range): bool
     {
         return ($range[0] === null || $value >= $range[0]) && ($range[1] === null || $value <= $range[1]);
     }
-    public static function validatePattern(string $value, string $pattern, Context $context) : void
+    public static function validatePattern(string $value, string $pattern, Context $context): void
     {
         if (!\preg_match("\x01^(?:{$pattern})\$\x01Du", $value)) {
             $context->addError("The %label% %path% expects to match pattern '%pattern%', %value% given.", Message::PatternMismatch, ['value' => $value, 'pattern' => $pattern]);
         }
     }
-    public static function getCastStrategy(string $type) : \Closure
+    public static function getCastStrategy(string $type): \Closure
     {
         if (Nette\Utils\Reflection::isBuiltinType($type)) {
-            return static function ($value) use($type) {
+            return static function ($value) use ($type) {
                 \settype($value, $type);
                 return $value;
             };
         } elseif (\method_exists($type, '__construct')) {
-            return static function ($value) use($type) {
+            return static function ($value) use ($type) {
                 if (\PHP_VERSION_ID < 80000 && \is_array($value)) {
                     throw new Nette\NotSupportedException("Creating {$type} objects is supported since PHP 8.0");
                 }
                 return \is_array($value) ? new $type(...$value) : new $type($value);
             };
         } else {
-            return static function ($value) use($type) {
+            return static function ($value) use ($type) {
                 $object = new $type();
                 foreach ($value as $k => $v) {
                     $object->{$k} = $v;

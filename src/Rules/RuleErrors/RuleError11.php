@@ -14,15 +14,15 @@ final class RuleError11 implements RuleError, LineRuleError, TipRuleError
     public string $message;
     public int $line;
     public string $tip;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }

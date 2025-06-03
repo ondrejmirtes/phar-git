@@ -44,27 +44,27 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
         $this->callSiteVarianceMap = $callSiteVarianceMap;
         $this->passedArgs = $passedArgs;
     }
-    public function getOriginalParametersAcceptor() : \PHPStan\Reflection\ParametersAcceptor
+    public function getOriginalParametersAcceptor(): \PHPStan\Reflection\ParametersAcceptor
     {
         return $this->parametersAcceptor;
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->parametersAcceptor->getTemplateTypeMap();
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return $this->resolvedTemplateTypeMap;
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return $this->callSiteVarianceMap;
     }
-    public function getParameters() : array
+    public function getParameters(): array
     {
         $parameters = $this->parameters;
         if ($parameters === null) {
-            $parameters = array_map(function (\PHPStan\Reflection\ExtendedParameterReflection $param) : \PHPStan\Reflection\ExtendedParameterReflection {
+            $parameters = array_map(function (\PHPStan\Reflection\ExtendedParameterReflection $param): \PHPStan\Reflection\ExtendedParameterReflection {
                 $paramType = TypeUtils::resolveLateResolvableTypes(TemplateTypeHelper::resolveTemplateTypes($this->resolveConditionalTypesForParameter($param->getType()), $this->resolvedTemplateTypeMap, $this->callSiteVarianceMap, TemplateTypeVariance::createContravariant()), \false);
                 $paramOutType = $param->getOutType();
                 if ($paramOutType !== null) {
@@ -80,19 +80,19 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
         }
         return $parameters;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->parametersAcceptor->isVariadic();
     }
-    public function getReturnTypeWithUnresolvableTemplateTypes() : Type
+    public function getReturnTypeWithUnresolvableTemplateTypes(): Type
     {
         return $this->returnTypeWithUnresolvableTemplateTypes ??= $this->resolveConditionalTypesForParameter($this->resolveResolvableTemplateTypes($this->parametersAcceptor->getReturnType(), TemplateTypeVariance::createCovariant()));
     }
-    public function getPhpDocReturnTypeWithUnresolvableTemplateTypes() : Type
+    public function getPhpDocReturnTypeWithUnresolvableTemplateTypes(): Type
     {
         return $this->phpDocReturnTypeWithUnresolvableTemplateTypes ??= $this->resolveConditionalTypesForParameter($this->resolveResolvableTemplateTypes($this->parametersAcceptor->getPhpDocReturnType(), TemplateTypeVariance::createCovariant()));
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         $type = $this->returnType;
         if ($type === null) {
@@ -101,7 +101,7 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
         }
         return $type;
     }
-    public function getPhpDocReturnType() : Type
+    public function getPhpDocReturnType(): Type
     {
         $type = $this->phpDocReturnType;
         if ($type === null) {
@@ -110,14 +110,14 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
         }
         return $type;
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->parametersAcceptor->getNativeReturnType();
     }
-    private function resolveResolvableTemplateTypes(Type $type, TemplateTypeVariance $positionVariance) : Type
+    private function resolveResolvableTemplateTypes(Type $type, TemplateTypeVariance $positionVariance): Type
     {
         $references = $type->getReferencedTemplateTypes($positionVariance);
-        $objectCb = function (Type $type, callable $traverse) use($references) : Type {
+        $objectCb = function (Type $type, callable $traverse) use ($references): Type {
             if ($type instanceof TemplateType && !$type->isArgument() && $type->getScope()->getFunctionName() !== null) {
                 $newType = $this->resolvedTemplateTypeMap->getType($type->getName());
                 if ($newType === null || $newType instanceof ErrorType) {
@@ -147,7 +147,7 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
             }
             return $traverse($type);
         };
-        return TypeTraverser::map($type, function (Type $type, callable $traverse) use($references, $objectCb) : Type {
+        return TypeTraverser::map($type, function (Type $type, callable $traverse) use ($references, $objectCb): Type {
             if ($type instanceof GenericObjectType || $type instanceof GenericStaticType) {
                 return TypeTraverser::map($type, $objectCb);
             }
@@ -180,9 +180,9 @@ final class ResolvedFunctionVariantWithOriginal implements \PHPStan\Reflection\R
             return $traverse($type);
         });
     }
-    private function resolveConditionalTypesForParameter(Type $type) : Type
+    private function resolveConditionalTypesForParameter(Type $type): Type
     {
-        return TypeTraverser::map($type, function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($type, function (Type $type, callable $traverse): Type {
             if ($type instanceof ConditionalTypeForParameter && array_key_exists($type->getParameterName(), $this->passedArgs)) {
                 $type = $type->toConditional($this->passedArgs[$type->getParameterName()]);
             }

@@ -82,14 +82,14 @@ class DateTime extends \DateTime implements \JsonSerializable
     /**
      * Returns JSON representation in ISO 8601 (used by JavaScript).
      */
-    public function jsonSerialize() : string
+    public function jsonSerialize(): string
     {
         return $this->format('c');
     }
     /**
      * Returns the date and time in the format 'Y-m-d H:i:s'.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->format('Y-m-d H:i:s');
     }

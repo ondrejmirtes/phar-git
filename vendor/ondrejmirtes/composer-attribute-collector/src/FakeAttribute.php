@@ -16,14 +16,14 @@ class FakeAttribute
         $this->name = $name;
         $this->arguments = $arguments;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
     /**
      * @return mixed[]
      */
-    public function getArguments() : array
+    public function getArguments(): array
     {
         return $this->arguments;
     }

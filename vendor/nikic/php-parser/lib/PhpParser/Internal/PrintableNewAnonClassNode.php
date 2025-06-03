@@ -47,7 +47,7 @@ class PrintableNewAnonClassNode extends Expr
         $this->implements = $implements;
         $this->stmts = $stmts;
     }
-    public static function fromNewNode(Expr\New_ $newNode) : self
+    public static function fromNewNode(Expr\New_ $newNode): self
     {
         $class = $newNode->class;
         \assert($class instanceof Node\Stmt\Class_);
@@ -55,11 +55,11 @@ class PrintableNewAnonClassNode extends Expr
         // to anonymous classes for their own purposes. We simplify ignore the name here.
         return new self($class->attrGroups, $class->flags, $newNode->args, $class->extends, $class->implements, $class->stmts, $newNode->getAttributes());
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Expr_PrintableNewAnonClass';
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['attrGroups', 'flags', 'args', 'extends', 'implements', 'stmts'];
     }

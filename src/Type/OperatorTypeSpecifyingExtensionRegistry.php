@@ -21,7 +21,7 @@ final class OperatorTypeSpecifyingExtensionRegistry
     /**
      * @return OperatorTypeSpecifyingExtension[]
      */
-    public function getOperatorTypeSpecifyingExtensions(string $operator, \PHPStan\Type\Type $leftType, \PHPStan\Type\Type $rightType) : array
+    public function getOperatorTypeSpecifyingExtensions(string $operator, \PHPStan\Type\Type $leftType, \PHPStan\Type\Type $rightType): array
     {
         return array_values(array_filter($this->extensions, static fn(\PHPStan\Type\OperatorTypeSpecifyingExtension $extension): bool => $extension->isOperatorSupported($operator, $leftType, $rightType)));
     }

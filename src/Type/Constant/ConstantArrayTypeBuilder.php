@@ -61,11 +61,11 @@ final class ConstantArrayTypeBuilder
         $this->optionalKeys = $optionalKeys;
         $this->isList = $isList;
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         return new self([], [], [0], [], TrinaryLogic::createYes());
     }
-    public static function createFromConstantArray(\PHPStan\Type\Constant\ConstantArrayType $startArrayType) : self
+    public static function createFromConstantArray(\PHPStan\Type\Constant\ConstantArrayType $startArrayType): self
     {
         $builder = new self($startArrayType->getKeyTypes(), $startArrayType->getValueTypes(), $startArrayType->getNextAutoIndexes(), $startArrayType->getOptionalKeys(), $startArrayType->isList());
         if (count($startArrayType->getKeyTypes()) > self::ARRAY_COUNT_LIMIT) {
@@ -73,7 +73,7 @@ final class ConstantArrayTypeBuilder
         }
         return $builder;
     }
-    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $optional = \false) : void
+    public function setOffsetValueType(?Type $offsetType, Type $valueType, bool $optional = \false): void
     {
         if ($offsetType !== null) {
             $offsetType = $offsetType->toArrayKey();
@@ -246,12 +246,12 @@ final class ConstantArrayTypeBuilder
         }
         $this->degradeToGeneralArray = \true;
     }
-    public function degradeToGeneralArray(bool $oversized = \false) : void
+    public function degradeToGeneralArray(bool $oversized = \false): void
     {
         $this->degradeToGeneralArray = \true;
         $this->oversized = $this->oversized || $oversized;
     }
-    public function getArray() : Type
+    public function getArray(): Type
     {
         $keyTypesCount = count($this->keyTypes);
         if ($keyTypesCount === 0) {
@@ -274,7 +274,7 @@ final class ConstantArrayTypeBuilder
         }
         return $array;
     }
-    public function isList() : bool
+    public function isList(): bool
     {
         return $this->isList->yes();
     }

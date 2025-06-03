@@ -15,22 +15,22 @@ final class UnsetOffsetExpr extends Expr implements VirtualNode
         $this->dim = $dim;
         parent::__construct([]);
     }
-    public function getVar() : Expr
+    public function getVar(): Expr
     {
         return $this->var;
     }
-    public function getDim() : Expr
+    public function getDim(): Expr
     {
         return $this->dim;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_UnsetOffsetExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

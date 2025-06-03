@@ -30,17 +30,17 @@ class Parameter
     /** @var mixed */
     private $defaultValue;
     /** @return static */
-    public function setReference(bool $state = \true) : self
+    public function setReference(bool $state = \true): self
     {
         $this->reference = $state;
         return $this;
     }
-    public function isReference() : bool
+    public function isReference(): bool
     {
         return $this->reference;
     }
     /** @return static */
-    public function setType(?string $type) : self
+    public function setType(?string $type): self
     {
         $this->type = Helpers::validateType($type, $this->nullable);
         return $this;
@@ -53,12 +53,12 @@ class Parameter
         return $asObject && $this->type ? Type::fromString($this->type) : $this->type;
     }
     /** @deprecated  use setType() */
-    public function setTypeHint(?string $type) : self
+    public function setTypeHint(?string $type): self
     {
         return $this->setType($type);
     }
     /** @deprecated  use getType() */
-    public function getTypeHint() : ?string
+    public function getTypeHint(): ?string
     {
         return $this->getType();
     }
@@ -66,24 +66,24 @@ class Parameter
      * @deprecated  just use setDefaultValue()
      * @return static
      */
-    public function setOptional(bool $state = \true) : self
+    public function setOptional(bool $state = \true): self
     {
         \trigger_error(__METHOD__ . '() is deprecated, use setDefaultValue()', \E_USER_DEPRECATED);
         $this->hasDefaultValue = $state;
         return $this;
     }
     /** @return static */
-    public function setNullable(bool $state = \true) : self
+    public function setNullable(bool $state = \true): self
     {
         $this->nullable = $state;
         return $this;
     }
-    public function isNullable() : bool
+    public function isNullable(): bool
     {
         return $this->nullable;
     }
     /** @return static */
-    public function setDefaultValue($val) : self
+    public function setDefaultValue($val): self
     {
         $this->defaultValue = $val;
         $this->hasDefaultValue = \true;
@@ -93,11 +93,11 @@ class Parameter
     {
         return $this->defaultValue;
     }
-    public function hasDefaultValue() : bool
+    public function hasDefaultValue(): bool
     {
         return $this->hasDefaultValue;
     }
-    public function validate() : void
+    public function validate(): void
     {
     }
 }

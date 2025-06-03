@@ -112,33 +112,33 @@ class Arithmetic implements Visitor\Visit
                     $arguments[] = $_();
                     unset($_);
                 }
-                $acc = function () use($function, $arguments, $acc) {
+                $acc = function () use ($function, $arguments, $acc) {
                     return $acc($function->distributeArguments($arguments));
                 };
                 break;
             case '#negative':
                 $children[0]->accept($this, $a, $eldnah);
-                $acc = function () use($a, $acc) {
+                $acc = function () use ($a, $acc) {
                     return $acc(-$a());
                 };
                 break;
             case '#addition':
                 $children[0]->accept($this, $a, $eldnah);
-                $acc = function ($b) use($a, $acc) {
+                $acc = function ($b) use ($a, $acc) {
                     return $acc($a() + $b);
                 };
                 $children[1]->accept($this, $acc, $eldnah);
                 break;
             case '#substraction':
                 $children[0]->accept($this, $a, $eldnah);
-                $acc = function ($b) use($a, $acc) {
+                $acc = function ($b) use ($a, $acc) {
                     return $acc($a()) - $b;
                 };
                 $children[1]->accept($this, $acc, $eldnah);
                 break;
             case '#multiplication':
                 $children[0]->accept($this, $a, $eldnah);
-                $acc = function ($b) use($a, $acc) {
+                $acc = function ($b) use ($a, $acc) {
                     return $acc($a() * $b);
                 };
                 $children[1]->accept($this, $acc, $eldnah);
@@ -147,40 +147,38 @@ class Arithmetic implements Visitor\Visit
                 $children[0]->accept($this, $a, $eldnah);
                 $parent = $element->getParent();
                 if (null === $parent || $type === $parent->getId()) {
-                    $acc = function ($b) use($a, $acc) {
+                    $acc = function ($b) use ($a, $acc) {
                         if (0.0 === $b) {
                             throw new \RuntimeException('Division by zero is not possible.');
                         }
                         return $acc($a()) / $b;
                     };
+                } else if ('#fakegroup' !== $parent->getId()) {
+                    $classname = \get_class($element);
+                    $group = new $classname('#fakegroup', null, [$element], $parent);
+                    $element->setParent($group);
+                    $this->visit($group, $acc, $eldnah);
+                    break;
                 } else {
-                    if ('#fakegroup' !== $parent->getId()) {
-                        $classname = \get_class($element);
-                        $group = new $classname('#fakegroup', null, [$element], $parent);
-                        $element->setParent($group);
-                        $this->visit($group, $acc, $eldnah);
-                        break;
-                    } else {
-                        $acc = function ($b) use($a, $acc) {
-                            if (0.0 === $b) {
-                                throw new \RuntimeException('Division by zero is not possible.');
-                            }
-                            return $acc($a() / $b);
-                        };
-                    }
+                    $acc = function ($b) use ($a, $acc) {
+                        if (0.0 === $b) {
+                            throw new \RuntimeException('Division by zero is not possible.');
+                        }
+                        return $acc($a() / $b);
+                    };
                 }
                 $children[1]->accept($this, $acc, $eldnah);
                 break;
             case '#fakegroup':
             case '#group':
                 $children[0]->accept($this, $a, $eldnah);
-                $acc = function () use($a, $acc) {
+                $acc = function () use ($a, $acc) {
                     return $acc($a());
                 };
                 break;
             case '#variable':
                 $out = $this->getVariable($children[0]->getValueValue());
-                $acc = function () use($out, $acc) {
+                $acc = function () use ($out, $acc) {
                     return $acc($out);
                 };
                 break;
@@ -198,7 +196,7 @@ class Arithmetic implements Visitor\Visit
                 } else {
                     $out = (float) $value;
                 }
-                $acc = function () use($out, $acc) {
+                $acc = function () use ($out, $acc) {
                     return $acc($out);
                 };
                 break;

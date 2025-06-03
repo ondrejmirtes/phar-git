@@ -6,6 +6,6 @@ namespace PHPStan\Rules;
 /** @api */
 interface FileRuleError extends \PHPStan\Rules\RuleError
 {
-    public function getFile() : string;
-    public function getFileDescription() : string;
+    public function getFile(): string;
+    public function getFileDescription(): string;
 }

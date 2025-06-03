@@ -33,22 +33,22 @@ final class RegexNonCapturingGroup
         $this->resetGroupCounter = $resetGroupCounter;
     }
     /** @phpstan-assert-if-true !null $this->getAlternationId() */
-    public function inAlternation() : bool
+    public function inAlternation(): bool
     {
         return $this->alternation !== null;
     }
-    public function getAlternationId() : ?int
+    public function getAlternationId(): ?int
     {
         if ($this->alternation === null) {
             return null;
         }
         return $this->alternation->getId();
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->inAlternation() || $this->inOptionalQuantification || $this->parent !== null && $this->parent->isOptional();
     }
-    public function isTopLevel() : bool
+    public function isTopLevel(): bool
     {
         return $this->parent === null || $this->parent instanceof \PHPStan\Type\Regex\RegexNonCapturingGroup && $this->parent->isTopLevel();
     }
@@ -59,7 +59,7 @@ final class RegexNonCapturingGroup
     {
         return $this->parent;
     }
-    public function resetsGroupCounter() : bool
+    public function resetsGroupCounter(): bool
     {
         return $this->resetGroupCounter;
     }

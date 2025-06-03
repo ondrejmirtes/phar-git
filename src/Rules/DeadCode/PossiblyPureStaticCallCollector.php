@@ -15,7 +15,7 @@ final class PossiblyPureStaticCallCollector implements Collector
     public function __construct()
     {
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Expression::class;
     }

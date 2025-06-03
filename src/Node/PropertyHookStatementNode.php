@@ -30,11 +30,11 @@ final class PropertyHookStatementNode extends Stmt implements \PHPStan\Node\Virt
     {
         return null;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_PropertyHookStatementNode';
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

@@ -13,18 +13,18 @@ final class PropertyInitializationExpr extends Expr implements VirtualNode
         $this->propertyName = $propertyName;
         parent::__construct([]);
     }
-    public function getPropertyName() : string
+    public function getPropertyName(): string
     {
         return $this->propertyName;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_PropertyInitializationExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

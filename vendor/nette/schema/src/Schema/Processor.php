@@ -61,7 +61,7 @@ final class Processor
     /**
      * @return string[]
      */
-    public function getWarnings() : array
+    public function getWarnings(): array
     {
         $res = [];
         foreach ($this->context->warnings as $message) {
@@ -69,7 +69,7 @@ final class Processor
         }
         return $res;
     }
-    private function throwsErrors() : void
+    private function throwsErrors(): void
     {
         if ($this->context->errors) {
             throw new ValidationException(null, $this->context->errors);

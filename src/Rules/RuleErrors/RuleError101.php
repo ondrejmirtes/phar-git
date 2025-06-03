@@ -17,22 +17,22 @@ final class RuleError101 implements RuleError, FileRuleError, MetadataRuleError,
     public string $fileDescription;
     /** @var mixed[] */
     public array $metadata;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

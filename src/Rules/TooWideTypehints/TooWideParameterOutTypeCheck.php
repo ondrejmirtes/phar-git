@@ -24,7 +24,7 @@ final class TooWideParameterOutTypeCheck
      * @param ExtendedParameterReflection[] $parameters
      * @return list<IdentifierRuleError>
      */
-    public function check(array $executionEnds, array $returnStatements, array $parameters, string $functionDescription) : array
+    public function check(array $executionEnds, array $returnStatements, array $parameters, string $functionDescription): array
     {
         $finalScope = null;
         foreach ($executionEnds as $executionEnd) {
@@ -59,7 +59,7 @@ final class TooWideParameterOutTypeCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleParameter(Scope $scope, string $functionDescription, ExtendedParameterReflection $parameter) : array
+    private function processSingleParameter(Scope $scope, string $functionDescription, ExtendedParameterReflection $parameter): array
     {
         $isParamOutType = \true;
         $outType = $parameter->getOutType();

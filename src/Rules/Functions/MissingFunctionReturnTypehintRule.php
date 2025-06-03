@@ -22,11 +22,11 @@ final class MissingFunctionReturnTypehintRule implements Rule
     {
         $this->missingTypehintCheck = $missingTypehintCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $functionReflection = $node->getFunctionReflection();
         $returnType = $functionReflection->getReturnType();

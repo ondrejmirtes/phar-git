@@ -18,11 +18,11 @@ final class ReturnStatement
         $this->scope = $scope;
         $this->returnNode = $returnNode;
     }
-    public function getScope() : Scope
+    public function getScope(): Scope
     {
         return $this->scope;
     }
-    public function getReturnNode() : Return_
+    public function getReturnNode(): Return_
     {
         return $this->returnNode;
     }

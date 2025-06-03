@@ -46,11 +46,11 @@ final class InvalidPhpDocVarTagTypeRule implements Rule
         $this->checkMissingVarTagTypehint = $checkMissingVarTagTypehint;
         $this->discoveringSymbolsTip = $discoveringSymbolsTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node instanceof Node\Stmt\Property || $node instanceof Node\Stmt\ClassConst || $node instanceof Node\Stmt\Const_) {
             return [];

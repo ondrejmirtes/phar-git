@@ -24,14 +24,14 @@ final class MemoizingReflectionProvider implements ReflectionProvider
     {
         $this->provider = $provider;
     }
-    public function hasClass(string $className) : bool
+    public function hasClass(string $className): bool
     {
         if (isset($this->hasClasses[$className])) {
             return $this->hasClasses[$className];
         }
         return $this->hasClasses[$className] = $this->provider->hasClass($className);
     }
-    public function getClass(string $className) : ClassReflection
+    public function getClass(string $className): ClassReflection
     {
         $lowerClassName = strtolower($className);
         if (isset($this->classes[$lowerClassName])) {
@@ -39,7 +39,7 @@ final class MemoizingReflectionProvider implements ReflectionProvider
         }
         return $this->classes[$lowerClassName] = $this->provider->getClass($className);
     }
-    public function getClassName(string $className) : string
+    public function getClassName(string $className): string
     {
         $lowerClassName = strtolower($className);
         if (isset($this->classNames[$lowerClassName])) {
@@ -47,35 +47,35 @@ final class MemoizingReflectionProvider implements ReflectionProvider
         }
         return $this->classNames[$lowerClassName] = $this->provider->getClassName($className);
     }
-    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope) : ClassReflection
+    public function getAnonymousClassReflection(Node\Stmt\Class_ $classNode, Scope $scope): ClassReflection
     {
         return $this->provider->getAnonymousClassReflection($classNode, $scope);
     }
-    public function getUniversalObjectCratesClasses() : array
+    public function getUniversalObjectCratesClasses(): array
     {
         return $this->provider->getUniversalObjectCratesClasses();
     }
-    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return $this->provider->hasFunction($nameNode, $namespaceAnswerer);
     }
-    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : FunctionReflection
+    public function getFunction(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): FunctionReflection
     {
         return $this->provider->getFunction($nameNode, $namespaceAnswerer);
     }
-    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveFunctionName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         return $this->provider->resolveFunctionName($nameNode, $namespaceAnswerer);
     }
-    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : bool
+    public function hasConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): bool
     {
         return $this->provider->hasConstant($nameNode, $namespaceAnswerer);
     }
-    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ConstantReflection
+    public function getConstant(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ConstantReflection
     {
         return $this->provider->getConstant($nameNode, $namespaceAnswerer);
     }
-    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer) : ?string
+    public function resolveConstantName(Node\Name $nameNode, ?NamespaceAnswerer $namespaceAnswerer): ?string
     {
         return $this->provider->resolveConstantName($nameNode, $namespaceAnswerer);
     }

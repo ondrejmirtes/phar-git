@@ -10,7 +10,7 @@ use function sprintf;
 use function substr;
 class InvalidArrowFunctionBodyNode extends RuntimeException
 {
-    public static function create(Stmt $node) : self
+    public static function create(Stmt $node): self
     {
         $printer = (new BetterReflection())->printer();
         return new self(sprintf('Invalid arrow function body node (first 50 characters: %s)', substr($printer->prettyPrint([$node]), 0, 50)));

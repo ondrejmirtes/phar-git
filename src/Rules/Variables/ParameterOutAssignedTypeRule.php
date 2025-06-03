@@ -26,11 +26,11 @@ final class ParameterOutAssignedTypeRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return VariableAssignNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $inFunction = $scope->getFunction();
         if ($inFunction === null) {

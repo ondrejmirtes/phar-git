@@ -33,17 +33,16 @@ class HelpCommand extends Command
     {
         $this->ignoreValidationErrors();
         $this->setName('help')->setDefinition([new InputArgument('command_name', InputArgument::OPTIONAL, 'The command name', 'help'), new InputOption('format', null, InputOption::VALUE_REQUIRED, 'The output format (txt, xml, json, or md)', 'txt'), new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw command help')])->setDescription('Display help for a command')->setHelp(<<<'EOF'
-The <info>%command.name%</info> command displays help for a given command:
-
-  <info>%command.full_name% list</info>
-
-You can also output the help in other formats by using the <comment>--format</comment> option:
-
-  <info>%command.full_name% --format=xml list</info>
-
-To display the list of available commands, please use the <info>list</info> command.
-EOF
-);
+        The <info>%command.name%</info> command displays help for a given command:
+        
+          <info>%command.full_name% list</info>
+        
+        You can also output the help in other formats by using the <comment>--format</comment> option:
+        
+          <info>%command.full_name% --format=xml list</info>
+        
+        To display the list of available commands, please use the <info>list</info> command.
+        EOF);
     }
     public function setCommand(Command $command)
     {
@@ -62,7 +61,7 @@ EOF
         $this->command = null;
         return 0;
     }
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions) : void
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         if ($input->mustSuggestArgumentValuesFor('command_name')) {
             $descriptor = new ApplicationDescription($this->getApplication());

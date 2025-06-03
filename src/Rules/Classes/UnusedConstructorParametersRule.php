@@ -27,11 +27,11 @@ final class UnusedConstructorParametersRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         $originalNode = $node->getOriginalNode();
@@ -53,7 +53,7 @@ final class UnusedConstructorParametersRule implements Rule
         if ($node->getClassReflection()->isAnonymous()) {
             $message = 'Constructor of an anonymous class has an unused parameter $%s.';
         }
-        return $this->check->getUnusedParameters($scope, array_map(static function (Param $parameter) : Variable {
+        return $this->check->getUnusedParameters($scope, array_map(static function (Param $parameter): Variable {
             if (!$parameter->var instanceof Variable) {
                 throw new ShouldNotHappenException();
             }

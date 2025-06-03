@@ -20,11 +20,11 @@ final class ExistingClassesInTypehintsRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $methodReflection = $node->getMethodReflection();
         $className = SprintfHelper::escapeFormatString($node->getClassReflection()->getDisplayName());

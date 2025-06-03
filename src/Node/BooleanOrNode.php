@@ -33,18 +33,18 @@ final class BooleanOrNode extends Expr implements \PHPStan\Node\VirtualNode
     {
         return $this->originalNode;
     }
-    public function getRightScope() : Scope
+    public function getRightScope(): Scope
     {
         return $this->rightScope;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_BooleanOrNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

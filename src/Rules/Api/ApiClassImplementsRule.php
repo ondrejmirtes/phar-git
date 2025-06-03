@@ -26,11 +26,11 @@ final class ApiClassImplementsRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Class_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->implements as $implements) {
@@ -41,7 +41,7 @@ final class ApiClassImplementsRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkName(Scope $scope, Node\Name $name) : array
+    private function checkName(Scope $scope, Node\Name $name): array
     {
         $implementedClassName = (string) $name;
         if (!$this->reflectionProvider->hasClass($implementedClassName)) {

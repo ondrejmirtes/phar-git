@@ -25,11 +25,11 @@ final class DateTimeConstructorThrowTypeExtension implements DynamicStaticMethod
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === '__construct' && in_array($methodReflection->getDeclaringClass()->getName(), [DateTime::class, DateTimeImmutable::class], \true);
     }
-    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) === 0) {
             return null;
@@ -50,7 +50,7 @@ final class DateTimeConstructorThrowTypeExtension implements DynamicStaticMethod
         }
         return null;
     }
-    private function exceptionType() : Type
+    private function exceptionType(): Type
     {
         if ($this->phpVersion->hasDateTimeExceptions()) {
             return new ObjectType('DateMalformedStringException');

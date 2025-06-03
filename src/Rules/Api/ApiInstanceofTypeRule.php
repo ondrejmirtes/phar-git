@@ -90,17 +90,17 @@ final class ApiInstanceofTypeRule implements Rule
         HasMethodType::class => 'Type::hasMethod()',
         HasPropertyType::class => 'Type::hasProperty()',
         HasOffsetType::class => 'Type::hasOffsetValueType()',
-        AccessoryType::class => 'methods on PHPStan\\Type\\Type',
+        AccessoryType::class => 'methods on PHPStan\Type\Type',
     ];
     public function __construct(ReflectionProvider $reflectionProvider)
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Instanceof_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->class instanceof Node\Name) {
             return [];

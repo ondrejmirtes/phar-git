@@ -24,11 +24,11 @@ final class ApiStaticCallRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\StaticCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Identifier) {
             return [];
@@ -56,7 +56,7 @@ final class ApiStaticCallRule implements Rule
         $ruleError = RuleErrorBuilder::message(sprintf('Calling %s::%s() is not covered by backward compatibility promise. The method might change in a minor PHPStan version.', $declaringClass->getDisplayName(), $methodReflection->getName()))->identifier('phpstanApi.method')->tip(sprintf("If you think it should be covered by backward compatibility promise, open a discussion:\n   %s\n\n   See also:\n   https://phpstan.org/developing-extensions/backward-compatibility-promise", 'https://github.com/phpstan/phpstan/discussions'))->build();
         return [$ruleError];
     }
-    private function isCovered(MethodReflection $methodReflection) : bool
+    private function isCovered(MethodReflection $methodReflection): bool
     {
         $declaringClass = $methodReflection->getDeclaringClass();
         $classDocBlock = $declaringClass->getResolvedPhpDoc();

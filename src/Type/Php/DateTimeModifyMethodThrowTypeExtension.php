@@ -25,11 +25,11 @@ final class DateTimeModifyMethodThrowTypeExtension implements DynamicMethodThrow
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isMethodSupported(MethodReflection $methodReflection) : bool
+    public function isMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === 'modify' && in_array($methodReflection->getDeclaringClass()->getName(), [DateTime::class, DateTimeImmutable::class], \true);
     }
-    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromMethodCall(MethodReflection $methodReflection, MethodCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) === 0) {
             return null;
@@ -54,7 +54,7 @@ final class DateTimeModifyMethodThrowTypeExtension implements DynamicMethodThrow
         }
         return null;
     }
-    private function exceptionType() : Type
+    private function exceptionType(): Type
     {
         if ($this->phpVersion->hasDateTimeExceptions()) {
             return new ObjectType('DateMalformedStringException');

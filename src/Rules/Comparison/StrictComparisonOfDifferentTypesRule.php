@@ -32,11 +32,11 @@ final class StrictComparisonOfDifferentTypesRule implements Rule
         $this->reportAlwaysTrueInLastCondition = $reportAlwaysTrueInLastCondition;
         $this->treatPhpDocTypesAsCertainTip = $treatPhpDocTypesAsCertainTip;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\BinaryOp::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$scope instanceof MutatingScope) {
             throw new ShouldNotHappenException();
@@ -54,7 +54,7 @@ final class StrictComparisonOfDifferentTypesRule implements Rule
         }
         $leftType = $this->treatPhpDocTypesAsCertain ? $scope->getType($node->left) : $scope->getNativeType($node->left);
         $rightType = $this->treatPhpDocTypesAsCertain ? $scope->getType($node->right) : $scope->getNativeType($node->right);
-        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use($scope, $node, $nodeTypeResult) : RuleErrorBuilder {
+        $addTip = function (RuleErrorBuilder $ruleErrorBuilder) use ($scope, $node, $nodeTypeResult): RuleErrorBuilder {
             $reasons = $nodeTypeResult->reasons;
             if (count($reasons) > 0) {
                 return $ruleErrorBuilder->acceptsReasonsTip($reasons);

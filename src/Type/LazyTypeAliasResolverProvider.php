@@ -11,7 +11,7 @@ final class LazyTypeAliasResolverProvider implements \PHPStan\Type\TypeAliasReso
     {
         $this->container = $container;
     }
-    public function getTypeAliasResolver() : \PHPStan\Type\TypeAliasResolver
+    public function getTypeAliasResolver(): \PHPStan\Type\TypeAliasResolver
     {
         return $this->container->getByType(\PHPStan\Type\TypeAliasResolver::class);
     }

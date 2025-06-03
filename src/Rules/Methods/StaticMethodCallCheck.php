@@ -54,7 +54,7 @@ final class StaticMethodCallCheck
      * @param Name|Expr $class
      * @return array{list<IdentifierRuleError>, ExtendedMethodReflection|null}
      */
-    public function check(Scope $scope, string $methodName, $class) : array
+    public function check(Scope $scope, string $methodName, $class): array
     {
         $errors = [];
         $isAbstract = \false;

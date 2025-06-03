@@ -14,7 +14,7 @@ final class LazyOperatorTypeSpecifyingExtensionRegistryProvider implements \PHPS
     {
         $this->container = $container;
     }
-    public function getRegistry() : OperatorTypeSpecifyingExtensionRegistry
+    public function getRegistry(): OperatorTypeSpecifyingExtensionRegistry
     {
         if ($this->registry === null) {
             $this->registry = new OperatorTypeSpecifyingExtensionRegistry($this->container->getServicesByTag(BrokerFactory::OPERATOR_TYPE_SPECIFYING_EXTENSION_TAG));

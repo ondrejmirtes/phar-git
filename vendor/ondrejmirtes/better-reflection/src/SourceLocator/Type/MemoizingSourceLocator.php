@@ -21,7 +21,7 @@ final class MemoizingSourceLocator implements \PHPStan\BetterReflection\SourceLo
     {
         $this->wrappedSourceLocator = $wrappedSourceLocator;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         $cacheKey = sprintf('%s_%s', $this->reflectorCacheKey($reflector), $this->identifierToCacheKey($identifier));
         if (array_key_exists($cacheKey, $this->cacheByIdentifierKeyAndOid)) {
@@ -30,7 +30,7 @@ final class MemoizingSourceLocator implements \PHPStan\BetterReflection\SourceLo
         return $this->cacheByIdentifierKeyAndOid[$cacheKey] = $this->wrappedSourceLocator->locateIdentifier($reflector, $identifier);
     }
     /** @return list<Reflection> */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         $cacheKey = sprintf('%s_%s', $this->reflectorCacheKey($reflector), $this->identifierTypeToCacheKey($identifierType));
         if (array_key_exists($cacheKey, $this->cacheByIdentifierTypeKeyAndOid)) {
@@ -38,15 +38,15 @@ final class MemoizingSourceLocator implements \PHPStan\BetterReflection\SourceLo
         }
         return $this->cacheByIdentifierTypeKeyAndOid[$cacheKey] = $this->wrappedSourceLocator->locateIdentifiersByType($reflector, $identifierType);
     }
-    private function reflectorCacheKey(Reflector $reflector) : string
+    private function reflectorCacheKey(Reflector $reflector): string
     {
         return sprintf('type:%s#oid:%d', \get_class($reflector), spl_object_id($reflector));
     }
-    private function identifierToCacheKey(Identifier $identifier) : string
+    private function identifierToCacheKey(Identifier $identifier): string
     {
         return sprintf('%s#name:%s', $this->identifierTypeToCacheKey($identifier->getType()), $identifier->getName());
     }
-    private function identifierTypeToCacheKey(IdentifierType $identifierType) : string
+    private function identifierTypeToCacheKey(IdentifierType $identifierType): string
     {
         return sprintf('type:%s', $identifierType->getName());
     }

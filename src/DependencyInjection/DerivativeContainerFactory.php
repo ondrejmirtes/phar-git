@@ -52,7 +52,7 @@ final class DerivativeContainerFactory
     /**
      * @param string[] $additionalConfigFiles
      */
-    public function create(array $additionalConfigFiles) : \PHPStan\DependencyInjection\Container
+    public function create(array $additionalConfigFiles): \PHPStan\DependencyInjection\Container
     {
         $containerFactory = new \PHPStan\DependencyInjection\ContainerFactory($this->currentWorkingDirectory);
         $containerFactory->setJournalContainer();

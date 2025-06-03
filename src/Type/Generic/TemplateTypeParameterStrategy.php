@@ -11,14 +11,14 @@ use PHPStan\Type\Type;
  */
 final class TemplateTypeParameterStrategy implements \PHPStan\Type\Generic\TemplateTypeStrategy
 {
-    public function accepts(\PHPStan\Type\Generic\TemplateType $left, Type $right, bool $strictTypes) : AcceptsResult
+    public function accepts(\PHPStan\Type\Generic\TemplateType $left, Type $right, bool $strictTypes): AcceptsResult
     {
         if ($right instanceof CompoundType) {
             return $right->isAcceptedBy($left, $strictTypes);
         }
         return $left->getBound()->accepts($right, $strictTypes);
     }
-    public function isArgument() : bool
+    public function isArgument(): bool
     {
         return \false;
     }

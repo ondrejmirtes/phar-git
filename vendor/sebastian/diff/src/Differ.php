@@ -71,7 +71,7 @@ final class Differ
      * @param array|string $from
      * @param array|string $to
      */
-    public function diff($from, $to, ?LongestCommonSubsequenceCalculator $lcs = null) : string
+    public function diff($from, $to, ?LongestCommonSubsequenceCalculator $lcs = null): string
     {
         $diff = $this->diffToArray($this->normalizeDiffInput($from), $this->normalizeDiffInput($to), $lcs);
         return $this->outputBuilder->getDiff($diff);
@@ -91,7 +91,7 @@ final class Differ
      * @param array|string                       $to
      * @param LongestCommonSubsequenceCalculator $lcs
      */
-    public function diffToArray($from, $to, ?LongestCommonSubsequenceCalculator $lcs = null) : array
+    public function diffToArray($from, $to, ?LongestCommonSubsequenceCalculator $lcs = null): array
     {
         if (is_string($from)) {
             $from = $this->splitStringByLines($from);
@@ -154,11 +154,11 @@ final class Differ
     /**
      * Checks if input is string, if so it will split it line-by-line.
      */
-    private function splitStringByLines(string $input) : array
+    private function splitStringByLines(string $input): array
     {
-        return preg_split('/(.*\\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        return preg_split('/(.*\R)/', $input, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
     }
-    private function selectLcsImplementation(array $from, array $to) : LongestCommonSubsequenceCalculator
+    private function selectLcsImplementation(array $from, array $to): LongestCommonSubsequenceCalculator
     {
         // We do not want to use the time-efficient implementation if its memory
         // footprint will probably exceed this value. Note that the footprint
@@ -183,7 +183,7 @@ final class Differ
     /**
      * Returns true if line ends don't match in a diff.
      */
-    private function detectUnmatchedLineEndings(array $diff) : bool
+    private function detectUnmatchedLineEndings(array $diff): bool
     {
         $newLineBreaks = ['' => \true];
         $oldLineBreaks = ['' => \true];
@@ -215,7 +215,7 @@ final class Differ
         }
         return \false;
     }
-    private function getLinebreak($line) : string
+    private function getLinebreak($line): string
     {
         if (!is_string($line)) {
             return '';
@@ -232,7 +232,7 @@ final class Differ
         }
         return "\n";
     }
-    private static function getArrayDiffParted(array &$from, array &$to) : array
+    private static function getArrayDiffParted(array &$from, array &$to): array
     {
         $start = [];
         $end = [];

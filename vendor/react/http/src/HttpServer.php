@@ -249,7 +249,7 @@ final class HttpServer extends EventEmitter
         });
         $this->streamingServer = new StreamingServer($loop, new MiddlewareRunner($middleware));
         $that = $this;
-        $this->streamingServer->on('error', function ($error) use($that) {
+        $this->streamingServer->on('error', function ($error) use ($that) {
             $that->emit('error', array($error));
         });
     }

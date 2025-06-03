@@ -16,7 +16,7 @@ use PHPStan\Type\LooseComparisonHelper;
 use PHPStan\Type\Type;
 trait ConstantScalarTypeTrait
 {
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof self) {
             return AcceptsResult::createFromBoolean($this->equals($type));
@@ -26,7 +26,7 @@ trait ConstantScalarTypeTrait
         }
         return parent::accepts($type, $strictTypes)->and(AcceptsResult::createMaybe());
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof self) {
             return IsSuperTypeOfResult::createFromBoolean($this->equals($type));
@@ -39,7 +39,7 @@ trait ConstantScalarTypeTrait
         }
         return IsSuperTypeOfResult::createNo();
     }
-    public function looseCompare(Type $type, PhpVersion $phpVersion) : BooleanType
+    public function looseCompare(Type $type, PhpVersion $phpVersion): BooleanType
     {
         if (!$this instanceof ConstantScalarType) {
             throw new ShouldNotHappenException();
@@ -57,11 +57,11 @@ trait ConstantScalarTypeTrait
         }
         return parent::looseCompare($type, $phpVersion);
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && $this->value === $type->value;
     }
-    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThan(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($otherType instanceof ConstantScalarType) {
             return TrinaryLogic::createFromBoolean($this->value < $otherType->getValue());
@@ -71,7 +71,7 @@ trait ConstantScalarTypeTrait
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThanOrEqual(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($otherType instanceof ConstantScalarType) {
             return TrinaryLogic::createFromBoolean($this->value <= $otherType->getValue());
@@ -81,23 +81,23 @@ trait ConstantScalarTypeTrait
         }
         return TrinaryLogic::createMaybe();
     }
-    public function isConstantValue() : TrinaryLogic
+    public function isConstantValue(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function isConstantScalarValue() : TrinaryLogic
+    public function isConstantScalarValue(): TrinaryLogic
     {
         return TrinaryLogic::createYes();
     }
-    public function getConstantScalarTypes() : array
+    public function getConstantScalarTypes(): array
     {
         return [$this];
     }
-    public function getConstantScalarValues() : array
+    public function getConstantScalarValues(): array
     {
         return [$this->getValue()];
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [$this];
     }

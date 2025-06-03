@@ -22,7 +22,7 @@ final class InvalidIgnoredErrorPatternsException extends Exception
     /**
      * @return string[]
      */
-    public function getErrors() : array
+    public function getErrors(): array
     {
         return $this->errors;
     }

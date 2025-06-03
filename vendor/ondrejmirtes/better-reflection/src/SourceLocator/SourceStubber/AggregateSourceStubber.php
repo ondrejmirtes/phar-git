@@ -15,7 +15,7 @@ class AggregateSourceStubber implements \PHPStan\BetterReflection\SourceLocator\
         $this->sourceStubbers = array_values(array_merge([$sourceStubber], $otherSourceStubbers));
     }
     /** @param class-string|trait-string $className */
-    public function generateClassStub(string $className) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateClassStub(string $className): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         foreach ($this->sourceStubbers as $sourceStubber) {
             $stubData = $sourceStubber->generateClassStub($className);
@@ -25,7 +25,7 @@ class AggregateSourceStubber implements \PHPStan\BetterReflection\SourceLocator\
         }
         return null;
     }
-    public function generateFunctionStub(string $functionName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateFunctionStub(string $functionName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         foreach ($this->sourceStubbers as $sourceStubber) {
             $stubData = $sourceStubber->generateFunctionStub($functionName);
@@ -35,7 +35,7 @@ class AggregateSourceStubber implements \PHPStan\BetterReflection\SourceLocator\
         }
         return null;
     }
-    public function generateConstantStub(string $constantName) : ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
+    public function generateConstantStub(string $constantName): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData
     {
         return array_reduce($this->sourceStubbers, static fn(?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData $stubData, \PHPStan\BetterReflection\SourceLocator\SourceStubber\SourceStubber $sourceStubber): ?\PHPStan\BetterReflection\SourceLocator\SourceStubber\StubData => $stubData ?? $sourceStubber->generateConstantStub($constantName), null);
     }

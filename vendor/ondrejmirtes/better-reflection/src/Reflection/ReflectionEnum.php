@@ -46,45 +46,45 @@ class ReflectionEnum extends \PHPStan\BetterReflection\Reflection\ReflectionClas
      *
      * @psalm-suppress MoreSpecificImplementedParamType
      */
-    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null) : self
+    public static function createFromNode(Reflector $reflector, $node, LocatedSource $locatedSource, ?string $namespace = null): self
     {
         $node = $node;
         assert($node instanceof EnumNode);
         return new self($reflector, $node, $locatedSource, $namespace);
     }
     /** @param non-empty-string $name */
-    public function hasCase(string $name) : bool
+    public function hasCase(string $name): bool
     {
         return array_key_exists($name, $this->cases);
     }
     /** @param non-empty-string $name */
-    public function getCase(string $name) : ?\PHPStan\BetterReflection\Reflection\ReflectionEnumCase
+    public function getCase(string $name): ?\PHPStan\BetterReflection\Reflection\ReflectionEnumCase
     {
         return $this->cases[$name] ?? null;
     }
     /** @return array<non-empty-string, ReflectionEnumCase> */
-    public function getCases() : array
+    public function getCases(): array
     {
         return $this->cases;
     }
     /** @return array<non-empty-string, ReflectionEnumCase> */
-    private function createCases(EnumNode $node) : array
+    private function createCases(EnumNode $node): array
     {
         $enumCasesNodes = array_filter($node->stmts, static fn(Node\Stmt $stmt): bool => $stmt instanceof Node\Stmt\EnumCase);
         return array_combine(array_map(static fn(Node\Stmt\EnumCase $enumCaseNode): string => $enumCaseNode->name->toString(), $enumCasesNodes), array_map(fn(Node\Stmt\EnumCase $enumCaseNode): \PHPStan\BetterReflection\Reflection\ReflectionEnumCase => \PHPStan\BetterReflection\Reflection\ReflectionEnumCase::createFromNode($this->reflector, $enumCaseNode, $this), $enumCasesNodes));
     }
-    public function isBacked() : bool
+    public function isBacked(): bool
     {
         return $this->backingType !== null;
     }
-    public function getBackingType() : \PHPStan\BetterReflection\Reflection\ReflectionNamedType
+    public function getBackingType(): \PHPStan\BetterReflection\Reflection\ReflectionNamedType
     {
         if ($this->backingType === null) {
             throw new LogicException('This enum does not have a backing type available');
         }
         return $this->backingType;
     }
-    private function createBackingType(EnumNode $node) : ?\PHPStan\BetterReflection\Reflection\ReflectionNamedType
+    private function createBackingType(EnumNode $node): ?\PHPStan\BetterReflection\Reflection\ReflectionNamedType
     {
         if ($node->scalarType === null) {
             return null;

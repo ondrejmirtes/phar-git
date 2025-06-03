@@ -66,7 +66,7 @@ class SplFileInfo extends \SplFileInfo
     public function __construct($filename, $relativePath = null)
     {
         parent::__construct($filename);
-        if (-1 !== ($mtime = $this->getMTime())) {
+        if (-1 !== $mtime = $this->getMTime()) {
             $this->_hash = \md5($this->getPathname() . $mtime);
         }
         $this->_relativePath = $relativePath;
@@ -122,7 +122,7 @@ class SplFileInfo extends \SplFileInfo
      */
     public function getRelativePathname()
     {
-        if (null === ($relative = $this->getRelativePath())) {
+        if (null === $relative = $this->getRelativePath()) {
             return $this->getPathname();
         }
         return \substr($this->getPathname(), \strlen($relative));

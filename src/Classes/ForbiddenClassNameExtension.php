@@ -26,5 +26,5 @@ interface ForbiddenClassNameExtension
 {
     public const EXTENSION_TAG = 'phpstan.forbiddenClassNamesExtension';
     /** @return array<string, string> */
-    public function getClassPrefixes() : array;
+    public function getClassPrefixes(): array;
 }

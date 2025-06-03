@@ -54,7 +54,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @param callable(Node , Scope ): void $callback
      * @param string[] $dynamicConstantNames
      */
-    public static function processFile(string $file, callable $callback, array $dynamicConstantNames = []) : void
+    public static function processFile(string $file, callable $callback, array $dynamicConstantNames = []): void
     {
         $reflectionProvider = self::createReflectionProvider();
         $typeSpecifier = self::getContainer()->getService('typeSpecifier');
@@ -69,7 +69,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @api
      * @param mixed ...$args
      */
-    public function assertFileAsserts(string $assertType, string $file, ...$args) : void
+    public function assertFileAsserts(string $assertType, string $file, ...$args): void
     {
         if ($assertType === 'type') {
             if ($args[0] instanceof Type) {
@@ -111,7 +111,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @api
      * @return array<string, mixed[]>
      */
-    public static function gatherAssertTypes(string $file) : array
+    public static function gatherAssertTypes(string $file): array
     {
         $fileHelper = self::getContainer()->getByType(FileHelper::class);
         $relativePathHelper = new SystemAgnosticSimpleRelativePathHelper($fileHelper);
@@ -119,7 +119,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
         $file = $fileHelper->normalizePath($file);
         $asserts = [];
         $delayedErrors = [];
-        self::processFile($file, static function (Node $node, Scope $scope) use(&$asserts, &$delayedErrors, $file, $relativePathHelper, $reflectionProvider) : void {
+        self::processFile($file, static function (Node $node, Scope $scope) use (&$asserts, &$delayedErrors, $file, $relativePathHelper, $reflectionProvider): void {
             if ($node instanceof InClassNode) {
                 if (!$reflectionProvider->hasClass($node->getClassReflection()->getName())) {
                     $delayedErrors[] = sprintf('%s %s in %s not found in ReflectionProvider. Configure "autoload-dev" section in composer.json to include your tests directory.', $node->getClassReflection()->getClassTypeDescription(), $node->getClassReflection()->getName(), $file);
@@ -142,21 +142,21 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
             $functionName = $nameNode->toString();
             if (in_array(strtolower($functionName), ['asserttype', 'assertnativetype', 'assertvariablecertainty'], \true)) {
                 self::fail(sprintf('Missing use statement for %s() in %s on line %d.', $functionName, $relativePathHelper->getRelativePath($file), $node->getStartLine()));
-            } elseif ($functionName === 'PHPStan\\Testing\\assertType') {
+            } elseif ($functionName === 'PHPStan\Testing\assertType') {
                 $expectedType = $scope->getType($node->getArgs()[0]->value);
                 if (!$expectedType instanceof ConstantScalarType) {
                     self::fail(sprintf('Expected type must be a literal string, %s given in %s on line %d.', $expectedType->describe(VerbosityLevel::precise()), $relativePathHelper->getRelativePath($file), $node->getStartLine()));
                 }
                 $actualType = $scope->getType($node->getArgs()[1]->value);
                 $assert = ['type', $file, $expectedType->getValue(), $actualType->describe(VerbosityLevel::precise()), $node->getStartLine()];
-            } elseif ($functionName === 'PHPStan\\Testing\\assertNativeType') {
+            } elseif ($functionName === 'PHPStan\Testing\assertNativeType') {
                 $expectedType = $scope->getType($node->getArgs()[0]->value);
                 if (!$expectedType instanceof ConstantScalarType) {
                     self::fail(sprintf('Expected type must be a literal string, %s given in %s on line %d.', $expectedType->describe(VerbosityLevel::precise()), $relativePathHelper->getRelativePath($file), $node->getStartLine()));
                 }
                 $actualType = $scope->getNativeType($node->getArgs()[1]->value);
                 $assert = ['type', $file, $expectedType->getValue(), $actualType->describe(VerbosityLevel::precise()), $node->getStartLine()];
-            } elseif ($functionName === 'PHPStan\\Testing\\assertVariableCertainty') {
+            } elseif ($functionName === 'PHPStan\Testing\assertVariableCertainty') {
                 $certainty = $node->getArgs()[0]->value;
                 if (!$certainty instanceof StaticCall) {
                     self::fail(sprintf('First argument of %s() must be TrinaryLogic call', $functionName));
@@ -164,7 +164,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
                 if (!$certainty->class instanceof Node\Name) {
                     self::fail(sprintf('ERROR: Invalid TrinaryLogic call.'));
                 }
-                if ($certainty->class->toString() !== 'PHPStan\\TrinaryLogic') {
+                if ($certainty->class->toString() !== 'PHPStan\TrinaryLogic') {
                     self::fail(sprintf('ERROR: Invalid TrinaryLogic call.'));
                 }
                 if (!$certainty->name instanceof Node\Identifier) {
@@ -186,7 +186,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
                 $assert = ['variableCertainty', $file, $expectedertaintyValue, $actualCertaintyValue, $variableDescription, $node->getStartLine()];
             } else {
                 $correctFunction = null;
-                $assertFunctions = ['assertType' => 'PHPStan\\Testing\\assertType', 'assertNativeType' => 'PHPStan\\Testing\\assertNativeType', 'assertVariableCertainty' => 'PHPStan\\Testing\\assertVariableCertainty'];
+                $assertFunctions = ['assertType' => 'PHPStan\Testing\assertType', 'assertNativeType' => 'PHPStan\Testing\assertNativeType', 'assertVariableCertainty' => 'PHPStan\Testing\assertVariableCertainty'];
                 foreach ($assertFunctions as $assertFn => $fqFunctionName) {
                     if (stripos($functionName, $assertFn) === \false) {
                         continue;
@@ -219,7 +219,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
      * @api
      * @return array<string, mixed[]>
      */
-    public static function gatherAssertTypesFromDirectory(string $directory) : array
+    public static function gatherAssertTypesFromDirectory(string $directory): array
     {
         $asserts = [];
         foreach (self::findTestDataFilesFromDirectory($directory) as $path) {
@@ -232,7 +232,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
     /**
      * @return list<string>
      */
-    public static function findTestDataFilesFromDirectory(string $directory) : array
+    public static function findTestDataFilesFromDirectory(string $directory): array
     {
         if (!is_dir($directory)) {
             self::fail(sprintf('Directory %s does not exist.', $directory));
@@ -254,7 +254,7 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
      *
      * Copyright (c) 2012, Jakub Onderka
      */
-    private static function isFileLintSkipped(string $file) : bool
+    private static function isFileLintSkipped(string $file): bool
     {
         $f = @fopen($file, 'r');
         if ($f !== \false) {
@@ -270,24 +270,24 @@ abstract class TypeInferenceTestCase extends \PHPStan\Testing\PHPStanTestCase
                 }
             }
             @fclose($f);
-            if (preg_match('~<?php\\s*\\/\\/\\s*lint\\s*([^\\d\\s]+)\\s*([^\\s]+)\\s*~i', $firstLine, $m) === 1) {
+            if (preg_match('~<?php\s*\/\/\s*lint\s*([^\d\s]+)\s*([^\s]+)\s*~i', $firstLine, $m) === 1) {
                 return version_compare(PHP_VERSION, $m[2], $m[1]) === \false;
             }
         }
         return \false;
     }
     /** @return string[] */
-    protected static function getAdditionalAnalysedFiles() : array
+    protected static function getAdditionalAnalysedFiles(): array
     {
         return [];
     }
     /** @return string[][] */
-    protected static function getEarlyTerminatingMethodCalls() : array
+    protected static function getEarlyTerminatingMethodCalls(): array
     {
         return [];
     }
     /** @return string[] */
-    protected static function getEarlyTerminatingFunctionCalls() : array
+    protected static function getEarlyTerminatingFunctionCalls(): array
     {
         return [];
     }

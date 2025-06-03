@@ -28,11 +28,11 @@ final class RequireFileExistsRule implements Rule
     {
         $this->currentWorkingDirectory = $currentWorkingDirectory;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Include_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         $paths = $this->resolveFilePaths($node, $scope);
@@ -52,7 +52,7 @@ final class RequireFileExistsRule implements Rule
      * 	2. The include path.
      *  3. The path of the script that is being executed.
      */
-    private function doesFileExist(string $path, Scope $scope) : bool
+    private function doesFileExist(string $path, Scope $scope): bool
     {
         $directories = array_merge([$this->currentWorkingDirectory], explode(PATH_SEPARATOR, get_include_path()), [dirname($scope->getFile())]);
         foreach ($directories as $directory) {
@@ -62,13 +62,13 @@ final class RequireFileExistsRule implements Rule
         }
         return \false;
     }
-    private function doesFileExistForDirectory(string $path, string $workingDirectory) : bool
+    private function doesFileExistForDirectory(string $path, string $workingDirectory): bool
     {
         $fileHelper = new FileHelper($workingDirectory);
         $absolutePath = $fileHelper->absolutizePath($path);
         return is_file($absolutePath);
     }
-    private function getErrorMessage(Include_ $node, string $filePath) : IdentifierRuleError
+    private function getErrorMessage(Include_ $node, string $filePath): IdentifierRuleError
     {
         $message = 'Path in %s() "%s" is not a file or it does not exist.';
         switch ($node->type) {
@@ -97,7 +97,7 @@ final class RequireFileExistsRule implements Rule
     /**
      * @return array<string>
      */
-    private function resolveFilePaths(Include_ $node, Scope $scope) : array
+    private function resolveFilePaths(Include_ $node, Scope $scope): array
     {
         $paths = [];
         $type = $scope->getType($node->expr);

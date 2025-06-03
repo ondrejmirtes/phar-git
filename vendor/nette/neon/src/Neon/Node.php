@@ -21,9 +21,9 @@ abstract class Node implements \IteratorAggregate
     /** @var ?int */
     public $endLine;
     /** @return mixed */
-    public abstract function toValue();
-    public abstract function toString() : string;
-    public function &getIterator() : \Generator
+    abstract public function toValue();
+    abstract public function toString(): string;
+    public function &getIterator(): \Generator
     {
         return;
         yield;

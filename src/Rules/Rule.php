@@ -27,10 +27,10 @@ interface Rule
     /**
      * @return class-string<TNodeType>
      */
-    public function getNodeType() : string;
+    public function getNodeType(): string;
     /**
      * @param TNodeType $node
      * @return list<IdentifierRuleError>
      */
-    public function processNode(Node $node, Scope $scope) : array;
+    public function processNode(Node $node, Scope $scope): array;
 }

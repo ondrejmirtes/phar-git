@@ -10,11 +10,11 @@ use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\ShouldNotHappenException;
 final class RequireExtendsPropertiesClassReflectionExtension implements PropertiesClassReflectionExtension
 {
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         return $this->findProperty($classReflection, $propertyName) !== null;
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : ExtendedPropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): ExtendedPropertyReflection
     {
         $property = $this->findProperty($classReflection, $propertyName);
         if ($property === null) {
@@ -22,7 +22,7 @@ final class RequireExtendsPropertiesClassReflectionExtension implements Properti
         }
         return $property;
     }
-    private function findProperty(ClassReflection $classReflection, string $propertyName) : ?ExtendedPropertyReflection
+    private function findProperty(ClassReflection $classReflection, string $propertyName): ?ExtendedPropertyReflection
     {
         if (!$classReflection->isInterface()) {
             return null;

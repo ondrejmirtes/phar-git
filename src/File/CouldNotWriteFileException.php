@@ -11,7 +11,7 @@ final class CouldNotWriteFileException extends AnalysedCodeException
     {
         parent::__construct(sprintf('Could not write file: %s (%s)', $fileName, $error));
     }
-    public function getTip() : ?string
+    public function getTip(): ?string
     {
         return null;
     }

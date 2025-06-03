@@ -30,11 +30,11 @@ final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionRetu
     {
         $this->phpVersion = $phpVersion;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return in_array($functionReflection->getName(), ['bcdiv', 'bcmod', 'bcpowmod', 'bcsqrt'], \true);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if ($functionReflection->getName() === 'bcsqrt') {
             return $this->getTypeForBcSqrt($functionCall, $scope);
@@ -100,7 +100,7 @@ final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionRetu
      * > Returns the square root as a string, or NULL if operand is negative.
      *
      */
-    private function getTypeForBcSqrt(FuncCall $functionCall, Scope $scope) : Type
+    private function getTypeForBcSqrt(FuncCall $functionCall, Scope $scope): Type
     {
         $stringAndNumericStringType = TypeCombinator::intersect(new StringType(), new AccessoryNumericStringType());
         if ($this->phpVersion->throwsTypeErrorForInternalFunctions()) {
@@ -154,7 +154,7 @@ final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionRetu
      * https://www.php.net/manual/en/function.bcpowmod.php
      * > Returns the result as a string, or FALSE if modulus is 0 or exponent is negative.
      */
-    private function getTypeForBcPowMod(FuncCall $functionCall, Scope $scope) : Type
+    private function getTypeForBcPowMod(FuncCall $functionCall, Scope $scope): Type
     {
         if ($this->phpVersion->throwsTypeErrorForInternalFunctions() && isset($functionCall->getArgs()[0]) === \false) {
             return new NeverType();
@@ -194,10 +194,8 @@ final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionRetu
             if ($modulus instanceof ConstantScalarType) {
                 return $stringAndNumericStringType;
             }
-        } else {
-            if ($this->phpVersion->throwsTypeErrorForInternalFunctions()) {
-                return new NeverType();
-            }
+        } else if ($this->phpVersion->throwsTypeErrorForInternalFunctions()) {
+            return new NeverType();
         }
         if ($this->phpVersion->throwsTypeErrorForInternalFunctions()) {
             return $stringAndNumericStringType;
@@ -209,7 +207,7 @@ final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionRetu
      *
      * @param mixed $value
      */
-    private function isZero($value) : bool
+    private function isZero($value): bool
     {
         if (is_numeric($value) === \false) {
             return \false;

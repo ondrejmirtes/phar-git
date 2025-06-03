@@ -7,7 +7,7 @@ use PHPStan\BetterReflection\Identifier\Identifier;
 interface PsrAutoloaderMapping
 {
     /** @return list<string> */
-    public function resolvePossibleFilePaths(Identifier $identifier) : array;
+    public function resolvePossibleFilePaths(Identifier $identifier): array;
     /** @return list<string> */
-    public function directories() : array;
+    public function directories(): array;
 }

@@ -30,19 +30,19 @@ final class TemplateTag
     /**
      * @return non-empty-string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getBound() : Type
+    public function getBound(): Type
     {
         return $this->bound;
     }
-    public function getDefault() : ?Type
+    public function getDefault(): ?Type
     {
         return $this->default;
     }
-    public function getVariance() : TemplateTypeVariance
+    public function getVariance(): TemplateTypeVariance
     {
         return $this->variance;
     }

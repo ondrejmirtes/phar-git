@@ -26,14 +26,14 @@ final class OriginalPropertyTypeExpr extends Expr implements VirtualNode
     {
         return $this->propertyFetch;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_OriginalPropertyTypeExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

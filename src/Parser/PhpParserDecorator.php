@@ -19,7 +19,7 @@ final class PhpParserDecorator implements Parser
     /**
      * @return Node\Stmt[]
      */
-    public function parse(string $code, ?ErrorHandler $errorHandler = null) : array
+    public function parse(string $code, ?ErrorHandler $errorHandler = null): array
     {
         try {
             return $this->wrappedParser->parseString($code);
@@ -31,7 +31,7 @@ final class PhpParserDecorator implements Parser
             throw new Error($message, $e->getAttributes());
         }
     }
-    public function getTokens() : array
+    public function getTokens(): array
     {
         throw new ShouldNotHappenException('PhpParserDecorator::getTokens() should not be called');
     }

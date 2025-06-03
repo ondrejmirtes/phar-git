@@ -21,11 +21,11 @@ final class UnusedPrivateConstantRule implements Rule
     {
         $this->extensionProvider = $extensionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassConstantsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getClass() instanceof Node\Stmt\Class_ && !$node->getClass() instanceof Node\Stmt\Enum_) {
             return [];

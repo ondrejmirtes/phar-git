@@ -18,11 +18,11 @@ final class TooWideFunctionParameterOutTypeRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $inFunction = $node->getFunctionReflection();
         return $this->check->check($node->getExecutionEnds(), $node->getReturnStatements(), $inFunction->getParameters(), sprintf('Function %s()', $inFunction->getName()));

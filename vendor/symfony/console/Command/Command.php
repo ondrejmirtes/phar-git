@@ -62,16 +62,16 @@ class Command
     public static function getDefaultName()
     {
         $class = static::class;
-        if (\PHP_VERSION_ID >= 80000 && ($attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class))) {
+        if (\PHP_VERSION_ID >= 80000 && $attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class)) {
             return $attribute[0]->newInstance()->name;
         }
         $r = new \ReflectionProperty($class, 'defaultName');
         return $class === $r->class ? static::$defaultName : null;
     }
-    public static function getDefaultDescription() : ?string
+    public static function getDefaultDescription(): ?string
     {
         $class = static::class;
-        if (\PHP_VERSION_ID >= 80000 && ($attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class))) {
+        if (\PHP_VERSION_ID >= 80000 && $attribute = (new \ReflectionClass($class))->getAttributes(AsCommand::class)) {
             return $attribute[0]->newInstance()->description;
         }
         $r = new \ReflectionProperty($class, 'defaultDescription');
@@ -85,9 +85,9 @@ class Command
     public function __construct(?string $name = null)
     {
         $this->definition = new InputDefinition();
-        if (null === $name && null !== ($name = static::getDefaultName())) {
+        if (null === $name && null !== $name = static::getDefaultName()) {
             $aliases = \explode('|', $name);
-            if ('' === ($name = \array_shift($aliases))) {
+            if ('' === $name = \array_shift($aliases)) {
                 $this->setHidden(\true);
                 $name = \array_shift($aliases);
             }
@@ -237,7 +237,7 @@ class Command
                         \cli_set_process_title($this->processTitle);
                     }
                 }
-            } elseif (\function_exists('_PHPStan_checksum\\setproctitle')) {
+            } elseif (\function_exists('_PHPStan_checksum\setproctitle')) {
                 setproctitle($this->processTitle);
             } elseif (OutputInterface::VERBOSITY_VERY_VERBOSE === $output->getVerbosity()) {
                 $output->writeln('<comment>Install the proctitle PECL to be able to change the process title.</comment>');
@@ -266,7 +266,7 @@ class Command
     /**
      * Adds suggestions to $suggestions for the current completion input (e.g. option or argument).
      */
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions) : void
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
     }
     /**
@@ -607,7 +607,7 @@ class Command
      */
     private function validateName(string $name)
     {
-        if (!\preg_match('/^[^\\:]++(\\:[^\\:]++)*$/', $name)) {
+        if (!\preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
             throw new InvalidArgumentException(\sprintf('Command name "%s" is invalid.', $name));
         }
     }

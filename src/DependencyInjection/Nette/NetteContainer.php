@@ -19,7 +19,7 @@ final class NetteContainer implements Container
     {
         $this->container = $container;
     }
-    public function hasService(string $serviceName) : bool
+    public function hasService(string $serviceName): bool
     {
         return $this->container->hasService($serviceName);
     }
@@ -51,25 +51,25 @@ final class NetteContainer implements Container
      * @param class-string $className
      * @return string[]
      */
-    public function findServiceNamesByType(string $className) : array
+    public function findServiceNamesByType(string $className): array
     {
         return $this->container->findByType($className);
     }
     /**
      * @return mixed[]
      */
-    public function getServicesByTag(string $tagName) : array
+    public function getServicesByTag(string $tagName): array
     {
         return $this->tagsToServices($this->container->findByTag($tagName));
     }
     /**
      * @return mixed[]
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->container->getParameters();
     }
-    public function hasParameter(string $parameterName) : bool
+    public function hasParameter(string $parameterName): bool
     {
         return array_key_exists($parameterName, $this->container->getParameters());
     }
@@ -87,7 +87,7 @@ final class NetteContainer implements Container
      * @param mixed[] $tags
      * @return mixed[]
      */
-    private function tagsToServices(array $tags) : array
+    private function tagsToServices(array $tags): array
     {
         return array_map(fn(string $serviceName) => $this->getService($serviceName), array_keys($tags));
     }

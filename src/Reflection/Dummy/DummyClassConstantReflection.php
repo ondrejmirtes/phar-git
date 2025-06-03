@@ -19,76 +19,76 @@ final class DummyClassConstantReflection implements ClassConstantReflection
     {
         $this->name = $name;
     }
-    public function getDeclaringClass() : ClassReflection
+    public function getDeclaringClass(): ClassReflection
     {
         $reflectionProvider = ReflectionProviderStaticAccessor::getInstance();
         return $reflectionProvider->getClass(stdClass::class);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return \false;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return null;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return \true;
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return \false;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return \true;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getValueType() : Type
+    public function getValueType(): Type
     {
         return new MixedType();
     }
-    public function getValueExpr() : Expr
+    public function getValueExpr(): Expr
     {
         return new TypeExpr(new MixedType());
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return null;
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return null;
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return \false;
     }
-    public function getPhpDocType() : ?Type
+    public function getPhpDocType(): ?Type
     {
         return null;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return \false;
     }
-    public function getNativeType() : ?Type
+    public function getNativeType(): ?Type
     {
         return null;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return [];
     }

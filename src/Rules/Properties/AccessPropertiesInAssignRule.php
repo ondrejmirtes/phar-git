@@ -17,11 +17,11 @@ final class AccessPropertiesInAssignRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyAssignNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getPropertyFetch() instanceof Node\Expr\PropertyFetch) {
             return [];

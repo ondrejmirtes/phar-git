@@ -8,5 +8,5 @@ interface ResultCacheManagerFactory
     /**
      * @param array<string, string> $fileReplacements
      */
-    public function create(array $fileReplacements) : \PHPStan\Analyser\ResultCache\ResultCacheManager;
+    public function create(array $fileReplacements): \PHPStan\Analyser\ResultCache\ResultCacheManager;
 }

@@ -30,22 +30,22 @@ final class PropertyAssignNode extends NodeAbstract implements \PHPStan\Node\Vir
     {
         return $this->propertyFetch;
     }
-    public function getAssignedExpr() : Expr
+    public function getAssignedExpr(): Expr
     {
         return $this->assignedExpr;
     }
-    public function isAssignOp() : bool
+    public function isAssignOp(): bool
     {
         return $this->assignOp;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_PropertyAssignNodeNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

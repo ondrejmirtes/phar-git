@@ -17,7 +17,7 @@ use _PHPStan_checksum\Symfony\Component\Console\Output\OutputInterface;
  */
 class BashCompletionOutput implements CompletionOutputInterface
 {
-    public function write(CompletionSuggestions $suggestions, OutputInterface $output) : void
+    public function write(CompletionSuggestions $suggestions, OutputInterface $output): void
     {
         $values = $suggestions->getValueSuggestions();
         foreach ($suggestions->getOptionSuggestions() as $option) {

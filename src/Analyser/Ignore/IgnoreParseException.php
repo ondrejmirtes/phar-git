@@ -12,7 +12,7 @@ final class IgnoreParseException extends Exception
         $this->phpDocLine = $phpDocLine;
         parent::__construct($message);
     }
-    public function getPhpDocLine() : int
+    public function getPhpDocLine(): int
     {
         return $this->phpDocLine;
     }

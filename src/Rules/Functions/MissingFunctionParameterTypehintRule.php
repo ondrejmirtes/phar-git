@@ -25,11 +25,11 @@ final class MissingFunctionParameterTypehintRule implements Rule
     {
         $this->missingTypehintCheck = $missingTypehintCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $functionReflection = $node->getFunctionReflection();
         $messages = [];
@@ -54,7 +54,7 @@ final class MissingFunctionParameterTypehintRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkFunctionParameter(FunctionReflection $functionReflection, string $parameterMessage, Type $parameterType) : array
+    private function checkFunctionParameter(FunctionReflection $functionReflection, string $parameterMessage, Type $parameterType): array
     {
         if ($parameterType instanceof MixedType && !$parameterType->isExplicitMixed()) {
             return [RuleErrorBuilder::message(sprintf('Function %s() has %s with no type specified.', $functionReflection->getName(), $parameterMessage))->identifier('missingType.parameter')->build()];

@@ -62,7 +62,7 @@ class Calc extends Console\Dispatcher\Kit
      */
     public function main()
     {
-        while (\false !== ($c = $this->getOption($v))) {
+        while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'h':
                 case '?':
@@ -127,7 +127,7 @@ class Calc extends Console\Dispatcher\Kit
                     $handle = $expression;
                     break;
             }
-        } while (\false !== ($expression = $readline->readLine('> ')));
+        } while (\false !== $expression = $readline->readLine('> '));
         return;
     }
     /**
@@ -143,4 +143,5 @@ class Calc extends Console\Dispatcher\Kit
 }
 __halt_compiler();
 A simple calculator.
+
 

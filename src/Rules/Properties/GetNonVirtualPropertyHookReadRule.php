@@ -18,11 +18,11 @@ use function sprintf;
  */
 final class GetNonVirtualPropertyHookReadRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertiesNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $reads = [];
         $classReflection = $node->getClassReflection();
@@ -84,7 +84,7 @@ final class GetNonVirtualPropertyHookReadRule implements Rule
         }
         return $errors;
     }
-    private function getGetHookLine(ClassPropertyNode $propertyNode) : int
+    private function getGetHookLine(ClassPropertyNode $propertyNode): int
     {
         $getHook = null;
         foreach ($propertyNode->getHooks() as $hook) {

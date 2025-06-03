@@ -22,47 +22,47 @@ final class ResolvedPropertyReflection implements \PHPStan\Reflection\WrapperPro
         $this->templateTypeMap = $templateTypeMap;
         $this->callSiteVarianceMap = $callSiteVarianceMap;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getOriginalReflection() : \PHPStan\Reflection\ExtendedPropertyReflection
+    public function getOriginalReflection(): \PHPStan\Reflection\ExtendedPropertyReflection
     {
         return $this->reflection;
     }
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection
     {
         return $this->reflection->getDeclaringClass();
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function hasPhpDocType() : bool
+    public function hasPhpDocType(): bool
     {
         return $this->reflection->hasPhpDocType();
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->reflection->getPhpDocType();
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return $this->reflection->hasNativeType();
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return $this->reflection->getNativeType();
     }
-    public function getReadableType() : Type
+    public function getReadableType(): Type
     {
         $type = $this->readableType;
         if ($type !== null) {
@@ -73,7 +73,7 @@ final class ResolvedPropertyReflection implements \PHPStan\Reflection\WrapperPro
         $this->readableType = $type;
         return $type;
     }
-    public function getWritableType() : Type
+    public function getWritableType(): Type
     {
         $type = $this->writableType;
         if ($type !== null) {
@@ -84,67 +84,67 @@ final class ResolvedPropertyReflection implements \PHPStan\Reflection\WrapperPro
         $this->writableType = $type;
         return $type;
     }
-    public function canChangeTypeAfterAssignment() : bool
+    public function canChangeTypeAfterAssignment(): bool
     {
         return $this->reflection->canChangeTypeAfterAssignment();
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return $this->reflection->isReadable();
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return $this->reflection->isWritable();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->reflection->getDocComment();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->reflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->reflection->getDeprecatedDescription();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->reflection->isInternal();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         return $this->reflection->isAbstract();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->reflection->isFinalByKeyword();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->reflection->isFinal();
     }
-    public function isVirtual() : TrinaryLogic
+    public function isVirtual(): TrinaryLogic
     {
         return $this->reflection->isVirtual();
     }
-    public function hasHook(string $hookType) : bool
+    public function hasHook(string $hookType): bool
     {
         return $this->reflection->hasHook($hookType);
     }
-    public function getHook(string $hookType) : \PHPStan\Reflection\ExtendedMethodReflection
+    public function getHook(string $hookType): \PHPStan\Reflection\ExtendedMethodReflection
     {
         return new \PHPStan\Reflection\ResolvedMethodReflection($this->reflection->getHook($hookType), $this->templateTypeMap, $this->callSiteVarianceMap);
     }
-    public function isProtectedSet() : bool
+    public function isProtectedSet(): bool
     {
         return $this->reflection->isProtectedSet();
     }
-    public function isPrivateSet() : bool
+    public function isPrivateSet(): bool
     {
         return $this->reflection->isPrivateSet();
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->reflection->getAttributes();
     }

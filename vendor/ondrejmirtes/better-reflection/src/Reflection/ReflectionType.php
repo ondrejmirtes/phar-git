@@ -50,11 +50,11 @@ abstract class ReflectionType
     /**
      * Does the type allow null?
      */
-    public abstract function allowsNull() : bool;
+    abstract public function allowsNull(): bool;
     /**
      * Convert this string type to a string
      *
      * @return non-empty-string
      */
-    public abstract function __toString() : string;
+    abstract public function __toString(): string;
 }

@@ -35,7 +35,7 @@ class Printer
     {
         $this->dumper = new Dumper();
     }
-    public function printFunction(GlobalFunction $function, ?PhpNamespace $namespace = null) : string
+    public function printFunction(GlobalFunction $function, ?PhpNamespace $namespace = null): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         $line = 'function ' . ($function->getReturnReference() ? '&' : '') . $function->getName();
@@ -43,7 +43,7 @@ class Printer
         $body = Helpers::simplifyTaggedNames($function->getBody(), $this->namespace);
         return Helpers::formatDocComment($function->getComment() . "\n") . $this->printAttributes($function->getAttributes()) . $line . $this->printParameters($function, \strlen($line) + \strlen($returnType) + 2) . $returnType . "\n{\n" . $this->indent(\ltrim(\rtrim($body) . "\n")) . "}\n";
     }
-    public function printClosure(Closure $closure, ?PhpNamespace $namespace = null) : string
+    public function printClosure(Closure $closure, ?PhpNamespace $namespace = null): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         $uses = [];
@@ -54,7 +54,7 @@ class Printer
         $body = Helpers::simplifyTaggedNames($closure->getBody(), $this->namespace);
         return $this->printAttributes($closure->getAttributes(), \true) . 'function ' . ($closure->getReturnReference() ? '&' : '') . $this->printParameters($closure) . ($uses ? " use ({$useStr})" : '') . $this->printReturnType($closure) . " {\n" . $this->indent(\ltrim(\rtrim($body) . "\n")) . '}';
     }
-    public function printArrowFunction(Closure $closure, ?PhpNamespace $namespace = null) : string
+    public function printArrowFunction(Closure $closure, ?PhpNamespace $namespace = null): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         foreach ($closure->getUses() as $use) {
@@ -65,7 +65,7 @@ class Printer
         $body = Helpers::simplifyTaggedNames($closure->getBody(), $this->namespace);
         return $this->printAttributes($closure->getAttributes()) . 'fn' . ($closure->getReturnReference() ? '&' : '') . $this->printParameters($closure) . $this->printReturnType($closure) . ' => ' . \trim($body) . ';';
     }
-    public function printMethod(Method $method, ?PhpNamespace $namespace = null) : string
+    public function printMethod(Method $method, ?PhpNamespace $namespace = null): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         $method->validate();
@@ -75,7 +75,7 @@ class Printer
         $body = Helpers::simplifyTaggedNames((string) $method->getBody(), $this->namespace);
         return Helpers::formatDocComment($method->getComment() . "\n") . $this->printAttributes($method->getAttributes()) . $line . $params . $returnType . ($method->isAbstract() || $method->getBody() === null ? ";\n" : (\strpos($params, "\n") === \false ? "\n" : ' ') . "{\n" . $this->indent(\ltrim(\rtrim($body) . "\n")) . "}\n");
     }
-    public function printClass(ClassType $class, ?PhpNamespace $namespace = null) : string
+    public function printClass(ClassType $class, ?PhpNamespace $namespace = null): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         $class->validate();
@@ -111,7 +111,7 @@ class Printer
         $members = \array_filter([\implode('', $traits), $this->joinProperties($cases), $this->joinProperties($consts), $this->joinProperties($properties), ($methods && $properties ? \str_repeat("\n", $this->linesBetweenMethods - 1) : '') . \implode(\str_repeat("\n", $this->linesBetweenMethods), $methods)]);
         return Strings::normalize(Helpers::formatDocComment($class->getComment() . "\n") . $this->printAttributes($class->getAttributes()) . ($class->isAbstract() ? 'abstract ' : '') . ($class->isFinal() ? 'final ' : '') . ($class->getName() ? $class->getType() . ' ' . $class->getName() . $enumType . ' ' : '') . ($class->getExtends() ? 'extends ' . \implode(', ', \array_map($resolver, (array) $class->getExtends())) . ' ' : '') . ($class->getImplements() ? 'implements ' . \implode(', ', \array_map($resolver, $class->getImplements())) . ' ' : '') . ($class->getName() ? "\n" : '') . "{\n" . ($members ? $this->indent(\implode("\n", $members)) : '') . '}') . ($class->getName() ? "\n" : '');
     }
-    public function printNamespace(PhpNamespace $namespace) : string
+    public function printNamespace(PhpNamespace $namespace): string
     {
         $this->namespace = $this->resolveTypes ? $namespace : null;
         $name = $namespace->getName();
@@ -130,7 +130,7 @@ class Printer
             return ($name ? "namespace {$name};\n\n" : '') . $body;
         }
     }
-    public function printFile(PhpFile $file) : string
+    public function printFile(PhpFile $file): string
     {
         $namespaces = [];
         foreach ($file->getNamespaces() as $namespace) {
@@ -138,7 +138,7 @@ class Printer
         }
         return Strings::normalize("<?php\n" . ($file->getComment() ? "\n" . Helpers::formatDocComment($file->getComment() . "\n") : '') . "\n" . ($file->hasStrictTypes() ? "declare(strict_types=1);\n\n" : '') . \implode("\n\n", $namespaces)) . "\n";
     }
-    protected function printUses(PhpNamespace $namespace, string $of = PhpNamespace::NameNormal) : string
+    protected function printUses(PhpNamespace $namespace, string $of = PhpNamespace::NameNormal): string
     {
         $prefix = [PhpNamespace::NameNormal => '', PhpNamespace::NameFunction => 'function ', PhpNamespace::NameConstant => 'const '][$of];
         $name = $namespace->getName();
@@ -151,7 +151,7 @@ class Printer
     /**
      * @param Closure|GlobalFunction|Method  $function
      */
-    protected function printParameters($function, int $column = 0) : string
+    protected function printParameters($function, int $column = 0): string
     {
         $params = [];
         $list = $function->getParameters();
@@ -167,7 +167,7 @@ class Printer
         $line = \implode(', ', $params);
         return \count($params) > 1 && ($special || \strlen($line) + $column > $this->wrapLength) ? "(\n" . $this->indent(\implode(",\n", $params)) . ($special ? ',' : '') . "\n)" : "({$line})";
     }
-    protected function printType(?string $type, bool $nullable) : string
+    protected function printType(?string $type, bool $nullable): string
     {
         if ($type === null) {
             return '';
@@ -183,11 +183,11 @@ class Printer
     /**
      * @param Closure|GlobalFunction|Method  $function
      */
-    private function printReturnType($function) : string
+    private function printReturnType($function): string
     {
         return ($tmp = $this->printType($function->getReturnType(), $function->isReturnNullable())) ? $this->returnTypeColon . $tmp : '';
     }
-    private function printAttributes(array $attrs, bool $inline = \false) : string
+    private function printAttributes(array $attrs, bool $inline = \false): string
     {
         if (!$attrs) {
             return '';
@@ -202,17 +202,17 @@ class Printer
         return $inline ? '#[' . \implode(', ', $items) . '] ' : '#[' . \implode("]\n#[", $items) . "]\n";
     }
     /** @return static */
-    public function setTypeResolving(bool $state = \true) : self
+    public function setTypeResolving(bool $state = \true): self
     {
         $this->resolveTypes = $state;
         return $this;
     }
-    protected function indent(string $s) : string
+    protected function indent(string $s): string
     {
         $s = \str_replace("\t", $this->indentation, $s);
         return Strings::indent($s, 1, $this->indentation);
     }
-    protected function dump($var, int $column = 0) : string
+    protected function dump($var, int $column = 0): string
     {
         $this->dumper->indentation = $this->indentation;
         $this->dumper->wrapLength = $this->wrapLength;
@@ -220,8 +220,8 @@ class Printer
         $s = Helpers::simplifyTaggedNames($s, $this->namespace);
         return $s;
     }
-    private function joinProperties(array $props) : string
+    private function joinProperties(array $props): string
     {
-        return $this->linesBetweenProperties ? \implode(\str_repeat("\n", $this->linesBetweenProperties), $props) : \preg_replace('#^(\\w.*\\n)\\n(?=\\w.*;)#m', '$1', \implode("\n", $props));
+        return $this->linesBetweenProperties ? \implode(\str_repeat("\n", $this->linesBetweenProperties), $props) : \preg_replace('#^(\w.*\n)\n(?=\w.*;)#m', '$1', \implode("\n", $props));
     }
 }

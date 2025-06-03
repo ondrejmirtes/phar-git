@@ -30,11 +30,11 @@ final class TypesAssignedToPropertiesRule implements Rule
         $this->ruleLevelHelper = $ruleLevelHelper;
         $this->propertyReflectionFinder = $propertyReflectionFinder;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyAssignNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $propertyFetch = $node->getPropertyFetch();
         $propertyReflections = $this->propertyReflectionFinder->findPropertyReflectionsFromNode($propertyFetch, $scope);
@@ -48,7 +48,7 @@ final class TypesAssignedToPropertiesRule implements Rule
      * @return list<IdentifierRuleError>
      * @param \PhpParser\Node\Expr\PropertyFetch|\PhpParser\Node\Expr\StaticPropertyFetch $fetch
      */
-    private function processSingleProperty(\PHPStan\Rules\Properties\FoundPropertyReflection $propertyReflection, $fetch, Node\Expr $assignedExpr) : array
+    private function processSingleProperty(\PHPStan\Rules\Properties\FoundPropertyReflection $propertyReflection, $fetch, Node\Expr $assignedExpr): array
     {
         if (!$propertyReflection->isWritable()) {
             return [];
@@ -69,7 +69,7 @@ final class TypesAssignedToPropertiesRule implements Rule
         }
         return [];
     }
-    private function describePropertyByName(PropertyReflection $property, string $propertyName) : string
+    private function describePropertyByName(PropertyReflection $property, string $propertyName): string
     {
         if (!$property->isStatic()) {
             return sprintf('Property %s::$%s', $property->getDeclaringClass()->getDisplayName(), $propertyName);

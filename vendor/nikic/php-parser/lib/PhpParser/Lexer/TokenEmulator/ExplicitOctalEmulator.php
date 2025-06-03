@@ -7,15 +7,15 @@ use PhpParser\PhpVersion;
 use PhpParser\Token;
 class ExplicitOctalEmulator extends \PhpParser\Lexer\TokenEmulator\TokenEmulator
 {
-    public function getPhpVersion() : PhpVersion
+    public function getPhpVersion(): PhpVersion
     {
         return PhpVersion::fromComponents(8, 1);
     }
-    public function isEmulationNeeded(string $code) : bool
+    public function isEmulationNeeded(string $code): bool
     {
         return \strpos($code, '0o') !== \false || \strpos($code, '0O') !== \false;
     }
-    public function emulate(string $code, array $tokens) : array
+    public function emulate(string $code, array $tokens): array
     {
         for ($i = 0, $c = \count($tokens); $i < $c; ++$i) {
             $token = $tokens[$i];
@@ -27,14 +27,14 @@ class ExplicitOctalEmulator extends \PhpParser\Lexer\TokenEmulator\TokenEmulator
         }
         return $tokens;
     }
-    private function resolveIntegerOrFloatToken(string $str) : int
+    private function resolveIntegerOrFloatToken(string $str): int
     {
         $str = \substr($str, 1);
         $str = \str_replace('_', '', $str);
         $num = \octdec($str);
         return \is_float($num) ? \T_DNUMBER : \T_LNUMBER;
     }
-    public function reverseEmulate(string $code, array $tokens) : array
+    public function reverseEmulate(string $code, array $tokens): array
     {
         // Explicit octals were not legal code previously, don't bother.
         return $tokens;

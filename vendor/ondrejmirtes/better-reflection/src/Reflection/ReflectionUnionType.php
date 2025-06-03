@@ -22,7 +22,7 @@ class ReflectionUnionType extends \PHPStan\BetterReflection\Reflection\Reflectio
     public function __construct(Reflector $reflector, $owner, UnionType $type)
     {
         /** @var non-empty-list<ReflectionNamedType|ReflectionIntersectionType> $types */
-        $types = array_map(static function ($type) use($reflector, $owner) {
+        $types = array_map(static function ($type) use ($reflector, $owner) {
             $type = \PHPStan\BetterReflection\Reflection\ReflectionType::createFromNode($reflector, $owner, $type);
             assert($type instanceof \PHPStan\BetterReflection\Reflection\ReflectionNamedType || $type instanceof \PHPStan\BetterReflection\Reflection\ReflectionIntersectionType);
             return $type;
@@ -41,11 +41,11 @@ class ReflectionUnionType extends \PHPStan\BetterReflection\Reflection\Reflectio
         return $clone;
     }
     /** @return non-empty-list<ReflectionNamedType|ReflectionIntersectionType> */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return $this->types;
     }
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         foreach ($this->types as $type) {
             if ($type->allowsNull()) {
@@ -55,9 +55,9 @@ class ReflectionUnionType extends \PHPStan\BetterReflection\Reflection\Reflectio
         return \false;
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
-        return implode('|', array_map(static function (\PHPStan\BetterReflection\Reflection\ReflectionType $type) : string {
+        return implode('|', array_map(static function (\PHPStan\BetterReflection\Reflection\ReflectionType $type): string {
             if ($type instanceof \PHPStan\BetterReflection\Reflection\ReflectionIntersectionType) {
                 return sprintf('(%s)', $type->__toString());
             }

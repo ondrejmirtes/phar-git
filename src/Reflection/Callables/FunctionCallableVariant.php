@@ -40,46 +40,46 @@ final class FunctionCallableVariant implements \PHPStan\Reflection\Callables\Cal
      * @return self[]
      * @param \PHPStan\Reflection\FunctionReflection|\PHPStan\Reflection\ExtendedMethodReflection $function
      */
-    public static function createFromVariants($function, array $variants) : array
+    public static function createFromVariants($function, array $variants): array
     {
         return array_map(static fn(ExtendedParametersAcceptor $variant) => new self($function, $variant), $variants);
     }
-    public function getTemplateTypeMap() : TemplateTypeMap
+    public function getTemplateTypeMap(): TemplateTypeMap
     {
         return $this->variant->getTemplateTypeMap();
     }
-    public function getResolvedTemplateTypeMap() : TemplateTypeMap
+    public function getResolvedTemplateTypeMap(): TemplateTypeMap
     {
         return $this->variant->getResolvedTemplateTypeMap();
     }
     /**
      * @return list<ExtendedParameterReflection>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->variant->getParameters();
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variant->isVariadic();
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return $this->variant->getReturnType();
     }
-    public function getPhpDocReturnType() : Type
+    public function getPhpDocReturnType(): Type
     {
         return $this->variant->getPhpDocReturnType();
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->variant->getNativeReturnType();
     }
-    public function getCallSiteVarianceMap() : TemplateTypeVarianceMap
+    public function getCallSiteVarianceMap(): TemplateTypeVarianceMap
     {
         return $this->variant->getCallSiteVarianceMap();
     }
-    public function getThrowPoints() : array
+    public function getThrowPoints(): array
     {
         if ($this->throwPoints !== null) {
             return $this->throwPoints;
@@ -99,14 +99,12 @@ final class FunctionCallableVariant implements \PHPStan\Reflection\Callables\Cal
             if (!$throwType->isVoid()->yes()) {
                 $throwPoints[] = \PHPStan\Reflection\Callables\SimpleThrowPoint::createExplicit($throwType, \true);
             }
-        } else {
-            if (!(new ObjectType(Throwable::class))->isSuperTypeOf($returnType)->yes()) {
-                $throwPoints[] = \PHPStan\Reflection\Callables\SimpleThrowPoint::createImplicit();
-            }
+        } else if (!(new ObjectType(Throwable::class))->isSuperTypeOf($returnType)->yes()) {
+            $throwPoints[] = \PHPStan\Reflection\Callables\SimpleThrowPoint::createImplicit();
         }
         return $this->throwPoints = $throwPoints;
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         $impurePoints = $this->getImpurePoints();
         if (count($impurePoints) === 0) {
@@ -121,7 +119,7 @@ final class FunctionCallableVariant implements \PHPStan\Reflection\Callables\Cal
         }
         return $certainCount > 0 ? TrinaryLogic::createNo() : TrinaryLogic::createMaybe();
     }
-    public function getImpurePoints() : array
+    public function getImpurePoints(): array
     {
         if ($this->impurePoints !== null) {
             return $this->impurePoints;
@@ -135,15 +133,15 @@ final class FunctionCallableVariant implements \PHPStan\Reflection\Callables\Cal
         }
         return $this->impurePoints = [$impurePoint];
     }
-    public function getInvalidateExpressions() : array
+    public function getInvalidateExpressions(): array
     {
         return [];
     }
-    public function getUsedVariables() : array
+    public function getUsedVariables(): array
     {
         return [];
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->function->acceptsNamedArguments();
     }

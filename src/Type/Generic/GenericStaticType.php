@@ -52,16 +52,16 @@ class GenericStaticType extends StaticType
     /**
      * @return array<int, Type>
      */
-    public function getTypes() : array
+    public function getTypes(): array
     {
         return $this->types;
     }
     /** @return array<int, TemplateTypeVariance> */
-    public function getVariances() : array
+    public function getVariances(): array
     {
         return $this->variances;
     }
-    public function getStaticObjectType() : ObjectType
+    public function getStaticObjectType(): ObjectType
     {
         if ($this->staticObjectType === null) {
             if ($this->classReflection->isGeneric()) {
@@ -71,7 +71,7 @@ class GenericStaticType extends StaticType
         }
         return $this->staticObjectType;
     }
-    public function changeBaseClass(ClassReflection $classReflection) : StaticType
+    public function changeBaseClass(ClassReflection $classReflection): StaticType
     {
         if ($classReflection->getName() === $this->getClassName()) {
             return $this;
@@ -117,7 +117,7 @@ class GenericStaticType extends StaticType
         }
         return new self($classReflection, $classReflection->typeMapToList(new \PHPStan\Type\Generic\TemplateTypeMap($newClassTypes)), $this->subtractedType, $classReflection->varianceMapToList(new \PHPStan\Type\Generic\TemplateTypeVarianceMap($newClassVariances)));
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof CompoundType) {
             return $type->isSubTypeOf($this);
@@ -127,7 +127,7 @@ class GenericStaticType extends StaticType
         }
         return parent::isSuperTypeOf($type)->and(IsSuperTypeOfResult::createMaybe());
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         $subtractedType = $this->getSubtractedType() !== null ? $cb($this->getSubtractedType()) : null;
         $typesChanged = \false;
@@ -145,7 +145,7 @@ class GenericStaticType extends StaticType
         }
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         if (!$right instanceof TypeWithClassName) {
             return $this;
@@ -173,7 +173,7 @@ class GenericStaticType extends StaticType
         }
         return $this;
     }
-    public function changeSubtractedType(?Type $subtractedType) : Type
+    public function changeSubtractedType(?Type $subtractedType): Type
     {
         if ($subtractedType !== null) {
             $classReflection = $this->getClassReflection();
@@ -190,15 +190,15 @@ class GenericStaticType extends StaticType
         }
         return new self($this->classReflection, $this->types, $subtractedType, $this->variances);
     }
-    public function inferTemplateTypes(Type $receivedType) : \PHPStan\Type\Generic\TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): \PHPStan\Type\Generic\TemplateTypeMap
     {
         return $this->getStaticObjectType()->inferTemplateTypes($receivedType);
     }
-    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance): array
     {
         return $this->getStaticObjectType()->getReferencedTemplateTypes($positionVariance);
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         /** @var IdentifierTypeNode $parent */
         $parent = parent::toPhpDocNode();

@@ -12,11 +12,11 @@ final class TemplateTypeReference
         $this->type = $type;
         $this->positionVariance = $positionVariance;
     }
-    public function getType() : \PHPStan\Type\Generic\TemplateType
+    public function getType(): \PHPStan\Type\Generic\TemplateType
     {
         return $this->type;
     }
-    public function getPositionVariance() : \PHPStan\Type\Generic\TemplateTypeVariance
+    public function getPositionVariance(): \PHPStan\Type\Generic\TemplateTypeVariance
     {
         return $this->positionVariance;
     }

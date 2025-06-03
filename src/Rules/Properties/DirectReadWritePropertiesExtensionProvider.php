@@ -19,7 +19,7 @@ final class DirectReadWritePropertiesExtensionProvider implements \PHPStan\Rules
     /**
      * @return ReadWritePropertiesExtension[]
      */
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->extensions;
     }

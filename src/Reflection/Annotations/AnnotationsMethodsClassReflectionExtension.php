@@ -19,7 +19,7 @@ final class AnnotationsMethodsClassReflectionExtension implements MethodsClassRe
 {
     /** @var ExtendedMethodReflection[][] */
     private array $methods = [];
-    public function hasMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         if (!isset($this->methods[$classReflection->getCacheKey()][$methodName])) {
             $method = $this->findClassReflectionWithMethod($classReflection, $classReflection, $methodName);
@@ -30,11 +30,11 @@ final class AnnotationsMethodsClassReflectionExtension implements MethodsClassRe
         }
         return isset($this->methods[$classReflection->getCacheKey()][$methodName]);
     }
-    public function getMethod(ClassReflection $classReflection, string $methodName) : ExtendedMethodReflection
+    public function getMethod(ClassReflection $classReflection, string $methodName): ExtendedMethodReflection
     {
         return $this->methods[$classReflection->getCacheKey()][$methodName];
     }
-    private function findClassReflectionWithMethod(ClassReflection $classReflection, ClassReflection $declaringClass, string $methodName) : ?ExtendedMethodReflection
+    private function findClassReflectionWithMethod(ClassReflection $classReflection, ClassReflection $declaringClass, string $methodName): ?ExtendedMethodReflection
     {
         $methodTags = $classReflection->getMethodTags();
         if (isset($methodTags[$methodName])) {
@@ -75,7 +75,7 @@ final class AnnotationsMethodsClassReflectionExtension implements MethodsClassRe
     /**
      * @param AnnotationsMethodParameterReflection[] $parameters
      */
-    private function detectMethodVariadic(array $parameters) : bool
+    private function detectMethodVariadic(array $parameters): bool
     {
         if ($parameters === []) {
             return \false;

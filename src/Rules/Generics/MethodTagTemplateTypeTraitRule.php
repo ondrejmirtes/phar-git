@@ -19,11 +19,11 @@ final class MethodTagTemplateTypeTraitRule implements Rule
         $this->check = $check;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Trait_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $docComment = $node->getDocComment();
         if ($docComment === null) {

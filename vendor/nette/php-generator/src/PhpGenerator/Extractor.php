@@ -30,7 +30,7 @@ final class Extractor
         $this->printer = new PhpParser\PrettyPrinter\Standard();
         $this->parseCode($code);
     }
-    private function parseCode(string $code) : void
+    private function parseCode(string $code): void
     {
         if (\substr($code, 0, 5) !== '<?php') {
             throw new Nette\InvalidStateException('The input string is not a PHP code.');
@@ -44,10 +44,10 @@ final class Extractor
         $traverser->addVisitor(new PhpParser\NodeVisitor\NameResolver(null, ['preserveOriginalNames' => \true]));
         $this->statements = $traverser->traverse($stmts);
     }
-    public function extractMethodBodies(string $className) : array
+    public function extractMethodBodies(string $className): array
     {
         $nodeFinder = new NodeFinder();
-        $classNode = $nodeFinder->findFirst($this->statements, function (Node $node) use($className) {
+        $classNode = $nodeFinder->findFirst($this->statements, function (Node $node) use ($className) {
             return $node instanceof Node\Stmt\ClassLike && $node->namespacedName->toString() === $className;
         });
         $res = [];
@@ -59,26 +59,26 @@ final class Extractor
         }
         return $res;
     }
-    public function extractFunctionBody(string $name) : ?string
+    public function extractFunctionBody(string $name): ?string
     {
         /** @var Node\Stmt\Function_ $functionNode */
-        $functionNode = (new NodeFinder())->findFirst($this->statements, function (Node $node) use($name) {
+        $functionNode = (new NodeFinder())->findFirst($this->statements, function (Node $node) use ($name) {
             return $node instanceof Node\Stmt\Function_ && $node->namespacedName->toString() === $name;
         });
         return $this->getReformattedContents($functionNode->stmts, 1);
     }
     /** @param  Node[]  $statements */
-    private function getReformattedContents(array $statements, int $level) : string
+    private function getReformattedContents(array $statements, int $level): string
     {
         $body = $this->getNodeContents(...$statements);
         $body = $this->performReplacements($body, $this->prepareReplacements($statements));
         return Helpers::unindent($body, $level);
     }
-    private function prepareReplacements(array $statements) : array
+    private function prepareReplacements(array $statements): array
     {
         $start = $this->getNodeStartPos($statements[0]);
         $replacements = [];
-        (new NodeFinder())->find($statements, function (Node $node) use(&$replacements, $start) {
+        (new NodeFinder())->find($statements, function (Node $node) use (&$replacements, $start) {
             if ($node instanceof Node\Name\FullyQualified) {
                 if ($node->getAttribute('originalName') instanceof Node\Name) {
                     $of = $node->getAttribute('parent') instanceof Node\Expr\ConstFetch ? PhpNamespace::NameConstant : ($node->getAttribute('parent') instanceof Node\Expr\FuncCall ? PhpNamespace::NameFunction : PhpNamespace::NameNormal);
@@ -101,7 +101,7 @@ final class Extractor
         });
         return $replacements;
     }
-    private function performReplacements(string $s, array $replacements) : string
+    private function performReplacements(string $s, array $replacements): string
     {
         \usort($replacements, function ($a, $b) {
             // sort by position in file
@@ -112,7 +112,7 @@ final class Extractor
         }
         return $s;
     }
-    public function extractAll() : PhpFile
+    public function extractAll(): PhpFile
     {
         $phpFile = new PhpFile();
         $namespace = '';
@@ -124,7 +124,7 @@ final class Extractor
                 return ($this->callback)($node);
             }
         };
-        $visitor->callback = function (Node $node) use(&$class, &$namespace, $phpFile) {
+        $visitor->callback = function (Node $node) use (&$class, &$namespace, $phpFile) {
             if ($node instanceof Node\Stmt\DeclareDeclare && $node->key->name === 'strict_types') {
                 $phpFile->setStrictTypes((bool) $node->value->value);
             } elseif ($node instanceof Node\Stmt\Namespace_) {
@@ -167,14 +167,14 @@ final class Extractor
         $traverser->traverse($this->statements);
         return $phpFile;
     }
-    private function addUseToNamespace(Node\Stmt\Use_ $node, PhpNamespace $namespace) : void
+    private function addUseToNamespace(Node\Stmt\Use_ $node, PhpNamespace $namespace): void
     {
         $of = [$node::TYPE_NORMAL => PhpNamespace::NameNormal, $node::TYPE_FUNCTION => PhpNamespace::NameFunction, $node::TYPE_CONSTANT => PhpNamespace::NameConstant][$node->type];
         foreach ($node->uses as $use) {
             $namespace->addUse($use->name->toString(), $use->alias ? $use->alias->toString() : null, $of);
         }
     }
-    private function addClassToFile(PhpFile $phpFile, Node\Stmt\Class_ $node) : ClassType
+    private function addClassToFile(PhpFile $phpFile, Node\Stmt\Class_ $node): ClassType
     {
         $class = $phpFile->addClass($node->namespacedName->toString());
         if ($node->extends) {
@@ -188,7 +188,7 @@ final class Extractor
         $this->addCommentAndAttributes($class, $node);
         return $class;
     }
-    private function addInterfaceToFile(PhpFile $phpFile, Node\Stmt\Interface_ $node) : ClassType
+    private function addInterfaceToFile(PhpFile $phpFile, Node\Stmt\Interface_ $node): ClassType
     {
         $class = $phpFile->addInterface($node->namespacedName->toString());
         foreach ($node->extends as $item) {
@@ -197,13 +197,13 @@ final class Extractor
         $this->addCommentAndAttributes($class, $node);
         return $class;
     }
-    private function addTraitToFile(PhpFile $phpFile, Node\Stmt\Trait_ $node) : ClassType
+    private function addTraitToFile(PhpFile $phpFile, Node\Stmt\Trait_ $node): ClassType
     {
         $class = $phpFile->addTrait($node->namespacedName->toString());
         $this->addCommentAndAttributes($class, $node);
         return $class;
     }
-    private function addEnumToFile(PhpFile $phpFile, Node\Stmt\Enum_ $node) : ClassType
+    private function addEnumToFile(PhpFile $phpFile, Node\Stmt\Enum_ $node): ClassType
     {
         $class = $phpFile->addEnum($node->namespacedName->toString());
         foreach ($node->implements as $item) {
@@ -212,12 +212,12 @@ final class Extractor
         $this->addCommentAndAttributes($class, $node);
         return $class;
     }
-    private function addFunctionToFile(PhpFile $phpFile, Node\Stmt\Function_ $node) : void
+    private function addFunctionToFile(PhpFile $phpFile, Node\Stmt\Function_ $node): void
     {
         $function = $phpFile->addFunction($node->namespacedName->toString());
         $this->setupFunction($function, $node);
     }
-    private function addTraitToClass(ClassType $class, Node\Stmt\TraitUse $node) : void
+    private function addTraitToClass(ClassType $class, Node\Stmt\TraitUse $node): void
     {
         foreach ($node->traits as $item) {
             $trait = $class->addTrait($item->toString(), \true);
@@ -227,7 +227,7 @@ final class Extractor
         }
         $this->addCommentAndAttributes($trait, $node);
     }
-    private function addPropertyToClass(ClassType $class, Node\Stmt\Property $node) : void
+    private function addPropertyToClass(ClassType $class, Node\Stmt\Property $node): void
     {
         foreach ($node->props as $item) {
             $prop = $class->addProperty($item->name->toString());
@@ -241,7 +241,7 @@ final class Extractor
             $this->addCommentAndAttributes($prop, $node);
         }
     }
-    private function addMethodToClass(ClassType $class, Node\Stmt\ClassMethod $node) : void
+    private function addMethodToClass(ClassType $class, Node\Stmt\ClassMethod $node): void
     {
         $method = $class->addMethod($node->name->toString());
         $method->setAbstract($node->isAbstract());
@@ -250,7 +250,7 @@ final class Extractor
         $method->setVisibility($this->toVisibility($node->flags));
         $this->setupFunction($method, $node);
     }
-    private function addConstantToClass(ClassType $class, Node\Stmt\ClassConst $node) : void
+    private function addConstantToClass(ClassType $class, Node\Stmt\ClassConst $node): void
     {
         foreach ($node->consts as $item) {
             $value = $this->getReformattedContents([$item->value], 1);
@@ -265,7 +265,7 @@ final class Extractor
         $case = $class->addCase($node->name->toString(), $node->expr ? $node->expr->value : null);
         $this->addCommentAndAttributes($case, $node);
     }
-    private function addCommentAndAttributes($element, Node $node) : void
+    private function addCommentAndAttributes($element, Node $node): void
     {
         if ($node->getDocComment()) {
             $comment = $node->getDocComment()->getReformattedText();
@@ -291,7 +291,7 @@ final class Extractor
     /**
      * @param  GlobalFunction|Method  $function
      */
-    private function setupFunction($function, Node\FunctionLike $node) : void
+    private function setupFunction($function, Node\FunctionLike $node): void
     {
         $function->setReturnReference($node->returnsByRef());
         $function->setReturnType($node->getReturnType() ? $this->toPhp($node->getReturnType()) : null);
@@ -312,7 +312,7 @@ final class Extractor
             $function->setBody($this->getReformattedContents($node->getStmts(), 2));
         }
     }
-    private function toVisibility(int $flags) : ?string
+    private function toVisibility(int $flags): ?string
     {
         if ($flags & Node\Stmt\Class_::MODIFIER_PUBLIC) {
             return ClassType::VisibilityPublic;
@@ -323,16 +323,16 @@ final class Extractor
         }
         return null;
     }
-    private function toPhp($value) : string
+    private function toPhp($value): string
     {
         return $this->printer->prettyPrint([$value]);
     }
-    private function getNodeContents(Node ...$nodes) : string
+    private function getNodeContents(Node ...$nodes): string
     {
         $start = $this->getNodeStartPos($nodes[0]);
         return \substr($this->code, $start, \end($nodes)->getEndFilePos() - $start + 1);
     }
-    private function getNodeStartPos(Node $node) : int
+    private function getNodeStartPos(Node $node): int
     {
         return ($comments = $node->getComments()) ? $comments[0]->getStartFilePos() : $node->getStartFilePos();
     }

@@ -26,7 +26,7 @@ final class DirectRegistry implements \PHPStan\Rules\Registry
      * @param class-string<TNodeType> $nodeType
      * @return array<Rule<TNodeType>>
      */
-    public function getRules(string $nodeType) : array
+    public function getRules(string $nodeType): array
     {
         if (!isset($this->cache[$nodeType])) {
             $parentNodeTypes = [$nodeType] + class_parents($nodeType) + class_implements($nodeType);

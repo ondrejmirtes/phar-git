@@ -16,7 +16,7 @@ final class InlineArrayNode extends ArrayNode
     {
         $this->bracket = $bracket;
     }
-    public function toString() : string
+    public function toString(): string
     {
         return $this->bracket . ArrayItemNode::itemsToInlineString($this->items) . ['[' => ']', '{' => '}', '(' => ')'][$this->bracket];
     }

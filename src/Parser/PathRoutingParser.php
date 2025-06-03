@@ -33,11 +33,11 @@ final class PathRoutingParser implements \PHPStan\Parser\Parser
     /**
      * @param string[] $files
      */
-    public function setAnalysedFiles(array $files) : void
+    public function setAnalysedFiles(array $files): void
     {
         $this->analysedFiles = array_fill_keys($files, \true);
     }
-    public function parseFile(string $file) : array
+    public function parseFile(string $file): array
     {
         $normalizedPath = $this->fileHelper->normalizePath($file, '/');
         if (str_contains($normalizedPath, 'vendor/jetbrains/phpstorm-stubs')) {
@@ -68,7 +68,7 @@ final class PathRoutingParser implements \PHPStan\Parser\Parser
         }
         return $this->currentPhpVersionRichParser->parseFile($file);
     }
-    public function parseString(string $sourceCode) : array
+    public function parseString(string $sourceCode): array
     {
         return $this->currentPhpVersionSimpleParser->parseString($sourceCode);
     }

@@ -15,11 +15,11 @@ use function sprintf;
  */
 final class RedefinedParametersRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\FunctionLike::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $params = $node->getParams();
         if (count($params) <= 1) {

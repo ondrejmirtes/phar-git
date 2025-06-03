@@ -26,18 +26,18 @@ final class FileNode extends NodeAbstract implements \PHPStan\Node\VirtualNode
     /**
      * @return Node[]
      */
-    public function getNodes() : array
+    public function getNodes(): array
     {
         return $this->nodes;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_FileNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

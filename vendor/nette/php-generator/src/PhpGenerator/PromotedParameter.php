@@ -18,17 +18,17 @@ final class PromotedParameter extends Parameter
     /** @var bool */
     private $readOnly = \false;
     /** @return static */
-    public function setReadOnly(bool $state = \true) : self
+    public function setReadOnly(bool $state = \true): self
     {
         $this->readOnly = $state;
         return $this;
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->readOnly;
     }
     /** @throws Nette\InvalidStateException */
-    public function validate() : void
+    public function validate(): void
     {
         if ($this->readOnly && !$this->getType()) {
             throw new Nette\InvalidStateException("Property \${$this->getName()}: Read-only properties are only supported on typed property.");

@@ -26,11 +26,11 @@ final class CallMethodsRule implements Rule
         $this->methodCallCheck = $methodCallCheck;
         $this->parametersCheck = $parametersCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MethodCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         if ($node->name instanceof Node\Identifier) {
@@ -51,7 +51,7 @@ final class CallMethodsRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function processSingleMethodCall(Scope $scope, MethodCall $node, string $methodName) : array
+    private function processSingleMethodCall(Scope $scope, MethodCall $node, string $methodName): array
     {
         [$errors, $methodReflection] = $this->methodCallCheck->check($scope, $methodName, $node->var, $node->name);
         if ($methodReflection === null) {

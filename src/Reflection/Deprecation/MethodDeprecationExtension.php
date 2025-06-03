@@ -22,5 +22,5 @@ use PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod;
 interface MethodDeprecationExtension
 {
     public const METHOD_EXTENSION_TAG = 'phpstan.methodDeprecationExtension';
-    public function getMethodDeprecation(ReflectionMethod $reflection) : ?\PHPStan\Reflection\Deprecation\Deprecation;
+    public function getMethodDeprecation(ReflectionMethod $reflection): ?\PHPStan\Reflection\Deprecation\Deprecation;
 }

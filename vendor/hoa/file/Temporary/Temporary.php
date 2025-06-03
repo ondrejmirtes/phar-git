@@ -83,7 +83,7 @@ class Temporary extends File
      */
     protected function &_open($streamName, Stream\Context $context = null)
     {
-        if (\false === ($out = @\tmpfile())) {
+        if (\false === $out = @\tmpfile()) {
             throw new File\Exception('Failed to open a temporary stream.', 0);
         }
         return $out;
@@ -121,4 +121,4 @@ class Temporary extends File
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\File\\Temporary\\Temporary');
+Consistency::flexEntity('Hoa\File\Temporary\Temporary');

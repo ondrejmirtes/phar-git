@@ -33,31 +33,31 @@ final class ExtendedDummyParameter extends \PHPStan\Reflection\Php\DummyParamete
         $this->attributes = $attributes;
         parent::__construct($name, $type, $optional, $passedByReference, $variadic, $defaultValue);
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->phpDocType;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return !$this->nativeType instanceof MixedType || $this->nativeType->isExplicitMixed();
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return $this->nativeType;
     }
-    public function getOutType() : ?Type
+    public function getOutType(): ?Type
     {
         return $this->outType;
     }
-    public function isImmediatelyInvokedCallable() : TrinaryLogic
+    public function isImmediatelyInvokedCallable(): TrinaryLogic
     {
         return $this->immediatelyInvokedCallable;
     }
-    public function getClosureThisType() : ?Type
+    public function getClosureThisType(): ?Type
     {
         return $this->closureThisType;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }

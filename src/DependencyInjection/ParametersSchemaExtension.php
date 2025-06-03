@@ -9,7 +9,7 @@ use _PHPStan_checksum\Nette\Schema\Expect;
 use _PHPStan_checksum\Nette\Schema\Schema;
 final class ParametersSchemaExtension extends CompilerExtension
 {
-    public function getConfigSchema() : Schema
+    public function getConfigSchema(): Schema
     {
         return Expect::arrayOf(Expect::type(Statement::class))->min(1);
     }

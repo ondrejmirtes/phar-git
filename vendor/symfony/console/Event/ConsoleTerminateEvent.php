@@ -26,11 +26,11 @@ final class ConsoleTerminateEvent extends ConsoleEvent
         parent::__construct($command, $input, $output);
         $this->setExitCode($exitCode);
     }
-    public function setExitCode(int $exitCode) : void
+    public function setExitCode(int $exitCode): void
     {
         $this->exitCode = $exitCode;
     }
-    public function getExitCode() : int
+    public function getExitCode(): int
     {
         return $this->exitCode;
     }

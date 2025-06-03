@@ -29,7 +29,7 @@ final class ArgumentsNormalizer
     /**
      * @return array{ParametersAcceptor, FuncCall, TrinaryLogic}|null
      */
-    public static function reorderCallUserFuncArguments(FuncCall $callUserFuncCall, \PHPStan\Analyser\Scope $scope) : ?array
+    public static function reorderCallUserFuncArguments(FuncCall $callUserFuncCall, \PHPStan\Analyser\Scope $scope): ?array
     {
         $args = $callUserFuncCall->getArgs();
         if (count($args) < 1) {
@@ -65,7 +65,7 @@ final class ArgumentsNormalizer
         }
         return [$parametersAcceptor, new FuncCall($callbackArg->value, $passThruArgs, $callUserFuncCall->getAttributes()), $acceptsNamedArguments];
     }
-    public static function reorderFuncArguments(ParametersAcceptor $parametersAcceptor, FuncCall $functionCall) : ?FuncCall
+    public static function reorderFuncArguments(ParametersAcceptor $parametersAcceptor, FuncCall $functionCall): ?FuncCall
     {
         $reorderedArgs = self::reorderArgs($parametersAcceptor, $functionCall->getArgs());
         if ($reorderedArgs === null) {
@@ -77,7 +77,7 @@ final class ArgumentsNormalizer
         }
         return new FuncCall($functionCall->name, $reorderedArgs, $functionCall->getAttributes());
     }
-    public static function reorderMethodArguments(ParametersAcceptor $parametersAcceptor, MethodCall $methodCall) : ?MethodCall
+    public static function reorderMethodArguments(ParametersAcceptor $parametersAcceptor, MethodCall $methodCall): ?MethodCall
     {
         $reorderedArgs = self::reorderArgs($parametersAcceptor, $methodCall->getArgs());
         if ($reorderedArgs === null) {
@@ -89,7 +89,7 @@ final class ArgumentsNormalizer
         }
         return new MethodCall($methodCall->var, $methodCall->name, $reorderedArgs, $methodCall->getAttributes());
     }
-    public static function reorderStaticCallArguments(ParametersAcceptor $parametersAcceptor, StaticCall $staticCall) : ?StaticCall
+    public static function reorderStaticCallArguments(ParametersAcceptor $parametersAcceptor, StaticCall $staticCall): ?StaticCall
     {
         $reorderedArgs = self::reorderArgs($parametersAcceptor, $staticCall->getArgs());
         if ($reorderedArgs === null) {
@@ -101,7 +101,7 @@ final class ArgumentsNormalizer
         }
         return new StaticCall($staticCall->class, $staticCall->name, $reorderedArgs, $staticCall->getAttributes());
     }
-    public static function reorderNewArguments(ParametersAcceptor $parametersAcceptor, New_ $new) : ?New_
+    public static function reorderNewArguments(ParametersAcceptor $parametersAcceptor, New_ $new): ?New_
     {
         $reorderedArgs = self::reorderArgs($parametersAcceptor, $new->getArgs());
         if ($reorderedArgs === null) {
@@ -117,7 +117,7 @@ final class ArgumentsNormalizer
      * @param Arg[] $callArgs
      * @return ?array<int, Arg>
      */
-    public static function reorderArgs(ParametersAcceptor $parametersAcceptor, array $callArgs) : ?array
+    public static function reorderArgs(ParametersAcceptor $parametersAcceptor, array $callArgs): ?array
     {
         if (count($callArgs) === 0) {
             return [];

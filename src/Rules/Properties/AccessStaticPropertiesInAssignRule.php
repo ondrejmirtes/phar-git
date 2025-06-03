@@ -17,11 +17,11 @@ final class AccessStaticPropertiesInAssignRule implements Rule
     {
         $this->accessStaticPropertiesRule = $accessStaticPropertiesRule;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return PropertyAssignNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->getPropertyFetch() instanceof Node\Expr\StaticPropertyFetch) {
             return [];

@@ -23,11 +23,11 @@ final class IterableInForeachRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InForeachNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $originalNode = $node->getOriginalNode();
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $originalNode->expr, 'Iterating over an object of an unknown class %s.', static fn(Type $type): bool => $type->isIterable()->yes());

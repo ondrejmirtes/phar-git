@@ -16,25 +16,25 @@ final class PropertyTag
         $this->readableType = $readableType;
         $this->writableType = $writableType;
     }
-    public function getReadableType() : ?Type
+    public function getReadableType(): ?Type
     {
         return $this->readableType;
     }
-    public function getWritableType() : ?Type
+    public function getWritableType(): ?Type
     {
         return $this->writableType;
     }
     /**
      * @phpstan-assert-if-true !null $this->getReadableType()
      */
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return $this->readableType !== null;
     }
     /**
      * @phpstan-assert-if-true !null $this->getWritableType()
      */
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return $this->writableType !== null;
     }

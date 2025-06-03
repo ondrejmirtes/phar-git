@@ -24,5 +24,5 @@ use PHPStan\Command\Output;
 interface DiagnoseExtension
 {
     public const EXTENSION_TAG = 'phpstan.diagnoseExtension';
-    public function print(Output $output) : void;
+    public function print(Output $output): void;
 }

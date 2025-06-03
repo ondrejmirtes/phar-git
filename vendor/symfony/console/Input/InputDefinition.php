@@ -276,7 +276,7 @@ class InputDefinition
     /**
      * Returns true if an InputOption object exists by negated name.
      */
-    public function hasNegation(string $name) : bool
+    public function hasNegation(string $name): bool
     {
         return isset($this->negations[$name]);
     }
@@ -307,7 +307,7 @@ class InputDefinition
      *
      * @internal
      */
-    public function shortcutToName(string $shortcut) : string
+    public function shortcutToName(string $shortcut): string
     {
         if (!isset($this->shortcuts[$shortcut])) {
             throw new InvalidArgumentException(\sprintf('The "-%s" option does not exist.', $shortcut));
@@ -321,7 +321,7 @@ class InputDefinition
      *
      * @internal
      */
-    public function negationToName(string $negation) : string
+    public function negationToName(string $negation): string
     {
         if (!isset($this->negations[$negation])) {
             throw new InvalidArgumentException(\sprintf('The "--%s" option does not exist.', $negation));

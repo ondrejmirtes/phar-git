@@ -19,7 +19,7 @@ final class ExpressionTypeResolverExtensionRegistry
     /**
      * @return array<ExpressionTypeResolverExtension>
      */
-    public function getExtensions() : array
+    public function getExtensions(): array
     {
         return $this->extensions;
     }

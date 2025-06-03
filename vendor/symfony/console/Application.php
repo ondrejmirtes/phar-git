@@ -107,7 +107,7 @@ class Application implements ResetInterface
     {
         $this->commandLoader = $commandLoader;
     }
-    public function getSignalRegistry() : SignalRegistry
+    public function getSignalRegistry(): SignalRegistry
     {
         if (!$this->signalRegistry) {
             throw new RuntimeException('Signals are not supported. Make sure that the `pcntl` extension is installed and that "pcntl_*" functions are not disabled by your php.ini\'s "disable_functions" directive.');
@@ -137,7 +137,7 @@ class Application implements ResetInterface
         if (null === $output) {
             $output = new ConsoleOutput();
         }
-        $renderException = function (\Throwable $e) use($output) {
+        $renderException = function (\Throwable $e) use ($output) {
             if ($output instanceof ConsoleOutputInterface) {
                 $this->renderThrowable($e, $output->getErrorOutput());
             } else {
@@ -308,7 +308,7 @@ class Application implements ResetInterface
     /**
      * Adds suggestions to $suggestions for the current completion input (e.g. option or argument).
      */
-    public function complete(CompletionInput $input, CompletionSuggestions $suggestions) : void
+    public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         if (CompletionInput::TYPE_ARGUMENT_VALUE === $input->getCompletionType() && 'command' === $input->getCompletionName()) {
             $commandNames = [];
@@ -588,7 +588,7 @@ class Application implements ResetInterface
         }
         // if no commands matched or we just matched namespaces
         if (empty($commands) || \count(\preg_grep('{^' . $expr . '$}i', $commands)) < 1) {
-            if (\false !== ($pos = \strrpos($name, ':'))) {
+            if (\false !== $pos = \strrpos($name, ':')) {
                 // check if a namespace exists and contains commands
                 $this->findNamespace(\substr($name, 0, $pos));
             }
@@ -610,7 +610,7 @@ class Application implements ResetInterface
         // filter out aliases for commands which are already on the list
         if (\count($commands) > 1) {
             $commandList = $this->commandLoader ? \array_merge(\array_flip($this->commandLoader->getNames()), $this->commands) : $this->commands;
-            $commands = \array_unique(\array_filter($commands, function ($nameOrAlias) use(&$commandList, $commands, &$aliases) {
+            $commands = \array_unique(\array_filter($commands, function ($nameOrAlias) use (&$commandList, $commands, &$aliases) {
                 if (!$commandList[$nameOrAlias] instanceof Command) {
                     $commandList[$nameOrAlias] = $this->commandLoader->get($nameOrAlias);
                 }
@@ -626,7 +626,7 @@ class Application implements ResetInterface
             foreach ($abbrevs as $abbrev) {
                 $maxLen = \max(Helper::width($abbrev), $maxLen);
             }
-            $abbrevs = \array_map(function ($cmd) use($commandList, $usableWidth, $maxLen, &$commands) {
+            $abbrevs = \array_map(function ($cmd) use ($commandList, $usableWidth, $maxLen, &$commands) {
                 if ($commandList[$cmd]->isHidden()) {
                     unset($commands[\array_search($cmd, $commands)]);
                     return \false;
@@ -698,7 +698,7 @@ class Application implements ResetInterface
         }
         return $abbrevs;
     }
-    public function renderThrowable(\Throwable $e, OutputInterface $output) : void
+    public function renderThrowable(\Throwable $e, OutputInterface $output): void
     {
         $output->writeln('', OutputInterface::VERBOSITY_QUIET);
         $this->doRenderThrowable($e, $output);
@@ -707,7 +707,7 @@ class Application implements ResetInterface
             $output->writeln('', OutputInterface::VERBOSITY_QUIET);
         }
     }
-    protected function doRenderThrowable(\Throwable $e, OutputInterface $output) : void
+    protected function doRenderThrowable(\Throwable $e, OutputInterface $output): void
     {
         do {
             $message = \trim($e->getMessage());
@@ -719,13 +719,13 @@ class Application implements ResetInterface
                 $len = 0;
             }
             if (\str_contains($message, "@anonymous\x00")) {
-                $message = \preg_replace_callback('/[a-zA-Z_\\x7f-\\xff][\\\\a-zA-Z0-9_\\x7f-\\xff]*+@anonymous\\x00.*?\\.php(?:0x?|:[0-9]++\\$)?[0-9a-fA-F]++/', function ($m) {
+                $message = \preg_replace_callback('/[a-zA-Z_\x7f-\xff][\\\\a-zA-Z0-9_\x7f-\xff]*+@anonymous\x00.*?\.php(?:0x?|:[0-9]++\$)?[0-9a-fA-F]++/', function ($m) {
                     return \class_exists($m[0], \false) ? ((\get_parent_class($m[0]) ?: \key(\class_implements($m[0]))) ?: 'class') . '@anonymous' : $m[0];
                 }, $message);
             }
             $width = $this->terminal->getWidth() ? $this->terminal->getWidth() - 1 : \PHP_INT_MAX;
             $lines = [];
-            foreach ('' !== $message ? \preg_split('/\\r?\\n/', $message) : [] as $line) {
+            foreach ('' !== $message ? \preg_split('/\r?\n/', $message) : [] as $line) {
                 foreach ($this->splitStringByWidth($line, $width - 4) as $line) {
                     // pre-format lines to get the right string length
                     $lineLength = Helper::width($line) + 4;
@@ -797,17 +797,15 @@ class Application implements ResetInterface
         if (\true === $input->hasParameterOption(['--quiet', '-q'], \true)) {
             $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
             $shellVerbosity = -1;
-        } else {
-            if ($input->hasParameterOption('-vvv', \true) || $input->hasParameterOption('--verbose=3', \true) || 3 === $input->getParameterOption('--verbose', \false, \true)) {
-                $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-                $shellVerbosity = 3;
-            } elseif ($input->hasParameterOption('-vv', \true) || $input->hasParameterOption('--verbose=2', \true) || 2 === $input->getParameterOption('--verbose', \false, \true)) {
-                $output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);
-                $shellVerbosity = 2;
-            } elseif ($input->hasParameterOption('-v', \true) || $input->hasParameterOption('--verbose=1', \true) || $input->hasParameterOption('--verbose', \true) || $input->getParameterOption('--verbose', \false, \true)) {
-                $output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
-                $shellVerbosity = 1;
-            }
+        } else if ($input->hasParameterOption('-vvv', \true) || $input->hasParameterOption('--verbose=3', \true) || 3 === $input->getParameterOption('--verbose', \false, \true)) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
+            $shellVerbosity = 3;
+        } elseif ($input->hasParameterOption('-vv', \true) || $input->hasParameterOption('--verbose=2', \true) || 2 === $input->getParameterOption('--verbose', \false, \true)) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);
+            $shellVerbosity = 2;
+        } elseif ($input->hasParameterOption('-v', \true) || $input->hasParameterOption('--verbose=1', \true) || $input->hasParameterOption('--verbose', \true) || $input->getParameterOption('--verbose', \false, \true)) {
+            $output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+            $shellVerbosity = 1;
         }
         if (-1 === $shellVerbosity) {
             $input->setInteractive(\false);
@@ -842,7 +840,7 @@ class Application implements ResetInterface
                 if (Terminal::hasSttyAvailable()) {
                     $sttyMode = \shell_exec('stty -g');
                     foreach ([\SIGINT, \SIGTERM] as $signal) {
-                        $this->signalRegistry->register($signal, static function () use($sttyMode) {
+                        $this->signalRegistry->register($signal, static function () use ($sttyMode) {
                             \shell_exec('stty ' . $sttyMode);
                         });
                     }
@@ -851,7 +849,7 @@ class Application implements ResetInterface
             if (null !== $this->dispatcher) {
                 foreach ($this->signalsToDispatchEvent as $signal) {
                     $event = new ConsoleSignalEvent($command, $input, $output, $signal);
-                    $this->signalRegistry->register($signal, function ($signal, $hasNext) use($event) {
+                    $this->signalRegistry->register($signal, function ($signal, $hasNext) use ($event) {
                         $this->dispatcher->dispatch($event, ConsoleEvents::SIGNAL);
                         // No more handlers, we try to simulate PHP default behavior
                         if (!$hasNext) {
@@ -889,7 +887,7 @@ class Application implements ResetInterface
             $event = new ConsoleErrorEvent($input, $output, $e, $command);
             $this->dispatcher->dispatch($event, ConsoleEvents::ERROR);
             $e = $event->getError();
-            if (0 === ($exitCode = $event->getExitCode())) {
+            if (0 === $exitCode = $event->getExitCode()) {
                 $e = null;
             }
         }
@@ -939,7 +937,7 @@ class Application implements ResetInterface
     /**
      * Returns abbreviated suggestions in string format.
      */
-    private function getAbbreviationSuggestions(array $abbrevs) : string
+    private function getAbbreviationSuggestions(array $abbrevs): string
     {
         return '    ' . \implode("\n    ", $abbrevs);
     }
@@ -961,7 +959,7 @@ class Application implements ResetInterface
      *
      * @return string[]
      */
-    private function findAlternatives(string $name, iterable $collection) : array
+    private function findAlternatives(string $name, iterable $collection): array
     {
         $threshold = 1000.0;
         $alternatives = [];
@@ -992,7 +990,7 @@ class Application implements ResetInterface
                 $alternatives[$item] = isset($alternatives[$item]) ? $alternatives[$item] - $lev : $lev;
             }
         }
-        $alternatives = \array_filter($alternatives, function ($lev) use($threshold) {
+        $alternatives = \array_filter($alternatives, function ($lev) use ($threshold) {
             return $lev < 2 * $threshold;
         });
         \ksort($alternatives, \SORT_NATURAL | \SORT_FLAG_CASE);
@@ -1016,16 +1014,16 @@ class Application implements ResetInterface
     /**
      * @internal
      */
-    public function isSingleCommand() : bool
+    public function isSingleCommand(): bool
     {
         return $this->singleCommand;
     }
-    private function splitStringByWidth(string $string, int $width) : array
+    private function splitStringByWidth(string $string, int $width): array
     {
         // str_split is not suitable for multi-byte characters, we should use preg_split to get char array properly.
         // additionally, array_slice() is not enough as some character has doubled width.
         // we need a function to split string not by character count but by string width
-        if (\false === ($encoding = \mb_detect_encoding($string, null, \true))) {
+        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
             return \str_split($string, $width);
         }
         $utf8String = \mb_convert_encoding($string, 'utf8', $encoding);
@@ -1054,7 +1052,7 @@ class Application implements ResetInterface
      *
      * @return string[]
      */
-    private function extractAllNamespaces(string $name) : array
+    private function extractAllNamespaces(string $name): array
     {
         // -1 as third argument is needed to skip the command short name when exploding
         $parts = \explode(':', $name, -1);

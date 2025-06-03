@@ -12,11 +12,11 @@ final class RuleError3 implements RuleError, LineRuleError
 {
     public string $message;
     public int $line;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }

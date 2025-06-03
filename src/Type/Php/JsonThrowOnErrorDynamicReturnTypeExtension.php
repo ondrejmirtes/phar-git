@@ -33,14 +33,14 @@ final class JsonThrowOnErrorDynamicReturnTypeExtension implements DynamicFunctio
         $this->reflectionProvider = $reflectionProvider;
         $this->bitwiseFlagAnalyser = $bitwiseFlagAnalyser;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         if ($functionReflection->getName() === 'json_decode') {
             return \true;
         }
         return $functionReflection->getName() === 'json_encode' && $this->reflectionProvider->hasConstant(new FullyQualified('JSON_THROW_ON_ERROR'), null);
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         $argumentPosition = $this->argumentPositions[$functionReflection->getName()];
         $defaultReturnType = ParametersAcceptorSelector::selectFromArgs($scope, $functionCall->getArgs(), $functionReflection->getVariants())->getReturnType();
@@ -56,7 +56,7 @@ final class JsonThrowOnErrorDynamicReturnTypeExtension implements DynamicFunctio
         }
         return $defaultReturnType;
     }
-    private function narrowTypeForJsonDecode(FuncCall $funcCall, Scope $scope, Type $fallbackType) : Type
+    private function narrowTypeForJsonDecode(FuncCall $funcCall, Scope $scope, Type $fallbackType): Type
     {
         $args = $funcCall->getArgs();
         $isForceArray = $this->isForceArray($funcCall, $scope);
@@ -75,7 +75,7 @@ final class JsonThrowOnErrorDynamicReturnTypeExtension implements DynamicFunctio
     /**
      * Is "json_decode(..., true)"?
      */
-    private function isForceArray(FuncCall $funcCall, Scope $scope) : bool
+    private function isForceArray(FuncCall $funcCall, Scope $scope): bool
     {
         $args = $funcCall->getArgs();
         if (!isset($args[1])) {
@@ -92,7 +92,7 @@ final class JsonThrowOnErrorDynamicReturnTypeExtension implements DynamicFunctio
         // depends on used constants, @see https://www.php.net/manual/en/json.constants.php#constant.json-object-as-array
         return $this->bitwiseFlagAnalyser->bitwiseOrContainsConstant($args[3]->value, $scope, 'JSON_OBJECT_AS_ARRAY')->yes();
     }
-    private function resolveConstantStringType(ConstantStringType $constantStringType, bool $isForceArray) : Type
+    private function resolveConstantStringType(ConstantStringType $constantStringType, bool $isForceArray): Type
     {
         $decodedValue = json_decode($constantStringType->getValue(), $isForceArray);
         return ConstantTypeHelper::getTypeFromValue($decodedValue);

@@ -28,7 +28,7 @@ abstract class Definition
      * @return static
      * @internal  This is managed by ContainerBuilder and should not be called by user
      */
-    public final function setName(string $name)
+    final public function setName(string $name)
     {
         if ($this->name) {
             throw new Nette\InvalidStateException('Name already has been set.');
@@ -36,7 +36,7 @@ abstract class Definition
         $this->name = $name;
         return $this;
     }
-    public final function getName() : ?string
+    final public function getName(): ?string
     {
         return $this->name;
     }
@@ -55,17 +55,17 @@ abstract class Definition
         }
         return $this;
     }
-    public final function getType() : ?string
+    final public function getType(): ?string
     {
         return $this->type;
     }
     /** @return static */
-    public final function setTags(array $tags)
+    final public function setTags(array $tags)
     {
         $this->tags = $tags;
         return $this;
     }
-    public final function getTags() : array
+    final public function getTags(): array
     {
         return $this->tags;
     }
@@ -73,13 +73,13 @@ abstract class Definition
      * @param  mixed  $attr
      * @return static
      */
-    public final function addTag(string $tag, $attr = \true)
+    final public function addTag(string $tag, $attr = \true)
     {
         $this->tags[$tag] = $attr;
         return $this;
     }
     /** @return mixed */
-    public final function getTag(string $tag)
+    final public function getTag(string $tag)
     {
         return $this->tags[$tag] ?? null;
     }
@@ -87,7 +87,7 @@ abstract class Definition
      * @param  bool|string|string[]  $state
      * @return static
      */
-    public final function setAutowired($state = \true)
+    final public function setAutowired($state = \true)
     {
         if ($this->notifier && $this->autowired !== $state) {
             ($this->notifier)();
@@ -96,7 +96,7 @@ abstract class Definition
         return $this;
     }
     /** @return bool|string[] */
-    public final function getAutowired()
+    final public function getAutowired()
     {
         return $this->autowired;
     }
@@ -105,7 +105,7 @@ abstract class Definition
     {
         return $this->addTag('nette.exported', $state);
     }
-    public function isExported() : bool
+    public function isExported(): bool
     {
         return (bool) $this->getTag('nette.exported');
     }
@@ -114,10 +114,10 @@ abstract class Definition
         $this->notifier = $this->name = null;
     }
     /********************* life cycle ****************d*g**/
-    public abstract function resolveType(Nette\DI\Resolver $resolver) : void;
-    public abstract function complete(Nette\DI\Resolver $resolver) : void;
-    public abstract function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator) : void;
-    public final function setNotifier(?callable $notifier) : void
+    abstract public function resolveType(Nette\DI\Resolver $resolver): void;
+    abstract public function complete(Nette\DI\Resolver $resolver): void;
+    abstract public function generateMethod(Nette\PhpGenerator\Method $method, Nette\DI\PhpGenerator $generator): void;
+    final public function setNotifier(?callable $notifier): void
     {
         $this->notifier = $notifier;
     }
@@ -128,18 +128,18 @@ abstract class Definition
         return $this->setType($type);
     }
     /** @deprecated Use getType() */
-    public function getClass() : ?string
+    public function getClass(): ?string
     {
         return $this->getType();
     }
     /** @deprecated Use '$def instanceof Nette\DI\Definitions\ImportedDefinition' */
-    public function isDynamic() : bool
+    public function isDynamic(): bool
     {
         \trigger_error(\sprintf('Service %s: %s() is deprecated, use "instanceof ImportedDefinition".', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
         return \false;
     }
     /** @deprecated Use Nette\DI\Definitions\FactoryDefinition or AccessorDefinition */
-    public function getImplement() : ?string
+    public function getImplement(): ?string
     {
         \trigger_error(\sprintf('Service %s: %s() is deprecated.', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
         return null;

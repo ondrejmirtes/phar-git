@@ -35,30 +35,30 @@ final class ReflectionParameter extends CoreReflectionParameter
         unset($this->name);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionParameter->__toString();
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionParameter->getName();
     }
-    public function getBetterReflection() : BetterReflectionParameter
+    public function getBetterReflection(): BetterReflectionParameter
     {
         return $this->betterReflectionParameter;
     }
-    public function isPassedByReference() : bool
+    public function isPassedByReference(): bool
     {
         return $this->betterReflectionParameter->isPassedByReference();
     }
-    public function canBePassedByValue() : bool
+    public function canBePassedByValue(): bool
     {
         return $this->betterReflectionParameter->canBePassedByValue();
     }
     /**
      * @return ReflectionFunction|ReflectionMethod
      */
-    public function getDeclaringFunction() : CoreReflectionFunctionAbstract
+    public function getDeclaringFunction(): CoreReflectionFunctionAbstract
     {
         $function = $this->betterReflectionParameter->getDeclaringFunction();
         if ($function instanceof BetterReflectionMethod) {
@@ -67,7 +67,7 @@ final class ReflectionParameter extends CoreReflectionParameter
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionFunction($function);
     }
     /** @return ReflectionClass|null */
-    public function getDeclaringClass() : ?CoreReflectionClass
+    public function getDeclaringClass(): ?CoreReflectionClass
     {
         $declaringClass = $this->betterReflectionParameter->getDeclaringClass();
         if ($declaringClass === null) {
@@ -76,7 +76,7 @@ final class ReflectionParameter extends CoreReflectionParameter
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($declaringClass);
     }
     /** @return ReflectionClass|null */
-    public function getClass() : ?CoreReflectionClass
+    public function getClass(): ?CoreReflectionClass
     {
         $type = $this->betterReflectionParameter->getType();
         if ($type === null) {
@@ -113,11 +113,11 @@ final class ReflectionParameter extends CoreReflectionParameter
             return null;
         }
     }
-    public function isArray() : bool
+    public function isArray(): bool
     {
         return $this->isType($this->betterReflectionParameter->getType(), 'array');
     }
-    public function isCallable() : bool
+    public function isCallable(): bool
     {
         return $this->isType($this->betterReflectionParameter->getType(), 'callable');
     }
@@ -125,7 +125,7 @@ final class ReflectionParameter extends CoreReflectionParameter
      * For isArray() and isCallable().
      * @param BetterReflectionNamedType|BetterReflectionUnionType|BetterReflectionIntersectionType|null $typeReflection
      */
-    private function isType($typeReflection, string $type) : bool
+    private function isType($typeReflection, string $type): bool
     {
         if ($typeReflection === null) {
             return \false;
@@ -133,7 +133,7 @@ final class ReflectionParameter extends CoreReflectionParameter
         if ($typeReflection instanceof BetterReflectionIntersectionType) {
             return \false;
         }
-        $isOneOfAllowedTypes = static function (BetterReflectionType $namedType, string ...$types) : bool {
+        $isOneOfAllowedTypes = static function (BetterReflectionType $namedType, string ...$types): bool {
             foreach ($types as $type) {
                 if ($namedType instanceof BetterReflectionNamedType && strtolower($namedType->getName()) === $type) {
                     return \true;
@@ -152,23 +152,23 @@ final class ReflectionParameter extends CoreReflectionParameter
         }
         return $isOneOfAllowedTypes($typeReflection, $type);
     }
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->betterReflectionParameter->allowsNull();
     }
-    public function getPosition() : int
+    public function getPosition(): int
     {
         return $this->betterReflectionParameter->getPosition();
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->betterReflectionParameter->isOptional();
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->betterReflectionParameter->isVariadic();
     }
-    public function isDefaultValueAvailable() : bool
+    public function isDefaultValueAvailable(): bool
     {
         return $this->betterReflectionParameter->isDefaultValueAvailable();
     }
@@ -177,19 +177,19 @@ final class ReflectionParameter extends CoreReflectionParameter
     {
         return $this->betterReflectionParameter->getDefaultValue();
     }
-    public function getDefaultValueExpression() : Expr
+    public function getDefaultValueExpression(): Expr
     {
         return $this->betterReflectionParameter->getDefaultValueExpression();
     }
-    public function isDefaultValueConstant() : bool
+    public function isDefaultValueConstant(): bool
     {
         return $this->betterReflectionParameter->isDefaultValueConstant();
     }
-    public function getDefaultValueConstantName() : string
+    public function getDefaultValueConstantName(): string
     {
         return $this->betterReflectionParameter->getDefaultValueConstantName();
     }
-    public function hasType() : bool
+    public function hasType(): bool
     {
         return $this->betterReflectionParameter->hasType();
     }
@@ -197,11 +197,11 @@ final class ReflectionParameter extends CoreReflectionParameter
      * @phpstan-ignore return.unusedType
      * @return ReflectionUnionType|ReflectionNamedType|ReflectionIntersectionType|null
      */
-    public function getType() : ?\ReflectionType
+    public function getType(): ?\ReflectionType
     {
         return \PHPStan\BetterReflection\Reflection\Adapter\ReflectionType::fromTypeOrNull($this->betterReflectionParameter->getType());
     }
-    public function isPromoted() : bool
+    public function isPromoted(): bool
     {
         return $this->betterReflectionParameter->isPromoted();
     }
@@ -210,7 +210,7 @@ final class ReflectionParameter extends CoreReflectionParameter
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(?string $name = null, int $flags = 0) : array
+    public function getAttributes(?string $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');

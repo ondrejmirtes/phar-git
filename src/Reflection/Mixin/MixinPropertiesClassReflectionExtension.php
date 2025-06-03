@@ -26,11 +26,11 @@ final class MixinPropertiesClassReflectionExtension implements PropertiesClassRe
     {
         $this->mixinExcludeClasses = $mixinExcludeClasses;
     }
-    public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
+    public function hasProperty(ClassReflection $classReflection, string $propertyName): bool
     {
         return $this->findProperty($classReflection, $propertyName) !== null;
     }
-    public function getProperty(ClassReflection $classReflection, string $propertyName) : PropertyReflection
+    public function getProperty(ClassReflection $classReflection, string $propertyName): PropertyReflection
     {
         $property = $this->findProperty($classReflection, $propertyName);
         if ($property === null) {
@@ -38,7 +38,7 @@ final class MixinPropertiesClassReflectionExtension implements PropertiesClassRe
         }
         return $property;
     }
-    private function findProperty(ClassReflection $classReflection, string $propertyName) : ?PropertyReflection
+    private function findProperty(ClassReflection $classReflection, string $propertyName): ?PropertyReflection
     {
         $mixinTypes = $classReflection->getResolvedMixinTypes();
         foreach ($mixinTypes as $type) {

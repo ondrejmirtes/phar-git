@@ -17,7 +17,7 @@ final class Factory
     use Nette\SmartObject;
     private $bodyCache = [];
     private $extractorCache = [];
-    public function fromClassReflection(\ReflectionClass $from, bool $withBodies = \false, bool $materializeTraits = \true) : ClassType
+    public function fromClassReflection(\ReflectionClass $from, bool $withBodies = \false, bool $materializeTraits = \true): ClassType
     {
         if ($withBodies && $from->isAnonymous()) {
             throw new Nette\NotSupportedException('The $withBodies parameter cannot be used for anonymous functions.');
@@ -35,7 +35,7 @@ final class Factory
         }
         $ifaces = $from->getInterfaceNames();
         foreach ($ifaces as $iface) {
-            $ifaces = \array_filter($ifaces, function (string $item) use($iface) : bool {
+            $ifaces = \array_filter($ifaces, function (string $item) use ($iface): bool {
                 return !\is_subclass_of($iface, $item);
             });
         }
@@ -99,7 +99,7 @@ final class Factory
         $class->setCases($cases);
         return $class;
     }
-    public function fromMethodReflection(\ReflectionMethod $from) : Method
+    public function fromMethodReflection(\ReflectionMethod $from): Method
     {
         $method = new Method($from->name);
         $method->setParameters(\array_map([$this, 'fromParameterReflection'], $from->getParameters()));
@@ -152,7 +152,7 @@ final class Factory
         $ref = Nette\Utils\Callback::toReflection($from);
         return $ref instanceof \ReflectionMethod ? $this->fromMethodReflection($ref) : $this->fromFunctionReflection($ref);
     }
-    public function fromParameterReflection(\ReflectionParameter $from) : Parameter
+    public function fromParameterReflection(\ReflectionParameter $from): Parameter
     {
         $param = \PHP_VERSION_ID >= 80000 && $from->isPromoted() ? new PromotedParameter($from->name) : new Parameter($from->name);
         $param->setReference($from->isPassedByReference());
@@ -179,7 +179,7 @@ final class Factory
         $param->setAttributes($this->getAttributes($from));
         return $param;
     }
-    public function fromConstantReflection(\ReflectionClassConstant $from) : Constant
+    public function fromConstantReflection(\ReflectionClassConstant $from): Constant
     {
         $const = new Constant($from->name);
         $const->setValue($from->getValue());
@@ -189,7 +189,7 @@ final class Factory
         $const->setAttributes($this->getAttributes($from));
         return $const;
     }
-    public function fromCaseReflection(\ReflectionClassConstant $from) : EnumCase
+    public function fromCaseReflection(\ReflectionClassConstant $from): EnumCase
     {
         $const = new EnumCase($from->name);
         $const->setValue($from->getValue()->value ?? null);
@@ -197,7 +197,7 @@ final class Factory
         $const->setAttributes($this->getAttributes($from));
         return $const;
     }
-    public function fromPropertyReflection(\ReflectionProperty $from) : Property
+    public function fromPropertyReflection(\ReflectionProperty $from): Property
     {
         $defaults = $from->getDeclaringClass()->getDefaultProperties();
         $prop = new Property($from->name);
@@ -220,11 +220,11 @@ final class Factory
         $prop->setAttributes($this->getAttributes($from));
         return $prop;
     }
-    public function fromObject(object $obj) : Literal
+    public function fromObject(object $obj): Literal
     {
         return new Literal('new \\' . \get_class($obj) . '(/* unknown */)');
     }
-    public function fromClassCode(string $code) : ClassType
+    public function fromClassCode(string $code): ClassType
     {
         $classes = $this->fromCode($code)->getClasses();
         if (!$classes) {
@@ -232,12 +232,12 @@ final class Factory
         }
         return \reset($classes);
     }
-    public function fromCode(string $code) : PhpFile
+    public function fromCode(string $code): PhpFile
     {
         $reader = new Extractor($code);
         return $reader->extractAll();
     }
-    private function getAttributes($from) : array
+    private function getAttributes($from): array
     {
         if (\PHP_VERSION_ID < 80000) {
             return [];
@@ -252,11 +252,11 @@ final class Factory
             return new Attribute($attr->getName(), $args);
         }, $from->getAttributes());
     }
-    private function getVisibility($from) : string
+    private function getVisibility($from): string
     {
         return $from->isPrivate() ? ClassType::VisibilityPrivate : ($from->isProtected() ? ClassType::VisibilityProtected : ClassType::VisibilityPublic);
     }
-    private function getExtractor($from) : Extractor
+    private function getExtractor($from): Extractor
     {
         $file = $from->getFileName();
         $cache =& $this->extractorCache[$file];

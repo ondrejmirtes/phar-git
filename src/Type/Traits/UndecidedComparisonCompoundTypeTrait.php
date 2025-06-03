@@ -9,11 +9,11 @@ use PHPStan\Type\Type;
 trait UndecidedComparisonCompoundTypeTrait
 {
     use \PHPStan\Type\Traits\UndecidedComparisonTypeTrait;
-    public function isGreaterThan(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThan(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function isGreaterThanOrEqual(Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThanOrEqual(Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }

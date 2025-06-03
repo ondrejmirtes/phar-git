@@ -16,19 +16,19 @@ final class RuleError85 implements RuleError, FileRuleError, IdentifierRuleError
     public string $file;
     public string $fileDescription;
     public string $identifier;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

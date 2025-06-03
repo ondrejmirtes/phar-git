@@ -50,7 +50,7 @@ final class ArrayFilterFunctionReturnTypeHelper
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getType(Scope $scope, ?Expr $arrayArg, ?Expr $callbackArg, ?Expr $flagArg) : Type
+    public function getType(Scope $scope, ?Expr $arrayArg, ?Expr $callbackArg, ?Expr $flagArg): Type
     {
         if ($arrayArg === null) {
             return new ArrayType(new MixedType(), new MixedType());
@@ -123,7 +123,7 @@ final class ArrayFilterFunctionReturnTypeHelper
         }
         return new ArrayType($keyType, $itemType);
     }
-    private function removeFalsey(Type $type) : Type
+    private function removeFalsey(Type $type): Type
     {
         $falseyTypes = StaticTypeFactory::falsey();
         if (count($type->getConstantArrays()) > 0) {
@@ -156,7 +156,7 @@ final class ArrayFilterFunctionReturnTypeHelper
      * @param \PhpParser\Node\Expr\Error|\PhpParser\Node\Expr\Variable|null $itemVar
      * @param \PhpParser\Node\Expr\Error|\PhpParser\Node\Expr\Variable|null $keyVar
      */
-    private function filterByTruthyValue(Scope $scope, $itemVar, Type $arrayType, $keyVar, Expr $expr) : Type
+    private function filterByTruthyValue(Scope $scope, $itemVar, Type $arrayType, $keyVar, Expr $expr): Type
     {
         if (!$scope instanceof MutatingScope) {
             throw new ShouldNotHappenException();
@@ -195,7 +195,7 @@ final class ArrayFilterFunctionReturnTypeHelper
      * @param \PhpParser\Node\Expr\Error|\PhpParser\Node\Expr\Variable|null $itemVar
      * @param \PhpParser\Node\Expr\Error|\PhpParser\Node\Expr\Variable|null $keyVar
      */
-    private function processKeyAndItemType(MutatingScope $scope, Type $keyType, Type $itemType, $itemVar, $keyVar, Expr $expr) : array
+    private function processKeyAndItemType(MutatingScope $scope, Type $keyType, Type $itemType, $itemVar, $keyVar, Expr $expr): array
     {
         $itemVarName = null;
         if ($itemVar !== null) {
@@ -220,7 +220,7 @@ final class ArrayFilterFunctionReturnTypeHelper
         $scope = $scope->filterByTruthyValue($expr);
         return [$keyVarName !== null ? $scope->getVariableType($keyVarName) : $keyType, $itemVarName !== null ? $scope->getVariableType($itemVarName) : $itemType, !$booleanResult->isTrue()->yes()];
     }
-    private static function createFunctionName(string $funcName) : ?Name
+    private static function createFunctionName(string $funcName): ?Name
     {
         if ($funcName === '') {
             return null;
@@ -238,7 +238,7 @@ final class ArrayFilterFunctionReturnTypeHelper
      * @param self::USE_* $mode
      * @return array{list<Arg>, ?Variable, ?Variable}
      */
-    private function createDummyArgs(int $mode) : array
+    private function createDummyArgs(int $mode): array
     {
         if ($mode === self::USE_ITEM) {
             $itemVar = new Variable('item');
@@ -258,7 +258,7 @@ final class ArrayFilterFunctionReturnTypeHelper
     /**
      * @param non-empty-string $constantName
      */
-    private function getConstant(string $constantName) : int
+    private function getConstant(string $constantName): int
     {
         $constant = $this->reflectionProvider->getConstant(new Name($constantName), null);
         $valueType = $constant->getValueType();
@@ -270,7 +270,7 @@ final class ArrayFilterFunctionReturnTypeHelper
     /**
      * @return self::USE_*|null
      */
-    private function determineMode(?Expr $flagArg, Scope $scope) : ?int
+    private function determineMode(?Expr $flagArg, Scope $scope): ?int
     {
         if ($flagArg === null) {
             return self::USE_ITEM;

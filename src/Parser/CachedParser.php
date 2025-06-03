@@ -24,7 +24,7 @@ final class CachedParser implements \PHPStan\Parser\Parser
      * @param string $file path to a file to parse
      * @return Node\Stmt[]
      */
-    public function parseFile(string $file) : array
+    public function parseFile(string $file): array
     {
         if ($this->cachedNodesByStringCountMax !== 0 && $this->cachedNodesByStringCount >= $this->cachedNodesByStringCountMax) {
             $this->cachedNodesByString = array_slice($this->cachedNodesByString, 1, null, \true);
@@ -41,7 +41,7 @@ final class CachedParser implements \PHPStan\Parser\Parser
     /**
      * @return Node\Stmt[]
      */
-    public function parseString(string $sourceCode) : array
+    public function parseString(string $sourceCode): array
     {
         if ($this->cachedNodesByStringCountMax !== 0 && $this->cachedNodesByStringCount >= $this->cachedNodesByStringCountMax) {
             $this->cachedNodesByString = array_slice($this->cachedNodesByString, 1, null, \true);
@@ -54,18 +54,18 @@ final class CachedParser implements \PHPStan\Parser\Parser
         }
         return $this->cachedNodesByString[$sourceCode];
     }
-    public function getCachedNodesByStringCount() : int
+    public function getCachedNodesByStringCount(): int
     {
         return $this->cachedNodesByStringCount;
     }
-    public function getCachedNodesByStringCountMax() : int
+    public function getCachedNodesByStringCountMax(): int
     {
         return $this->cachedNodesByStringCountMax;
     }
     /**
      * @return array<string, Node[]>
      */
-    public function getCachedNodesByString() : array
+    public function getCachedNodesByString(): array
     {
         return $this->cachedNodesByString;
     }

@@ -35,11 +35,11 @@ final class ReflectionEnum extends CoreReflectionEnum
         unset($this->name);
     }
     /** @return non-empty-string */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionEnum->__toString();
     }
-    public function __get(string $name) : mixed
+    public function __get(string $name): mixed
     {
         if ($name === 'name') {
             return $this->betterReflectionEnum->getName();
@@ -47,54 +47,54 @@ final class ReflectionEnum extends CoreReflectionEnum
         throw new OutOfBoundsException(sprintf('Property %s::$%s does not exist.', self::class, $name));
     }
     /** @return class-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionEnum->getName();
     }
-    public function getBetterReflection() : BetterReflectionEnum
+    public function getBetterReflection(): BetterReflectionEnum
     {
         return $this->betterReflectionEnum;
     }
-    public function isAnonymous() : bool
+    public function isAnonymous(): bool
     {
         return $this->betterReflectionEnum->isAnonymous();
     }
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->betterReflectionEnum->isInternal();
     }
-    public function isUserDefined() : bool
+    public function isUserDefined(): bool
     {
         return $this->betterReflectionEnum->isUserDefined();
     }
-    public function isInstantiable() : bool
+    public function isInstantiable(): bool
     {
         return $this->betterReflectionEnum->isInstantiable();
     }
-    public function isCloneable() : bool
+    public function isCloneable(): bool
     {
         return $this->betterReflectionEnum->isCloneable();
     }
     /** @return non-empty-string|false */
-    public function getFileName() : string|false
+    public function getFileName(): string|false
     {
         $fileName = $this->betterReflectionEnum->getFileName();
         return $fileName !== null ? FileHelper::normalizeSystemPath($fileName) : \false;
     }
-    public function getStartLine() : int
+    public function getStartLine(): int
     {
         return $this->betterReflectionEnum->getStartLine();
     }
-    public function getEndLine() : int
+    public function getEndLine(): int
     {
         return $this->betterReflectionEnum->getEndLine();
     }
-    public function getDocComment() : string|false
+    public function getDocComment(): string|false
     {
         return $this->betterReflectionEnum->getDocComment() ?? \false;
     }
     /** @return ReflectionMethod|null */
-    public function getConstructor() : ?CoreReflectionMethod
+    public function getConstructor(): ?CoreReflectionMethod
     {
         $constructor = $this->betterReflectionEnum->getConstructor();
         if ($constructor === null) {
@@ -102,14 +102,14 @@ final class ReflectionEnum extends CoreReflectionEnum
         }
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod($constructor);
     }
-    public function hasMethod(string $name) : bool
+    public function hasMethod(string $name): bool
     {
         if ($name === '') {
             return \false;
         }
         return $this->betterReflectionEnum->hasMethod($name);
     }
-    public function getMethod(string $name) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
+    public function getMethod(string $name): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod
     {
         $method = $name !== '' ? $this->betterReflectionEnum->getMethod($name) : null;
         if ($method === null) {
@@ -122,19 +122,19 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return list<ReflectionMethod>
      */
-    public function getMethods(int|null $filter = null) : array
+    public function getMethods(int|null $filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_values(array_map(static fn(BetterReflectionMethod $method): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionMethod($method), $this->betterReflectionEnum->getMethods($filter ?? 0)));
     }
-    public function hasProperty(string $name) : bool
+    public function hasProperty(string $name): bool
     {
         if ($name === '') {
             return \false;
         }
         return $this->betterReflectionEnum->hasProperty($name);
     }
-    public function getProperty(string $name) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty
+    public function getProperty(string $name): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionEnum->getProperty($name) : null;
         if ($betterReflectionProperty === null) {
@@ -147,12 +147,12 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return list<ReflectionProperty>
      */
-    public function getProperties(int|null $filter = null) : array
+    public function getProperties(int|null $filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_values(array_map(static fn(BetterReflectionProperty $property): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty($property), $this->betterReflectionEnum->getProperties($filter ?? 0)));
     }
-    public function hasConstant(string $name) : bool
+    public function hasConstant(string $name): bool
     {
         if ($name === '') {
             return \false;
@@ -164,12 +164,12 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return array<non-empty-string, mixed>
      */
-    public function getConstants(int|null $filter = null) : array
+    public function getConstants(int|null $filter = null): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(fn(BetterReflectionClassConstant|BetterReflectionEnumCase $betterConstantOrEnumCase): mixed => $this->getConstantValue($betterConstantOrEnumCase), $this->filterBetterReflectionClassConstants($filter));
     }
-    public function getConstant(string $name) : mixed
+    public function getConstant(string $name): mixed
     {
         if ($name === '') {
             return \false;
@@ -184,14 +184,14 @@ final class ReflectionEnum extends CoreReflectionEnum
         }
         return $betterReflectionConstant->getValue();
     }
-    private function getConstantValue(BetterReflectionClassConstant|BetterReflectionEnumCase $betterConstantOrEnumCase) : mixed
+    private function getConstantValue(BetterReflectionClassConstant|BetterReflectionEnumCase $betterConstantOrEnumCase): mixed
     {
         if ($betterConstantOrEnumCase instanceof BetterReflectionEnumCase) {
             throw new \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplemented('Not implemented');
         }
         return $betterConstantOrEnumCase->getValue();
     }
-    public function getReflectionConstant(string $name) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant|false
+    public function getReflectionConstant(string $name): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant|false
     {
         if ($name === '') {
             return \false;
@@ -208,7 +208,7 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return list<ReflectionClassConstant>
      */
-    public function getReflectionConstants(int|null $filter = null) : array
+    public function getReflectionConstants(int|null $filter = null): array
     {
         return array_values(array_map(static fn(BetterReflectionClassConstant|BetterReflectionEnumCase $betterConstantOrEnum): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant($betterConstantOrEnum), $this->filterBetterReflectionClassConstants($filter)));
     }
@@ -217,7 +217,7 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return array<non-empty-string, BetterReflectionClassConstant|BetterReflectionEnumCase>
      */
-    private function filterBetterReflectionClassConstants(int|null $filter) : array
+    private function filterBetterReflectionClassConstants(int|null $filter): array
     {
         $reflectionConstants = $this->betterReflectionEnum->getConstants($filter ?? 0);
         if ($filter === null || $filter & \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClassConstant::IS_PUBLIC_COMPATIBILITY) {
@@ -226,22 +226,22 @@ final class ReflectionEnum extends CoreReflectionEnum
         return $reflectionConstants;
     }
     /** @return array<class-string, ReflectionClass> */
-    public function getInterfaces() : array
+    public function getInterfaces(): array
     {
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(static fn(BetterReflectionClass $interface): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($interface), $this->betterReflectionEnum->getInterfaces());
     }
     /** @return list<class-string> */
-    public function getInterfaceNames() : array
+    public function getInterfaceNames(): array
     {
         return $this->betterReflectionEnum->getInterfaceNames();
     }
-    public function isInterface() : bool
+    public function isInterface(): bool
     {
         return $this->betterReflectionEnum->isInterface();
     }
     /** @return array<trait-string, ReflectionClass> */
-    public function getTraits() : array
+    public function getTraits(): array
     {
         $traits = $this->betterReflectionEnum->getTraits();
         /** @var list<trait-string> $traitNames */
@@ -250,51 +250,51 @@ final class ReflectionEnum extends CoreReflectionEnum
         return array_combine($traitNames, array_map(static fn(BetterReflectionClass $trait): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass => new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass($trait), $traits));
     }
     /** @return list<trait-string> */
-    public function getTraitNames() : array
+    public function getTraitNames(): array
     {
         return $this->betterReflectionEnum->getTraitNames();
     }
     /** @return array<non-empty-string, non-empty-string> */
-    public function getTraitAliases() : array
+    public function getTraitAliases(): array
     {
         return $this->betterReflectionEnum->getTraitAliases();
     }
-    public function isTrait() : bool
+    public function isTrait(): bool
     {
         return $this->betterReflectionEnum->isTrait();
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->betterReflectionEnum->isAbstract();
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->betterReflectionEnum->isFinal();
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return $this->betterReflectionEnum->isReadOnly();
     }
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         return $this->betterReflectionEnum->getModifiers();
     }
-    public function isInstance(object $object) : bool
+    public function isInstance(object $object): bool
     {
         return $this->betterReflectionEnum->isInstance($object);
     }
     /** @return never */
-    public function newInstance(mixed ...$args) : object
+    public function newInstance(mixed ...$args): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function newInstanceWithoutConstructor() : object
+    public function newInstanceWithoutConstructor(): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function newInstanceArgs(array|null $args = null) : object
+    public function newInstanceArgs(array|null $args = null): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
@@ -303,7 +303,7 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return never
      */
-    public function newLazyGhost(callable $initializer, int $options = 0) : object
+    public function newLazyGhost(callable $initializer, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
@@ -312,45 +312,45 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return never
      */
-    public function newLazyProxy(callable $factory, int $options = 0) : object
+    public function newLazyProxy(callable $factory, int $options = 0): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function markLazyObjectAsInitialized(object $object) : object
+    public function markLazyObjectAsInitialized(object $object): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function getLazyInitializer(object $object) : callable|null
+    public function getLazyInitializer(object $object): callable|null
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function initializeLazyObject(object $object) : object
+    public function initializeLazyObject(object $object): object
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @return never */
-    public function isUninitializedLazyObject(object $object) : bool
+    public function isUninitializedLazyObject(object $object): bool
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<ReflectionClass::SKIP_*> $options */
-    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0) : void
+    public function resetAsLazyGhost(object $object, callable $initializer, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
     /** @param int-mask-of<ReflectionClass::SKIP_*> $options */
-    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0) : void
+    public function resetAsLazyProxy(object $object, callable $factory, int $options = 0): void
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
     }
-    public function getParentClass() : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass|false
+    public function getParentClass(): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionClass|false
     {
         return \false;
     }
-    public function isSubclassOf(CoreReflectionClass|string $class) : bool
+    public function isSubclassOf(CoreReflectionClass|string $class): bool
     {
         $realParentClassNames = $this->betterReflectionEnum->getParentClassNames();
         $parentClassNames = array_combine(array_map(static fn(string $parentClassName): string => strtolower($parentClassName), $realParentClassNames), $realParentClassNames);
@@ -367,32 +367,32 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @psalm-suppress LessSpecificImplementedReturnType
      */
-    public function getStaticProperties() : array
+    public function getStaticProperties(): array
     {
         return $this->betterReflectionEnum->getStaticProperties();
     }
-    public function getStaticPropertyValue(string $name, mixed $default = null) : mixed
+    public function getStaticPropertyValue(string $name, mixed $default = null): mixed
     {
         throw new CoreReflectionException(sprintf('Property %s::$%s does not exist', $this->betterReflectionEnum->getName(), $name));
     }
-    public function setStaticPropertyValue(string $name, mixed $value) : void
+    public function setStaticPropertyValue(string $name, mixed $value): void
     {
         throw new CoreReflectionException(sprintf('Class %s does not have a property named %s', $this->betterReflectionEnum->getName(), $name));
     }
     /** @return array<non-empty-string, mixed> */
-    public function getDefaultProperties() : array
+    public function getDefaultProperties(): array
     {
         return $this->betterReflectionEnum->getDefaultProperties();
     }
-    public function isIterateable() : bool
+    public function isIterateable(): bool
     {
         return $this->betterReflectionEnum->isIterateable();
     }
-    public function isIterable() : bool
+    public function isIterable(): bool
     {
         return $this->isIterateable();
     }
-    public function implementsInterface(CoreReflectionClass|string $interface) : bool
+    public function implementsInterface(CoreReflectionClass|string $interface): bool
     {
         $realInterfaceNames = $this->betterReflectionEnum->getInterfaceNames();
         $interfaceNames = array_combine(array_map(static fn(string $interfaceName): string => strtolower($interfaceName), $realInterfaceNames), $realInterfaceNames);
@@ -401,24 +401,24 @@ final class ReflectionEnum extends CoreReflectionEnum
         $realInterfaceName = $interfaceNames[$lowercasedInterfaceName] ?? $interfaceName;
         return $this->betterReflectionEnum->implementsInterface($realInterfaceName);
     }
-    public function getExtension() : ?CoreReflectionExtension
+    public function getExtension(): ?CoreReflectionExtension
     {
         throw new \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplemented('Not implemented');
     }
     /** @return non-empty-string|false */
-    public function getExtensionName() : string|false
+    public function getExtensionName(): string|false
     {
         return $this->betterReflectionEnum->getExtensionName() ?? \false;
     }
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return $this->betterReflectionEnum->inNamespace();
     }
-    public function getNamespaceName() : string
+    public function getNamespaceName(): string
     {
         return $this->betterReflectionEnum->getNamespaceName() ?? '';
     }
-    public function getShortName() : string
+    public function getShortName(): string
     {
         return $this->betterReflectionEnum->getShortName();
     }
@@ -427,7 +427,7 @@ final class ReflectionEnum extends CoreReflectionEnum
      *
      * @return list<ReflectionAttribute|FakeReflectionAttribute>
      */
-    public function getAttributes(string|null $name = null, int $flags = 0) : array
+    public function getAttributes(string|null $name = null, int $flags = 0): array
     {
         if ($flags !== 0 && $flags !== \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute::IS_INSTANCEOF) {
             throw new ValueError('Argument #2 ($flags) must be a valid attribute filter flag');
@@ -442,18 +442,18 @@ final class ReflectionEnum extends CoreReflectionEnum
         /** @psalm-suppress ImpureFunctionCall */
         return array_map(static fn(BetterReflectionAttribute $betterReflectionAttribute): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttribute|\PHPStan\BetterReflection\Reflection\Adapter\FakeReflectionAttribute => \PHPStan\BetterReflection\Reflection\Adapter\ReflectionAttributeFactory::create($betterReflectionAttribute), $attributes);
     }
-    public function isEnum() : bool
+    public function isEnum(): bool
     {
         return $this->betterReflectionEnum->isEnum();
     }
-    public function hasCase(string $name) : bool
+    public function hasCase(string $name): bool
     {
         if ($name === '') {
             return \false;
         }
         return $this->betterReflectionEnum->hasCase($name);
     }
-    public function getCase(string $name) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase
+    public function getCase(string $name): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase
     {
         $case = $name !== '' ? $this->betterReflectionEnum->getCase($name) : null;
         if ($case === null) {
@@ -465,21 +465,21 @@ final class ReflectionEnum extends CoreReflectionEnum
         return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase($case);
     }
     /** @return list<ReflectionEnumUnitCase|ReflectionEnumBackedCase> */
-    public function getCases() : array
+    public function getCases(): array
     {
         /** @psalm-suppress ImpureFunctionCall */
-        return array_map(function (BetterReflectionEnumCase $case) : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase {
+        return array_map(function (BetterReflectionEnumCase $case): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase|\PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase {
             if ($this->betterReflectionEnum->isBacked()) {
                 return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase($case);
             }
             return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase($case);
         }, array_values($this->betterReflectionEnum->getCases()));
     }
-    public function isBacked() : bool
+    public function isBacked(): bool
     {
         return $this->betterReflectionEnum->isBacked();
     }
-    public function getBackingType() : \PHPStan\BetterReflection\Reflection\Adapter\ReflectionNamedType|null
+    public function getBackingType(): \PHPStan\BetterReflection\Reflection\Adapter\ReflectionNamedType|null
     {
         if ($this->betterReflectionEnum->isBacked()) {
             return new \PHPStan\BetterReflection\Reflection\Adapter\ReflectionNamedType($this->betterReflectionEnum->getBackingType(), \false);

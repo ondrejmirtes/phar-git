@@ -19,11 +19,11 @@ use function sprintf;
  */
 final class InvalidCallablePropertyTypeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $propertyReflection = $classReflection->getNativeProperty($node->getName());
@@ -32,7 +32,7 @@ final class InvalidCallablePropertyTypeRule implements Rule
         }
         $nativeType = $propertyReflection->getNativeType();
         $callableTypes = [];
-        TypeTraverser::map($nativeType, static function (Type $type, callable $traverse) use(&$callableTypes) : Type {
+        TypeTraverser::map($nativeType, static function (Type $type, callable $traverse) use (&$callableTypes): Type {
             if ($type instanceof UnionType || $type instanceof IntersectionType) {
                 return $traverse($type);
             }

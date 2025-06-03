@@ -36,52 +36,52 @@ final class VerbosityLevel
     /**
      * @param self::* $value
      */
-    private static function create(int $value) : self
+    private static function create(int $value): self
     {
         self::$registry[$value] ??= new self($value);
         return self::$registry[$value];
     }
     /** @return self::* */
-    public function getLevelValue() : int
+    public function getLevelValue(): int
     {
         return $this->value;
     }
     /** @api */
-    public static function typeOnly() : self
+    public static function typeOnly(): self
     {
         return self::create(self::TYPE_ONLY);
     }
     /** @api */
-    public static function value() : self
+    public static function value(): self
     {
         return self::create(self::VALUE);
     }
     /** @api */
-    public static function precise() : self
+    public static function precise(): self
     {
         return self::create(self::PRECISE);
     }
     /** @api */
-    public static function cache() : self
+    public static function cache(): self
     {
         return self::create(self::CACHE);
     }
-    public function isTypeOnly() : bool
+    public function isTypeOnly(): bool
     {
         return $this->value === self::TYPE_ONLY;
     }
-    public function isValue() : bool
+    public function isValue(): bool
     {
         return $this->value === self::VALUE;
     }
-    public function isPrecise() : bool
+    public function isPrecise(): bool
     {
         return $this->value === self::PRECISE;
     }
     /** @api */
-    public static function getRecommendedLevelByType(\PHPStan\Type\Type $acceptingType, ?\PHPStan\Type\Type $acceptedType = null) : self
+    public static function getRecommendedLevelByType(\PHPStan\Type\Type $acceptingType, ?\PHPStan\Type\Type $acceptedType = null): self
     {
-        $moreVerboseCallback = static function (\PHPStan\Type\Type $type, callable $traverse) use(&$moreVerbose, &$veryVerbose) : \PHPStan\Type\Type {
+        $moreVerboseCallback = static function (\PHPStan\Type\Type $type, callable $traverse) use (&$moreVerbose, &$veryVerbose): \PHPStan\Type\Type {
             if ($type->isCallable()->yes()) {
                 $moreVerbose = \true;
                 // Keep checking if we need to be very verbose.
@@ -125,7 +125,7 @@ final class VerbosityLevel
             return $verbosity ?? self::typeOnly();
         }
         $containsInvariantTemplateType = \false;
-        \PHPStan\Type\TypeTraverser::map($acceptingType, static function (\PHPStan\Type\Type $type, callable $traverse) use(&$containsInvariantTemplateType) : \PHPStan\Type\Type {
+        \PHPStan\Type\TypeTraverser::map($acceptingType, static function (\PHPStan\Type\Type $type, callable $traverse) use (&$containsInvariantTemplateType): \PHPStan\Type\Type {
             if ($type instanceof GenericObjectType || $type instanceof GenericStaticType) {
                 $reflection = $type->getClassReflection();
                 if ($reflection !== null) {
@@ -163,7 +163,7 @@ final class VerbosityLevel
      * @param callable(): string|null $preciseCallback
      * @param callable(): string|null $cacheCallback
      */
-    public function handle(callable $typeOnlyCallback, callable $valueCallback, ?callable $preciseCallback = null, ?callable $cacheCallback = null) : string
+    public function handle(callable $typeOnlyCallback, callable $valueCallback, ?callable $preciseCallback = null, ?callable $cacheCallback = null): string
     {
         if ($this->value === self::TYPE_ONLY) {
             return $typeOnlyCallback();

@@ -13,7 +13,7 @@ class Identifier
 {
     private \PHPStan\BetterReflection\Identifier\IdentifierType $type;
     public const WILDCARD = '*';
-    private const VALID_NAME_REGEXP = '/([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)(\\\\[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)*/';
+    private const VALID_NAME_REGEXP = '/([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(\\\\[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)*/';
     private string $name;
     /** @throws InvalidIdentifierName */
     public function __construct(string $name, \PHPStan\BetterReflection\Identifier\IdentifierType $type)
@@ -29,23 +29,23 @@ class Identifier
         }
         $this->name = $name;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getType() : \PHPStan\BetterReflection\Identifier\IdentifierType
+    public function getType(): \PHPStan\BetterReflection\Identifier\IdentifierType
     {
         return $this->type;
     }
-    public function isClass() : bool
+    public function isClass(): bool
     {
         return $this->type->isClass();
     }
-    public function isFunction() : bool
+    public function isFunction(): bool
     {
         return $this->type->isFunction();
     }
-    public function isConstant() : bool
+    public function isConstant(): bool
     {
         return $this->type->isConstant();
     }

@@ -20,22 +20,22 @@ final class InArrowFunctionNode extends NodeAbstract implements \PHPStan\Node\Vi
         parent::__construct($originalNode->getAttributes());
         $this->originalNode = $originalNode;
     }
-    public function getClosureType() : ClosureType
+    public function getClosureType(): ClosureType
     {
         return $this->closureType;
     }
-    public function getOriginalNode() : Node\Expr\ArrowFunction
+    public function getOriginalNode(): Node\Expr\ArrowFunction
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InArrowFunctionNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

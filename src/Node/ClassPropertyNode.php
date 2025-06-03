@@ -57,75 +57,75 @@ final class ClassPropertyNode extends NodeAbstract implements \PHPStan\Node\Virt
         parent::__construct($originalNode->getAttributes());
     }
     /** @return non-empty-string */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getFlags() : int
+    public function getFlags(): int
     {
         return $this->flags;
     }
-    public function getDefault() : ?Expr
+    public function getDefault(): ?Expr
     {
         return $this->default;
     }
-    public function isPromoted() : bool
+    public function isPromoted(): bool
     {
         return $this->isPromoted;
     }
-    public function isPromotedFromTrait() : bool
+    public function isPromotedFromTrait(): bool
     {
         return $this->isPromotedFromTrait;
     }
-    public function getPhpDoc() : ?string
+    public function getPhpDoc(): ?string
     {
         return $this->phpDoc;
     }
-    public function getPhpDocType() : ?Type
+    public function getPhpDocType(): ?Type
     {
         return $this->phpDocType;
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return ($this->flags & Modifiers::PUBLIC) !== 0 || ($this->flags & Modifiers::VISIBILITY_MASK) === 0;
     }
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return (bool) ($this->flags & Modifiers::PROTECTED);
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return (bool) ($this->flags & Modifiers::PRIVATE);
     }
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return (bool) ($this->flags & Modifiers::FINAL);
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return (bool) ($this->flags & Modifiers::STATIC);
     }
-    public function isReadOnly() : bool
+    public function isReadOnly(): bool
     {
         return (bool) ($this->flags & Modifiers::READONLY) || $this->isReadonlyClass;
     }
-    public function isReadOnlyByPhpDoc() : bool
+    public function isReadOnlyByPhpDoc(): bool
     {
         return $this->isReadonlyByPhpDoc;
     }
-    public function isDeclaredInTrait() : bool
+    public function isDeclaredInTrait(): bool
     {
         return $this->isDeclaredInTrait;
     }
-    public function isAllowedPrivateMutation() : bool
+    public function isAllowedPrivateMutation(): bool
     {
         return $this->isAllowedPrivateMutation;
     }
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return (bool) ($this->flags & Modifiers::ABSTRACT);
     }
-    public function getNativeType() : ?Type
+    public function getNativeType(): ?Type
     {
         return $this->type;
     }
@@ -136,41 +136,41 @@ final class ClassPropertyNode extends NodeAbstract implements \PHPStan\Node\Virt
     {
         return $this->originalNode->type;
     }
-    public function getClassReflection() : ClassReflection
+    public function getClassReflection(): ClassReflection
     {
         return $this->classReflection;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_ClassPropertyNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }
-    public function hasHooks() : bool
+    public function hasHooks(): bool
     {
         return $this->getHooks() !== [];
     }
     /**
      * @return Node\PropertyHook[]
      */
-    public function getHooks() : array
+    public function getHooks(): array
     {
         return $this->originalNode->hooks;
     }
-    public function isVirtual() : bool
+    public function isVirtual(): bool
     {
         return $this->classReflection->getNativeProperty($this->name)->isVirtual()->yes();
     }
-    public function isWritable() : bool
+    public function isWritable(): bool
     {
         return $this->classReflection->getNativeProperty($this->name)->isWritable();
     }
-    public function isReadable() : bool
+    public function isReadable(): bool
     {
         return $this->classReflection->getNativeProperty($this->name)->isReadable();
     }

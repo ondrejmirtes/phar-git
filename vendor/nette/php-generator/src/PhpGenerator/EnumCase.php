@@ -20,7 +20,7 @@ final class EnumCase
     /** @var string|int|null */
     private $value;
     /** @return static */
-    public function setValue($val) : self
+    public function setValue($val): self
     {
         $this->value = $val;
         return $this;

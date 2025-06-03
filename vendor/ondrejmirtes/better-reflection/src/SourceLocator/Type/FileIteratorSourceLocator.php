@@ -45,22 +45,22 @@ class FileIteratorSourceLocator implements \PHPStan\BetterReflection\SourceLocat
         $this->fileSystemIterator = $fileInfoIterator;
     }
     /** @throws InvalidFileLocation */
-    private function getAggregatedSourceLocator() : \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator
+    private function getAggregatedSourceLocator(): \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator
     {
         // @infection-ignore-all Coalesce: There's no difference, it's just optimization
-        return $this->aggregateSourceLocator ?? ($this->aggregateSourceLocator = new \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator(array_values(array_filter(array_map(function (SplFileInfo $item) : ?\PHPStan\BetterReflection\SourceLocator\Type\SingleFileSourceLocator {
+        return $this->aggregateSourceLocator ?? $this->aggregateSourceLocator = new \PHPStan\BetterReflection\SourceLocator\Type\AggregateSourceLocator(array_values(array_filter(array_map(function (SplFileInfo $item): ?\PHPStan\BetterReflection\SourceLocator\Type\SingleFileSourceLocator {
             if (!($item->isFile() && $item->getExtension() === 'php')) {
                 return null;
             }
             return new \PHPStan\BetterReflection\SourceLocator\Type\SingleFileSourceLocator($item->getRealPath(), $this->astLocator);
-        }, iterator_to_array($this->fileSystemIterator))))));
+        }, iterator_to_array($this->fileSystemIterator)))));
     }
     /**
      * {@inheritDoc}
      *
      * @throws InvalidFileLocation
      */
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?\PHPStan\BetterReflection\Reflection\Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?\PHPStan\BetterReflection\Reflection\Reflection
     {
         return $this->getAggregatedSourceLocator()->locateIdentifier($reflector, $identifier);
     }
@@ -69,7 +69,7 @@ class FileIteratorSourceLocator implements \PHPStan\BetterReflection\SourceLocat
      *
      * @throws InvalidFileLocation
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return $this->getAggregatedSourceLocator()->locateIdentifiersByType($reflector, $identifierType);
     }

@@ -11,11 +11,11 @@ use function array_keys;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class EnumAllowedSubTypesClassReflectionExtension implements AllowedSubTypesClassReflectionExtension
 {
-    public function supports(ClassReflection $classReflection) : bool
+    public function supports(ClassReflection $classReflection): bool
     {
         return $classReflection->isEnum();
     }
-    public function getAllowedSubTypes(ClassReflection $classReflection) : array
+    public function getAllowedSubTypes(ClassReflection $classReflection): array
     {
         $cases = [];
         foreach (array_keys($classReflection->getEnumCases()) as $name) {

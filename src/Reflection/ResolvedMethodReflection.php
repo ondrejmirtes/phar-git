@@ -31,15 +31,15 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         $this->resolvedTemplateTypeMap = $resolvedTemplateTypeMap;
         $this->callSiteVarianceMap = $callSiteVarianceMap;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->reflection->getName();
     }
-    public function getPrototype() : \PHPStan\Reflection\ClassMemberReflection
+    public function getPrototype(): \PHPStan\Reflection\ClassMemberReflection
     {
         return $this->reflection->getPrototype();
     }
-    public function getVariants() : array
+    public function getVariants(): array
     {
         $variants = $this->variants;
         if ($variants !== null) {
@@ -47,11 +47,11 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         }
         return $this->variants = $this->resolveVariants($this->reflection->getVariants());
     }
-    public function getOnlyVariant() : \PHPStan\Reflection\ExtendedParametersAcceptor
+    public function getOnlyVariant(): \PHPStan\Reflection\ExtendedParametersAcceptor
     {
         return $this->getVariants()[0];
     }
-    public function getNamedArgumentsVariants() : ?array
+    public function getNamedArgumentsVariants(): ?array
     {
         $variants = $this->namedArgumentVariants;
         if ($variants !== null) {
@@ -67,7 +67,7 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
      * @param ExtendedParametersAcceptor[] $variants
      * @return list<ResolvedFunctionVariant>
      */
-    private function resolveVariants(array $variants) : array
+    private function resolveVariants(array $variants): array
     {
         $result = [];
         foreach ($variants as $variant) {
@@ -75,54 +75,54 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         }
         return $result;
     }
-    public function getDeclaringClass() : \PHPStan\Reflection\ClassReflection
+    public function getDeclaringClass(): \PHPStan\Reflection\ClassReflection
     {
         return $this->reflection->getDeclaringClass();
     }
-    public function getDeclaringTrait() : ?\PHPStan\Reflection\ClassReflection
+    public function getDeclaringTrait(): ?\PHPStan\Reflection\ClassReflection
     {
         if ($this->reflection instanceof PhpMethodReflection) {
             return $this->reflection->getDeclaringTrait();
         }
         return null;
     }
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->reflection->isStatic();
     }
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->reflection->isPrivate();
     }
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->reflection->isPublic();
     }
-    public function getDocComment() : ?string
+    public function getDocComment(): ?string
     {
         return $this->reflection->getDocComment();
     }
-    public function isDeprecated() : TrinaryLogic
+    public function isDeprecated(): TrinaryLogic
     {
         return $this->reflection->isDeprecated();
     }
-    public function getDeprecatedDescription() : ?string
+    public function getDeprecatedDescription(): ?string
     {
         return $this->reflection->getDeprecatedDescription();
     }
-    public function isFinal() : TrinaryLogic
+    public function isFinal(): TrinaryLogic
     {
         return $this->reflection->isFinal();
     }
-    public function isFinalByKeyword() : TrinaryLogic
+    public function isFinalByKeyword(): TrinaryLogic
     {
         return $this->reflection->isFinalByKeyword();
     }
-    public function isInternal() : TrinaryLogic
+    public function isInternal(): TrinaryLogic
     {
         return $this->reflection->isInternal();
     }
-    public function isBuiltin() : TrinaryLogic
+    public function isBuiltin(): TrinaryLogic
     {
         $builtin = $this->reflection->isBuiltin();
         if (is_bool($builtin)) {
@@ -130,27 +130,27 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         }
         return $builtin;
     }
-    public function getThrowType() : ?Type
+    public function getThrowType(): ?Type
     {
         return $this->reflection->getThrowType();
     }
-    public function hasSideEffects() : TrinaryLogic
+    public function hasSideEffects(): TrinaryLogic
     {
         return $this->reflection->hasSideEffects();
     }
-    public function isPure() : TrinaryLogic
+    public function isPure(): TrinaryLogic
     {
         return $this->reflection->isPure();
     }
-    public function getAsserts() : \PHPStan\Reflection\Assertions
+    public function getAsserts(): \PHPStan\Reflection\Assertions
     {
         return $this->asserts ??= $this->reflection->getAsserts()->mapTypes(fn(Type $type) => TemplateTypeHelper::resolveTemplateTypes($type, $this->resolvedTemplateTypeMap, $this->callSiteVarianceMap, TemplateTypeVariance::createInvariant()));
     }
-    public function acceptsNamedArguments() : TrinaryLogic
+    public function acceptsNamedArguments(): TrinaryLogic
     {
         return $this->reflection->acceptsNamedArguments();
     }
-    public function getSelfOutType() : ?Type
+    public function getSelfOutType(): ?Type
     {
         if ($this->selfOutType === \false) {
             $selfOutType = $this->reflection->getSelfOutType();
@@ -161,11 +161,11 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         }
         return $this->selfOutType;
     }
-    public function returnsByReference() : TrinaryLogic
+    public function returnsByReference(): TrinaryLogic
     {
         return $this->reflection->returnsByReference();
     }
-    public function isAbstract() : TrinaryLogic
+    public function isAbstract(): TrinaryLogic
     {
         $abstract = $this->reflection->isAbstract();
         if (is_bool($abstract)) {
@@ -173,7 +173,7 @@ final class ResolvedMethodReflection implements \PHPStan\Reflection\ExtendedMeth
         }
         return $abstract;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->reflection->getAttributes();
     }

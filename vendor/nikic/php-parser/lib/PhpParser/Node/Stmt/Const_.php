@@ -19,11 +19,11 @@ class Const_ extends Node\Stmt
         $this->attributes = $attributes;
         $this->consts = $consts;
     }
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['consts'];
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'Stmt_Const';
     }

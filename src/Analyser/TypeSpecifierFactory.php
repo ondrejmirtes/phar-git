@@ -21,7 +21,7 @@ final class TypeSpecifierFactory
     {
         $this->container = $container;
     }
-    public function create() : \PHPStan\Analyser\TypeSpecifier
+    public function create(): \PHPStan\Analyser\TypeSpecifier
     {
         $typeSpecifier = new \PHPStan\Analyser\TypeSpecifier($this->container->getByType(ExprPrinter::class), $this->container->getByType(ReflectionProvider::class), $this->container->getByType(PhpVersion::class), $this->container->getServicesByTag(self::FUNCTION_TYPE_SPECIFYING_EXTENSION_TAG), $this->container->getServicesByTag(self::METHOD_TYPE_SPECIFYING_EXTENSION_TAG), $this->container->getServicesByTag(self::STATIC_METHOD_TYPE_SPECIFYING_EXTENSION_TAG), $this->container->getParameter('rememberPossiblyImpureFunctionValues'));
         foreach (array_merge($this->container->getServicesByTag(BrokerFactory::PROPERTIES_CLASS_REFLECTION_EXTENSION_TAG), $this->container->getServicesByTag(BrokerFactory::METHODS_CLASS_REFLECTION_EXTENSION_TAG), $this->container->getServicesByTag(BrokerFactory::DYNAMIC_METHOD_RETURN_TYPE_EXTENSION_TAG), $this->container->getServicesByTag(BrokerFactory::DYNAMIC_STATIC_METHOD_RETURN_TYPE_EXTENSION_TAG), $this->container->getServicesByTag(BrokerFactory::DYNAMIC_FUNCTION_RETURN_TYPE_EXTENSION_TAG)) as $extension) {

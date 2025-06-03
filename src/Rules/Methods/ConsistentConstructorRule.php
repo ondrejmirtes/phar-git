@@ -20,11 +20,11 @@ final class ConsistentConstructorRule implements Rule
         $this->methodParameterComparisonHelper = $methodParameterComparisonHelper;
         $this->methodVisibilityComparisonHelper = $methodVisibilityComparisonHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $method = $node->getMethodReflection();
         if (strtolower($method->getName()) !== '__construct') {

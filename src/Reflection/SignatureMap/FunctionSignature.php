@@ -26,19 +26,19 @@ final class FunctionSignature
     /**
      * @return list<ParameterSignature>
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->parameters;
     }
-    public function getReturnType() : Type
+    public function getReturnType(): Type
     {
         return $this->returnType;
     }
-    public function getNativeReturnType() : Type
+    public function getNativeReturnType(): Type
     {
         return $this->nativeReturnType;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }

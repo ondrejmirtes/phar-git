@@ -23,11 +23,11 @@ final class Dumper
     /**
      * Returns a PHP representation of a variable.
      */
-    public function dump($var, int $column = 0) : string
+    public function dump($var, int $column = 0): string
     {
         return $this->dumpVar($var, [], 0, $column);
     }
-    private function dumpVar(&$var, array $parents = [], int $level = 0, int $column = 0) : string
+    private function dumpVar(&$var, array $parents = [], int $level = 0, int $column = 0): string
     {
         if ($var === null) {
             return 'null';
@@ -45,16 +45,16 @@ final class Dumper
             return \var_export($var, \true);
         }
     }
-    private function dumpString(string $s) : string
+    private function dumpString(string $s): string
     {
-        static $special = ["\r" => '\\r', "\n" => '\\n', "\t" => '\\t', "\x1b" => '\\e', '\\' => '\\\\'];
+        static $special = ["\r" => '\r', "\n" => '\n', "\t" => '\t', "\x1b" => '\e', '\\' => '\\\\'];
         $utf8 = \preg_match('##u', $s);
-        $escaped = \preg_replace_callback($utf8 ? '#[\\p{C}\\\\]#u' : '#[\\x00-\\x1F\\x7F-\\xFF\\\\]#', function ($m) use($special) {
-            return $special[$m[0]] ?? (\strlen($m[0]) === 1 ? '\\x' . \str_pad(\strtoupper(\dechex(\ord($m[0]))), 2, '0', \STR_PAD_LEFT) . '' : '\\u{' . \strtoupper(\ltrim(\dechex(self::utf8Ord($m[0])), '0')) . '}');
+        $escaped = \preg_replace_callback($utf8 ? '#[\p{C}\\\\]#u' : '#[\x00-\x1F\x7F-\xFF\\\\]#', function ($m) use ($special) {
+            return $special[$m[0]] ?? (\strlen($m[0]) === 1 ? '\x' . \str_pad(\strtoupper(\dechex(\ord($m[0]))), 2, '0', \STR_PAD_LEFT) . '' : '\u{' . \strtoupper(\ltrim(\dechex(self::utf8Ord($m[0])), '0')) . '}');
         }, $s);
         return $s === \str_replace('\\\\', '\\', $escaped) ? "'" . \preg_replace('#\'|\\\\(?=[\'\\\\]|$)#D', '\\\\$0', $s) . "'" : '"' . \addcslashes($escaped, '"$') . '"';
     }
-    private static function utf8Ord(string $c) : int
+    private static function utf8Ord(string $c): int
     {
         $ord0 = \ord($c[0]);
         if ($ord0 < 0x80) {
@@ -67,7 +67,7 @@ final class Dumper
             return ($ord0 << 18) + (\ord($c[1]) << 12) + (\ord($c[2]) << 6) + \ord($c[3]) - 0x3c82080;
         }
     }
-    private function dumpArray(array &$var, array $parents, int $level, int $column) : string
+    private function dumpArray(array &$var, array $parents, int $level, int $column): string
     {
         if (empty($var)) {
             return '[]';
@@ -92,7 +92,7 @@ final class Dumper
         // 3 = [],
         return '[' . ($wrap ? $outWrapped : $outInline) . ']';
     }
-    private function dumpObject($var, array $parents, int $level) : string
+    private function dumpObject($var, array $parents, int $level): string
     {
         if ($var instanceof \Serializable) {
             return 'unserialize(' . $this->dumpString(\serialize($var)) . ')';
@@ -101,7 +101,7 @@ final class Dumper
         } elseif ($var instanceof \Closure) {
             $inner = Nette\Utils\Callback::unwrap($var);
             if (Nette\Utils\Callback::isStatic($inner)) {
-                return \PHP_VERSION_ID < 80100 ? '\\Closure::fromCallable(' . $this->dump($inner) . ')' : \implode('::', (array) $inner) . '(...)';
+                return \PHP_VERSION_ID < 80100 ? '\Closure::fromCallable(' . $this->dump($inner) . ')' : \implode('::', (array) $inner) . '(...)';
             }
             throw new Nette\InvalidArgumentException('Cannot dump closure.');
         }
@@ -132,7 +132,7 @@ final class Dumper
         $out .= $space;
         return $class === \stdClass::class ? "(object) [{$out}]" : '\\' . self::class . "::createObject('{$class}', [{$out}])";
     }
-    private function dumpLiteral(Literal $var, int $level) : string
+    private function dumpLiteral(Literal $var, int $level): string
     {
         $s = $var->formatWith($this);
         $s = Nette\Utils\Strings::indent(\trim($s), $level, $this->indentation);
@@ -141,14 +141,14 @@ final class Dumper
     /**
      * Generates PHP statement. Supports placeholders: ?  \?  $?  ->?  ::?  ...?  ...?:  ?*
      */
-    public function format(string $statement, ...$args) : string
+    public function format(string $statement, ...$args): string
     {
-        $tokens = \preg_split('#(\\.\\.\\.\\?:?|\\$\\?|->\\?|::\\?|\\\\\\?|\\?\\*|\\?(?!\\w))#', $statement, -1, \PREG_SPLIT_DELIM_CAPTURE);
+        $tokens = \preg_split('#(\.\.\.\?:?|\$\?|->\?|::\?|\\\\\\?|\?\*|\?(?!\w))#', $statement, -1, \PREG_SPLIT_DELIM_CAPTURE);
         $res = '';
         foreach ($tokens as $n => $token) {
             if ($n % 2 === 0) {
                 $res .= $token;
-            } elseif ($token === '\\?') {
+            } elseif ($token === '\?') {
                 $res .= '?';
             } elseif (!$args) {
                 throw new Nette\InvalidArgumentException('Insufficient number of arguments.');
@@ -174,7 +174,7 @@ final class Dumper
         }
         return $res;
     }
-    private function dumpArguments(array &$var, int $column, bool $named) : string
+    private function dumpArguments(array &$var, int $column, bool $named): string
     {
         $outInline = $outWrapped = '';
         foreach ($var as $k => &$v) {
@@ -188,7 +188,7 @@ final class Dumper
     /**
      * @internal
      */
-    public static function createObject(string $class, array $props) : object
+    public static function createObject(string $class, array $props): object
     {
         return \unserialize('O' . \substr(\serialize($class), 1, -1) . \substr(\serialize($props), 1));
     }

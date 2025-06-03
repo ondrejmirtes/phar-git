@@ -76,7 +76,7 @@ final class ContainerFactory
         $this->rootDirectory = $this->fileHelper->normalizePath($rootDir);
         $this->configDirectory = $originalRootDir . '/conf';
     }
-    public function setJournalContainer() : void
+    public function setJournalContainer(): void
     {
         $this->journalContainer = \true;
     }
@@ -86,7 +86,7 @@ final class ContainerFactory
      * @param string[] $composerAutoloaderProjectPaths
      * @param string[] $analysedPathsFromConfig
      */
-    public function create(string $tempDirectory, array $additionalConfigFiles, array $analysedPaths, array $composerAutoloaderProjectPaths = [], array $analysedPathsFromConfig = [], string $usedLevel = CommandHelper::DEFAULT_LEVEL, ?string $generateBaselineFile = null, ?string $cliAutoloadFile = null, ?string $singleReflectionFile = null, ?string $singleReflectionInsteadOfFile = null) : \PHPStan\DependencyInjection\Container
+    public function create(string $tempDirectory, array $additionalConfigFiles, array $analysedPaths, array $composerAutoloaderProjectPaths = [], array $analysedPathsFromConfig = [], string $usedLevel = CommandHelper::DEFAULT_LEVEL, ?string $generateBaselineFile = null, ?string $cliAutoloadFile = null, ?string $singleReflectionFile = null, ?string $singleReflectionInsteadOfFile = null): \PHPStan\DependencyInjection\Container
     {
         [$allConfigFiles, $projectConfig] = $this->detectDuplicateIncludedFiles(array_merge([__DIR__ . '/../../conf/parametersSchema.neon'], $additionalConfigFiles), ['rootDir' => $this->rootDirectory, 'currentWorkingDirectory' => $this->currentWorkingDirectory, 'env' => getenv()]);
         $configurator = new \PHPStan\DependencyInjection\Configurator(new \PHPStan\DependencyInjection\LoaderFactory($this->fileHelper, $this->rootDirectory, $this->currentWorkingDirectory, $generateBaselineFile, $projectConfig['expandRelativePaths']), $this->journalContainer);
@@ -106,7 +106,7 @@ final class ContainerFactory
         return $container;
     }
     /** @internal */
-    public static function postInitializeContainer(\PHPStan\DependencyInjection\Container $container) : void
+    public static function postInitializeContainer(\PHPStan\DependencyInjection\Container $container): void
     {
         $containerId = spl_object_id($container);
         if ($containerId === self::$lastInitializedContainerId) {
@@ -126,15 +126,15 @@ final class ContainerFactory
         $container->getService('typeSpecifier');
         \PHPStan\DependencyInjection\BleedingEdgeToggle::setBleedingEdge($container->getParameter('featureToggles')['bleedingEdge']);
     }
-    public function getCurrentWorkingDirectory() : string
+    public function getCurrentWorkingDirectory(): string
     {
         return $this->currentWorkingDirectory;
     }
-    public function getRootDirectory() : string
+    public function getRootDirectory(): string
     {
         return $this->rootDirectory;
     }
-    public function getConfigDirectory() : string
+    public function getConfigDirectory(): string
     {
         return $this->configDirectory;
     }
@@ -144,7 +144,7 @@ final class ContainerFactory
      * @return array{list<string>, array<mixed>}
      * @throws DuplicateIncludedFilesException
      */
-    private function detectDuplicateIncludedFiles(array $configFiles, array $loaderParameters) : array
+    private function detectDuplicateIncludedFiles(array $configFiles, array $loaderParameters): array
     {
         $neonAdapter = new \PHPStan\DependencyInjection\NeonAdapter([]);
         $phpAdapter = new PhpAdapter();
@@ -168,7 +168,7 @@ final class ContainerFactory
      * @param array<string, string> $loaderParameters
      * @return array{list<string>, array<mixed>}
      */
-    private static function getConfigFiles(FileHelper $fileHelper, \PHPStan\DependencyInjection\NeonAdapter $neonAdapter, PhpAdapter $phpAdapter, string $configFile, array $loaderParameters, ?string $generateBaselineFile) : array
+    private static function getConfigFiles(FileHelper $fileHelper, \PHPStan\DependencyInjection\NeonAdapter $neonAdapter, PhpAdapter $phpAdapter, string $configFile, array $loaderParameters, ?string $generateBaselineFile): array
     {
         if ($generateBaselineFile === $fileHelper->normalizePath($configFile)) {
             return [[], []];
@@ -195,7 +195,7 @@ final class ContainerFactory
         }
         return [$allConfigFiles, $data];
     }
-    private static function expandIncludedFile(string $includedFile, string $mainFile) : string
+    private static function expandIncludedFile(string $includedFile, string $mainFile): string
     {
         return Strings::match($includedFile, '#([a-z]+:)?[/\\\\]#Ai') !== null ? $includedFile : dirname($mainFile) . '/' . $includedFile;
     }
@@ -203,14 +203,14 @@ final class ContainerFactory
      * @param array<mixed> $parameters
      * @param array<mixed> $parametersSchema
      */
-    private function validateParameters(array $parameters, array $parametersSchema) : void
+    private function validateParameters(array $parameters, array $parametersSchema): void
     {
         if (!(bool) $parameters['__validate']) {
             return;
         }
         $schema = $this->processArgument(new Statement('schema', [new Statement('structure', [$parametersSchema])]));
         $processor = new Processor();
-        $processor->onNewContext[] = static function (SchemaContext $context) : void {
+        $processor->onNewContext[] = static function (SchemaContext $context): void {
             $context->path = ['parameters'];
         };
         $processor->process($schema, $parameters);
@@ -225,7 +225,7 @@ final class ContainerFactory
     /**
      * @param Statement[] $statements
      */
-    private function processSchema(array $statements, bool $required = \true) : Schema
+    private function processSchema(array $statements, bool $required = \true): Schema
     {
         if (count($statements) === 0) {
             throw new ShouldNotHappenException();

@@ -19,11 +19,11 @@ final class MissingCheckedExceptionInMethodThrowsRule implements Rule
     {
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return MethodReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $statementResult = $node->getStatementResult();
         $methodReflection = $node->getMethodReflection();

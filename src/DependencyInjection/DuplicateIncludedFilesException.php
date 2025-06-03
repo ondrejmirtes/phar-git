@@ -23,7 +23,7 @@ final class DuplicateIncludedFilesException extends Exception
     /**
      * @return string[]
      */
-    public function getFiles() : array
+    public function getFiles(): array
     {
         return $this->files;
     }

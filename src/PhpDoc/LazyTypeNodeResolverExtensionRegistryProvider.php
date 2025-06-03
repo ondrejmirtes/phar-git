@@ -12,7 +12,7 @@ final class LazyTypeNodeResolverExtensionRegistryProvider implements \PHPStan\Ph
     {
         $this->container = $container;
     }
-    public function getRegistry() : \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry
+    public function getRegistry(): \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistry
     {
         if ($this->registry === null) {
             $this->registry = new \PHPStan\PhpDoc\TypeNodeResolverExtensionAwareRegistry($this->container->getByType(\PHPStan\PhpDoc\TypeNodeResolver::class), $this->container->getServicesByTag(\PHPStan\PhpDoc\TypeNodeResolverExtension::EXTENSION_TAG));

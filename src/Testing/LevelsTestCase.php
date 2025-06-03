@@ -29,22 +29,22 @@ abstract class LevelsTestCase extends TestCase
     /**
      * @return array<array<string>>
      */
-    public static abstract function dataTopics() : array;
-    public abstract function getDataPath() : string;
-    public abstract function getPhpStanExecutablePath() : string;
-    public abstract function getPhpStanConfigPath() : ?string;
-    protected function getResultSuffix() : string
+    abstract public static function dataTopics(): array;
+    abstract public function getDataPath(): string;
+    abstract public function getPhpStanExecutablePath(): string;
+    abstract public function getPhpStanConfigPath(): ?string;
+    protected function getResultSuffix(): string
     {
         return '';
     }
-    protected function shouldAutoloadAnalysedFile() : bool
+    protected function shouldAutoloadAnalysedFile(): bool
     {
         return \true;
     }
     /**
      * @dataProvider dataTopics
      */
-    public function testLevels(string $topic) : void
+    public function testLevels(string $topic): void
     {
         $file = sprintf('%s' . DIRECTORY_SEPARATOR . '%s.php', $this->getDataPath(), $topic);
         $command = escapeshellcmd($this->getPhpStanExecutablePath());
@@ -124,14 +124,14 @@ abstract class LevelsTestCase extends TestCase
     /**
      * @return string[]
      */
-    public function getAdditionalAnalysedFiles() : array
+    public function getAdditionalAnalysedFiles(): array
     {
         return [];
     }
     /**
      * @param string[] $expectedMessages
      */
-    private function compareFiles(string $expectedJsonFile, array $expectedMessages) : ?AssertionFailedError
+    private function compareFiles(string $expectedJsonFile, array $expectedMessages): ?AssertionFailedError
     {
         if (count($expectedMessages) === 0) {
             try {
@@ -151,7 +151,7 @@ abstract class LevelsTestCase extends TestCase
         }
         return null;
     }
-    public static function ourCustomAssertFileDoesNotExist(string $filename, string $message = '') : void
+    public static function ourCustomAssertFileDoesNotExist(string $filename, string $message = ''): void
     {
         // this method is no longer called assertFileDoesNotExist because this method is final in PHPUnit 10
         if (!method_exists(parent::class, 'assertFileDoesNotExist')) {

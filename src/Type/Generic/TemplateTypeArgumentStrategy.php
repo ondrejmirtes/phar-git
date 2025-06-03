@@ -14,7 +14,7 @@ use function sprintf;
  */
 final class TemplateTypeArgumentStrategy implements \PHPStan\Type\Generic\TemplateTypeStrategy
 {
-    public function accepts(\PHPStan\Type\Generic\TemplateType $left, Type $right, bool $strictTypes) : AcceptsResult
+    public function accepts(\PHPStan\Type\Generic\TemplateType $left, Type $right, bool $strictTypes): AcceptsResult
     {
         if ($right instanceof CompoundType) {
             $accepts = $right->isAcceptedBy($left, $strictTypes);
@@ -27,7 +27,7 @@ final class TemplateTypeArgumentStrategy implements \PHPStan\Type\Generic\Templa
         }
         return $accepts;
     }
-    public function isArgument() : bool
+    public function isArgument(): bool
     {
         return \true;
     }

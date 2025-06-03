@@ -14,11 +14,11 @@ use function sprintf;
  */
 final class ConstructorReturnTypeRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InClassMethodNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $methodNode = $node->getOriginalNode();

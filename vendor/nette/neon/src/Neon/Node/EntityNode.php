@@ -21,19 +21,19 @@ final class EntityNode extends Node
         $this->value = $value;
         $this->attributes = $attributes;
     }
-    public function toValue() : Entity
+    public function toValue(): Entity
     {
         return new Entity($this->value->toValue(), ArrayItemNode::itemsToArray($this->attributes));
     }
-    public function toString() : string
+    public function toString(): string
     {
         return $this->value->toString() . '(' . ($this->attributes ? ArrayItemNode::itemsToInlineString($this->attributes) : '') . ')';
     }
-    public function &getIterator() : \Generator
+    public function &getIterator(): \Generator
     {
-        (yield $this->value);
+        yield $this->value;
         foreach ($this->attributes as &$item) {
-            (yield $item);
+            yield $item;
         }
     }
 }

@@ -28,7 +28,7 @@ class Locator
      * @throws IdentifierNotFound
      * @throws Exception\ParseToAstFailure
      */
-    public function findReflection(Reflector $reflector, LocatedSource $locatedSource, Identifier $identifier) : Reflection
+    public function findReflection(Reflector $reflector, LocatedSource $locatedSource, Identifier $identifier): Reflection
     {
         return $this->findInArray($this->findReflectionsOfType($reflector, $locatedSource, $identifier->getType()), $identifier, $locatedSource->getName());
     }
@@ -39,7 +39,7 @@ class Locator
      *
      * @throws Exception\ParseToAstFailure
      */
-    public function findReflectionsOfType(Reflector $reflector, LocatedSource $locatedSource, IdentifierType $identifierType) : array
+    public function findReflectionsOfType(Reflector $reflector, LocatedSource $locatedSource, IdentifierType $identifierType): array
     {
         try {
             /** @var list<Node\Stmt> $ast */
@@ -56,7 +56,7 @@ class Locator
      *
      * @throws IdentifierNotFound
      */
-    private function findInArray(array $reflections, Identifier $identifier, ?string $name) : Reflection
+    private function findInArray(array $reflections, Identifier $identifier, ?string $name): Reflection
     {
         if ($name === null) {
             throw IdentifierNotFound::fromIdentifier($identifier);

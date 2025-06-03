@@ -56,15 +56,13 @@ final class FileExcluder
             }
             if (self::isFnmatchPattern($normalized)) {
                 $this->fnmatchAnalyseExcludes[] = $normalized;
-            } else {
-                if (is_file($normalized)) {
-                    $this->literalAnalyseFilesExcludes[] = $normalized;
-                } elseif (is_dir($normalized)) {
-                    if (!$trailingDirSeparator) {
-                        $normalized .= DIRECTORY_SEPARATOR;
-                    }
-                    $this->literalAnalyseDirectoryExcludes[] = $normalized;
+            } else if (is_file($normalized)) {
+                $this->literalAnalyseFilesExcludes[] = $normalized;
+            } elseif (is_dir($normalized)) {
+                if (!$trailingDirSeparator) {
+                    $normalized .= DIRECTORY_SEPARATOR;
                 }
+                $this->literalAnalyseDirectoryExcludes[] = $normalized;
             }
         }
         $isWindows = DIRECTORY_SEPARATOR === '\\';
@@ -74,7 +72,7 @@ final class FileExcluder
             $this->fnmatchFlags = 0;
         }
     }
-    public function isExcludedFromAnalysing(string $file) : bool
+    public function isExcludedFromAnalysing(string $file): bool
     {
         $file = $this->fileHelper->normalizePath($file);
         foreach ($this->literalAnalyseExcludes as $exclude) {
@@ -99,7 +97,7 @@ final class FileExcluder
         }
         return \false;
     }
-    public static function isAbsolutePath(string $path) : bool
+    public static function isAbsolutePath(string $path): bool
     {
         if (DIRECTORY_SEPARATOR === '/') {
             if (str_starts_with($path, '/')) {
@@ -110,8 +108,8 @@ final class FileExcluder
         }
         return \false;
     }
-    public static function isFnmatchPattern(string $path) : bool
+    public static function isFnmatchPattern(string $path): bool
     {
-        return preg_match('~[*?[\\]]~', $path) > 0;
+        return preg_match('~[*?[\]]~', $path) > 0;
     }
 }

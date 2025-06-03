@@ -5,5 +5,5 @@ namespace PHPStan\Type;
 
 interface TypeAliasResolverProvider
 {
-    public function getTypeAliasResolver() : \PHPStan\Type\TypeAliasResolver;
+    public function getTypeAliasResolver(): \PHPStan\Type\TypeAliasResolver;
 }

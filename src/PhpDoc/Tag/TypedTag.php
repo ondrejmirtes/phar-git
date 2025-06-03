@@ -7,9 +7,9 @@ use PHPStan\Type\Type;
 /** @api */
 interface TypedTag
 {
-    public function getType() : Type;
+    public function getType(): Type;
     /**
      * @return static
      */
-    public function withType(Type $type) : self;
+    public function withType(Type $type): self;
 }

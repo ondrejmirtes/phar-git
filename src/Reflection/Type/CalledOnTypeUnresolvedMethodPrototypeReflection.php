@@ -33,18 +33,18 @@ final class CalledOnTypeUnresolvedMethodPrototypeReflection implements \PHPStan\
         $this->resolveTemplateTypeMapToBounds = $resolveTemplateTypeMapToBounds;
         $this->calledOnType = $calledOnType;
     }
-    public function doNotResolveTemplateTypeMapToBounds() : \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
+    public function doNotResolveTemplateTypeMapToBounds(): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
     {
         if ($this->cachedDoNotResolveTemplateTypeMapToBounds !== null) {
             return $this->cachedDoNotResolveTemplateTypeMapToBounds;
         }
         return $this->cachedDoNotResolveTemplateTypeMapToBounds = new self($this->methodReflection, $this->resolvedDeclaringClass, \false, $this->calledOnType);
     }
-    public function getNakedMethod() : ExtendedMethodReflection
+    public function getNakedMethod(): ExtendedMethodReflection
     {
         return $this->methodReflection;
     }
-    public function getTransformedMethod() : ExtendedMethodReflection
+    public function getTransformedMethod(): ExtendedMethodReflection
     {
         if ($this->transformedMethod !== null) {
             return $this->transformedMethod;
@@ -53,14 +53,14 @@ final class CalledOnTypeUnresolvedMethodPrototypeReflection implements \PHPStan\
         $callSiteVarianceMap = $this->resolvedDeclaringClass->getCallSiteVarianceMap();
         return $this->transformedMethod = new ResolvedMethodReflection($this->transformMethodWithStaticType($this->resolvedDeclaringClass, $this->methodReflection), $this->resolveTemplateTypeMapToBounds ? $templateTypeMap->resolveToBounds() : $templateTypeMap, $callSiteVarianceMap);
     }
-    public function withCalledOnType(Type $type) : \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
+    public function withCalledOnType(Type $type): \PHPStan\Reflection\Type\UnresolvedMethodPrototypeReflection
     {
         return new self($this->methodReflection, $this->resolvedDeclaringClass, $this->resolveTemplateTypeMapToBounds, $type);
     }
-    private function transformMethodWithStaticType(ClassReflection $declaringClass, ExtendedMethodReflection $method) : ExtendedMethodReflection
+    private function transformMethodWithStaticType(ClassReflection $declaringClass, ExtendedMethodReflection $method): ExtendedMethodReflection
     {
         $selfOutType = $method->getSelfOutType() !== null ? $this->transformStaticType($method->getSelfOutType()) : null;
-        $variantFn = function (ExtendedParametersAcceptor $acceptor) use($selfOutType) : ExtendedParametersAcceptor {
+        $variantFn = function (ExtendedParametersAcceptor $acceptor) use ($selfOutType): ExtendedParametersAcceptor {
             $originalReturnType = $acceptor->getReturnType();
             if ($originalReturnType instanceof ThisType && $selfOutType !== null) {
                 $returnType = $selfOutType;
@@ -74,9 +74,9 @@ final class CalledOnTypeUnresolvedMethodPrototypeReflection implements \PHPStan\
         $namedArgumentsVariants = $namedArgumentsVariants !== null ? array_map($variantFn, $namedArgumentsVariants) : null;
         return new ChangedTypeMethodReflection($declaringClass, $method, $variants, $namedArgumentsVariants, $selfOutType);
     }
-    private function transformStaticType(Type $type) : Type
+    private function transformStaticType(Type $type): Type
     {
-        return TypeTraverser::map($type, function (Type $type, callable $traverse) : Type {
+        return TypeTraverser::map($type, function (Type $type, callable $traverse): Type {
             if ($type instanceof GenericStaticType) {
                 $calledOnTypeReflections = $this->calledOnType->getObjectClassReflections();
                 if (count($calledOnTypeReflections) === 1) {

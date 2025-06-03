@@ -35,27 +35,27 @@ class GenericClassStringType extends ClassStringType
         $this->type = $type;
         parent::__construct();
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return $this->type->getReferencedClasses();
     }
-    public function getGenericType() : Type
+    public function getGenericType(): Type
     {
         return $this->type;
     }
-    public function getClassStringObjectType() : Type
+    public function getClassStringObjectType(): Type
     {
         return $this->getGenericType();
     }
-    public function getObjectTypeOrClassStringObjectType() : Type
+    public function getObjectTypeOrClassStringObjectType(): Type
     {
         return $this->getClassStringObjectType();
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return sprintf('%s<%s>', parent::describe($level), $this->type->describe($level));
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
@@ -76,7 +76,7 @@ class GenericClassStringType extends ClassStringType
         }
         return $this->type->accepts($objectType, $strictTypes);
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         if ($type instanceof CompoundType) {
             return $type->isSubTypeOf($this);
@@ -110,7 +110,7 @@ class GenericClassStringType extends ClassStringType
         }
         return IsSuperTypeOfResult::createNo();
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         $newType = $cb($this->type);
         if ($newType === $this->type) {
@@ -118,7 +118,7 @@ class GenericClassStringType extends ClassStringType
         }
         return new self($newType);
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         $newType = $cb($this->type, $right->getClassStringObjectType());
         if ($newType === $this->type) {
@@ -126,7 +126,7 @@ class GenericClassStringType extends ClassStringType
         }
         return new self($newType);
     }
-    public function inferTemplateTypes(Type $receivedType) : \PHPStan\Type\Generic\TemplateTypeMap
+    public function inferTemplateTypes(Type $receivedType): \PHPStan\Type\Generic\TemplateTypeMap
     {
         if ($receivedType instanceof UnionType || $receivedType instanceof IntersectionType) {
             return $receivedType->inferTemplateTypesOn($this);
@@ -146,12 +146,12 @@ class GenericClassStringType extends ClassStringType
         }
         return $this->type->inferTemplateTypes($typeToInfer);
     }
-    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance) : array
+    public function getReferencedTemplateTypes(\PHPStan\Type\Generic\TemplateTypeVariance $positionVariance): array
     {
         $variance = $positionVariance->compose(\PHPStan\Type\Generic\TemplateTypeVariance::createCovariant());
         return $this->type->getReferencedTemplateTypes($variance);
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         if (!$type instanceof self) {
             return \false;
@@ -164,11 +164,11 @@ class GenericClassStringType extends ClassStringType
         }
         return \true;
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new GenericTypeNode(new IdentifierTypeNode('class-string'), [$this->type->toPhpDocNode()]);
     }
-    public function tryRemove(Type $typeToRemove) : ?Type
+    public function tryRemove(Type $typeToRemove): ?Type
     {
         if ($typeToRemove instanceof ConstantStringType && $typeToRemove->isClassString()->yes()) {
             $generic = $this->getGenericType();

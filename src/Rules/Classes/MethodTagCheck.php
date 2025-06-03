@@ -44,7 +44,7 @@ final class MethodTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node) : array
+    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node): array
     {
         $errors = [];
         foreach ($classReflection->getMethodTags() as $methodName => $methodTag) {
@@ -82,7 +82,7 @@ final class MethodTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitDefinitionContext(ClassReflection $classReflection) : array
+    public function checkInTraitDefinitionContext(ClassReflection $classReflection): array
     {
         $errors = [];
         foreach ($classReflection->getMethodTags() as $methodName => $methodTag) {
@@ -111,7 +111,7 @@ final class MethodTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitUseContext(Scope $scope, ClassReflection $classReflection, ClassReflection $implementingClass, ClassLike $node) : array
+    public function checkInTraitUseContext(Scope $scope, ClassReflection $classReflection, ClassReflection $implementingClass, ClassLike $node): array
     {
         $phpDoc = $classReflection->getTraitContextResolvedPhpDoc($implementingClass);
         if ($phpDoc === null) {
@@ -144,7 +144,7 @@ final class MethodTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkMethodTypeInTraitDefinitionContext(ClassReflection $classReflection, string $methodName, string $description, Type $type) : array
+    private function checkMethodTypeInTraitDefinitionContext(ClassReflection $classReflection, string $methodName, string $description, Type $type): array
     {
         if (!$this->checkMissingTypehints) {
             return [];
@@ -165,7 +165,7 @@ final class MethodTagCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkMethodTypeInTraitUseContext(Scope $scope, ClassReflection $classReflection, string $methodName, string $description, Type $type, ClassLike $node) : array
+    private function checkMethodTypeInTraitUseContext(Scope $scope, ClassReflection $classReflection, string $methodName, string $description, Type $type, ClassLike $node): array
     {
         $errors = [];
         foreach ($type->getReferencedClasses() as $class) {

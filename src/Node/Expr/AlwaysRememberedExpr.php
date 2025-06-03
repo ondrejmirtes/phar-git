@@ -18,26 +18,26 @@ final class AlwaysRememberedExpr extends Expr implements VirtualNode
         $this->nativeType = $nativeType;
         parent::__construct([]);
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getExprType() : Type
+    public function getExprType(): Type
     {
         return $this->type;
     }
-    public function getNativeExprType() : Type
+    public function getNativeExprType(): Type
     {
         return $this->nativeType;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_AlwaysRememberedExpr';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return ['expr'];
     }

@@ -21,11 +21,11 @@ final class YieldInGeneratorRule implements Rule
     {
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\Yield_ && !$node instanceof Node\Expr\YieldFrom) {
             return [];

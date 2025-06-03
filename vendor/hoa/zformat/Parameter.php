@@ -87,13 +87,13 @@ class Parameter
     {
         if (\is_object($owner)) {
             if (!$owner instanceof \Hoa\Zformat\Parameterizable) {
-                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \\Hoa\\Zformat\\Parameterizable.', 0, \get_class($owner));
+                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \Hoa\Zformat\Parameterizable.', 0, \get_class($owner));
             }
             $owner = \get_class($owner);
         } else {
             $reflection = new \ReflectionClass($owner);
-            if (\false === $reflection->implementsInterface('\\Hoa\\Zformat\\Parameterizable')) {
-                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \\Hoa\\Zformat\\Parameterizable.', 1, $owner);
+            if (\false === $reflection->implementsInterface('\Hoa\Zformat\Parameterizable')) {
+                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \Hoa\Zformat\Parameterizable.', 1, $owner);
             }
         }
         $this->_owner = $owner;
@@ -194,7 +194,7 @@ class Parameter
      */
     public function getFormattedParameter($parameter)
     {
-        if (null === ($value = $this->getParameter($parameter))) {
+        if (null === $value = $this->getParameter($parameter)) {
             return null;
         }
         return $this->zFormat($value);
@@ -231,11 +231,11 @@ class Parameter
                 continue;
             }
             $handle = [];
-            $explode = \preg_split('#((?<!\\\\)\\.)#', \substr($key, $lBranch + 1), -1, \PREG_SPLIT_NO_EMPTY);
+            $explode = \preg_split('#((?<!\\\\)\.)#', \substr($key, $lBranch + 1), -1, \PREG_SPLIT_NO_EMPTY);
             $end = \count($explode) - 1;
             $i = $end;
             while ($i >= 0) {
-                $explode[$i] = \str_replace('\\.', '.', $explode[$i]);
+                $explode[$i] = \str_replace('\.', '.', $explode[$i]);
                 if ($i != $end) {
                     $handle = [$explode[$i] => $handle];
                 } else {
@@ -407,7 +407,7 @@ class Parameter
         $self = $this;
         $keywords = $this->getKeywords();
         $parameters = $this->getParameters();
-        return $this->_cache[$value] = \preg_replace_callback('#\\(:(.*?):\\)#', function ($match) use($self, $value, &$keywords, &$parameters) {
+        return $this->_cache[$value] = \preg_replace_callback('#\(:(.*?):\)#', function ($match) use ($self, $value, &$keywords, &$parameters) {
             \preg_match('#([^:]+)(?::(.*))?#', $match[1], $submatch);
             if (!isset($submatch[1])) {
                 return '';
@@ -439,7 +439,7 @@ class Parameter
             if (!isset($submatch[2])) {
                 return $out;
             }
-            \preg_match_all('#(h|t|r|e|l|u|U|s(/|%|\\#)(.*?)(?<!\\\\)\\2(.*?)(?:(?<!\\\\)\\2|$))#', $submatch[2], $flags);
+            \preg_match_all('#(h|t|r|e|l|u|U|s(/|%|\#)(.*?)(?<!\\\\)\2(.*?)(?:(?<!\\\\)\2|$))#', $submatch[2], $flags);
             if (empty($flags) || empty($flags[1])) {
                 throw new \Hoa\Zformat\Exception('Unrecognized format pattern %s in the rule %s.', 3, [$match[0], $value]);
             }
@@ -452,12 +452,12 @@ class Parameter
                         $out = \basename($out);
                         break;
                     case 'r':
-                        if (\false !== ($position = \strrpos($out, '.', 1))) {
+                        if (\false !== $position = \strrpos($out, '.', 1)) {
                             $out = \substr($out, 0, $position);
                         }
                         break;
                     case 'e':
-                        if (\false !== ($position = \strrpos($out, '.', 1))) {
+                        if (\false !== $position = \strrpos($out, '.', 1)) {
                             $out = \substr($out, $position + 1);
                         }
                         break;

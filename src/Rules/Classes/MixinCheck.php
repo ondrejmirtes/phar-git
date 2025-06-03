@@ -42,7 +42,7 @@ final class MixinCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node) : array
+    public function check(Scope $scope, ClassReflection $classReflection, ClassLike $node): array
     {
         $errors = [];
         foreach ($this->checkInTraitDefinitionContext($classReflection) as $error) {
@@ -56,7 +56,7 @@ final class MixinCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitDefinitionContext(ClassReflection $classReflection) : array
+    public function checkInTraitDefinitionContext(ClassReflection $classReflection): array
     {
         $errors = [];
         foreach ($classReflection->getMixinTags() as $mixinTag) {
@@ -84,7 +84,7 @@ final class MixinCheck
     /**
      * @return list<IdentifierRuleError>
      */
-    public function checkInTraitUseContext(Scope $scope, ClassReflection $reflection, ClassReflection $implementingClassReflection, ClassLike $node) : array
+    public function checkInTraitUseContext(Scope $scope, ClassReflection $reflection, ClassReflection $implementingClassReflection, ClassLike $node): array
     {
         if ($reflection->getNativeReflection()->getName() === $implementingClassReflection->getName()) {
             $phpDoc = $reflection->getResolvedPhpDoc();

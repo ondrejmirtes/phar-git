@@ -24,11 +24,11 @@ final class IncompatiblePhpDocTypeRule implements Rule
         $this->fileTypeMapper = $fileTypeMapper;
         $this->check = $check;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\FunctionLike::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node instanceof Node\Stmt\ClassMethod) {
             $functionName = $node->name->name;
@@ -47,7 +47,7 @@ final class IncompatiblePhpDocTypeRule implements Rule
     /**
      * @return array<string, Type>
      */
-    private function getNativeParameterTypes(Node\FunctionLike $node, Scope $scope) : array
+    private function getNativeParameterTypes(Node\FunctionLike $node, Scope $scope): array
     {
         $nativeParameterTypes = [];
         foreach ($node->getParams() as $parameter) {
@@ -62,7 +62,7 @@ final class IncompatiblePhpDocTypeRule implements Rule
     /**
      * @return array<string, bool>
      */
-    private function getByRefParameters(Node\FunctionLike $node) : array
+    private function getByRefParameters(Node\FunctionLike $node): array
     {
         $nativeParameterTypes = [];
         foreach ($node->getParams() as $parameter) {
@@ -73,7 +73,7 @@ final class IncompatiblePhpDocTypeRule implements Rule
         }
         return $nativeParameterTypes;
     }
-    private function getNativeReturnType(Node\FunctionLike $node, Scope $scope) : Type
+    private function getNativeReturnType(Node\FunctionLike $node, Scope $scope): Type
     {
         return $scope->getFunctionType($node->getReturnType(), \false, \false);
     }

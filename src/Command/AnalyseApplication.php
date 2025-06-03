@@ -49,7 +49,7 @@ final class AnalyseApplication
      * @param string[] $files
      * @param mixed[]|null $projectConfigArray
      */
-    public function analyse(array $files, bool $onlyFiles, \PHPStan\Command\Output $stdOutput, \PHPStan\Command\Output $errorOutput, bool $defaultLevelUsed, bool $debug, ?string $projectConfigFile, ?array $projectConfigArray, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input) : \PHPStan\Command\AnalysisResult
+    public function analyse(array $files, bool $onlyFiles, \PHPStan\Command\Output $stdOutput, \PHPStan\Command\Output $errorOutput, bool $defaultLevelUsed, bool $debug, ?string $projectConfigFile, ?array $projectConfigArray, ?string $tmpFile, ?string $insteadOfFile, InputInterface $input): \PHPStan\Command\AnalysisResult
     {
         $isResultCacheUsed = \false;
         $fileReplacements = [];
@@ -115,7 +115,7 @@ final class AnalyseApplication
      *
      * @return list<CollectedData>
      */
-    private function mapCollectedData(array $collectedData) : array
+    private function mapCollectedData(array $collectedData): array
     {
         $result = [];
         foreach ($collectedData as $file => $dataPerCollector) {
@@ -129,7 +129,7 @@ final class AnalyseApplication
      * @param string[] $files
      * @param string[] $allAnalysedFiles
      */
-    private function runAnalyser(array $files, array $allAnalysedFiles, bool $debug, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, \PHPStan\Command\Output $stdOutput, \PHPStan\Command\Output $errorOutput, InputInterface $input) : AnalyserResult
+    private function runAnalyser(array $files, array $allAnalysedFiles, bool $debug, ?string $projectConfigFile, ?string $tmpFile, ?string $insteadOfFile, \PHPStan\Command\Output $stdOutput, \PHPStan\Command\Output $errorOutput, InputInterface $input): AnalyserResult
     {
         $filesCount = count($files);
         $allAnalysedFilesCount = count($allAnalysedFiles);
@@ -141,21 +141,21 @@ final class AnalyseApplication
         }
         if (!$debug) {
             $preFileCallback = null;
-            $postFileCallback = static function (int $step) use($errorOutput) : void {
+            $postFileCallback = static function (int $step) use ($errorOutput): void {
                 $errorOutput->getStyle()->progressAdvance($step);
             };
             $errorOutput->getStyle()->progressStart($allAnalysedFilesCount);
             $errorOutput->getStyle()->progressAdvance($allAnalysedFilesCount - $filesCount);
         } else {
             $startTime = null;
-            $preFileCallback = static function (string $file) use($stdOutput, &$startTime) : void {
+            $preFileCallback = static function (string $file) use ($stdOutput, &$startTime): void {
                 $stdOutput->writeLineFormatted($file);
                 $startTime = microtime(\true);
             };
             $postFileCallback = null;
             if ($stdOutput->isDebug()) {
                 $previousMemory = memory_get_peak_usage(\true);
-                $postFileCallback = static function () use($stdOutput, &$previousMemory, &$startTime) : void {
+                $postFileCallback = static function () use ($stdOutput, &$previousMemory, &$startTime): void {
                     if ($startTime === null) {
                         throw new ShouldNotHappenException();
                     }
@@ -172,7 +172,7 @@ final class AnalyseApplication
         }
         return $analyserResult;
     }
-    private function switchTmpFileInAnalyserResult(AnalyserResult $analyserResult, ?string $insteadOfFile, ?string $tmpFile) : AnalyserResult
+    private function switchTmpFileInAnalyserResult(AnalyserResult $analyserResult, ?string $insteadOfFile, ?string $tmpFile): AnalyserResult
     {
         if ($insteadOfFile === null || $tmpFile === null) {
             return $analyserResult;
@@ -205,7 +205,7 @@ final class AnalyseApplication
      * @param array<string, array<string>> $dependencies
      * @return array<string, array<string>>
      */
-    private function switchTmpFileInDependencies(array $dependencies, string $insteadOfFile, string $tmpFile) : array
+    private function switchTmpFileInDependencies(array $dependencies, string $insteadOfFile, string $tmpFile): array
     {
         $newDependencies = [];
         foreach ($dependencies as $dependencyFile => $dependentFiles) {
@@ -229,7 +229,7 @@ final class AnalyseApplication
      * @param list<Error> $errors
      * @return list<Error>
      */
-    private function switchTmpFileInErrors(array $errors, string $insteadOfFile, string $tmpFile) : array
+    private function switchTmpFileInErrors(array $errors, string $insteadOfFile, string $tmpFile): array
     {
         $newErrors = [];
         foreach ($errors as $error) {
@@ -247,7 +247,7 @@ final class AnalyseApplication
      * @param array<string, LinesToIgnore> $linesToIgnore
      * @return array<string, LinesToIgnore>
      */
-    private function swittchTmpFileInLinesToIgnore(array $linesToIgnore, string $insteadOfFile, string $tmpFile) : array
+    private function swittchTmpFileInLinesToIgnore(array $linesToIgnore, string $insteadOfFile, string $tmpFile): array
     {
         $newLinesToIgnore = [];
         foreach ($linesToIgnore as $file => $lines) {

@@ -23,11 +23,11 @@ final class ReflectionFunctionConstructorThrowTypeExtension implements DynamicSt
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return $methodReflection->getName() === '__construct' && $methodReflection->getDeclaringClass()->getName() === ReflectionFunction::class;
     }
-    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) < 1) {
             return $methodReflection->getThrowType();

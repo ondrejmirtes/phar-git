@@ -20,11 +20,11 @@ final class NonexistentAnalysedTraitRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt\Trait_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->namespacedName === null) {
             throw new ShouldNotHappenException();

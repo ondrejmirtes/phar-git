@@ -46,7 +46,7 @@ final class ExportedMethodNode implements ExportedNode, JsonSerializable
         $this->parameters = $parameters;
         $this->attributes = $attributes;
     }
-    public function equals(ExportedNode $node) : bool
+    public function equals(ExportedNode $node): bool
     {
         if (!$node instanceof self) {
             return \false;
@@ -84,7 +84,7 @@ final class ExportedMethodNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $properties
      */
-    public static function __set_state(array $properties) : self
+    public static function __set_state(array $properties): self
     {
         return new self($properties['name'], $properties['phpDoc'], $properties['byRef'], $properties['public'], $properties['private'], $properties['abstract'], $properties['final'], $properties['static'], $properties['returnType'], $properties['parameters'], $properties['attributes']);
     }
@@ -99,14 +99,14 @@ final class ExportedMethodNode implements ExportedNode, JsonSerializable
     /**
      * @param mixed[] $data
      */
-    public static function decode(array $data) : self
+    public static function decode(array $data): self
     {
-        return new self($data['name'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['byRef'], $data['public'], $data['private'], $data['abstract'], $data['final'], $data['static'], $data['returnType'], array_map(static function (array $parameterData) : \PHPStan\Dependency\ExportedNode\ExportedParameterNode {
+        return new self($data['name'], $data['phpDoc'] !== null ? \PHPStan\Dependency\ExportedNode\ExportedPhpDocNode::decode($data['phpDoc']['data']) : null, $data['byRef'], $data['public'], $data['private'], $data['abstract'], $data['final'], $data['static'], $data['returnType'], array_map(static function (array $parameterData): \PHPStan\Dependency\ExportedNode\ExportedParameterNode {
             if ($parameterData['type'] !== \PHPStan\Dependency\ExportedNode\ExportedParameterNode::class) {
                 throw new ShouldNotHappenException();
             }
             return \PHPStan\Dependency\ExportedNode\ExportedParameterNode::decode($parameterData['data']);
-        }, $data['parameters']), array_map(static function (array $attributeData) : \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
+        }, $data['parameters']), array_map(static function (array $attributeData): \PHPStan\Dependency\ExportedNode\ExportedAttributeNode {
             if ($attributeData['type'] !== \PHPStan\Dependency\ExportedNode\ExportedAttributeNode::class) {
                 throw new ShouldNotHappenException();
             }

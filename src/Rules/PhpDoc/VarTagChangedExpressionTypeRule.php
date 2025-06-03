@@ -17,11 +17,11 @@ final class VarTagChangedExpressionTypeRule implements Rule
     {
         $this->varTagTypeRuleHelper = $varTagTypeRuleHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return VarTagChangedExpressionTypeNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         return $this->varTagTypeRuleHelper->checkExprType($scope, $node->getExpr(), $node->getVarTag()->getType());
     }

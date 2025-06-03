@@ -23,7 +23,7 @@ final class RicherScopeGetTypeHelper
     /**
      * @return TypeResult<BooleanType>
      */
-    public function getIdenticalResult(\PHPStan\Analyser\Scope $scope, Identical $expr) : TypeResult
+    public function getIdenticalResult(\PHPStan\Analyser\Scope $scope, Identical $expr): TypeResult
     {
         if ($expr->left instanceof Variable && is_string($expr->left->name) && $expr->right instanceof Variable && is_string($expr->right->name) && $expr->left->name === $expr->right->name) {
             return new TypeResult(new ConstantBooleanType(\true), []);
@@ -44,7 +44,7 @@ final class RicherScopeGetTypeHelper
     /**
      * @return TypeResult<BooleanType>
      */
-    public function getNotIdenticalResult(\PHPStan\Analyser\Scope $scope, Node\Expr\BinaryOp\NotIdentical $expr) : TypeResult
+    public function getNotIdenticalResult(\PHPStan\Analyser\Scope $scope, Node\Expr\BinaryOp\NotIdentical $expr): TypeResult
     {
         $identicalResult = $this->getIdenticalResult($scope, new Identical($expr->left, $expr->right));
         $identicalType = $identicalResult->type;

@@ -13,13 +13,13 @@ final class ReflectionStringCastHelper
 {
     /** @psalm-pure
      * @param \PHPStan\BetterReflection\Reflection\ReflectionProperty|\PHPStan\BetterReflection\Reflection\ReflectionClassConstant|\PHPStan\BetterReflection\Reflection\ReflectionEnumCase $reflection */
-    public static function docCommentToString($reflection, bool $indent) : string
+    public static function docCommentToString($reflection, bool $indent): string
     {
         $docComment = $reflection->getDocComment();
         if ($docComment === null) {
             return '';
         }
-        $indentedDocComment = $indent ? preg_replace('/(\\n)(?!\\n)/', '\\1    ', $docComment) : $docComment;
+        $indentedDocComment = $indent ? preg_replace('/(\n)(?!\n)/', '\1    ', $docComment) : $docComment;
         assert($indentedDocComment !== null);
         return $indentedDocComment . "\n";
     }

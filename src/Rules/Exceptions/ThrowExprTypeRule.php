@@ -24,11 +24,11 @@ final class ThrowExprTypeRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Throw_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $throwableType = new ObjectType(Throwable::class);
         $typeResult = $this->ruleLevelHelper->findTypeToCheck($scope, $node->expr, 'Throwing object of an unknown class %s.', static fn(Type $type): bool => $throwableType->isSuperTypeOf($type)->yes());

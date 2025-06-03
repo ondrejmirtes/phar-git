@@ -19,11 +19,11 @@ final class ThrowExpressionRule implements Rule
     {
         $this->phpVersion = $phpVersion;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\Throw_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($this->phpVersion->supportsThrowExpression()) {
             return [];

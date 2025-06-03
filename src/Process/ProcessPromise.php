@@ -24,14 +24,14 @@ final class ProcessPromise
     {
         $this->loop = $loop;
         $this->command = $command;
-        $this->deferred = new Deferred(function () : void {
+        $this->deferred = new Deferred(function (): void {
             $this->cancel();
         });
     }
     /**
      * @return PromiseInterface<string>
      */
-    public function run() : PromiseInterface
+    public function run(): PromiseInterface
     {
         $tmpStdOutResource = tmpfile();
         if ($tmpStdOutResource === \false) {
@@ -43,7 +43,7 @@ final class ProcessPromise
         }
         $this->process = new Process($this->command, null, null, [1 => $tmpStdOutResource, 2 => $tmpStdErrResource]);
         $this->process->start($this->loop);
-        $this->process->on('exit', function ($exitCode) use($tmpStdOutResource, $tmpStdErrResource) : void {
+        $this->process->on('exit', function ($exitCode) use ($tmpStdOutResource, $tmpStdErrResource): void {
             if ($this->canceled) {
                 fclose($tmpStdOutResource);
                 fclose($tmpStdErrResource);
@@ -70,7 +70,7 @@ final class ProcessPromise
         });
         return $this->deferred->promise();
     }
-    private function cancel() : void
+    private function cancel(): void
     {
         if ($this->process === null) {
             throw new ShouldNotHappenException('Cancelling process before running');

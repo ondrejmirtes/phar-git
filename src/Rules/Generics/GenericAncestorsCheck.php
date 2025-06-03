@@ -52,7 +52,7 @@ final class GenericAncestorsCheck
      * @param array<Type> $ancestorTypes
      * @return list<IdentifierRuleError>
      */
-    public function check(array $nameNodes, array $ancestorTypes, string $incompatibleTypeMessage, string $unresolvableTypeMessage, string $noNamesMessage, string $noRelatedNameMessage, string $classNotGenericMessage, string $notEnoughTypesMessage, string $extraTypesMessage, string $typeIsNotSubtypeMessage, string $typeProjectionIsNotAllowedMessage, string $invalidTypeMessage, string $genericClassInNonGenericObjectType, string $invalidVarianceMessage) : array
+    public function check(array $nameNodes, array $ancestorTypes, string $incompatibleTypeMessage, string $unresolvableTypeMessage, string $noNamesMessage, string $noRelatedNameMessage, string $classNotGenericMessage, string $notEnoughTypesMessage, string $extraTypesMessage, string $typeIsNotSubtypeMessage, string $typeProjectionIsNotAllowedMessage, string $invalidTypeMessage, string $genericClassInNonGenericObjectType, string $invalidVarianceMessage): array
     {
         $names = array_fill_keys(array_map(static fn(Name $nameNode): string => $nameNode->toString(), $nameNodes), \true);
         $unusedNames = $names;

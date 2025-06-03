@@ -59,11 +59,11 @@ class ArgvInput extends Input
     {
         $parseOptions = \true;
         $this->parsed = $this->tokens;
-        while (null !== ($token = \array_shift($this->parsed))) {
+        while (null !== $token = \array_shift($this->parsed)) {
             $parseOptions = $this->parseToken($token, $parseOptions);
         }
     }
-    protected function parseToken(string $token, bool $parseOptions) : bool
+    protected function parseToken(string $token, bool $parseOptions): bool
     {
         if ($parseOptions && '' == $token) {
             $this->parseArgument($token);
@@ -123,8 +123,8 @@ class ArgvInput extends Input
     private function parseLongOption(string $token)
     {
         $name = \substr($token, 2);
-        if (\false !== ($pos = \strpos($name, '='))) {
-            if ('' === ($value = \substr($name, $pos + 1))) {
+        if (\false !== $pos = \strpos($name, '=')) {
+            if ('' === $value = \substr($name, $pos + 1)) {
                 \array_unshift($this->parsed, $value);
             }
             $this->addLongOption(\substr($name, 0, $pos), $value);

@@ -35,11 +35,11 @@ final class VersionCompareFunctionDynamicReturnTypeExtension implements DynamicF
         $this->configPhpVersion = $configPhpVersion;
         $this->composerPhpVersionFactory = $composerPhpVersionFactory;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'version_compare';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         $args = $functionCall->getArgs();
         if (count($args) < 2) {
@@ -82,7 +82,7 @@ final class VersionCompareFunctionDynamicReturnTypeExtension implements DynamicF
     /**
      * @return ConstantStringType[]
      */
-    private function getVersionStrings(Expr $expr, Scope $scope) : array
+    private function getVersionStrings(Expr $expr, Scope $scope): array
     {
         if ($expr instanceof Expr\ConstFetch && $expr->name->toString() === 'PHP_VERSION') {
             if (is_array($this->configPhpVersion)) {

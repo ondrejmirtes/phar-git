@@ -40,11 +40,11 @@ class Resolver
         $this->builder = $builder;
         $this->recursive = new \SplObjectStorage();
     }
-    public function getContainerBuilder() : ContainerBuilder
+    public function getContainerBuilder(): ContainerBuilder
     {
         return $this->builder;
     }
-    public function resolveDefinition(Definition $def) : void
+    public function resolveDefinition(Definition $def): void
     {
         if ($this->recursive->contains($def)) {
             $names = \array_map(function ($item) {
@@ -64,7 +64,7 @@ class Resolver
             $this->recursive->detach($def);
         }
     }
-    public function resolveReferenceType(Reference $ref) : ?string
+    public function resolveReferenceType(Reference $ref): ?string
     {
         if ($ref->isSelf()) {
             return $this->currentServiceType;
@@ -77,7 +77,7 @@ class Resolver
         }
         return $def->getType();
     }
-    public function resolveEntityType(Statement $statement) : ?string
+    public function resolveEntityType(Statement $statement): ?string
     {
         $entity = $this->normalizeEntity($statement);
         if (\is_array($entity)) {
@@ -98,7 +98,7 @@ class Resolver
                 throw new ServiceCreationException(\sprintf('Method %s() is not callable.', Callback::toString($entity)), 0, $e ?? null);
             }
             $this->addDependency($reflection);
-            $type = Nette\Utils\Type::fromReflection($reflection) ?? ($annotation = Helpers::getReturnTypeAnnotation($reflection));
+            $type = Nette\Utils\Type::fromReflection($reflection) ?? $annotation = Helpers::getReturnTypeAnnotation($reflection);
             if ($type && !\in_array($type->getSingleName(), ['object', 'mixed'], \true)) {
                 if (isset($annotation)) {
                     \trigger_error('Annotation @return should be replaced with native return type at ' . Callback::toString($entity), \E_USER_DEPRECATED);
@@ -118,7 +118,7 @@ class Resolver
         }
         return null;
     }
-    public function completeDefinition(Definition $def) : void
+    public function completeDefinition(Definition $def): void
     {
         $this->currentService = \in_array($def, $this->builder->getDefinitions(), \true) ? $def : null;
         $this->currentServiceType = $def->getType();
@@ -132,7 +132,7 @@ class Resolver
             $this->currentService = $this->currentServiceType = null;
         }
     }
-    public function completeStatement(Statement $statement, bool $currentServiceAllowed = \false) : Statement
+    public function completeStatement(Statement $statement, bool $currentServiceAllowed = \false): Statement
     {
         $this->currentServiceAllowed = $currentServiceAllowed;
         $entity = $this->normalizeEntity($statement);
@@ -181,7 +181,7 @@ class Resolver
                 $entity = [new Reference(ContainerBuilder::ThisContainer), Container::getMethodName($entity->getValue())];
                 break;
             case \is_array($entity):
-                if (!\preg_match('#^\\$?(\\\\?' . PhpHelpers::PHP_IDENT . ')+(\\[\\])?$#D', $entity[1])) {
+                if (!\preg_match('#^\$?(\\\\?' . PhpHelpers::PHP_IDENT . ')+(\[\])?$#D', $entity[1])) {
                     throw new ServiceCreationException(\sprintf("Expected function, method or property name, '%s' given.", $entity[1]));
                 }
                 switch (\true) {
@@ -233,9 +233,9 @@ class Resolver
         }
         return new Statement($entity, $arguments);
     }
-    public function completeArguments(array $arguments) : array
+    public function completeArguments(array $arguments): array
     {
-        \array_walk_recursive($arguments, function (&$val) : void {
+        \array_walk_recursive($arguments, function (&$val): void {
             if ($val instanceof Statement) {
                 $entity = $val->getEntity();
                 if ($entity === 'typed' || $entity === 'tagged') {
@@ -282,7 +282,7 @@ class Resolver
     /**
      * Normalizes reference to 'self' or named reference (or leaves it typed if it is not possible during resolving) and checks existence of service.
      */
-    public function normalizeReference(Reference $ref) : Reference
+    public function normalizeReference(Reference $ref): Reference
     {
         $service = $ref->getValue();
         if ($ref->isSelf()) {
@@ -299,7 +299,7 @@ class Resolver
             return new Reference($service);
         }
     }
-    public function resolveReference(Reference $ref) : Definition
+    public function resolveReference(Reference $ref): Definition
     {
         return $ref->isSelf() ? $this->currentService : $this->builder->getDefinition($ref->getValue());
     }
@@ -308,7 +308,7 @@ class Resolver
      * @throws ServiceCreationException when multiple found
      * @throws MissingServiceException when not found
      */
-    public function getByType(string $type) : Reference
+    public function getByType(string $type): Reference
     {
         if ($this->currentService && $this->currentServiceAllowed && \is_a($this->currentServiceType, $type, \true)) {
             return new Reference(Reference::Self);
@@ -329,7 +329,7 @@ class Resolver
         $this->builder->addDependency($dep);
         return $this;
     }
-    private function completeException(\Throwable $e, Definition $def) : ServiceCreationException
+    private function completeException(\Throwable $e, Definition $def): ServiceCreationException
     {
         if ($e instanceof ServiceCreationException && Strings::startsWith($e->getMessage(), "Service '")) {
             return $e;
@@ -348,9 +348,9 @@ class Resolver
         $message .= $type ? \str_replace("{$type}::", \preg_replace('~.*\\\\~', '', $type) . '::', $e->getMessage()) : $e->getMessage();
         return $e instanceof ServiceCreationException ? $e->setMessage($message) : new ServiceCreationException($message, 0, $e);
     }
-    private function entityToString($entity) : string
+    private function entityToString($entity): string
     {
-        $referenceToText = function (Reference $ref) : string {
+        $referenceToText = function (Reference $ref): string {
             return $ref->isSelf() && $this->currentService ? '@' . $this->currentService->getName() : '@' . $ref->getValue();
         };
         if (\is_string($entity)) {
@@ -370,9 +370,9 @@ class Resolver
         }
         return (string) $entity;
     }
-    private function convertReferences(array $arguments) : array
+    private function convertReferences(array $arguments): array
     {
-        \array_walk_recursive($arguments, function (&$val) : void {
+        \array_walk_recursive($arguments, function (&$val): void {
             if (\is_string($val) && \strlen($val) > 1 && $val[0] === '@' && $val[1] !== '@') {
                 $pair = \explode('::', \substr($val, 1), 2);
                 if (!isset($pair[1])) {
@@ -397,7 +397,7 @@ class Resolver
      * @param  (callable(string $type, bool $single): (object|object[]|null))  $getter
      * @throws ServiceCreationException
      */
-    public static function autowireArguments(\ReflectionFunctionAbstract $method, array $arguments, callable $getter) : array
+    public static function autowireArguments(\ReflectionFunctionAbstract $method, array $arguments, callable $getter): array
     {
         $optCount = 0;
         $useName = \false;
@@ -495,9 +495,9 @@ class Resolver
             throw new ServiceCreationException(\sprintf('Parameter %s has %s, so its value must be specified.', $desc, $type && !$type->isSingle() ? 'complex type and no default value' : 'no class type or default value'));
         }
     }
-    private static function isArrayOf(\ReflectionParameter $parameter, ?Nette\Utils\Type $type) : ?string
+    private static function isArrayOf(\ReflectionParameter $parameter, ?Nette\Utils\Type $type): ?string
     {
         $method = $parameter->getDeclaringFunction();
-        return $method instanceof \ReflectionMethod && $type && $type->getSingleName() === 'array' && \preg_match('#@param[ \\t]+(?|([\\w\\\\]+)\\[\\]|list<([\\w\\\\]+)>|array<int,\\s*([\\w\\\\]+)>)[ \\t]+\\$' . $parameter->name . '#', (string) $method->getDocComment(), $m) && ($itemType = Reflection::expandClassName($m[1], $method->getDeclaringClass())) && (\class_exists($itemType) || \interface_exists($itemType)) ? $itemType : null;
+        return $method instanceof \ReflectionMethod && $type && $type->getSingleName() === 'array' && \preg_match('#@param[ \t]+(?|([\w\\\\]+)\[\]|list<([\w\\\\]+)>|array<int,\s*([\w\\\\]+)>)[ \t]+\$' . $parameter->name . '#', (string) $method->getDocComment(), $m) && ($itemType = Reflection::expandClassName($m[1], $method->getDeclaringClass())) && (\class_exists($itemType) || \interface_exists($itemType)) ? $itemType : null;
     }
 }

@@ -23,34 +23,34 @@ final class RuleError215 implements RuleError, LineRuleError, FileRuleError, Ide
     public Node $originalNode;
     /** @var callable(Node): Node */
     public $newNodeCallable;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getLine() : int
+    public function getLine(): int
     {
         return $this->line;
     }
-    public function getFile() : string
+    public function getFile(): string
     {
         return $this->file;
     }
-    public function getFileDescription() : string
+    public function getFileDescription(): string
     {
         return $this->fileDescription;
     }
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
-    public function getOriginalNode() : Node
+    public function getOriginalNode(): Node
     {
         return $this->originalNode;
     }
     /**
      * @return callable(Node): Node
      */
-    public function getNewNodeCallable() : callable
+    public function getNewNodeCallable(): callable
     {
         return $this->newNodeCallable;
     }

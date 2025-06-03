@@ -18,11 +18,11 @@ use function libxml_use_internal_errors;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class SimpleXMLElementConstructorThrowTypeExtension implements DynamicStaticMethodThrowTypeExtension
 {
-    public function isStaticMethodSupported(MethodReflection $methodReflection) : bool
+    public function isStaticMethodSupported(MethodReflection $methodReflection): bool
     {
         return extension_loaded('simplexml') && $methodReflection->getName() === '__construct' && $methodReflection->getDeclaringClass()->getName() === SimpleXMLElement::class;
     }
-    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope) : ?Type
+    public function getThrowTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, Scope $scope): ?Type
     {
         if (count($methodCall->getArgs()) === 0) {
             return $methodReflection->getThrowType();

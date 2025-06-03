@@ -20,11 +20,11 @@ use function count;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class StrWordCountFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'str_word_count';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, Node\Expr\FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, Node\Expr\FuncCall $functionCall, Scope $scope): Type
     {
         $argsCount = count($functionCall->getArgs());
         if ($argsCount === 1) {

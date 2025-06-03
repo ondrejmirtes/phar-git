@@ -23,11 +23,11 @@ final class CompactVariablesRule implements Rule
     {
         $this->checkMaybeUndefinedVariables = $checkMaybeUndefinedVariables;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->name instanceof Node\Expr) {
             return [];
@@ -56,7 +56,7 @@ final class CompactVariablesRule implements Rule
     /**
      * @return list<ConstantStringType>
      */
-    private function findConstantStrings(Type $type) : array
+    private function findConstantStrings(Type $type): array
     {
         $constantStrings = $type->getConstantStrings();
         if (count($constantStrings) > 0) {

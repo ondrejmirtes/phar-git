@@ -50,7 +50,7 @@ class Terminal
     /**
      * @internal
      */
-    public static function hasSttyAvailable() : bool
+    public static function hasSttyAvailable(): bool
     {
         if (null !== self::$stty) {
             return self::$stty;
@@ -65,7 +65,7 @@ class Terminal
     {
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $ansicon = \getenv('ANSICON');
-            if (\false !== $ansicon && \preg_match('/^(\\d+)x(\\d+)(?: \\((\\d+)x(\\d+)\\))?$/', \trim($ansicon), $matches)) {
+            if (\false !== $ansicon && \preg_match('/^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$/', \trim($ansicon), $matches)) {
                 // extract [w, H] from "wxh (WxH)"
                 // or [w, h] from "wxh"
                 self::$width = (int) $matches[1];
@@ -74,7 +74,7 @@ class Terminal
                 // only use stty on Windows if the terminal does not support vt100 (e.g. Windows 7 + git-bash)
                 // testing for stty in a Windows 10 vt100-enabled console will implicitly disable vt100 support on STDOUT
                 self::initDimensionsUsingStty();
-            } elseif (null !== ($dimensions = self::getConsoleMode())) {
+            } elseif (null !== $dimensions = self::getConsoleMode()) {
                 // extract [w, h] from "wxh"
                 self::$width = (int) $dimensions[0];
                 self::$height = (int) $dimensions[1];
@@ -86,7 +86,7 @@ class Terminal
     /**
      * Returns whether STDOUT has vt100 support (some Windows 10+ configurations).
      */
-    private static function hasVt100Support() : bool
+    private static function hasVt100Support(): bool
     {
         return \function_exists('sapi_windows_vt100_support') && \sapi_windows_vt100_support(\fopen('php://stdout', 'w'));
     }
@@ -96,11 +96,11 @@ class Terminal
     private static function initDimensionsUsingStty()
     {
         if ($sttyString = self::getSttyColumns()) {
-            if (\preg_match('/rows.(\\d+);.columns.(\\d+);/i', $sttyString, $matches)) {
+            if (\preg_match('/rows.(\d+);.columns.(\d+);/i', $sttyString, $matches)) {
                 // extract [w, h] from "rows h; columns w;"
                 self::$width = (int) $matches[2];
                 self::$height = (int) $matches[1];
-            } elseif (\preg_match('/;.(\\d+).rows;.(\\d+).columns/i', $sttyString, $matches)) {
+            } elseif (\preg_match('/;.(\d+).rows;.(\d+).columns/i', $sttyString, $matches)) {
                 // extract [w, h] from "; h rows; w columns"
                 self::$width = (int) $matches[2];
                 self::$height = (int) $matches[1];
@@ -112,10 +112,10 @@ class Terminal
      *
      * @return int[]|null An array composed of the width and the height or null if it could not be parsed
      */
-    private static function getConsoleMode() : ?array
+    private static function getConsoleMode(): ?array
     {
         $info = self::readFromProcess('mode CON');
-        if (null === $info || !\preg_match('/--------+\\r?\\n.+?(\\d+)\\r?\\n.+?(\\d+)\\r?\\n/', $info, $matches)) {
+        if (null === $info || !\preg_match('/--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n/', $info, $matches)) {
             return null;
         }
         return [(int) $matches[2], (int) $matches[1]];
@@ -123,18 +123,18 @@ class Terminal
     /**
      * Runs and parses stty -a if it's available, suppressing any error output.
      */
-    private static function getSttyColumns() : ?string
+    private static function getSttyColumns(): ?string
     {
         return self::readFromProcess('stty -a | grep columns');
     }
-    private static function readFromProcess(string $command) : ?string
+    private static function readFromProcess(string $command): ?string
     {
         if (!\function_exists('proc_open')) {
             return null;
         }
         $descriptorspec = [1 => ['pipe', 'w'], 2 => ['pipe', 'w']];
         $cp = \function_exists('sapi_windows_cp_set') ? \sapi_windows_cp_get() : 0;
-        if (!($process = @\proc_open($command, $descriptorspec, $pipes, null, null, ['suppress_errors' => \true]))) {
+        if (!$process = @\proc_open($command, $descriptorspec, $pipes, null, null, ['suppress_errors' => \true])) {
             return null;
         }
         $info = \stream_get_contents($pipes[1]);

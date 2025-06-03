@@ -194,4 +194,4 @@ abstract class Filter extends Stream
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Stream\\Filter\\Filter');
+Consistency::flexEntity('Hoa\Stream\Filter\Filter');

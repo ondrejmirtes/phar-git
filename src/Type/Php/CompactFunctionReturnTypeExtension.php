@@ -20,11 +20,11 @@ final class CompactFunctionReturnTypeExtension implements DynamicFunctionReturnT
     {
         $this->checkMaybeUndefinedVariables = $checkMaybeUndefinedVariables;
     }
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'compact';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : ?Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): ?Type
     {
         if (count($functionCall->getArgs()) === 0) {
             return null;
@@ -52,7 +52,7 @@ final class CompactFunctionReturnTypeExtension implements DynamicFunctionReturnT
     /**
      * @return array<int, ConstantStringType>|null
      */
-    private function findConstantStrings(Type $type) : ?array
+    private function findConstantStrings(Type $type): ?array
     {
         if ($type instanceof ConstantStringType) {
             return [$type];

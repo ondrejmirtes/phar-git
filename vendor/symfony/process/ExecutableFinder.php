@@ -51,10 +51,8 @@ class ExecutableFinder
                 // Silencing against https://bugs.php.net/69240
                 if (@\is_dir($path)) {
                     $dirs[] = $path;
-                } else {
-                    if (\basename($path) == $name && @\is_executable($path)) {
-                        return $path;
-                    }
+                } else if (\basename($path) == $name && @\is_executable($path)) {
+                    return $path;
                 }
             }
         } else {

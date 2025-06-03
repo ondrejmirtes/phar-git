@@ -20,11 +20,11 @@ final class PropertyVarianceRule implements Rule
     {
         $this->varianceCheck = $varianceCheck;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         if (!$classReflection->hasNativeProperty($node->getName())) {

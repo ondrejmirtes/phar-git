@@ -30,11 +30,11 @@ final class InvalidComparisonOperationRule implements Rule
     {
         $this->ruleLevelHelper = $ruleLevelHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\BinaryOp::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof Node\Expr\BinaryOp\Equal && !$node instanceof Node\Expr\BinaryOp\NotEqual && !$node instanceof Node\Expr\BinaryOp\Smaller && !$node instanceof Node\Expr\BinaryOp\SmallerOrEqual && !$node instanceof Node\Expr\BinaryOp\Greater && !$node instanceof Node\Expr\BinaryOp\GreaterOrEqual && !$node instanceof Node\Expr\BinaryOp\Spaceship) {
             return [];
@@ -72,7 +72,7 @@ final class InvalidComparisonOperationRule implements Rule
         }
         return [];
     }
-    private function isNumberType(Scope $scope, Node\Expr $expr) : bool
+    private function isNumberType(Scope $scope, Node\Expr $expr): bool
     {
         $acceptedType = new UnionType([new IntegerType(), new FloatType()]);
         $onlyNumber = static fn(Type $type): bool => $acceptedType->isSuperTypeOf($type)->yes();
@@ -83,7 +83,7 @@ final class InvalidComparisonOperationRule implements Rule
         // SimpleXMLElement can be cast to number union type
         return !$acceptedType->isSuperTypeOf($type)->no() || $acceptedType->equals($type->toNumber());
     }
-    private function isPossiblyNullableObjectType(Scope $scope, Node\Expr $expr) : bool
+    private function isPossiblyNullableObjectType(Scope $scope, Node\Expr $expr): bool
     {
         $acceptedType = new ObjectWithoutClassType();
         $type = $this->ruleLevelHelper->findTypeToCheck($scope, $expr, '', static fn(Type $type): bool => $acceptedType->isSuperTypeOf($type)->yes())->getType();
@@ -99,7 +99,7 @@ final class InvalidComparisonOperationRule implements Rule
         }
         return $isSuperType->yes();
     }
-    private function isPossiblyNullableArrayType(Scope $scope, Node\Expr $expr) : bool
+    private function isPossiblyNullableArrayType(Scope $scope, Node\Expr $expr): bool
     {
         $type = $this->ruleLevelHelper->findTypeToCheck($scope, $expr, '', static fn(Type $type): bool => $type->isArray()->yes())->getType();
         if (TypeCombinator::containsNull($type) && !$type->isNull()->yes()) {

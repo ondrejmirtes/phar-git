@@ -17,11 +17,11 @@ use PHPStan\Type\Type;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class GetDefinedVarsFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'get_defined_vars';
     }
-    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope) : Type
+    public function getTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $functionCall, Scope $scope): Type
     {
         if ($scope->canAnyVariableExist()) {
             return new ArrayType(new StringType(), new MixedType());

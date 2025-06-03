@@ -24,11 +24,11 @@ final class DumpTypeRule implements Rule
     {
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Expr\FuncCall::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (!$node->name instanceof Node\Name) {
             return [];
@@ -37,7 +37,7 @@ final class DumpTypeRule implements Rule
         if ($functionName === null) {
             return [];
         }
-        if (strtolower($functionName) !== 'phpstan\\dumptype') {
+        if (strtolower($functionName) !== 'phpstan\dumptype') {
             return [];
         }
         if (count($node->getArgs()) === 0) {

@@ -14,7 +14,7 @@ use _PHPStan_checksum\Nette;
 final class Helpers
 {
     use Nette\StaticClass;
-    public const ReIdentifier = '[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*';
+    public const ReIdentifier = '[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*';
     public const Keywords = [
         // built-in types
         'string' => 1,
@@ -115,21 +115,21 @@ final class Helpers
     /** @deprecated  */
     public const PHP_IDENT = self::ReIdentifier, KEYWORDS = self::Keywords;
     /** @deprecated  use (new Nette\PhpGenerator\Dumper)->dump() */
-    public static function dump($var) : string
+    public static function dump($var): string
     {
         return (new Dumper())->dump($var);
     }
     /** @deprecated  use (new Nette\PhpGenerator\Dumper)->format() */
-    public static function format(string $statement, ...$args) : string
+    public static function format(string $statement, ...$args): string
     {
         return (new Dumper())->format($statement, ...$args);
     }
     /** @deprecated  use (new Nette\PhpGenerator\Dumper)->format() */
-    public static function formatArgs(string $statement, array $args) : string
+    public static function formatArgs(string $statement, array $args): string
     {
         return (new Dumper())->format($statement, ...$args);
     }
-    public static function formatDocComment(string $content) : string
+    public static function formatDocComment(string $content): string
     {
         $s = \trim($content);
         $s = \str_replace('*/', '* /', $s);
@@ -141,59 +141,59 @@ final class Helpers
             return \str_replace("\n", "\n * ", "/**\n{$s}") . "\n */\n";
         }
     }
-    public static function tagName(string $name, string $of = PhpNamespace::NameNormal) : string
+    public static function tagName(string $name, string $of = PhpNamespace::NameNormal): string
     {
         return isset(self::Keywords[\strtolower($name)]) ? $name : "/*({$of}*/{$name}";
     }
-    public static function simplifyTaggedNames(string $code, ?PhpNamespace $namespace) : string
+    public static function simplifyTaggedNames(string $code, ?PhpNamespace $namespace): string
     {
-        return \preg_replace_callback('~/\\*\\(([ncf])\\*/([\\w\\x7f-\\xff\\\\]++)~', function ($m) use($namespace) {
+        return \preg_replace_callback('~/\*\(([ncf])\*/([\w\x7f-\xff\\\\]++)~', function ($m) use ($namespace) {
             [, $of, $name] = $m;
             return $namespace ? $namespace->simplifyType($name, $of) : $name;
         }, $code);
     }
-    public static function unformatDocComment(string $comment) : string
+    public static function unformatDocComment(string $comment): string
     {
-        return \preg_replace('#^\\s*\\* ?#m', '', \trim(\trim(\trim($comment), '/*')));
+        return \preg_replace('#^\s*\* ?#m', '', \trim(\trim(\trim($comment), '/*')));
     }
-    public static function unindent(string $s, int $level = 1) : string
+    public static function unindent(string $s, int $level = 1): string
     {
-        return $level ? \preg_replace('#^(\\t| {4}){1,' . $level . '}#m', '', $s) : $s;
+        return $level ? \preg_replace('#^(\t| {4}){1,' . $level . '}#m', '', $s) : $s;
     }
-    public static function isIdentifier($value) : bool
+    public static function isIdentifier($value): bool
     {
         return \is_string($value) && \preg_match('#^' . self::ReIdentifier . '$#D', $value);
     }
-    public static function isNamespaceIdentifier($value, bool $allowLeadingSlash = \false) : bool
+    public static function isNamespaceIdentifier($value, bool $allowLeadingSlash = \false): bool
     {
         $re = '#^' . ($allowLeadingSlash ? '\\\\?' : '') . self::ReIdentifier . '(\\\\' . self::ReIdentifier . ')*$#D';
         return \is_string($value) && \preg_match($re, $value);
     }
-    public static function extractNamespace(string $name) : string
+    public static function extractNamespace(string $name): string
     {
         return ($pos = \strrpos($name, '\\')) ? \substr($name, 0, $pos) : '';
     }
-    public static function extractShortName(string $name) : string
+    public static function extractShortName(string $name): string
     {
         return ($pos = \strrpos($name, '\\')) === \false ? $name : \substr($name, $pos + 1);
     }
-    public static function tabsToSpaces(string $s, int $count = 4) : string
+    public static function tabsToSpaces(string $s, int $count = 4): string
     {
         return \str_replace("\t", \str_repeat(' ', $count), $s);
     }
     /** @internal */
-    public static function createObject(string $class, array $props) : object
+    public static function createObject(string $class, array $props): object
     {
         return Dumper::createObject($class, $props);
     }
-    public static function validateType(?string $type, bool &$nullable) : ?string
+    public static function validateType(?string $type, bool &$nullable): ?string
     {
         if ($type === '' || $type === null) {
             return null;
         }
         if (!\preg_match('#(?:
-			\\?[\\w\\\\]+|
-			[\\w\\\\]+ (?: (&[\\w\\\\]+)* | (\\|[\\w\\\\]+)* )
+			\?[\w\\\\]+|
+			[\w\\\\]+ (?: (&[\w\\\\]+)* | (\|[\w\\\\]+)* )
 		)()$#xAD', $type)) {
             throw new Nette\InvalidArgumentException("Value '{$type}' is not valid type.");
         }

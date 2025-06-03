@@ -81,7 +81,7 @@ final class FileReadTrapStreamWrapper
      * @param int    $options
      * @param string $opened_path
      */
-    public function stream_open($path, $mode, $options, &$opened_path) : bool
+    public function stream_open($path, $mode, $options, &$opened_path): bool
     {
         self::$autoloadLocatedFile = $path;
         // @infection-ignore-all FalseValue

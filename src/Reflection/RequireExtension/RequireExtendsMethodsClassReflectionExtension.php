@@ -10,11 +10,11 @@ use PHPStan\Reflection\MethodsClassReflectionExtension;
 use PHPStan\ShouldNotHappenException;
 final class RequireExtendsMethodsClassReflectionExtension implements MethodsClassReflectionExtension
 {
-    public function hasMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $this->findMethod($classReflection, $methodName) !== null;
     }
-    public function getMethod(ClassReflection $classReflection, string $methodName) : ExtendedMethodReflection
+    public function getMethod(ClassReflection $classReflection, string $methodName): ExtendedMethodReflection
     {
         $method = $this->findMethod($classReflection, $methodName);
         if ($method === null) {
@@ -22,7 +22,7 @@ final class RequireExtendsMethodsClassReflectionExtension implements MethodsClas
         }
         return $method;
     }
-    private function findMethod(ClassReflection $classReflection, string $methodName) : ?ExtendedMethodReflection
+    private function findMethod(ClassReflection $classReflection, string $methodName): ?ExtendedMethodReflection
     {
         if (!$classReflection->isInterface()) {
             return null;

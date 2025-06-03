@@ -14,7 +14,7 @@ final class ThrowsTag
     {
         $this->type = $type;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }

@@ -28,5 +28,5 @@ use PHPStan\Reflection\ExtendedMethodReflection;
 interface RestrictedMethodUsageExtension
 {
     public const METHOD_EXTENSION_TAG = 'phpstan.restrictedMethodUsageExtension';
-    public function isRestrictedMethodUsage(ExtendedMethodReflection $methodReflection, Scope $scope) : ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
+    public function isRestrictedMethodUsage(ExtendedMethodReflection $methodReflection, Scope $scope): ?\PHPStan\Rules\RestrictedUsage\RestrictedUsage;
 }

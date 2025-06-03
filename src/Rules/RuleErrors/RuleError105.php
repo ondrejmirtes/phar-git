@@ -16,18 +16,18 @@ final class RuleError105 implements RuleError, TipRuleError, MetadataRuleError, 
     public string $tip;
     /** @var mixed[] */
     public array $metadata;
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
-    public function getTip() : string
+    public function getTip(): string
     {
         return $this->tip;
     }
     /**
      * @return mixed[]
      */
-    public function getMetadata() : array
+    public function getMetadata(): array
     {
         return $this->metadata;
     }

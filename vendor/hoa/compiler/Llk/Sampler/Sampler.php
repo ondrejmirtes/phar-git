@@ -192,4 +192,4 @@ abstract class Sampler
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Compiler\\Llk\\Sampler\\Sampler');
+Consistency::flexEntity('Hoa\Compiler\Llk\Sampler\Sampler');

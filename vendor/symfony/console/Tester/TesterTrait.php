@@ -99,7 +99,7 @@ trait TesterTrait
         }
         return $this->statusCode;
     }
-    public function assertCommandIsSuccessful(string $message = '') : void
+    public function assertCommandIsSuccessful(string $message = ''): void
     {
         Assert::assertThat($this->statusCode, new CommandIsSuccessful(), $message);
     }

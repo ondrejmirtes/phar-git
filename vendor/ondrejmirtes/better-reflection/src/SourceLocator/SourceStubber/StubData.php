@@ -19,16 +19,16 @@ class StubData
         $this->extensionName = $extensionName;
         $this->fileName = $fileName;
     }
-    public function getStub() : string
+    public function getStub(): string
     {
         return $this->stub;
     }
     /** @return non-empty-string|null */
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return $this->extensionName;
     }
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }

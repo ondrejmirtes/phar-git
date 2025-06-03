@@ -30,7 +30,7 @@ class ContainerPanel implements Tracy\IBarPanel
     /**
      * Renders tab.
      */
-    public function getTab() : string
+    public function getTab(): string
     {
         return Nette\Utils\Helpers::capture(function () {
             $elapsedTime = $this->elapsedTime;
@@ -40,7 +40,7 @@ class ContainerPanel implements Tracy\IBarPanel
     /**
      * Renders panel.
      */
-    public function getPanel() : string
+    public function getPanel(): string
     {
         $methods = (function () {
             return $this->methods;
@@ -60,7 +60,7 @@ class ContainerPanel implements Tracy\IBarPanel
                 $tags[$service][$tag] = $val;
             }
         }
-        return Nette\Utils\Helpers::capture(function () use($tags, $services) {
+        return Nette\Utils\Helpers::capture(function () use ($tags, $services) {
             $container = $this->container;
             $rc = new \ReflectionClass($this->container);
             $file = $rc->getFileName();

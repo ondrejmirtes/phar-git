@@ -17,12 +17,12 @@ final class AlreadyVisitedClasses
     {
         $this->classNames = $classNames;
     }
-    public static function createEmpty() : self
+    public static function createEmpty(): self
     {
         return new self([]);
     }
     /** @param class-string $className */
-    public function push(string $className) : void
+    public function push(string $className): void
     {
         if (array_key_exists($className, $this->classNames)) {
             throw CircularReference::fromClassName($className);

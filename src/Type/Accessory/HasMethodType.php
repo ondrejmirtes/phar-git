@@ -41,34 +41,34 @@ class HasMethodType implements \PHPStan\Type\Accessory\AccessoryType, CompoundTy
     {
         $this->methodName = $methodName;
     }
-    public function getReferencedClasses() : array
+    public function getReferencedClasses(): array
     {
         return [];
     }
-    public function getObjectClassNames() : array
+    public function getObjectClassNames(): array
     {
         return [];
     }
-    public function getObjectClassReflections() : array
+    public function getObjectClassReflections(): array
     {
         return [];
     }
-    private function getCanonicalMethodName() : string
+    private function getCanonicalMethodName(): string
     {
         return strtolower($this->methodName);
     }
-    public function accepts(Type $type, bool $strictTypes) : AcceptsResult
+    public function accepts(Type $type, bool $strictTypes): AcceptsResult
     {
         if ($type instanceof CompoundType) {
             return $type->isAcceptedBy($this, $strictTypes);
         }
         return AcceptsResult::createFromBoolean($this->equals($type));
     }
-    public function isSuperTypeOf(Type $type) : IsSuperTypeOfResult
+    public function isSuperTypeOf(Type $type): IsSuperTypeOfResult
     {
         return new IsSuperTypeOfResult($type->hasMethod($this->methodName), []);
     }
-    public function isSubTypeOf(Type $otherType) : IsSuperTypeOfResult
+    public function isSubTypeOf(Type $otherType): IsSuperTypeOfResult
     {
         if ($otherType instanceof UnionType || $otherType instanceof IntersectionType) {
             return $otherType->isSuperTypeOf($this);
@@ -83,77 +83,77 @@ class HasMethodType implements \PHPStan\Type\Accessory\AccessoryType, CompoundTy
         }
         return $limit->and(new IsSuperTypeOfResult($otherType->hasMethod($this->methodName), []));
     }
-    public function isAcceptedBy(Type $acceptingType, bool $strictTypes) : AcceptsResult
+    public function isAcceptedBy(Type $acceptingType, bool $strictTypes): AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(Type $type) : bool
+    public function equals(Type $type): bool
     {
         return $type instanceof self && $this->getCanonicalMethodName() === $type->getCanonicalMethodName();
     }
-    public function describe(VerbosityLevel $level) : string
+    public function describe(VerbosityLevel $level): string
     {
         return sprintf('hasMethod(%s)', $this->methodName);
     }
-    public function isOffsetAccessLegal() : TrinaryLogic
+    public function isOffsetAccessLegal(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function hasMethod(string $methodName) : TrinaryLogic
+    public function hasMethod(string $methodName): TrinaryLogic
     {
         if ($this->getCanonicalMethodName() === strtolower($methodName)) {
             return TrinaryLogic::createYes();
         }
         return TrinaryLogic::createMaybe();
     }
-    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope) : ExtendedMethodReflection
+    public function getMethod(string $methodName, ClassMemberAccessAnswerer $scope): ExtendedMethodReflection
     {
         return $this->getUnresolvedMethodPrototype($methodName, $scope)->getTransformedMethod();
     }
-    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope) : UnresolvedMethodPrototypeReflection
+    public function getUnresolvedMethodPrototype(string $methodName, ClassMemberAccessAnswerer $scope): UnresolvedMethodPrototypeReflection
     {
         $method = new DummyMethodReflection($this->methodName);
         return new CallbackUnresolvedMethodPrototypeReflection($method, $method->getDeclaringClass(), \false, static fn(Type $type): Type => $type);
     }
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         if ($this->getCanonicalMethodName() === '__invoke') {
             return TrinaryLogic::createYes();
         }
         return TrinaryLogic::createMaybe();
     }
-    public function toString() : Type
+    public function toString(): Type
     {
         if ($this->getCanonicalMethodName() === '__tostring') {
             return new StringType();
         }
         return new ErrorType();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return [new TrivialParametersAcceptor()];
     }
-    public function getEnumCases() : array
+    public function getEnumCases(): array
     {
         return [];
     }
-    public function traverse(callable $cb) : Type
+    public function traverse(callable $cb): Type
     {
         return $this;
     }
-    public function traverseSimultaneously(Type $right, callable $cb) : Type
+    public function traverseSimultaneously(Type $right, callable $cb): Type
     {
         return $this;
     }
-    public function exponentiate(Type $exponent) : Type
+    public function exponentiate(Type $exponent): Type
     {
         return new ErrorType();
     }
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         return [];
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         return new IdentifierTypeNode('');
         // no PHPDoc representation

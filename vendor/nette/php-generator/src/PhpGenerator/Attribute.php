@@ -26,11 +26,11 @@ final class Attribute
         $this->name = $name;
         $this->args = $args;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function getArguments() : array
+    public function getArguments(): array
     {
         return $this->args;
     }

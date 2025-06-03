@@ -26,7 +26,7 @@ final class SimpleParser implements \PHPStan\Parser\Parser
      * @param string $file path to a file to parse
      * @return Node\Stmt[]
      */
-    public function parseFile(string $file) : array
+    public function parseFile(string $file): array
     {
         try {
             return $this->parseString(FileReader::read($file));
@@ -37,7 +37,7 @@ final class SimpleParser implements \PHPStan\Parser\Parser
     /**
      * @return Node\Stmt[]
      */
-    public function parseString(string $sourceCode) : array
+    public function parseString(string $sourceCode): array
     {
         $errorHandler = new Collecting();
         $nodes = $this->parser->parse($sourceCode, $errorHandler);

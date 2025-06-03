@@ -84,18 +84,18 @@ final class AnalyseCommand extends Command
         $this->analysisStartTime = $analysisStartTime;
         parent::__construct();
     }
-    protected function configure() : void
+    protected function configure(): void
     {
         $this->setName(self::NAME)->setDescription('Analyses source code')->setDefinition([new InputArgument('paths', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, 'Paths with source code to run analysis on'), new InputOption('configuration', 'c', InputOption::VALUE_REQUIRED, 'Path to project configuration file'), new InputOption(self::OPTION_LEVEL, 'l', InputOption::VALUE_REQUIRED, 'Level of rule options - the higher the stricter'), new InputOption(\PHPStan\Command\ErrorsConsoleStyle::OPTION_NO_PROGRESS, null, InputOption::VALUE_NONE, 'Do not show progress bar, only results'), new InputOption('debug', null, InputOption::VALUE_NONE, 'Show debug information - which file is analysed, do not catch internal errors'), new InputOption('autoload-file', 'a', InputOption::VALUE_REQUIRED, 'Project\'s additional autoload file path'), new InputOption('error-format', null, InputOption::VALUE_REQUIRED, 'Format in which to print the result of the analysis'), new InputOption('generate-baseline', 'b', InputOption::VALUE_OPTIONAL, 'Path to a file where the baseline should be saved', \false), new InputOption('allow-empty-baseline', null, InputOption::VALUE_NONE, 'Do not error out when the generated baseline is empty'), new InputOption('memory-limit', null, InputOption::VALUE_REQUIRED, 'Memory limit for analysis'), new InputOption('xdebug', null, InputOption::VALUE_NONE, 'Allow running with Xdebug for debugging purposes'), new InputOption('tmp-file', null, InputOption::VALUE_REQUIRED, '(Editor mode) Edited file used in place of --instead-of file'), new InputOption('instead-of', null, InputOption::VALUE_REQUIRED, '(Editor mode) File being replaced by --tmp-file'), new InputOption('fix', null, InputOption::VALUE_NONE, 'Fix auto-fixable errors (experimental)'), new InputOption('watch', null, InputOption::VALUE_NONE, 'Launch PHPStan Pro'), new InputOption('pro', null, InputOption::VALUE_NONE, 'Launch PHPStan Pro'), new InputOption('fail-without-result-cache', null, InputOption::VALUE_NONE, 'Return non-zero exit code when result cache is not used')]);
     }
     /**
      * @return string[]
      */
-    public function getAliases() : array
+    public function getAliases(): array
     {
         return ['analyze'];
     }
-    protected function initialize(InputInterface $input, OutputInterface $output) : void
+    protected function initialize(InputInterface $input, OutputInterface $output): void
     {
         if ((bool) $input->getOption('debug')) {
             $application = $this->getApplication();
@@ -106,7 +106,7 @@ final class AnalyseCommand extends Command
             return;
         }
     }
-    protected function execute(InputInterface $input, OutputInterface $output) : int
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $paths = $input->getArgument('paths');
         $memoryLimit = $input->getOption('memory-limit');
@@ -417,7 +417,7 @@ final class AnalyseCommand extends Command
         $this->runDiagnoseExtensions($container, $inceptionResult->getErrorOutput());
         return $inceptionResult->handleReturn($exitCode, $analysisResult->getPeakMemoryUsageBytes(), $this->analysisStartTime);
     }
-    private function createStreamOutput() : StreamOutput
+    private function createStreamOutput(): StreamOutput
     {
         $resource = fopen('php://memory', 'w', \false);
         if ($resource === \false) {
@@ -425,7 +425,7 @@ final class AnalyseCommand extends Command
         }
         return new StreamOutput($resource);
     }
-    private function getMessageFromInternalError(FileHelper $fileHelper, InternalError $internalError, int $verbosity) : string
+    private function getMessageFromInternalError(FileHelper $fileHelper, InternalError $internalError, int $verbosity): string
     {
         $message = sprintf('%s while %s', $internalError->getMessage(), $internalError->getContextDescription());
         $hasLarastan = \false;
@@ -476,17 +476,15 @@ final class AnalyseCommand extends Command
                 } else {
                     $message .= sprintf('%s%s', "\n\n", $trace);
                 }
+            } else if ($internalError->shouldReportBug()) {
+                $message .= sprintf('%sRun PHPStan with -v option and post the stack trace to:%s%s%s', "\n\n", "\n", $bugReportUrl, "\n");
             } else {
-                if ($internalError->shouldReportBug()) {
-                    $message .= sprintf('%sRun PHPStan with -v option and post the stack trace to:%s%s%s', "\n\n", "\n", $bugReportUrl, "\n");
-                } else {
-                    $message .= sprintf('%sRun PHPStan with -v option to see the stack trace', "\n");
-                }
+                $message .= sprintf('%sRun PHPStan with -v option to see the stack trace', "\n");
             }
         }
         return $message;
     }
-    private function generateBaseline(string $generateBaselineFile, \PHPStan\Command\InceptionResult $inceptionResult, \PHPStan\Command\AnalysisResult $analysisResult, OutputInterface $output, bool $allowEmptyBaseline, string $baselineExtension, bool $failWithoutResultCache) : int
+    private function generateBaseline(string $generateBaselineFile, \PHPStan\Command\InceptionResult $inceptionResult, \PHPStan\Command\AnalysisResult $analysisResult, OutputInterface $output, bool $allowEmptyBaseline, string $baselineExtension, bool $failWithoutResultCache): int
     {
         if (!$allowEmptyBaseline && !$analysisResult->hasErrors()) {
             $inceptionResult->getStdOutput()->getStyle()->error('No errors were found during the analysis. Baseline could not be generated.');
@@ -542,12 +540,10 @@ final class AnalyseCommand extends Command
         $message = sprintf('Baseline generated with %d %s.', $errorsCount, $errorsCount === 1 ? 'error' : 'errors');
         if ($unignorableCount === 0 && count($analysisResult->getNotFileSpecificErrors()) === 0) {
             $inceptionResult->getStdOutput()->getStyle()->success($message);
+        } else if ($output->isVeryVerbose()) {
+            $inceptionResult->getStdOutput()->getStyle()->warning($message . "\nSome errors could not be put into baseline.");
         } else {
-            if ($output->isVeryVerbose()) {
-                $inceptionResult->getStdOutput()->getStyle()->warning($message . "\nSome errors could not be put into baseline.");
-            } else {
-                $inceptionResult->getStdOutput()->getStyle()->warning($message . "\nSome errors could not be put into baseline. Re-run PHPStan with \"-vv\" and fix them.");
-            }
+            $inceptionResult->getStdOutput()->getStyle()->warning($message . "\nSome errors could not be put into baseline. Re-run PHPStan with \"-vv\" and fix them.");
         }
         $exitCode = 0;
         if ($failWithoutResultCache && !$analysisResult->isResultCacheUsed()) {
@@ -558,7 +554,7 @@ final class AnalyseCommand extends Command
     /**
      * @param string[] $files
      */
-    private function runFixer(\PHPStan\Command\InceptionResult $inceptionResult, Container $container, bool $onlyFiles, InputInterface $input, OutputInterface $output, array $files) : int
+    private function runFixer(\PHPStan\Command\InceptionResult $inceptionResult, Container $container, bool $onlyFiles, InputInterface $input, OutputInterface $output, array $files): int
     {
         $ciDetector = new CiDetector();
         if ($ciDetector->isCiDetected()) {
@@ -569,7 +565,7 @@ final class AnalyseCommand extends Command
         $fixerApplication = $container->getByType(\PHPStan\Command\FixerApplication::class);
         return $fixerApplication->run($inceptionResult->getProjectConfigFile(), $input, $output, count($files), $_SERVER['argv'][0]);
     }
-    private function runDiagnoseExtensions(Container $container, \PHPStan\Command\Output $errorOutput) : void
+    private function runDiagnoseExtensions(Container $container, \PHPStan\Command\Output $errorOutput): void
     {
         if (!$errorOutput->isDebug()) {
             return;

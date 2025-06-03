@@ -8,11 +8,11 @@ use PHPStan\Reflection\TrivialParametersAcceptor;
 use PHPStan\TrinaryLogic;
 trait MaybeCallableTypeTrait
 {
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return TrinaryLogic::createMaybe();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         return [new TrivialParametersAcceptor()];
     }

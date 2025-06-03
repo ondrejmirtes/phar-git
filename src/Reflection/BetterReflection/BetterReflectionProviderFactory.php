@@ -6,5 +6,5 @@ namespace PHPStan\Reflection\BetterReflection;
 use PHPStan\BetterReflection\Reflector\Reflector;
 interface BetterReflectionProviderFactory
 {
-    public function create(Reflector $reflector) : \PHPStan\Reflection\BetterReflection\BetterReflectionProvider;
+    public function create(Reflector $reflector): \PHPStan\Reflection\BetterReflection\BetterReflectionProvider;
 }

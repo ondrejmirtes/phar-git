@@ -29,11 +29,11 @@ final class OverridingPropertyRule implements Rule
         $this->checkPhpDocMethodSignatures = $checkPhpDocMethodSignatures;
         $this->reportMaybes = $reportMaybes;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return ClassPropertyNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $classReflection = $node->getClassReflection();
         $prototype = $this->findPrototype($classReflection, $node->getName());
@@ -87,19 +87,17 @@ final class OverridingPropertyRule implements Rule
         if ($prototype->hasNativeType()) {
             if ($nativeType === null) {
                 $typeErrors[] = RuleErrorBuilder::message(sprintf('Property %s::$%s overriding property %s::$%s (%s) should also have native type %s.', $classReflection->getDisplayName(), $node->getName(), $prototype->getDeclaringClass()->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly())))->identifier('property.missingNativeType')->nonIgnorable()->build();
-            } else {
-                if (!$prototype->getNativeType()->equals($nativeType)) {
-                    if ($this->phpVersion->supportsPropertyHooks() && ($prototype->isVirtual()->yes() || $prototype->isAbstract()->yes()) && (!$prototype->isReadable() || !$prototype->isWritable())) {
-                        if (!$prototype->isReadable()) {
-                            if (!$nativeType->isSuperTypeOf($prototype->getNativeType())->yes()) {
-                                $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not contravariant with type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
-                            }
-                        } elseif (!$prototype->getNativeType()->isSuperTypeOf($nativeType)->yes()) {
-                            $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not covariant with type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
+            } else if (!$prototype->getNativeType()->equals($nativeType)) {
+                if ($this->phpVersion->supportsPropertyHooks() && ($prototype->isVirtual()->yes() || $prototype->isAbstract()->yes()) && (!$prototype->isReadable() || !$prototype->isWritable())) {
+                    if (!$prototype->isReadable()) {
+                        if (!$nativeType->isSuperTypeOf($prototype->getNativeType())->yes()) {
+                            $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not contravariant with type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
                         }
-                    } else {
-                        $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not the same as type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
+                    } elseif (!$prototype->getNativeType()->isSuperTypeOf($nativeType)->yes()) {
+                        $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not covariant with type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
                     }
+                } else {
+                    $typeErrors[] = RuleErrorBuilder::message(sprintf('Type %s of property %s::$%s is not the same as type %s of overridden property %s::$%s.', $nativeType->describe(VerbosityLevel::typeOnly()), $classReflection->getDisplayName(), $node->getName(), $prototype->getNativeType()->describe(VerbosityLevel::typeOnly()), $prototype->getDeclaringClass()->getDisplayName(), $node->getName()))->identifier('property.nativeType')->nonIgnorable()->build();
                 }
             }
         } elseif ($nativeType !== null) {
@@ -135,14 +133,12 @@ final class OverridingPropertyRule implements Rule
             } else {
                 $errors[] = $canBeTurnedOffError;
             }
-        } else {
-            if (!$isSuperType->yes()) {
-                $errors[] = $cannotBeTurnedOffError;
-            }
+        } else if (!$isSuperType->yes()) {
+            $errors[] = $cannotBeTurnedOffError;
         }
         return $errors;
     }
-    private function findPrototype(ClassReflection $classReflection, string $propertyName) : ?PhpPropertyReflection
+    private function findPrototype(ClassReflection $classReflection, string $propertyName): ?PhpPropertyReflection
     {
         $parentClass = $classReflection->getParentClass();
         if ($parentClass === null) {
@@ -157,7 +153,7 @@ final class OverridingPropertyRule implements Rule
         }
         return $property;
     }
-    private function findPrototypeInInterfaces(ClassReflection $classReflection, string $propertyName) : ?PhpPropertyReflection
+    private function findPrototypeInInterfaces(ClassReflection $classReflection, string $propertyName): ?PhpPropertyReflection
     {
         foreach ($classReflection->getInterfaces() as $interface) {
             if (!$interface->hasNativeProperty($propertyName)) {

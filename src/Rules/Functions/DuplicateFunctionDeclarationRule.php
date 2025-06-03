@@ -27,11 +27,11 @@ final class DuplicateFunctionDeclarationRule implements Rule
         $this->reflector = $reflector;
         $this->relativePathHelper = $relativePathHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return InFunctionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $thisFunction = $node->getFunctionReflection();
         $allFunctions = $this->reflector->reflectAllFunctions();

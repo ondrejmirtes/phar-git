@@ -26,11 +26,11 @@ final class ApiInterfaceExtendsRule implements Rule
         $this->apiRuleHelper = $apiRuleHelper;
         $this->reflectionProvider = $reflectionProvider;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Interface_::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $errors = [];
         foreach ($node->extends as $extends) {
@@ -41,7 +41,7 @@ final class ApiInterfaceExtendsRule implements Rule
     /**
      * @return list<IdentifierRuleError>
      */
-    private function checkName(Scope $scope, Node\Name $name) : array
+    private function checkName(Scope $scope, Node\Name $name): array
     {
         $extendedInterface = (string) $name;
         if (!$this->reflectionProvider->hasClass($extendedInterface)) {

@@ -8,11 +8,11 @@ use PHPStan\ShouldNotHappenException;
 use PHPStan\TrinaryLogic;
 trait NonCallableTypeTrait
 {
-    public function isCallable() : TrinaryLogic
+    public function isCallable(): TrinaryLogic
     {
         return TrinaryLogic::createNo();
     }
-    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope) : array
+    public function getCallableParametersAcceptors(ClassMemberAccessAnswerer $scope): array
     {
         throw new ShouldNotHappenException();
     }

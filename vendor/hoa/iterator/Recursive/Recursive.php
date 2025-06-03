@@ -50,4 +50,4 @@ interface Recursive extends \RecursiveIterator
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Iterator\\Recursive\\Recursive');
+Consistency::flexEntity('Hoa\Iterator\Recursive\Recursive');

@@ -20,22 +20,22 @@ final class InClosureNode extends NodeAbstract implements \PHPStan\Node\VirtualN
         parent::__construct($originalNode->getAttributes());
         $this->originalNode = $originalNode;
     }
-    public function getClosureType() : ClosureType
+    public function getClosureType(): ClosureType
     {
         return $this->closureType;
     }
-    public function getOriginalNode() : Closure
+    public function getOriginalNode(): Closure
     {
         return $this->originalNode;
     }
-    public function getType() : string
+    public function getType(): string
     {
         return 'PHPStan_Node_InClosureNode';
     }
     /**
      * @return string[]
      */
-    public function getSubNodeNames() : array
+    public function getSubNodeNames(): array
     {
         return [];
     }

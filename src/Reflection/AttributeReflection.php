@@ -22,14 +22,14 @@ final class AttributeReflection
         $this->name = $name;
         $this->argumentTypes = $argumentTypes;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
     /**
      * @return array<string, Type>
      */
-    public function getArgumentTypes() : array
+    public function getArgumentTypes(): array
     {
         return $this->argumentTypes;
     }

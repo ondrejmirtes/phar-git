@@ -22,14 +22,14 @@ final class Traverser
      * @param  callable(Node): (Node|int|null)|null  $enter
      * @param  callable(Node): (Node|int|null)|null  $leave
      */
-    public function traverse(Node $node, ?callable $enter = null, ?callable $leave = null) : Node
+    public function traverse(Node $node, ?callable $enter = null, ?callable $leave = null): Node
     {
         $this->enter = $enter;
         $this->leave = $leave;
         $this->stop = \false;
         return $this->traverseNode($node);
     }
-    private function traverseNode(Node $node) : Node
+    private function traverseNode(Node $node): Node
     {
         $children = \true;
         if ($this->enter) {

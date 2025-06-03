@@ -6,5 +6,5 @@ namespace PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Reflection\ReflectionProvider;
 interface ReflectionProviderProvider
 {
-    public function getReflectionProvider() : ReflectionProvider;
+    public function getReflectionProvider(): ReflectionProvider;
 }

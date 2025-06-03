@@ -24,14 +24,14 @@ use function strtolower;
  */
 final class UsedNamesRule implements Rule
 {
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FileNode::class;
     }
     /**
      * @param FileNode $node
      */
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         $usedNames = [];
         $errors = [];
@@ -55,7 +55,7 @@ final class UsedNamesRule implements Rule
      * @param array<string, string[]> $usedNames
      * @return list<IdentifierRuleError>
      */
-    private function findErrorsForNode(Node $node, string $namespace, array &$usedNames) : array
+    private function findErrorsForNode(Node $node, string $namespace, array &$usedNames): array
     {
         $lowerNamespace = strtolower($namespace);
         if ($node instanceof Use_) {
@@ -97,7 +97,7 @@ final class UsedNamesRule implements Rule
      * @param array<string, string[]> $usedNames
      * @return list<IdentifierRuleError>
      */
-    private function findErrorsInUses(array $uses, string $useGroupPrefix, string $lowerNamespace, array &$usedNames) : array
+    private function findErrorsInUses(array $uses, string $useGroupPrefix, string $lowerNamespace, array &$usedNames): array
     {
         $errors = [];
         foreach ($uses as $use) {
@@ -116,7 +116,7 @@ final class UsedNamesRule implements Rule
     /**
      * @param \PhpParser\Node\Stmt\Use_|\PhpParser\Node\Stmt\GroupUse|\PhpParser\Node\UseItem $use
      */
-    private function shouldBeIgnored($use) : bool
+    private function shouldBeIgnored($use): bool
     {
         return in_array($use->type, [Use_::TYPE_FUNCTION, Use_::TYPE_CONSTANT], \true);
     }

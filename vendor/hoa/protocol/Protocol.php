@@ -175,4 +175,4 @@ class Protocol extends \Hoa\Protocol\Node
 /**
  * Flex entity.
  */
-Consistency::flexEntity('Hoa\\Protocol\\Protocol');
+Consistency::flexEntity('Hoa\Protocol\Protocol');

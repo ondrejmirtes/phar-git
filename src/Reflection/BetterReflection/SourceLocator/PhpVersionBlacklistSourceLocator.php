@@ -18,7 +18,7 @@ final class PhpVersionBlacklistSourceLocator implements SourceLocator
         $this->sourceLocator = $sourceLocator;
         $this->phpStormStubsSourceStubber = $phpStormStubsSourceStubber;
     }
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         if ($identifier->isClass()) {
             if ($this->phpStormStubsSourceStubber->isPresentClass($identifier->getName()) === \false) {
@@ -32,7 +32,7 @@ final class PhpVersionBlacklistSourceLocator implements SourceLocator
         }
         return $this->sourceLocator->locateIdentifier($reflector, $identifier);
     }
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return $this->sourceLocator->locateIdentifiersByType($reflector, $identifierType);
     }

@@ -5,7 +5,7 @@ namespace PHPStan\File;
 
 final class NullRelativePathHelper implements \PHPStan\File\RelativePathHelper
 {
-    public function getRelativePath(string $filename) : string
+    public function getRelativePath(string $filename): string
     {
         return $filename;
     }

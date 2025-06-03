@@ -18,22 +18,22 @@ final class ExpressionTypeHolder
         $this->type = $type;
         $this->certainty = $certainty;
     }
-    public static function createYes(Expr $expr, Type $type) : self
+    public static function createYes(Expr $expr, Type $type): self
     {
         return new self($expr, $type, TrinaryLogic::createYes());
     }
-    public static function createMaybe(Expr $expr, Type $type) : self
+    public static function createMaybe(Expr $expr, Type $type): self
     {
         return new self($expr, $type, TrinaryLogic::createMaybe());
     }
-    public function equals(self $other) : bool
+    public function equals(self $other): bool
     {
         if (!$this->certainty->equals($other->certainty)) {
             return \false;
         }
         return $this->type->equals($other->type);
     }
-    public function and(self $other) : self
+    public function and(self $other): self
     {
         if ($this->type->equals($other->type)) {
             if ($this->certainty->equals($other->certainty)) {
@@ -45,15 +45,15 @@ final class ExpressionTypeHolder
         }
         return new self($this->expr, $type, $this->certainty->and($other->certainty));
     }
-    public function getExpr() : Expr
+    public function getExpr(): Expr
     {
         return $this->expr;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function getCertainty() : TrinaryLogic
+    public function getCertainty(): TrinaryLogic
     {
         return $this->certainty;
     }

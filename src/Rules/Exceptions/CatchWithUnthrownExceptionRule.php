@@ -23,11 +23,11 @@ final class CatchWithUnthrownExceptionRule implements Rule
         $this->exceptionTypeResolver = $exceptionTypeResolver;
         $this->reportUncheckedExceptionDeadCatch = $reportUncheckedExceptionDeadCatch;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return CatchWithUnthrownExceptionNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node->getCaughtType() instanceof NeverType) {
             return [RuleErrorBuilder::message(sprintf('Dead catch - %s is already caught above.', $node->getOriginalCaughtType()->describe(VerbosityLevel::typeOnly())))->line($node->getStartLine())->identifier('catch.alreadyCaught')->build()];

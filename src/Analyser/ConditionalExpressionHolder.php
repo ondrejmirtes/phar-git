@@ -29,15 +29,15 @@ final class ConditionalExpressionHolder
     /**
      * @return array<string, ExpressionTypeHolder>
      */
-    public function getConditionExpressionTypeHolders() : array
+    public function getConditionExpressionTypeHolders(): array
     {
         return $this->conditionExpressionTypeHolders;
     }
-    public function getTypeHolder() : \PHPStan\Analyser\ExpressionTypeHolder
+    public function getTypeHolder(): \PHPStan\Analyser\ExpressionTypeHolder
     {
         return $this->typeHolder;
     }
-    public function getKey() : string
+    public function getKey(): string
     {
         $parts = [];
         foreach ($this->conditionExpressionTypeHolders as $exprString => $typeHolder) {

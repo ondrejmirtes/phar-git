@@ -5,5 +5,5 @@ namespace PHPStan\Reflection\BetterReflection\SourceLocator;
 
 interface OptimizedSingleFileSourceLocatorFactory
 {
-    public function create(string $fileName) : \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedSingleFileSourceLocator;
+    public function create(string $fileName): \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedSingleFileSourceLocator;
 }

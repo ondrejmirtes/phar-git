@@ -18,11 +18,11 @@ use const PHP_INT_MIN;
 #[\PHPStan\DependencyInjection\AutowiredService]
 final class IntdivThrowTypeExtension implements DynamicFunctionThrowTypeExtension
 {
-    public function isFunctionSupported(FunctionReflection $functionReflection) : bool
+    public function isFunctionSupported(FunctionReflection $functionReflection): bool
     {
         return $functionReflection->getName() === 'intdiv';
     }
-    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, Scope $scope) : ?Type
+    public function getThrowTypeFromFunctionCall(FunctionReflection $functionReflection, FuncCall $funcCall, Scope $scope): ?Type
     {
         if (count($funcCall->getArgs()) < 2) {
             return $functionReflection->getThrowType();

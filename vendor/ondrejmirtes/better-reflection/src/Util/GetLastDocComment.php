@@ -13,7 +13,7 @@ final class GetLastDocComment
      *
      * @psalm-pure
      */
-    public static function forNode(NodeAbstract $node) : ?string
+    public static function forNode(NodeAbstract $node): ?string
     {
         /** @psalm-suppress ImpureMethodCall */
         $docComment = $node->getDocComment();

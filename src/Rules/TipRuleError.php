@@ -6,5 +6,5 @@ namespace PHPStan\Rules;
 /** @api */
 interface TipRuleError extends \PHPStan\Rules\RuleError
 {
-    public function getTip() : string;
+    public function getTip(): string;
 }

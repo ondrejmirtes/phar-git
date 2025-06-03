@@ -44,7 +44,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         assert($min === null || $max === null || $min <= $max);
         assert($min !== null || $max !== null);
     }
-    public static function fromInterval(?int $min, ?int $max, int $shift = 0) : \PHPStan\Type\Type
+    public static function fromInterval(?int $min, ?int $max, int $shift = 0): \PHPStan\Type\Type
     {
         if ($min !== null && $max !== null) {
             if ($min > $max) {
@@ -59,7 +59,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return (new self($min, $max))->shift($shift);
     }
-    protected static function isDisjoint(?int $minA, ?int $maxA, ?int $minB, ?int $maxB, bool $touchingIsDisjoint = \true) : bool
+    protected static function isDisjoint(?int $minA, ?int $maxA, ?int $minB, ?int $maxB, bool $touchingIsDisjoint = \true): bool
     {
         $offset = $touchingIsDisjoint ? 0 : 1;
         return $minA !== null && $maxB !== null && $minA > $maxB + $offset || $maxA !== null && $minB !== null && $maxA + $offset < $minB;
@@ -69,7 +69,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      *
      * @param int|float $value
      */
-    public static function createAllSmallerThan($value) : \PHPStan\Type\Type
+    public static function createAllSmallerThan($value): \PHPStan\Type\Type
     {
         if (is_int($value)) {
             return self::fromInterval(null, $value, -1);
@@ -87,7 +87,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      *
      * @param int|float $value
      */
-    public static function createAllSmallerThanOrEqualTo($value) : \PHPStan\Type\Type
+    public static function createAllSmallerThanOrEqualTo($value): \PHPStan\Type\Type
     {
         if (is_int($value)) {
             return self::fromInterval(null, $value);
@@ -105,7 +105,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      *
      * @param int|float $value
      */
-    public static function createAllGreaterThan($value) : \PHPStan\Type\Type
+    public static function createAllGreaterThan($value): \PHPStan\Type\Type
     {
         if (is_int($value)) {
             return self::fromInterval($value, null, 1);
@@ -123,7 +123,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      *
      * @param int|float $value
      */
-    public static function createAllGreaterThanOrEqualTo($value) : \PHPStan\Type\Type
+    public static function createAllGreaterThanOrEqualTo($value): \PHPStan\Type\Type
     {
         if (is_int($value)) {
             return self::fromInterval($value, null);
@@ -136,19 +136,19 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return self::fromInterval((int) ceil($value), null);
     }
-    public function getMin() : ?int
+    public function getMin(): ?int
     {
         return $this->min;
     }
-    public function getMax() : ?int
+    public function getMax(): ?int
     {
         return $this->max;
     }
-    public function describe(\PHPStan\Type\VerbosityLevel $level) : string
+    public function describe(\PHPStan\Type\VerbosityLevel $level): string
     {
         return sprintf('int<%s, %s>', $this->min ?? 'min', $this->max ?? 'max');
     }
-    public function shift(int $amount) : \PHPStan\Type\Type
+    public function shift(int $amount): \PHPStan\Type\Type
     {
         if ($amount === 0) {
             return $this;
@@ -178,7 +178,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return self::fromInterval($min, $max);
     }
-    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function accepts(\PHPStan\Type\Type $type, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         if ($type instanceof parent) {
             return $this->isSuperTypeOf($type)->toAcceptsResult();
@@ -188,7 +188,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\AcceptsResult::createNo();
     }
-    public function isSuperTypeOf(\PHPStan\Type\Type $type) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSuperTypeOf(\PHPStan\Type\Type $type): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($type instanceof self || $type instanceof ConstantIntegerType) {
             if ($type instanceof self) {
@@ -214,7 +214,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    public function isSubTypeOf(\PHPStan\Type\Type $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    public function isSubTypeOf(\PHPStan\Type\Type $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($otherType instanceof parent) {
             return $otherType->isSuperTypeOf($this);
@@ -227,7 +227,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo();
     }
-    private function isSubTypeOfUnionWithReason(\PHPStan\Type\UnionType $otherType) : \PHPStan\Type\IsSuperTypeOfResult
+    private function isSubTypeOfUnionWithReason(\PHPStan\Type\UnionType $otherType): \PHPStan\Type\IsSuperTypeOfResult
     {
         if ($this->min !== null && $this->max !== null) {
             $matchingConstantIntegers = array_filter($otherType->getTypes(), fn(\PHPStan\Type\Type $type): bool => $type instanceof ConstantIntegerType && $type->getValue() >= $this->min && $type->getValue() <= $this->max);
@@ -237,19 +237,19 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\IsSuperTypeOfResult::createNo()->or(...array_map(fn(\PHPStan\Type\Type $innerType) => $this->isSubTypeOf($innerType), $otherType->getTypes()));
     }
-    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes) : \PHPStan\Type\AcceptsResult
+    public function isAcceptedBy(\PHPStan\Type\Type $acceptingType, bool $strictTypes): \PHPStan\Type\AcceptsResult
     {
         return $this->isSubTypeOf($acceptingType)->toAcceptsResult();
     }
-    public function equals(\PHPStan\Type\Type $type) : bool
+    public function equals(\PHPStan\Type\Type $type): bool
     {
         return $type instanceof self && $this->min === $type->min && $this->max === $type->max;
     }
-    public function generalize(\PHPStan\Type\GeneralizePrecision $precision) : \PHPStan\Type\Type
+    public function generalize(\PHPStan\Type\GeneralizePrecision $precision): \PHPStan\Type\Type
     {
         return new \PHPStan\Type\IntegerType();
     }
-    public function isSmallerThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($this->min === null) {
             $minIsSmaller = TrinaryLogic::createYes();
@@ -268,7 +268,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return TrinaryLogic::extremeIdentity($minIsSmaller, $maxIsSmaller);
     }
-    public function isSmallerThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isSmallerThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($this->min === null) {
             $minIsSmaller = TrinaryLogic::createYes();
@@ -287,7 +287,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return TrinaryLogic::extremeIdentity($minIsSmaller, $maxIsSmaller);
     }
-    public function isGreaterThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThan(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($this->min === null) {
             $minIsSmaller = TrinaryLogic::createNo();
@@ -306,7 +306,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return TrinaryLogic::extremeIdentity($minIsSmaller, $maxIsSmaller);
     }
-    public function isGreaterThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion) : TrinaryLogic
+    public function isGreaterThanOrEqual(\PHPStan\Type\Type $otherType, PhpVersion $phpVersion): TrinaryLogic
     {
         if ($this->min === null) {
             $minIsSmaller = TrinaryLogic::createNo();
@@ -325,7 +325,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return TrinaryLogic::extremeIdentity($minIsSmaller, $maxIsSmaller);
     }
-    public function getSmallerType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getSmallerType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         $subtractedTypes = [new ConstantBooleanType(\true)];
         if ($this->max !== null) {
@@ -333,7 +333,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\TypeCombinator::remove(new \PHPStan\Type\MixedType(), \PHPStan\Type\TypeCombinator::union(...$subtractedTypes));
     }
-    public function getSmallerOrEqualType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getSmallerOrEqualType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         $subtractedTypes = [];
         if ($this->max !== null) {
@@ -341,7 +341,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\TypeCombinator::remove(new \PHPStan\Type\MixedType(), \PHPStan\Type\TypeCombinator::union(...$subtractedTypes));
     }
-    public function getGreaterType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getGreaterType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         $subtractedTypes = [new \PHPStan\Type\NullType(), new ConstantBooleanType(\false)];
         if ($this->min !== null) {
@@ -352,7 +352,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\TypeCombinator::remove(new \PHPStan\Type\MixedType(), \PHPStan\Type\TypeCombinator::union(...$subtractedTypes));
     }
-    public function getGreaterOrEqualType(PhpVersion $phpVersion) : \PHPStan\Type\Type
+    public function getGreaterOrEqualType(PhpVersion $phpVersion): \PHPStan\Type\Type
     {
         $subtractedTypes = [];
         if ($this->min !== null) {
@@ -364,7 +364,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return \PHPStan\Type\TypeCombinator::remove(new \PHPStan\Type\MixedType(), \PHPStan\Type\TypeCombinator::union(...$subtractedTypes));
     }
-    public function toBoolean() : \PHPStan\Type\BooleanType
+    public function toBoolean(): \PHPStan\Type\BooleanType
     {
         $isZero = (new ConstantIntegerType(0))->isSuperTypeOf($this);
         if ($isZero->no()) {
@@ -375,7 +375,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return new ConstantBooleanType(\false);
     }
-    public function toAbsoluteNumber() : \PHPStan\Type\Type
+    public function toAbsoluteNumber(): \PHPStan\Type\Type
     {
         if ($this->min !== null && $this->min >= 0) {
             return $this;
@@ -386,7 +386,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return self::fromInterval($this->max * -1, $this->min !== null ? $this->min * -1 : null);
     }
-    public function toString() : \PHPStan\Type\Type
+    public function toString(): \PHPStan\Type\Type
     {
         $finiteTypes = $this->getFiniteTypes();
         if ($finiteTypes !== []) {
@@ -402,7 +402,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      * Return the union with another type, but only if it can be expressed in a simpler way than using UnionType
      *
      */
-    public function tryUnion(\PHPStan\Type\Type $otherType) : ?\PHPStan\Type\Type
+    public function tryUnion(\PHPStan\Type\Type $otherType): ?\PHPStan\Type\Type
     {
         if ($otherType instanceof self || $otherType instanceof ConstantIntegerType) {
             if ($otherType instanceof self) {
@@ -427,7 +427,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      * IntersectionType
      *
      */
-    public function tryIntersect(\PHPStan\Type\Type $otherType) : ?\PHPStan\Type\Type
+    public function tryIntersect(\PHPStan\Type\Type $otherType): ?\PHPStan\Type\Type
     {
         if ($otherType instanceof self || $otherType instanceof ConstantIntegerType) {
             if ($otherType instanceof self) {
@@ -465,7 +465,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
      * Return the different with another type, or null if it cannot be represented.
      *
      */
-    public function tryRemove(\PHPStan\Type\Type $typeToRemove) : ?\PHPStan\Type\Type
+    public function tryRemove(\PHPStan\Type\Type $typeToRemove): ?\PHPStan\Type\Type
     {
         if (get_class($typeToRemove) === parent::class) {
             return new \PHPStan\Type\NeverType();
@@ -498,7 +498,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return null;
     }
-    public function exponentiate(\PHPStan\Type\Type $exponent) : \PHPStan\Type\Type
+    public function exponentiate(\PHPStan\Type\Type $exponent): \PHPStan\Type\Type
     {
         if ($exponent instanceof \PHPStan\Type\UnionType) {
             $results = [];
@@ -541,7 +541,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
     /**
      * @return list<ConstantIntegerType>
      */
-    public function getFiniteTypes() : array
+    public function getFiniteTypes(): array
     {
         if ($this->min === null || $this->max === null) {
             return [];
@@ -556,7 +556,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return $types;
     }
-    public function toPhpDocNode() : TypeNode
+    public function toPhpDocNode(): TypeNode
     {
         if ($this->min === null) {
             $min = new IdentifierTypeNode('min');
@@ -570,7 +570,7 @@ class IntegerRangeType extends \PHPStan\Type\IntegerType implements \PHPStan\Typ
         }
         return new GenericTypeNode(new IdentifierTypeNode('int'), [$min, $max]);
     }
-    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion) : \PHPStan\Type\BooleanType
+    public function looseCompare(\PHPStan\Type\Type $type, PhpVersion $phpVersion): \PHPStan\Type\BooleanType
     {
         $zeroInt = new ConstantIntegerType(0);
         if ($zeroInt->isSuperTypeOf($this)->no()) {

@@ -8,11 +8,11 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\MethodsClassReflectionExtension;
 final class SoapClientMethodsClassReflectionExtension implements MethodsClassReflectionExtension
 {
-    public function hasMethod(ClassReflection $classReflection, string $methodName) : bool
+    public function hasMethod(ClassReflection $classReflection, string $methodName): bool
     {
         return $classReflection->is('SoapClient');
     }
-    public function getMethod(ClassReflection $classReflection, string $methodName) : MethodReflection
+    public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
     {
         return new \PHPStan\Reflection\Php\Soap\SoapClientMethodReflection($classReflection, $methodName);
     }

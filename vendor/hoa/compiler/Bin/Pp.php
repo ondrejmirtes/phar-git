@@ -65,12 +65,12 @@ class Pp extends Console\Dispatcher\Kit
         $visitor = null;
         $tokenSequence = \false;
         $trace = \false;
-        while (\false !== ($c = $this->getOption($v))) {
+        while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'v':
                     switch (\strtolower($v)) {
                         case 'dump':
-                            $visitor = 'Hoa\\Compiler\\Visitor\\Dump';
+                            $visitor = 'Hoa\Compiler\Visitor\Dump';
                             break;
                         default:
                             return $this->usage();
@@ -139,7 +139,7 @@ class Pp extends Console\Dispatcher\Kit
                 $ruleName = $element->getRule();
                 $rule = $compiler->getRule($ruleName);
                 echo \str_repeat('>  ', ++$i), 'enter ', $ruleName;
-                if (null !== ($id = $rule->getNodeId())) {
+                if (null !== $id = $rule->getNodeId()) {
                     echo ' (', $id, ')';
                 }
                 echo "\n";
@@ -177,10 +177,11 @@ class Pp extends Console\Dispatcher\Kit
      */
     public function usage()
     {
-        echo 'Usage   : compiler:pp <options> [grammar.pp] [language]', "\n", 'Options :', "\n", $this->makeUsageOptionsList(['v' => 'Visitor name (only “dump” is supported).', 'c' => 'Visitor classname (using . instead of \\ works).', 's' => 'Print token sequence.', 't' => 'Print trace.', 'help' => 'This help.']), "\n";
+        echo 'Usage   : compiler:pp <options> [grammar.pp] [language]', "\n", 'Options :', "\n", $this->makeUsageOptionsList(['v' => 'Visitor name (only “dump” is supported).', 'c' => 'Visitor classname (using . instead of \ works).', 's' => 'Print token sequence.', 't' => 'Print trace.', 'help' => 'This help.']), "\n";
         return;
     }
 }
 __halt_compiler();
 Compile and visit languages with grammars.
+
 

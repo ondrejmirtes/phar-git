@@ -10,7 +10,7 @@ final class FileReader
     /**
      * @throws CouldNotReadFileException
      */
-    public static function read(string $fileName) : string
+    public static function read(string $fileName): string
     {
         $path = $fileName;
         $contents = @file_get_contents($path);

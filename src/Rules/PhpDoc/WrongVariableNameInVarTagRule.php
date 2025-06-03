@@ -40,11 +40,11 @@ final class WrongVariableNameInVarTagRule implements Rule
         $this->fileTypeMapper = $fileTypeMapper;
         $this->varTagTypeRuleHelper = $varTagTypeRuleHelper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return Node\Stmt::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if ($node instanceof Node\Stmt\Property || $node instanceof Node\Stmt\ClassConst || $node instanceof Node\Stmt\Const_ || $node instanceof VirtualNode && !$node instanceof InFunctionNode && !$node instanceof InClassMethodNode && !$node instanceof InClassNode) {
             return [];
@@ -103,7 +103,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processAssign(Scope $scope, Node\Expr $var, Node\Expr $expr, array $varTags) : array
+    private function processAssign(Scope $scope, Node\Expr $var, Node\Expr $expr, array $varTags): array
     {
         $errors = [];
         $hasMultipleMessage = \false;
@@ -142,7 +142,7 @@ final class WrongVariableNameInVarTagRule implements Rule
     /**
      * @return string[]
      */
-    private function getAssignedVariables(Expr $expr) : array
+    private function getAssignedVariables(Expr $expr): array
     {
         if ($expr instanceof Expr\Variable) {
             if (is_string($expr->name)) {
@@ -166,7 +166,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processForeach(Scope $scope, Node\Expr $iterateeExpr, ?Node\Expr $keyVar, Node\Expr $valueVar, array $varTags) : array
+    private function processForeach(Scope $scope, Node\Expr $iterateeExpr, ?Node\Expr $keyVar, Node\Expr $valueVar, array $varTags): array
     {
         $variableNames = [];
         if ($iterateeExpr instanceof Node\Expr\Variable && is_string($iterateeExpr->name)) {
@@ -207,7 +207,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processExpression(Scope $scope, Expr $expr, array $varTags) : array
+    private function processExpression(Scope $scope, Expr $expr, array $varTags): array
     {
         if ($expr instanceof Node\Expr\Assign || $expr instanceof Node\Expr\AssignRef) {
             return $this->processAssign($scope, $expr->var, $expr->expr, $varTags);
@@ -219,7 +219,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processStatic(Scope $scope, array $vars, array $varTags) : array
+    private function processStatic(Scope $scope, array $vars, array $varTags): array
     {
         $variableNames = [];
         foreach ($vars as $var) {
@@ -256,7 +256,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processStmt(Scope $scope, array $varTags, ?Expr $defaultExpr) : array
+    private function processStmt(Scope $scope, array $varTags, ?Expr $defaultExpr): array
     {
         $errors = [];
         $variableLessVarTags = [];
@@ -281,7 +281,7 @@ final class WrongVariableNameInVarTagRule implements Rule
      * @param VarTag[] $varTags
      * @return list<IdentifierRuleError>
      */
-    private function processGlobal(Scope $scope, Node\Stmt\Global_ $node, array $varTags) : array
+    private function processGlobal(Scope $scope, Node\Stmt\Global_ $node, array $varTags): array
     {
         $variableNames = [];
         foreach ($node->vars as $var) {

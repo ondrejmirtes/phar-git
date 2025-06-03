@@ -17,7 +17,7 @@ final class Chain implements Filter
     {
         $this->filters = $filters;
     }
-    public function filter(string $filepath, string $class, IOInterface $io) : bool
+    public function filter(string $filepath, string $class, IOInterface $io): bool
     {
         foreach ($this->filters as $filter) {
             if ($filter->filter($filepath, $class, $io) === \false) {

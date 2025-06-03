@@ -20,11 +20,11 @@ final class FunctionNeverRule implements Rule
     {
         $this->helper = $helper;
     }
-    public function getNodeType() : string
+    public function getNodeType(): string
     {
         return FunctionReturnStatementsNode::class;
     }
-    public function processNode(Node $node, Scope $scope) : array
+    public function processNode(Node $node, Scope $scope): array
     {
         if (count($node->getReturnStatements()) > 0) {
             return [];

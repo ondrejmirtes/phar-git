@@ -44,55 +44,55 @@ final class ExtendedNativeParameterReflection implements ExtendedParameterReflec
         $this->closureThisType = $closureThisType;
         $this->attributes = $attributes;
     }
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }
-    public function getType() : Type
+    public function getType(): Type
     {
         return $this->type;
     }
-    public function getPhpDocType() : Type
+    public function getPhpDocType(): Type
     {
         return $this->phpDocType;
     }
-    public function hasNativeType() : bool
+    public function hasNativeType(): bool
     {
         return !$this->nativeType instanceof MixedType || $this->nativeType->isExplicitMixed();
     }
-    public function getNativeType() : Type
+    public function getNativeType(): Type
     {
         return $this->nativeType;
     }
-    public function passedByReference() : PassedByReference
+    public function passedByReference(): PassedByReference
     {
         return $this->passedByReference;
     }
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->variadic;
     }
-    public function getDefaultValue() : ?Type
+    public function getDefaultValue(): ?Type
     {
         return $this->defaultValue;
     }
-    public function getOutType() : ?Type
+    public function getOutType(): ?Type
     {
         return $this->outType;
     }
-    public function isImmediatelyInvokedCallable() : TrinaryLogic
+    public function isImmediatelyInvokedCallable(): TrinaryLogic
     {
         return $this->immediatelyInvokedCallable;
     }
-    public function getClosureThisType() : ?Type
+    public function getClosureThisType(): ?Type
     {
         return $this->closureThisType;
     }
-    public function getAttributes() : array
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
