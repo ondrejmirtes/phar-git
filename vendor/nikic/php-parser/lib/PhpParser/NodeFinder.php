@@ -20,7 +20,7 @@ class NodeFinder
         if ($nodes === []) {
             return [];
         }
-        if (!\is_array($nodes)) {
+        if (!is_array($nodes)) {
             $nodes = [$nodes];
         }
         $visitor = new FindingVisitor($filter);
@@ -56,7 +56,7 @@ class NodeFinder
         if ($nodes === []) {
             return null;
         }
-        if (!\is_array($nodes)) {
+        if (!is_array($nodes)) {
             $nodes = [$nodes];
         }
         $visitor = new FirstFindingVisitor($filter);

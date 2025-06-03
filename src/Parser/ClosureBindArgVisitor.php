@@ -8,7 +8,7 @@ use PhpParser\Node\Identifier;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClosureBindArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'closureBindArg';

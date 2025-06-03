@@ -22,7 +22,7 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class CtypeDigitFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

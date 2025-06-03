@@ -11,7 +11,7 @@ use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\Type;
 use function count;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FilterVarDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private \PHPStan\Type\Php\FilterFunctionReturnTypeHelper $filterFunctionReturnTypeHelper;

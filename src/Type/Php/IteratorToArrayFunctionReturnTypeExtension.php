@@ -16,7 +16,7 @@ use PHPStan\Type\NeverType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IteratorToArrayFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

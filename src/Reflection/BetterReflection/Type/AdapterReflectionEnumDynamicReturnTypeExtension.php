@@ -23,7 +23,7 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AdapterReflectionEnumDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     private PhpVersion $phpVersion;

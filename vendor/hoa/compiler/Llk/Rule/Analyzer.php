@@ -119,7 +119,7 @@ class Analyzer
             $nodeId = null;
             if ('#' === $key[0]) {
                 $nodeId = $key;
-                $key = \substr($key, 1);
+                $key = substr($key, 1);
             }
             $pNodeId = $nodeId;
             $rule = $this->rule($pNodeId);
@@ -245,24 +245,24 @@ class Analyzer
                 $this->_lexer->next();
                 break;
             case 'n_to_m':
-                $handle = \trim($this->_lexer->current()['value'], '{}');
-                $nm = \explode(',', $handle);
-                $min = (int) \trim($nm[0]);
-                $max = (int) \trim($nm[1]);
+                $handle = trim($this->_lexer->current()['value'], '{}');
+                $nm = explode(',', $handle);
+                $min = (int) trim($nm[0]);
+                $max = (int) trim($nm[1]);
                 $this->_lexer->next();
                 break;
             case 'zero_to_m':
                 $min = 0;
-                $max = (int) \trim($this->_lexer->current()['value'], '{,}');
+                $max = (int) trim($this->_lexer->current()['value'], '{,}');
                 $this->_lexer->next();
                 break;
             case 'n_or_more':
-                $min = (int) \trim($this->_lexer->current()['value'], '{,}');
+                $min = (int) trim($this->_lexer->current()['value'], '{,}');
                 $max = -1;
                 $this->_lexer->next();
                 break;
             case 'exactly_n':
-                $handle = \trim($this->_lexer->current()['value'], '{}');
+                $handle = trim($this->_lexer->current()['value'], '{}');
                 $min = (int) $handle;
                 $max = $min;
                 $this->_lexer->next();
@@ -305,17 +305,17 @@ class Analyzer
             return $rule;
         }
         if ('skipped' === $this->_lexer->current()['token']) {
-            $tokenName = \trim($this->_lexer->current()['value'], ':');
-            if (']' === \substr($tokenName, -1)) {
-                $uId = (int) \substr($tokenName, \strpos($tokenName, '[') + 1, -1);
-                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
+            $tokenName = trim($this->_lexer->current()['value'], ':');
+            if (']' === substr($tokenName, -1)) {
+                $uId = (int) substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
             } else {
                 $uId = -1;
             }
             $exists = \false;
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
-                    if ($token === $tokenName || \substr($token, 0, \strpos($token, ':')) === $tokenName) {
+                    if ($token === $tokenName || substr($token, 0, strpos($token, ':')) === $tokenName) {
                         $exists = \true;
                         break 2;
                     }
@@ -330,17 +330,17 @@ class Analyzer
             return $name;
         }
         if ('kept' === $this->_lexer->current()['token']) {
-            $tokenName = \trim($this->_lexer->current()['value'], '<>');
-            if (']' === \substr($tokenName, -1)) {
-                $uId = (int) \substr($tokenName, \strpos($tokenName, '[') + 1, -1);
-                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
+            $tokenName = trim($this->_lexer->current()['value'], '<>');
+            if (']' === substr($tokenName, -1)) {
+                $uId = (int) substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
             } else {
                 $uId = -1;
             }
             $exists = \false;
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
-                    if ($token === $tokenName || \substr($token, 0, \strpos($token, ':')) === $tokenName) {
+                    if ($token === $tokenName || substr($token, 0, strpos($token, ':')) === $tokenName) {
                         $exists = \true;
                         break 2;
                     }
@@ -356,8 +356,8 @@ class Analyzer
             return $name;
         }
         if ('named' === $this->_lexer->current()['token']) {
-            $tokenName = \rtrim($this->_lexer->current()['value'], '()');
-            if (\false === \array_key_exists($tokenName, $this->_rules) && \false === \array_key_exists('#' . $tokenName, $this->_rules)) {
+            $tokenName = rtrim($this->_lexer->current()['value'], '()');
+            if (\false === array_key_exists($tokenName, $this->_rules) && \false === array_key_exists('#' . $tokenName, $this->_rules)) {
                 throw new Compiler\Exception\Rule('Cannot call rule %s() in rule %s because it does not exist.', 5, [$tokenName, $this->_ruleName]);
             }
             if (0 === $this->_lexer->key() && 'EOF' === $this->_lexer->getNext()['token']) {

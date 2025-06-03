@@ -22,7 +22,7 @@ use PHPStan\Type\Generic\GenericClassStringType;
 use PHPStan\Type\ObjectType;
 use function in_array;
 use function ltrim;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClassExistsFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

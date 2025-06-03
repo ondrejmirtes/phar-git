@@ -21,7 +21,7 @@ final class Reference
     private $value;
     public static function fromType(string $value): self
     {
-        if (\strpos($value, '\\') === \false) {
+        if (strpos($value, '\\') === \false) {
             $value = '\\' . $value;
         }
         return new static($value);
@@ -36,11 +36,11 @@ final class Reference
     }
     public function isName(): bool
     {
-        return \strpos($this->value, '\\') === \false && $this->value !== self::Self;
+        return strpos($this->value, '\\') === \false && $this->value !== self::Self;
     }
     public function isType(): bool
     {
-        return \strpos($this->value, '\\') !== \false;
+        return strpos($this->value, '\\') !== \false;
     }
     public function isSelf(): bool
     {

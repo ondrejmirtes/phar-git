@@ -46,7 +46,7 @@ final class ArrayItemNode extends Node
         $res = '';
         foreach ($items as $item) {
             $v = $item->value->toString();
-            $res .= ($item->key ? $item->key->toString() . ':' : '-') . ($item->value instanceof BlockArrayNode && $item->value->items ? "\n" . $v . (\substr($v, -2, 1) === "\n" ? '' : "\n") : ' ' . $v . "\n");
+            $res .= ($item->key ? $item->key->toString() . ':' : '-') . ($item->value instanceof BlockArrayNode && $item->value->items ? "\n" . $v . (substr($v, -2, 1) === "\n" ? '' : "\n") : ' ' . $v . "\n");
         }
         return $res;
     }

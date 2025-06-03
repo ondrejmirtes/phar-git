@@ -14,7 +14,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use ReflectionProperty;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReflectionPropertyConstructorThrowTypeExtension implements DynamicStaticMethodThrowTypeExtension
 {
     private ReflectionProvider $reflectionProvider;

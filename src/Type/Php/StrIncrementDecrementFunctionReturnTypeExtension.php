@@ -24,7 +24,7 @@ use function ord;
 use function preg_match;
 use function str_split;
 use function stripos;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrIncrementDecrementFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

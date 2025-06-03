@@ -109,8 +109,8 @@ class Event
         if (\true === self::eventExists($eventId)) {
             throw new \Hoa\Event\Exception('Cannot redeclare an event with the same ID, i.e. the event ' . 'ID %s already exists.', 0, $eventId);
         }
-        if (\is_object($source) && !$source instanceof \Hoa\Event\Source) {
-            throw new \Hoa\Event\Exception('The source must implement \Hoa\Event\Source ' . 'interface; given %s.', 1, \get_class($source));
+        if (is_object($source) && !$source instanceof \Hoa\Event\Source) {
+            throw new \Hoa\Event\Exception('The source must implement \Hoa\Event\Source ' . 'interface; given %s.', 1, get_class($source));
         } else {
             $reflection = new \ReflectionClass($source);
             if (\false === $reflection->implementsInterface('\Hoa\Event\Source')) {
@@ -204,7 +204,7 @@ class Event
      */
     public static function eventExists($eventId)
     {
-        return \array_key_exists($eventId, self::$_register) && self::$_register[$eventId][self::KEY_SOURCE] !== null;
+        return array_key_exists($eventId, self::$_register) && self::$_register[$eventId][self::KEY_SOURCE] !== null;
     }
 }
 /**

@@ -55,14 +55,14 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
         }
         $remoteDiff = Line::createArray($this->differ->diffToArray($base, $remote));
         $localDiff = Line::createArray($this->differ->diffToArray($base, $local));
-        $baseLines = Line::createArray(\array_map(function ($l) {
+        $baseLines = Line::createArray(array_map(function ($l) {
             return [$l, 0];
         }, self::splitStringByLines($base)));
         $remoteHunks = Hunk::createArray($remoteDiff);
         $localHunks = Hunk::createArray($localDiff);
         $conflicts = [];
         $merged = PhpMerge::mergeHunks($baseLines, $remoteHunks, $localHunks, $conflicts);
-        $merged = \implode("", $merged);
+        $merged = implode("", $merged);
         if (!empty($conflicts)) {
             throw new MergeException('A merge conflict has occurred.', $conflicts, $merged);
         }
@@ -93,7 +93,7 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
         $flipped = \false;
         $i = -1;
         // Loop over all indexes of the base and all hunks.
-        while ($i < \count($base) || $a->valid() || $b->valid()) {
+        while ($i < count($base) || $a->valid() || $b->valid()) {
             // Assure that $aa is the first hunk by swaping $a and $b
             if ($a->valid() && $b->valid() && $a->current()->getStart() > $b->current()->getStart()) {
                 self::swap($a, $b, $flipped);
@@ -104,16 +104,16 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
             $aa = $a->current();
             /** @var Hunk|null $bb */
             $bb = $b->current();
-            if (!\is_null($aa)) {
-                \assert($aa->getStart() >= $i, 'The start of the hunk is after the current index.');
+            if (!is_null($aa)) {
+                assert($aa->getStart() >= $i, 'The start of the hunk is after the current index.');
             }
             // The hunk starts at the current index.
-            if (!\is_null($aa) && $aa->getStart() === $i) {
+            if (!is_null($aa) && $aa->getStart() === $i) {
                 // Hunks from both sources start with the same index.
-                if (!\is_null($bb) && $bb->getStart() === $i) {
+                if (!is_null($bb) && $bb->getStart() === $i) {
                     if (!$aa->isSame($bb)) {
                         // If the hunks are not the same its a conflict.
-                        $conflicts[] = self::prepareConflict($base, $a, $b, $flipped, \count($merged));
+                        $conflicts[] = self::prepareConflict($base, $a, $b, $flipped, count($merged));
                         $aa = $a->current();
                     } else {
                         // Advance $b it is the same as $a and will be merged.
@@ -121,12 +121,12 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
                     }
                 } elseif ($aa->hasIntersection($bb)) {
                     // The end overlaps with the start of the next other hunk.
-                    $conflicts[] = self::prepareConflict($base, $a, $b, $flipped, \count($merged));
+                    $conflicts[] = self::prepareConflict($base, $a, $b, $flipped, count($merged));
                     $aa = $a->current();
                 }
             }
             // The conflict resolution could mean the hunk starts now later.
-            if (!\is_null($aa) && $aa->getStart() === $i) {
+            if (!is_null($aa) && $aa->getStart() === $i) {
                 if ($aa->getType() === Hunk::ADDED && $i >= 0) {
                     $merged[] = $base[$i]->getContent();
                 }
@@ -179,11 +179,11 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
             $start = $aa->getStart();
             $end = $aa->getEnd();
         } else {
-            $start = \min($aa->getStart(), $bb->getStart());
-            $end = \max($aa->getEnd(), $bb->getEnd());
+            $start = min($aa->getStart(), $bb->getStart());
+            $end = max($aa->getEnd(), $bb->getEnd());
         }
         // Add one to the merged line number if we advanced the start.
-        $mergedLine += $start - \min($aa->getStart(), $bb->getStart());
+        $mergedLine += $start - min($aa->getStart(), $bb->getStart());
         $baseLines = [];
         $remoteLines = [];
         $localLines = [];
@@ -204,7 +204,7 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
                     if ($aa->getType() === Hunk::ADDED) {
                         $remoteLines[] = $base[$i]->getContent();
                     }
-                    $remoteLines = \array_merge($remoteLines, $aa->getLinesContent());
+                    $remoteLines = array_merge($remoteLines, $aa->getLinesContent());
                 }
                 if ($i < $bb->getStart() || $i > $bb->getEnd()) {
                     $localLines[] = $base[$i]->getContent();
@@ -212,7 +212,7 @@ final class PhpMerge extends AbstractMergeBase implements PhpMergeInterface
                     if ($bb->getType() === Hunk::ADDED) {
                         $localLines[] = $base[$i]->getContent();
                     }
-                    $localLines = \array_merge($localLines, $bb->getLinesContent());
+                    $localLines = array_merge($localLines, $bb->getLinesContent());
                 }
             }
         } else {

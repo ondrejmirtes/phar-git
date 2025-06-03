@@ -98,7 +98,7 @@ class Wrapper
      */
     public function stream_close()
     {
-        if (\true === @\fclose($this->getStream())) {
+        if (\true === @fclose($this->getStream())) {
             $this->_stream = null;
             $this->_streamName = null;
         }
@@ -113,7 +113,7 @@ class Wrapper
      */
     public function stream_eof()
     {
-        return \feof($this->getStream());
+        return feof($this->getStream());
     }
     /**
      * Flush the output.
@@ -125,7 +125,7 @@ class Wrapper
      */
     public function stream_flush()
     {
-        return \fflush($this->getStream());
+        return fflush($this->getStream());
     }
     /**
      * Advisory file locking.
@@ -144,7 +144,7 @@ class Wrapper
      */
     public function stream_lock($operation)
     {
-        return \flock($this->getStream(), $operation);
+        return flock($this->getStream(), $operation);
     }
     /**
      * Change stream options.
@@ -168,25 +168,25 @@ class Wrapper
         $path = static::realPath($path, \false);
         switch ($option) {
             case \STREAM_META_TOUCH:
-                $arity = \count($values);
+                $arity = count($values);
                 if (0 === $arity) {
-                    $out = \touch($path);
+                    $out = touch($path);
                 } elseif (1 === $arity) {
-                    $out = \touch($path, $values[0]);
+                    $out = touch($path, $values[0]);
                 } else {
-                    $out = \touch($path, $values[0], $values[1]);
+                    $out = touch($path, $values[0], $values[1]);
                 }
                 break;
             case \STREAM_META_OWNER_NAME:
             case \STREAM_META_OWNER:
-                $out = \chown($path, $values);
+                $out = chown($path, $values);
                 break;
             case \STREAM_META_GROUP_NAME:
             case \STREAM_META_GROUP:
-                $out = \chgrp($path, $values);
+                $out = chgrp($path, $values);
                 break;
             case \STREAM_META_ACCESS:
-                $out = \chmod($path, $values);
+                $out = chmod($path, $values);
                 break;
             default:
                 $out = \false;
@@ -227,11 +227,11 @@ class Wrapper
             return \false;
         }
         if (null === $this->context) {
-            $openedPath = \fopen($path, $mode, $options & \STREAM_USE_PATH);
+            $openedPath = fopen($path, $mode, $options & \STREAM_USE_PATH);
         } else {
-            $openedPath = \fopen($path, $mode, $options & \STREAM_USE_PATH, $this->context);
+            $openedPath = fopen($path, $mode, $options & \STREAM_USE_PATH, $this->context);
         }
-        if (\false === \is_resource($openedPath)) {
+        if (\false === is_resource($openedPath)) {
             return \false;
         }
         $this->_stream = $openedPath;
@@ -248,7 +248,7 @@ class Wrapper
      */
     public function stream_read($count)
     {
-        return \fread($this->getStream(), $count);
+        return fread($this->getStream(), $count);
     }
     /**
      * Seek to specific location in a stream.
@@ -268,7 +268,7 @@ class Wrapper
      */
     public function stream_seek($offset, $whence = \SEEK_SET)
     {
-        return 0 === \fseek($this->getStream(), $offset, $whence);
+        return 0 === fseek($this->getStream(), $offset, $whence);
     }
     /**
      * Retrieve information about a file resource.
@@ -278,7 +278,7 @@ class Wrapper
      */
     public function stream_stat()
     {
-        return \fstat($this->getStream());
+        return fstat($this->getStream());
     }
     /**
      * Retrieve the current position of a stream.
@@ -288,7 +288,7 @@ class Wrapper
      */
     public function stream_tell()
     {
-        return \ftell($this->getStream());
+        return ftell($this->getStream());
     }
     /**
      * Truncate a stream to a given length.
@@ -298,7 +298,7 @@ class Wrapper
      */
     public function stream_truncate($size)
     {
-        return \ftruncate($this->getStream(), $size);
+        return ftruncate($this->getStream(), $size);
     }
     /**
      * Write to stream.
@@ -309,7 +309,7 @@ class Wrapper
      */
     public function stream_write($data)
     {
-        return \fwrite($this->getStream(), $data);
+        return fwrite($this->getStream(), $data);
     }
     /**
      * Close directory handle.
@@ -321,7 +321,7 @@ class Wrapper
      */
     public function dir_closedir()
     {
-        \closedir($this->getStream());
+        closedir($this->getStream());
         $this->_stream = null;
         $this->_streamName = null;
         return;
@@ -340,9 +340,9 @@ class Wrapper
         $path = static::realPath($path);
         $handle = null;
         if (null === $this->context) {
-            $handle = @\opendir($path);
+            $handle = @opendir($path);
         } else {
-            $handle = @\opendir($path, $this->context);
+            $handle = @opendir($path, $this->context);
         }
         if (\false === $handle) {
             return \false;
@@ -359,7 +359,7 @@ class Wrapper
      */
     public function dir_readdir()
     {
-        return \readdir($this->getStream());
+        return readdir($this->getStream());
     }
     /**
      * Rewind directory handle.
@@ -372,7 +372,7 @@ class Wrapper
      */
     public function dir_rewinddir()
     {
-        return \rewinddir($this->getStream());
+        return rewinddir($this->getStream());
     }
     /**
      * Create a directory.
@@ -386,9 +386,9 @@ class Wrapper
     public function mkdir($path, $mode, $options)
     {
         if (null === $this->context) {
-            return \mkdir(static::realPath($path, \false), $mode, $options | \STREAM_MKDIR_RECURSIVE);
+            return mkdir(static::realPath($path, \false), $mode, $options | \STREAM_MKDIR_RECURSIVE);
         }
-        return \mkdir(static::realPath($path, \false), $mode, $options | \STREAM_MKDIR_RECURSIVE, $this->context);
+        return mkdir(static::realPath($path, \false), $mode, $options | \STREAM_MKDIR_RECURSIVE, $this->context);
     }
     /**
      * Rename a file or directory.
@@ -402,9 +402,9 @@ class Wrapper
     public function rename($from, $to)
     {
         if (null === $this->context) {
-            return \rename(static::realPath($from), static::realPath($to, \false));
+            return rename(static::realPath($from), static::realPath($to, \false));
         }
-        return \rename(static::realPath($from), static::realPath($to, \false), $this->context);
+        return rename(static::realPath($from), static::realPath($to, \false), $this->context);
     }
     /**
      * Remove a directory.
@@ -418,9 +418,9 @@ class Wrapper
     public function rmdir($path, $options)
     {
         if (null === $this->context) {
-            return \rmdir(static::realPath($path));
+            return rmdir(static::realPath($path));
         }
-        return \rmdir(static::realPath($path), $this->context);
+        return rmdir(static::realPath($path), $this->context);
     }
     /**
      * Delete a file.
@@ -432,9 +432,9 @@ class Wrapper
     public function unlink($path)
     {
         if (null === $this->context) {
-            return \unlink(static::realPath($path));
+            return unlink(static::realPath($path));
         }
-        return \unlink(static::realPath($path), $this->context);
+        return unlink(static::realPath($path), $this->context);
     }
     /**
      * Retrieve information about a file.
@@ -467,13 +467,13 @@ class Wrapper
             if ($flags & \STREAM_URL_STAT_QUIET) {
                 return 0;
             } else {
-                return \trigger_error('Path ' . $path . ' cannot be resolved.', \E_WARNING);
+                return trigger_error('Path ' . $path . ' cannot be resolved.', \E_WARNING);
             }
         }
         if ($flags & \STREAM_URL_STAT_LINK) {
-            return @\lstat($path);
+            return @lstat($path);
         }
-        return @\stat($path);
+        return @stat($path);
     }
     /**
      * Get stream resource.
@@ -497,4 +497,4 @@ class Wrapper
 /**
  * Register the `hoa://` protocol.
  */
-\stream_wrapper_register('hoa', \Hoa\Protocol\Wrapper::class);
+stream_wrapper_register('hoa', \Hoa\Protocol\Wrapper::class);

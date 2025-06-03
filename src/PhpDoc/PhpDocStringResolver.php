@@ -8,7 +8,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PhpDocStringResolver
 {
     private Lexer $phpDocLexer;

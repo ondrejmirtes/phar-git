@@ -29,7 +29,7 @@ final class Structure implements Schema
     public function __construct(array $items)
     {
         (function (Schema ...$items) {
-        })(...\array_values($items));
+        })(...array_values($items));
         $this->items = $items;
         $this->castTo('object');
         $this->required = \true;
@@ -64,20 +64,20 @@ final class Structure implements Schema
     /********************* processing ****************d*g**/
     public function normalize($value, Context $context)
     {
-        if ($prevent = \is_array($value) && isset($value[Helpers::PreventMerging])) {
+        if ($prevent = is_array($value) && isset($value[Helpers::PreventMerging])) {
             unset($value[Helpers::PreventMerging]);
         }
         $value = $this->doNormalize($value, $context);
-        if (\is_object($value)) {
+        if (is_object($value)) {
             $value = (array) $value;
         }
-        if (\is_array($value)) {
+        if (is_array($value)) {
             foreach ($value as $key => $val) {
                 $itemSchema = $this->items[$key] ?? $this->otherItems;
                 if ($itemSchema) {
                     $context->path[] = $key;
                     $value[$key] = $itemSchema->normalize($val, $context);
-                    \array_pop($context->path);
+                    array_pop($context->path);
                 }
             }
             if ($prevent) {
@@ -88,17 +88,17 @@ final class Structure implements Schema
     }
     public function merge($value, $base)
     {
-        if (\is_array($value) && isset($value[Helpers::PreventMerging])) {
+        if (is_array($value) && isset($value[Helpers::PreventMerging])) {
             unset($value[Helpers::PreventMerging]);
             $base = null;
         }
-        if (\is_array($value) && \is_array($base)) {
+        if (is_array($value) && is_array($base)) {
             $index = 0;
             foreach ($value as $key => $val) {
                 if ($key === $index) {
                     $base[] = $val;
                     $index++;
-                } elseif (\array_key_exists($key, $base)) {
+                } elseif (array_key_exists($key, $base)) {
                     $itemSchema = $this->items[$key] ?? $this->otherItems;
                     $base[$key] = $itemSchema ? $itemSchema->merge($val, $base[$key]) : Helpers::merge($val, $base[$key]);
                 } else {
@@ -126,11 +126,11 @@ final class Structure implements Schema
     private function validateItems(array &$value, Context $context): void
     {
         $items = $this->items;
-        if ($extraKeys = \array_keys(\array_diff_key($value, $items))) {
+        if ($extraKeys = array_keys(array_diff_key($value, $items))) {
             if ($this->otherItems) {
-                $items += \array_fill_keys($extraKeys, $this->otherItems);
+                $items += array_fill_keys($extraKeys, $this->otherItems);
             } else {
-                $keys = \array_map('strval', \array_keys($items));
+                $keys = array_map('strval', array_keys($items));
                 foreach ($extraKeys as $key) {
                     $hint = Nette\Utils\ObjectHelpers::getSuggestion($keys, (string) $key);
                     $context->addError('Unexpected item %path%' . ($hint ? ", did you mean '%hint%'?" : '.'), Nette\Schema\Message::UnexpectedItem, ['hint' => $hint])->path[] = $key;
@@ -139,7 +139,7 @@ final class Structure implements Schema
         }
         foreach ($items as $itemKey => $itemVal) {
             $context->path[] = $itemKey;
-            if (\array_key_exists($itemKey, $value)) {
+            if (array_key_exists($itemKey, $value)) {
                 $value[$itemKey] = $itemVal->complete($value[$itemKey], $context);
             } else {
                 $default = $itemVal->completeDefault($context);
@@ -148,7 +148,7 @@ final class Structure implements Schema
                     $value[$itemKey] = $default;
                 }
             }
-            \array_pop($context->path);
+            array_pop($context->path);
         }
     }
     public function completeDefault(Context $context)

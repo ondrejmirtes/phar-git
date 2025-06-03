@@ -205,7 +205,7 @@ final class HttpServer extends EventEmitter
     public function __construct($requestHandlerOrLoop)
     {
         $requestHandlers = \func_get_args();
-        if (\reset($requestHandlers) instanceof LoopInterface) {
+        if (reset($requestHandlers) instanceof LoopInterface) {
             $loop = \array_shift($requestHandlers);
         } else {
             $loop = Loop::get();

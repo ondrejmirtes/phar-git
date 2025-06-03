@@ -21,7 +21,7 @@ use function str_starts_with;
 use function substr;
 use const PREG_SPLIT_DELIM_CAPTURE;
 use const PREG_SPLIT_NO_EMPTY;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class Patcher
 {
     private Differ $differ;

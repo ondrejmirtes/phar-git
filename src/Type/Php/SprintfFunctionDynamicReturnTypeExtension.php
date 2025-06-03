@@ -37,7 +37,7 @@ use function preg_match;
 use function sprintf;
 use function substr;
 use function vsprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class SprintfFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

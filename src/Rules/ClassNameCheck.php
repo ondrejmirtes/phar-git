@@ -8,7 +8,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\RestrictedUsage\RestrictedClassNameUsageExtension;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClassNameCheck
 {
     private \PHPStan\Rules\ClassCaseSensitivityCheck $classCaseSensitivityCheck;

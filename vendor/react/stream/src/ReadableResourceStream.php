@@ -57,7 +57,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         }
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         // Use unbuffered read operations on the underlying stream resource.
         // Reading chunks from the stream may otherwise leave unread bytes in

@@ -12,8 +12,8 @@ if (\false) {
     interface IAdapter
     {
     }
-} elseif (!\interface_exists(IAdapter::class)) {
-    \class_alias(Adapter::class, IAdapter::class);
+} elseif (!interface_exists(IAdapter::class)) {
+    class_alias(Adapter::class, IAdapter::class);
 }
 namespace _PHPStan_checksum\Nette\DI;
 
@@ -22,14 +22,14 @@ if (\false) {
     class ServiceDefinition
     {
     }
-} elseif (!\class_exists(ServiceDefinition::class)) {
-    \class_alias(Definitions\ServiceDefinition::class, ServiceDefinition::class);
+} elseif (!class_exists(ServiceDefinition::class)) {
+    class_alias(Definitions\ServiceDefinition::class, ServiceDefinition::class);
 }
 if (\false) {
     /** @deprecated use Nette\DI\Definitions\Statement */
     class Statement
     {
     }
-} elseif (!\class_exists(Statement::class)) {
-    \class_alias(Definitions\Statement::class, Statement::class);
+} elseif (!class_exists(Statement::class)) {
+    class_alias(Definitions\Statement::class, Statement::class);
 }

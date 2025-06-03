@@ -55,7 +55,7 @@ class Consistency
      */
     public static function entityExists($entityName, $autoloader = \false)
     {
-        return \class_exists($entityName, $autoloader) || \interface_exists($entityName, \false) || \trait_exists($entityName, \false);
+        return class_exists($entityName, $autoloader) || interface_exists($entityName, \false) || trait_exists($entityName, \false);
     }
     /**
      * Get the shortest name for an entity.
@@ -65,13 +65,13 @@ class Consistency
      */
     public static function getEntityShortestName($entityName)
     {
-        $parts = \explode('\\', $entityName);
-        $count = \count($parts);
+        $parts = explode('\\', $entityName);
+        $count = count($parts);
         if (1 >= $count) {
             return $entityName;
         }
         if ($parts[$count - 2] === $parts[$count - 1]) {
-            return \implode('\\', \array_slice($parts, 0, -1));
+            return implode('\\', array_slice($parts, 0, -1));
         }
         return $entityName;
     }
@@ -83,7 +83,7 @@ class Consistency
      */
     public static function flexEntity($entityName)
     {
-        return \class_alias($entityName, static::getEntityShortestName($entityName), \false);
+        return class_alias($entityName, static::getEntityShortestName($entityName), \false);
     }
     /**
      * Whether a word is reserved or not.
@@ -183,7 +183,7 @@ class Consistency
             '__namespace__',
             '__trait__',
         ];
-        return \in_array(\strtolower($word), $_list);
+        return in_array(strtolower($word), $_list);
     }
     /**
      * Whether an ID is a valid PHP identifier.
@@ -193,7 +193,7 @@ class Consistency
      */
     public static function isIdentifier($id)
     {
-        return 0 !== \preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x80-\xff]*$#', $id);
+        return 0 !== preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x80-\xff]*$#', $id);
     }
     /**
      * Register a register shutdown function.
@@ -204,7 +204,7 @@ class Consistency
      */
     public static function registerShutdownFunction($callable)
     {
-        return \register_shutdown_function($callable);
+        return register_shutdown_function($callable);
     }
     /**
      * Get PHP executable.
@@ -213,15 +213,15 @@ class Consistency
      */
     public static function getPHPBinary()
     {
-        if (\defined('PHP_BINARY')) {
+        if (defined('PHP_BINARY')) {
             return \PHP_BINARY;
         }
         if (isset($_SERVER['_'])) {
             return $_SERVER['_'];
         }
         foreach (['', '.exe'] as $extension) {
-            if (\file_exists($_ = \PHP_BINDIR . DS . 'php' . $extension)) {
-                return \realpath($_);
+            if (file_exists($_ = \PHP_BINDIR . DS . 'php' . $extension)) {
+                return realpath($_);
             }
         }
         return null;
@@ -233,7 +233,7 @@ class Consistency
      */
     public static function uuid()
     {
-        return \sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', \mt_rand(0, 0xffff), \mt_rand(0, 0xffff), \mt_rand(0, 0xffff), \mt_rand(0, 0xfff) | 0x4000, \mt_rand(0, 0x3fff) | 0x8000, \mt_rand(0, 0xffff), \mt_rand(0, 0xffff), \mt_rand(0, 0xffff));
+        return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xfff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff));
     }
 }
 namespace _PHPStan_checksum;
@@ -253,6 +253,10 @@ if (70000 > \PHP_VERSION_ID && \false === \interface_exists('Throwable', \false)
         public function getTraceAsString();
         public function __toString();
     }
+    /**
+     * Implement a fake Throwable class, introduced in PHP7.0.
+     */
+    \class_alias('_PHPStan_checksum\Throwable', 'Throwable', \false);
 }
 /**
  * Define TLSv* constants, introduced in PHP 5.5.

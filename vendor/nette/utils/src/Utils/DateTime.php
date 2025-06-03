@@ -36,11 +36,11 @@ class DateTime extends \DateTime implements \JsonSerializable
     {
         if ($time instanceof \DateTimeInterface) {
             return new static($time->format('Y-m-d H:i:s.u'), $time->getTimezone());
-        } elseif (\is_numeric($time)) {
+        } elseif (is_numeric($time)) {
             if ($time <= self::YEAR) {
-                $time += \time();
+                $time += time();
             }
-            return (new static('@' . $time))->setTimezone(new \DateTimeZone(\date_default_timezone_get()));
+            return (new static('@' . $time))->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         } else {
             // textual or null
             return new static((string) $time);
@@ -53,8 +53,8 @@ class DateTime extends \DateTime implements \JsonSerializable
      */
     public static function fromParts(int $year, int $month, int $day, int $hour = 0, int $minute = 0, float $second = 0.0)
     {
-        $s = \sprintf('%04d-%02d-%02d %02d:%02d:%02.5F', $year, $month, $day, $hour, $minute, $second);
-        if (!\checkdate($month, $day, $year) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 || $second < 0 || $second >= 60) {
+        $s = sprintf('%04d-%02d-%02d %02d:%02d:%02.5F', $year, $month, $day, $hour, $minute, $second);
+        if (!checkdate($month, $day, $year) || $hour < 0 || $hour > 23 || $minute < 0 || $minute > 59 || $second < 0 || $second >= 60) {
             throw new Nette\InvalidArgumentException("Invalid date '{$s}'");
         }
         return new static($s);
@@ -70,8 +70,8 @@ class DateTime extends \DateTime implements \JsonSerializable
     public static function createFromFormat($format, $time, $timezone = null)
     {
         if ($timezone === null) {
-            $timezone = new \DateTimeZone(\date_default_timezone_get());
-        } elseif (\is_string($timezone)) {
+            $timezone = new \DateTimeZone(date_default_timezone_get());
+        } elseif (is_string($timezone)) {
             $timezone = new \DateTimeZone($timezone);
         } elseif (!$timezone instanceof \DateTimeZone) {
             throw new Nette\InvalidArgumentException('Invalid timezone given');

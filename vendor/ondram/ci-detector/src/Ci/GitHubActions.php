@@ -27,7 +27,7 @@ class GitHubActions extends AbstractCi
     }
     public function getBuildUrl(): string
     {
-        return \sprintf('%s/%s/commit/%s/checks', self::GITHUB_BASE_URL, $this->env->get('GITHUB_REPOSITORY'), $this->env->get('GITHUB_SHA'));
+        return sprintf('%s/%s/commit/%s/checks', self::GITHUB_BASE_URL, $this->env->get('GITHUB_REPOSITORY'), $this->env->get('GITHUB_SHA'));
     }
     public function getGitCommit(): string
     {
@@ -38,7 +38,7 @@ class GitHubActions extends AbstractCi
         $prBranch = $this->env->getString('GITHUB_HEAD_REF');
         if ($this->isPullRequest()->no() || empty($prBranch)) {
             $gitReference = $this->env->getString('GITHUB_REF');
-            return \preg_replace('~^refs/heads/~', '', $gitReference) ?? '';
+            return preg_replace('~^refs/heads/~', '', $gitReference) ?? '';
         }
         return $prBranch;
     }
@@ -48,6 +48,6 @@ class GitHubActions extends AbstractCi
     }
     public function getRepositoryUrl(): string
     {
-        return \sprintf('%s/%s', self::GITHUB_BASE_URL, $this->env->get('GITHUB_REPOSITORY'));
+        return sprintf('%s/%s', self::GITHUB_BASE_URL, $this->env->get('GITHUB_REPOSITORY'));
     }
 }

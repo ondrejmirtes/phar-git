@@ -30,7 +30,7 @@ class ConsoleSectionOutput extends StreamOutput
     public function __construct($stream, array &$sections, int $verbosity, bool $decorated, OutputFormatterInterface $formatter)
     {
         parent::__construct($stream, $verbosity, $decorated, $formatter);
-        \array_unshift($sections, $this);
+        array_unshift($sections, $this);
         $this->sections =& $sections;
         $this->terminal = new Terminal();
     }
@@ -45,7 +45,7 @@ class ConsoleSectionOutput extends StreamOutput
             return;
         }
         if ($lines) {
-            \array_splice($this->content, -($lines * 2));
+            array_splice($this->content, -($lines * 2));
             // Multiply lines by 2 to cater for each new line added between content
         } else {
             $lines = $this->lines;
@@ -66,15 +66,15 @@ class ConsoleSectionOutput extends StreamOutput
     }
     public function getContent(): string
     {
-        return \implode('', $this->content);
+        return implode('', $this->content);
     }
     /**
      * @internal
      */
     public function addContent(string $input)
     {
-        foreach (\explode(\PHP_EOL, $input) as $lineContent) {
-            $this->lines += \ceil($this->getDisplayLength($lineContent) / $this->terminal->getWidth()) ?: 1;
+        foreach (explode(\PHP_EOL, $input) as $lineContent) {
+            $this->lines += ceil($this->getDisplayLength($lineContent) / $this->terminal->getWidth()) ?: 1;
             $this->content[] = $lineContent;
             $this->content[] = \PHP_EOL;
         }
@@ -110,14 +110,14 @@ class ConsoleSectionOutput extends StreamOutput
         }
         if ($numberOfLinesToClear > 0) {
             // move cursor up n lines
-            parent::doWrite(\sprintf("\x1b[%dA", $numberOfLinesToClear), \false);
+            parent::doWrite(sprintf("\x1b[%dA", $numberOfLinesToClear), \false);
             // erase to end of screen
             parent::doWrite("\x1b[0J", \false);
         }
-        return \implode('', \array_reverse($erasedContent));
+        return implode('', array_reverse($erasedContent));
     }
     private function getDisplayLength(string $text): int
     {
-        return Helper::width(Helper::removeDecoration($this->getFormatter(), \str_replace("\t", '        ', $text)));
+        return Helper::width(Helper::removeDecoration($this->getFormatter(), str_replace("\t", '        ', $text)));
     }
 }

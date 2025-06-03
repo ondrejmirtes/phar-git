@@ -43,7 +43,7 @@ class MemoizeClassMapFilter
             $paths[$pathname] = \true;
             [$timestamp, $keep] = $this->state[$pathname] ?? [0, \false];
             $mtime = filemtime($pathname);
-            \assert(is_int($mtime));
+            assert(is_int($mtime));
             if ($timestamp < $mtime) {
                 if ($timestamp) {
                     $diff = $mtime - $timestamp;

@@ -98,16 +98,16 @@ abstract class Filter extends Stream
         if ($overwrite === self::DO_NOT_OVERWRITE && \true === self::isRegistered($name)) {
             throw new \Hoa\Stream\Filter\Exception('Filter %s is already registered.', 0, $name);
         }
-        if (\is_object($class)) {
-            $class = \get_class($class);
+        if (is_object($class)) {
+            $class = get_class($class);
         }
         if (empty($name)) {
             throw new \Hoa\Stream\Filter\Exception('Filter name cannot be empty (implementation class is %s).', 1, $class);
         }
-        if (\false === \class_exists($class, \false)) {
+        if (\false === class_exists($class, \false)) {
             throw new \Hoa\Stream\Filter\Exception('Cannot register the %s class for the filter %s ' . 'because it does not exist.', 2, [$class, $name]);
         }
-        return \stream_filter_register($name, $class);
+        return stream_filter_register($name, $class);
     }
     /**
      * Append a filter to the list of filters.
@@ -127,9 +127,9 @@ abstract class Filter extends Stream
             $stream = $stream->getStream();
         }
         if (null === $parameters) {
-            return self::$_resources[$name] = \stream_filter_append($stream, $name, $mode);
+            return self::$_resources[$name] = stream_filter_append($stream, $name, $mode);
         }
-        return self::$_resources[$name] = \stream_filter_append($stream, $name, $mode, $parameters);
+        return self::$_resources[$name] = stream_filter_append($stream, $name, $mode, $parameters);
     }
     /**
      * Prepend a filter to the list of filters.
@@ -149,9 +149,9 @@ abstract class Filter extends Stream
             $stream = $stream->getStream();
         }
         if (null === $parameters) {
-            return self::$_resources[$name] = \stream_filter_prepend($stream, $name, $mode);
+            return self::$_resources[$name] = stream_filter_prepend($stream, $name, $mode);
         }
-        return self::$_resources[$name] = \stream_filter_prepend($stream, $name, $mode, $parameters);
+        return self::$_resources[$name] = stream_filter_prepend($stream, $name, $mode, $parameters);
     }
     /**
      * Delete a filter.
@@ -162,14 +162,14 @@ abstract class Filter extends Stream
      */
     public static function remove($streamFilter)
     {
-        if (!\is_resource($streamFilter)) {
+        if (!is_resource($streamFilter)) {
             if (isset(self::$_resources[$streamFilter])) {
                 $streamFilter = self::$_resources[$streamFilter];
             } else {
                 throw new \Hoa\Stream\Filter\Exception('Cannot remove the stream filter %s because no resource was ' . 'found with this name.', 3, $streamFilter);
             }
         }
-        return \stream_filter_remove($streamFilter);
+        return stream_filter_remove($streamFilter);
     }
     /**
      * Check if a filter is already registered or not.
@@ -179,7 +179,7 @@ abstract class Filter extends Stream
      */
     public static function isRegistered($name)
     {
-        return \in_array($name, self::getRegistered());
+        return in_array($name, self::getRegistered());
     }
     /**
      * Get all registered filer names.
@@ -188,7 +188,7 @@ abstract class Filter extends Stream
      */
     public static function getRegistered()
     {
-        return \stream_get_filters();
+        return stream_get_filters();
     }
 }
 /**

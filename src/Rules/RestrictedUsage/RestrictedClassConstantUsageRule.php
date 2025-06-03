@@ -18,7 +18,7 @@ use PHPStan\Type\Type;
 /**
  * @implements Rule<Node\Expr\ClassConstFetch>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedClassConstantUsageRule implements Rule
 {
     private Container $container;

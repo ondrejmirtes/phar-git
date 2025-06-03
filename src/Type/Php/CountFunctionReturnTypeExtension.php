@@ -13,7 +13,7 @@ use PHPStan\Type\Type;
 use function count;
 use function in_array;
 use const COUNT_RECURSIVE;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class CountFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

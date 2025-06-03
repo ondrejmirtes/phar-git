@@ -19,7 +19,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use SplFileObject;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StatDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension, DynamicMethodReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

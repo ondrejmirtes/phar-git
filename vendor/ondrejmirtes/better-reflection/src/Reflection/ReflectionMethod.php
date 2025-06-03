@@ -413,7 +413,7 @@ class ReflectionMethod
             throw NoObjectProvided::create();
         }
         $implementingClassName = $this->getImplementingClass()->getName();
-        if (\get_class($object) !== $implementingClassName) {
+        if (get_class($object) !== $implementingClassName) {
             throw ObjectNotInstanceOfClass::fromClassName($implementingClassName);
         }
         return $object;

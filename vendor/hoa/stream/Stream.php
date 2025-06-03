@@ -157,7 +157,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     private static function &_getStream($streamName, \Hoa\Stream\Stream $handler, $context = null)
     {
-        $name = \md5($streamName);
+        $name = md5($streamName);
         if (null !== $context) {
             if (\false === \Hoa\Stream\Context::contextExists($context)) {
                 throw new \Hoa\Stream\Exception('Context %s was not previously declared, cannot retrieve ' . 'this context.', 0, $context);
@@ -207,7 +207,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
         $context = $this->_context;
         if (\true === $this->hasBeenDeferred()) {
             if (null === $context) {
-                $handle = \Hoa\Stream\Context::getInstance(\uniqid());
+                $handle = \Hoa\Stream\Context::getInstance(uniqid());
                 $handle->setParameters(['notification' => [$this, '_notify']]);
                 $context = $handle->getId();
             } elseif (\true === \Hoa\Stream\Context::contextExists($context)) {
@@ -230,7 +230,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
     final public function close()
     {
         $streamName = $this->getStreamName();
-        $name = \md5($streamName);
+        $name = md5($streamName);
         if (!isset(self::$_register[$name])) {
             return;
         }
@@ -288,7 +288,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public static function getStreamHandler($streamName)
     {
-        $name = \md5($streamName);
+        $name = md5($streamName);
         if (!isset(self::$_register[$name])) {
             return null;
         }
@@ -305,8 +305,8 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function _setStream($stream)
     {
-        if (\false === \is_resource($stream) && ('resource' !== \gettype($stream) || 'Unknown' !== \get_resource_type($stream))) {
-            throw new \Hoa\Stream\Exception('Try to change the stream resource with an invalid one; ' . 'given %s.', 1, \gettype($stream));
+        if (\false === is_resource($stream) && ('resource' !== gettype($stream) || 'Unknown' !== get_resource_type($stream))) {
+            throw new \Hoa\Stream\Exception('Try to change the stream resource with an invalid one; ' . 'given %s.', 1, gettype($stream));
         }
         $old = $this->_bucket[self::RESOURCE];
         $this->_bucket[self::RESOURCE] = $stream;
@@ -319,7 +319,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function isOpened()
     {
-        return \is_resource($this->getStream());
+        return is_resource($this->getStream());
     }
     /**
      * Set the timeout period.
@@ -330,7 +330,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function setStreamTimeout($seconds, $microseconds = 0)
     {
-        return \stream_set_timeout($this->getStream(), $seconds, $microseconds);
+        return stream_set_timeout($this->getStream(), $seconds, $microseconds);
     }
     /**
      * Whether the opening of the stream has been deferred
@@ -359,7 +359,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function setStreamBlocking($mode)
     {
-        return \stream_set_blocking($this->getStream(), (int) $mode);
+        return stream_set_blocking($this->getStream(), (int) $mode);
     }
     /**
      * Set stream buffer.
@@ -378,7 +378,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
     public function setStreamBuffer($buffer)
     {
         // Zero means success.
-        $out = 0 === \stream_set_write_buffer($this->getStream(), $buffer);
+        $out = 0 === stream_set_write_buffer($this->getStream(), $buffer);
         if (\true === $out) {
             $this->_bufferSize = $buffer;
         }
@@ -410,10 +410,10 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function getStreamWrapperName()
     {
-        if (\false === $pos = \strpos($this->getStreamName(), '://')) {
+        if (\false === $pos = strpos($this->getStreamName(), '://')) {
             return 'file';
         }
-        return \substr($this->getStreamName(), 0, $pos);
+        return substr($this->getStreamName(), 0, $pos);
     }
     /**
      * Get stream meta data.
@@ -422,7 +422,7 @@ abstract class Stream implements \Hoa\Stream\IStream\Stream, Event\Listenable
      */
     public function getStreamMetaData()
     {
-        return \stream_get_meta_data($this->getStream());
+        return stream_get_meta_data($this->getStream());
     }
     /**
      * Whether this stream is already opened by another handler.

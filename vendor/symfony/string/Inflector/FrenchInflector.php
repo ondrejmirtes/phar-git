@@ -99,8 +99,8 @@ final class FrenchInflector implements InflectorInterface
         }
         foreach (self::SINGULARIZE_REGEXP as $rule) {
             [$regexp, $replace] = $rule;
-            if (1 === \preg_match($regexp, $plural)) {
-                return [\preg_replace($regexp, $replace, $plural)];
+            if (1 === preg_match($regexp, $plural)) {
+                return [preg_replace($regexp, $replace, $plural)];
             }
         }
         return [$plural];
@@ -115,14 +115,14 @@ final class FrenchInflector implements InflectorInterface
         }
         foreach (self::PLURALIZE_REGEXP as $rule) {
             [$regexp, $replace] = $rule;
-            if (1 === \preg_match($regexp, $singular)) {
-                return [\preg_replace($regexp, $replace, $singular)];
+            if (1 === preg_match($regexp, $singular)) {
+                return [preg_replace($regexp, $replace, $singular)];
             }
         }
         return [$singular . 's'];
     }
     private function isInflectedWord(string $word): bool
     {
-        return 1 === \preg_match(self::UNINFLECTED, $word);
+        return 1 === preg_match(self::UNINFLECTED, $word);
     }
 }

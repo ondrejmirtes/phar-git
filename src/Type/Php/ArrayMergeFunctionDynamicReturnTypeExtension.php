@@ -23,7 +23,7 @@ use PHPStan\Type\TypeCombinator;
 use function array_keys;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayMergeFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

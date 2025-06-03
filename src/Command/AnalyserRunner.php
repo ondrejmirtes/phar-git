@@ -20,7 +20,7 @@ use function count;
 use function function_exists;
 use function is_file;
 use function memory_get_peak_usage;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AnalyserRunner
 {
     private Scheduler $scheduler;

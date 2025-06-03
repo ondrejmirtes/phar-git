@@ -14,7 +14,7 @@ use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class HighlightStringDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

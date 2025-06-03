@@ -14,7 +14,7 @@ use function array_pop;
 use function count;
 use function in_array;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class VariadicMethodsVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'variadicMethods';

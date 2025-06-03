@@ -27,9 +27,9 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
     public function load(string $file): array
     {
         $input = Nette\Utils\FileSystem::read($file);
-        if (\substr($input, 0, 3) === "﻿") {
+        if (substr($input, 0, 3) === "﻿") {
             // BOM
-            $input = \substr($input, 3);
+            $input = substr($input, 3);
         }
         $this->file = $file;
         $decoder = new Neon\Decoder();
@@ -44,25 +44,25 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
     {
         $res = [];
         foreach ($arr as $key => $val) {
-            if (\is_string($key) && \substr($key, -1) === self::PreventMergingSuffix) {
-                if (!\is_array($val) && $val !== null) {
-                    throw new Nette\DI\InvalidConfigurationException(\sprintf("Replacing operator is available only for arrays, item '%s' is not array (used in '%s')", $key, $this->file));
+            if (is_string($key) && substr($key, -1) === self::PreventMergingSuffix) {
+                if (!is_array($val) && $val !== null) {
+                    throw new Nette\DI\InvalidConfigurationException(sprintf("Replacing operator is available only for arrays, item '%s' is not array (used in '%s')", $key, $this->file));
                 }
-                $key = \substr($key, 0, -1);
+                $key = substr($key, 0, -1);
                 $val[Helpers::PREVENT_MERGING] = \true;
             }
-            if (\is_array($val)) {
+            if (is_array($val)) {
                 $val = $this->process($val);
             } elseif ($val instanceof Neon\Entity) {
                 if ($val->value === Neon\Neon::CHAIN) {
                     $tmp = null;
                     foreach ($this->process($val->attributes) as $st) {
-                        $tmp = new Statement($tmp === null ? $st->getEntity() : [$tmp, \ltrim(\implode('::', (array) $st->getEntity()), ':')], $st->arguments);
+                        $tmp = new Statement($tmp === null ? $st->getEntity() : [$tmp, ltrim(implode('::', (array) $st->getEntity()), ':')], $st->arguments);
                     }
                     $val = $tmp;
                 } else {
                     $tmp = $this->process([$val->value]);
-                    if (\is_string($tmp[0]) && \strpos($tmp[0], '?') !== \false) {
+                    if (is_string($tmp[0]) && strpos($tmp[0], '?') !== \false) {
                         throw new Nette\DI\InvalidConfigurationException("Operator ? is deprecated in config file (used in '{$this->file}')");
                     }
                     $val = new Statement($tmp[0], $this->process($val->attributes));
@@ -77,7 +77,7 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
      */
     public function dump(array $data): string
     {
-        \array_walk_recursive($data, function (&$val): void {
+        array_walk_recursive($data, function (&$val): void {
             if ($val instanceof Statement) {
                 $val = self::statementToEntity($val);
             }
@@ -86,7 +86,7 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
     }
     private static function statementToEntity(Statement $val): Neon\Entity
     {
-        \array_walk_recursive($val->arguments, function (&$val): void {
+        array_walk_recursive($val->arguments, function (&$val): void {
             if ($val instanceof Statement) {
                 $val = self::statementToEntity($val);
             } elseif ($val instanceof Reference) {
@@ -96,12 +96,12 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
         $entity = $val->getEntity();
         if ($entity instanceof Reference) {
             $entity = '@' . $entity->getValue();
-        } elseif (\is_array($entity)) {
+        } elseif (is_array($entity)) {
             if ($entity[0] instanceof Statement) {
                 return new Neon\Entity(Neon\Neon::CHAIN, [self::statementToEntity($entity[0]), new Neon\Entity('::' . $entity[1], $val->arguments)]);
             } elseif ($entity[0] instanceof Reference) {
                 $entity = '@' . $entity[0]->getValue() . '::' . $entity[1];
-            } elseif (\is_string($entity[0])) {
+            } elseif (is_string($entity[0])) {
                 $entity = $entity[0] . '::' . $entity[1];
             }
         }
@@ -122,7 +122,7 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
                 unset($node->attributes[$i]);
                 $index = \true;
             } elseif ($attr->value instanceof Neon\Node\LiteralNode && $attr->value->value === '...') {
-                \trigger_error("Replace ... with _ in configuration file '{$this->file}'.", \E_USER_DEPRECATED);
+                trigger_error("Replace ... with _ in configuration file '{$this->file}'.", \E_USER_DEPRECATED);
                 unset($node->attributes[$i]);
                 $index = \true;
             }
@@ -132,14 +132,14 @@ final class NeonAdapter implements Nette\DI\Config\Adapter
     public function convertAtSignVisitor(Neon\Node $node)
     {
         if ($node instanceof Neon\Node\StringNode) {
-            if (\substr($node->value, 0, 2) === '@@') {
-                \trigger_error("There is no need to escape @ anymore, replace @@ with @ in: '{$node->value}' (used in {$this->file})", \E_USER_DEPRECATED);
+            if (substr($node->value, 0, 2) === '@@') {
+                trigger_error("There is no need to escape @ anymore, replace @@ with @ in: '{$node->value}' (used in {$this->file})", \E_USER_DEPRECATED);
             } else {
-                $node->value = \preg_replace('#^@#', '$0$0', $node->value);
+                $node->value = preg_replace('#^@#', '$0$0', $node->value);
                 // escape
             }
-        } elseif ($node instanceof Neon\Node\LiteralNode && \is_string($node->value) && \substr($node->value, 0, 2) === '@@') {
-            \trigger_error("There is no need to escape @ anymore, replace @@ with @ and put string in quotes: '{$node->value}' (used in {$this->file})", \E_USER_DEPRECATED);
+        } elseif ($node instanceof Neon\Node\LiteralNode && is_string($node->value) && substr($node->value, 0, 2) === '@@') {
+            trigger_error("There is no need to escape @ anymore, replace @@ with @ and put string in quotes: '{$node->value}' (used in {$this->file})", \E_USER_DEPRECATED);
         }
     }
 }

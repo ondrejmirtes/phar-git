@@ -70,7 +70,7 @@ final class Expect
                     $item->required();
                 } else {
                     $def = $prop->getValue($object);
-                    if (\is_object($def)) {
+                    if (is_object($def)) {
                         $item = static::from($def);
                     } elseif ($def === null && !Nette\Utils\Validators::is(null, $type)) {
                         $item->required();

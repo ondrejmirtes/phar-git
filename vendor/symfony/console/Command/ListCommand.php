@@ -61,7 +61,7 @@ class ListCommand extends Command
     {
         if ($input->mustSuggestArgumentValuesFor('namespace')) {
             $descriptor = new ApplicationDescription($this->getApplication());
-            $suggestions->suggestValues(\array_keys($descriptor->getNamespaces()));
+            $suggestions->suggestValues(array_keys($descriptor->getNamespaces()));
             return;
         }
         if ($input->mustSuggestOptionValuesFor('format')) {

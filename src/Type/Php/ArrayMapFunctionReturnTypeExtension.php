@@ -24,7 +24,7 @@ use function array_map;
 use function array_reduce;
 use function array_slice;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayMapFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

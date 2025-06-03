@@ -85,11 +85,11 @@ class Parameter
      */
     public function __construct($owner, array $keywords = [], array $parameters = [])
     {
-        if (\is_object($owner)) {
+        if (is_object($owner)) {
             if (!$owner instanceof \Hoa\Zformat\Parameterizable) {
-                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \Hoa\Zformat\Parameterizable.', 0, \get_class($owner));
+                throw new \Hoa\Zformat\Exception('Only parameterizable object can have parameter; ' . '%s does implement \Hoa\Zformat\Parameterizable.', 0, get_class($owner));
             }
-            $owner = \get_class($owner);
+            $owner = get_class($owner);
         } else {
             $reflection = new \ReflectionClass($owner);
             if (\false === $reflection->implementsInterface('\Hoa\Zformat\Parameterizable')) {
@@ -108,7 +108,7 @@ class Parameter
      */
     public static function initializeConstants()
     {
-        $c = \explode('…', \date('d…j…N…w…z…W…m…n…Y…y…g…G…h…H…i…s…u…O…T…U'));
+        $c = explode('…', date('d…j…N…w…z…W…m…n…Y…y…g…G…h…H…i…s…u…O…T…U'));
         self::$_constants = ['d' => $c[0], 'j' => $c[1], 'N' => $c[2], 'w' => $c[3], 'z' => $c[4], 'W' => $c[5], 'm' => $c[6], 'n' => $c[7], 'Y' => $c[8], 'y' => $c[9], 'g' => $c[10], 'G' => $c[11], 'h' => $c[12], 'H' => $c[13], 'i' => $c[14], 's' => $c[15], 'u' => $c[16], 'O' => $c[17], 'T' => $c[18], 'U' => $c[19]];
         return;
     }
@@ -167,7 +167,7 @@ class Parameter
     {
         $this->resetCache();
         $old = null;
-        if (\true === \array_key_exists($key, $this->_parameters)) {
+        if (\true === array_key_exists($key, $this->_parameters)) {
             $old = $this->_parameters[$key];
         }
         $this->_parameters[$key] = $value;
@@ -181,7 +181,7 @@ class Parameter
      */
     public function getParameter($parameter)
     {
-        if (\array_key_exists($parameter, $this->_parameters)) {
+        if (array_key_exists($parameter, $this->_parameters)) {
             return $this->_parameters[$parameter];
         }
         return null;
@@ -207,9 +207,9 @@ class Parameter
      */
     public function branchExists($branch)
     {
-        $qBranch = \preg_quote($branch);
+        $qBranch = preg_quote($branch);
         foreach ($this->getParameters() as $key => $value) {
-            if (0 !== \preg_match('#^' . $qBranch . '(.*)?#', $key)) {
+            if (0 !== preg_match('#^' . $qBranch . '(.*)?#', $key)) {
                 return \true;
             }
         }
@@ -225,17 +225,17 @@ class Parameter
     {
         $parameters = $this->getParameters();
         $out = [];
-        $lBranch = \strlen($branch);
+        $lBranch = strlen($branch);
         foreach ($parameters as $key => $value) {
-            if ($branch !== \substr($key, 0, $lBranch)) {
+            if ($branch !== substr($key, 0, $lBranch)) {
                 continue;
             }
             $handle = [];
-            $explode = \preg_split('#((?<!\\\\)\.)#', \substr($key, $lBranch + 1), -1, \PREG_SPLIT_NO_EMPTY);
-            $end = \count($explode) - 1;
+            $explode = preg_split('#((?<!\\\\)\.)#', substr($key, $lBranch + 1), -1, \PREG_SPLIT_NO_EMPTY);
+            $end = count($explode) - 1;
             $i = $end;
             while ($i >= 0) {
-                $explode[$i] = \str_replace('\.', '.', $explode[$i]);
+                $explode[$i] = str_replace('\.', '.', $explode[$i]);
                 if ($i != $end) {
                     $handle = [$explode[$i] => $handle];
                 } else {
@@ -243,7 +243,7 @@ class Parameter
                 }
                 --$i;
             }
-            $out = \array_merge_recursive($out, $handle);
+            $out = array_merge_recursive($out, $handle);
         }
         return $out;
     }
@@ -282,7 +282,7 @@ class Parameter
     {
         $this->resetCache();
         $old = null;
-        if (\true === \array_key_exists($key, $this->_keywords)) {
+        if (\true === array_key_exists($key, $this->_keywords)) {
             $old = $this->_keywords[$key];
         }
         $this->_keywords[$key] = $value;
@@ -296,7 +296,7 @@ class Parameter
      */
     public function getKeyword($keyword)
     {
-        if (\true === \array_key_exists($keyword, $this->_keywords)) {
+        if (\true === array_key_exists($keyword, $this->_keywords)) {
             return $this->_keywords[$keyword];
         }
         return null;
@@ -395,7 +395,7 @@ class Parameter
      */
     public function zFormat($value)
     {
-        if (!\is_string($value)) {
+        if (!is_string($value)) {
             return $value;
         }
         if (isset($this->_cache[$value])) {
@@ -407,31 +407,31 @@ class Parameter
         $self = $this;
         $keywords = $this->getKeywords();
         $parameters = $this->getParameters();
-        return $this->_cache[$value] = \preg_replace_callback('#\(:(.*?):\)#', function ($match) use ($self, $value, &$keywords, &$parameters) {
-            \preg_match('#([^:]+)(?::(.*))?#', $match[1], $submatch);
+        return $this->_cache[$value] = preg_replace_callback('#\(:(.*?):\)#', function ($match) use ($self, $value, &$keywords, &$parameters) {
+            preg_match('#([^:]+)(?::(.*))?#', $match[1], $submatch);
             if (!isset($submatch[1])) {
                 return '';
             }
             $out = null;
             $key = $submatch[1];
-            $word = \substr($key, 1);
+            $word = substr($key, 1);
             // Call a parameter.
             if ('%' == $key[0]) {
-                if (\false === \array_key_exists($word, $parameters)) {
+                if (\false === array_key_exists($word, $parameters)) {
                     throw new \Hoa\Zformat\Exception('Parameter %s is not found in parameters.', 0, $word);
                 }
                 $handle = $parameters[$word];
                 $out = $self->zFormat($handle);
             } elseif ('_' == $key[0]) {
                 $constants = \Hoa\Zformat\Parameter::getConstants();
-                foreach (\str_split($word) as $k => $v) {
+                foreach (str_split($word) as $k => $v) {
                     if (!isset($constants[$v])) {
                         throw new \Hoa\Zformat\Exception('Constant char %s is not supported in the ' . 'rule %s.', 1, [$v, $value]);
                     }
                     $out .= $constants[$v];
                 }
             } else {
-                if (\false === \array_key_exists($key, $keywords)) {
+                if (\false === array_key_exists($key, $keywords)) {
                     throw new \Hoa\Zformat\Exception('Keyword %s is not found in the rule %s.', 2, [$key, $value]);
                 }
                 $out = $keywords[$key];
@@ -439,41 +439,41 @@ class Parameter
             if (!isset($submatch[2])) {
                 return $out;
             }
-            \preg_match_all('#(h|t|r|e|l|u|U|s(/|%|\#)(.*?)(?<!\\\\)\2(.*?)(?:(?<!\\\\)\2|$))#', $submatch[2], $flags);
+            preg_match_all('#(h|t|r|e|l|u|U|s(/|%|\#)(.*?)(?<!\\\\)\2(.*?)(?:(?<!\\\\)\2|$))#', $submatch[2], $flags);
             if (empty($flags) || empty($flags[1])) {
                 throw new \Hoa\Zformat\Exception('Unrecognized format pattern %s in the rule %s.', 3, [$match[0], $value]);
             }
             foreach ($flags[1] as $i => $flag) {
                 switch ($flag) {
                     case 'h':
-                        $out = \dirname($out);
+                        $out = dirname($out);
                         break;
                     case 't':
-                        $out = \basename($out);
+                        $out = basename($out);
                         break;
                     case 'r':
-                        if (\false !== $position = \strrpos($out, '.', 1)) {
-                            $out = \substr($out, 0, $position);
+                        if (\false !== $position = strrpos($out, '.', 1)) {
+                            $out = substr($out, 0, $position);
                         }
                         break;
                     case 'e':
-                        if (\false !== $position = \strrpos($out, '.', 1)) {
-                            $out = \substr($out, $position + 1);
+                        if (\false !== $position = strrpos($out, '.', 1)) {
+                            $out = substr($out, $position + 1);
                         }
                         break;
                     case 'l':
-                        $out = \strtolower($out);
+                        $out = strtolower($out);
                         break;
                     case 'u':
-                        $out = \strtoupper($out);
+                        $out = strtoupper($out);
                         break;
                     case 'U':
                         $handle = null;
-                        foreach (\explode('\\', $out) as $part) {
+                        foreach (explode('\\', $out) as $part) {
                             if (null === $handle) {
-                                $handle = \ucfirst($part);
+                                $handle = ucfirst($part);
                             } else {
-                                $handle .= '\\' . \ucfirst($part);
+                                $handle .= '\\' . ucfirst($part);
                             }
                         }
                         $out = $handle;
@@ -482,7 +482,7 @@ class Parameter
                         if (!isset($flags[3]) && !isset($flags[4])) {
                             throw new \Hoa\Zformat\Exception('Unrecognized format pattern in the rule %s.', 4, $value);
                         }
-                        $l = \preg_quote($flags[3][$i], '#');
+                        $l = preg_quote($flags[3][$i], '#');
                         $r = $flags[4][$i];
                         switch ($flags[2][$i]) {
                             case '%':
@@ -492,7 +492,7 @@ class Parameter
                                 $l .= '$';
                                 break;
                         }
-                        $out = \preg_replace('#' . $l . '#', $r, $out);
+                        $out = preg_replace('#' . $l . '#', $r, $out);
                 }
             }
             return $out;

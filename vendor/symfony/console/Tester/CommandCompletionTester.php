@@ -31,10 +31,10 @@ class CommandCompletionTester
     public function complete(array $input): array
     {
         $currentIndex = \count($input);
-        if ('' === \end($input)) {
-            \array_pop($input);
+        if ('' === end($input)) {
+            array_pop($input);
         }
-        \array_unshift($input, $this->command->getName());
+        array_unshift($input, $this->command->getName());
         $completionInput = CompletionInput::fromTokens($input, $currentIndex);
         $completionInput->bind($this->command->getDefinition());
         $suggestions = new CompletionSuggestions();
@@ -43,6 +43,6 @@ class CommandCompletionTester
         foreach ($suggestions->getOptionSuggestions() as $option) {
             $options[] = '--' . $option->getName();
         }
-        return \array_map('strval', \array_merge($options, $suggestions->getValueSuggestions()));
+        return array_map('strval', array_merge($options, $suggestions->getValueSuggestions()));
     }
 }

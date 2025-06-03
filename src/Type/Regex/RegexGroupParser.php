@@ -34,7 +34,7 @@ use function str_replace;
 use function strlen;
 use function substr;
 use function trim;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RegexGroupParser
 {
     private PhpVersion $phpVersion;

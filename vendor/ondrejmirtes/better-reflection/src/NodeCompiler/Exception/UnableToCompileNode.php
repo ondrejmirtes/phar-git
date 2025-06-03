@@ -23,7 +23,7 @@ class UnableToCompileNode extends LogicException
     }
     public static function forUnRecognizedExpressionInContext(Node\Expr $expression, CompilerContext $context): self
     {
-        return new self(sprintf('Unable to compile expression in %s: unrecognized node type %s in file %s (line %d)', self::compilerContextToContextDescription($context), \get_class($expression), self::getFileName($context), $expression->getStartLine()));
+        return new self(sprintf('Unable to compile expression in %s: unrecognized node type %s in file %s (line %d)', self::compilerContextToContextDescription($context), get_class($expression), self::getFileName($context), $expression->getStartLine()));
     }
     public static function becauseOfNotFoundClassConstantReference(CompilerContext $fetchContext, ReflectionClass $targetClass, Node\Expr\ClassConstFetch $constantFetch): self
     {

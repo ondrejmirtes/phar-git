@@ -56,11 +56,11 @@ final class DuplexResourceStream extends EventEmitter implements DuplexStreamInt
         }
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         if ($buffer !== null && !$buffer instanceof WritableStreamInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #4 ($buffer) expected null|React\Stream\WritableStreamInterface');
+            throw new \InvalidArgumentException('Argument #4 ($buffer) expected null|React\Stream\WritableStreamInterface');
         }
         // Use unbuffered read operations on the underlying stream resource.
         // Reading chunks from the stream may otherwise leave unread bytes in

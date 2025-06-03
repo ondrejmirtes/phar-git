@@ -71,7 +71,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
         }
         return \PHPStan\BetterReflection\Reflection\Adapter\ReflectionType::fromTypeOrNull($this->betterClassConstantOrEnumCase->getType());
     }
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getValue()
     {
         if ($this->betterClassConstantOrEnumCase instanceof BetterReflectionEnumCase) {
@@ -123,7 +123,7 @@ final class ReflectionClassConstant extends CoreReflectionClassConstant
      *
      * @return string|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterClassConstantOrEnumCase->getDocComment() ?? \false;

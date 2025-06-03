@@ -21,7 +21,7 @@ use PHPStan\Type\UnionType;
 use function count;
 use function in_array;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ParseStrParameterOutTypeExtension implements FunctionParameterOutTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool

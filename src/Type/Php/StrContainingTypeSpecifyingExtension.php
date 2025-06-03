@@ -26,7 +26,7 @@ use PHPStan\Type\StringType;
 use function array_key_exists;
 use function count;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrContainingTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private const STR_CONTAINING_FUNCTIONS = ['fnmatch' => [1, 0], 'str_contains' => [0, 1], 'str_starts_with' => [0, 1], 'str_ends_with' => [0, 1], 'strpos' => [0, 1], 'strrpos' => [0, 1], 'stripos' => [0, 1], 'strripos' => [0, 1], 'strstr' => [0, 1], 'mb_strpos' => [0, 1], 'mb_strrpos' => [0, 1], 'mb_stripos' => [0, 1], 'mb_strripos' => [0, 1], 'mb_strstr' => [0, 1]];

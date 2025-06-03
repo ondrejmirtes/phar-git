@@ -30,7 +30,7 @@ final class ExtUvLoop implements LoopInterface
     private $streamListener;
     public function __construct()
     {
-        if (!\function_exists('uv_loop_new')) {
+        if (!\function_exists('uv_loop_new') && !\function_exists('_PHPStan_checksum\uv_loop_new')) {
             throw new \BadMethodCallException('Cannot create LibUvLoop, ext-uv extension missing');
         }
         $this->uv = \uv_loop_new();
@@ -150,8 +150,8 @@ final class ExtUvLoop implements LoopInterface
         $this->signals->add($signal, $listener);
         if (!isset($this->signalEvents[$signal])) {
             $signals = $this->signals;
-            $this->signalEvents[$signal] = \_PHPStan_checksum\uv_signal_init($this->uv);
-            \_PHPStan_checksum\uv_signal_start($this->signalEvents[$signal], function () use ($signals, $signal) {
+            $this->signalEvents[$signal] = \uv_signal_init($this->uv);
+            \uv_signal_start($this->signalEvents[$signal], function () use ($signals, $signal) {
                 $signals->call($signal);
             }, $signal);
         }

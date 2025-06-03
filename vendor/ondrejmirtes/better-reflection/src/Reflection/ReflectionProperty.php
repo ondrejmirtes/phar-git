@@ -256,7 +256,7 @@ class ReflectionProperty
             return \true;
             /** @phpstan-ignore catch.neverThrown */
         } catch (Error $e) {
-            if (\strpos($e->getMessage(), 'must not be accessed before initialization') !== \false) {
+            if (strpos($e->getMessage(), 'must not be accessed before initialization') !== \false) {
                 return \false;
             }
             throw $e;
@@ -527,7 +527,7 @@ class ReflectionProperty
             throw NotAnObject::fromNonObject($object);
         }
         $implementingClassName = $this->getImplementingClass()->getName();
-        if (\get_class($object) !== $implementingClassName) {
+        if (get_class($object) !== $implementingClassName) {
             throw ObjectNotInstanceOfClass::fromClassName($implementingClassName);
         }
         return $object;

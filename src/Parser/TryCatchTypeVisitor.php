@@ -9,7 +9,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use function array_pop;
 use function array_reverse;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class TryCatchTypeVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'tryCatchTypes';

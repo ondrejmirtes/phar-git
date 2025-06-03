@@ -136,7 +136,7 @@ class TcpTransportExecutor implements ExecutorInterface
         }
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $this->nameserver = 'tcp://' . $parts['host'] . ':' . (isset($parts['port']) ? $parts['port'] : 53);
         $this->loop = $loop ?: Loop::get();
@@ -264,7 +264,7 @@ class TcpTransportExecutor implements ExecutorInterface
                 return;
             }
             $data = \substr($this->readBuffer, 2, $length);
-            $this->readBuffer = (string) \substr($this->readBuffer, $length + 2);
+            $this->readBuffer = (string) substr($this->readBuffer, $length + 2);
             try {
                 $response = $this->parser->parseMessage($data);
             } catch (\Exception $e) {

@@ -68,7 +68,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
         // Multiple cookie headers are not allowed according
         // to https://tools.ietf.org/html/rfc6265#section-5.4
         $cookieHeaders = $this->getHeader("Cookie");
-        if (\count($cookieHeaders) === 1) {
+        if (count($cookieHeaders) === 1) {
             $this->cookies = $this->parseCookie($cookieHeaders[0]);
         }
     }

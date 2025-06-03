@@ -11,7 +11,7 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\ClosureType;
 use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClosureBindDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
     public function getClass(): string

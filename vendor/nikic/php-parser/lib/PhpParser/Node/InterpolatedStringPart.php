@@ -29,4 +29,4 @@ class InterpolatedStringPart extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\InterpolatedStringPart::class, \PhpParser\Node\Scalar\EncapsedStringPart::class);
+class_alias(\PhpParser\Node\InterpolatedStringPart::class, \PhpParser\Node\Scalar\EncapsedStringPart::class);

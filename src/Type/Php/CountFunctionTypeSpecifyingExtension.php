@@ -15,7 +15,7 @@ use PHPStan\Type\Accessory\NonEmptyArrayType;
 use PHPStan\Type\FunctionTypeSpecifyingExtension;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class CountFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

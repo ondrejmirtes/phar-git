@@ -106,7 +106,7 @@ class Process extends EventEmitter
             // manual type check to support legacy PHP < 7.1
             throw new \InvalidArgumentException('Argument #4 ($fds) expected null|array');
         }
-        if (!\function_exists('proc_open')) {
+        if (!\function_exists('proc_open') && !\function_exists('_PHPStan_checksum\proc_open')) {
             throw new \LogicException('The Process class relies on proc_open(), which is not available on your PHP installation.');
         }
         $this->cmd = $cmd;
@@ -155,7 +155,7 @@ class Process extends EventEmitter
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #1 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #1 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         if ($this->isRunning()) {
             throw new \RuntimeException('Process is already running');

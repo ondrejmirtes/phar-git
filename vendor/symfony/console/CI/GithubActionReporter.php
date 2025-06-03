@@ -33,7 +33,7 @@ class GithubActionReporter
     }
     public static function isGithubActionEnvironment(): bool
     {
-        return \false !== \getenv('GITHUB_ACTIONS');
+        return \false !== getenv('GITHUB_ACTIONS');
     }
     /**
      * Output an error using the Github annotations format.
@@ -65,12 +65,12 @@ class GithubActionReporter
     private function log(string $type, string $message, ?string $file = null, ?int $line = null, ?int $col = null): void
     {
         // Some values must be encoded.
-        $message = \strtr($message, self::ESCAPED_DATA);
+        $message = strtr($message, self::ESCAPED_DATA);
         if (!$file) {
             // No file provided, output the message solely:
-            $this->output->writeln(\sprintf('::%s::%s', $type, $message));
+            $this->output->writeln(sprintf('::%s::%s', $type, $message));
             return;
         }
-        $this->output->writeln(\sprintf('::%s file=%s,line=%s,col=%s::%s', $type, \strtr($file, self::ESCAPED_PROPERTIES), \strtr($line ?? 1, self::ESCAPED_PROPERTIES), \strtr($col ?? 0, self::ESCAPED_PROPERTIES), $message));
+        $this->output->writeln(sprintf('::%s file=%s,line=%s,col=%s::%s', $type, strtr($file, self::ESCAPED_PROPERTIES), strtr($line ?? 1, self::ESCAPED_PROPERTIES), strtr($col ?? 0, self::ESCAPED_PROPERTIES), $message));
     }
 }

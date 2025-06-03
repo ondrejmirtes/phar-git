@@ -53,13 +53,13 @@ abstract class Helper implements HelperInterface
     public static function width(?string $string): int
     {
         $string ?? $string = '';
-        if (\preg_match('//u', $string)) {
+        if (preg_match('//u', $string)) {
             return (new UnicodeString($string))->width(\false);
         }
-        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
+        if (\false === $encoding = mb_detect_encoding($string, null, \true)) {
             return \strlen($string);
         }
-        return \mb_strwidth($string, $encoding);
+        return mb_strwidth($string, $encoding);
     }
     /**
      * Returns the length of a string, using mb_strlen if it is available.
@@ -68,13 +68,13 @@ abstract class Helper implements HelperInterface
     public static function length(?string $string): int
     {
         $string ?? $string = '';
-        if (\preg_match('//u', $string)) {
+        if (preg_match('//u', $string)) {
             return (new UnicodeString($string))->length();
         }
-        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
+        if (\false === $encoding = mb_detect_encoding($string, null, \true)) {
             return \strlen($string);
         }
-        return \mb_strlen($string, $encoding);
+        return mb_strlen($string, $encoding);
     }
     /**
      * Returns the subset of a string, using mb_substr if it is available.
@@ -84,10 +84,10 @@ abstract class Helper implements HelperInterface
     public static function substr(?string $string, int $from, ?int $length = null)
     {
         $string ?? $string = '';
-        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
-            return \substr($string, $from, $length);
+        if (\false === $encoding = mb_detect_encoding($string, null, \true)) {
+            return substr($string, $from, $length);
         }
-        return \mb_substr($string, $from, $length, $encoding);
+        return mb_substr($string, $from, $length, $encoding);
     }
     public static function formatTime($secs)
     {
@@ -98,7 +98,7 @@ abstract class Helper implements HelperInterface
                     if (2 == \count($format)) {
                         return $format[1];
                     }
-                    return \floor($secs / $format[2]) . ' ' . $format[1];
+                    return floor($secs / $format[2]) . ' ' . $format[1];
                 }
             }
         }
@@ -106,15 +106,15 @@ abstract class Helper implements HelperInterface
     public static function formatMemory(int $memory)
     {
         if ($memory >= 1024 * 1024 * 1024) {
-            return \sprintf('%.1f GiB', $memory / 1024 / 1024 / 1024);
+            return sprintf('%.1f GiB', $memory / 1024 / 1024 / 1024);
         }
         if ($memory >= 1024 * 1024) {
-            return \sprintf('%.1f MiB', $memory / 1024 / 1024);
+            return sprintf('%.1f MiB', $memory / 1024 / 1024);
         }
         if ($memory >= 1024) {
-            return \sprintf('%d KiB', $memory / 1024);
+            return sprintf('%d KiB', $memory / 1024);
         }
-        return \sprintf('%d B', $memory);
+        return sprintf('%d B', $memory);
     }
     /**
      * @deprecated since Symfony 5.3
@@ -131,9 +131,9 @@ abstract class Helper implements HelperInterface
         // remove <...> formatting
         $string = $formatter->format($string ?? '');
         // remove already formatted characters
-        $string = \preg_replace("/\x1b\\[[^m]*m/", '', $string ?? '');
+        $string = preg_replace("/\x1b\\[[^m]*m/", '', $string ?? '');
         // remove terminal hyperlinks
-        $string = \preg_replace('/\033]8;[^;]*;[^\033]*\033\\\\/', '', $string ?? '');
+        $string = preg_replace('/\033]8;[^;]*;[^\033]*\033\\\\/', '', $string ?? '');
         $formatter->setDecorated($isDecorated);
         return $string;
     }

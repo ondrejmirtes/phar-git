@@ -18,7 +18,7 @@ use PHPStan\Type\Type;
 use function count;
 use function in_array;
 use const ENT_SUBSTITUTE;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class NonEmptyStringFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

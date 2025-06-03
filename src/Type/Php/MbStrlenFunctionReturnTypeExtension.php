@@ -33,7 +33,7 @@ use function range;
 use function sort;
 use function sprintf;
 use function var_export;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MbStrlenFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

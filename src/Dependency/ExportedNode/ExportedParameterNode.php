@@ -57,7 +57,7 @@ final class ExportedParameterNode implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'type' => $this->type, 'byRef' => $this->byRef, 'variadic' => $this->variadic, 'hasDefault' => $this->hasDefault, 'attributes' => $this->attributes]];

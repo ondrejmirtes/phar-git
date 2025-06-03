@@ -13,7 +13,7 @@ use function str_starts_with;
 use function strlen;
 use function strpos;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClassForbiddenNameCheck
 {
     private Container $container;

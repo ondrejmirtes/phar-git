@@ -48,7 +48,7 @@ class Emulative extends Lexer
     }
     public function tokenize(string $code, ?ErrorHandler $errorHandler = null): array
     {
-        $emulators = \array_filter($this->emulators, function ($emulator) use ($code) {
+        $emulators = array_filter($this->emulators, function ($emulator) use ($code) {
             return $emulator->isEmulationNeeded($code);
         });
         if (empty($emulators)) {
@@ -90,7 +90,7 @@ class Emulative extends Lexer
     {
         // Patches may be contributed by different emulators.
         // Make sure they are sorted by increasing patch position.
-        \usort($this->patches, function ($p1, $p2) {
+        usort($this->patches, function ($p1, $p2) {
             return $p1[0] <=> $p2[0];
         });
     }
@@ -121,25 +121,25 @@ class Emulative extends Lexer
                 if ($patchType === 'remove') {
                     if ($patchPos === $pos && $patchTextLen === $len) {
                         // Remove token entirely
-                        \array_splice($tokens, $i, 1, []);
+                        array_splice($tokens, $i, 1, []);
                         $i--;
                         $c--;
                     } else {
                         // Remove from token string
-                        $token->text = \substr_replace($token->text, '', $patchPos - $pos + $localPosDelta, $patchTextLen);
+                        $token->text = substr_replace($token->text, '', $patchPos - $pos + $localPosDelta, $patchTextLen);
                         $localPosDelta -= $patchTextLen;
                     }
                     $lineDelta -= \substr_count($patchText, "\n");
                 } elseif ($patchType === 'add') {
                     // Insert into the token string
-                    $token->text = \substr_replace($token->text, $patchText, $patchPos - $pos + $localPosDelta, 0);
+                    $token->text = substr_replace($token->text, $patchText, $patchPos - $pos + $localPosDelta, 0);
                     $localPosDelta += $patchTextLen;
                     $lineDelta += \substr_count($patchText, "\n");
                 } elseif ($patchType === 'replace') {
                     // Replace inside the token string
-                    $token->text = \substr_replace($token->text, $patchText, $patchPos - $pos + $localPosDelta, $patchTextLen);
+                    $token->text = substr_replace($token->text, $patchText, $patchPos - $pos + $localPosDelta, $patchTextLen);
                 } else {
-                    \assert(\false);
+                    assert(\false);
                 }
                 // Fetch the next patch
                 $patchIdx++;
@@ -172,11 +172,11 @@ class Emulative extends Lexer
                     break;
                 }
                 if ($patchType === 'add') {
-                    $posDelta += \strlen($patchText);
-                    $lineDelta += \substr_count($patchText, "\n");
+                    $posDelta += strlen($patchText);
+                    $lineDelta += substr_count($patchText, "\n");
                 } elseif ($patchType === 'remove') {
-                    $posDelta -= \strlen($patchText);
-                    $lineDelta -= \substr_count($patchText, "\n");
+                    $posDelta -= strlen($patchText);
+                    $lineDelta -= substr_count($patchText, "\n");
                 }
             }
             $attrs['startFilePos'] += $posDelta;

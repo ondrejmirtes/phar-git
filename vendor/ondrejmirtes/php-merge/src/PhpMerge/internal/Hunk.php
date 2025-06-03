@@ -54,11 +54,11 @@ final class Hunk
     public function __construct($lines, $type, $start, $end = null)
     {
         $this->start = $start;
-        if (\is_null($end)) {
+        if (is_null($end)) {
             $end = $start;
         }
         $this->end = $end;
-        if (!\is_array($lines)) {
+        if (!is_array($lines)) {
             $lines = [$lines];
         }
         $this->lines = $lines;
@@ -175,7 +175,7 @@ final class Hunk
      */
     public function getRemovedLines()
     {
-        return \array_values(\array_filter($this->lines, function (Line $line) {
+        return array_values(array_filter($this->lines, function (Line $line) {
             return $line->getType() === Line::REMOVED;
         }));
     }
@@ -186,7 +186,7 @@ final class Hunk
      */
     public function getAddedLines()
     {
-        return \array_values(\array_filter($this->lines, function (Line $line) {
+        return array_values(array_filter($this->lines, function (Line $line) {
             return $line->getType() === Line::ADDED;
         }));
     }
@@ -197,7 +197,7 @@ final class Hunk
      */
     public function getLinesContent()
     {
-        return \array_map(function (Line $line) {
+        return array_map(function (Line $line) {
             return $line->getContent();
         }, $this->getAddedLines());
     }
@@ -239,13 +239,13 @@ final class Hunk
      */
     public function isSame(?Hunk $other = null): bool
     {
-        if (\is_null($other)) {
+        if (is_null($other)) {
             return \false;
         }
         if ($this->type !== $other->type || $this->start !== $other->start || $this->end !== $other->end) {
             return \false;
         }
-        if (\count($this->lines) !== \count($other->lines)) {
+        if (count($this->lines) !== count($other->lines)) {
             return \false;
         }
         foreach ($this->lines as $key => $line) {

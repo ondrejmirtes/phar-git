@@ -63,7 +63,7 @@ final class ClosureSourceLocator implements \PHPStan\BetterReflection\SourceLoca
         }
         /** @phpstan-var non-empty-string $fileName */
         $fileName = $this->coreFunctionReflection->getFileName();
-        if (\strpos($fileName, 'eval()\'d code') !== \false) {
+        if (strpos($fileName, 'eval()\'d code') !== \false) {
             throw EvaledClosureCannotBeLocated::create();
         }
         FileChecker::assertReadableFile($fileName);

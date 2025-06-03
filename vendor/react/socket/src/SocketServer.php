@@ -33,7 +33,7 @@ final class SocketServer extends EventEmitter implements ServerInterface
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #3 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #3 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         // apply default options if not explicitly given
         $context += array('tcp' => array(), 'tls' => array(), 'unix' => array());
@@ -47,10 +47,10 @@ final class SocketServer extends EventEmitter implements ServerInterface
         } elseif ($scheme === 'php') {
             $server = new FdServer($uri, $loop);
         } else {
-            if (\preg_match('#^(?:\w+://)?\d+$#', $uri)) {
+            if (preg_match('#^(?:\w+://)?\d+$#', $uri)) {
                 throw new \InvalidArgumentException('Invalid URI given (EINVAL)', \defined('SOCKET_EINVAL') ? \SOCKET_EINVAL : (\defined('PCNTL_EINVAL') ? \PCNTL_EINVAL : 22));
             }
-            $server = new TcpServer(\str_replace('tls://', '', $uri), $loop, $context['tcp']);
+            $server = new TcpServer(str_replace('tls://', '', $uri), $loop, $context['tcp']);
             if ($scheme === 'tls') {
                 $server = new SecureServer($server, $loop, $context['tls']);
             }
@@ -126,7 +126,7 @@ final class SocketServer extends EventEmitter implements ServerInterface
         // PHP defines the required `strerror()` function through either `ext-sockets`, `ext-posix` or `ext-pcntl`
         $strerror = \function_exists('socket_strerror') ? 'socket_strerror' : (\function_exists('posix_strerror') ? 'posix_strerror' : (\function_exists('pcntl_strerror') ? 'pcntl_strerror' : null));
         if ($strerror !== null) {
-            \assert(\is_string($strerror) && \is_callable($strerror));
+            assert(\is_string($strerror) && \is_callable($strerror));
             // PHP defines most useful errno constants like `ECONNREFUSED` through constants in `ext-sockets` like `SOCKET_ECONNREFUSED`
             // PHP also defines a hand full of errno constants like `EMFILE` through constants in `ext-pcntl` like `PCNTL_EMFILE`
             // go through list of all defined constants like `SOCKET_E*` and `PCNTL_E*` and see if they match the given `$errstr`
@@ -137,7 +137,7 @@ final class SocketServer extends EventEmitter implements ServerInterface
             }
             // if we reach this, no matching errno constant could be found (unlikely when `ext-sockets` is available)
             // go through list of all possible errno values from 1 to `MAX_ERRNO` and see if they match the given `$errstr`
-            for ($errno = 1, $max = \defined('_PHPStan_checksum\MAX_ERRNO') ? \_PHPStan_checksum\MAX_ERRNO : 4095; $errno <= $max; ++$errno) {
+            for ($errno = 1, $max = \defined('MAX_ERRNO') ? \MAX_ERRNO : 4095; $errno <= $max; ++$errno) {
                 if ($strerror($errno) === $errstr) {
                     return $errno;
                 }

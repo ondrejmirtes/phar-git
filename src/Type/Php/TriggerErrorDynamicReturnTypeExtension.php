@@ -19,7 +19,7 @@ use const E_USER_DEPRECATED;
 use const E_USER_ERROR;
 use const E_USER_NOTICE;
 use const E_USER_WARNING;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class TriggerErrorDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

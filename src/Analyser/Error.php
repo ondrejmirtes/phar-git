@@ -178,7 +178,7 @@ final class Error implements JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         $fixedErrorDiffHash = null;

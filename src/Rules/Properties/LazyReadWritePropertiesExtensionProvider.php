@@ -5,7 +5,7 @@ namespace PHPStan\Rules\Properties;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LazyReadWritePropertiesExtensionProvider implements \PHPStan\Rules\Properties\ReadWritePropertiesExtensionProvider
 {
     private Container $container;

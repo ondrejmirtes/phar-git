@@ -27,7 +27,7 @@ class Travis extends AbstractCi
     }
     public function getBuildUrl(): string
     {
-        return \sprintf('%s/%s/jobs/%s', self::TRAVIS_BASE_URL, $this->env->get('TRAVIS_REPO_SLUG'), $this->env->get('TRAVIS_JOB_ID'));
+        return sprintf('%s/%s/jobs/%s', self::TRAVIS_BASE_URL, $this->env->get('TRAVIS_REPO_SLUG'), $this->env->get('TRAVIS_JOB_ID'));
     }
     public function getGitCommit(): string
     {

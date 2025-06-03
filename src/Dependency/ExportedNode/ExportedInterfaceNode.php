@@ -69,7 +69,7 @@ final class ExportedInterfaceNode implements RootExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'phpDoc' => $this->phpDoc, 'extends' => $this->extends, 'statements' => $this->statements]];

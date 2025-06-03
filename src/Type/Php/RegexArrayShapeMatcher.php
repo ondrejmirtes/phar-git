@@ -33,7 +33,7 @@ use const PREG_UNMATCHED_AS_NULL;
 /**
  * @api
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RegexArrayShapeMatcher
 {
     private RegexGroupParser $regexGroupParser;

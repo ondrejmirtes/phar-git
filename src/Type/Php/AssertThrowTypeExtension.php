@@ -12,7 +12,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use Throwable;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AssertThrowTypeExtension implements DynamicFunctionThrowTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

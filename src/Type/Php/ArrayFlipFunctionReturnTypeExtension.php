@@ -15,7 +15,7 @@ use PHPStan\Type\NullType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayFlipFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

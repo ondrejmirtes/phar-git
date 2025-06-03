@@ -40,7 +40,7 @@ class ConfirmationQuestion extends Question
             if (\is_bool($answer)) {
                 return $answer;
             }
-            $answerIsTrue = (bool) \preg_match($regex, $answer);
+            $answerIsTrue = (bool) preg_match($regex, $answer);
             if (\false === $default) {
                 return $answer && $answerIsTrue;
             }

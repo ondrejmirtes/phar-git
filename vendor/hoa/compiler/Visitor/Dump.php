@@ -63,7 +63,7 @@ class Dump implements Visitor\Visit
     public function visit(Visitor\Element $element, &$handle = null, $eldnah = null)
     {
         ++self::$_i;
-        $out = \str_repeat('>  ', self::$_i) . $element->getId();
+        $out = str_repeat('>  ', self::$_i) . $element->getId();
         if (null !== $value = $element->getValue()) {
             $out .= '(' . ('default' !== $value['namespace'] ? $value['namespace'] . ':' : '') . $value['token'] . ', ' . $value['value'] . ')';
         }
@@ -87,7 +87,7 @@ class Dump implements Visitor\Visit
     protected function dumpData($data)
     {
         $out = null;
-        if (!\is_array($data)) {
+        if (!is_array($data)) {
             return $data;
         }
         foreach ($data as $key => $value) {

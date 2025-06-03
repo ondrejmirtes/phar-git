@@ -125,7 +125,7 @@ use function str_replace;
 use function str_starts_with;
 use function strtolower;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class TypeNodeResolver
 {
     private \PHPStan\PhpDoc\TypeNodeResolverExtensionRegistryProvider $extensionRegistryProvider;

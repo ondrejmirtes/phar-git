@@ -6,7 +6,7 @@ namespace PHPStan\Process;
 use _PHPStan_checksum\Fidry\CpuCoreCounter\CpuCoreCounter as FidryCpuCoreCounter;
 use _PHPStan_checksum\Fidry\CpuCoreCounter\NumberOfCpuCoreNotFound;
 use PHPStan\DependencyInjection\AutowiredService;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class CpuCoreCounter
 {
     private ?int $count = null;

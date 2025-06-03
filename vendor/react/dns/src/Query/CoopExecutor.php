@@ -80,6 +80,6 @@ final class CoopExecutor implements ExecutorInterface
     }
     private function serializeQueryToIdentity(Query $query)
     {
-        return \sprintf('%s:%s:%s', $query->name, $query->type, $query->class);
+        return sprintf('%s:%s:%s', $query->name, $query->type, $query->class);
     }
 }

@@ -33,4 +33,4 @@ class ClosureUse extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\ClosureUse::class, \PhpParser\Node\Expr\ClosureUse::class);
+class_alias(\PhpParser\Node\ClosureUse::class, \PhpParser\Node\Expr\ClosureUse::class);

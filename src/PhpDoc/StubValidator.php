@@ -102,7 +102,7 @@ use Throwable;
 use function array_fill_keys;
 use function count;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StubValidator
 {
     private DerivativeContainerFactory $derivativeContainerFactory;

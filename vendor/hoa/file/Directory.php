@@ -92,7 +92,7 @@ class Directory extends \Hoa\File\Generic
      */
     protected function &_open($streamName, Stream\Context $context = null)
     {
-        if (\false === \is_dir($streamName)) {
+        if (\false === is_dir($streamName)) {
             if ($this->getMode() == self::MODE_READ) {
                 throw new \Hoa\File\Exception\FileDoesNotExist('Directory %s does not exist.', 0, $streamName);
             } else {
@@ -127,12 +127,12 @@ class Directory extends \Hoa\File\Generic
             throw new \Hoa\File\Exception('The destination path (to copy) is empty.', 1);
         }
         $from = $this->getStreamName();
-        $fromLength = \strlen($from) + 1;
+        $fromLength = strlen($from) + 1;
         $finder = new \Hoa\File\Finder();
         $finder->in($from);
         self::create($to, self::MODE_CREATE_RECURSIVE);
         foreach ($finder as $file) {
-            $relative = \substr($file->getPathname(), $fromLength);
+            $relative = substr($file->getPathname(), $fromLength);
             $_to = $to . DS . $relative;
             if (\true === $file->isDir()) {
                 self::create($_to, self::MODE_CREATE);
@@ -173,9 +173,9 @@ class Directory extends \Hoa\File\Generic
             $file->close();
         }
         if (null === $this->getStreamContext()) {
-            return @\rmdir($from);
+            return @rmdir($from);
         }
-        return @\rmdir($from, $this->getStreamContext()->getContext());
+        return @rmdir($from, $this->getStreamContext()->getContext());
     }
     /**
      * Create a directory.
@@ -190,7 +190,7 @@ class Directory extends \Hoa\File\Generic
      */
     public static function create($name, $mode = self::MODE_CREATE_RECURSIVE, $context = null)
     {
-        if (\true === \is_dir($name)) {
+        if (\true === is_dir($name)) {
             return \true;
         }
         if (empty($name)) {
@@ -204,8 +204,8 @@ class Directory extends \Hoa\File\Generic
             }
         }
         if (null === $context) {
-            return @\mkdir($name, 0755, self::MODE_CREATE_RECURSIVE === $mode);
+            return @mkdir($name, 0755, self::MODE_CREATE_RECURSIVE === $mode);
         }
-        return @\mkdir($name, 0755, self::MODE_CREATE_RECURSIVE === $mode, $context->getContext());
+        return @mkdir($name, 0755, self::MODE_CREATE_RECURSIVE === $mode, $context->getContext());
     }
 }

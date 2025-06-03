@@ -19,7 +19,7 @@ use PHPStan\Type\TypeUtils;
 use PHPStan\Type\UnionType;
 use function array_map;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class GetParentClassDynamicFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private ReflectionProvider $reflectionProvider;

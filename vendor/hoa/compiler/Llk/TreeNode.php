@@ -173,7 +173,7 @@ class TreeNode implements Visitor\Element
      */
     public function prependChild(\Hoa\Compiler\Llk\TreeNode $child)
     {
-        \array_unshift($this->_children, $child);
+        array_unshift($this->_children, $child);
         return $this;
     }
     /**
@@ -225,7 +225,7 @@ class TreeNode implements Visitor\Element
      */
     public function getChildrenNumber()
     {
-        return \count($this->_children);
+        return count($this->_children);
     }
     /**
      * Check if a child exists.
@@ -235,7 +235,7 @@ class TreeNode implements Visitor\Element
      */
     public function childExists($i)
     {
-        return \array_key_exists($i, $this->_children);
+        return array_key_exists($i, $this->_children);
     }
     /**
      * Set parent.

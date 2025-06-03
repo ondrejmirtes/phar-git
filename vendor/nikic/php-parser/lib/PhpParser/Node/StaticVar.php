@@ -34,4 +34,4 @@ class StaticVar extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\StaticVar::class, \PhpParser\Node\Stmt\StaticVar::class);
+class_alias(\PhpParser\Node\StaticVar::class, \PhpParser\Node\Stmt\StaticVar::class);

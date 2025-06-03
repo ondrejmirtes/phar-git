@@ -48,9 +48,9 @@ class NodeTraverser implements \PhpParser\NodeTraverserInterface
      */
     public function removeVisitor(\PhpParser\NodeVisitor $visitor): void
     {
-        $index = \array_search($visitor, $this->visitors);
+        $index = array_search($visitor, $this->visitors);
         if ($index !== \false) {
-            \array_splice($this->visitors, $index, 1, []);
+            array_splice($this->visitors, $index, 1, []);
         }
     }
     /**
@@ -116,7 +116,7 @@ class NodeTraverser implements \PhpParser\NodeTraverserInterface
                         $node->{$name} = null;
                         continue 2;
                     } else {
-                        throw new \LogicException('enterNode() returned invalid value of type ' . \gettype($return));
+                        throw new \LogicException('enterNode() returned invalid value of type ' . gettype($return));
                     }
                 }
             }
@@ -142,7 +142,7 @@ class NodeTraverser implements \PhpParser\NodeTraverserInterface
                     } elseif (\is_array($return)) {
                         throw new \LogicException('leaveNode() may only return an array ' . 'if the parent structure is an array');
                     } else {
-                        throw new \LogicException('leaveNode() returned invalid value of type ' . \gettype($return));
+                        throw new \LogicException('leaveNode() returned invalid value of type ' . gettype($return));
                     }
                 }
             }
@@ -190,7 +190,7 @@ class NodeTraverser implements \PhpParser\NodeTraverserInterface
                     } elseif (\PhpParser\NodeVisitor::REPLACE_WITH_NULL === $return) {
                         throw new \LogicException('REPLACE_WITH_NULL can not be used if the parent structure is an array');
                     } else {
-                        throw new \LogicException('enterNode() returned invalid value of type ' . \gettype($return));
+                        throw new \LogicException('enterNode() returned invalid value of type ' . gettype($return));
                     }
                 }
             }
@@ -219,14 +219,14 @@ class NodeTraverser implements \PhpParser\NodeTraverserInterface
                     } elseif (\PhpParser\NodeVisitor::REPLACE_WITH_NULL === $return) {
                         throw new \LogicException('REPLACE_WITH_NULL can not be used if the parent structure is an array');
                     } else {
-                        throw new \LogicException('leaveNode() returned invalid value of type ' . \gettype($return));
+                        throw new \LogicException('leaveNode() returned invalid value of type ' . gettype($return));
                     }
                 }
             }
         }
         if (!empty($doNodes)) {
-            while (list($i, $replace) = \array_pop($doNodes)) {
-                \array_splice($nodes, $i, 1, $replace);
+            while (list($i, $replace) = array_pop($doNodes)) {
+                array_splice($nodes, $i, 1, $replace);
             }
         }
         return $nodes;

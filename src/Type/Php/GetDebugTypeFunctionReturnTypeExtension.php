@@ -16,7 +16,7 @@ use PHPStan\Type\UnionType;
 use function array_key_first;
 use function array_map;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class GetDebugTypeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

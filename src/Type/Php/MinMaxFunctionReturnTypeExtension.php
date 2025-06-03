@@ -21,7 +21,7 @@ use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MinMaxFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

@@ -46,7 +46,7 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public static function find(...$masks): self
     {
-        $masks = \is_array($tmp = \reset($masks)) ? $tmp : $masks;
+        $masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
         return (new static())->select($masks, 'isDir')->select($masks, 'isFile');
     }
     /**
@@ -56,7 +56,7 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public static function findFiles(...$masks): self
     {
-        $masks = \is_array($tmp = \reset($masks)) ? $tmp : $masks;
+        $masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
         return (new static())->select($masks, 'isFile');
     }
     /**
@@ -66,7 +66,7 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public static function findDirectories(...$masks): self
     {
-        $masks = \is_array($tmp = \reset($masks)) ? $tmp : $masks;
+        $masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
         return (new static())->select($masks, 'isDir');
     }
     /**
@@ -78,7 +78,7 @@ class Finder implements \IteratorAggregate, \Countable
         $this->cursor =& $this->groups[];
         $pattern = self::buildPattern($masks);
         $this->filter(function (RecursiveDirectoryIterator $file) use ($type, $pattern): bool {
-            return !$file->isDot() && $file->{$type}() && (!$pattern || \preg_match($pattern, '/' . \strtr($file->getSubPathName(), '\\', '/')));
+            return !$file->isDot() && $file->{$type}() && (!$pattern || preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/')));
         });
         return $this;
     }
@@ -102,7 +102,7 @@ class Finder implements \IteratorAggregate, \Countable
         if ($this->paths) {
             throw new Nette\InvalidStateException('Directory to search has already been specified.');
         }
-        $this->paths = \is_array($tmp = \reset($paths)) ? $tmp : $paths;
+        $this->paths = is_array($tmp = reset($paths)) ? $tmp : $paths;
         $this->cursor =& $this->exclude;
         return $this;
     }
@@ -122,7 +122,7 @@ class Finder implements \IteratorAggregate, \Countable
     {
         $pattern = [];
         foreach ($masks as $mask) {
-            $mask = \rtrim(\strtr($mask, '\\', '/'), '/');
+            $mask = rtrim(strtr($mask, '\\', '/'), '/');
             $prefix = '';
             if ($mask === '') {
                 continue;
@@ -130,19 +130,19 @@ class Finder implements \IteratorAggregate, \Countable
                 return null;
             } elseif ($mask[0] === '/') {
                 // absolute fixing
-                $mask = \ltrim($mask, '/');
+                $mask = ltrim($mask, '/');
                 $prefix = '(?<=^/)';
             }
-            $pattern[] = $prefix . \strtr(\preg_quote($mask, '#'), ['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
+            $pattern[] = $prefix . strtr(preg_quote($mask, '#'), ['\*\*' => '.*', '\*' => '[^/]*', '\?' => '[^/]', '\[\!' => '[^', '\[' => '[', '\]' => ']', '\-' => '-']);
         }
-        return $pattern ? '#/(' . \implode('|', $pattern) . ')$#Di' : null;
+        return $pattern ? '#/(' . implode('|', $pattern) . ')$#Di' : null;
     }
     /********************* iterator generator ****************d*g**/
     /** @deprecated */
     public function count(): int
     {
-        \trigger_error('Nette\Utils\Finder::count is deprecated.', \E_USER_DEPRECATED);
-        return \iterator_count($this->getIterator());
+        trigger_error('Nette\Utils\Finder::count is deprecated.', \E_USER_DEPRECATED);
+        return iterator_count($this->getIterator());
     }
     /**
      * Returns iterator.
@@ -151,7 +151,7 @@ class Finder implements \IteratorAggregate, \Countable
     {
         if (!$this->paths) {
             throw new Nette\InvalidStateException('Call in() or from() to specify directory to search.');
-        } elseif (\count($this->paths) === 1) {
+        } elseif (count($this->paths) === 1) {
             return $this->buildIterator((string) $this->paths[0]);
         }
         $iterator = new \AppendIterator();
@@ -207,11 +207,11 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public function exclude(...$masks): self
     {
-        $masks = \is_array($tmp = \reset($masks)) ? $tmp : $masks;
+        $masks = is_array($tmp = reset($masks)) ? $tmp : $masks;
         $pattern = self::buildPattern($masks);
         if ($pattern) {
             $this->filter(function (RecursiveDirectoryIterator $file) use ($pattern): bool {
-                return !\preg_match($pattern, '/' . \strtr($file->getSubPathName(), '\\', '/'));
+                return !preg_match($pattern, '/' . strtr($file->getSubPathName(), '\\', '/'));
             });
         }
         return $this;
@@ -242,14 +242,14 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public function size(string $operator, ?int $size = null): self
     {
-        if (\func_num_args() === 1) {
+        if (func_num_args() === 1) {
             // in $operator is predicate
-            if (!\preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?$#Di', $operator, $matches)) {
+            if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?((?:\d*\.)?\d+)\s*(K|M|G|)B?$#Di', $operator, $matches)) {
                 throw new Nette\InvalidArgumentException('Invalid size predicate format.');
             }
             [, $operator, $size, $unit] = $matches;
             static $units = ['' => 1, 'k' => 1000.0, 'm' => 1000000.0, 'g' => 1000000000.0];
-            $size *= $units[\strtolower($unit)];
+            $size *= $units[strtolower($unit)];
             $operator = $operator ?: '=';
         }
         return $this->filter(function (RecursiveDirectoryIterator $file) use ($operator, $size): bool {
@@ -264,9 +264,9 @@ class Finder implements \IteratorAggregate, \Countable
      */
     public function date(string $operator, $date = null): self
     {
-        if (\func_num_args() === 1) {
+        if (func_num_args() === 1) {
             // in $operator is predicate
-            if (!\preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)$#Di', $operator, $matches)) {
+            if (!preg_match('#^(?:([=<>!]=?|<>)\s*)?(.+)$#Di', $operator, $matches)) {
                 throw new Nette\InvalidArgumentException('Invalid date predicate format.');
             }
             [, $operator, $date] = $matches;
@@ -306,12 +306,12 @@ class Finder implements \IteratorAggregate, \Countable
     /** @deprecated */
     public function __call(string $name, array $args)
     {
-        return isset(self::$extMethods[$name]) ? self::$extMethods[$name]($this, ...$args) : Nette\Utils\ObjectHelpers::strictCall(static::class, $name, \array_keys(self::$extMethods));
+        return isset(self::$extMethods[$name]) ? self::$extMethods[$name]($this, ...$args) : Nette\Utils\ObjectHelpers::strictCall(static::class, $name, array_keys(self::$extMethods));
     }
     /** @deprecated */
     public static function extensionMethod(string $name, callable $callback): void
     {
-        \trigger_error(__METHOD__ . '() is deprecated.', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() is deprecated.', \E_USER_DEPRECATED);
         self::$extMethods[$name] = $callback;
     }
 }

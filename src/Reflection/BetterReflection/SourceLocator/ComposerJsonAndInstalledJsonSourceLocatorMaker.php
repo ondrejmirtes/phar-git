@@ -26,7 +26,7 @@ use function is_dir;
 use function is_file;
 use function str_contains;
 use const GLOB_ONLYDIR;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ComposerJsonAndInstalledJsonSourceLocatorMaker
 {
     private \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocatorRepository $optimizedDirectorySourceLocatorRepository;

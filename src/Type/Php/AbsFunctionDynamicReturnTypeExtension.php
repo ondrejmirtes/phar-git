@@ -10,7 +10,7 @@ use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AbsFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

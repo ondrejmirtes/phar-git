@@ -124,7 +124,7 @@ class Differ
                 $y--;
             }
         }
-        return \array_reverse($result);
+        return array_reverse($result);
     }
     /**
      * Coalesce equal-length sequences of remove+add into a replace operation.

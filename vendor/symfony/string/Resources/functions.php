@@ -29,6 +29,6 @@ if (!\function_exists(s::class)) {
     function s(?string $string = ''): AbstractString
     {
         $string = $string ?? '';
-        return \preg_match('//u', $string) ? new UnicodeString($string) : new ByteString($string);
+        return preg_match('//u', $string) ? new UnicodeString($string) : new ByteString($string);
     }
 }

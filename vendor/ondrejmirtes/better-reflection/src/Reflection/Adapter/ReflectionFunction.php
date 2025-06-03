@@ -60,7 +60,7 @@ final class ReflectionFunction extends CoreReflectionFunction
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getClosureThis()
     {
         throw new NotImplemented('Not implemented');
@@ -76,7 +76,7 @@ final class ReflectionFunction extends CoreReflectionFunction
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterReflectionFunction->getDocComment() ?? \false;
@@ -85,7 +85,7 @@ final class ReflectionFunction extends CoreReflectionFunction
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStartLine()
     {
         return $this->betterReflectionFunction->getStartLine();
@@ -94,7 +94,7 @@ final class ReflectionFunction extends CoreReflectionFunction
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getEndLine()
     {
         return $this->betterReflectionFunction->getEndLine();
@@ -107,7 +107,7 @@ final class ReflectionFunction extends CoreReflectionFunction
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getExtensionName()
     {
         return $this->betterReflectionFunction->getExtensionName() ?? \false;
@@ -115,7 +115,7 @@ final class ReflectionFunction extends CoreReflectionFunction
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getFileName()
     {
         $fileName = $this->betterReflectionFunction->getFileName();
@@ -184,7 +184,7 @@ final class ReflectionFunction extends CoreReflectionFunction
      *
      * @throws CoreReflectionException
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function invoke($arg = null, ...$args)
     {
         try {
@@ -196,7 +196,7 @@ final class ReflectionFunction extends CoreReflectionFunction
     /**
      * @param mixed[] $args
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function invokeArgs(array $args)
     {
         try {

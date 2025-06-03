@@ -18,7 +18,7 @@ use function array_key_exists;
 use function count;
 use function sprintf;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ConditionalReturnTypeRuleHelper
 {
     /**

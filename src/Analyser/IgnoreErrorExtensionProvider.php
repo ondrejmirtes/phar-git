@@ -5,7 +5,7 @@ namespace PHPStan\Analyser;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IgnoreErrorExtensionProvider
 {
     private Container $container;

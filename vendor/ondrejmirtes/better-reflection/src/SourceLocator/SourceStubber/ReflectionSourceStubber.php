@@ -584,14 +584,14 @@ final class ReflectionSourceStubber implements \PHPStan\BetterReflection\SourceL
                 $otherNames[] = $type;
             }
             if ($this->phpVersion >= 80100) {
-                if (\count($intersectionTypes) > 0) {
+                if (count($intersectionTypes) > 0) {
                     return $intersectionTypes[0];
                 }
             }
-            if (\count($otherNames) > 1) {
+            if (count($otherNames) > 1) {
                 return new UnionType($otherNames);
             }
-            if (\count($otherNames) > 0) {
+            if (count($otherNames) > 0) {
                 return $otherNames[0];
             }
             return new Name('null');

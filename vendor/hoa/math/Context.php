@@ -122,7 +122,7 @@ class Context
     public function addFunction($name, $callable = null)
     {
         if (null === $callable) {
-            if (\false === \function_exists($name)) {
+            if (\false === function_exists($name)) {
                 throw new \Hoa\Math\Exception\UnknownFunction('Function %s does not exist, cannot add it.', 2, $name);
             }
             $callable = $name;
@@ -212,17 +212,17 @@ class Context
         static $_functions = null;
         if (null === $_functions) {
             $average = function () {
-                $arguments = \func_get_args();
-                return \array_sum($arguments) / \count($arguments);
+                $arguments = func_get_args();
+                return array_sum($arguments) / count($arguments);
             };
             $_functions = new \ArrayObject(['abs' => xcallable('abs'), 'acos' => xcallable('acos'), 'asin' => xcallable('asin'), 'atan' => xcallable('atan'), 'average' => xcallable($average), 'avg' => xcallable($average), 'ceil' => xcallable('ceil'), 'cos' => xcallable('cos'), 'count' => xcallable(function () {
-                return \count(\func_get_args());
+                return count(func_get_args());
             }), 'deg2rad' => xcallable('deg2rad'), 'exp' => xcallable('exp'), 'floor' => xcallable('floor'), 'ln' => xcallable('log'), 'log' => xcallable(function ($value, $base = 10) {
-                return \log($value, $base);
+                return log($value, $base);
             }), 'max' => xcallable('max'), 'min' => xcallable('min'), 'pow' => xcallable('pow'), 'rad2deg' => xcallable('rad2deg'), 'round' => xcallable(function ($value, $precision = 0) {
-                return \round($value, $precision);
+                return round($value, $precision);
             }), 'sin' => xcallable('sin'), 'sqrt' => xcallable('sqrt'), 'sum' => xcallable(function () {
-                return \array_sum(\func_get_args());
+                return array_sum(func_get_args());
             }), 'tan' => xcallable('tan')]);
         }
         $this->_functions = $_functions;

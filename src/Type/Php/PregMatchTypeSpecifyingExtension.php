@@ -15,7 +15,7 @@ use PHPStan\TrinaryLogic;
 use PHPStan\Type\FunctionTypeSpecifyingExtension;
 use function in_array;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PregMatchTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private \PHPStan\Type\Php\RegexArrayShapeMatcher $regexShapeMatcher;

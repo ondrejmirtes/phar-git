@@ -64,7 +64,7 @@ class Tocode extends Console\Dispatcher\Kit
         while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'b':
-                    $base = \intval($v);
+                    $base = intval($v);
                     break;
                 case '__ambiguous':
                     $this->resolveOptionAmbiguity($v);
@@ -76,7 +76,7 @@ class Tocode extends Console\Dispatcher\Kit
             }
         }
         $this->parser->listInputs($char);
-        $code = \base_convert((string) Ustring::toCode($char), 10, $base);
+        $code = base_convert((string) Ustring::toCode($char), 10, $base);
         echo $code, "\n";
         return;
     }

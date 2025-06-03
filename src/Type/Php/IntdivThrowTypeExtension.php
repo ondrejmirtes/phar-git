@@ -15,7 +15,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use function count;
 use const PHP_INT_MIN;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IntdivThrowTypeExtension implements DynamicFunctionThrowTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

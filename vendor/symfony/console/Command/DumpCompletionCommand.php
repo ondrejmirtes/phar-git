@@ -36,8 +36,8 @@ final class DumpCompletionCommand extends Command
     protected function configure()
     {
         $fullCommand = $_SERVER['PHP_SELF'];
-        $commandName = \basename($fullCommand);
-        $fullCommand = @\realpath($fullCommand) ?: $fullCommand;
+        $commandName = basename($fullCommand);
+        $fullCommand = @realpath($fullCommand) ?: $fullCommand;
         $this->setHelp(<<<EOH
         The <info>%command.name%</> command dumps the shell completion script required
         to use shell autocompletion (currently only bash completion is supported).
@@ -69,37 +69,37 @@ final class DumpCompletionCommand extends Command
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $commandName = \basename($_SERVER['argv'][0]);
+        $commandName = basename($_SERVER['argv'][0]);
         if ($input->getOption('debug')) {
             $this->tailDebugLog($commandName, $output);
             return 0;
         }
         $shell = $input->getArgument('shell') ?? self::guessShell();
         $completionFile = __DIR__ . '/../Resources/completion.' . $shell;
-        if (!\file_exists($completionFile)) {
+        if (!file_exists($completionFile)) {
             $supportedShells = $this->getSupportedShells();
             if ($output instanceof ConsoleOutputInterface) {
                 $output = $output->getErrorOutput();
             }
             if ($shell) {
-                $output->writeln(\sprintf('<error>Detected shell "%s", which is not supported by Symfony shell completion (supported shells: "%s").</>', $shell, \implode('", "', $supportedShells)));
+                $output->writeln(sprintf('<error>Detected shell "%s", which is not supported by Symfony shell completion (supported shells: "%s").</>', $shell, implode('", "', $supportedShells)));
             } else {
-                $output->writeln(\sprintf('<error>Shell not detected, Symfony shell completion only supports "%s").</>', \implode('", "', $supportedShells)));
+                $output->writeln(sprintf('<error>Shell not detected, Symfony shell completion only supports "%s").</>', implode('", "', $supportedShells)));
             }
             return 2;
         }
-        $output->write(\str_replace(['{{ COMMAND_NAME }}', '{{ VERSION }}'], [$commandName, $this->getApplication()->getVersion()], \file_get_contents($completionFile)));
+        $output->write(str_replace(['{{ COMMAND_NAME }}', '{{ VERSION }}'], [$commandName, $this->getApplication()->getVersion()], file_get_contents($completionFile)));
         return 0;
     }
     private static function guessShell(): string
     {
-        return \basename($_SERVER['SHELL'] ?? '');
+        return basename($_SERVER['SHELL'] ?? '');
     }
     private function tailDebugLog(string $commandName, OutputInterface $output): void
     {
-        $debugFile = \sys_get_temp_dir() . '/sf_' . $commandName . '.log';
-        if (!\file_exists($debugFile)) {
-            \touch($debugFile);
+        $debugFile = sys_get_temp_dir() . '/sf_' . $commandName . '.log';
+        if (!file_exists($debugFile)) {
+            touch($debugFile);
         }
         $process = new Process(['tail', '-f', $debugFile], null, null, null, 0);
         $process->run(function (string $type, string $line) use ($output): void {
@@ -113,7 +113,7 @@ final class DumpCompletionCommand extends Command
     {
         $shells = [];
         foreach (new \DirectoryIterator(__DIR__ . '/../Resources/') as $file) {
-            if (\str_starts_with($file->getBasename(), 'completion.') && $file->isFile()) {
+            if (str_starts_with($file->getBasename(), 'completion.') && $file->isFile()) {
                 $shells[] = $file->getExtension();
             }
         }

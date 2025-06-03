@@ -90,15 +90,15 @@ class CartesianProduct implements Iterator
      */
     public function __construct($set)
     {
-        foreach (\func_get_args() as $s) {
-            if (\is_array($s)) {
+        foreach (func_get_args() as $s) {
+            if (is_array($s)) {
                 $s = new Iterator\Map($s);
             } else {
                 $s = new Iterator\IteratorIterator($s);
             }
             $this->_sets[] = $s;
         }
-        $this->_max = \count($this->_sets) - 1;
+        $this->_max = count($this->_sets) - 1;
         $this->_break = empty($this->_sets);
         return;
     }

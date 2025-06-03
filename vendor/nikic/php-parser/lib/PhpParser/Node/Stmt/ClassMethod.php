@@ -52,7 +52,7 @@ class ClassMethod extends Node\Stmt implements FunctionLike
         $this->name = \is_string($name) ? new Node\Identifier($name) : $name;
         $this->params = $subNodes['params'] ?? [];
         $this->returnType = $subNodes['returnType'] ?? null;
-        $this->stmts = \array_key_exists('stmts', $subNodes) ? $subNodes['stmts'] : [];
+        $this->stmts = array_key_exists('stmts', $subNodes) ? $subNodes['stmts'] : [];
         $this->attrGroups = $subNodes['attrGroups'] ?? [];
     }
     public function getSubNodeNames(): array

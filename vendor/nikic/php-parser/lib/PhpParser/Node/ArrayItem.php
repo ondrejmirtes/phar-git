@@ -40,4 +40,4 @@ class ArrayItem extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\ArrayItem::class, \PhpParser\Node\Expr\ArrayItem::class);
+class_alias(\PhpParser\Node\ArrayItem::class, \PhpParser\Node\Expr\ArrayItem::class);

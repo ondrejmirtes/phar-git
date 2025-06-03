@@ -8,7 +8,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 /**
  * @api
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ExprPrinter
 {
     private \PHPStan\Node\Printer\Printer $printer;

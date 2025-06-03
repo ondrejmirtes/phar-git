@@ -9,7 +9,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use function array_pop;
 use function count;
 use function get_class;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ParentStmtTypesVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'parentStmtTypes';

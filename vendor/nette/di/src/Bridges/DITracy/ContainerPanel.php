@@ -25,7 +25,7 @@ class ContainerPanel implements Tracy\IBarPanel
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->elapsedTime = self::$compilationTime ? \microtime(\true) - self::$compilationTime : null;
+        $this->elapsedTime = self::$compilationTime ? microtime(\true) - self::$compilationTime : null;
     }
     /**
      * Renders tab.
@@ -47,10 +47,10 @@ class ContainerPanel implements Tracy\IBarPanel
         })->bindTo($this->container, Container::class)();
         $services = [];
         foreach ($methods as $name => $foo) {
-            $name = \lcfirst(\str_replace('__', '.', \substr($name, 13)));
+            $name = lcfirst(str_replace('__', '.', substr($name, 13)));
             $services[$name] = $this->container->getServiceType($name);
         }
-        \ksort($services, \SORT_NATURAL);
+        ksort($services, \SORT_NATURAL);
         $propertyTags = (function () {
             return $this->tags;
         })->bindTo($this->container, $this->container)();

@@ -21,7 +21,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function is_bool;
 use function json_decode;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class JsonThrowOnErrorDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private ReflectionProvider $reflectionProvider;

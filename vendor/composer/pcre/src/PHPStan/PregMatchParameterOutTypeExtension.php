@@ -24,7 +24,7 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
     }
     public function isStaticMethodSupported(MethodReflection $methodReflection, ParameterReflection $parameter): bool
     {
-        return $methodReflection->getDeclaringClass()->getName() === Preg::class && \in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups', 'matchAll', 'isMatchAll', 'matchAllStrictGroups', 'isMatchAllStrictGroups'], \true) && $parameter->getName() === 'matches';
+        return $methodReflection->getDeclaringClass()->getName() === Preg::class && in_array($methodReflection->getName(), ['match', 'isMatch', 'matchStrictGroups', 'isMatchStrictGroups', 'matchAll', 'isMatchAll', 'matchAllStrictGroups', 'isMatchAllStrictGroups'], \true) && $parameter->getName() === 'matches';
     }
     public function getParameterOutTypeFromStaticMethodCall(MethodReflection $methodReflection, StaticCall $methodCall, ParameterReflection $parameter, Scope $scope): ?Type
     {
@@ -39,7 +39,7 @@ final class PregMatchParameterOutTypeExtension implements StaticMethodParameterO
         if ($flagsType === null) {
             return null;
         }
-        if (\stripos($methodReflection->getName(), 'matchAll') !== \false) {
+        if (stripos($methodReflection->getName(), 'matchAll') !== \false) {
             return $this->regexShapeMatcher->matchAllExpr($patternArg->value, $flagsType, TrinaryLogic::createMaybe(), $scope);
         }
         return $this->regexShapeMatcher->matchExpr($patternArg->value, $flagsType, TrinaryLogic::createMaybe(), $scope);

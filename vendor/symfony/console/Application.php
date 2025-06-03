@@ -128,8 +128,8 @@ class Application implements ResetInterface
     public function run(?InputInterface $input = null, ?OutputInterface $output = null)
     {
         if (\function_exists('putenv')) {
-            @\putenv('LINES=' . $this->terminal->getHeight());
-            @\putenv('COLUMNS=' . $this->terminal->getWidth());
+            @putenv('LINES=' . $this->terminal->getHeight());
+            @putenv('COLUMNS=' . $this->terminal->getWidth());
         }
         if (null === $input) {
             $input = new ArgvInput();
@@ -144,8 +144,8 @@ class Application implements ResetInterface
                 $this->renderThrowable($e, $output);
             }
         };
-        if ($phpHandler = \set_exception_handler($renderException)) {
-            \restore_exception_handler();
+        if ($phpHandler = set_exception_handler($renderException)) {
+            restore_exception_handler();
             if (!\is_array($phpHandler) || !$phpHandler[0] instanceof ErrorHandler) {
                 $errorHandler = \true;
             } elseif ($errorHandler = $phpHandler[0]->setExceptionHandler($renderException)) {
@@ -161,7 +161,7 @@ class Application implements ResetInterface
             }
             $renderException($e);
             $exitCode = $e->getCode();
-            if (\is_numeric($exitCode)) {
+            if (is_numeric($exitCode)) {
                 $exitCode = (int) $exitCode;
                 if ($exitCode <= 0) {
                     $exitCode = 1;
@@ -173,10 +173,10 @@ class Application implements ResetInterface
             // if the exception handler changed, keep it
             // otherwise, unregister $renderException
             if (!$phpHandler) {
-                if (\set_exception_handler($renderException) === $renderException) {
-                    \restore_exception_handler();
+                if (set_exception_handler($renderException) === $renderException) {
+                    restore_exception_handler();
                 }
-                \restore_exception_handler();
+                restore_exception_handler();
             } elseif (!$errorHandler) {
                 $finalHandler = $phpHandler[0]->setExceptionHandler(null);
                 if ($finalHandler !== $renderException) {
@@ -221,7 +221,7 @@ class Application implements ResetInterface
         if (!$name) {
             $name = $this->defaultCommand;
             $definition = $this->getDefinition();
-            $definition->setArguments(\array_merge($definition->getArguments(), ['command' => new InputArgument('command', InputArgument::OPTIONAL, $definition->getArgument('command')->getDescription(), $name)]));
+            $definition->setArguments(array_merge($definition->getArguments(), ['command' => new InputArgument('command', InputArgument::OPTIONAL, $definition->getArgument('command')->getDescription(), $name)]));
         }
         try {
             $this->runningCommand = null;
@@ -242,9 +242,9 @@ class Application implements ResetInterface
             $alternative = $alternatives[0];
             $style = new SymfonyStyle($input, $output);
             $output->writeln('');
-            $formattedBlock = (new FormatterHelper())->formatBlock(\sprintf('Command "%s" is not defined.', $name), 'error', \true);
+            $formattedBlock = (new FormatterHelper())->formatBlock(sprintf('Command "%s" is not defined.', $name), 'error', \true);
             $output->writeln($formattedBlock);
-            if (!$style->confirm(\sprintf('Do you want to run "%s" instead? ', $alternative), \false)) {
+            if (!$style->confirm(sprintf('Do you want to run "%s" instead? ', $alternative), \false)) {
                 if (null !== $this->dispatcher) {
                     $event = new ConsoleErrorEvent($input, $output, $e);
                     $this->dispatcher->dispatch($event, ConsoleEvents::ERROR);
@@ -322,7 +322,7 @@ class Application implements ResetInterface
                     $commandNames[] = $name;
                 }
             }
-            $suggestions->suggestValues(\array_filter($commandNames));
+            $suggestions->suggestValues(array_filter($commandNames));
             return;
         }
         if (CompletionInput::TYPE_OPTION_NAME === $input->getCompletionType()) {
@@ -412,7 +412,7 @@ class Application implements ResetInterface
     {
         if ('UNKNOWN' !== $this->getName()) {
             if ('UNKNOWN' !== $this->getVersion()) {
-                return \sprintf('%s <info>%s</info>', $this->getName(), $this->getVersion());
+                return sprintf('%s <info>%s</info>', $this->getName(), $this->getVersion());
             }
             return $this->getName();
         }
@@ -461,7 +461,7 @@ class Application implements ResetInterface
             $command->getDefinition();
         }
         if (!$command->getName()) {
-            throw new LogicException(\sprintf('The command defined in "%s" cannot have an empty name.', \get_debug_type($command)));
+            throw new LogicException(sprintf('The command defined in "%s" cannot have an empty name.', get_debug_type($command)));
         }
         $this->commands[$command->getName()] = $command;
         foreach ($command->getAliases() as $alias) {
@@ -480,11 +480,11 @@ class Application implements ResetInterface
     {
         $this->init();
         if (!$this->has($name)) {
-            throw new CommandNotFoundException(\sprintf('The command "%s" does not exist.', $name));
+            throw new CommandNotFoundException(sprintf('The command "%s" does not exist.', $name));
         }
         // When the command has a different name than the one used at the command loader level
         if (!isset($this->commands[$name])) {
-            throw new CommandNotFoundException(\sprintf('The "%s" command cannot be found because it is registered under multiple names. Make sure you don\'t set a different name via constructor or "setName()".', $name));
+            throw new CommandNotFoundException(sprintf('The "%s" command cannot be found because it is registered under multiple names. Make sure you don\'t set a different name via constructor or "setName()".', $name));
         }
         $command = $this->commands[$name];
         if ($this->wantHelps) {
@@ -524,7 +524,7 @@ class Application implements ResetInterface
                 $namespaces[] = $this->extractAllNamespaces($alias);
             }
         }
-        return \array_values(\array_unique(\array_filter(\array_merge([], ...$namespaces))));
+        return array_values(array_unique(array_filter(array_merge([], ...$namespaces))));
     }
     /**
      * Finds a registered namespace by a name or an abbreviation.
@@ -536,25 +536,25 @@ class Application implements ResetInterface
     public function findNamespace(string $namespace)
     {
         $allNamespaces = $this->getNamespaces();
-        $expr = \implode('[^:]*:', \array_map('preg_quote', \explode(':', $namespace))) . '[^:]*';
-        $namespaces = \preg_grep('{^' . $expr . '}', $allNamespaces);
+        $expr = implode('[^:]*:', array_map('preg_quote', explode(':', $namespace))) . '[^:]*';
+        $namespaces = preg_grep('{^' . $expr . '}', $allNamespaces);
         if (empty($namespaces)) {
-            $message = \sprintf('There are no commands defined in the "%s" namespace.', $namespace);
+            $message = sprintf('There are no commands defined in the "%s" namespace.', $namespace);
             if ($alternatives = $this->findAlternatives($namespace, $allNamespaces)) {
                 if (1 == \count($alternatives)) {
                     $message .= "\n\nDid you mean this?\n    ";
                 } else {
                     $message .= "\n\nDid you mean one of these?\n    ";
                 }
-                $message .= \implode("\n    ", $alternatives);
+                $message .= implode("\n    ", $alternatives);
             }
             throw new NamespaceNotFoundException($message, $alternatives);
         }
         $exact = \in_array($namespace, $namespaces, \true);
         if (\count($namespaces) > 1 && !$exact) {
-            throw new NamespaceNotFoundException(\sprintf("The namespace \"%s\" is ambiguous.\nDid you mean one of these?\n%s.", $namespace, $this->getAbbreviationSuggestions(\array_values($namespaces))), \array_values($namespaces));
+            throw new NamespaceNotFoundException(sprintf("The namespace \"%s\" is ambiguous.\nDid you mean one of these?\n%s.", $namespace, $this->getAbbreviationSuggestions(array_values($namespaces))), array_values($namespaces));
         }
-        return $exact ? $namespace : \reset($namespaces);
+        return $exact ? $namespace : reset($namespaces);
     }
     /**
      * Finds a command by name or alias.
@@ -580,22 +580,22 @@ class Application implements ResetInterface
         if ($this->has($name)) {
             return $this->get($name);
         }
-        $allCommands = $this->commandLoader ? \array_merge($this->commandLoader->getNames(), \array_keys($this->commands)) : \array_keys($this->commands);
-        $expr = \implode('[^:]*:', \array_map('preg_quote', \explode(':', $name))) . '[^:]*';
-        $commands = \preg_grep('{^' . $expr . '}', $allCommands);
+        $allCommands = $this->commandLoader ? array_merge($this->commandLoader->getNames(), array_keys($this->commands)) : array_keys($this->commands);
+        $expr = implode('[^:]*:', array_map('preg_quote', explode(':', $name))) . '[^:]*';
+        $commands = preg_grep('{^' . $expr . '}', $allCommands);
         if (empty($commands)) {
-            $commands = \preg_grep('{^' . $expr . '}i', $allCommands);
+            $commands = preg_grep('{^' . $expr . '}i', $allCommands);
         }
         // if no commands matched or we just matched namespaces
-        if (empty($commands) || \count(\preg_grep('{^' . $expr . '$}i', $commands)) < 1) {
-            if (\false !== $pos = \strrpos($name, ':')) {
+        if (empty($commands) || \count(preg_grep('{^' . $expr . '$}i', $commands)) < 1) {
+            if (\false !== $pos = strrpos($name, ':')) {
                 // check if a namespace exists and contains commands
-                $this->findNamespace(\substr($name, 0, $pos));
+                $this->findNamespace(substr($name, 0, $pos));
             }
-            $message = \sprintf('Command "%s" is not defined.', $name);
+            $message = sprintf('Command "%s" is not defined.', $name);
             if ($alternatives = $this->findAlternatives($name, $allCommands)) {
                 // remove hidden commands
-                $alternatives = \array_filter($alternatives, function ($name) {
+                $alternatives = array_filter($alternatives, function ($name) {
                     return !$this->get($name)->isHidden();
                 });
                 if (1 == \count($alternatives)) {
@@ -603,14 +603,14 @@ class Application implements ResetInterface
                 } else {
                     $message .= "\n\nDid you mean one of these?\n    ";
                 }
-                $message .= \implode("\n    ", $alternatives);
+                $message .= implode("\n    ", $alternatives);
             }
-            throw new CommandNotFoundException($message, \array_values($alternatives));
+            throw new CommandNotFoundException($message, array_values($alternatives));
         }
         // filter out aliases for commands which are already on the list
         if (\count($commands) > 1) {
-            $commandList = $this->commandLoader ? \array_merge(\array_flip($this->commandLoader->getNames()), $this->commands) : $this->commands;
-            $commands = \array_unique(\array_filter($commands, function ($nameOrAlias) use (&$commandList, $commands, &$aliases) {
+            $commandList = $this->commandLoader ? array_merge(array_flip($this->commandLoader->getNames()), $this->commands) : $this->commands;
+            $commands = array_unique(array_filter($commands, function ($nameOrAlias) use (&$commandList, $commands, &$aliases) {
                 if (!$commandList[$nameOrAlias] instanceof Command) {
                     $commandList[$nameOrAlias] = $this->commandLoader->get($nameOrAlias);
                 }
@@ -621,27 +621,27 @@ class Application implements ResetInterface
         }
         if (\count($commands) > 1) {
             $usableWidth = $this->terminal->getWidth() - 10;
-            $abbrevs = \array_values($commands);
+            $abbrevs = array_values($commands);
             $maxLen = 0;
             foreach ($abbrevs as $abbrev) {
-                $maxLen = \max(Helper::width($abbrev), $maxLen);
+                $maxLen = max(Helper::width($abbrev), $maxLen);
             }
-            $abbrevs = \array_map(function ($cmd) use ($commandList, $usableWidth, $maxLen, &$commands) {
+            $abbrevs = array_map(function ($cmd) use ($commandList, $usableWidth, $maxLen, &$commands) {
                 if ($commandList[$cmd]->isHidden()) {
-                    unset($commands[\array_search($cmd, $commands)]);
+                    unset($commands[array_search($cmd, $commands)]);
                     return \false;
                 }
-                $abbrev = \str_pad($cmd, $maxLen, ' ') . ' ' . $commandList[$cmd]->getDescription();
+                $abbrev = str_pad($cmd, $maxLen, ' ') . ' ' . $commandList[$cmd]->getDescription();
                 return Helper::width($abbrev) > $usableWidth ? Helper::substr($abbrev, 0, $usableWidth - 3) . '...' : $abbrev;
-            }, \array_values($commands));
+            }, array_values($commands));
             if (\count($commands) > 1) {
-                $suggestions = $this->getAbbreviationSuggestions(\array_filter($abbrevs));
-                throw new CommandNotFoundException(\sprintf("Command \"%s\" is ambiguous.\nDid you mean one of these?\n%s.", $name, $suggestions), \array_values($commands));
+                $suggestions = $this->getAbbreviationSuggestions(array_filter($abbrevs));
+                throw new CommandNotFoundException(sprintf("Command \"%s\" is ambiguous.\nDid you mean one of these?\n%s.", $name, $suggestions), array_values($commands));
             }
         }
-        $command = $this->get(\reset($commands));
+        $command = $this->get(reset($commands));
         if ($command->isHidden()) {
-            throw new CommandNotFoundException(\sprintf('The command "%s" does not exist.', $name));
+            throw new CommandNotFoundException(sprintf('The command "%s" does not exist.', $name));
         }
         return $command;
     }
@@ -669,13 +669,13 @@ class Application implements ResetInterface
         }
         $commands = [];
         foreach ($this->commands as $name => $command) {
-            if ($namespace === $this->extractNamespace($name, \substr_count($namespace, ':') + 1)) {
+            if ($namespace === $this->extractNamespace($name, substr_count($namespace, ':') + 1)) {
                 $commands[$name] = $command;
             }
         }
         if ($this->commandLoader) {
             foreach ($this->commandLoader->getNames() as $name) {
-                if (!isset($commands[$name]) && $namespace === $this->extractNamespace($name, \substr_count($namespace, ':') + 1) && $this->has($name)) {
+                if (!isset($commands[$name]) && $namespace === $this->extractNamespace($name, substr_count($namespace, ':') + 1) && $this->has($name)) {
                     $commands[$name] = $this->get($name);
                 }
             }
@@ -692,7 +692,7 @@ class Application implements ResetInterface
         $abbrevs = [];
         foreach ($names as $name) {
             for ($len = \strlen($name); $len > 0; --$len) {
-                $abbrev = \substr($name, 0, $len);
+                $abbrev = substr($name, 0, $len);
                 $abbrevs[$abbrev][] = $name;
             }
         }
@@ -703,46 +703,46 @@ class Application implements ResetInterface
         $output->writeln('', OutputInterface::VERBOSITY_QUIET);
         $this->doRenderThrowable($e, $output);
         if (null !== $this->runningCommand) {
-            $output->writeln(\sprintf('<info>%s</info>', OutputFormatter::escape(\sprintf($this->runningCommand->getSynopsis(), $this->getName()))), OutputInterface::VERBOSITY_QUIET);
+            $output->writeln(sprintf('<info>%s</info>', OutputFormatter::escape(sprintf($this->runningCommand->getSynopsis(), $this->getName()))), OutputInterface::VERBOSITY_QUIET);
             $output->writeln('', OutputInterface::VERBOSITY_QUIET);
         }
     }
     protected function doRenderThrowable(\Throwable $e, OutputInterface $output): void
     {
         do {
-            $message = \trim($e->getMessage());
+            $message = trim($e->getMessage());
             if ('' === $message || OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
-                $class = \get_debug_type($e);
-                $title = \sprintf('  [%s%s]  ', $class, 0 !== ($code = $e->getCode()) ? ' (' . $code . ')' : '');
+                $class = get_debug_type($e);
+                $title = sprintf('  [%s%s]  ', $class, 0 !== ($code = $e->getCode()) ? ' (' . $code . ')' : '');
                 $len = Helper::width($title);
             } else {
                 $len = 0;
             }
-            if (\str_contains($message, "@anonymous\x00")) {
-                $message = \preg_replace_callback('/[a-zA-Z_\x7f-\xff][\\\\a-zA-Z0-9_\x7f-\xff]*+@anonymous\x00.*?\.php(?:0x?|:[0-9]++\$)?[0-9a-fA-F]++/', function ($m) {
-                    return \class_exists($m[0], \false) ? ((\get_parent_class($m[0]) ?: \key(\class_implements($m[0]))) ?: 'class') . '@anonymous' : $m[0];
+            if (str_contains($message, "@anonymous\x00")) {
+                $message = preg_replace_callback('/[a-zA-Z_\x7f-\xff][\\\\a-zA-Z0-9_\x7f-\xff]*+@anonymous\x00.*?\.php(?:0x?|:[0-9]++\$)?[0-9a-fA-F]++/', function ($m) {
+                    return class_exists($m[0], \false) ? ((get_parent_class($m[0]) ?: key(class_implements($m[0]))) ?: 'class') . '@anonymous' : $m[0];
                 }, $message);
             }
             $width = $this->terminal->getWidth() ? $this->terminal->getWidth() - 1 : \PHP_INT_MAX;
             $lines = [];
-            foreach ('' !== $message ? \preg_split('/\r?\n/', $message) : [] as $line) {
+            foreach ('' !== $message ? preg_split('/\r?\n/', $message) : [] as $line) {
                 foreach ($this->splitStringByWidth($line, $width - 4) as $line) {
                     // pre-format lines to get the right string length
                     $lineLength = Helper::width($line) + 4;
                     $lines[] = [$line, $lineLength];
-                    $len = \max($lineLength, $len);
+                    $len = max($lineLength, $len);
                 }
             }
             $messages = [];
             if (!$e instanceof ExceptionInterface || OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
-                $messages[] = \sprintf('<comment>%s</comment>', OutputFormatter::escape(\sprintf('In %s line %s:', \basename($e->getFile()) ?: 'n/a', $e->getLine() ?: 'n/a')));
+                $messages[] = sprintf('<comment>%s</comment>', OutputFormatter::escape(sprintf('In %s line %s:', basename($e->getFile()) ?: 'n/a', $e->getLine() ?: 'n/a')));
             }
-            $messages[] = $emptyLine = \sprintf('<error>%s</error>', \str_repeat(' ', $len));
+            $messages[] = $emptyLine = sprintf('<error>%s</error>', str_repeat(' ', $len));
             if ('' === $message || OutputInterface::VERBOSITY_VERBOSE <= $output->getVerbosity()) {
-                $messages[] = \sprintf('<error>%s%s</error>', $title, \str_repeat(' ', \max(0, $len - Helper::width($title))));
+                $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - Helper::width($title))));
             }
             foreach ($lines as $line) {
-                $messages[] = \sprintf('<error>  %s  %s</error>', OutputFormatter::escape($line[0]), \str_repeat(' ', $len - $line[1]));
+                $messages[] = sprintf('<error>  %s  %s</error>', OutputFormatter::escape($line[0]), str_repeat(' ', $len - $line[1]));
             }
             $messages[] = $emptyLine;
             $messages[] = '';
@@ -751,14 +751,14 @@ class Application implements ResetInterface
                 $output->writeln('<comment>Exception trace:</comment>', OutputInterface::VERBOSITY_QUIET);
                 // exception related properties
                 $trace = $e->getTrace();
-                \array_unshift($trace, ['function' => '', 'file' => $e->getFile() ?: 'n/a', 'line' => $e->getLine() ?: 'n/a', 'args' => []]);
+                array_unshift($trace, ['function' => '', 'file' => $e->getFile() ?: 'n/a', 'line' => $e->getLine() ?: 'n/a', 'args' => []]);
                 for ($i = 0, $count = \count($trace); $i < $count; ++$i) {
                     $class = $trace[$i]['class'] ?? '';
                     $type = $trace[$i]['type'] ?? '';
                     $function = $trace[$i]['function'] ?? '';
                     $file = $trace[$i]['file'] ?? 'n/a';
                     $line = $trace[$i]['line'] ?? 'n/a';
-                    $output->writeln(\sprintf(' %s%s at <info>%s:%s</info>', $class, $function ? $type . $function . '()' : '', $file, $line), OutputInterface::VERBOSITY_QUIET);
+                    $output->writeln(sprintf(' %s%s at <info>%s:%s</info>', $class, $function ? $type . $function . '()' : '', $file, $line), OutputInterface::VERBOSITY_QUIET);
                 }
                 $output->writeln('', OutputInterface::VERBOSITY_QUIET);
             }
@@ -777,7 +777,7 @@ class Application implements ResetInterface
         if (\true === $input->hasParameterOption(['--no-interaction', '-n'], \true)) {
             $input->setInteractive(\false);
         }
-        switch ($shellVerbosity = (int) \getenv('SHELL_VERBOSITY')) {
+        switch ($shellVerbosity = (int) getenv('SHELL_VERBOSITY')) {
             case -1:
                 $output->setVerbosity(OutputInterface::VERBOSITY_QUIET);
                 break;
@@ -811,7 +811,7 @@ class Application implements ResetInterface
             $input->setInteractive(\false);
         }
         if (\function_exists('putenv')) {
-            @\putenv('SHELL_VERBOSITY=' . $shellVerbosity);
+            @putenv('SHELL_VERBOSITY=' . $shellVerbosity);
         }
         $_ENV['SHELL_VERBOSITY'] = $shellVerbosity;
         $_SERVER['SHELL_VERBOSITY'] = $shellVerbosity;
@@ -838,10 +838,10 @@ class Application implements ResetInterface
                     throw new RuntimeException('Unable to subscribe to signal events. Make sure that the `pcntl` extension is installed and that "pcntl_*" functions are not disabled by your php.ini\'s "disable_functions" directive.');
                 }
                 if (Terminal::hasSttyAvailable()) {
-                    $sttyMode = \shell_exec('stty -g');
+                    $sttyMode = shell_exec('stty -g');
                     foreach ([\SIGINT, \SIGTERM] as $signal) {
                         $this->signalRegistry->register($signal, static function () use ($sttyMode) {
-                            \shell_exec('stty ' . $sttyMode);
+                            shell_exec('stty ' . $sttyMode);
                         });
                     }
                 }
@@ -939,7 +939,7 @@ class Application implements ResetInterface
      */
     private function getAbbreviationSuggestions(array $abbrevs): string
     {
-        return '    ' . \implode("\n    ", $abbrevs);
+        return '    ' . implode("\n    ", $abbrevs);
     }
     /**
      * Returns the namespace part of the command name.
@@ -950,8 +950,8 @@ class Application implements ResetInterface
      */
     public function extractNamespace(string $name, ?int $limit = null)
     {
-        $parts = \explode(':', $name, -1);
-        return \implode(':', null === $limit ? $parts : \array_slice($parts, 0, $limit));
+        $parts = explode(':', $name, -1);
+        return implode(':', null === $limit ? $parts : \array_slice($parts, 0, $limit));
     }
     /**
      * Finds alternative of $name among $collection,
@@ -965,9 +965,9 @@ class Application implements ResetInterface
         $alternatives = [];
         $collectionParts = [];
         foreach ($collection as $item) {
-            $collectionParts[$item] = \explode(':', $item);
+            $collectionParts[$item] = explode(':', $item);
         }
-        foreach (\explode(':', $name) as $i => $subname) {
+        foreach (explode(':', $name) as $i => $subname) {
             foreach ($collectionParts as $collectionName => $parts) {
                 $exists = isset($alternatives[$collectionName]);
                 if (!isset($parts[$i]) && $exists) {
@@ -976,8 +976,8 @@ class Application implements ResetInterface
                 } elseif (!isset($parts[$i])) {
                     continue;
                 }
-                $lev = \levenshtein($subname, $parts[$i]);
-                if ($lev <= \strlen($subname) / 3 || '' !== $subname && \str_contains($parts[$i], $subname)) {
+                $lev = levenshtein($subname, $parts[$i]);
+                if ($lev <= \strlen($subname) / 3 || '' !== $subname && str_contains($parts[$i], $subname)) {
                     $alternatives[$collectionName] = $exists ? $alternatives[$collectionName] + $lev : $lev;
                 } elseif ($exists) {
                     $alternatives[$collectionName] += $threshold;
@@ -985,16 +985,16 @@ class Application implements ResetInterface
             }
         }
         foreach ($collection as $item) {
-            $lev = \levenshtein($name, $item);
-            if ($lev <= \strlen($name) / 3 || \str_contains($item, $name)) {
+            $lev = levenshtein($name, $item);
+            if ($lev <= \strlen($name) / 3 || str_contains($item, $name)) {
                 $alternatives[$item] = isset($alternatives[$item]) ? $alternatives[$item] - $lev : $lev;
             }
         }
-        $alternatives = \array_filter($alternatives, function ($lev) use ($threshold) {
+        $alternatives = array_filter($alternatives, function ($lev) use ($threshold) {
             return $lev < 2 * $threshold;
         });
-        \ksort($alternatives, \SORT_NATURAL | \SORT_FLAG_CASE);
-        return \array_keys($alternatives);
+        ksort($alternatives, \SORT_NATURAL | \SORT_FLAG_CASE);
+        return array_keys($alternatives);
     }
     /**
      * Sets the default Command name.
@@ -1003,7 +1003,7 @@ class Application implements ResetInterface
      */
     public function setDefaultCommand(string $commandName, bool $isSingleCommand = \false)
     {
-        $this->defaultCommand = \explode('|', \ltrim($commandName, '|'))[0];
+        $this->defaultCommand = explode('|', ltrim($commandName, '|'))[0];
         if ($isSingleCommand) {
             // Ensure the command exist
             $this->find($commandName);
@@ -1023,28 +1023,28 @@ class Application implements ResetInterface
         // str_split is not suitable for multi-byte characters, we should use preg_split to get char array properly.
         // additionally, array_slice() is not enough as some character has doubled width.
         // we need a function to split string not by character count but by string width
-        if (\false === $encoding = \mb_detect_encoding($string, null, \true)) {
-            return \str_split($string, $width);
+        if (\false === $encoding = mb_detect_encoding($string, null, \true)) {
+            return str_split($string, $width);
         }
-        $utf8String = \mb_convert_encoding($string, 'utf8', $encoding);
+        $utf8String = mb_convert_encoding($string, 'utf8', $encoding);
         $lines = [];
         $line = '';
         $offset = 0;
-        while (\preg_match('/.{1,10000}/u', $utf8String, $m, 0, $offset)) {
+        while (preg_match('/.{1,10000}/u', $utf8String, $m, 0, $offset)) {
             $offset += \strlen($m[0]);
-            foreach (\preg_split('//u', $m[0]) as $char) {
+            foreach (preg_split('//u', $m[0]) as $char) {
                 // test if $char could be appended to current line
-                if (\mb_strwidth($line . $char, 'utf8') <= $width) {
+                if (mb_strwidth($line . $char, 'utf8') <= $width) {
                     $line .= $char;
                     continue;
                 }
                 // if not, push current line to array and make new line
-                $lines[] = \str_pad($line, $width);
+                $lines[] = str_pad($line, $width);
                 $line = $char;
             }
         }
-        $lines[] = \count($lines) ? \str_pad($line, $width) : $line;
-        \mb_convert_variables($encoding, 'utf8', $lines);
+        $lines[] = \count($lines) ? str_pad($line, $width) : $line;
+        mb_convert_variables($encoding, 'utf8', $lines);
         return $lines;
     }
     /**
@@ -1055,11 +1055,11 @@ class Application implements ResetInterface
     private function extractAllNamespaces(string $name): array
     {
         // -1 as third argument is needed to skip the command short name when exploding
-        $parts = \explode(':', $name, -1);
+        $parts = explode(':', $name, -1);
         $namespaces = [];
         foreach ($parts as $part) {
             if (\count($namespaces)) {
-                $namespaces[] = \end($namespaces) . ':' . $part;
+                $namespaces[] = end($namespaces) . ':' . $part;
             } else {
                 $namespaces[] = $part;
             }

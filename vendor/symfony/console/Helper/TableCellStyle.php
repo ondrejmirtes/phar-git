@@ -22,13 +22,13 @@ class TableCellStyle
     private $options = ['fg' => 'default', 'bg' => 'default', 'options' => null, 'align' => self::DEFAULT_ALIGN, 'cellFormat' => null];
     public function __construct(array $options = [])
     {
-        if ($diff = \array_diff(\array_keys($options), \array_keys($this->options))) {
-            throw new InvalidArgumentException(\sprintf('The TableCellStyle does not support the following options: \'%s\'.', \implode('\', \'', $diff)));
+        if ($diff = array_diff(array_keys($options), array_keys($this->options))) {
+            throw new InvalidArgumentException(sprintf('The TableCellStyle does not support the following options: \'%s\'.', implode('\', \'', $diff)));
         }
         if (isset($options['align']) && !\array_key_exists($options['align'], self::ALIGN_MAP)) {
-            throw new InvalidArgumentException(\sprintf('Wrong align value. Value must be following: \'%s\'.', \implode('\', \'', \array_keys(self::ALIGN_MAP))));
+            throw new InvalidArgumentException(sprintf('Wrong align value. Value must be following: \'%s\'.', implode('\', \'', array_keys(self::ALIGN_MAP))));
         }
-        $this->options = \array_merge($this->options, $options);
+        $this->options = array_merge($this->options, $options);
     }
     public function getOptions(): array
     {
@@ -41,7 +41,7 @@ class TableCellStyle
      */
     public function getTagOptions()
     {
-        return \array_filter($this->getOptions(), function ($key) {
+        return array_filter($this->getOptions(), function ($key) {
             return \in_array($key, self::TAG_OPTIONS) && isset($this->options[$key]);
         }, \ARRAY_FILTER_USE_KEY);
     }

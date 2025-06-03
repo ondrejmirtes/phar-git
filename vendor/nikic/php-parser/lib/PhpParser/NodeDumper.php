@@ -181,7 +181,7 @@ class NodeDumper
             $strs[] = 'PRIVATE_SET';
         }
         if ($strs) {
-            return \implode(' | ', $strs) . ' (' . $flags . ')';
+            return implode(' | ', $strs) . ' (' . $flags . ')';
         } else {
             return (string) $flags;
         }
@@ -241,10 +241,10 @@ class NodeDumper
     // Copied from Error class
     private function toColumn(string $code, int $pos): int
     {
-        if ($pos > \strlen($code)) {
+        if ($pos > strlen($code)) {
             throw new \RuntimeException('Invalid position information');
         }
-        $lineStartPos = \strrpos($code, "\n", $pos - \strlen($code));
+        $lineStartPos = strrpos($code, "\n", $pos - strlen($code));
         if (\false === $lineStartPos) {
             $lineStartPos = -1;
         }

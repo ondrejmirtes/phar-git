@@ -41,7 +41,7 @@ class ReflectionObject extends \PHPStan\BetterReflection\Reflection\ReflectionCl
      */
     public static function createFromInstance(object $instance): \PHPStan\BetterReflection\Reflection\ReflectionClass
     {
-        $className = \get_class($instance);
+        $className = get_class($instance);
         $betterReflection = new BetterReflection();
         if (preg_match(\PHPStan\BetterReflection\Reflection\ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX_REGEXP, $className) === 1) {
             $reflector = new DefaultReflector(new AggregateSourceLocator([$betterReflection->sourceLocator(), new AnonymousClassObjectSourceLocator($instance, $betterReflection->phpParser())]));

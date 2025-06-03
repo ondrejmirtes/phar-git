@@ -24,7 +24,7 @@ use function count;
 use function implode;
 use function sprintf;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class GenericObjectTypeCheck
 {
     /**

@@ -59,27 +59,27 @@ class Library extends \Hoa\Protocol\Node\Node
         }
         if (!empty($queue)) {
             $head = $queue;
-            if (\false !== $pos = \strpos($queue, '/')) {
-                $head = \substr($head, 0, $pos);
-                $queue = \DIRECTORY_SEPARATOR . \substr($queue, $pos + 1);
+            if (\false !== $pos = strpos($queue, '/')) {
+                $head = substr($head, 0, $pos);
+                $queue = \DIRECTORY_SEPARATOR . substr($queue, $pos + 1);
             } else {
                 $queue = null;
             }
             $out = [];
-            foreach (\explode(RS, $this->_reach) as $part) {
-                $out[] = "\r" . $part . \strtolower($head) . $queue;
+            foreach (explode(RS, $this->_reach) as $part) {
+                $out[] = "\r" . $part . strtolower($head) . $queue;
             }
-            $out[] = "\r" . \dirname(\dirname(\dirname(\dirname(__DIR__)))) . $queue;
-            return \implode(RS, $out);
+            $out[] = "\r" . dirname(dirname(dirname(dirname(__DIR__)))) . $queue;
+            return implode(RS, $out);
         }
         $out = [];
-        foreach (\explode(RS, $this->_reach) as $part) {
-            $pos = \strrpos(\rtrim($part, \DIRECTORY_SEPARATOR), \DIRECTORY_SEPARATOR) + 1;
-            $head = \substr($part, 0, $pos);
-            $tail = \substr($part, $pos);
-            $out[] = $head . \strtolower($tail);
+        foreach (explode(RS, $this->_reach) as $part) {
+            $pos = strrpos(rtrim($part, \DIRECTORY_SEPARATOR), \DIRECTORY_SEPARATOR) + 1;
+            $head = substr($part, 0, $pos);
+            $tail = substr($part, $pos);
+            $out[] = $head . strtolower($tail);
         }
-        $this->_reach = \implode(RS, $out);
+        $this->_reach = implode(RS, $out);
         return parent::reach($queue);
     }
 }

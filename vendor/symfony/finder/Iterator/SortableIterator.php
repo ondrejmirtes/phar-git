@@ -40,11 +40,11 @@ class SortableIterator implements \IteratorAggregate
         $order = $reverseOrder ? -1 : 1;
         if (self::SORT_BY_NAME === $sort) {
             $this->sort = static function (\SplFileInfo $a, \SplFileInfo $b) use ($order) {
-                return $order * \strcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
+                return $order * strcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
             };
         } elseif (self::SORT_BY_NAME_NATURAL === $sort) {
             $this->sort = static function (\SplFileInfo $a, \SplFileInfo $b) use ($order) {
-                return $order * \strnatcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
+                return $order * strnatcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
             };
         } elseif (self::SORT_BY_TYPE === $sort) {
             $this->sort = static function (\SplFileInfo $a, \SplFileInfo $b) use ($order) {
@@ -53,7 +53,7 @@ class SortableIterator implements \IteratorAggregate
                 } elseif ($a->isFile() && $b->isDir()) {
                     return $order;
                 }
-                return $order * \strcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
+                return $order * strcmp($a->getRealPath() ?: $a->getPathname(), $b->getRealPath() ?: $b->getPathname());
             };
         } elseif (self::SORT_BY_ACCESSED_TIME === $sort) {
             $this->sort = static function (\SplFileInfo $a, \SplFileInfo $b) use ($order) {
@@ -86,11 +86,11 @@ class SortableIterator implements \IteratorAggregate
         if (1 === $this->sort) {
             return $this->iterator;
         }
-        $array = \iterator_to_array($this->iterator, \true);
+        $array = iterator_to_array($this->iterator, \true);
         if (-1 === $this->sort) {
-            $array = \array_reverse($array);
+            $array = array_reverse($array);
         } else {
-            \uasort($array, $this->sort);
+            uasort($array, $this->sort);
         }
         return new \ArrayIterator($array);
     }

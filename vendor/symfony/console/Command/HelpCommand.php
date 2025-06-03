@@ -65,7 +65,7 @@ class HelpCommand extends Command
     {
         if ($input->mustSuggestArgumentValuesFor('command_name')) {
             $descriptor = new ApplicationDescription($this->getApplication());
-            $suggestions->suggestValues(\array_keys($descriptor->getCommands()));
+            $suggestions->suggestValues(array_keys($descriptor->getCommands()));
             return;
         }
         if ($input->mustSuggestOptionValuesFor('format')) {

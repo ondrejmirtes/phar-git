@@ -59,7 +59,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getBasename()
     {
-        return \basename($this->getStreamName());
+        return basename($this->getStreamName());
     }
     /**
      * Get directory name component of path.
@@ -68,7 +68,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getDirname()
     {
-        return \dirname($this->getStreamName());
+        return dirname($this->getStreamName());
     }
     /**
      * Get size.
@@ -80,7 +80,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
         if (\false === $this->getStatistic()) {
             return \false;
         }
-        return \filesize($this->getStreamName());
+        return filesize($this->getStreamName());
     }
     /**
      * Get informations about a file.
@@ -89,7 +89,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getStatistic()
     {
-        return \fstat($this->getStream());
+        return fstat($this->getStream());
     }
     /**
      * Get last access time of file.
@@ -98,7 +98,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getATime()
     {
-        return \fileatime($this->getStreamName());
+        return fileatime($this->getStreamName());
     }
     /**
      * Get inode change time of file.
@@ -107,7 +107,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getCTime()
     {
-        return \filectime($this->getStreamName());
+        return filectime($this->getStreamName());
     }
     /**
      * Get file modification time.
@@ -116,7 +116,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getMTime()
     {
-        return \filemtime($this->getStreamName());
+        return filemtime($this->getStreamName());
     }
     /**
      * Get file group.
@@ -125,7 +125,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getGroup()
     {
-        return \filegroup($this->getStreamName());
+        return filegroup($this->getStreamName());
     }
     /**
      * Get file owner.
@@ -134,7 +134,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getOwner()
     {
-        return \fileowner($this->getStreamName());
+        return fileowner($this->getStreamName());
     }
     /**
      * Get file permissions.
@@ -143,7 +143,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getPermissions()
     {
-        return \fileperms($this->getStreamName());
+        return fileperms($this->getStreamName());
     }
     /**
      * Get file permissions as a string.
@@ -189,7 +189,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isReadable()
     {
-        return \is_readable($this->getStreamName());
+        return is_readable($this->getStreamName());
     }
     /**
      * Check if the file is writable.
@@ -198,7 +198,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isWritable()
     {
-        return \is_writable($this->getStreamName());
+        return is_writable($this->getStreamName());
     }
     /**
      * Check if the file is executable.
@@ -207,7 +207,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isExecutable()
     {
-        return \is_executable($this->getStreamName());
+        return is_executable($this->getStreamName());
     }
     /**
      * Clear file status cache.
@@ -216,7 +216,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function clearStatisticCache()
     {
-        \clearstatcache(\true, $this->getStreamName());
+        clearstatcache(\true, $this->getStreamName());
         return;
     }
     /**
@@ -226,7 +226,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public static function clearAllStatisticCaches()
     {
-        \clearstatcache();
+        clearstatcache();
         return;
     }
     /**
@@ -240,12 +240,12 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
     public function touch($time = -1, $atime = -1)
     {
         if ($time == -1) {
-            $time = \time();
+            $time = time();
         }
         if ($atime == -1) {
             $atime = $time;
         }
-        return \touch($this->getStreamName(), $time, $atime);
+        return touch($this->getStreamName(), $time, $atime);
     }
     /**
      * Copy file.
@@ -260,13 +260,13 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
     public function copy($to, $force = Stream\IStream\Touchable::DO_NOT_OVERWRITE)
     {
         $from = $this->getStreamName();
-        if ($force === Stream\IStream\Touchable::DO_NOT_OVERWRITE && \true === \file_exists($to)) {
+        if ($force === Stream\IStream\Touchable::DO_NOT_OVERWRITE && \true === file_exists($to)) {
             return \true;
         }
         if (null === $this->getStreamContext()) {
-            return @\copy($from, $to);
+            return @copy($from, $to);
         }
-        return @\copy($from, $to, $this->getStreamContext()->getContext());
+        return @copy($from, $to, $this->getStreamContext()->getContext());
     }
     /**
      * Move a file.
@@ -284,16 +284,16 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
     public function move($name, $force = Stream\IStream\Touchable::DO_NOT_OVERWRITE, $mkdir = Stream\IStream\Touchable::DO_NOT_MAKE_DIRECTORY)
     {
         $from = $this->getStreamName();
-        if ($force === Stream\IStream\Touchable::DO_NOT_OVERWRITE && \true === \file_exists($name)) {
+        if ($force === Stream\IStream\Touchable::DO_NOT_OVERWRITE && \true === file_exists($name)) {
             return \false;
         }
         if (Stream\IStream\Touchable::MAKE_DIRECTORY === $mkdir) {
-            \Hoa\File\Directory::create(\dirname($name), \Hoa\File\Directory::MODE_CREATE_RECURSIVE);
+            \Hoa\File\Directory::create(dirname($name), \Hoa\File\Directory::MODE_CREATE_RECURSIVE);
         }
         if (null === $this->getStreamContext()) {
-            return @\rename($from, $name);
+            return @rename($from, $name);
         }
-        return @\rename($from, $name, $this->getStreamContext()->getContext());
+        return @rename($from, $name, $this->getStreamContext()->getContext());
     }
     /**
      * Delete a file.
@@ -303,9 +303,9 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
     public function delete()
     {
         if (null === $this->getStreamContext()) {
-            return @\unlink($this->getStreamName());
+            return @unlink($this->getStreamName());
         }
-        return @\unlink($this->getStreamName(), $this->getStreamContext()->getContext());
+        return @unlink($this->getStreamName(), $this->getStreamContext()->getContext());
     }
     /**
      * Change file group.
@@ -315,7 +315,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function changeGroup($group)
     {
-        return \chgrp($this->getStreamName(), $group);
+        return chgrp($this->getStreamName(), $group);
     }
     /**
      * Change file mode.
@@ -325,7 +325,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function changeMode($mode)
     {
-        return \chmod($this->getStreamName(), $mode);
+        return chmod($this->getStreamName(), $mode);
     }
     /**
      * Change file owner.
@@ -335,7 +335,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function changeOwner($user)
     {
-        return \chown($this->getStreamName(), $user);
+        return chown($this->getStreamName(), $user);
     }
     /**
      * Change the current umask.
@@ -347,9 +347,9 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
     public static function umask($umask = null)
     {
         if (null === $umask) {
-            return \umask();
+            return umask();
         }
-        return \umask($umask);
+        return umask($umask);
     }
     /**
      * Check if it is a file.
@@ -358,7 +358,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isFile()
     {
-        return \is_file($this->getStreamName());
+        return is_file($this->getStreamName());
     }
     /**
      * Check if it is a link.
@@ -367,7 +367,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isLink()
     {
-        return \is_link($this->getStreamName());
+        return is_link($this->getStreamName());
     }
     /**
      * Check if it is a directory.
@@ -376,7 +376,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isDirectory()
     {
-        return \is_dir($this->getStreamName());
+        return is_dir($this->getStreamName());
     }
     /**
      * Check if it is a socket.
@@ -385,7 +385,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isSocket()
     {
-        return \filetype($this->getStreamName()) == 'socket';
+        return filetype($this->getStreamName()) == 'socket';
     }
     /**
      * Check if it is a FIFO pipe.
@@ -394,7 +394,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isFIFOPipe()
     {
-        return \filetype($this->getStreamName()) == 'fifo';
+        return filetype($this->getStreamName()) == 'fifo';
     }
     /**
      * Check if it is character special file.
@@ -403,7 +403,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isCharacterSpecial()
     {
-        return \filetype($this->getStreamName()) == 'char';
+        return filetype($this->getStreamName()) == 'char';
     }
     /**
      * Check if it is block special.
@@ -412,7 +412,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isBlockSpecial()
     {
-        return \filetype($this->getStreamName()) == 'block';
+        return filetype($this->getStreamName()) == 'block';
     }
     /**
      * Check if it is an unknown type.
@@ -421,7 +421,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function isUnknown()
     {
-        return \filetype($this->getStreamName()) == 'unknown';
+        return filetype($this->getStreamName()) == 'unknown';
     }
     /**
      * Set the open mode.
@@ -452,7 +452,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getINode()
     {
-        return \fileinode($this->getStreamName());
+        return fileinode($this->getStreamName());
     }
     /**
      * Check if the system is case sensitive or not.
@@ -461,7 +461,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public static function isCaseSensitive()
     {
-        return !(\file_exists(\mb_strtolower(__FILE__)) && \file_exists(\mb_strtoupper(__FILE__)));
+        return !(file_exists(mb_strtolower(__FILE__)) && file_exists(mb_strtoupper(__FILE__)));
     }
     /**
      * Get a canonicalized absolute pathname.
@@ -470,7 +470,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getRealPath()
     {
-        if (\false === $out = \realpath($this->getStreamName())) {
+        if (\false === $out = realpath($this->getStreamName())) {
             return $this->getStreamName();
         }
         return $out;
@@ -482,7 +482,7 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getExtension()
     {
-        return \pathinfo($this->getStreamName(), \PATHINFO_EXTENSION);
+        return pathinfo($this->getStreamName(), \PATHINFO_EXTENSION);
     }
     /**
      * Get filename without extension.
@@ -491,12 +491,12 @@ abstract class Generic extends Stream implements Stream\IStream\Pathable, Stream
      */
     public function getFilename()
     {
-        $file = \basename($this->getStreamName());
-        if (\defined('PATHINFO_FILENAME')) {
-            return \pathinfo($file, \PATHINFO_FILENAME);
+        $file = basename($this->getStreamName());
+        if (defined('PATHINFO_FILENAME')) {
+            return pathinfo($file, \PATHINFO_FILENAME);
         }
-        if (\strstr($file, '.')) {
-            return \substr($file, 0, \strrpos($file, '.'));
+        if (strstr($file, '.')) {
+            return substr($file, 0, strrpos($file, '.'));
         }
         return $file;
     }

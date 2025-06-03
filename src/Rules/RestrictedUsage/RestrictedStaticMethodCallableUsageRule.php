@@ -19,7 +19,7 @@ use PHPStan\Type\Type;
 /**
  * @implements Rule<StaticMethodCallableNode>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedStaticMethodCallableUsageRule implements Rule
 {
     private Container $container;

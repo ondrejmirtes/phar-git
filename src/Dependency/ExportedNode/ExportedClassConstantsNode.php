@@ -78,7 +78,7 @@ final class ExportedClassConstantsNode implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['constants' => $this->constants, 'public' => $this->public, 'private' => $this->private, 'final' => $this->final, 'phpDoc' => $this->phpDoc]];

@@ -16,7 +16,7 @@ use function array_key_exists;
 use function ltrim;
 use function strrpos;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RegexExpressionHelper
 {
     private InitializerExprTypeResolver $initializerExprTypeResolver;

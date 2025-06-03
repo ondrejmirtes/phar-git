@@ -5,7 +5,7 @@ namespace PHPStan\Rules\Constants;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LazyAlwaysUsedClassConstantsExtensionProvider implements \PHPStan\Rules\Constants\AlwaysUsedClassConstantsExtensionProvider
 {
     private Container $container;

@@ -105,14 +105,14 @@ class Uniform extends \Hoa\Compiler\Llk\Sampler\Sampler
                 $stat[$c] = $this->_data[$child][$n]['n'];
             }
             $i = $this->_sampler->getInteger(1, $computed);
-            for ($e = 0, $b = $stat[$e], $max = \count($stat) - 1; $e < $max && $i > $b; $b += $stat[++$e]) {
+            for ($e = 0, $b = $stat[$e], $max = count($stat) - 1; $e < $max && $i > $b; $b += $stat[++$e]) {
             }
             return $this->uniform($this->_rules[$children[$e]], $n);
         } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $children = $rule->getChildren();
             $out = null;
             $Γ = $data['Γ'];
-            $γ = $Γ[$this->_sampler->getInteger(0, \count($Γ) - 1)];
+            $γ = $Γ[$this->_sampler->getInteger(0, count($Γ) - 1)];
             foreach ($children as $i => $child) {
                 $out .= $this->uniform($this->_rules[$child], $γ[$i]);
             }
@@ -129,7 +129,7 @@ class Uniform extends \Hoa\Compiler\Llk\Sampler\Sampler
                 }
             }
             $Γ =& $st['Γ'];
-            $γ =& $Γ[$this->_sampler->getInteger(0, \count($Γ) - 1)];
+            $γ =& $Γ[$this->_sampler->getInteger(0, count($Γ) - 1)];
             for ($j = 0; $j < $α; ++$j) {
                 $out .= $this->uniform($child, $γ[$j]);
             }
@@ -164,7 +164,7 @@ class Uniform extends \Hoa\Compiler\Llk\Sampler\Sampler
             }
         } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $children = $rule->getChildren();
-            $Γ = new Math\Combinatorics\Combination\Gamma(\count($children), $n);
+            $Γ = new Math\Combinatorics\Combination\Gamma(count($children), $n);
             $this->_data[$ruleName][$n]['Γ'] = [];
             $handle =& $this->_data[$ruleName][$n]['Γ'];
             foreach ($Γ as $γ) {
@@ -186,7 +186,7 @@ class Uniform extends \Hoa\Compiler\Llk\Sampler\Sampler
             if (-1 === $y) {
                 $y = $n;
             } else {
-                $y = \min($n, $y);
+                $y = min($n, $y);
             }
             if (0 === $x && $x === $y) {
                 $out = 1;

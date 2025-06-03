@@ -39,7 +39,7 @@ class PhpGenerator
             $class->addProperty($key)->setProtected()->setValue($value);
         }
         $definitions = $this->builder->getDefinitions();
-        \ksort($definitions);
+        ksort($definitions);
         foreach ($definitions as $def) {
             $class->addMember($this->generateMethod($def));
         }
@@ -83,25 +83,25 @@ declare(strict_types=1);
         $entity = $statement->getEntity();
         $arguments = $statement->arguments;
         switch (\true) {
-            case \is_string($entity) && Strings::contains($entity, '?'):
+            case is_string($entity) && Strings::contains($entity, '?'):
                 // PHP literal
                 return $this->formatPhp($entity, $arguments);
-            case \is_string($entity):
+            case is_string($entity):
                 // create class
                 return $arguments ? $this->formatPhp("new {$entity}(...?:)", [$arguments]) : $this->formatPhp("new {$entity}", []);
-            case \is_array($entity):
+            case is_array($entity):
                 switch (\true) {
                     case $entity[1][0] === '$':
                         // property getter, setter or appender
-                        $name = \substr($entity[1], 1);
-                        if ($append = \substr($name, -2) === '[]') {
-                            $name = \substr($name, 0, -2);
+                        $name = substr($entity[1], 1);
+                        if ($append = substr($name, -2) === '[]') {
+                            $name = substr($name, 0, -2);
                         }
                         $prop = $entity[0] instanceof Reference ? $this->formatPhp('?->?', [$entity[0], $name]) : $this->formatPhp('?::$?', [$entity[0], $name]);
                         return $arguments ? $this->formatPhp(($append ? '?[]' : '?') . ' = ?', [new Php\Literal($prop), $arguments[0]]) : $prop;
                     case $entity[0] instanceof Statement:
                         $inner = $this->formatPhp('?', [$entity[0]]);
-                        if (\substr($inner, 0, 4) === 'new ') {
+                        if (substr($inner, 0, 4) === 'new ') {
                             $inner = "({$inner})";
                         }
                         return $this->formatPhp('?->?(...?:)', [new Php\Literal($inner), $entity[1], $arguments]);
@@ -110,7 +110,7 @@ declare(strict_types=1);
                     case $entity[0] === '':
                         // function call
                         return $this->formatPhp('?(...?:)', [new Php\Literal($entity[1]), $arguments]);
-                    case \is_string($entity[0]):
+                    case is_string($entity[0]):
                         // static method call
                         return $this->formatPhp('?::?(...?:)', [new Php\Literal($entity[0]), $entity[1], $arguments]);
                 }
@@ -127,7 +127,7 @@ declare(strict_types=1);
     }
     public function convertArguments(array $args): array
     {
-        \array_walk_recursive($args, function (&$val): void {
+        array_walk_recursive($args, function (&$val): void {
             if ($val instanceof Statement) {
                 $val = new Php\Literal($this->formatStatement($val));
             } elseif ($val instanceof Reference) {
@@ -151,9 +151,9 @@ declare(strict_types=1);
     {
         $res = [];
         foreach ($parameters as $k => $v) {
-            $tmp = \explode(' ', \is_int($k) ? $v : $k);
-            $param = $res[] = new Php\Parameter(\end($tmp));
-            if (!\is_int($k)) {
+            $tmp = explode(' ', is_int($k) ? $v : $k);
+            $param = $res[] = new Php\Parameter(end($tmp));
+            if (!is_int($k)) {
                 $param->setDefaultValue($v);
             }
             if (isset($tmp[1])) {

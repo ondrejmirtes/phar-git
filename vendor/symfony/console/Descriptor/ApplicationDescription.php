@@ -65,7 +65,7 @@ class ApplicationDescription
     public function getCommand(string $name): Command
     {
         if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
-            throw new CommandNotFoundException(\sprintf('Command "%s" does not exist.', $name));
+            throw new CommandNotFoundException(sprintf('Command "%s" does not exist.', $name));
         }
         return $this->commands[$name] ?? $this->aliases[$name];
     }
@@ -105,13 +105,13 @@ class ApplicationDescription
             }
         }
         if ($globalCommands) {
-            \ksort($globalCommands);
+            ksort($globalCommands);
             $sortedCommands[self::GLOBAL_NAMESPACE] = $globalCommands;
         }
         if ($namespacedCommands) {
-            \ksort($namespacedCommands, \SORT_STRING);
+            ksort($namespacedCommands, \SORT_STRING);
             foreach ($namespacedCommands as $key => $commandsSet) {
-                \ksort($commandsSet);
+                ksort($commandsSet);
                 $sortedCommands[$key] = $commandsSet;
             }
         }

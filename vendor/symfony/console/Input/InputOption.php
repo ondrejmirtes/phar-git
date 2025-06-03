@@ -53,8 +53,8 @@ class InputOption
      */
     public function __construct(string $name, $shortcut = null, ?int $mode = null, string $description = '', $default = null)
     {
-        if (\str_starts_with($name, '--')) {
-            $name = \substr($name, 2);
+        if (str_starts_with($name, '--')) {
+            $name = substr($name, 2);
         }
         if (empty($name)) {
             throw new InvalidArgumentException('An option name cannot be empty.');
@@ -64,11 +64,11 @@ class InputOption
         }
         if (null !== $shortcut) {
             if (\is_array($shortcut)) {
-                $shortcut = \implode('|', $shortcut);
+                $shortcut = implode('|', $shortcut);
             }
-            $shortcuts = \preg_split('{(\|)-?}', \ltrim($shortcut, '-'));
-            $shortcuts = \array_filter($shortcuts, 'strlen');
-            $shortcut = \implode('|', $shortcuts);
+            $shortcuts = preg_split('{(\|)-?}', ltrim($shortcut, '-'));
+            $shortcuts = array_filter($shortcuts, 'strlen');
+            $shortcut = implode('|', $shortcuts);
             if ('' === $shortcut) {
                 throw new InvalidArgumentException('An option shortcut cannot be empty.');
             }
@@ -76,7 +76,7 @@ class InputOption
         if (null === $mode) {
             $mode = self::VALUE_NONE;
         } elseif ($mode >= self::VALUE_NEGATABLE << 1 || $mode < 1) {
-            throw new InvalidArgumentException(\sprintf('Option mode "%s" is not valid.', $mode));
+            throw new InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
         }
         $this->name = $name;
         $this->shortcut = $shortcut;

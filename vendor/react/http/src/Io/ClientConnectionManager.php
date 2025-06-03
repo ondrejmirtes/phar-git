@@ -52,11 +52,11 @@ class ClientConnectionManager
         // Reuse idle connection for same URI if available
         foreach ($this->idleConnections as $id => $connection) {
             if ($this->idleUris[$id] === $uri) {
-                \assert($this->idleStreamHandlers[$id] instanceof \Closure);
+                assert($this->idleStreamHandlers[$id] instanceof \Closure);
                 $connection->removeListener('close', $this->idleStreamHandlers[$id]);
                 $connection->removeListener('data', $this->idleStreamHandlers[$id]);
                 $connection->removeListener('error', $this->idleStreamHandlers[$id]);
-                \assert($this->idleTimers[$id] instanceof TimerInterface);
+                assert($this->idleTimers[$id] instanceof TimerInterface);
                 $this->loop->cancelTimer($this->idleTimers[$id]);
                 unset($this->idleUris[$id], $this->idleConnections[$id], $this->idleTimers[$id], $this->idleStreamHandlers[$id]);
                 return \_PHPStan_checksum\React\Promise\resolve($connection);
@@ -73,7 +73,7 @@ class ClientConnectionManager
     public function keepAlive(UriInterface $uri, ConnectionInterface $connection)
     {
         $scheme = $uri->getScheme();
-        \assert($scheme === 'https' || $scheme === 'http');
+        assert($scheme === 'https' || $scheme === 'http');
         $port = $uri->getPort();
         if ($port === null) {
             $port = $scheme === 'https' ? 443 : 80;
@@ -103,8 +103,8 @@ class ClientConnectionManager
         if ($id === \false) {
             return;
         }
-        \assert(\is_int($id));
-        \assert($this->idleTimers[$id] instanceof TimerInterface);
+        assert(\is_int($id));
+        assert($this->idleTimers[$id] instanceof TimerInterface);
         $this->loop->cancelTimer($this->idleTimers[$id]);
         unset($this->idleUris[$id], $this->idleConnections[$id], $this->idleTimers[$id], $this->idleStreamHandlers[$id]);
         $connection->close();

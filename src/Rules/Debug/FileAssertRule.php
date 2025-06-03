@@ -19,7 +19,7 @@ use function sprintf;
 /**
  * @implements Rule<Node\Expr\FuncCall>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FileAssertRule implements Rule
 {
     private ReflectionProvider $reflectionProvider;

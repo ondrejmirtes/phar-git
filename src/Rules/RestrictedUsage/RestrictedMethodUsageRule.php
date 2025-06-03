@@ -15,7 +15,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<MethodCall>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedMethodUsageRule implements Rule
 {
     private Container $container;

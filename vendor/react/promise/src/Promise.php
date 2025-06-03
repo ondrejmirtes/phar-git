@@ -49,7 +49,7 @@ final class Promise implements PromiseInterface
         $parent = $this;
         ++$parent->requiredCancelRequests;
         return new static($this->resolver($onFulfilled, $onRejected), static function () use (&$parent): void {
-            \assert($parent instanceof self);
+            assert($parent instanceof self);
             --$parent->requiredCancelRequests;
             if ($parent->requiredCancelRequests <= 0) {
                 $parent->cancel();
@@ -214,7 +214,7 @@ final class Promise implements PromiseInterface
         } elseif (\is_object($callback) && !$callback instanceof \Closure) {
             $ref = new \ReflectionMethod($callback, '__invoke');
         } else {
-            \assert($callback instanceof \Closure || \is_string($callback));
+            assert($callback instanceof \Closure || \is_string($callback));
             $ref = new \ReflectionFunction($callback);
         }
         $args = $ref->getNumberOfParameters();

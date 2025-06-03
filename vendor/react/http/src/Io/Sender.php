@@ -74,7 +74,7 @@ class Sender
     public function send(RequestInterface $request)
     {
         // support HTTP/1.1 and HTTP/1.0 only, ensured by `Browser` already
-        \assert(\in_array($request->getProtocolVersion(), array('1.0', '1.1'), \true));
+        assert(\in_array($request->getProtocolVersion(), array('1.0', '1.1'), \true));
         $body = $request->getBody();
         $size = $body->getSize();
         if ($size !== null && $size !== 0) {

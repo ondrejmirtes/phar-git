@@ -18,7 +18,7 @@ class AwsCodeBuild extends AbstractCi
     }
     public function isPullRequest(): TrinaryLogic
     {
-        return TrinaryLogic::createFromBoolean(\mb_strpos($this->env->getString('CODEBUILD_WEBHOOK_EVENT'), 'PULL_REQUEST') === 0);
+        return TrinaryLogic::createFromBoolean(mb_strpos($this->env->getString('CODEBUILD_WEBHOOK_EVENT'), 'PULL_REQUEST') === 0);
     }
     public function getBuildNumber(): string
     {
@@ -35,7 +35,7 @@ class AwsCodeBuild extends AbstractCi
     public function getGitBranch(): string
     {
         $gitReference = $this->env->getString('CODEBUILD_WEBHOOK_HEAD_REF');
-        return \preg_replace('~^refs/heads/~', '', $gitReference) ?? '';
+        return preg_replace('~^refs/heads/~', '', $gitReference) ?? '';
     }
     public function getRepositoryName(): string
     {

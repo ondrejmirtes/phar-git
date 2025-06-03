@@ -19,7 +19,7 @@ use PHPStan\Type\CallableType;
 use PHPStan\Type\FunctionTypeSpecifyingExtension;
 use function count;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IsCallableFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private \PHPStan\Type\Php\MethodExistsTypeSpecifyingExtension $methodExistsExtension;

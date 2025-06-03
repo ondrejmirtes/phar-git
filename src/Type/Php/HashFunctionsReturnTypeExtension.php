@@ -25,7 +25,7 @@ use function hash_algos;
 use function in_array;
 use function is_bool;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class HashFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

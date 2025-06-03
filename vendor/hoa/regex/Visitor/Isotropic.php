@@ -101,26 +101,26 @@ class Isotropic implements Visitor\Visit
                         $y = 1;
                         break;
                     case 'zero_or_more':
-                        $y = \mt_rand(5, 8);
+                        $y = mt_rand(5, 8);
                         // why not?
                         break;
                     case 'one_or_more':
                         $x = 1;
-                        $y = \mt_rand(5, 8);
+                        $y = mt_rand(5, 8);
                         // why not?
                         break;
                     case 'exactly_n':
-                        $x = $y = (int) \substr($xy, 1, -1);
+                        $x = $y = (int) substr($xy, 1, -1);
                         break;
                     case 'n_to_m':
-                        $xy = \explode(',', \substr($xy, 1, -1));
-                        $x = (int) \trim($xy[0]);
-                        $y = (int) \trim($xy[1]);
+                        $xy = explode(',', substr($xy, 1, -1));
+                        $x = (int) trim($xy[0]);
+                        $y = (int) trim($xy[1]);
                         break;
                     case 'n_or_more':
-                        $xy = \explode(',', \substr($xy, 1, -1));
-                        $x = (int) \trim($xy[0]);
-                        $y = \mt_rand($x + 5, $x + 8);
+                        $xy = explode(',', substr($xy, 1, -1));
+                        $x = (int) trim($xy[0]);
+                        $y = mt_rand($x + 5, $x + 8);
                         // why not?
                         break;
                 }
@@ -147,7 +147,7 @@ class Isotropic implements Visitor\Visit
                 $value = $element->getValueValue();
                 switch ($element->getValueToken()) {
                     case 'character':
-                        $value = \ltrim($value, '\\');
+                        $value = ltrim($value, '\\');
                         switch ($value) {
                             case 'a':
                                 return "\\a";
@@ -162,21 +162,21 @@ class Isotropic implements Visitor\Visit
                             case 't':
                                 return "\t";
                             default:
-                                return Ustring::fromCode(\intval(\substr($value, 1)));
+                                return Ustring::fromCode(intval(substr($value, 1)));
                         }
                         break;
                     case 'dynamic_character':
-                        $value = \ltrim($value, '\\');
+                        $value = ltrim($value, '\\');
                         switch ($value[0]) {
                             case 'x':
-                                $value = \trim($value, 'x{}');
-                                return Ustring::fromCode(\hexdec($value));
+                                $value = trim($value, 'x{}');
+                                return Ustring::fromCode(hexdec($value));
                             default:
-                                return Ustring::fromCode(\octdec($value));
+                                return Ustring::fromCode(octdec($value));
                         }
                         break;
                     case 'character_type':
-                        $value = \ltrim($value, '\\');
+                        $value = ltrim($value, '\\');
                         if ('s' === $value) {
                             $value = $this->_sampler->getInteger(0, 1) ? 'h' : 'v';
                         }
@@ -187,23 +187,23 @@ class Isotropic implements Visitor\Visit
                                 return $this->_sampler->getInteger(0, 9);
                             case 'h':
                                 $h = [Ustring::fromCode(0x9), Ustring::fromCode(0x20), Ustring::fromCode(0xa0)];
-                                return $h[$this->_sampler->getInteger(0, \count($h) - 1)];
+                                return $h[$this->_sampler->getInteger(0, count($h) - 1)];
                             case 'v':
                                 $v = [Ustring::fromCode(0xa), Ustring::fromCode(0xb), Ustring::fromCode(0xc), Ustring::fromCode(0xd)];
-                                return $v[$this->_sampler->getInteger(0, \count($v) - 1)];
+                                return $v[$this->_sampler->getInteger(0, count($v) - 1)];
                             case 'w':
-                                $w = \array_merge(\range(0x41, 0x5a), \range(0x61, 0x7a), [0x5f]);
-                                return Ustring::fromCode($w[$this->_sampler->getInteger(0, \count($w) - 1)]);
+                                $w = array_merge(range(0x41, 0x5a), range(0x61, 0x7a), [0x5f]);
+                                return Ustring::fromCode($w[$this->_sampler->getInteger(0, count($w) - 1)]);
                             default:
                                 return '?';
                         }
                         break;
                     case 'literal':
                         if ('.' === $value) {
-                            $w = \array_merge(\range(0x41, 0x5a), \range(0x61, 0x7a), [0x5f]);
-                            return Ustring::fromCode($w[$this->_sampler->getInteger(0, \count($w) - 1)]);
+                            $w = array_merge(range(0x41, 0x5a), range(0x61, 0x7a), [0x5f]);
+                            return Ustring::fromCode($w[$this->_sampler->getInteger(0, count($w) - 1)]);
                         }
-                        return \str_replace('\\\\', '\\', \preg_replace('#\\\\(?!\\\\)#', '', $value));
+                        return str_replace('\\\\', '\\', preg_replace('#\\\\(?!\\\\)#', '', $value));
                 }
                 break;
             case '#internal_options':

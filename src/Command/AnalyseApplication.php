@@ -27,7 +27,7 @@ use function sprintf;
  * @phpstan-import-type CollectorData from CollectedData
  * @phpstan-import-type LinesToIgnore from FileAnalyserResult
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AnalyseApplication
 {
     private \PHPStan\Command\AnalyserRunner $analyserRunner;

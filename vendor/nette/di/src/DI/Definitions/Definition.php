@@ -48,8 +48,8 @@ abstract class Definition
         }
         if ($type === null) {
             $this->type = null;
-        } elseif (!\class_exists($type) && !\interface_exists($type)) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Class or interface '%s' not found.", $this->name, $type));
+        } elseif (!class_exists($type) && !interface_exists($type)) {
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Class or interface '%s' not found.", $this->name, $type));
         } else {
             $this->type = Nette\DI\Helpers::normalizeClass($type);
         }
@@ -92,7 +92,7 @@ abstract class Definition
         if ($this->notifier && $this->autowired !== $state) {
             ($this->notifier)();
         }
-        $this->autowired = \is_string($state) || \is_array($state) ? (array) $state : (bool) $state;
+        $this->autowired = is_string($state) || is_array($state) ? (array) $state : (bool) $state;
         return $this;
     }
     /** @return bool|string[] */
@@ -135,13 +135,13 @@ abstract class Definition
     /** @deprecated Use '$def instanceof Nette\DI\Definitions\ImportedDefinition' */
     public function isDynamic(): bool
     {
-        \trigger_error(\sprintf('Service %s: %s() is deprecated, use "instanceof ImportedDefinition".', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
+        trigger_error(sprintf('Service %s: %s() is deprecated, use "instanceof ImportedDefinition".', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
         return \false;
     }
     /** @deprecated Use Nette\DI\Definitions\FactoryDefinition or AccessorDefinition */
     public function getImplement(): ?string
     {
-        \trigger_error(\sprintf('Service %s: %s() is deprecated.', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
+        trigger_error(sprintf('Service %s: %s() is deprecated.', $this->getName(), __METHOD__), \E_USER_DEPRECATED);
         return null;
     }
     /** @deprecated Use getAutowired() */

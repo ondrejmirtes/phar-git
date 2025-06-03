@@ -11,7 +11,7 @@ use function is_array;
 /**
  * @phpstan-import-type LinesToIgnore from FileAnalyserResult
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LocalIgnoresProcessor
 {
     /**

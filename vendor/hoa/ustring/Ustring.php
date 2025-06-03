@@ -192,7 +192,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function checkMbString()
     {
-        return \function_exists('mb_substr');
+        return function_exists('mb_substr');
     }
     /**
      * Check if ext/iconv is available.
@@ -201,7 +201,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function checkIconv()
     {
-        return \function_exists('iconv');
+        return function_exists('iconv');
     }
     /**
      * Append a substring to the current string, i.e. add to the end.
@@ -241,10 +241,10 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
             return $this;
         }
         $handle = null;
-        for ($i = $difference / \mb_strlen($piece) - 1; $i >= 0; --$i) {
+        for ($i = $difference / mb_strlen($piece) - 1; $i >= 0; --$i) {
             $handle .= $piece;
         }
-        $handle .= \mb_substr($piece, 0, $difference - \mb_strlen($handle));
+        $handle .= mb_substr($piece, 0, $difference - mb_strlen($handle));
         return static::END === $side ? $this->append($handle) : $this->prepend($handle);
     }
     /**
@@ -258,7 +258,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
     public function compare($string)
     {
         if (null === $collator = static::getCollator()) {
-            return \strcmp($this->_string, (string) $string);
+            return strcmp($this->_string, (string) $string);
         }
         return $collator->compare($this->_string, $string);
     }
@@ -269,11 +269,11 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function getCollator()
     {
-        if (\false === \class_exists('Collator')) {
+        if (\false === class_exists('Collator')) {
             return null;
         }
         if (null === static::$_collator) {
-            static::$_collator = new \Collator(\setlocale(\LC_COLLATE, null));
+            static::$_collator = new \Collator(setlocale(\LC_COLLATE, null));
         }
         return static::$_collator;
     }
@@ -285,9 +285,9 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function safePattern($pattern)
     {
-        $delimiter = \mb_substr($pattern, 0, 1);
-        $options = \mb_substr(\mb_strrchr($pattern, $delimiter, \false), \mb_strlen($delimiter));
-        if (\false === \strpos($options, 'u')) {
+        $delimiter = mb_substr($pattern, 0, 1);
+        $options = mb_substr(mb_strrchr($pattern, $delimiter, \false), mb_strlen($delimiter));
+        if (\false === strpos($options, 'u')) {
             $pattern .= 'u';
         }
         return $pattern;
@@ -315,11 +315,11 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
         } else {
             $flags &= ~\PREG_SPLIT_OFFSET_CAPTURE;
         }
-        $offset = \strlen(\mb_substr($this->_string, 0, $offset));
+        $offset = strlen(mb_substr($this->_string, 0, $offset));
         if (\true === $global) {
-            return \preg_match_all($pattern, $this->_string, $matches, $flags, $offset);
+            return preg_match_all($pattern, $this->_string, $matches, $flags, $offset);
         }
-        return \preg_match($pattern, $this->_string, $matches, $flags, $offset);
+        return preg_match($pattern, $this->_string, $matches, $flags, $offset);
     }
     /**
      * Perform a regular expression (PCRE) search and replace.
@@ -333,10 +333,10 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
     public function replace($pattern, $replacement, $limit = -1)
     {
         $pattern = static::safePattern($pattern);
-        if (\false === \is_callable($replacement)) {
-            $this->_string = \preg_replace($pattern, $replacement, $this->_string, $limit);
+        if (\false === is_callable($replacement)) {
+            $this->_string = preg_replace($pattern, $replacement, $this->_string, $limit);
         } else {
-            $this->_string = \preg_replace_callback($pattern, $replacement, $this->_string, $limit);
+            $this->_string = preg_replace_callback($pattern, $replacement, $this->_string, $limit);
         }
         return $this;
     }
@@ -351,7 +351,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function split($pattern, $limit = -1, $flags = self::WITHOUT_EMPTY)
     {
-        return \preg_split(static::safePattern($pattern), $this->_string, $limit, $flags);
+        return preg_split(static::safePattern($pattern), $this->_string, $limit, $flags);
     }
     /**
      * Iterator over chars.
@@ -360,7 +360,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getIterator()
     {
-        return new \ArrayIterator(\preg_split('#(?<!^)(?!$)#u', $this->_string));
+        return new \ArrayIterator(preg_split('#(?<!^)(?!$)#u', $this->_string));
     }
     /**
      * Perform a lowercase folding on the current string.
@@ -369,7 +369,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function toLowerCase()
     {
-        $this->_string = \mb_strtolower($this->_string);
+        $this->_string = mb_strtolower($this->_string);
         return $this;
     }
     /**
@@ -379,7 +379,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function toUpperCase()
     {
-        $this->_string = \mb_strtoupper($this->_string);
+        $this->_string = mb_strtoupper($this->_string);
         return $this;
     }
     /**
@@ -393,27 +393,27 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function toAscii($try = \false)
     {
-        if (0 === \preg_match('#[\x80-\xff]#', $this->_string)) {
+        if (0 === preg_match('#[\x80-\xff]#', $this->_string)) {
             return $this;
         }
         $string = $this->_string;
         $transId = 'Any-Latin; ' . '[\p{S}] Name; ' . 'Latin-ASCII';
         if (null !== $transliterator = static::getTransliterator($transId)) {
-            $this->_string = \preg_replace_callback('#\\\\N\{([A-Z ]+)\}#u', function (array $matches) {
-                return '(' . \strtolower($matches[1]) . ')';
+            $this->_string = preg_replace_callback('#\\\\N\{([A-Z ]+)\}#u', function (array $matches) {
+                return '(' . strtolower($matches[1]) . ')';
             }, $transliterator->transliterate($string));
             return $this;
         }
-        if (\false === \class_exists('Normalizer')) {
+        if (\false === class_exists('Normalizer')) {
             if (\false === $try) {
                 throw new \Hoa\Ustring\Exception('%s needs the class Normalizer to work properly, ' . 'or you can force a try by using %1$s(true).', 0, __METHOD__);
             }
             $string = static::transcode($string, 'UTF-8', 'ASCII//IGNORE//TRANSLIT');
-            $this->_string = \preg_replace('#(?:[\'"`^](\w))#u', '\1', $string);
+            $this->_string = preg_replace('#(?:[\'"`^](\w))#u', '\1', $string);
             return $this;
         }
         $string = \Normalizer::normalize($string, \Normalizer::NFKD);
-        $string = \preg_replace('#\p{Mn}+#u', '', $string);
+        $string = preg_replace('#\p{Mn}+#u', '', $string);
         $this->_string = static::transcode($string, 'UTF-8', 'ASCII//IGNORE//TRANSLIT');
         return $this;
     }
@@ -444,7 +444,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function getTransliterator($identifier)
     {
-        if (\false === \class_exists('Transliterator')) {
+        if (\false === class_exists('Transliterator')) {
             return null;
         }
         return \Transliterator::create($identifier);
@@ -470,7 +470,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
             }
             $handle .= '(' . $regex . '$)';
         }
-        $this->_string = \preg_replace('#' . $handle . '#u', '', $this->_string);
+        $this->_string = preg_replace('#' . $handle . '#u', '', $this->_string);
         $this->_direction = null;
         return $this;
     }
@@ -482,7 +482,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     protected function computeOffset($offset)
     {
-        $length = \mb_strlen($this->_string);
+        $length = mb_strlen($this->_string);
         if (0 > $offset) {
             $offset = -$offset % $length;
             if (0 !== $offset) {
@@ -501,7 +501,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function offsetGet($offset)
     {
-        return \mb_substr($this->_string, $this->computeOffset($offset), 1);
+        return mb_substr($this->_string, $this->computeOffset($offset), 1);
     }
     /**
      * Set a specific character of the current string.
@@ -515,9 +515,9 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
         $head = null;
         $offset = $this->computeOffset($offset);
         if (0 < $offset) {
-            $head = \mb_substr($this->_string, 0, $offset);
+            $head = mb_substr($this->_string, 0, $offset);
         }
-        $tail = \mb_substr($this->_string, $offset + 1);
+        $tail = mb_substr($this->_string, $offset + 1);
         $this->_string = $head . $value . $tail;
         $this->_direction = null;
         return $this;
@@ -550,7 +550,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function reduce($start, $length = null)
     {
-        $this->_string = \mb_substr($this->_string, $start, $length);
+        $this->_string = mb_substr($this->_string, $start, $length);
         return $this;
     }
     /**
@@ -560,7 +560,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function count()
     {
-        return \mb_strlen($this->_string);
+        return mb_strlen($this->_string);
     }
     /**
      * Get byte (not character) at a specific offset.
@@ -570,7 +570,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getByteAt($offset)
     {
-        $length = \strlen($this->_string);
+        $length = strlen($this->_string);
         if (0 > $offset) {
             $offset = -$offset % $length;
             if (0 !== $offset) {
@@ -588,7 +588,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getBytesLength()
     {
-        return \strlen($this->_string);
+        return strlen($this->_string);
     }
     /**
      * Get the width of the current string.
@@ -599,7 +599,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getWidth()
     {
-        return \mb_strwidth($this->_string);
+        return mb_strwidth($this->_string);
     }
     /**
      * Get direction of the current string.
@@ -614,7 +614,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
             if (null === $this->_string) {
                 $this->_direction = static::LTR;
             } else {
-                $this->_direction = static::getCharDirection(\mb_substr($this->_string, 0, 1));
+                $this->_direction = static::getCharDirection(mb_substr($this->_string, 0, 1));
             }
         }
         return $this->_direction;
@@ -672,7 +672,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
             return -1;
         }
         // Non-spacing characters.
-        if (0xad !== $c && 0 !== \preg_match('#^[\p{Mn}\p{Me}\p{Cf}\x{1160}-\x{11ff}\x{200b}]#u', $char)) {
+        if (0xad !== $c && 0 !== preg_match('#^[\p{Mn}\p{Me}\p{Cf}\x{1160}-\x{11ff}\x{200b}]#u', $char)) {
             return 0;
         }
         // If we arrive here, $c is not a combining C0/C1 control character.
@@ -696,7 +696,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function fromCode($code)
     {
-        return \mb_convert_encoding('&#x' . \dechex($code) . ';', 'UTF-8', 'HTML-ENTITIES');
+        return mb_convert_encoding('&#x' . dechex($code) . ';', 'UTF-8', 'HTML-ENTITIES');
     }
     /**
      * Get a decimal code representation of a specific character.
@@ -707,7 +707,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
     public static function toCode($char)
     {
         $char = (string) $char;
-        $code = \ord($char[0]);
+        $code = ord($char[0]);
         $bytes = 1;
         if (!($code & 0x80)) {
             // 0xxxxxxx
@@ -728,7 +728,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
         }
         for ($i = 2; $i <= $bytes; $i++) {
             // 10xxxxxx
-            $code = ($code << 6) + (\ord($char[$i - 1]) & ~0x80);
+            $code = ($code << 6) + (ord($char[$i - 1]) & ~0x80);
         }
         return $code;
     }
@@ -742,8 +742,8 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $char = (string) $char;
         $out = null;
-        for ($i = 0, $max = \strlen($char); $i < $max; ++$i) {
-            $out .= \vsprintf('%08b', \ord($char[$i]));
+        for ($i = 0, $max = strlen($char); $i < $max; ++$i) {
+            $out .= vsprintf('%08b', ord($char[$i]));
         }
         return $out;
     }
@@ -761,7 +761,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
         if (\false === static::checkIconv()) {
             throw new \Hoa\Ustring\Exception('%s needs the iconv extension.', 2, __CLASS__);
         }
-        return \iconv($from, $to, $string);
+        return iconv($from, $to, $string);
     }
     /**
      * Check if a string is encoded in UTF-8.
@@ -771,7 +771,7 @@ class Ustring implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public static function isUtf8($string)
     {
-        return (bool) \preg_match('##u', $string);
+        return (bool) preg_match('##u', $string);
     }
     /**
      * Copy current object string

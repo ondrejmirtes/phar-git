@@ -64,7 +64,7 @@ class Context
     protected function __construct($id)
     {
         $this->_id = $id;
-        $this->_context = \stream_context_create();
+        $this->_context = stream_context_create();
         return;
     }
     /**
@@ -101,7 +101,7 @@ class Context
      */
     public static function contextExists($id)
     {
-        return \array_key_exists($id, static::$_instances);
+        return array_key_exists($id, static::$_instances);
     }
     /**
      * Set options.
@@ -112,7 +112,7 @@ class Context
      */
     public function setOptions(array $options)
     {
-        return \stream_context_set_option($this->getContext(), $options);
+        return stream_context_set_option($this->getContext(), $options);
     }
     /**
      * Set parameters.
@@ -123,7 +123,7 @@ class Context
      */
     public function setParameters(array $parameters)
     {
-        return \stream_context_set_params($this->getContext(), $parameters);
+        return stream_context_set_params($this->getContext(), $parameters);
     }
     /**
      * Get options.
@@ -132,7 +132,7 @@ class Context
      */
     public function getOptions()
     {
-        return \stream_context_get_options($this->getContext());
+        return stream_context_get_options($this->getContext());
     }
     /**
      * Get parameters.
@@ -141,7 +141,7 @@ class Context
      */
     public function getParameters()
     {
-        return \stream_context_get_params($this->getContext());
+        return stream_context_get_params($this->getContext());
     }
     /**
      * Get context as a resource.

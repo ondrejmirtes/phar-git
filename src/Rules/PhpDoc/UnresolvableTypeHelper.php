@@ -8,7 +8,7 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\NeverType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeTraverser;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class UnresolvableTypeHelper
 {
     public function containsUnresolvableType(Type $type): bool

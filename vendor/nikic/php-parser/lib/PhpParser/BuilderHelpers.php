@@ -70,7 +70,7 @@ final class BuilderHelpers
         if (\is_string($name)) {
             return new Identifier($name);
         }
-        throw new \LogicException('_PHPStan_checksum\Expected string or instance of Node\Identifier');
+        throw new \LogicException('Expected string or instance of Node\Identifier');
     }
     /**
      * Normalizes strings to Identifier, also allowing expressions.
@@ -87,7 +87,7 @@ final class BuilderHelpers
         if (\is_string($name)) {
             return new Identifier($name);
         }
-        throw new \LogicException('_PHPStan_checksum\Expected string or instance of Node\Identifier or Node\Expr');
+        throw new \LogicException('Expected string or instance of Node\Identifier or Node\Expr');
     }
     /**
      * Normalizes a name: Converts string names to Name nodes.
@@ -101,19 +101,19 @@ final class BuilderHelpers
         if ($name instanceof Name) {
             return $name;
         }
-        if (\is_string($name)) {
+        if (is_string($name)) {
             if (!$name) {
                 throw new \LogicException('Name cannot be empty');
             }
             if ($name[0] === '\\') {
-                return new Name\FullyQualified(\substr($name, 1));
+                return new Name\FullyQualified(substr($name, 1));
             }
-            if (0 === \strpos($name, 'namespace\\')) {
-                return new Name\Relative(\substr($name, \strlen('namespace\\')));
+            if (0 === strpos($name, 'namespace\\')) {
+                return new Name\Relative(substr($name, strlen('namespace\\')));
             }
             return new Name($name);
         }
-        throw new \LogicException('_PHPStan_checksum\Name must be a string or an instance of Node\Name');
+        throw new \LogicException('Name must be a string or an instance of Node\Name');
     }
     /**
      * Normalizes a name: Converts string names to Name nodes, while also allowing expressions.
@@ -127,8 +127,8 @@ final class BuilderHelpers
         if ($name instanceof Expr) {
             return $name;
         }
-        if (!\is_string($name) && !$name instanceof Name) {
-            throw new \LogicException('_PHPStan_checksum\Name must be a string or an instance of Node\Name or Node\Expr');
+        if (!is_string($name) && !$name instanceof Name) {
+            throw new \LogicException('Name must be a string or an instance of Node\Name or Node\Expr');
         }
         return self::normalizeName($name);
     }
@@ -144,27 +144,27 @@ final class BuilderHelpers
      */
     public static function normalizeType($type)
     {
-        if (!\is_string($type)) {
+        if (!is_string($type)) {
             if (!$type instanceof Name && !$type instanceof Identifier && !$type instanceof ComplexType) {
                 throw new \LogicException('Type must be a string, or an instance of Name, Identifier or ComplexType');
             }
             return $type;
         }
         $nullable = \false;
-        if (\strlen($type) > 0 && $type[0] === '?') {
+        if (strlen($type) > 0 && $type[0] === '?') {
             $nullable = \true;
-            $type = \substr($type, 1);
+            $type = substr($type, 1);
         }
         $builtinTypes = ['array', 'callable', 'bool', 'int', 'float', 'string', 'iterable', 'void', 'object', 'null', 'false', 'mixed', 'never', 'true'];
-        $lowerType = \strtolower($type);
-        if (\in_array($lowerType, $builtinTypes)) {
+        $lowerType = strtolower($type);
+        if (in_array($lowerType, $builtinTypes)) {
             $type = new Identifier($lowerType);
         } else {
             $type = self::normalizeName($type);
         }
         $notNullableTypes = ['void', 'mixed', 'never'];
-        if ($nullable && \in_array((string) $type, $notNullableTypes)) {
-            throw new \LogicException(\sprintf('%s type cannot be nullable', $type));
+        if ($nullable && in_array((string) $type, $notNullableTypes)) {
+            throw new \LogicException(sprintf('%s type cannot be nullable', $type));
         }
         return $nullable ? new NullableType($type) : $type;
     }
@@ -181,22 +181,22 @@ final class BuilderHelpers
         if ($value instanceof \PhpParser\Node\Expr) {
             return $value;
         }
-        if (\is_null($value)) {
+        if (is_null($value)) {
             return new Expr\ConstFetch(new Name('null'));
         }
-        if (\is_bool($value)) {
+        if (is_bool($value)) {
             return new Expr\ConstFetch(new Name($value ? 'true' : 'false'));
         }
-        if (\is_int($value)) {
+        if (is_int($value)) {
             return new Scalar\Int_($value);
         }
-        if (\is_float($value)) {
+        if (is_float($value)) {
             return new Scalar\Float_($value);
         }
-        if (\is_string($value)) {
+        if (is_string($value)) {
             return new Scalar\String_($value);
         }
-        if (\is_array($value)) {
+        if (is_array($value)) {
             $items = [];
             $lastKey = -1;
             foreach ($value as $itemKey => $itemValue) {
@@ -227,7 +227,7 @@ final class BuilderHelpers
         if ($docComment instanceof \PhpParser\Comment\Doc) {
             return $docComment;
         }
-        if (\is_string($docComment)) {
+        if (is_string($docComment)) {
             return new \PhpParser\Comment\Doc($docComment);
         }
         throw new \LogicException('Doc comment must be a string or an instance of PhpParser\Comment\Doc');

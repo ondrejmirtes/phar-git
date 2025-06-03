@@ -12,12 +12,12 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeWithClassName;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DsMapDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string
     {
-        return 'Ds\Map';
+        return '_PHPStan_checksum\Ds\Map';
     }
     public function isMethodSupported(MethodReflection $methodReflection): bool
     {
@@ -36,7 +36,7 @@ final class DsMapDynamicReturnTypeExtension implements DynamicMethodReturnTypeEx
         if (!$mapType instanceof TypeWithClassName) {
             return null;
         }
-        $mapAncestor = $mapType->getAncestorWithClassName('Ds\Map');
+        $mapAncestor = $mapType->getAncestorWithClassName('_PHPStan_checksum\Ds\Map');
         if ($mapAncestor === null) {
             return null;
         }

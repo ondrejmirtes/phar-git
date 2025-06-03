@@ -12,7 +12,7 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ConstantFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private \PHPStan\Type\Php\ConstantHelper $constantHelper;

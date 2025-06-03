@@ -64,7 +64,7 @@ class Fromcode extends Console\Dispatcher\Kit
         while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'b':
-                    $base = \intval($v);
+                    $base = intval($v);
                     break;
                 case '__ambiguous':
                     $this->resolveOptionAmbiguity($v);
@@ -76,7 +76,7 @@ class Fromcode extends Console\Dispatcher\Kit
             }
         }
         $this->parser->listInputs($code);
-        $char = Ustring::fromCode(\base_convert($code, $base, 10));
+        $char = Ustring::fromCode(base_convert($code, $base, 10));
         echo $char;
         return;
     }

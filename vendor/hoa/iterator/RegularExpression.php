@@ -167,7 +167,7 @@ class RegularExpression extends \Hoa\Iterator\Filter
      */
     public function accept()
     {
-        if (\is_array(parent::current())) {
+        if (is_array(parent::current())) {
             return \false;
         }
         $this->_key = parent::key();
@@ -178,23 +178,23 @@ class RegularExpression extends \Hoa\Iterator\Filter
         $out = \false;
         switch ($this->_mode) {
             case self::MATCH:
-                $out = 0 !== \preg_match($this->_regex, $subject, $matches, $this->_pregFlags);
+                $out = 0 !== preg_match($this->_regex, $subject, $matches, $this->_pregFlags);
                 break;
             case self::GET_MATCH:
                 $this->_current = [];
-                $out = 0 !== \preg_match($this->_regex, $subject, $this->_current, $this->_pregFlags);
+                $out = 0 !== preg_match($this->_regex, $subject, $this->_current, $this->_pregFlags);
                 break;
             case self::ALL_MATCHES:
                 $this->_current = [];
-                $out = 0 < \preg_match_all($this->_regex, $subject, $this->_current, $this->_pregFlags);
+                $out = 0 < preg_match_all($this->_regex, $subject, $this->_current, $this->_pregFlags);
                 break;
             case self::SPLIT:
-                $this->_current = \preg_split($this->_regex, $subject, null, $this->_pregFlags);
-                $out = \is_array($this->_current) && 1 < \count($this->_current);
+                $this->_current = preg_split($this->_regex, $subject, null, $this->_pregFlags);
+                $out = is_array($this->_current) && 1 < count($this->_current);
                 break;
             case self::REPLACE:
                 $numberOfReplacement = 0;
-                $result = \preg_replace($this->_regex, $this->replacement, $subject, -1, $numberOfReplacement);
+                $result = preg_replace($this->_regex, $this->replacement, $subject, -1, $numberOfReplacement);
                 if (null === $result || 0 === $numberOfReplacement) {
                     $out = \false;
                     break;

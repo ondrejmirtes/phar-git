@@ -24,14 +24,14 @@ final class Cursor
     public function __construct(OutputInterface $output, $input = null)
     {
         $this->output = $output;
-        $this->input = $input ?? (\defined('STDIN') ? \STDIN : \fopen('php://input', 'r+'));
+        $this->input = $input ?? (\defined('STDIN') ? \STDIN : fopen('php://input', 'r+'));
     }
     /**
      * @return $this
      */
     public function moveUp(int $lines = 1): self
     {
-        $this->output->write(\sprintf("\x1b[%dA", $lines));
+        $this->output->write(sprintf("\x1b[%dA", $lines));
         return $this;
     }
     /**
@@ -39,7 +39,7 @@ final class Cursor
      */
     public function moveDown(int $lines = 1): self
     {
-        $this->output->write(\sprintf("\x1b[%dB", $lines));
+        $this->output->write(sprintf("\x1b[%dB", $lines));
         return $this;
     }
     /**
@@ -47,7 +47,7 @@ final class Cursor
      */
     public function moveRight(int $columns = 1): self
     {
-        $this->output->write(\sprintf("\x1b[%dC", $columns));
+        $this->output->write(sprintf("\x1b[%dC", $columns));
         return $this;
     }
     /**
@@ -55,7 +55,7 @@ final class Cursor
      */
     public function moveLeft(int $columns = 1): self
     {
-        $this->output->write(\sprintf("\x1b[%dD", $columns));
+        $this->output->write(sprintf("\x1b[%dD", $columns));
         return $this;
     }
     /**
@@ -63,7 +63,7 @@ final class Cursor
      */
     public function moveToColumn(int $column): self
     {
-        $this->output->write(\sprintf("\x1b[%dG", $column));
+        $this->output->write(sprintf("\x1b[%dG", $column));
         return $this;
     }
     /**
@@ -71,7 +71,7 @@ final class Cursor
      */
     public function moveToPosition(int $column, int $row): self
     {
-        $this->output->write(\sprintf("\x1b[%d;%dH", $row + 1, $column));
+        $this->output->write(sprintf("\x1b[%d;%dH", $row + 1, $column));
         return $this;
     }
     /**
@@ -151,17 +151,17 @@ final class Cursor
     {
         static $isTtySupported;
         if (null === $isTtySupported && \function_exists('proc_open')) {
-            $isTtySupported = (bool) @\proc_open('echo 1 >/dev/null', [['file', '/dev/tty', 'r'], ['file', '/dev/tty', 'w'], ['file', '/dev/tty', 'w']], $pipes);
+            $isTtySupported = (bool) @proc_open('echo 1 >/dev/null', [['file', '/dev/tty', 'r'], ['file', '/dev/tty', 'w'], ['file', '/dev/tty', 'w']], $pipes);
         }
         if (!$isTtySupported) {
             return [1, 1];
         }
-        $sttyMode = \shell_exec('stty -g');
-        \shell_exec('stty -icanon -echo');
-        @\fwrite($this->input, "\x1b[6n");
-        $code = \trim(\fread($this->input, 1024));
-        \shell_exec(\sprintf('stty %s', $sttyMode));
-        \sscanf($code, "\x1b[%d;%dR", $row, $col);
+        $sttyMode = shell_exec('stty -g');
+        shell_exec('stty -icanon -echo');
+        @fwrite($this->input, "\x1b[6n");
+        $code = trim(fread($this->input, 1024));
+        shell_exec(sprintf('stty %s', $sttyMode));
+        sscanf($code, "\x1b[%d;%dR", $row, $col);
         return [$col, $row];
     }
 }

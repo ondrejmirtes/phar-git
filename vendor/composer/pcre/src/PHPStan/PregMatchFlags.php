@@ -28,7 +28,7 @@ final class PregMatchFlags
         }
         $internalFlagsTypes = [];
         foreach ($flagsType->getConstantScalarValues() as $constantScalarValue) {
-            if (!\is_int($constantScalarValue)) {
+            if (!is_int($constantScalarValue)) {
                 return null;
             }
             $internalFlagsTypes[] = new ConstantIntegerType($constantScalarValue | \PREG_UNMATCHED_AS_NULL);
@@ -42,7 +42,7 @@ final class PregMatchFlags
                 return $traverse($type);
             }
             if ($type instanceof ConstantArrayType) {
-                return new ConstantArrayType($type->getKeyTypes(), \array_map(static function (Type $valueType) use ($traverse): Type {
+                return new ConstantArrayType($type->getKeyTypes(), array_map(static function (Type $valueType) use ($traverse): Type {
                     return $traverse($valueType);
                 }, $type->getValueTypes()), $type->getNextAutoIndexes(), [], $type->isList());
             }

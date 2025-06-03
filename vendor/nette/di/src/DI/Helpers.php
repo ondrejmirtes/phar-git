@@ -28,7 +28,7 @@ final class Helpers
      */
     public static function expand($var, array $params, $recursive = \false)
     {
-        if (\is_array($var)) {
+        if (is_array($var)) {
             $res = [];
             foreach ($var as $key => $val) {
                 $res[self::expand($key, $params, $recursive)] = self::expand($val, $params, $recursive);
@@ -36,12 +36,12 @@ final class Helpers
             return $res;
         } elseif ($var instanceof Statement) {
             return new Statement(self::expand($var->getEntity(), $params, $recursive), self::expand($var->arguments, $params, $recursive));
-        } elseif ($var === '%parameters%' && !\array_key_exists('parameters', $params)) {
-            return $recursive ? self::expand($params, $params, \is_array($recursive) ? $recursive : []) : $params;
-        } elseif (!\is_string($var)) {
+        } elseif ($var === '%parameters%' && !array_key_exists('parameters', $params)) {
+            return $recursive ? self::expand($params, $params, is_array($recursive) ? $recursive : []) : $params;
+        } elseif (!is_string($var)) {
             return $var;
         }
-        $parts = \preg_split('#%([\w.-]*)%#i', $var, -1, \PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('#%([\w.-]*)%#i', $var, -1, \PREG_SPLIT_DELIM_CAPTURE);
         $res = [];
         $php = \false;
         foreach ($parts as $n => $part) {
@@ -50,42 +50,42 @@ final class Helpers
             } elseif ($part === '') {
                 $res[] = '%';
             } elseif (isset($recursive[$part])) {
-                throw new Nette\InvalidArgumentException(\sprintf('Circular reference detected for variables: %s.', \implode(', ', \array_keys($recursive))));
+                throw new Nette\InvalidArgumentException(sprintf('Circular reference detected for variables: %s.', implode(', ', array_keys($recursive))));
             } else {
                 $val = $params;
-                foreach (\explode('.', $part) as $key) {
-                    if (\is_array($val) && \array_key_exists($key, $val)) {
+                foreach (explode('.', $part) as $key) {
+                    if (is_array($val) && array_key_exists($key, $val)) {
                         $val = $val[$key];
                     } elseif ($val instanceof DynamicParameter) {
-                        $val = new DynamicParameter($val . '[' . \var_export($key, \true) . ']');
+                        $val = new DynamicParameter($val . '[' . var_export($key, \true) . ']');
                     } else {
-                        throw new Nette\InvalidArgumentException(\sprintf("Missing parameter '%s'.", $part));
+                        throw new Nette\InvalidArgumentException(sprintf("Missing parameter '%s'.", $part));
                     }
                 }
                 if ($recursive) {
-                    $val = self::expand($val, $params, (\is_array($recursive) ? $recursive : []) + [$part => 1]);
+                    $val = self::expand($val, $params, (is_array($recursive) ? $recursive : []) + [$part => 1]);
                 }
-                if (\strlen($part) + 2 === \strlen($var)) {
+                if (strlen($part) + 2 === strlen($var)) {
                     return $val;
                 }
                 if ($val instanceof DynamicParameter) {
                     $php = \true;
-                } elseif (!\is_scalar($val)) {
-                    throw new Nette\InvalidArgumentException(\sprintf("Unable to concatenate non-scalar parameter '%s' into '%s'.", $part, $var));
+                } elseif (!is_scalar($val)) {
+                    throw new Nette\InvalidArgumentException(sprintf("Unable to concatenate non-scalar parameter '%s' into '%s'.", $part, $var));
                 }
                 $res[] = $val;
             }
         }
         if ($php) {
-            $res = \array_filter($res, function ($val): bool {
+            $res = array_filter($res, function ($val): bool {
                 return $val !== '';
             });
-            $res = \array_map(function ($val): string {
-                return $val instanceof DynamicParameter ? "({$val})" : \var_export((string) $val, \true);
+            $res = array_map(function ($val): string {
+                return $val instanceof DynamicParameter ? "({$val})" : var_export((string) $val, \true);
             }, $res);
-            return new DynamicParameter(\implode(' . ', $res));
+            return new DynamicParameter(implode(' . ', $res));
         }
-        return \implode('', $res);
+        return implode('', $res);
     }
     /**
      * Escapes '%' and '@'
@@ -94,15 +94,15 @@ final class Helpers
      */
     public static function escape($value)
     {
-        if (\is_array($value)) {
+        if (is_array($value)) {
             $res = [];
             foreach ($value as $key => $val) {
-                $key = \is_string($key) ? \str_replace('%', '%%', $key) : $key;
+                $key = is_string($key) ? str_replace('%', '%%', $key) : $key;
                 $res[$key] = self::escape($val);
             }
             return $res;
-        } elseif (\is_string($value)) {
-            return \preg_replace('#^@|%#', '$0$0', $value);
+        } elseif (is_string($value)) {
+            return preg_replace('#^@|%#', '$0$0', $value);
         }
         return $value;
     }
@@ -112,13 +112,13 @@ final class Helpers
     public static function filterArguments(array $args): array
     {
         foreach ($args as $k => $v) {
-            if (\PHP_VERSION_ID >= 80100 && \is_string($v) && \preg_match('#^([\w\\\\]+)::\w+$#D', $v, $m) && \enum_exists($m[1])) {
+            if (\PHP_VERSION_ID >= 80100 && is_string($v) && preg_match('#^([\w\\\\]+)::\w+$#D', $v, $m) && enum_exists($m[1])) {
                 $args[$k] = new Nette\PhpGenerator\PhpLiteral($v);
-            } elseif (\is_string($v) && \preg_match('#^[\w\\\\]*::[A-Z][a-zA-Z0-9_]*$#D', $v)) {
-                $args[$k] = new Nette\PhpGenerator\PhpLiteral(\ltrim($v, ':'));
-            } elseif (\is_string($v) && \preg_match('#^@[\w\\\\]+$#D', $v)) {
-                $args[$k] = new Reference(\substr($v, 1));
-            } elseif (\is_array($v)) {
+            } elseif (is_string($v) && preg_match('#^[\w\\\\]*::[A-Z][a-zA-Z0-9_]*$#D', $v)) {
+                $args[$k] = new Nette\PhpGenerator\PhpLiteral(ltrim($v, ':'));
+            } elseif (is_string($v) && preg_match('#^@[\w\\\\]+$#D', $v)) {
+                $args[$k] = new Reference(substr($v, 1));
+            } elseif (is_array($v)) {
                 $args[$k] = self::filterArguments($v);
             } elseif ($v instanceof Statement) {
                 [$tmp] = self::filterArguments([$v->getEntity()]);
@@ -134,17 +134,17 @@ final class Helpers
      */
     public static function prefixServiceName($config, string $namespace)
     {
-        if (\is_string($config)) {
-            if (\strncmp($config, '@extension.', 10) === 0) {
-                $config = '@' . $namespace . '.' . \substr($config, 11);
+        if (is_string($config)) {
+            if (strncmp($config, '@extension.', 10) === 0) {
+                $config = '@' . $namespace . '.' . substr($config, 11);
             }
         } elseif ($config instanceof Reference) {
-            if (\strncmp($config->getValue(), 'extension.', 9) === 0) {
-                $config = new Reference($namespace . '.' . \substr($config->getValue(), 10));
+            if (strncmp($config->getValue(), 'extension.', 9) === 0) {
+                $config = new Reference($namespace . '.' . substr($config->getValue(), 10));
             }
         } elseif ($config instanceof Statement) {
             return new Statement(self::prefixServiceName($config->getEntity(), $namespace), self::prefixServiceName($config->arguments, $namespace));
-        } elseif (\is_array($config)) {
+        } elseif (is_array($config)) {
             foreach ($config as &$val) {
                 $val = self::prefixServiceName($val, $namespace);
             }
@@ -160,15 +160,15 @@ final class Helpers
         if (!Reflection::areCommentsAvailable()) {
             throw new Nette\InvalidStateException('You have to enable phpDoc comments in opcode cache.');
         }
-        $re = '#[\s*]@' . \preg_quote($name, '#') . '(?=\s|$)(?:[ \t]+([^@\s]\S*))?#';
-        if ($ref->getDocComment() && \preg_match($re, \trim($ref->getDocComment(), '/*'), $m)) {
+        $re = '#[\s*]@' . preg_quote($name, '#') . '(?=\s|$)(?:[ \t]+([^@\s]\S*))?#';
+        if ($ref->getDocComment() && preg_match($re, trim($ref->getDocComment(), '/*'), $m)) {
             return $m[1] ?? '';
         }
         return null;
     }
     public static function getReturnTypeAnnotation(\ReflectionFunctionAbstract $func): ?Type
     {
-        $type = \preg_replace('#[|\s].*#', '', (string) self::parseAnnotation($func, 'return'));
+        $type = preg_replace('#[|\s].*#', '', (string) self::parseAnnotation($func, 'return'));
         if (!$type || $type === 'object' || $type === 'mixed') {
             return null;
         } elseif ($func instanceof \ReflectionMethod) {
@@ -180,19 +180,19 @@ final class Helpers
     public static function ensureClassType(?Type $type, string $hint, bool $allowNullable = \false): string
     {
         if (!$type) {
-            throw new ServiceCreationException(\sprintf('%s is not declared.', \ucfirst($hint)));
+            throw new ServiceCreationException(sprintf('%s is not declared.', ucfirst($hint)));
         } elseif (!$type->isClass() || !$allowNullable && $type->allows('null')) {
-            throw new ServiceCreationException(\sprintf("%s is expected to not be %sbuilt-in/complex, '%s' given.", \ucfirst($hint), $allowNullable ? '' : 'nullable/', $type));
+            throw new ServiceCreationException(sprintf("%s is expected to not be %sbuilt-in/complex, '%s' given.", ucfirst($hint), $allowNullable ? '' : 'nullable/', $type));
         }
         $class = $type->getSingleName();
-        if (!\class_exists($class) && !\interface_exists($class)) {
-            throw new ServiceCreationException(\sprintf("Class '%s' not found.\nCheck the %s.", $class, $hint));
+        if (!class_exists($class) && !interface_exists($class)) {
+            throw new ServiceCreationException(sprintf("Class '%s' not found.\nCheck the %s.", $class, $hint));
         }
         return $class;
     }
     public static function normalizeClass(string $type): string
     {
-        return \class_exists($type) || \interface_exists($type) ? (new \ReflectionClass($type))->name : $type;
+        return class_exists($type) || interface_exists($type) ? (new \ReflectionClass($type))->name : $type;
     }
     /**
      * Non data-loss type conversion.
@@ -202,17 +202,17 @@ final class Helpers
      */
     public static function convertType($value, string $type)
     {
-        if (\is_scalar($value)) {
+        if (is_scalar($value)) {
             $norm = $value === \false ? '0' : (string) $value;
             if ($type === 'float') {
-                $norm = \preg_replace('#\.0*$#D', '', $norm);
+                $norm = preg_replace('#\.0*$#D', '', $norm);
             }
             $orig = $norm;
-            \settype($norm, $type);
+            settype($norm, $type);
             if ($orig === ($norm === \false ? '0' : (string) $norm)) {
                 return $norm;
             }
         }
-        throw new Nette\InvalidStateException(\sprintf('Cannot convert %s to %s.', \is_scalar($value) ? "'{$value}'" : \gettype($value), $type));
+        throw new Nette\InvalidStateException(sprintf('Cannot convert %s to %s.', is_scalar($value) ? "'{$value}'" : gettype($value), $type));
     }
 }

@@ -6,7 +6,7 @@ namespace PHPStan\Parser;
 use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MagicConstantParamDefaultVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isMagicConstantParamDefault';

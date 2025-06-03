@@ -14,7 +14,7 @@ use PHPStan\Type\ClosureType;
 use PHPStan\Type\FunctionParameterClosureTypeExtension;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PregReplaceCallbackClosureTypeExtension implements FunctionParameterClosureTypeExtension
 {
     private \PHPStan\Type\Php\RegexArrayShapeMatcher $regexShapeMatcher;

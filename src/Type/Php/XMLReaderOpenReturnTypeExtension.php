@@ -15,7 +15,7 @@ use PHPStan\Type\DynamicStaticMethodReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class XMLReaderOpenReturnTypeExtension implements DynamicMethodReturnTypeExtension, DynamicStaticMethodReturnTypeExtension
 {
     private const XML_READER_CLASS = 'XMLReader';

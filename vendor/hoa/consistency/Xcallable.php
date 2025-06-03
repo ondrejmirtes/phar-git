@@ -82,28 +82,28 @@ class Xcallable
             $this->_callback = $call;
             return;
         }
-        if (!\is_string($able)) {
+        if (!is_string($able)) {
             throw new \Hoa\Consistency\Exception('Bad callback form; the able part must be a string.', 0);
         }
         if ('' === $able) {
-            if (\is_string($call)) {
-                if (\false === \strpos($call, '::')) {
-                    if (!\function_exists($call)) {
+            if (is_string($call)) {
+                if (\false === strpos($call, '::')) {
+                    if (!function_exists($call)) {
                         throw new \Hoa\Consistency\Exception('Bad callback form; function %s does not exist.', 1, $call);
                     }
                     $this->_callback = $call;
                     return;
                 }
-                list($call, $able) = \explode('::', $call);
-            } elseif (\is_object($call)) {
+                list($call, $able) = explode('::', $call);
+            } elseif (is_object($call)) {
                 if ($call instanceof Stream\IStream\Out) {
                     $able = null;
-                } elseif (\method_exists($call, '__invoke')) {
+                } elseif (method_exists($call, '__invoke')) {
                     $able = '__invoke';
                 } else {
                     throw new \Hoa\Consistency\Exception('Bad callback form; an object but without a known ' . 'method.', 2);
                 }
-            } elseif (\is_array($call) && isset($call[0])) {
+            } elseif (is_array($call) && isset($call[0])) {
                 if (!isset($call[1])) {
                     return $this->__construct($call[0]);
                 }
@@ -123,9 +123,9 @@ class Xcallable
      */
     public function __invoke()
     {
-        $arguments = \func_get_args();
+        $arguments = func_get_args();
         $valid = $this->getValidCallback($arguments);
-        return \call_user_func_array($valid, $arguments);
+        return call_user_func_array($valid, $arguments);
     }
     /**
      * Distribute arguments according to an array.
@@ -135,7 +135,7 @@ class Xcallable
      */
     public function distributeArguments(array $arguments)
     {
-        return \call_user_func_array([$this, '__invoke'], $arguments);
+        return call_user_func_array([$this, '__invoke'], $arguments);
     }
     /**
      * Get a valid callback in the PHP meaning.
@@ -153,13 +153,13 @@ class Xcallable
         }
         // If method is undetermined, we find it (we understand event bucket and
         // stream).
-        if (null !== $head && \is_array($callback) && null === $callback[1]) {
+        if (null !== $head && is_array($callback) && null === $callback[1]) {
             if ($head instanceof Event\Bucket) {
                 $head = $head->getData();
             }
-            switch ($type = \gettype($head)) {
+            switch ($type = gettype($head)) {
                 case 'string':
-                    if (1 === \strlen($head)) {
+                    if (1 === strlen($head)) {
                         $method = 'writeCharacter';
                     } else {
                         $method = 'writeString';
@@ -168,7 +168,7 @@ class Xcallable
                 case 'boolean':
                 case 'integer':
                 case 'array':
-                    $method = 'write' . \ucfirst($type);
+                    $method = 'write' . ucfirst($type);
                     break;
                 case 'double':
                     $method = 'writeFloat';
@@ -197,13 +197,13 @@ class Xcallable
             return $this->_hash;
         }
         $_ =& $this->_callback;
-        if (\is_string($_)) {
+        if (is_string($_)) {
             return $this->_hash = 'function#' . $_;
         }
-        if (\is_array($_)) {
-            return $this->_hash = (\is_object($_[0]) ? 'object(' . \spl_object_hash($_[0]) . ')' . '#' . \get_class($_[0]) : 'class#' . $_[0]) . '::' . (null !== $_[1] ? $_[1] : '???');
+        if (is_array($_)) {
+            return $this->_hash = (is_object($_[0]) ? 'object(' . spl_object_hash($_[0]) . ')' . '#' . get_class($_[0]) : 'class#' . $_[0]) . '::' . (null !== $_[1] ? $_[1] : '???');
         }
-        return $this->_hash = 'closure(' . \spl_object_hash($_) . ')';
+        return $this->_hash = 'closure(' . spl_object_hash($_) . ')';
     }
     /**
      * Get appropriated reflection instance.
@@ -213,17 +213,17 @@ class Xcallable
      */
     public function getReflection()
     {
-        $arguments = \func_get_args();
+        $arguments = func_get_args();
         $valid = $this->getValidCallback($arguments);
-        if (\is_string($valid)) {
+        if (is_string($valid)) {
             return new \ReflectionFunction($valid);
         }
         if ($valid instanceof \Closure) {
             return new \ReflectionFunction($valid);
         }
-        if (\is_array($valid)) {
-            if (\is_string($valid[0])) {
-                if (\false === \method_exists($valid[0], $valid[1])) {
+        if (is_array($valid)) {
+            if (is_string($valid[0])) {
+                if (\false === method_exists($valid[0], $valid[1])) {
                     return new \ReflectionClass($valid[0]);
                 }
                 return new \ReflectionMethod($valid[0], $valid[1]);

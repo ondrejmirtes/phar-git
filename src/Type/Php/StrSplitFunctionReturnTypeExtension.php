@@ -30,7 +30,7 @@ use function in_array;
 use function mb_internal_encoding;
 use function mb_str_split;
 use function str_split;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrSplitFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

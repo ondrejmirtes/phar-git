@@ -38,7 +38,7 @@ final class Psr0Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
             if ($prefix === '') {
                 continue;
             }
-            if (\strpos($className, $prefix) === 0) {
+            if (strpos($className, $prefix) === 0) {
                 return array_map(static fn(string $path): string => $path . '/' . str_replace(['\\', '_'], '/', $className) . '.php', $paths);
             }
         }

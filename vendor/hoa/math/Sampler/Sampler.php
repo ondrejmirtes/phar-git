@@ -118,8 +118,8 @@ abstract class Sampler implements Zformat\Parameterizable
             }
             return $this->_getInteger($lower, $upper);
         }
-        \sort($exclude);
-        $upper -= \count($exclude);
+        sort($exclude);
+        $upper -= count($exclude);
         if ($lower > $upper) {
             throw new Math\Exception('Unexpected values, integer %d should be lower than %d', 1, [$lower, $upper]);
         }

@@ -73,11 +73,11 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
     protected function &_open($streamName, Stream\Context $context = null)
     {
         static $createModes = [parent::MODE_READ_WRITE, parent::MODE_TRUNCATE_READ_WRITE, parent::MODE_APPEND_READ_WRITE, parent::MODE_CREATE_READ_WRITE];
-        if (!\in_array($this->getMode(), $createModes)) {
-            throw new File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), \implode(', ', $createModes)]);
+        if (!in_array($this->getMode(), $createModes)) {
+            throw new File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), implode(', ', $createModes)]);
         }
-        \preg_match('#^(\w+)://#', $streamName, $match);
-        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !\file_exists($streamName) && parent::MODE_READ_WRITE == $this->getMode()) {
+        preg_match('#^(\w+)://#', $streamName, $match);
+        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !file_exists($streamName) && parent::MODE_READ_WRITE == $this->getMode()) {
             throw new File\Exception\FileDoesNotExist('File %s does not exist.', 1, $streamName);
         }
         $out = parent::_open($streamName, $context);
@@ -90,7 +90,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function eof()
     {
-        return \feof($this->getStream());
+        return feof($this->getStream());
     }
     /**
      * Read n characters.
@@ -104,7 +104,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
         if (0 > $length) {
             throw new File\Exception('Length must be greater than 0, given %d.', 2, $length);
         }
-        return \fread($this->getStream(), $length);
+        return fread($this->getStream(), $length);
     }
     /**
      * Alias of $this->read().
@@ -123,7 +123,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function readCharacter()
     {
-        return \fgetc($this->getStream());
+        return fgetc($this->getStream());
     }
     /**
      * Read a boolean.
@@ -172,7 +172,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function readLine()
     {
-        return \fgets($this->getStream());
+        return fgets($this->getStream());
     }
     /**
      * Read all, i.e. read as much as possible.
@@ -182,7 +182,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function readAll($offset = 0)
     {
-        return \stream_get_contents($this->getStream(), -1, $offset);
+        return stream_get_contents($this->getStream(), -1, $offset);
     }
     /**
      * Parse input from a stream according to a format.
@@ -192,7 +192,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function scanf($format)
     {
-        return \fscanf($this->getStream(), $format);
+        return fscanf($this->getStream(), $format);
     }
     /**
      * Write n characters.
@@ -207,7 +207,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
         if (0 > $length) {
             throw new File\Exception('Length must be greater than 0, given %d.', 3, $length);
         }
-        return \fwrite($this->getStream(), $string, $length);
+        return fwrite($this->getStream(), $string, $length);
     }
     /**
      * Write a string.
@@ -218,7 +218,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
     public function writeString($string)
     {
         $string = (string) $string;
-        return $this->write($string, \strlen($string));
+        return $this->write($string, strlen($string));
     }
     /**
      * Write a character.
@@ -249,7 +249,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
     public function writeInteger($integer)
     {
         $integer = (string) (int) $integer;
-        return $this->write($integer, \strlen($integer));
+        return $this->write($integer, strlen($integer));
     }
     /**
      * Write a float.
@@ -260,7 +260,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
     public function writeFloat($float)
     {
         $float = (string) (float) $float;
-        return $this->write($float, \strlen($float));
+        return $this->write($float, strlen($float));
     }
     /**
      * Write an array.
@@ -270,8 +270,8 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function writeArray(array $array)
     {
-        $array = \var_export($array, \true);
-        return $this->write($array, \strlen($array));
+        $array = var_export($array, \true);
+        return $this->write($array, strlen($array));
     }
     /**
      * Write a line.
@@ -281,11 +281,11 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function writeLine($line)
     {
-        if (\false === $n = \strpos($line, "\n")) {
-            return $this->write($line . "\n", \strlen($line) + 1);
+        if (\false === $n = strpos($line, "\n")) {
+            return $this->write($line . "\n", strlen($line) + 1);
         }
         ++$n;
-        return $this->write(\substr($line, 0, $n), $n);
+        return $this->write(substr($line, 0, $n), $n);
     }
     /**
      * Write all, i.e. as much as possible.
@@ -295,7 +295,7 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function writeAll($string)
     {
-        return $this->write($string, \strlen($string));
+        return $this->write($string, strlen($string));
     }
     /**
      * Truncate a file to a given length.
@@ -305,6 +305,6 @@ class ReadWrite extends \Hoa\File\Temporary\Temporary implements Stream\IStream\
      */
     public function truncate($size)
     {
-        return \ftruncate($this->getStream(), $size);
+        return ftruncate($this->getStream(), $size);
     }
 }

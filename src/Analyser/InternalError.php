@@ -77,7 +77,7 @@ final class InternalError implements JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['message' => $this->message, 'contextDescription' => $this->contextDescription, 'trace' => $this->trace, 'traceAsString' => $this->traceAsString, 'shouldReportBug' => $this->shouldReportBug];

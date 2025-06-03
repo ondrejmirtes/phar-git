@@ -14,7 +14,7 @@ use PHPStan\Type\DynamicFunctionThrowTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class JsonThrowTypeExtension implements DynamicFunctionThrowTypeExtension
 {
     private ReflectionProvider $reflectionProvider;

@@ -49,7 +49,7 @@ final class AnyOf implements Schema
     }
     public function merge($value, $base)
     {
-        if (\is_array($value) && isset($value[Helpers::PreventMerging])) {
+        if (is_array($value) && isset($value[Helpers::PreventMerging])) {
             unset($value[Helpers::PreventMerging]);
             return $value;
         }
@@ -71,7 +71,7 @@ final class AnyOf implements Schema
                 $dolly->path = $context->path;
                 $res = $item->complete($item->normalize($value, $dolly), $dolly);
                 if (!$dolly->errors) {
-                    $context->warnings = \array_merge($context->warnings, $dolly->warnings);
+                    $context->warnings = array_merge($context->warnings, $dolly->warnings);
                     return $res;
                 }
                 foreach ($dolly->errors as $error) {
@@ -89,9 +89,9 @@ final class AnyOf implements Schema
             }
         }
         if ($innerErrors) {
-            $context->errors = \array_merge($context->errors, $innerErrors);
+            $context->errors = array_merge($context->errors, $innerErrors);
         } else {
-            $context->addError('The %label% %path% expects to be %expected%, %value% given.', Nette\Schema\Message::TypeMismatch, ['value' => $value, 'expected' => \implode('|', \array_unique($expecteds))]);
+            $context->addError('The %label% %path% expects to be %expected%, %value% given.', Nette\Schema\Message::TypeMismatch, ['value' => $value, 'expected' => implode('|', array_unique($expecteds))]);
         }
     }
     public function completeDefault(Context $context)

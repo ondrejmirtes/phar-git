@@ -17,7 +17,7 @@ use PHPStan\Type\TypeCombinator;
 use function count;
 use function date_create;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateTimeCreateDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

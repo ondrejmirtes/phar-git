@@ -103,7 +103,7 @@ abstract class Llk
         foreach ($parser->getTokens() as $namespace => $tokens) {
             $outTokens .= '                \'' . $namespace . '\' => [' . "\n";
             foreach ($tokens as $tokenName => $tokenValue) {
-                $outTokens .= '                    \'' . $tokenName . '\' => \'' . \str_replace(['\'', '\\\\'], ['\\\'', '\\\\\\'], $tokenValue) . '\',' . "\n";
+                $outTokens .= '                    \'' . $tokenName . '\' => \'' . str_replace(['\'', '\\\\'], ['\\\'', '\\\\\\'], $tokenValue) . '\',' . "\n";
             }
             $outTokens .= '                ],' . "\n";
         }
@@ -125,10 +125,10 @@ abstract class Llk
                 $ruleChildren = $rule->getChildren();
                 if (null === $ruleChildren) {
                     $arguments['children'] = 'null';
-                } elseif (\false === \is_array($ruleChildren)) {
+                } elseif (\false === is_array($ruleChildren)) {
                     $arguments['children'] = $escapeRuleName($ruleChildren);
                 } else {
-                    $arguments['children'] = '[' . \implode(', ', \array_map($escapeRuleName, $ruleChildren)) . ']';
+                    $arguments['children'] = '[' . implode(', ', array_map($escapeRuleName, $ruleChildren)) . ']';
                 }
             }
             // Node ID.
@@ -148,18 +148,18 @@ abstract class Llk
             if (null !== $defaultNodeId = $rule->getDefaultId()) {
                 $defaultNodeOptions = $rule->getDefaultOptions();
                 if (!empty($defaultNodeOptions)) {
-                    $defaultNodeId .= ':' . \implode('', $defaultNodeOptions);
+                    $defaultNodeId .= ':' . implode('', $defaultNodeOptions);
                 }
                 $outExtra .= "\n" . '        $this->getRule(' . $arguments['name'] . ')->setDefaultId(' . '\'' . $defaultNodeId . '\'' . ');';
             }
             // PP representation.
             if (null !== $ppRepresentation = $rule->getPPRepresentation()) {
-                $outExtra .= "\n" . '        $this->getRule(' . $arguments['name'] . ')->setPPRepresentation(' . '\'' . \str_replace('\'', '\\\'', $ppRepresentation) . '\'' . ');';
+                $outExtra .= "\n" . '        $this->getRule(' . $arguments['name'] . ')->setPPRepresentation(' . '\'' . str_replace('\'', '\\\'', $ppRepresentation) . '\'' . ');';
             }
-            $outRules .= "\n" . '                ' . $arguments['name'] . ' => new \\' . \get_class($rule) . '(' . \implode(', ', $arguments) . '),';
+            $outRules .= "\n" . '                ' . $arguments['name'] . ' => new \\' . get_class($rule) . '(' . implode(', ', $arguments) . '),';
         }
         foreach ($parser->getPragmas() as $pragmaName => $pragmaValue) {
-            $outPragmas .= "\n" . '                \'' . $pragmaName . '\' => ' . (\is_bool($pragmaValue) ? \true === $pragmaValue ? 'true' : 'false' : (\is_int($pragmaValue) ? $pragmaValue : '\'' . $pragmaValue . '\'')) . ',';
+            $outPragmas .= "\n" . '                \'' . $pragmaName . '\' => ' . (is_bool($pragmaValue) ? \true === $pragmaValue ? 'true' : 'false' : (is_int($pragmaValue) ? $pragmaValue : '\'' . $pragmaValue . '\'')) . ',';
         }
         $out .= 'class ' . $className . ' extends \Hoa\Compiler\Llk\Parser' . "\n" . '{' . "\n" . '    public function __construct()' . "\n" . '    {' . "\n" . '        parent::__construct(' . "\n" . '            [' . "\n" . $outTokens . '            ],' . "\n" . '            [' . $outRules . "\n" . '            ],' . "\n" . '            [' . $outPragmas . "\n" . '            ]' . "\n" . '        );' . "\n" . $outExtra . "\n" . '    }' . "\n" . '}' . "\n";
         return $out;
@@ -177,17 +177,17 @@ abstract class Llk
      */
     public static function parsePP($pp, &$tokens, &$rules, &$pragmas, $streamName)
     {
-        $lines = \explode("\n", $pp);
+        $lines = explode("\n", $pp);
         $pragmas = [];
         $tokens = ['default' => []];
         $rules = [];
-        for ($i = 0, $m = \count($lines); $i < $m; ++$i) {
-            $line = \rtrim($lines[$i]);
-            if (0 === \strlen($line) || '//' == \substr($line, 0, 2)) {
+        for ($i = 0, $m = count($lines); $i < $m; ++$i) {
+            $line = rtrim($lines[$i]);
+            if (0 === strlen($line) || '//' == substr($line, 0, 2)) {
                 continue;
             }
             if ('%' == $line[0]) {
-                if (0 !== \preg_match('#^%pragma\h+([^\h]+)\h+(.*)$#u', $line, $matches)) {
+                if (0 !== preg_match('#^%pragma\h+([^\h]+)\h+(.*)$#u', $line, $matches)) {
                     switch ($matches[2]) {
                         case 'true':
                             $pragmaValue = \true;
@@ -196,14 +196,14 @@ abstract class Llk
                             $pragmaValue = \false;
                             break;
                         default:
-                            if (\true === \ctype_digit($matches[2])) {
-                                $pragmaValue = \intval($matches[2]);
+                            if (\true === ctype_digit($matches[2])) {
+                                $pragmaValue = intval($matches[2]);
                             } else {
                                 $pragmaValue = $matches[2];
                             }
                     }
                     $pragmas[$matches[1]] = $pragmaValue;
-                } elseif (0 !== \preg_match('#^%skip\h+(?:([^:]+):)?([^\h]+)\h+(.*)$#u', $line, $matches)) {
+                } elseif (0 !== preg_match('#^%skip\h+(?:([^:]+):)?([^\h]+)\h+(.*)$#u', $line, $matches)) {
                     if (empty($matches[1])) {
                         $matches[1] = 'default';
                     }
@@ -215,7 +215,7 @@ abstract class Llk
                     } else {
                         $tokens[$matches[1]]['skip'] = '(?:' . $tokens[$matches[1]]['skip'] . '|' . $matches[3] . ')';
                     }
-                } elseif (0 !== \preg_match('#^%token\h+(?:([^:]+):)?([^\h]+)\h+(.*?)(?:\h+->\h+(.*))?$#u', $line, $matches)) {
+                } elseif (0 !== preg_match('#^%token\h+(?:([^:]+):)?([^\h]+)\h+(.*?)(?:\h+->\h+(.*))?$#u', $line, $matches)) {
                     if (empty($matches[1])) {
                         $matches[1] = 'default';
                     }
@@ -231,15 +231,15 @@ abstract class Llk
                 }
                 continue;
             }
-            $ruleName = \substr($line, 0, -1);
+            $ruleName = substr($line, 0, -1);
             $rule = null;
             ++$i;
-            while ($i < $m && isset($lines[$i][0]) && (' ' === $lines[$i][0] || "\t" === $lines[$i][0] || '//' === \substr($lines[$i], 0, 2))) {
-                if ('//' === \substr($lines[$i], 0, 2)) {
+            while ($i < $m && isset($lines[$i][0]) && (' ' === $lines[$i][0] || "\t" === $lines[$i][0] || '//' === substr($lines[$i], 0, 2))) {
+                if ('//' === substr($lines[$i], 0, 2)) {
                     ++$i;
                     continue;
                 }
-                $rule .= ' ' . \trim($lines[$i++]);
+                $rule .= ' ' . trim($lines[$i++]);
             }
             if (isset($lines[$i][0])) {
                 --$i;

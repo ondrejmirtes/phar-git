@@ -12,7 +12,7 @@ use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateFormatMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     private \PHPStan\Type\Php\DateFunctionReturnTypeHelper $dateFunctionReturnTypeHelper;

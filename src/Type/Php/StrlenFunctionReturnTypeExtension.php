@@ -22,7 +22,7 @@ use function min;
 use function range;
 use function sort;
 use function strlen;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrlenFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

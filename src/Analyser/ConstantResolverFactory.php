@@ -7,7 +7,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
 use PHPStan\Php\ComposerPhpVersionFactory;
 use PHPStan\Reflection\ReflectionProvider\ReflectionProviderProvider;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ConstantResolverFactory
 {
     private ReflectionProviderProvider $reflectionProviderProvider;

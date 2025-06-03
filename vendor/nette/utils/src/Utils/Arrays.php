@@ -28,10 +28,10 @@ class Arrays
     public static function get(array $array, $key, $default = null)
     {
         foreach (is_array($key) ? $key : [$key] as $k) {
-            if (is_array($array) && \array_key_exists($k, $array)) {
+            if (is_array($array) && array_key_exists($k, $array)) {
                 $array = $array[$k];
             } else {
-                if (\func_num_args() < 3) {
+                if (func_num_args() < 3) {
                     throw new Nette\InvalidArgumentException("Missing item '{$k}'.");
                 }
                 return $default;
@@ -71,7 +71,7 @@ class Arrays
     public static function mergeTree(array $array1, array $array2): array
     {
         $res = $array1 + $array2;
-        foreach (\array_intersect_key($array1, $array2) as $k => $v) {
+        foreach (array_intersect_key($array1, $array2) as $k => $v) {
             if (is_array($v) && is_array($array2[$k])) {
                 $res[$k] = self::mergeTree($v, $array2[$k]);
             }
@@ -85,7 +85,7 @@ class Arrays
      */
     public static function getKeyOffset(array $array, $key): ?int
     {
-        return Helpers::falseToNull(\array_search(self::toKey($key), \array_keys($array), \true));
+        return Helpers::falseToNull(array_search(self::toKey($key), array_keys($array), \true));
     }
     /**
      * @deprecated  use  getKeyOffset()
@@ -100,7 +100,7 @@ class Arrays
      */
     public static function contains(array $array, $value): bool
     {
-        return \in_array($value, $array, \true);
+        return in_array($value, $array, \true);
     }
     /**
      * Returns the first item from the array or null if array is empty.
@@ -110,7 +110,7 @@ class Arrays
      */
     public static function first(array $array)
     {
-        return count($array) ? \reset($array) : null;
+        return count($array) ? reset($array) : null;
     }
     /**
      * Returns the last item from the array or null if array is empty.
@@ -120,7 +120,7 @@ class Arrays
      */
     public static function last(array $array)
     {
-        return count($array) ? \end($array) : null;
+        return count($array) ? end($array) : null;
     }
     /**
      * Inserts the contents of the $inserted array into the $array immediately after the $key.
@@ -130,7 +130,7 @@ class Arrays
     public static function insertBefore(array &$array, $key, array $inserted): void
     {
         $offset = $key === null ? 0 : (int) self::getKeyOffset($array, $key);
-        $array = \array_slice($array, 0, $offset, \true) + $inserted + \array_slice($array, $offset, count($array), \true);
+        $array = array_slice($array, 0, $offset, \true) + $inserted + array_slice($array, $offset, count($array), \true);
     }
     /**
      * Inserts the contents of the $inserted array into the $array before the $key.
@@ -142,7 +142,7 @@ class Arrays
         if ($key === null || ($offset = self::getKeyOffset($array, $key)) === null) {
             $offset = count($array) - 1;
         }
-        $array = \array_slice($array, 0, $offset + 1, \true) + $inserted + \array_slice($array, $offset + 1, count($array), \true);
+        $array = array_slice($array, 0, $offset + 1, \true) + $inserted + array_slice($array, $offset + 1, count($array), \true);
     }
     /**
      * Renames key in array.
@@ -156,9 +156,9 @@ class Arrays
             return \false;
         }
         $val =& $array[$oldKey];
-        $keys = \array_keys($array);
+        $keys = array_keys($array);
         $keys[$offset] = $newKey;
-        $array = \array_combine($keys, $array);
+        $array = array_combine($keys, $array);
         $array[$newKey] =& $val;
         return \true;
     }
@@ -182,7 +182,7 @@ class Arrays
         } : function ($v) use (&$res): void {
             $res[] = $v;
         };
-        \array_walk_recursive($array, $cb);
+        array_walk_recursive($array, $cb);
         return $res;
     }
     /**
@@ -191,7 +191,7 @@ class Arrays
      */
     public static function isList($value): bool
     {
-        return is_array($value) && (\PHP_VERSION_ID < 80100 ? !$value || \array_keys($value) === \range(0, count($value) - 1) : \array_is_list($value));
+        return is_array($value) && (\PHP_VERSION_ID < 80100 ? !$value || array_keys($value) === range(0, count($value) - 1) : array_is_list($value));
     }
     /**
      * Reformats table to associative tree. Path looks like 'field|field[]field->field=field'.
@@ -200,7 +200,7 @@ class Arrays
      */
     public static function associate(array $array, $path)
     {
-        $parts = is_array($path) ? $path : \preg_split('#(\[\]|->|=|\|)#', $path, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
+        $parts = is_array($path) ? $path : preg_split('#(\[\]|->|=|\|)#', $path, -1, \PREG_SPLIT_DELIM_CAPTURE | \PREG_SPLIT_NO_EMPTY);
         if (!$parts || $parts === ['->'] || $parts[0] === '=' || $parts[0] === '|') {
             throw new Nette\InvalidArgumentException("Invalid path '{$path}'.");
         }
@@ -260,11 +260,11 @@ class Arrays
      */
     public static function pick(array &$array, $key, $default = null)
     {
-        if (\array_key_exists($key, $array)) {
+        if (array_key_exists($key, $array)) {
             $value = $array[$key];
             unset($array[$key]);
             return $value;
-        } elseif (\func_num_args() < 3) {
+        } elseif (func_num_args() < 3) {
             throw new Nette\InvalidArgumentException("Missing item '{$key}'.");
         } else {
             return $default;
@@ -352,7 +352,7 @@ class Arrays
      */
     public static function toKey($value)
     {
-        return \key([$value => null]);
+        return key([$value => null]);
     }
     /**
      * Returns copy of the $array where every item is converted to string

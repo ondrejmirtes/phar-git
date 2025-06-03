@@ -37,7 +37,7 @@ final class InjectExtension extends DI\CompilerExtension
     private function updateDefinition(Definitions\ServiceDefinition $def): void
     {
         $resolvedType = (new DI\Resolver($this->getContainerBuilder()))->resolveEntityType($def->getCreator());
-        $class = \is_subclass_of($resolvedType, $def->getType()) ? $resolvedType : $def->getType();
+        $class = is_subclass_of($resolvedType, $def->getType()) ? $resolvedType : $def->getType();
         $setups = $def->getSetup();
         foreach (self::getInjectProperties($class) as $property => $type) {
             $builder = $this->getContainerBuilder();
@@ -49,9 +49,9 @@ final class InjectExtension extends DI\CompilerExtension
                     unset($setups[$key]);
                 }
             }
-            \array_unshift($setups, $inject);
+            array_unshift($setups, $inject);
         }
-        foreach (\array_reverse(self::getInjectMethods($class)) as $method) {
+        foreach (array_reverse(self::getInjectMethods($class)) as $method) {
             $inject = new Definitions\Statement($method);
             foreach ($setups as $key => $setup) {
                 if ($setup->getEntity() === $inject->getEntity()) {
@@ -59,7 +59,7 @@ final class InjectExtension extends DI\CompilerExtension
                     unset($setups[$key]);
                 }
             }
-            \array_unshift($setups, $inject);
+            array_unshift($setups, $inject);
         }
         $def->setSetup($setups);
     }
@@ -70,16 +70,16 @@ final class InjectExtension extends DI\CompilerExtension
     public static function getInjectMethods(string $class): array
     {
         $classes = [];
-        foreach (\get_class_methods($class) as $name) {
-            if (\substr($name, 0, 6) === 'inject') {
+        foreach (get_class_methods($class) as $name) {
+            if (substr($name, 0, 6) === 'inject') {
                 $classes[$name] = (new \ReflectionMethod($class, $name))->getDeclaringClass()->name;
             }
         }
-        $methods = \array_keys($classes);
-        \uksort($classes, function (string $a, string $b) use ($classes, $methods): int {
-            return $classes[$a] === $classes[$b] ? \array_search($a, $methods, \true) <=> \array_search($b, $methods, \true) : (\is_a($classes[$a], $classes[$b], \true) ? 1 : -1);
+        $methods = array_keys($classes);
+        uksort($classes, function (string $a, string $b) use ($classes, $methods): int {
+            return $classes[$a] === $classes[$b] ? array_search($a, $methods, \true) <=> array_search($b, $methods, \true) : (is_a($classes[$a], $classes[$b], \true) ? 1 : -1);
         });
-        return \array_keys($classes);
+        return array_keys($classes);
     }
     /**
      * Generates list of properties with annotation @inject.
@@ -93,11 +93,11 @@ final class InjectExtension extends DI\CompilerExtension
             $hasAttr = \PHP_VERSION_ID >= 80000 && $rp->getAttributes(DI\Attributes\Inject::class);
             if ($hasAttr || DI\Helpers::parseAnnotation($rp, 'inject') !== null) {
                 if (!$rp->isPublic() || $rp->isStatic()) {
-                    \trigger_error(\sprintf('Property %s for injection must be public and non-static.', Reflection::toString($rp)), \E_USER_WARNING);
+                    trigger_error(sprintf('Property %s for injection must be public and non-static.', Reflection::toString($rp)), \E_USER_WARNING);
                     continue;
                 }
                 if (\PHP_VERSION_ID >= 80100 && $rp->isReadOnly()) {
-                    throw new Nette\InvalidStateException(\sprintf('Property %s for injection must not be readonly.', Reflection::toString($rp)));
+                    throw new Nette\InvalidStateException(sprintf('Property %s for injection must not be readonly.', Reflection::toString($rp)));
                 }
                 $type = Nette\Utils\Type::fromReflection($rp);
                 if (!$type && !$hasAttr && $annotation = DI\Helpers::parseAnnotation($rp, 'var')) {
@@ -107,7 +107,7 @@ final class InjectExtension extends DI\CompilerExtension
                 $res[$rp->getName()] = DI\Helpers::ensureClassType($type, 'type of property ' . Reflection::toString($rp));
             }
         }
-        \ksort($res);
+        ksort($res);
         return $res;
     }
     /**
@@ -116,13 +116,13 @@ final class InjectExtension extends DI\CompilerExtension
      */
     public static function callInjects(DI\Container $container, $service): void
     {
-        if (!\is_object($service)) {
-            throw new Nette\InvalidArgumentException(\sprintf('Service must be object, %s given.', \gettype($service)));
+        if (!is_object($service)) {
+            throw new Nette\InvalidArgumentException(sprintf('Service must be object, %s given.', gettype($service)));
         }
-        foreach (self::getInjectMethods(\get_class($service)) as $method) {
+        foreach (self::getInjectMethods(get_class($service)) as $method) {
             $container->callMethod([$service, $method]);
         }
-        foreach (self::getInjectProperties(\get_class($service)) as $property => $type) {
+        foreach (self::getInjectProperties(get_class($service)) as $property => $type) {
             $service->{$property} = $container->getByType($type);
         }
     }

@@ -5,7 +5,7 @@ namespace PHPStan\Collectors;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RegistryFactory
 {
     private Container $container;

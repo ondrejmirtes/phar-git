@@ -15,7 +15,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use SimpleXMLElement;
 use function extension_loaded;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class SimpleXMLElementXpathMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string

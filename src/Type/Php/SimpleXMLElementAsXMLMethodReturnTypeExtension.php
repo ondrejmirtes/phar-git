@@ -15,7 +15,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use SimpleXMLElement;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class SimpleXMLElementAsXMLMethodReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string

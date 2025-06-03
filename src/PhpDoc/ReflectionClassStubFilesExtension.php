@@ -5,7 +5,7 @@ namespace PHPStan\PhpDoc;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Php\PhpVersion;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReflectionClassStubFilesExtension implements \PHPStan\PhpDoc\StubFilesExtension
 {
     private PhpVersion $phpVersion;

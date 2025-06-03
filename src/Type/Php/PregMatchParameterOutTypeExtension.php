@@ -13,7 +13,7 @@ use PHPStan\Type\FunctionParameterOutTypeExtension;
 use PHPStan\Type\Type;
 use function in_array;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PregMatchParameterOutTypeExtension implements FunctionParameterOutTypeExtension
 {
     private \PHPStan\Type\Php\RegexArrayShapeMatcher $regexShapeMatcher;

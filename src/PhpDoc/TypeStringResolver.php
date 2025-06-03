@@ -9,7 +9,7 @@ use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class TypeStringResolver
 {
     private Lexer $typeLexer;

@@ -14,6 +14,6 @@ class InvalidFileInfo extends RuntimeException
      */
     public static function fromNonSplFileInfo($nonSplFileInfo): self
     {
-        return new self(sprintf('Expected an iterator of SplFileInfo instances, %s given instead', is_object($nonSplFileInfo) ? \get_class($nonSplFileInfo) : gettype($nonSplFileInfo)));
+        return new self(sprintf('Expected an iterator of SplFileInfo instances, %s given instead', is_object($nonSplFileInfo) ? get_class($nonSplFileInfo) : gettype($nonSplFileInfo)));
     }
 }

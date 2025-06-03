@@ -7,7 +7,7 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LastConditionVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isLastCondition';

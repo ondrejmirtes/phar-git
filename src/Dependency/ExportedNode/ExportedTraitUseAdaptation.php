@@ -62,7 +62,7 @@ final class ExportedTraitUseAdaptation implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['traitName' => $this->traitName, 'method' => $this->method, 'newModifier' => $this->newModifier, 'newName' => $this->newName, 'insteadOfs' => $this->insteadOfs]];

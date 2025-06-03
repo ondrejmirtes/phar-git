@@ -148,7 +148,7 @@ class Gamma implements Iterator
         $this->_current = [];
         $this->_tmp = null;
         $this->_i = 0;
-        $this->_o = 0 === $this->_n ? [0] : \array_fill(0, $this->_n, 0);
+        $this->_o = 0 === $this->_n ? [0] : array_fill(0, $this->_n, 0);
         $this->_o[0] = $this->_k;
         $this->_last = \false;
         return;

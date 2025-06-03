@@ -7,7 +7,7 @@ use PhpParser\Node;
 use PhpParser\Node\Identifier;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClosureBindToVarVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'closureBindToVar';

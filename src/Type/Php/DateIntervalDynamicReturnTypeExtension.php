@@ -15,7 +15,7 @@ use PHPStan\Type\Type;
 use Throwable;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateIntervalDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
     public function getClass(): string

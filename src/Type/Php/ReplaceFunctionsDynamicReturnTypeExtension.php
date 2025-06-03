@@ -23,7 +23,7 @@ use PHPStan\Type\TypeUtils;
 use function array_key_exists;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReplaceFunctionsDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private const FUNCTIONS_SUBJECT_POSITION = ['preg_replace' => 2, 'preg_replace_callback' => 2, 'preg_replace_callback_array' => 1, 'str_replace' => 2, 'str_ireplace' => 2, 'substr_replace' => 0, 'strtr' => 0];

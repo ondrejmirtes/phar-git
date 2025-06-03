@@ -62,15 +62,15 @@ class Autoloader
      */
     public function addNamespace($prefix, $baseDirectory, $prepend = \false)
     {
-        $prefix = \trim($prefix, '\\') . '\\';
-        $baseDirectory = \rtrim($baseDirectory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
+        $prefix = trim($prefix, '\\') . '\\';
+        $baseDirectory = rtrim($baseDirectory, \DIRECTORY_SEPARATOR) . \DIRECTORY_SEPARATOR;
         if (\false === isset($this->_namespacePrefixesToBaseDirectories[$prefix])) {
             $this->_namespacePrefixesToBaseDirectories[$prefix] = [];
         }
         if (\true === $prepend) {
-            \array_unshift($this->_namespacePrefixesToBaseDirectories[$prefix], $baseDirectory);
+            array_unshift($this->_namespacePrefixesToBaseDirectories[$prefix], $baseDirectory);
         } else {
-            \array_push($this->_namespacePrefixesToBaseDirectories[$prefix], $baseDirectory);
+            array_push($this->_namespacePrefixesToBaseDirectories[$prefix], $baseDirectory);
         }
         return;
     }
@@ -84,11 +84,11 @@ class Autoloader
     {
         $entityPrefix = $entity;
         $hasBaseDirectory = \false;
-        while (\false !== $pos = \strrpos($entityPrefix, '\\')) {
-            $currentEntityPrefix = \substr($entity, 0, $pos + 1);
-            $entityPrefix = \rtrim($currentEntityPrefix, '\\');
-            $entitySuffix = \substr($entity, $pos + 1);
-            $entitySuffixAsPath = \str_replace('\\', '/', $entitySuffix);
+        while (\false !== $pos = strrpos($entityPrefix, '\\')) {
+            $currentEntityPrefix = substr($entity, 0, $pos + 1);
+            $entityPrefix = rtrim($currentEntityPrefix, '\\');
+            $entitySuffix = substr($entity, $pos + 1);
+            $entitySuffixAsPath = str_replace('\\', '/', $entitySuffix);
             if (\false === $this->hasBaseDirectory($currentEntityPrefix)) {
                 continue;
             }
@@ -100,8 +100,8 @@ class Autoloader
                 }
             }
         }
-        if (\true === $hasBaseDirectory && $entity === \Hoa\Consistency\Consistency::getEntityShortestName($entity) && \false !== $pos = \strrpos($entity, '\\')) {
-            return $this->runAutoloaderStack($entity . '\\' . \substr($entity, $pos + 1));
+        if (\true === $hasBaseDirectory && $entity === \Hoa\Consistency\Consistency::getEntityShortestName($entity) && \false !== $pos = strrpos($entity, '\\')) {
+            return $this->runAutoloaderStack($entity . '\\' . substr($entity, $pos + 1));
         }
         return null;
     }
@@ -113,7 +113,7 @@ class Autoloader
      */
     public function requireFile($filename)
     {
-        if (\false === \file_exists($filename)) {
+        if (\false === file_exists($filename)) {
             return \false;
         }
         require $filename;
@@ -149,7 +149,7 @@ class Autoloader
      */
     public static function getLoadedClasses()
     {
-        return \get_declared_classes();
+        return get_declared_classes();
     }
     /**
      * Run the entire autoloader stack with a specific entity.
@@ -159,7 +159,7 @@ class Autoloader
      */
     public function runAutoloaderStack($entity)
     {
-        return \spl_autoload_call($entity);
+        return spl_autoload_call($entity);
     }
     /**
      * Register the autoloader.
@@ -169,7 +169,7 @@ class Autoloader
      */
     public function register($prepend = \false)
     {
-        return \spl_autoload_register([$this, 'load'], \true, $prepend);
+        return spl_autoload_register([$this, 'load'], \true, $prepend);
     }
     /**
      * Unregister the autoloader.
@@ -178,7 +178,7 @@ class Autoloader
      */
     public function unregister()
     {
-        return \spl_autoload_unregister([$this, 'load']);
+        return spl_autoload_unregister([$this, 'load']);
     }
     /**
      * Get all registered autoloaders (not only from this library).
@@ -187,7 +187,7 @@ class Autoloader
      */
     public function getRegisteredAutoloaders()
     {
-        return \spl_autoload_functions();
+        return spl_autoload_functions();
     }
     /**
      * Dynamic new, a simple factory.
@@ -199,9 +199,9 @@ class Autoloader
      */
     public static function dnew($classname, array $arguments = [])
     {
-        $classname = \ltrim($classname, '\\');
+        $classname = ltrim($classname, '\\');
         if (\false === \Hoa\Consistency\Consistency::entityExists($classname, \false)) {
-            \spl_autoload_call($classname);
+            spl_autoload_call($classname);
         }
         $class = new \ReflectionClass($classname);
         if (empty($arguments) || \false === $class->hasMethod('__construct')) {
@@ -214,5 +214,5 @@ class Autoloader
  * Autoloader.
  */
 $autoloader = new \Hoa\Consistency\Autoloader();
-$autoloader->addNamespace('Hoa', \dirname(__DIR__));
+$autoloader->addNamespace('Hoa', dirname(__DIR__));
 $autoloader->register();

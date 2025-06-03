@@ -24,7 +24,7 @@ final class Helpers
     /** @deprecated */
     public static function takeParent(&$data): bool
     {
-        if (\is_array($data) && isset($data[self::PREVENT_MERGING])) {
+        if (is_array($data) && isset($data[self::PREVENT_MERGING])) {
             unset($data[self::PREVENT_MERGING]);
             return \true;
         }

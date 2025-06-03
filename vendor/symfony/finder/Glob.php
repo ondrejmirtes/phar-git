@@ -63,7 +63,7 @@ class Glob
                 $car = '/(?:' . $car . ')*';
                 $i += 2 + isset($glob[$i + 3]);
                 if ('/' === $delimiter) {
-                    $car = \str_replace('/', '\/', $car);
+                    $car = str_replace('/', '\/', $car);
                 }
             }
             if ($delimiter === $car || '.' === $car || '(' === $car || ')' === $car || '|' === $car || '+' === $car || '^' === $car || '$' === $car) {

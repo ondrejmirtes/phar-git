@@ -30,7 +30,7 @@ class ContainerLoader
     public function load(callable $generator, $key = null): string
     {
         $class = $this->getClassName($key);
-        if (!\class_exists($class, \false)) {
+        if (!class_exists($class, \false)) {
             $this->loadFile($class, $generator);
         }
         return $class;
@@ -40,7 +40,7 @@ class ContainerLoader
      */
     public function getClassName($key): string
     {
-        return 'Container_' . \substr(\md5(\serialize($key)), 0, 10);
+        return 'Container_' . substr(md5(serialize($key)), 0, 10);
     }
     private function loadFile(string $class, callable $generator): void
     {
@@ -50,44 +50,44 @@ class ContainerLoader
             return;
         }
         Nette\Utils\FileSystem::createDir($this->tempDirectory);
-        $handle = @\fopen("{$file}.lock", 'c+');
+        $handle = @fopen("{$file}.lock", 'c+');
         // @ is escalated to exception
         if (!$handle) {
-            throw new Nette\IOException(\sprintf("Unable to create file '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
-        } elseif (!@\flock($handle, \LOCK_EX)) {
+            throw new Nette\IOException(sprintf("Unable to create file '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
+        } elseif (!@flock($handle, \LOCK_EX)) {
             // @ is escalated to exception
-            throw new Nette\IOException(\sprintf("Unable to acquire exclusive lock on '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
+            throw new Nette\IOException(sprintf("Unable to acquire exclusive lock on '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
         }
-        if (!\is_file($file) || $this->isExpired($file, $updatedMeta)) {
+        if (!is_file($file) || $this->isExpired($file, $updatedMeta)) {
             if (isset($updatedMeta)) {
                 $toWrite["{$file}.meta"] = $updatedMeta;
             } else {
                 [$toWrite[$file], $toWrite["{$file}.meta"]] = $this->generate($class, $generator);
             }
             foreach ($toWrite as $name => $content) {
-                if (\file_put_contents("{$name}.tmp", $content) !== \strlen($content) || !\rename("{$name}.tmp", $name)) {
-                    @\unlink("{$name}.tmp");
+                if (file_put_contents("{$name}.tmp", $content) !== strlen($content) || !rename("{$name}.tmp", $name)) {
+                    @unlink("{$name}.tmp");
                     // @ - file may not exist
-                    throw new Nette\IOException(\sprintf("Unable to create file '%s'.", $name));
-                } elseif (\function_exists('opcache_invalidate')) {
-                    @\opcache_invalidate($name, \true);
+                    throw new Nette\IOException(sprintf("Unable to create file '%s'.", $name));
+                } elseif (function_exists('opcache_invalidate')) {
+                    @opcache_invalidate($name, \true);
                     // @ can be restricted
                 }
             }
         }
         if (@(include $file) === \false) {
             // @ - error escalated to exception
-            throw new Nette\IOException(\sprintf("Unable to include '%s'.", $file));
+            throw new Nette\IOException(sprintf("Unable to include '%s'.", $file));
         }
-        \flock($handle, \LOCK_UN);
+        flock($handle, \LOCK_UN);
     }
     private function isExpired(string $file, ?string &$updatedMeta = null): bool
     {
         if ($this->autoRebuild) {
-            $meta = @\unserialize((string) \file_get_contents("{$file}.meta"));
+            $meta = @unserialize((string) file_get_contents("{$file}.meta"));
             // @ - file may not exist
             $orig = $meta[2] ?? null;
-            return empty($meta[0]) || DependencyChecker::isExpired(...$meta) || $orig !== $meta[2] && $updatedMeta = \serialize($meta);
+            return empty($meta[0]) || DependencyChecker::isExpired(...$meta) || $orig !== $meta[2] && $updatedMeta = serialize($meta);
         }
         return \false;
     }
@@ -97,6 +97,6 @@ class ContainerLoader
         $compiler = new Compiler();
         $compiler->setClassName($class);
         $code = $generator(...[&$compiler]) ?: $compiler->compile();
-        return ["<?php\n{$code}", \serialize($compiler->exportDependencies())];
+        return ["<?php\n{$code}", serialize($compiler->exportDependencies())];
     }
 }

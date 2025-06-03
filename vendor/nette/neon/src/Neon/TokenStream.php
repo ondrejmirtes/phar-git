@@ -29,10 +29,10 @@ final class TokenStream
     }
     public function isNext(...$types): bool
     {
-        while (\in_array($this->tokens[$this->pos]->type ?? null, [Token::Comment, Token::Whitespace], \true)) {
+        while (in_array($this->tokens[$this->pos]->type ?? null, [Token::Comment, Token::Whitespace], \true)) {
             $this->pos++;
         }
-        return $types ? \in_array($this->tokens[$this->pos]->type ?? null, $types, \true) : isset($this->tokens[$this->pos]);
+        return $types ? in_array($this->tokens[$this->pos]->type ?? null, $types, \true) : isset($this->tokens[$this->pos]);
     }
     public function consume(...$types): ?Token
     {
@@ -40,7 +40,7 @@ final class TokenStream
     }
     public function getIndentation(): string
     {
-        return \in_array($this->tokens[$this->pos - 2]->type ?? null, [Token::Newline, null], \true) && ($this->tokens[$this->pos - 1]->type ?? null) === Token::Whitespace ? $this->tokens[$this->pos - 1]->value : '';
+        return in_array($this->tokens[$this->pos - 2]->type ?? null, [Token::Newline, null], \true) && ($this->tokens[$this->pos - 1]->type ?? null) === Token::Whitespace ? $this->tokens[$this->pos - 1]->value : '';
     }
     /** @return never */
     public function error(?string $message = null, ?int $pos = null): void
@@ -53,10 +53,10 @@ final class TokenStream
             }
             $input .= $token->value;
         }
-        $line = \substr_count($input, "\n") + 1;
-        $col = \strlen($input) - \strrpos("\n" . $input, "\n") + 1;
+        $line = substr_count($input, "\n") + 1;
+        $col = strlen($input) - strrpos("\n" . $input, "\n") + 1;
         $token = $this->tokens[$pos] ?? null;
-        $message = $message ?? 'Unexpected ' . ($token === null ? 'end' : "'" . \str_replace("\n", '<new line>', \substr($this->tokens[$pos]->value, 0, 40)) . "'");
+        $message = $message ?? 'Unexpected ' . ($token === null ? 'end' : "'" . str_replace("\n", '<new line>', substr($this->tokens[$pos]->value, 0, 40)) . "'");
         throw new Exception("{$message} on line {$line}, column {$col}.");
     }
 }

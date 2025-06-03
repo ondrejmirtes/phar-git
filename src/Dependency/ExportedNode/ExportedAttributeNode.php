@@ -50,7 +50,7 @@ final class ExportedAttributeNode implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'args' => $this->args]];

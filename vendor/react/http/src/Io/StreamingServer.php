@@ -223,7 +223,7 @@ final class StreamingServer extends EventEmitter
         // assign default "Date" header from current time automatically
         if (!$response->hasHeader('Date')) {
             // IMF-fixdate  = day-name "," SP date1 SP time-of-day SP GMT
-            $response = $response->withHeader('Date', \gmdate('D, d M Y H:i:s', (int) $this->clock->now()) . ' GMT');
+            $response = $response->withHeader('Date', gmdate('D, d M Y H:i:s', (int) $this->clock->now()) . ' GMT');
         } elseif ($response->getHeaderLine('Date') === '') {
             $response = $response->withoutHeader('Date');
         }
@@ -263,7 +263,7 @@ final class StreamingServer extends EventEmitter
         } elseif ($version === '1.1') {
             // HTTP/1.1 assumes persistent connection support by default, so we don't need to inform client
             $persist = \true;
-        } elseif (\strtolower($request->getHeaderLine('Connection')) === 'keep-alive') {
+        } elseif (strtolower($request->getHeaderLine('Connection')) === 'keep-alive') {
             // obey explicit "Connection: keep-alive" request header and inform client
             $persist = \true;
             $response = $response->withHeader('Connection', 'keep-alive');

@@ -78,7 +78,7 @@ class ClassAttributeCollector
                     continue;
                 }
                 $property = $propertyReflection->name;
-                \assert($property !== '');
+                assert($property !== '');
                 $this->io->debug("Found attribute {$attribute->getName()} on {$class}::{$property}");
                 $propertyAttributes[] = new TransientTargetProperty($attribute->getName(), $attribute->getArguments(), $property);
             }
@@ -101,7 +101,7 @@ class ClassAttributeCollector
     }
     private static function isAttributeIgnored(string $name): bool
     {
-        static $ignored = [\ReturnTypeWillChange::class => \true, \_PHPStan_checksum\Override::class => \true, \SensitiveParameter::class => \true, \_PHPStan_checksum\Deprecated::class => \true, \AllowDynamicProperties::class];
+        static $ignored = [\ReturnTypeWillChange::class => \true, \Override::class => \true, \SensitiveParameter::class => \true, \Deprecated::class => \true, \AllowDynamicProperties::class];
         return isset($ignored[$name]);
         // @phpstan-ignore offsetAccess.nonOffsetAccessible
     }
@@ -156,7 +156,7 @@ class ClassAttributeCollector
             return [];
         }
         $ast = $this->parser->parse($contents);
-        \assert($ast !== null);
+        assert($ast !== null);
         $nameTraverser = new NodeTraverser(new NameResolver());
         return $this->parserCache[$file] = $nameTraverser->traverse($ast);
     }
@@ -168,7 +168,7 @@ class ClassAttributeCollector
     {
         $evaluator = new ConstExprEvaluator(function (Expr $expr) {
             if ($expr instanceof Expr\ClassConstFetch && $expr->class instanceof Node\Name && $expr->name instanceof Node\Identifier) {
-                return \constant(sprintf('%s::%s', $expr->class->toString(), $expr->name->toString()));
+                return constant(sprintf('%s::%s', $expr->class->toString(), $expr->name->toString()));
             }
             throw new ConstExprEvaluationException("Expression of type {$expr->getType()} cannot be evaluated");
         });

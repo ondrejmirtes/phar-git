@@ -71,15 +71,15 @@ class Error extends \Hoa\Exception\Exception
     public static function enableErrorHandler($enable = \true)
     {
         if (\false === $enable) {
-            return \restore_error_handler();
+            return restore_error_handler();
         }
-        return \set_error_handler(function ($no, $str, $file = null, $line = null, $ctx = null) {
-            if (0 === ($no & \error_reporting())) {
+        return set_error_handler(function ($no, $str, $file = null, $line = null, $ctx = null) {
+            if (0 === ($no & error_reporting())) {
                 return;
             }
-            $trace = \debug_backtrace();
-            \array_shift($trace);
-            \array_shift($trace);
+            $trace = debug_backtrace();
+            array_shift($trace);
+            array_shift($trace);
             throw new \Hoa\Exception\Error($str, $no, $file, $line, $trace);
         });
     }

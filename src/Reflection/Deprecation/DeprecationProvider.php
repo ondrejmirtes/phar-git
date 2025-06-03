@@ -14,7 +14,7 @@ use PHPStan\BetterReflection\Reflection\Adapter\ReflectionProperty;
 use PHPStan\BetterReflection\Reflection\ReflectionConstant;
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DeprecationProvider
 {
     private Container $container;

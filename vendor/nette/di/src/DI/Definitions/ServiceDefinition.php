@@ -134,7 +134,7 @@ final class ServiceDefinition extends Definition
         }
         $this->creator = $resolver->completeStatement($this->creator);
         foreach ($this->setup as &$setup) {
-            if (\is_string($setup->getEntity()) && \strpbrk($setup->getEntity(), ':@?\\') === \false) {
+            if (is_string($setup->getEntity()) && strpbrk($setup->getEntity(), ':@?\\') === \false) {
                 // auto-prepend @self
                 $setup = new Statement([new Reference(Reference::Self), $setup->getEntity()], $setup->arguments);
             }
@@ -159,8 +159,8 @@ final class ServiceDefinition extends Definition
     public function __clone()
     {
         parent::__clone();
-        $this->creator = \unserialize(\serialize($this->creator));
-        $this->setup = \unserialize(\serialize($this->setup));
+        $this->creator = unserialize(serialize($this->creator));
+        $this->setup = unserialize(serialize($this->setup));
     }
 }
-\class_exists(Nette\DI\ServiceDefinition::class);
+class_exists(Nette\DI\ServiceDefinition::class);

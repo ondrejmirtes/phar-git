@@ -41,7 +41,7 @@ final class Type
             $name = self::resolve($type->getName(), $of);
             return $asObject ? new self($type->allowsNull() && $name !== 'mixed' ? [$name, 'null'] : [$name]) : $name;
         } elseif ($type instanceof \ReflectionUnionType || $type instanceof \ReflectionIntersectionType) {
-            return new self(\array_map(function ($t) use ($of) {
+            return new self(array_map(function ($t) use ($of) {
                 return self::fromReflectionType($t, $of, \false);
             }, $type->getTypes()), $type instanceof \ReflectionUnionType ? '|' : '&');
         } else {
@@ -57,14 +57,14 @@ final class Type
             throw new Nette\InvalidArgumentException("Invalid type '{$type}'.");
         }
         if ($type[0] === '?') {
-            return new self([\substr($type, 1), 'null']);
+            return new self([substr($type, 1), 'null']);
         }
         $unions = [];
-        foreach (\explode('|', $type) as $part) {
-            $part = \explode('&', \trim($part, '()'));
-            $unions[] = \count($part) === 1 ? $part[0] : new self($part, '&');
+        foreach (explode('|', $type) as $part) {
+            $part = explode('&', trim($part, '()'));
+            $unions[] = count($part) === 1 ? $part[0] : new self($part, '&');
         }
-        return \count($unions) === 1 && $unions[0] instanceof self ? $unions[0] : new self($unions);
+        return count($unions) === 1 && $unions[0] instanceof self ? $unions[0] : new self($unions);
     }
     /**
      * Resolves 'self', 'static' and 'parent' to the actual class name.
@@ -72,7 +72,7 @@ final class Type
      */
     public static function resolve(string $type, $of): string
     {
-        $lower = \strtolower($type);
+        $lower = strtolower($type);
         if ($of instanceof \ReflectionFunction) {
             return $type;
         } elseif ($lower === 'self' || $lower === 'static') {
@@ -85,19 +85,19 @@ final class Type
     }
     private function __construct(array $types, string $kind = '|')
     {
-        $o = \array_search('null', $types, \true);
+        $o = array_search('null', $types, \true);
         if ($o !== \false) {
             // null as last
-            \array_splice($types, $o, 1);
+            array_splice($types, $o, 1);
             $types[] = 'null';
         }
         $this->types = $types;
-        $this->simple = \is_string($types[0]) && ($types[1] ?? 'null') === 'null';
-        $this->kind = \count($types) > 1 ? $kind : '';
+        $this->simple = is_string($types[0]) && ($types[1] ?? 'null') === 'null';
+        $this->kind = count($types) > 1 ? $kind : '';
     }
     public function __toString(): string
     {
-        $multi = \count($this->types) > 1;
+        $multi = count($this->types) > 1;
         if ($this->simple) {
             return ($multi ? '?' : '') . $this->types[0];
         }
@@ -105,7 +105,7 @@ final class Type
         foreach ($this->types as $type) {
             $res[] = $type instanceof self && $multi ? "({$type})" : $type;
         }
-        return \implode($this->kind, $res);
+        return implode($this->kind, $res);
     }
     /**
      * Returns the array of subtypes that make up the compound type as strings.
@@ -113,7 +113,7 @@ final class Type
      */
     public function getNames(): array
     {
-        return \array_map(function ($t) {
+        return array_map(function ($t) {
             return $t instanceof self ? $t->getNames() : $t;
         }, $this->types);
     }
@@ -123,7 +123,7 @@ final class Type
      */
     public function getTypes(): array
     {
-        return \array_map(function ($t) {
+        return array_map(function ($t) {
             return $t instanceof self ? $t : new self([$t]);
         }, $this->types);
     }
@@ -205,7 +205,7 @@ final class Type
         return Arrays::every($types, function ($type) use ($subtypes) {
             $builtin = Validators::isBuiltinType($type);
             return Arrays::some($subtypes, function ($subtype) use ($type, $builtin) {
-                return $builtin ? \strcasecmp($type, $subtype) === 0 : \is_a($subtype, $type, \true);
+                return $builtin ? strcasecmp($type, $subtype) === 0 : is_a($subtype, $type, \true);
             });
         });
     }

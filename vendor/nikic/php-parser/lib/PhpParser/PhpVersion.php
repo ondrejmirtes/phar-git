@@ -43,7 +43,7 @@ class PhpVersion
      */
     public static function fromString(string $version): self
     {
-        if (!\preg_match('/^(\d+)\.(\d+)/', $version, $matches)) {
+        if (!preg_match('/^(\d+)\.(\d+)/', $version, $matches)) {
             throw new \LogicException("Invalid PHP version \"{$version}\"");
         }
         return self::fromComponents((int) $matches[1], (int) $matches[2]);

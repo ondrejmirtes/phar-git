@@ -84,7 +84,7 @@ class MemoizeClassMapGenerator
             return \true;
         }
         $mtime = filemtime($path);
-        \assert(is_int($mtime));
+        assert(is_int($mtime));
         if ($timestamp < $mtime) {
             $diff = $mtime - $timestamp;
             $this->io->debug("Refresh class map for path '{$path}' ({$diff} sec ago)");

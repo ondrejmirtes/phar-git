@@ -35,21 +35,21 @@ final class Factory
         }
         $ifaces = $from->getInterfaceNames();
         foreach ($ifaces as $iface) {
-            $ifaces = \array_filter($ifaces, function (string $item) use ($iface): bool {
-                return !\is_subclass_of($iface, $item);
+            $ifaces = array_filter($ifaces, function (string $item) use ($iface): bool {
+                return !is_subclass_of($iface, $item);
             });
         }
         if ($from->isInterface()) {
             $class->setExtends($ifaces);
         } else {
-            $ifaces = \array_diff($ifaces, [$enumIface]);
+            $ifaces = array_diff($ifaces, [$enumIface]);
             $class->setImplements($ifaces);
         }
         $class->setComment(Helpers::unformatDocComment((string) $from->getDocComment()));
         $class->setAttributes($this->getAttributes($from));
         if ($from->getParentClass()) {
             $class->setExtends($from->getParentClass()->name);
-            $class->setImplements(\array_diff($class->getImplements(), $from->getParentClass()->getInterfaceNames()));
+            $class->setImplements(array_diff($class->getImplements(), $from->getParentClass()->getInterfaceNames()));
         }
         $props = [];
         foreach ($from->getProperties() as $prop) {
@@ -63,7 +63,7 @@ final class Factory
         foreach ($from->getMethods() as $method) {
             $realMethod = Reflection::getMethodDeclaringMethod($method);
             $declaringClass = ($materializeTraits ? $method : $realMethod)->getDeclaringClass();
-            if ($declaringClass->name === $from->name && (!$enumIface || !\method_exists($enumIface, $method->name))) {
+            if ($declaringClass->name === $from->name && (!$enumIface || !method_exists($enumIface, $method->name))) {
                 $methods[] = $m = $this->fromMethodReflection($method);
                 if ($withBodies) {
                     $realMethodClass = $realMethod->getDeclaringClass();
@@ -102,7 +102,7 @@ final class Factory
     public function fromMethodReflection(\ReflectionMethod $from): Method
     {
         $method = new Method($from->name);
-        $method->setParameters(\array_map([$this, 'fromParameterReflection'], $from->getParameters()));
+        $method->setParameters(array_map([$this, 'fromParameterReflection'], $from->getParameters()));
         $method->setStatic($from->isStatic());
         $isInterface = $from->getDeclaringClass()->isInterface();
         $method->setVisibility($isInterface ? null : $this->getVisibility($from));
@@ -125,7 +125,7 @@ final class Factory
     public function fromFunctionReflection(\ReflectionFunction $from, bool $withBody = \false)
     {
         $function = $from->isClosure() ? new Closure() : new GlobalFunction($from->name);
-        $function->setParameters(\array_map([$this, 'fromParameterReflection'], $from->getParameters()));
+        $function->setParameters(array_map([$this, 'fromParameterReflection'], $from->getParameters()));
         $function->setReturnReference($from->returnsReference());
         $function->setVariadic($from->isVariadic());
         if (!$from->isClosure()) {
@@ -164,12 +164,12 @@ final class Factory
         }
         if ($from->isDefaultValueAvailable()) {
             if ($from->isDefaultValueConstant()) {
-                $parts = \explode('::', $from->getDefaultValueConstantName());
-                if (\count($parts) > 1) {
+                $parts = explode('::', $from->getDefaultValueConstantName());
+                if (count($parts) > 1) {
                     $parts[0] = Helpers::tagName($parts[0]);
                 }
-                $param->setDefaultValue(new Literal(\implode('::', $parts)));
-            } elseif (\is_object($from->getDefaultValue())) {
+                $param->setDefaultValue(new Literal(implode('::', $parts)));
+            } elseif (is_object($from->getDefaultValue())) {
                 $param->setDefaultValue($this->fromObject($from->getDefaultValue()));
             } else {
                 $param->setDefaultValue($from->getDefaultValue());
@@ -211,7 +211,7 @@ final class Factory
             } elseif ($from->getType() instanceof \ReflectionUnionType || $from->getType() instanceof \ReflectionIntersectionType) {
                 $prop->setType((string) $from->getType());
             }
-            $prop->setInitialized($from->hasType() && \array_key_exists($prop->getName(), $defaults));
+            $prop->setInitialized($from->hasType() && array_key_exists($prop->getName(), $defaults));
             $prop->setReadOnly(\PHP_VERSION_ID >= 80100 ? $from->isReadOnly() : \false);
         } else {
             $prop->setInitialized(\false);
@@ -222,7 +222,7 @@ final class Factory
     }
     public function fromObject(object $obj): Literal
     {
-        return new Literal('new \\' . \get_class($obj) . '(/* unknown */)');
+        return new Literal('new \\' . get_class($obj) . '(/* unknown */)');
     }
     public function fromClassCode(string $code): ClassType
     {
@@ -230,7 +230,7 @@ final class Factory
         if (!$classes) {
             throw new Nette\InvalidStateException('The code does not contain any class.');
         }
-        return \reset($classes);
+        return reset($classes);
     }
     public function fromCode(string $code): PhpFile
     {
@@ -242,10 +242,10 @@ final class Factory
         if (\PHP_VERSION_ID < 80000) {
             return [];
         }
-        return \array_map(function ($attr) {
+        return array_map(function ($attr) {
             $args = $attr->getArguments();
             foreach ($args as &$arg) {
-                if (\is_object($arg)) {
+                if (is_object($arg)) {
                     $arg = $this->fromObject($arg);
                 }
             }
@@ -265,6 +265,6 @@ final class Factory
         } elseif (!$file) {
             throw new Nette\InvalidStateException("Source code of {$from->name} not found.");
         }
-        return new Extractor(\file_get_contents($file));
+        return new Extractor(file_get_contents($file));
     }
 }

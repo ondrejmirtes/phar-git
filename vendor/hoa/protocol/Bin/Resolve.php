@@ -92,13 +92,13 @@ class Resolve extends Console\Dispatcher\Kit
         }
         if (\true === $tree) {
             $protocol = Protocol::getInstance();
-            $foo = \substr($path, 0, 6);
+            $foo = substr($path, 0, 6);
             if ('hoa://' !== $foo) {
                 return;
             }
-            $path = \substr($path, 6);
+            $path = substr($path, 6);
             $current = $protocol;
-            foreach (\explode('/', $path) as $component) {
+            foreach (explode('/', $path) as $component) {
                 if (!isset($current[$component])) {
                     break;
                 }

@@ -7,7 +7,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 /**
  * @api
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ScopeFactory
 {
     private \PHPStan\Analyser\InternalScopeFactory $internalScopeFactory;

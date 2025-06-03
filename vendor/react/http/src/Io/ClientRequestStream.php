@@ -69,14 +69,14 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
         $promise = $this->connectionManager->connect($this->request->getUri());
         $promise->then(function (ConnectionInterface $connection) use ($headers, &$connectionRef, &$stateRef, &$pendingWrites, $that) {
             $connectionRef = $connection;
-            \assert($connectionRef instanceof ConnectionInterface);
+            assert($connectionRef instanceof ConnectionInterface);
             $connection->on('drain', array($that, 'handleDrain'));
             $connection->on('data', array($that, 'handleData'));
             $connection->on('end', array($that, 'handleEnd'));
             $connection->on('error', array($that, 'handleError'));
             $connection->on('close', array($that, 'close'));
             $more = $connection->write($headers . "\r\n" . $pendingWrites);
-            \assert($stateRef === ClientRequestStream::STATE_WRITING_HEAD);
+            assert($stateRef === ClientRequestStream::STATE_WRITING_HEAD);
             $stateRef = ClientRequestStream::STATE_HEAD_WRITTEN;
             // clear pending writes if non-empty
             if ($pendingWrites !== '') {
@@ -145,7 +145,7 @@ class ClientRequestStream extends EventEmitter implements WritableStreamInterfac
             }
             // response headers successfully received => remove listeners for connection events
             $connection = $this->connection;
-            \assert($connection instanceof ConnectionInterface);
+            assert($connection instanceof ConnectionInterface);
             $connection->removeListener('drain', array($this, 'handleDrain'));
             $connection->removeListener('data', array($this, 'handleData'));
             $connection->removeListener('end', array($this, 'handleEnd'));

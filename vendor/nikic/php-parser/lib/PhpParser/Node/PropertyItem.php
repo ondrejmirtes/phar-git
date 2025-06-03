@@ -34,4 +34,4 @@ class PropertyItem extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\PropertyItem::class, \PhpParser\Node\Stmt\PropertyProperty::class);
+class_alias(\PhpParser\Node\PropertyItem::class, \PhpParser\Node\Stmt\PropertyProperty::class);

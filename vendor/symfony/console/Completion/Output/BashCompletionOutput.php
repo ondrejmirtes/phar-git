@@ -26,6 +26,6 @@ class BashCompletionOutput implements CompletionOutputInterface
                 $values[] = '--no-' . $option->getName();
             }
         }
-        $output->writeln(\implode("\n", $values));
+        $output->writeln(implode("\n", $values));
     }
 }

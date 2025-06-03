@@ -147,10 +147,10 @@ abstract class Sampler
             $token->setRepresentation($this->_tokens[$this->_currentNamespace][$name]);
         } else {
             foreach ($this->_tokens[$this->_currentNamespace] as $_name => $regex) {
-                if (\false === \strpos($_name, ':')) {
+                if (\false === strpos($_name, ':')) {
                     continue;
                 }
-                list($_name, $toNamespace) = \explode(':', $_name, 2);
+                list($_name, $toNamespace) = explode(':', $_name, 2);
                 if ($_name === $name) {
                     break;
                 }

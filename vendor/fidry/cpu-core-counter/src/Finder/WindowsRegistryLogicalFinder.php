@@ -33,7 +33,7 @@ final class WindowsRegistryLogicalFinder extends ProcOpenBasedFinder
     protected function countCpuCores(string $process): ?int
     {
         $count = count(array_filter(explode(PHP_EOL, $process), static function (string $line): bool {
-            return '' !== \trim($line);
+            return '' !== trim($line);
         }));
         return $count > 0 ? $count : null;
     }

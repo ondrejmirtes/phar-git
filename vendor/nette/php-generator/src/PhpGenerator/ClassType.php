@@ -93,7 +93,7 @@ final class ClassType
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
-            \trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
+            trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
             return '';
         }
     }
@@ -105,7 +105,7 @@ final class ClassType
     /** @return static */
     public function setName(?string $name): self
     {
-        if ($name !== null && (!Helpers::isIdentifier($name) || isset(Helpers::Keywords[\strtolower($name)]))) {
+        if ($name !== null && (!Helpers::isIdentifier($name) || isset(Helpers::Keywords[strtolower($name)]))) {
             throw new Nette\InvalidArgumentException("Value '{$name}' is not valid class name.");
         }
         $this->name = $name;
@@ -152,7 +152,7 @@ final class ClassType
     /** @return static */
     public function setType(string $type): self
     {
-        if (!\in_array($type, [self::TYPE_CLASS, self::TYPE_INTERFACE, self::TYPE_TRAIT, self::TYPE_ENUM], \true)) {
+        if (!in_array($type, [self::TYPE_CLASS, self::TYPE_INTERFACE, self::TYPE_TRAIT, self::TYPE_ENUM], \true)) {
             throw new Nette\InvalidArgumentException('Argument must be class|interface|trait|enum.');
         }
         $this->type = $type;
@@ -188,7 +188,7 @@ final class ClassType
      */
     public function setExtends($names): self
     {
-        if (!\is_string($names) && !\is_array($names)) {
+        if (!is_string($names) && !is_array($names)) {
             throw new Nette\InvalidArgumentException('Argument must be string or string[].');
         }
         $this->validateNames((array) $names);
@@ -233,7 +233,7 @@ final class ClassType
     /** @return static */
     public function removeImplement(string $name): self
     {
-        $this->implements = \array_diff($this->implements, [$name]);
+        $this->implements = array_diff($this->implements, [$name]);
         return $this;
     }
     /**
@@ -254,7 +254,7 @@ final class ClassType
     /** @return string[] */
     public function getTraits(): array
     {
-        return \array_keys($this->traits);
+        return array_keys($this->traits);
     }
     /** @internal */
     public function getTraitResolutions(): array
@@ -271,7 +271,7 @@ final class ClassType
         if ($resolutions === \true) {
             return $trait;
         }
-        \array_map(function ($item) use ($trait) {
+        array_map(function ($item) use ($trait) {
             $trait->addResolution($item);
         }, $resolutions);
         return $this;
@@ -292,7 +292,7 @@ final class ClassType
             if ($this->isInterface()) {
                 $member->setBody(null);
             }
-            $this->methods[\strtolower($member->getName())] = $member;
+            $this->methods[strtolower($member->getName())] = $member;
         } elseif ($member instanceof Property) {
             $this->properties[$member->getName()] = $member;
         } elseif ($member instanceof Constant) {
@@ -344,7 +344,7 @@ final class ClassType
     public function setCases(array $cases): self
     {
         (function (EnumCase ...$cases) {
-        })(...\array_values($cases));
+        })(...array_values($cases));
         $this->cases = [];
         foreach ($cases as $case) {
             $this->cases[$case->getName()] = $case;
@@ -374,7 +374,7 @@ final class ClassType
     public function setProperties(array $props): self
     {
         (function (Property ...$props) {
-        })(...\array_values($props));
+        })(...array_values($props));
         $this->properties = [];
         foreach ($props as $v) {
             $this->properties[$v->getName()] = $v;
@@ -398,7 +398,7 @@ final class ClassType
      */
     public function addProperty(string $name, $value = null): Property
     {
-        return $this->properties[$name] = \func_num_args() > 1 ? (new Property($name))->setValue($value) : new Property($name);
+        return $this->properties[$name] = func_num_args() > 1 ? (new Property($name))->setValue($value) : new Property($name);
     }
     /**
      * @param  string  $name without $
@@ -420,10 +420,10 @@ final class ClassType
     public function setMethods(array $methods): self
     {
         (function (Method ...$methods) {
-        })(...\array_values($methods));
+        })(...array_values($methods));
         $this->methods = [];
         foreach ($methods as $m) {
-            $this->methods[\strtolower($m->getName())] = $m;
+            $this->methods[strtolower($m->getName())] = $m;
         }
         return $this;
     }
@@ -438,7 +438,7 @@ final class ClassType
     }
     public function getMethod(string $name): Method
     {
-        $m = $this->methods[\strtolower($name)] ?? null;
+        $m = $this->methods[strtolower($name)] ?? null;
         if (!$m) {
             throw new Nette\InvalidArgumentException("Method '{$name}' not found.");
         }
@@ -452,17 +452,17 @@ final class ClassType
         } else {
             $method->setPublic();
         }
-        return $this->methods[\strtolower($name)] = $method;
+        return $this->methods[strtolower($name)] = $method;
     }
     /** @return static */
     public function removeMethod(string $name): self
     {
-        unset($this->methods[\strtolower($name)]);
+        unset($this->methods[strtolower($name)]);
         return $this;
     }
     public function hasMethod(string $name): bool
     {
-        return isset($this->methods[\strtolower($name)]);
+        return isset($this->methods[strtolower($name)]);
     }
     /** @throws Nette\InvalidStateException */
     public function validate(): void
@@ -488,10 +488,10 @@ final class ClassType
         $clone = function ($item) {
             return clone $item;
         };
-        $this->traits = \array_map($clone, $this->traits);
-        $this->cases = \array_map($clone, $this->cases);
-        $this->consts = \array_map($clone, $this->consts);
-        $this->properties = \array_map($clone, $this->properties);
-        $this->methods = \array_map($clone, $this->methods);
+        $this->traits = array_map($clone, $this->traits);
+        $this->cases = array_map($clone, $this->cases);
+        $this->consts = array_map($clone, $this->consts);
+        $this->properties = array_map($clone, $this->properties);
+        $this->methods = array_map($clone, $this->methods);
     }
 }

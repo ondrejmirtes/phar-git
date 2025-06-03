@@ -63,15 +63,15 @@ class MemoizeAttributeCollector
                 } catch (Throwable $e) {
                     $this->io->error("Attribute collection failed for {$class}: {$e->getMessage()}");
                 }
-                $this->state[$class] = [\time(), $classAttributes, $methodAttributes, $propertyAttributes];
+                $this->state[$class] = [time(), $classAttributes, $methodAttributes, $propertyAttributes];
             }
-            if (\count($classAttributes)) {
+            if (count($classAttributes)) {
                 $collector->addClassAttributes($class, $classAttributes);
             }
-            if (\count($methodAttributes)) {
+            if (count($methodAttributes)) {
                 $collector->addMethodAttributes($class, $methodAttributes);
             }
-            if (\count($propertyAttributes)) {
+            if (count($propertyAttributes)) {
                 $collector->addTargetProperties($class, $propertyAttributes);
             }
         }

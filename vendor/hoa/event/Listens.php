@@ -62,7 +62,7 @@ trait Listens
     {
         $listener = $this->getListener();
         if (null === $listener) {
-            throw new \Hoa\Event\Exception('Cannot attach a callable to the listener %s because ' . 'it has not been initialized yet.', 0, \get_class($this));
+            throw new \Hoa\Event\Exception('Cannot attach a callable to the listener %s because ' . 'it has not been initialized yet.', 0, get_class($this));
         }
         $listener->attach($listenerId, $callable);
         return $this;

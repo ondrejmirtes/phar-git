@@ -134,7 +134,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
      */
     public function offsetExists($name): bool
     {
-        return \true === \array_key_exists($name, $this->_children);
+        return \true === array_key_exists($name, $this->_children);
     }
     /**
      * Remove a node.
@@ -158,26 +158,26 @@ class Node implements \ArrayAccess, \IteratorAggregate
      */
     protected function _resolve($path, &$accumulator, $id = null)
     {
-        if (\substr($path, 0, 6) == 'hoa://') {
-            $path = \substr($path, 6);
+        if (substr($path, 0, 6) == 'hoa://') {
+            $path = substr($path, 6);
         }
         if (empty($path)) {
             return null;
         }
         if (null === $accumulator) {
             $accumulator = [];
-            $posId = \strpos($path, '#');
+            $posId = strpos($path, '#');
             if (\false !== $posId) {
-                $id = \substr($path, $posId + 1);
-                $path = \substr($path, 0, $posId);
+                $id = substr($path, $posId + 1);
+                $path = substr($path, 0, $posId);
             } else {
                 $id = null;
             }
         }
-        $path = \trim($path, '/');
-        $pos = \strpos($path, '/');
+        $path = trim($path, '/');
+        $pos = strpos($path, '/');
         if (\false !== $pos) {
-            $next = \substr($path, 0, $pos);
+            $next = substr($path, 0, $pos);
         } else {
             $next = $path;
         }
@@ -192,7 +192,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
             }
             $tnext = $this[$next];
             $this->_resolveChoice($tnext->reach(), $accumulator);
-            return $tnext->_resolve(\substr($path, $pos + 1), $accumulator, $id);
+            return $tnext->_resolve(substr($path, $pos + 1), $accumulator, $id);
         }
         $this->_resolveChoice($this->reach($path), $accumulator);
         return \true;
@@ -207,12 +207,12 @@ class Node implements \ArrayAccess, \IteratorAggregate
     protected function _resolveChoice($reach, array &$accumulator)
     {
         if (empty($accumulator)) {
-            $accumulator = \explode(RS, $reach);
+            $accumulator = explode(RS, $reach);
             return;
         }
-        if (\false === \strpos($reach, RS)) {
-            if (\false !== $pos = \strrpos($reach, "\r")) {
-                $reach = \substr($reach, $pos + 1);
+        if (\false === strpos($reach, RS)) {
+            if (\false !== $pos = strrpos($reach, "\r")) {
+                $reach = substr($reach, $pos + 1);
                 foreach ($accumulator as &$entry) {
                     $entry = null;
                 }
@@ -222,12 +222,12 @@ class Node implements \ArrayAccess, \IteratorAggregate
             }
             return;
         }
-        $choices = \explode(RS, $reach);
+        $choices = explode(RS, $reach);
         $ref = $accumulator;
         $accumulator = [];
         foreach ($choices as $choice) {
-            if (\false !== $pos = \strrpos($choice, "\r")) {
-                $choice = \substr($choice, $pos + 1);
+            if (\false !== $pos = strrpos($choice, "\r")) {
+                $choice = substr($choice, $pos + 1);
                 foreach ($ref as $entry) {
                     $accumulator[] = $choice;
                 }
@@ -320,7 +320,7 @@ class Node implements \ArrayAccess, \IteratorAggregate
     public function __toString()
     {
         static $i = 0;
-        $out = \str_repeat('  ', $i) . $this->getName() . "\n";
+        $out = str_repeat('  ', $i) . $this->getName() . "\n";
         foreach ($this as $node) {
             ++$i;
             $out .= $node;

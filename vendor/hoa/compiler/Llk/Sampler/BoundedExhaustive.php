@@ -163,8 +163,8 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
      */
     protected function unfold()
     {
-        while (0 < \count($this->_todo)) {
-            $pop = \array_pop($this->_todo);
+        while (0 < count($this->_todo)) {
+            $pop = array_pop($this->_todo);
             if ($pop instanceof Compiler\Llk\Rule\Ekzit) {
                 $this->_trace[] = $pop;
             } else {
@@ -192,7 +192,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
         if ($rule instanceof Compiler\Llk\Rule\Repetition) {
             if (0 === $next) {
                 $this->_trace[] = new Compiler\Llk\Rule\Entry($rule->getName(), $rule->getMin());
-                \array_pop($this->_todo);
+                array_pop($this->_todo);
                 $this->_todo[] = new Compiler\Llk\Rule\Ekzit($rule->getName(), $rule->getMin(), $this->_todo);
                 for ($i = 0, $min = $rule->getMin(); $i < $min; ++$i) {
                     $this->_todo[] = new Compiler\Llk\Rule\Ekzit($children, 0);
@@ -215,7 +215,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
             }
             return \true;
         } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
-            if (\count($children) <= $next) {
+            if (count($children) <= $next) {
                 return \false;
             }
             $this->_trace[] = new Compiler\Llk\Rule\Entry($rule->getName(), $next, $this->_todo);
@@ -225,7 +225,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
             return \true;
         } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $this->_trace[] = new Compiler\Llk\Rule\Entry($rule->getName(), $next);
-            for ($i = \count($children) - 1; $i >= 0; --$i) {
+            for ($i = count($children) - 1; $i >= 0; --$i) {
                 $nextRule = $children[$i];
                 $this->_todo[] = new Compiler\Llk\Rule\Ekzit($nextRule, 0);
                 $this->_todo[] = new Compiler\Llk\Rule\Entry($nextRule, 0);
@@ -242,7 +242,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
                 return \false;
             }
             $this->_trace[] = $rule;
-            \array_pop($this->_todo);
+            array_pop($this->_todo);
             return \true;
         }
         return \false;
@@ -256,7 +256,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
     {
         $found = \false;
         do {
-            $last = \array_pop($this->_trace);
+            $last = array_pop($this->_trace);
             if ($last instanceof Compiler\Llk\Rule\Entry) {
                 $rule = $this->_rules[$last->getRule()];
                 $found = $rule instanceof Compiler\Llk\Rule\Choice;
@@ -264,7 +264,7 @@ class BoundedExhaustive extends \Hoa\Compiler\Llk\Sampler\Sampler implements Ite
                 $rule = $this->_rules[$last->getRule()];
                 $found = $rule instanceof Compiler\Llk\Rule\Repetition;
             }
-        } while (0 < \count($this->_trace) && \false === $found);
+        } while (0 < count($this->_trace) && \false === $found);
         if (\false === $found) {
             return \false;
         }

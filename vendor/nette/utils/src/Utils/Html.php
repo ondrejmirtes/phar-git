@@ -250,7 +250,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
     public static function el(?string $name = null, $attrs = null)
     {
         $el = new static();
-        $parts = \explode(' ', (string) $name, 2);
+        $parts = explode(' ', (string) $name, 2);
         $el->setName($parts[0]);
         if (is_array($attrs)) {
             $el->attrs = $attrs;
@@ -297,7 +297,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     public static function htmlToText(string $html): string
     {
-        return \html_entity_decode(\strip_tags($html), \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
+        return html_entity_decode(strip_tags($html), \ENT_QUOTES | \ENT_HTML5, 'UTF-8');
     }
     /**
      * Changes element's name.
@@ -329,7 +329,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     public function addAttributes(array $attrs)
     {
-        $this->attrs = \array_merge($this->attrs, $attrs);
+        $this->attrs = array_merge($this->attrs, $attrs);
         return $this;
     }
     /**
@@ -428,9 +428,9 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     final public function __call(string $m, array $args)
     {
-        $p = \substr($m, 0, 3);
+        $p = substr($m, 0, 3);
         if ($p === 'get' || $p === 'set' || $p === 'add') {
-            $m = \substr($m, 3);
+            $m = substr($m, 3);
             $m[0] = $m[0] | " ";
             if ($p === 'get') {
                 return $this->attrs[$m] ?? null;
@@ -438,9 +438,9 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
                 $args[] = \true;
             }
         }
-        if (\count($args) === 0) {
+        if (count($args) === 0) {
             // invalid
-        } elseif (\count($args) === 1) {
+        } elseif (count($args) === 1) {
             // set
             $this->attrs[$m] = $args[0];
         } else {
@@ -456,7 +456,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
     final public function href(string $path, ?array $query = null)
     {
         if ($query) {
-            $query = \http_build_query($query, '', '&');
+            $query = http_build_query($query, '', '&');
             if ($query !== '') {
                 $path .= '?' . $query;
             }
@@ -471,10 +471,10 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     public function data(string $name, $value = null)
     {
-        if (\func_num_args() === 1) {
+        if (func_num_args() === 1) {
             $this->attrs['data'] = $name;
         } else {
-            $this->attrs["data-{$name}"] = \is_bool($value) ? \json_encode($value) : $value;
+            $this->attrs["data-{$name}"] = is_bool($value) ? json_encode($value) : $value;
         }
         return $this;
     }
@@ -493,7 +493,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     final public function getHtml(): string
     {
-        return \implode('', $this->children);
+        return implode('', $this->children);
     }
     /**
      * Sets element's textual content.
@@ -503,7 +503,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
     final public function setText($text)
     {
         if (!$text instanceof HtmlStringable) {
-            $text = \htmlspecialchars((string) $text, \ENT_NOQUOTES, 'UTF-8');
+            $text = htmlspecialchars((string) $text, \ENT_NOQUOTES, 'UTF-8');
         }
         $this->children = [(string) $text];
         return $this;
@@ -532,7 +532,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
     public function addText($text)
     {
         if (!$text instanceof HtmlStringable) {
-            $text = \htmlspecialchars((string) $text, \ENT_NOQUOTES, 'UTF-8');
+            $text = htmlspecialchars((string) $text, \ENT_NOQUOTES, 'UTF-8');
         }
         return $this->insert(null, $text);
     }
@@ -559,7 +559,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
             $this->children[] = $child;
         } else {
             // insert or replace
-            \array_splice($this->children, $index, $replace ? 1 : 0, [$child]);
+            array_splice($this->children, $index, $replace ? 1 : 0, [$child]);
         }
         return $this;
     }
@@ -597,7 +597,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
     public function offsetUnset($index): void
     {
         if (isset($this->children[$index])) {
-            \array_splice($this->children, $index, 1);
+            array_splice($this->children, $index, 1);
         }
     }
     /**
@@ -605,7 +605,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
      */
     final public function count(): int
     {
-        return \count($this->children);
+        return count($this->children);
     }
     /**
      * Removes all children.
@@ -651,7 +651,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
             $s .= $this->endTag();
         }
         if ($indent !== null) {
-            return "\n" . \str_repeat("\t", $indent - 1) . $s . "\n" . \str_repeat("\t", \max(0, $indent - 2));
+            return "\n" . str_repeat("\t", $indent - 1) . $s . "\n" . str_repeat("\t", max(0, $indent - 2));
         }
         return $s;
     }
@@ -663,7 +663,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
-            \trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
+            trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
             return '';
         }
     }
@@ -703,7 +703,7 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
                 }
                 continue;
             } elseif (is_array($value)) {
-                if (\strncmp($key, 'data-', 5) === 0) {
+                if (strncmp($key, 'data-', 5) === 0) {
                     $value = Json::encode($value);
                 } else {
                     $tmp = null;
@@ -717,17 +717,17 @@ class Html implements \ArrayAccess, \Countable, \IteratorAggregate, HtmlStringab
                     if ($tmp === null) {
                         continue;
                     }
-                    $value = \implode($key === 'style' || !\strncmp($key, 'on', 2) ? ';' : ' ', $tmp);
+                    $value = implode($key === 'style' || !strncmp($key, 'on', 2) ? ';' : ' ', $tmp);
                 }
             } elseif (is_float($value)) {
-                $value = \rtrim(\rtrim(\number_format($value, 10, '.', ''), '0'), '.');
+                $value = rtrim(rtrim(number_format($value, 10, '.', ''), '0'), '.');
             } else {
                 $value = (string) $value;
             }
-            $q = \strpos($value, '"') === \false ? '"' : "'";
-            $s .= ' ' . $key . '=' . $q . \str_replace(['&', $q, '<'], ['&amp;', $q === '"' ? '&quot;' : '&#39;', self::$xhtml ? '&lt;' : '<'], $value) . (\strpos($value, '`') !== \false && \strpbrk($value, ' <>"\'') === \false ? ' ' : '') . $q;
+            $q = strpos($value, '"') === \false ? '"' : "'";
+            $s .= ' ' . $key . '=' . $q . str_replace(['&', $q, '<'], ['&amp;', $q === '"' ? '&quot;' : '&#39;', self::$xhtml ? '&lt;' : '<'], $value) . (strpos($value, '`') !== \false && strpbrk($value, ' <>"\'') === \false ? ' ' : '') . $q;
         }
-        $s = \str_replace('@', '&#64;', $s);
+        $s = str_replace('@', '&#64;', $s);
         return $s;
     }
     /**

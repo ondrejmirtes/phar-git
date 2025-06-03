@@ -84,7 +84,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
     public function __construct(\Iterator $iterator, $bufferSize)
     {
         $this->_iterator = $iterator;
-        $this->_bufferSize = \max($bufferSize, 1);
+        $this->_bufferSize = max($bufferSize, 1);
         $this->_buffer = new \SplDoublyLinkedList();
         return;
     }
@@ -147,7 +147,7 @@ class Buffer extends \Hoa\Iterator\IteratorIterator implements \Hoa\Iterator\Out
         $buffer->next();
         // End of the buffer, need a new value.
         if (\false === $buffer->valid()) {
-            for ($bufferSize = \count($buffer), $maximumBufferSize = $this->getBufferSize(); $bufferSize >= $maximumBufferSize; --$bufferSize) {
+            for ($bufferSize = count($buffer), $maximumBufferSize = $this->getBufferSize(); $bufferSize >= $maximumBufferSize; --$bufferSize) {
                 $buffer->shift();
             }
             $innerIterator->next();

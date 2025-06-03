@@ -9,7 +9,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Reflection\FunctionReflection;
 use PHPStan\Type\DynamicFunctionReturnTypeExtension;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayFilterFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private \PHPStan\Type\Php\ArrayFilterFunctionReturnTypeHelper $arrayFilterFunctionReturnTypeHelper;

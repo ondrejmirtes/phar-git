@@ -13,7 +13,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use function count;
 use function explode;
 use function ltrim;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ConstantHelper
 {
     public function createExprFromConstantName(string $constantName): ?Expr

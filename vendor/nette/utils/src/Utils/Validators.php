@@ -70,13 +70,13 @@ class Validators
     public static function assert($value, string $expected, string $label = 'variable'): void
     {
         if (!static::is($value, $expected)) {
-            $expected = \str_replace(['|', ':'], [' or ', ' in range '], $expected);
+            $expected = str_replace(['|', ':'], [' or ', ' in range '], $expected);
             $translate = ['boolean' => 'bool', 'integer' => 'int', 'double' => 'float', 'NULL' => 'null'];
-            $type = $translate[\gettype($value)] ?? \gettype($value);
-            if (\is_int($value) || \is_float($value) || \is_string($value) && \strlen($value) < 40) {
-                $type .= ' ' . \var_export($value, \true);
-            } elseif (\is_object($value)) {
-                $type .= ' ' . \get_class($value);
+            $type = $translate[gettype($value)] ?? gettype($value);
+            if (is_int($value) || is_float($value) || is_string($value) && strlen($value) < 40) {
+                $type .= ' ' . var_export($value, \true);
+            } elseif (is_object($value)) {
+                $type .= ' ' . get_class($value);
             }
             throw new AssertionException("The {$label} expects to be {$expected}, {$type} given.");
         }
@@ -89,10 +89,10 @@ class Validators
      */
     public static function assertField(array $array, $key, ?string $expected = null, string $label = "item '%' in array"): void
     {
-        if (!\array_key_exists($key, $array)) {
-            throw new AssertionException('Missing ' . \str_replace('%', $key, $label) . '.');
+        if (!array_key_exists($key, $array)) {
+            throw new AssertionException('Missing ' . str_replace('%', $key, $label) . '.');
         } elseif ($expected) {
-            static::assert($array[$key], $expected, \str_replace('%', $key, $label));
+            static::assert($array[$key], $expected, str_replace('%', $key, $label));
         }
     }
     /**
@@ -101,19 +101,19 @@ class Validators
      */
     public static function is($value, string $expected): bool
     {
-        foreach (\explode('|', $expected) as $item) {
-            if (\substr($item, -2) === '[]') {
-                if (\is_iterable($value) && self::everyIs($value, \substr($item, 0, -2))) {
+        foreach (explode('|', $expected) as $item) {
+            if (substr($item, -2) === '[]') {
+                if (is_iterable($value) && self::everyIs($value, substr($item, 0, -2))) {
                     return \true;
                 }
                 continue;
-            } elseif (\substr($item, 0, 1) === '?') {
-                $item = \substr($item, 1);
+            } elseif (substr($item, 0, 1) === '?') {
+                $item = substr($item, 1);
                 if ($value === null) {
                     return \true;
                 }
             }
-            [$type] = $item = \explode(':', $item, 2);
+            [$type] = $item = explode(':', $item, 2);
             if (isset(static::$validators[$type])) {
                 try {
                     if (!static::$validators[$type]($value)) {
@@ -135,7 +135,7 @@ class Validators
                 if (isset(static::$counters[$type])) {
                     $length = static::$counters[$type]($value);
                 }
-                $range = \explode('..', $item[1]);
+                $range = explode('..', $item[1]);
                 if (!isset($range[1])) {
                     $range[1] = $range[0];
                 }
@@ -166,7 +166,7 @@ class Validators
      */
     public static function isNumber($value): bool
     {
-        return \is_int($value) || \is_float($value);
+        return is_int($value) || is_float($value);
     }
     /**
      * Checks if the value is an integer or a integer written in a string.
@@ -174,7 +174,7 @@ class Validators
      */
     public static function isNumericInt($value): bool
     {
-        return \is_int($value) || \is_string($value) && \preg_match('#^[+-]?[0-9]+$#D', $value);
+        return is_int($value) || is_string($value) && preg_match('#^[+-]?[0-9]+$#D', $value);
     }
     /**
      * Checks if the value is a number or a number written in a string.
@@ -182,7 +182,7 @@ class Validators
      */
     public static function isNumeric($value): bool
     {
-        return \is_float($value) || \is_int($value) || \is_string($value) && \preg_match('#^[+-]?([0-9]++\.?[0-9]*|\.[0-9]+)$#D', $value);
+        return is_float($value) || is_int($value) || is_string($value) && preg_match('#^[+-]?([0-9]++\.?[0-9]*|\.[0-9]+)$#D', $value);
     }
     /**
      * Checks if the value is a syntactically correct callback.
@@ -190,7 +190,7 @@ class Validators
      */
     public static function isCallable($value): bool
     {
-        return $value && \is_callable($value, \true);
+        return $value && is_callable($value, \true);
     }
     /**
      * Checks if the value is a valid UTF-8 string.
@@ -198,7 +198,7 @@ class Validators
      */
     public static function isUnicode($value): bool
     {
-        return \is_string($value) && \preg_match('##u', $value);
+        return is_string($value) && preg_match('##u', $value);
     }
     /**
      * Checks if the value is 0, '', false or null.
@@ -235,13 +235,13 @@ class Validators
             return \false;
         }
         $limit = $range[0] ?? $range[1];
-        if (\is_string($limit)) {
+        if (is_string($limit)) {
             $value = (string) $value;
         } elseif ($limit instanceof \DateTimeInterface) {
             if (!$value instanceof \DateTimeInterface) {
                 return \false;
             }
-        } elseif (\is_numeric($value)) {
+        } elseif (is_numeric($value)) {
             $value *= 1;
         } else {
             return \false;
@@ -257,14 +257,15 @@ class Validators
         // RFC 5322 unquoted characters in local-part
         $alpha = "a-z\x80-\xff";
         // superset of IDN
-        return (bool) \preg_match(<<<XX
-        \t\t(^
-        \t\t\t("([ !#-[\\]-~]*|\\\\[ -~])+"|{$atom}+(\\.{$atom}+)*)  # quoted or unquoted
-        \t\t\t@
-        \t\t\t([0-9{$alpha}]([-0-9{$alpha}]{0,61}[0-9{$alpha}])?\\.)+  # domain - RFC 1034
-        \t\t\t[{$alpha}]([-0-9{$alpha}]{0,17}[{$alpha}])?              # top domain
-        \t\t\$)Dix
-        XX, $value);
+        return (bool) preg_match(<<<XX
+\t\t(^
+\t\t\t("([ !#-[\\]-~]*|\\\\[ -~])+"|{$atom}+(\\.{$atom}+)*)  # quoted or unquoted
+\t\t\t@
+\t\t\t([0-9{$alpha}]([-0-9{$alpha}]{0,61}[0-9{$alpha}])?\\.)+  # domain - RFC 1034
+\t\t\t[{$alpha}]([-0-9{$alpha}]{0,17}[{$alpha}])?              # top domain
+\t\t\$)Dix
+XX
+, $value);
     }
     /**
      * Checks if the value is a valid URL address.
@@ -272,67 +273,69 @@ class Validators
     public static function isUrl(string $value): bool
     {
         $alpha = "a-z\x80-\xff";
-        return (bool) \preg_match(<<<XX
-        \t\t(^
-        \t\t\thttps?://(
-        \t\t\t\t(([-_0-9{$alpha}]+\\.)*                       # subdomain
-        \t\t\t\t\t[0-9{$alpha}]([-0-9{$alpha}]{0,61}[0-9{$alpha}])?\\.)?  # domain
-        \t\t\t\t\t[{$alpha}]([-0-9{$alpha}]{0,17}[{$alpha}])?   # top domain
-        \t\t\t\t|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}  # IPv4
-        \t\t\t\t|\\[[0-9a-f:]{3,39}\\]                      # IPv6
-        \t\t\t)(:\\d{1,5})?                                   # port
-        \t\t\t(/\\S*)?                                        # path
-        \t\t\t(\\?\\S*)?                                      # query
-        \t\t\t(\\#\\S*)?                                      # fragment
-        \t\t\$)Dix
-        XX, $value);
+        return (bool) preg_match(<<<XX
+\t\t(^
+\t\t\thttps?://(
+\t\t\t\t(([-_0-9{$alpha}]+\\.)*                       # subdomain
+\t\t\t\t\t[0-9{$alpha}]([-0-9{$alpha}]{0,61}[0-9{$alpha}])?\\.)?  # domain
+\t\t\t\t\t[{$alpha}]([-0-9{$alpha}]{0,17}[{$alpha}])?   # top domain
+\t\t\t\t|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}  # IPv4
+\t\t\t\t|\\[[0-9a-f:]{3,39}\\]                      # IPv6
+\t\t\t)(:\\d{1,5})?                                   # port
+\t\t\t(/\\S*)?                                        # path
+\t\t\t(\\?\\S*)?                                      # query
+\t\t\t(\\#\\S*)?                                      # fragment
+\t\t\$)Dix
+XX
+, $value);
     }
     /**
      * Checks if the value is a valid URI address, that is, actually a string beginning with a syntactically valid schema.
      */
     public static function isUri(string $value): bool
     {
-        return (bool) \preg_match('#^[a-z\d+\.-]+:\S+$#Di', $value);
+        return (bool) preg_match('#^[a-z\d+\.-]+:\S+$#Di', $value);
     }
     /**
      * Checks whether the input is a class, interface or trait.
      */
     public static function isType(string $type): bool
     {
-        return \class_exists($type) || \interface_exists($type) || \trait_exists($type);
+        return class_exists($type) || interface_exists($type) || trait_exists($type);
     }
     /**
      * Checks whether the input is a valid PHP identifier.
      */
     public static function isPhpIdentifier(string $value): bool
     {
-        return \preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$#D', $value) === 1;
+        return preg_match('#^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$#D', $value) === 1;
     }
     /**
      * Determines if type is PHP built-in type. Otherwise, it is the class name.
      */
     public static function isBuiltinType(string $type): bool
     {
-        return isset(self::BuiltinTypes[\strtolower($type)]);
+        return isset(self::BuiltinTypes[strtolower($type)]);
     }
     /**
      * Determines if type is special class name self/parent/static.
      */
     public static function isClassKeyword(string $name): bool
     {
-        return (bool) \preg_match('#^(self|parent|static)$#Di', $name);
+        return (bool) preg_match('#^(self|parent|static)$#Di', $name);
     }
     /**
      * Checks whether the given type declaration is syntactically valid.
      */
     public static function isTypeDeclaration(string $type): bool
     {
-        return (bool) \preg_match(<<<'XX'
-        		~(
-        			\?? (?<type> \\? (?<name> [a-zA-Z_\x7f-\xff][\w\x7f-\xff]*) (\\ (?&name))* ) |
-        			(?<intersection> (?&type) (& (?&type))+ ) |
-        			(?<upart> (?&type) | \( (?&intersection) \) )  (\| (?&upart))+
-        		)$~xAD
-        XX, $type);
+        return (bool) preg_match(<<<'XX'
+		~(
+			\?? (?<type> \\? (?<name> [a-zA-Z_\x7f-\xff][\w\x7f-\xff]*) (\\ (?&name))* ) |
+			(?<intersection> (?&type) (& (?&type))+ ) |
+			(?<upart> (?&type) | \( (?&intersection) \) )  (\| (?&upart))+
+		)$~xAD
+XX
+, $type);
     }
 }

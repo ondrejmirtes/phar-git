@@ -39,7 +39,7 @@ class Clock
             // remember clock for current loop tick only and update on next tick
             $now =& $this->now;
             $this->loop->futureTick(function () use (&$now) {
-                \assert($now !== null);
+                assert($now !== null);
                 $now = null;
             });
         }

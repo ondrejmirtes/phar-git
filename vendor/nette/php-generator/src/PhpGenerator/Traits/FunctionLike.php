@@ -51,7 +51,7 @@ trait FunctionLike
     public function setParameters(array $val): self
     {
         (function (Parameter ...$val) {
-        })(...\array_values($val));
+        })(...array_values($val));
         $this->parameters = [];
         foreach ($val as $v) {
             $this->parameters[$v->getName()] = $v;
@@ -69,7 +69,7 @@ trait FunctionLike
     public function addParameter(string $name, $defaultValue = null): Parameter
     {
         $param = new Parameter($name);
-        if (\func_num_args() > 1) {
+        if (func_num_args() > 1) {
             $param->setDefaultValue($defaultValue);
         }
         return $this->parameters[$name] = $param;
@@ -134,7 +134,7 @@ trait FunctionLike
     /** @deprecated */
     public function setNamespace(?Nette\PhpGenerator\PhpNamespace $val = null): self
     {
-        \trigger_error(__METHOD__ . '() is deprecated', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() is deprecated', \E_USER_DEPRECATED);
         return $this;
     }
 }

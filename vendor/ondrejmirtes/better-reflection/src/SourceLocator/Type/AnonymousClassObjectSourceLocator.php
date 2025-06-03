@@ -65,7 +65,7 @@ final class AnonymousClassObjectSourceLocator implements \PHPStan\BetterReflecti
         }
         /** @phpstan-var non-empty-string $fileName */
         $fileName = $this->coreClassReflection->getFileName();
-        if (\strpos($fileName, 'eval()\'d code') !== \false) {
+        if (strpos($fileName, 'eval()\'d code') !== \false) {
             throw EvaledAnonymousClassCannotBeLocated::create();
         }
         FileChecker::assertReadableFile($fileName);

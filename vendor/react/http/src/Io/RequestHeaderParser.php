@@ -134,7 +134,7 @@ class RequestHeaderParser extends EventEmitter
             $this->connectionParams[$cid] = $serverParams;
             $params =& $this->connectionParams;
             $connection->on('close', function () use (&$params, $cid) {
-                \assert(\is_array($params));
+                assert(\is_array($params));
                 unset($params[$cid]);
             });
         }

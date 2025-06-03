@@ -7,7 +7,7 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayFindArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'isArrayFindArg';

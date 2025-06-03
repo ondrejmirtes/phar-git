@@ -10,7 +10,7 @@ use PHPStan\Node\Printer\ExprPrinter;
 use PHPStan\Php\PhpVersion;
 use PHPStan\Reflection\ReflectionProvider;
 use function array_merge;
-#[\PHPStan\DependencyInjection\AutowiredService('typeSpecifierFactory')]
+#[AutowiredService('typeSpecifierFactory')]
 final class TypeSpecifierFactory
 {
     private Container $container;

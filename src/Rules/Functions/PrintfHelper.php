@@ -12,7 +12,7 @@ use function max;
 use function sprintf;
 use function strlen;
 use const PREG_SET_ORDER;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PrintfHelper
 {
     private PhpVersion $phpVersion;

@@ -57,7 +57,7 @@ final class CollectedData implements JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['data' => $this->data, 'filePath' => $this->filePath, 'collectorType' => $this->collectorType];

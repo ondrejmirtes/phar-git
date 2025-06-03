@@ -27,7 +27,7 @@ use function array_map;
 use function count;
 use function in_array;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FilterVarArrayDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private \PHPStan\Type\Php\FilterFunctionReturnTypeHelper $filterFunctionReturnTypeHelper;

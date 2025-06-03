@@ -34,7 +34,7 @@ use function is_int;
 use function octdec;
 use function preg_match;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FilterFunctionReturnTypeHelper
 {
     private ReflectionProvider $reflectionProvider;

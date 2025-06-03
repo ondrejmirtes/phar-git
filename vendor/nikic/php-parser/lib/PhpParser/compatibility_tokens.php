@@ -33,11 +33,11 @@ if (!\function_exists('PhpParser\defineCompatibilityTokens')) {
             if (\defined($token)) {
                 $tokenId = \constant($token);
                 if (!\is_int($tokenId)) {
-                    throw new \Error(\sprintf('Token %s has ID of type %s, should be int. ' . 'You may be using a library with broken token emulation', $token, \gettype($tokenId)));
+                    throw new \Error(sprintf('Token %s has ID of type %s, should be int. ' . 'You may be using a library with broken token emulation', $token, \gettype($tokenId)));
                 }
                 $clashingToken = $usedTokenIds[$tokenId] ?? null;
                 if ($clashingToken !== null) {
-                    throw new \Error(\sprintf('Token %s has same ID as token %s, ' . 'you may be using a library with broken token emulation', $token, $clashingToken));
+                    throw new \Error(sprintf('Token %s has same ID as token %s, ' . 'you may be using a library with broken token emulation', $token, $clashingToken));
                 }
                 $usedTokenIds[$tokenId] = $token;
             }

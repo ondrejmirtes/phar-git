@@ -51,4 +51,4 @@ class UseItem extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\UseItem::class, \PhpParser\Node\Stmt\UseUse::class);
+class_alias(\PhpParser\Node\UseItem::class, \PhpParser\Node\Stmt\UseUse::class);

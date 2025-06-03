@@ -30,7 +30,7 @@ use function strtolower;
 use function strtoupper;
 use const CASE_LOWER;
 use const CASE_UPPER;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayChangeKeyCaseFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

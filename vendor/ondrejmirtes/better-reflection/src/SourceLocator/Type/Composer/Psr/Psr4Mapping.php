@@ -56,7 +56,7 @@ final class Psr4Mapping implements \PHPStan\BetterReflection\SourceLocator\Type\
             if ($prefix === '') {
                 return \false;
             }
-            return \strpos($className, $prefix) === 0;
+            return strpos($className, $prefix) === 0;
         }, ARRAY_FILTER_USE_KEY);
     }
     /** {@inheritDoc} */

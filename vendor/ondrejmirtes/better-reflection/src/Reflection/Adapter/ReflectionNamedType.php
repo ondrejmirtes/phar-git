@@ -67,7 +67,7 @@ final class ReflectionNamedType extends CoreReflectionNamedType
     }
     public function isIdentifier(): bool
     {
-        if (\is_string($this->type)) {
+        if (is_string($this->type)) {
             return \true;
         }
         return $this->type->isIdentifier();

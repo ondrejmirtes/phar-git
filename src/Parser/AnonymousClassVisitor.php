@@ -8,7 +8,7 @@ use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Node\AnonymousClassNode;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AnonymousClassVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_LINE_INDEX = 'anonymousClassLineIndex';

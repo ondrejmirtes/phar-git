@@ -18,7 +18,7 @@ use PHPStan\Type\Type;
 /**
  * @implements Rule<Node\Expr\StaticCall>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedStaticMethodUsageRule implements Rule
 {
     private Container $container;

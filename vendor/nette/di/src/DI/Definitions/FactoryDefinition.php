@@ -30,18 +30,18 @@ final class FactoryDefinition extends Definition
     /** @return static */
     public function setImplement(string $interface)
     {
-        if (!\interface_exists($interface)) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Interface '%s' not found.", $this->getName(), $interface));
+        if (!interface_exists($interface)) {
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Interface '%s' not found.", $this->getName(), $interface));
         }
         $rc = new \ReflectionClass($interface);
         $method = $rc->getMethods()[0] ?? null;
-        if (!$method || $method->isStatic() || $method->name !== self::MethodCreate || \count($rc->getMethods()) > 1) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Interface %s must have just one non-static method create().", $this->getName(), $interface));
+        if (!$method || $method->isStatic() || $method->name !== self::MethodCreate || count($rc->getMethods()) > 1) {
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Interface %s must have just one non-static method create().", $this->getName(), $interface));
         }
         try {
             Helpers::ensureClassType(Type::fromReflection($method), "return type of {$interface}::create()");
         } catch (Nette\DI\ServiceCreationException $e) {
-            \trigger_error($e->getMessage(), \E_USER_DEPRECATED);
+            trigger_error($e->getMessage(), \E_USER_DEPRECATED);
         }
         return parent::setType($interface);
     }
@@ -70,11 +70,11 @@ final class FactoryDefinition extends Definition
         if ($params) {
             $old = $new = [];
             foreach ($params as $k => $v) {
-                $tmp = \explode(' ', \is_int($k) ? $v : $k);
-                $old[] = '%' . \end($tmp) . '%';
-                $new[] = '$' . \end($tmp);
+                $tmp = explode(' ', is_int($k) ? $v : $k);
+                $old[] = '%' . end($tmp) . '%';
+                $new[] = '$' . end($tmp);
             }
-            \trigger_error(\sprintf("Service '%s': Option 'parameters' is deprecated and should be removed. The %s should be replaced with %s in configuration.", $this->getName(), \implode(', ', $old), \implode(', ', $new)), \E_USER_DEPRECATED);
+            trigger_error(sprintf("Service '%s': Option 'parameters' is deprecated and should be removed. The %s should be replaced with %s in configuration.", $this->getName(), implode(', ', $old), implode(', ', $new)), \E_USER_DEPRECATED);
         }
         $this->parameters = $params;
         return $this;
@@ -103,7 +103,7 @@ final class FactoryDefinition extends Definition
             $resolver->resolveDefinition($resultDef);
         }
         if ($type && !$type->allows($resultDef->getType())) {
-            throw new ServiceCreationException(\sprintf('Factory for %s cannot create incompatible %s type.', $type, $resultDef->getType()));
+            throw new ServiceCreationException(sprintf('Factory for %s cannot create incompatible %s type.', $type, $resultDef->getType()));
         }
     }
     public function complete(Nette\DI\Resolver $resolver): void
@@ -143,19 +143,19 @@ final class FactoryDefinition extends Definition
                 $ctorParam = $ctorParams[$param->name];
                 $ctorType = Type::fromReflection($ctorParam);
                 if ($ctorType && !$ctorType->allows((string) $methodType)) {
-                    throw new ServiceCreationException(\sprintf("Type of \$%s in %s::create() doesn't match type in %s constructor.", $param->name, $interface, $class));
+                    throw new ServiceCreationException(sprintf("Type of \$%s in %s::create() doesn't match type in %s constructor.", $param->name, $interface, $class));
                 }
                 $this->resultDefinition->getCreator()->arguments[$ctorParam->getPosition()] = new Php\Literal('$' . $ctorParam->name);
             } elseif (!$this->resultDefinition->getSetup()) {
                 // [param1, param2] => '$param1, $param2'
                 $stringifyParams = function (array $params): string {
-                    return \implode(', ', \array_map(function (string $param) {
+                    return implode(', ', array_map(function (string $param) {
                         return '$' . $param;
                     }, $params));
                 };
-                $ctorParamsKeys = \array_keys($ctorParams);
+                $ctorParamsKeys = array_keys($ctorParams);
                 $hint = Nette\Utils\Helpers::getSuggestion($ctorParamsKeys, $param->name);
-                throw new ServiceCreationException(\sprintf('Cannot implement %s::create(): factory method parameters (%s) are not matching %s::__construct() parameters (%s).', $interface, $stringifyParams(\array_map(function (\ReflectionParameter $param) {
+                throw new ServiceCreationException(sprintf('Cannot implement %s::create(): factory method parameters (%s) are not matching %s::__construct() parameters (%s).', $interface, $stringifyParams(array_map(function (\ReflectionParameter $param) {
                     return $param->name;
                 }, $method->getParameters())), $class, $stringifyParams($ctorParamsKeys)) . ($hint ? " Did you mean to use '\${$hint}' in factory method?" : ''));
             }
@@ -170,7 +170,7 @@ final class FactoryDefinition extends Definition
     public function convertArguments(array &$args): void
     {
         foreach ($args as &$v) {
-            if (\is_string($v) && $v && $v[0] === '$') {
+            if (is_string($v) && $v && $v[0] === '$') {
                 $v = new Php\Literal($v);
             }
         }
@@ -183,8 +183,8 @@ final class FactoryDefinition extends Definition
         $methodCreate = $class->addMethod(self::MethodCreate);
         $this->resultDefinition->generateMethod($methodCreate, $generator);
         $body = $methodCreate->getBody();
-        $body = \str_replace('$this', '$this->container', $body);
-        $body = \str_replace('$this->container->container', '$this->container', $body);
+        $body = str_replace('$this', '$this->container', $body);
+        $body = str_replace('$this->container->container', '$this->container', $body);
         $rm = new \ReflectionMethod($this->getType(), self::MethodCreate);
         $methodCreate->setParameters($generator->convertParameters($this->parameters))->setReturnType((string) (Type::fromReflection($rm) ?? $this->getResultType()))->setBody($body);
         $method->setBody('return new class ($this) ' . $class . ';');
@@ -192,6 +192,6 @@ final class FactoryDefinition extends Definition
     public function __clone()
     {
         parent::__clone();
-        $this->resultDefinition = \unserialize(\serialize($this->resultDefinition));
+        $this->resultDefinition = unserialize(serialize($this->resultDefinition));
     }
 }

@@ -23,8 +23,8 @@ final class DecoratorExtension extends Nette\DI\CompilerExtension
     {
         $this->getContainerBuilder()->resolve();
         foreach ($this->config as $type => $info) {
-            if (!\class_exists($type) && !\interface_exists($type)) {
-                throw new Nette\DI\InvalidConfigurationException(\sprintf("Decorated class '%s' not found.", $type));
+            if (!class_exists($type) && !interface_exists($type)) {
+                throw new Nette\DI\InvalidConfigurationException(sprintf("Decorated class '%s' not found.", $type));
             }
             if ($info->inject !== null) {
                 $info->tags[InjectExtension::TagInject] = $info->inject;
@@ -40,8 +40,8 @@ final class DecoratorExtension extends Nette\DI\CompilerExtension
                 $def = $def->getResultDefinition();
             }
             foreach ($setups as $setup) {
-                if (\is_array($setup)) {
-                    $setup = new Definitions\Statement(\key($setup), \array_values($setup));
+                if (is_array($setup)) {
+                    $setup = new Definitions\Statement(key($setup), array_values($setup));
                 }
                 $def->addSetup($setup);
             }
@@ -56,8 +56,8 @@ final class DecoratorExtension extends Nette\DI\CompilerExtension
     }
     private function findByType(string $type): array
     {
-        return \array_filter($this->getContainerBuilder()->getDefinitions(), function (Definitions\Definition $def) use ($type): bool {
-            return \is_a($def->getType(), $type, \true) || $def instanceof Definitions\FactoryDefinition && \is_a($def->getResultType(), $type, \true);
+        return array_filter($this->getContainerBuilder()->getDefinitions(), function (Definitions\Definition $def) use ($type): bool {
+            return is_a($def->getType(), $type, \true) || $def instanceof Definitions\FactoryDefinition && is_a($def->getResultType(), $type, \true);
         });
     }
 }

@@ -60,7 +60,7 @@ class Link extends File
      */
     public function __construct($streamName, $mode, $context = null, $wait = \false)
     {
-        if (!\is_link($streamName)) {
+        if (!is_link($streamName)) {
             throw new File\Exception('File %s is not a link.', 0, $streamName);
         }
         parent::__construct($streamName, $mode, $context, $wait);
@@ -73,7 +73,7 @@ class Link extends File
      */
     public function getStatistic()
     {
-        return \lstat($this->getStreamName());
+        return lstat($this->getStreamName());
     }
     /**
      * Change file group.
@@ -83,7 +83,7 @@ class Link extends File
      */
     public function changeGroup($group)
     {
-        return \lchgrp($this->getStreamName(), $group);
+        return lchgrp($this->getStreamName(), $group);
     }
     /**
      * Change file owner.
@@ -93,7 +93,7 @@ class Link extends File
      */
     public function changeOwner($user)
     {
-        return \lchown($this->getStreamName(), $user);
+        return lchown($this->getStreamName(), $user);
     }
     /**
      * Get file permissions.
@@ -113,13 +113,13 @@ class Link extends File
      */
     public function getTarget()
     {
-        $target = \dirname($this->getStreamName()) . DS . $this->getTargetName();
+        $target = dirname($this->getStreamName()) . DS . $this->getTargetName();
         $context = null !== $this->getStreamContext() ? $this->getStreamContext()->getCurrentId() : null;
-        if (\true === \is_link($target)) {
+        if (\true === is_link($target)) {
             return new \Hoa\File\Link\ReadWrite($target, File::MODE_APPEND_READ_WRITE, $context);
-        } elseif (\true === \is_file($target)) {
+        } elseif (\true === is_file($target)) {
             return new File\ReadWrite($target, File::MODE_APPEND_READ_WRITE, $context);
-        } elseif (\true === \is_dir($target)) {
+        } elseif (\true === is_dir($target)) {
             return new File\Directory($target, File::MODE_READ, $context);
         }
         throw new File\Exception('Cannot find an appropriated object that matches with ' . 'path %s when defining it.', 1, $target);
@@ -131,7 +131,7 @@ class Link extends File
      */
     public function getTargetName()
     {
-        return \readlink($this->getStreamName());
+        return readlink($this->getStreamName());
     }
     /**
      * Create a link.
@@ -142,10 +142,10 @@ class Link extends File
      */
     public static function create($name, $target)
     {
-        if (\false != \linkinfo($name)) {
+        if (\false != linkinfo($name)) {
             return \true;
         }
-        return \symlink($target, $name);
+        return symlink($target, $name);
     }
 }
 /**

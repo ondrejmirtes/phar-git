@@ -9,7 +9,7 @@ use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\FileTypeMapper;
 use function array_map;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PhpDocInheritanceResolver
 {
     private FileTypeMapper $fileTypeMapper;

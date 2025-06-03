@@ -19,7 +19,7 @@ use Throwable;
 use function count;
 use function in_array;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ThrowableReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string

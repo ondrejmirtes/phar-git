@@ -21,7 +21,7 @@ use PHPStan\Type\IntersectionType;
 use PHPStan\Type\ObjectWithoutClassType;
 use PHPStan\Type\UnionType;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MethodExistsTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

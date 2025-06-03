@@ -50,7 +50,7 @@ use function in_array;
 use function method_exists;
 use function str_starts_with;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PhpDocNodeResolver
 {
     private \PHPStan\PhpDoc\TypeNodeResolver $typeNodeResolver;

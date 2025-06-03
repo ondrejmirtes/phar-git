@@ -28,7 +28,7 @@ use ValueError;
 use function count;
 use function is_array;
 use function range;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RangeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private const RANGE_LENGTH_THRESHOLD = 50;

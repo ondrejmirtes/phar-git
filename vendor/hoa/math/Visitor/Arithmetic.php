@@ -104,7 +104,7 @@ class Arithmetic implements Visitor\Visit
         $acc =& $handle;
         switch ($type) {
             case '#function':
-                $name = \array_shift($children)->accept($this, $_, $eldnah);
+                $name = array_shift($children)->accept($this, $_, $eldnah);
                 $function = $this->getFunction($name);
                 $arguments = [];
                 foreach ($children as $child) {
@@ -154,7 +154,7 @@ class Arithmetic implements Visitor\Visit
                         return $acc($a()) / $b;
                     };
                 } else if ('#fakegroup' !== $parent->getId()) {
-                    $classname = \get_class($element);
+                    $classname = get_class($element);
                     $group = new $classname('#fakegroup', null, [$element], $parent);
                     $element->setParent($group);
                     $this->visit($group, $acc, $eldnah);
@@ -186,8 +186,8 @@ class Arithmetic implements Visitor\Visit
                 $value = $element->getValueValue();
                 $out = null;
                 if ('constant' === $element->getValueToken()) {
-                    if (\defined($value)) {
-                        $out = \constant($value);
+                    if (defined($value)) {
+                        $out = constant($value);
                     } else {
                         $out = $this->getConstant($value);
                     }

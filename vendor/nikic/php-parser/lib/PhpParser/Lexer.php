@@ -27,11 +27,11 @@ class Lexer
         if (null === $errorHandler) {
             $errorHandler = new \PhpParser\ErrorHandler\Throwing();
         }
-        $scream = \ini_set('xdebug.scream', '0');
+        $scream = ini_set('xdebug.scream', '0');
         $tokens = @\PhpParser\Token::tokenize($code);
         $this->postprocessTokens($tokens, $errorHandler);
         if (\false !== $scream) {
-            \ini_set('xdebug.scream', $scream);
+            ini_set('xdebug.scream', $scream);
         }
         return $tokens;
     }
@@ -42,13 +42,13 @@ class Lexer
             // PHP cuts error message after null byte, so need special case
             $errorMsg = 'Unexpected null byte';
         } else {
-            $errorMsg = \sprintf('Unexpected character "%s" (ASCII %d)', $chr, \ord($chr));
+            $errorMsg = sprintf('Unexpected character "%s" (ASCII %d)', $chr, ord($chr));
         }
         $errorHandler->handleError(new \PhpParser\Error($errorMsg, ['startLine' => $token->line, 'endLine' => $token->line, 'startFilePos' => $token->pos, 'endFilePos' => $token->pos]));
     }
     private function isUnterminatedComment(\PhpParser\Token $token): bool
     {
-        return $token->is([\T_COMMENT, \T_DOC_COMMENT]) && \substr($token->text, 0, 2) === '/*' && \substr($token->text, -2) !== '*/';
+        return $token->is([\T_COMMENT, \T_DOC_COMMENT]) && substr($token->text, 0, 2) === '/*' && substr($token->text, -2) !== '*/';
     }
     /**
      * @param list<Token> $tokens

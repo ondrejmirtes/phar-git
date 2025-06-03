@@ -15,7 +15,7 @@ use PHPStan\Type\TypeUtils;
 use PHPStan\Type\UnionType;
 use PHPStan\Type\VerbosityLevel;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class TooWideParameterOutTypeCheck
 {
     /**

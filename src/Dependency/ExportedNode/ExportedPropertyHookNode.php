@@ -85,7 +85,7 @@ final class ExportedPropertyHookNode implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'phpDoc' => $this->phpDoc, 'byRef' => $this->byRef, 'abstract' => $this->abstract, 'final' => $this->final, 'short' => $this->short, 'parameters' => $this->parameters, 'attributes' => $this->attributes]];

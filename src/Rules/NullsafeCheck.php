@@ -5,7 +5,7 @@ namespace PHPStan\Rules;
 
 use PhpParser\Node\Expr;
 use PHPStan\DependencyInjection\AutowiredService;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class NullsafeCheck
 {
     public function containsNullSafe(Expr $expr): bool

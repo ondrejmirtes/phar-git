@@ -72,11 +72,11 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
     protected function &_open($streamName, ?Stream\Context $context = null)
     {
         static $createModes = [parent::MODE_READ];
-        if (!\in_array($this->getMode(), $createModes)) {
-            throw new \Hoa\File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), \implode(', ', $createModes)]);
+        if (!in_array($this->getMode(), $createModes)) {
+            throw new \Hoa\File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), implode(', ', $createModes)]);
         }
-        \preg_match('#^(\w+)://#', $streamName, $match);
-        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !\file_exists($streamName)) {
+        preg_match('#^(\w+)://#', $streamName, $match);
+        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !file_exists($streamName)) {
             throw new \Hoa\File\Exception\FileDoesNotExist('File %s does not exist.', 1, $streamName);
         }
         $out = parent::_open($streamName, $context);
@@ -89,7 +89,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
      */
     public function eof()
     {
-        return \feof($this->getStream());
+        return feof($this->getStream());
     }
     /**
      * Read n characters.
@@ -103,7 +103,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
         if (0 > $length) {
             throw new \Hoa\File\Exception('Length must be greater than 0, given %d.', 2, $length);
         }
-        return \fread($this->getStream(), $length);
+        return fread($this->getStream(), $length);
     }
     /**
      * Alias of $this->read().
@@ -122,7 +122,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
      */
     public function readCharacter()
     {
-        return \fgetc($this->getStream());
+        return fgetc($this->getStream());
     }
     /**
      * Read a boolean.
@@ -171,7 +171,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
      */
     public function readLine()
     {
-        return \fgets($this->getStream());
+        return fgets($this->getStream());
     }
     /**
      * Read all, i.e. read as much as possible.
@@ -181,7 +181,7 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
      */
     public function readAll($offset = 0)
     {
-        return \stream_get_contents($this->getStream(), -1, $offset);
+        return stream_get_contents($this->getStream(), -1, $offset);
     }
     /**
      * Parse input from a stream according to a format.
@@ -191,6 +191,6 @@ class Read extends \Hoa\File\File implements Stream\IStream\In
      */
     public function scanf($format)
     {
-        return \fscanf($this->getStream(), $format);
+        return fscanf($this->getStream(), $format);
     }
 }

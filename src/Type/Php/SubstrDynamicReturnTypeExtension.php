@@ -26,7 +26,7 @@ use function in_array;
 use function is_bool;
 use function mb_substr;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class SubstrDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

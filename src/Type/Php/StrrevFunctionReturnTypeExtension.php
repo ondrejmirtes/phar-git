@@ -19,7 +19,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
 use function strrev;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrrevFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

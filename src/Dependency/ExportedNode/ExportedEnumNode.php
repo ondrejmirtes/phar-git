@@ -86,7 +86,7 @@ final class ExportedEnumNode implements RootExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'scalarType' => $this->scalarType, 'phpDoc' => $this->phpDoc, 'implements' => $this->implements, 'statements' => $this->statements, 'attributes' => $this->attributes]];

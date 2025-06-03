@@ -15,7 +15,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateTimeZoneConstructorThrowTypeExtension implements DynamicStaticMethodThrowTypeExtension
 {
     private PhpVersion $phpVersion;

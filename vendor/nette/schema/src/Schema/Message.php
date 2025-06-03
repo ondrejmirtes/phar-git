@@ -55,9 +55,9 @@ final class Message
     {
         $vars = $this->variables;
         $vars['label'] = empty($vars['isKey']) ? 'item' : 'key of item';
-        $vars['path'] = $this->path ? "'" . \implode(" › ", $this->path) . "'" : null;
+        $vars['path'] = $this->path ? "'" . implode(" › ", $this->path) . "'" : null;
         $vars['value'] = Helpers::formatValue($vars['value'] ?? null);
-        return \preg_replace_callback('~( ?)%(\w+)%~', function ($m) use ($vars) {
+        return preg_replace_callback('~( ?)%(\w+)%~', function ($m) use ($vars) {
             [, $space, $key] = $m;
             return $vars[$key] === null ? '' : $space . $vars[$key];
         }, $this->message);

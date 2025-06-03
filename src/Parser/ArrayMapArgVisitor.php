@@ -8,7 +8,7 @@ use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use function array_slice;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayMapArgVisitor extends NodeVisitorAbstract
 {
     public const ATTRIBUTE_NAME = 'arrayMapArgs';

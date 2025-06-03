@@ -15,7 +15,7 @@ use PHPStan\Type\TypeCombinator;
 use ReflectionClass;
 use function count;
 use function sort;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClassNameUsageLocationCreateIdentifierDynamicReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
     public function getClass(): string

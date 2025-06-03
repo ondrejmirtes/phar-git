@@ -18,7 +18,7 @@ use function date;
 use function is_numeric;
 use function str_pad;
 use const STR_PAD_LEFT;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateFunctionReturnTypeHelper
 {
     public function getTypeFromFormatType(Type $formatType, bool $useMicrosec): Type

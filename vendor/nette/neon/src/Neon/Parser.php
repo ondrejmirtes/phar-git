@@ -59,12 +59,12 @@ final class Parser
             while ($this->tokens->consume(Token::Newline)) {
             }
             $nextIndent = $this->tokens->getIndentation();
-            if (\strncmp($nextIndent, $indent, \min(\strlen($nextIndent), \strlen($indent)))) {
+            if (strncmp($nextIndent, $indent, min(strlen($nextIndent), strlen($indent)))) {
                 $this->tokens->error('Invalid combination of tabs and spaces');
-            } elseif (\strlen($nextIndent) > \strlen($indent)) {
+            } elseif (strlen($nextIndent) > strlen($indent)) {
                 // open new block
                 $item->value = $this->parseBlock($nextIndent);
-            } elseif (\strlen($nextIndent) < \strlen($indent)) {
+            } elseif (strlen($nextIndent) < strlen($indent)) {
                 // close block
                 return $res;
             } elseif ($item->key !== null && $this->tokens->isNext('-')) {
@@ -81,7 +81,7 @@ final class Parser
             }
         }
         if ($item->value instanceof Node\BlockArrayNode) {
-            $item->value->indentation = \substr($item->value->indentation, \strlen($indent));
+            $item->value->indentation = substr($item->value->indentation, strlen($indent));
         }
         $this->injectPos($res, $res->startTokenPos, $item->value->endTokenPos);
         $this->injectPos($item, $item->startTokenPos, $item->value->endTokenPos);
@@ -91,11 +91,11 @@ final class Parser
             return $res;
         }
         $nextIndent = $this->tokens->getIndentation();
-        if (\strncmp($nextIndent, $indent, \min(\strlen($nextIndent), \strlen($indent)))) {
+        if (strncmp($nextIndent, $indent, min(strlen($nextIndent), strlen($indent)))) {
             $this->tokens->error('Invalid combination of tabs and spaces');
-        } elseif (\strlen($nextIndent) > \strlen($indent)) {
+        } elseif (strlen($nextIndent) > strlen($indent)) {
             $this->tokens->error('Bad indentation');
-        } elseif (\strlen($nextIndent) < \strlen($indent)) {
+        } elseif (strlen($nextIndent) < strlen($indent)) {
             // close block
             return $res;
         }
@@ -139,7 +139,7 @@ final class Parser
                 break;
             }
         }
-        return \count($entities) === 1 ? $entities[0] : $this->injectPos(new Node\EntityChainNode($entities), $node->startTokenPos, \end($entities)->endTokenPos);
+        return count($entities) === 1 ? $entities[0] : $this->injectPos(new Node\EntityChainNode($entities), $node->startTokenPos, end($entities)->endTokenPos);
     }
     private function parseBraces(): Node\InlineArrayNode
     {
@@ -179,11 +179,11 @@ final class Parser
     /** @param  true[]  $arr */
     private function checkArrayKey(Node $key, array &$arr): void
     {
-        if (!$key instanceof Node\StringNode && !$key instanceof Node\LiteralNode || !\is_scalar($key->value)) {
+        if (!$key instanceof Node\StringNode && !$key instanceof Node\LiteralNode || !is_scalar($key->value)) {
             $this->tokens->error('Unacceptable key', $key->startTokenPos);
         }
         $k = (string) $key->value;
-        if (\array_key_exists($k, $arr)) {
+        if (array_key_exists($k, $arr)) {
             $this->tokens->error("Duplicated key '{$k}'", $key->startTokenPos);
         }
         $arr[$k] = \true;
@@ -193,7 +193,7 @@ final class Parser
         $node->startTokenPos = $start ?? $this->tokens->getPos();
         $node->startLine = $this->posToLine[$node->startTokenPos];
         $node->endTokenPos = $end ?? $node->startTokenPos;
-        $node->endLine = $this->posToLine[$node->endTokenPos + 1] ?? \end($this->posToLine);
+        $node->endLine = $this->posToLine[$node->endTokenPos + 1] ?? end($this->posToLine);
         return $node;
     }
     private function initLines(): void
@@ -202,7 +202,7 @@ final class Parser
         $line = 1;
         foreach ($this->tokens->getTokens() as $token) {
             $this->posToLine[] = $line;
-            $line += \substr_count($token->value, "\n");
+            $line += substr_count($token->value, "\n");
         }
         $this->posToLine[] = $line;
     }

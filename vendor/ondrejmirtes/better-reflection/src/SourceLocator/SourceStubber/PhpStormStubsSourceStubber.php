@@ -639,7 +639,7 @@ final class PhpStormStubsSourceStubber implements \PHPStan\BetterReflection\Sour
     private function normalizeType(string $type)
     {
         // There are some invalid types in stubs, eg. `string[]|string|null`
-        if (\strpos($type, '[') !== \false) {
+        if (strpos($type, '[') !== \false) {
             return null;
         }
         /** @psalm-suppress InternalClass, InternalMethod */

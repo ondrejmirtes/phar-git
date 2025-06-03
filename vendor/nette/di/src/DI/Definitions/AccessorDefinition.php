@@ -21,20 +21,20 @@ final class AccessorDefinition extends Definition
     /** @return static */
     public function setImplement(string $interface)
     {
-        if (!\interface_exists($interface)) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Interface '%s' not found.", $this->getName(), $interface));
+        if (!interface_exists($interface)) {
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Interface '%s' not found.", $this->getName(), $interface));
         }
         $rc = new \ReflectionClass($interface);
         $method = $rc->getMethods()[0] ?? null;
-        if (!$method || $method->isStatic() || $method->getName() !== self::MethodGet || \count($rc->getMethods()) > 1) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Interface %s must have just one non-static method get().", $this->getName(), $interface));
+        if (!$method || $method->isStatic() || $method->getName() !== self::MethodGet || count($rc->getMethods()) > 1) {
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Interface %s must have just one non-static method get().", $this->getName(), $interface));
         } elseif ($method->getNumberOfParameters()) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service '%s': Method %s::get() must have no parameters.", $this->getName(), $interface));
+            throw new Nette\InvalidArgumentException(sprintf("Service '%s': Method %s::get() must have no parameters.", $this->getName(), $interface));
         }
         try {
             Helpers::ensureClassType(Type::fromReflection($method), "return type of {$interface}::get()");
         } catch (Nette\DI\ServiceCreationException $e) {
-            \trigger_error($e->getMessage(), \E_USER_DEPRECATED);
+            trigger_error($e->getMessage(), \E_USER_DEPRECATED);
         }
         return parent::setType($interface);
     }
@@ -51,7 +51,7 @@ final class AccessorDefinition extends Definition
         if ($reference instanceof Reference) {
             $this->reference = $reference;
         } else {
-            $this->reference = \substr($reference, 0, 1) === '@' ? new Reference(\substr($reference, 1)) : Reference::fromType($reference);
+            $this->reference = substr($reference, 0, 1) === '@' ? new Reference(substr($reference, 1)) : Reference::fromType($reference);
         }
         return $this;
     }

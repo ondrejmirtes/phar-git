@@ -36,7 +36,7 @@ abstract class CompilerExtension
      */
     public function setConfig($config)
     {
-        if (!\is_array($config) && !\is_object($config)) {
+        if (!is_array($config) && !is_object($config)) {
             throw new Nette\InvalidArgumentException();
         }
         $this->config = $config;
@@ -55,7 +55,7 @@ abstract class CompilerExtension
      */
     public function getConfigSchema(): Nette\Schema\Schema
     {
-        return \is_object($this->config) ? Nette\Schema\Expect::from($this->config) : Nette\Schema\Expect::array();
+        return is_object($this->config) ? Nette\Schema\Expect::from($this->config) : Nette\Schema\Expect::array();
     }
     /**
      * Checks whether $config contains only $expected items and returns combined array.
@@ -64,13 +64,13 @@ abstract class CompilerExtension
      */
     public function validateConfig(array $expected, ?array $config = null, ?string $name = null): array
     {
-        if (\func_num_args() === 1) {
+        if (func_num_args() === 1) {
             return $this->config = $this->validateConfig($expected, $this->config);
         }
-        if ($extra = \array_diff_key((array) $config, $expected)) {
-            $name = $name ? \str_replace('.', " › ", $name) : $this->name;
-            $hint = Nette\Utils\Helpers::getSuggestion(\array_keys($expected), \key($extra));
-            throw new Nette\DI\InvalidConfigurationException(\sprintf("Unknown configuration option '%s › %s'", $name, $hint ? \key($extra) : \implode("', '{$name} › ", \array_keys($extra))) . ($hint ? ", did you mean '{$name} › {$hint}'?" : '.'));
+        if ($extra = array_diff_key((array) $config, $expected)) {
+            $name = $name ? str_replace('.', " › ", $name) : $this->name;
+            $hint = Nette\Utils\Helpers::getSuggestion(array_keys($expected), key($extra));
+            throw new Nette\DI\InvalidConfigurationException(sprintf("Unknown configuration option '%s › %s'", $name, $hint ? key($extra) : implode("', '{$name} › ", array_keys($extra))) . ($hint ? ", did you mean '{$name} › {$hint}'?" : '.'));
         }
         return Nette\Schema\Helpers::merge($config, $expected);
     }
@@ -96,7 +96,7 @@ abstract class CompilerExtension
     {
         $res = [];
         foreach ($configList as $key => $config) {
-            $key = \is_string($key) ? $this->name . '.' . $key : $key;
+            $key = is_string($key) ? $this->name . '.' . $key : $key;
             $res[$key] = Helpers::prefixServiceName($config, $this->name);
         }
         $this->compiler->loadDefinitionsFromConfig($res);
@@ -114,7 +114,7 @@ abstract class CompilerExtension
      */
     public function prefix(string $id): string
     {
-        return \substr_replace($id, $this->name . '.', \substr($id, 0, 1) === '@' ? 1 : 0, 0);
+        return substr_replace($id, $this->name . '.', substr($id, 0, 1) === '@' ? 1 : 0, 0);
     }
     /**
      * Processes configuration data. Intended to be overridden by descendant.

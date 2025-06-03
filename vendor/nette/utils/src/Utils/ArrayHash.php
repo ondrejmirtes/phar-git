@@ -25,7 +25,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
     {
         $obj = new static();
         foreach ($array as $key => $value) {
-            $obj->{$key} = $recursive && \is_array($value) ? static::from($value, \true) : $value;
+            $obj->{$key} = $recursive && is_array($value) ? static::from($value, \true) : $value;
         }
         return $obj;
     }
@@ -42,7 +42,7 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      */
     public function count(): int
     {
-        return \count((array) $this);
+        return count((array) $this);
     }
     /**
      * Replaces or appends a item.
@@ -51,9 +51,9 @@ class ArrayHash extends \stdClass implements \ArrayAccess, \Countable, \Iterator
      */
     public function offsetSet($key, $value): void
     {
-        if (!\is_scalar($key)) {
+        if (!is_scalar($key)) {
             // prevents null
-            throw new Nette\InvalidArgumentException(\sprintf('Key must be either a string or an integer, %s given.', \gettype($key)));
+            throw new Nette\InvalidArgumentException(sprintf('Key must be either a string or an integer, %s given.', gettype($key)));
         }
         $this->{$key} = $value;
     }

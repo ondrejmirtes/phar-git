@@ -11,7 +11,7 @@ use PHPStan\Reflection\ParametersAcceptor;
 use function array_filter;
 use function array_key_exists;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class VariadicFunctionsVisitor extends NodeVisitorAbstract
 {
     private ?Node $topNode = null;

@@ -41,15 +41,15 @@ final class Neon
      */
     public static function decodeFile(string $file)
     {
-        $input = @\file_get_contents($file);
+        $input = @file_get_contents($file);
         // @ is escalated to exception
         if ($input === \false) {
-            $error = \preg_replace('#^\w+\(.*?\): #', '', \error_get_last()['message'] ?? '');
+            $error = preg_replace('#^\w+\(.*?\): #', '', error_get_last()['message'] ?? '');
             throw new Exception("Unable to read file '{$file}'. {$error}");
         }
-        if (\substr($input, 0, 3) === "﻿") {
+        if (substr($input, 0, 3) === "﻿") {
             // BOM
-            $input = \substr($input, 3);
+            $input = substr($input, 3);
         }
         return self::decode($input);
     }

@@ -22,7 +22,7 @@ final class SecureConnector implements ConnectorInterface
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $this->connector = $connector;
         $this->streamEncryption = new StreamEncryption($loop ?: Loop::get(), \false);
@@ -30,7 +30,7 @@ final class SecureConnector implements ConnectorInterface
     }
     public function connect($uri)
     {
-        if (!\function_exists('stream_socket_enable_crypto')) {
+        if (!\function_exists('stream_socket_enable_crypto') && !\function_exists('_PHPStan_checksum\stream_socket_enable_crypto')) {
             return Promise\reject(new \BadMethodCallException('Encryption not supported on your platform (HHVM < 3.8?)'));
             // @codeCoverageIgnore
         }

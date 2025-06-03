@@ -44,7 +44,7 @@ class ApplicationTester
      */
     public function run(array $input, array $options = [])
     {
-        $prevShellVerbosity = \getenv('SHELL_VERBOSITY');
+        $prevShellVerbosity = getenv('SHELL_VERBOSITY');
         try {
             $this->input = new ArrayInput($input);
             if (isset($options['interactive'])) {
@@ -60,13 +60,13 @@ class ApplicationTester
             // to its previous value to avoid one test's verbosity to spread to the following tests
             if (\false === $prevShellVerbosity) {
                 if (\function_exists('putenv')) {
-                    @\putenv('SHELL_VERBOSITY');
+                    @putenv('SHELL_VERBOSITY');
                 }
                 unset($_ENV['SHELL_VERBOSITY']);
                 unset($_SERVER['SHELL_VERBOSITY']);
             } else {
                 if (\function_exists('putenv')) {
-                    @\putenv('SHELL_VERBOSITY=' . $prevShellVerbosity);
+                    @putenv('SHELL_VERBOSITY=' . $prevShellVerbosity);
                 }
                 $_ENV['SHELL_VERBOSITY'] = $prevShellVerbosity;
                 $_SERVER['SHELL_VERBOSITY'] = $prevShellVerbosity;

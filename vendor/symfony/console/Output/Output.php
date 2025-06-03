@@ -122,7 +122,7 @@ abstract class Output implements OutputInterface
      */
     public function write($messages, bool $newline = \false, int $options = self::OUTPUT_NORMAL)
     {
-        if (!\is_iterable($messages)) {
+        if (!is_iterable($messages)) {
             $messages = [$messages];
         }
         $types = self::OUTPUT_NORMAL | self::OUTPUT_RAW | self::OUTPUT_PLAIN;
@@ -140,7 +140,7 @@ abstract class Output implements OutputInterface
                 case OutputInterface::OUTPUT_RAW:
                     break;
                 case OutputInterface::OUTPUT_PLAIN:
-                    $message = \strip_tags($this->formatter->format($message));
+                    $message = strip_tags($this->formatter->format($message));
                     break;
             }
             $this->doWrite($message ?? '', $newline);

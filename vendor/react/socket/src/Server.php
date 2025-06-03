@@ -51,7 +51,7 @@ final class Server extends EventEmitter implements ServerInterface
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #2 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $loop = $loop ?: Loop::get();
         // sanitize TCP context options if not properly wrapped
@@ -68,7 +68,7 @@ final class Server extends EventEmitter implements ServerInterface
         if ($scheme === 'unix') {
             $server = new UnixServer($uri, $loop, $context['unix']);
         } else {
-            $server = new TcpServer(\str_replace('tls://', '', $uri), $loop, $context['tcp']);
+            $server = new TcpServer(str_replace('tls://', '', $uri), $loop, $context['tcp']);
             if ($scheme === 'tls') {
                 $server = new SecureServer($server, $loop, $context['tls']);
             }

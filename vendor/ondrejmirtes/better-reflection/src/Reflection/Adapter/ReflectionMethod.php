@@ -61,7 +61,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getClosureThis()
     {
         throw new NotImplemented('Not implemented');
@@ -77,7 +77,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterReflectionMethod->getDocComment() ?? \false;
@@ -85,7 +85,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStartLine()
     {
         try {
@@ -97,7 +97,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getEndLine()
     {
         try {
@@ -114,7 +114,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getExtensionName()
     {
         return $this->betterReflectionMethod->getExtensionName() ?? \false;
@@ -122,7 +122,7 @@ final class ReflectionMethod extends CoreReflectionMethod
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getFileName()
     {
         $fileName = $this->betterReflectionMethod->getFileName();
@@ -237,7 +237,7 @@ final class ReflectionMethod extends CoreReflectionMethod
      *
      * @throws CoreReflectionException
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function invoke($object = null, $arg = null, ...$args)
     {
         try {
@@ -256,7 +256,7 @@ final class ReflectionMethod extends CoreReflectionMethod
      *
      * @throws CoreReflectionException
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function invokeArgs($object = null, array $args = [])
     {
         try {

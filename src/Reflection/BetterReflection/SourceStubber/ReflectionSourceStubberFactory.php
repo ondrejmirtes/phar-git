@@ -7,7 +7,7 @@ use PHPStan\BetterReflection\SourceLocator\SourceStubber\ReflectionSourceStubber
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Node\Printer\Printer;
 use PHPStan\Php\PhpVersion;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReflectionSourceStubberFactory
 {
     private Printer $printer;

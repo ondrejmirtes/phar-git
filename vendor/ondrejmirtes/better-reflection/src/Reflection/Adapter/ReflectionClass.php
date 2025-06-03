@@ -118,7 +118,7 @@ final class ReflectionClass extends CoreReflectionClass
      * {@inheritDoc}
      * @return non-empty-string|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getFileName()
     {
         $fileName = $this->betterReflectionClass->getFileName();
@@ -128,7 +128,7 @@ final class ReflectionClass extends CoreReflectionClass
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStartLine()
     {
         return $this->betterReflectionClass->getStartLine();
@@ -137,7 +137,7 @@ final class ReflectionClass extends CoreReflectionClass
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getEndLine()
     {
         return $this->betterReflectionClass->getEndLine();
@@ -145,7 +145,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterReflectionClass->getDocComment() ?? \false;
@@ -252,7 +252,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getConstant($name)
     {
         if ($name === '') {
@@ -284,7 +284,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param string $name
      * @return ReflectionClassConstant|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getReflectionConstant($name)
     {
         if ($name === '') {
@@ -428,7 +428,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @param mixed $arg
      * @param mixed $args
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function newInstance($arg = null, ...$args)
     {
         ClassExistenceChecker::classExists($this->getName(), \true);
@@ -504,7 +504,7 @@ final class ReflectionClass extends CoreReflectionClass
      * @psalm-mutation-free
      * @return self|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getParentClass()
     {
         $parentClass = $this->betterReflectionClass->getParentClass();
@@ -540,7 +540,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStaticPropertyValue($name, $default = null)
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionClass->getProperty($name) : null;
@@ -610,7 +610,7 @@ final class ReflectionClass extends CoreReflectionClass
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getExtensionName()
     {
         return $this->betterReflectionClass->getExtensionName() ?? \false;

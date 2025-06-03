@@ -16,7 +16,7 @@ use PHPStan\Type\IntegerType;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class GettimeofdayDynamicFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

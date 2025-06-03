@@ -86,10 +86,10 @@ class Command
     {
         $this->definition = new InputDefinition();
         if (null === $name && null !== $name = static::getDefaultName()) {
-            $aliases = \explode('|', $name);
-            if ('' === $name = \array_shift($aliases)) {
+            $aliases = explode('|', $name);
+            if ('' === $name = array_shift($aliases)) {
                 $this->setHidden(\true);
-                $name = \array_shift($aliases);
+                $name = array_shift($aliases);
             }
             $this->setAliases($aliases);
         }
@@ -230,14 +230,14 @@ class Command
         $this->initialize($input, $output);
         if (null !== $this->processTitle) {
             if (\function_exists('cli_set_process_title')) {
-                if (!@\cli_set_process_title($this->processTitle)) {
+                if (!@cli_set_process_title($this->processTitle)) {
                     if ('Darwin' === \PHP_OS) {
                         $output->writeln('<comment>Running "cli_set_process_title" as an unprivileged user is not supported on MacOS.</comment>', OutputInterface::VERBOSITY_VERY_VERBOSE);
                     } else {
-                        \cli_set_process_title($this->processTitle);
+                        cli_set_process_title($this->processTitle);
                     }
                 }
-            } elseif (\function_exists('_PHPStan_checksum\setproctitle')) {
+            } elseif (\function_exists('setproctitle')) {
                 setproctitle($this->processTitle);
             } elseif (OutputInterface::VERBOSITY_VERY_VERBOSE === $output->getVerbosity()) {
                 $output->writeln('<comment>Install the proctitle PECL to be able to change the process title.</comment>');
@@ -258,10 +258,10 @@ class Command
         } else {
             $statusCode = $this->execute($input, $output);
             if (!\is_int($statusCode)) {
-                throw new \TypeError(\sprintf('Return value of "%s::execute()" must be of the type int, "%s" returned.', static::class, \get_debug_type($statusCode)));
+                throw new \TypeError(sprintf('Return value of "%s::execute()" must be of the type int, "%s" returned.', static::class, get_debug_type($statusCode)));
             }
         }
-        return \is_numeric($statusCode) ? (int) $statusCode : 0;
+        return is_numeric($statusCode) ? (int) $statusCode : 0;
     }
     /**
      * Adds suggestions to $suggestions for the current completion input (e.g. option or argument).
@@ -288,14 +288,14 @@ class Command
         if ($code instanceof \Closure) {
             $r = new \ReflectionFunction($code);
             if (null === $r->getClosureThis()) {
-                \set_error_handler(static function () {
+                set_error_handler(static function () {
                 });
                 try {
                     if ($c = \Closure::bind($code, $this)) {
                         $code = $c;
                     }
                 } finally {
-                    \restore_error_handler();
+                    restore_error_handler();
                 }
             }
         }
@@ -365,7 +365,7 @@ class Command
     public function getNativeDefinition()
     {
         if (null === $this->definition) {
-            throw new LogicException(\sprintf('Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.', static::class));
+            throw new LogicException(sprintf('Command class "%s" is not correctly initialized. You probably forgot to call the parent constructor.', static::class));
         }
         return $this->definition;
     }
@@ -516,7 +516,7 @@ class Command
         $isSingleCommand = $this->application && $this->application->isSingleCommand();
         $placeholders = ['%command.name%', '%command.full_name%'];
         $replacements = [$name, $isSingleCommand ? $_SERVER['PHP_SELF'] : $_SERVER['PHP_SELF'] . ' ' . $name];
-        return \str_replace($placeholders, $replacements, $this->getHelp() ?: $this->getDescription());
+        return str_replace($placeholders, $replacements, $this->getHelp() ?: $this->getDescription());
     }
     /**
      * Sets the aliases for the command.
@@ -557,7 +557,7 @@ class Command
     {
         $key = $short ? 'short' : 'long';
         if (!isset($this->synopsis[$key])) {
-            $this->synopsis[$key] = \trim(\sprintf('%s %s', $this->name, $this->definition->getSynopsis($short)));
+            $this->synopsis[$key] = trim(sprintf('%s %s', $this->name, $this->definition->getSynopsis($short)));
         }
         return $this->synopsis[$key];
     }
@@ -568,8 +568,8 @@ class Command
      */
     public function addUsage(string $usage)
     {
-        if (!\str_starts_with($usage, $this->name)) {
-            $usage = \sprintf('%s %s', $this->name, $usage);
+        if (!str_starts_with($usage, $this->name)) {
+            $usage = sprintf('%s %s', $this->name, $usage);
         }
         $this->usages[] = $usage;
         return $this;
@@ -594,7 +594,7 @@ class Command
     public function getHelper(string $name)
     {
         if (null === $this->helperSet) {
-            throw new LogicException(\sprintf('Cannot retrieve helper "%s" because there is no HelperSet defined. Did you forget to add your command to the application or to set the application on the command using the setApplication() method? You can also set the HelperSet directly using the setHelperSet() method.', $name));
+            throw new LogicException(sprintf('Cannot retrieve helper "%s" because there is no HelperSet defined. Did you forget to add your command to the application or to set the application on the command using the setApplication() method? You can also set the HelperSet directly using the setHelperSet() method.', $name));
         }
         return $this->helperSet->get($name);
     }
@@ -607,8 +607,8 @@ class Command
      */
     private function validateName(string $name)
     {
-        if (!\preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
-            throw new InvalidArgumentException(\sprintf('Command name "%s" is invalid.', $name));
+        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
+            throw new InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
     }
 }

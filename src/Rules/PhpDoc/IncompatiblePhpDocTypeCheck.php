@@ -20,7 +20,7 @@ use PHPStan\Type\VerbosityLevel;
 use function array_merge;
 use function in_array;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IncompatiblePhpDocTypeCheck
 {
     private GenericObjectTypeCheck $genericObjectTypeCheck;

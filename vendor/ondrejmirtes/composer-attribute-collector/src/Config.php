@@ -98,7 +98,7 @@ final class Config
         $this->include = $include;
         $this->exclude = $exclude;
         $this->useCache = $useCache;
-        $this->excludeRegExp = \count($exclude) ? self::compileExclude($this->exclude) : null;
+        $this->excludeRegExp = count($exclude) ? self::compileExclude($this->exclude) : null;
     }
     /**
      * @param non-empty-string[] $exclude
@@ -128,7 +128,7 @@ final class Config
         $expanded = [];
         foreach ($paths as $path) {
             if (str_starts_with($path, self::VENDOR_PLACEHOLDER)) {
-                $path = $vendorDir . \substr($path, strlen(self::VENDOR_PLACEHOLDER));
+                $path = $vendorDir . substr($path, strlen(self::VENDOR_PLACEHOLDER));
             } else {
                 $path = $rootDir . $path;
             }

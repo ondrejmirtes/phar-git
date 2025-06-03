@@ -21,7 +21,7 @@ use function count;
 use function in_array;
 use function lcfirst;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FunctionPurityCheck
 {
     /**

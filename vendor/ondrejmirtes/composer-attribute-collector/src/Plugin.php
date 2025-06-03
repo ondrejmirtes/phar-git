@@ -125,7 +125,7 @@ final class Plugin implements PluginInterface, EventSubscriberInterface
             return new RuntimeDatastore();
         }
         $basePath = Platform::getCwd();
-        \assert($basePath !== '');
+        assert($basePath !== '');
         return new FileDatastore($basePath . DIRECTORY_SEPARATOR . self::CACHE_DIR, $io);
     }
     private static function renderElapsedTime(float $start): string

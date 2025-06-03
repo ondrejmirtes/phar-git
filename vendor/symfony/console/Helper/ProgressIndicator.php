@@ -45,14 +45,14 @@ class ProgressIndicator
         if (null === $indicatorValues) {
             $indicatorValues = ['-', '\\', '|', '/'];
         }
-        $indicatorValues = \array_values($indicatorValues);
+        $indicatorValues = array_values($indicatorValues);
         if (2 > \count($indicatorValues)) {
             throw new InvalidArgumentException('Must have at least 2 indicator value characters.');
         }
         $this->format = self::getFormatDefinition($format);
         $this->indicatorChangeInterval = $indicatorChangeInterval;
         $this->indicatorValues = $indicatorValues;
-        $this->startTime = \time();
+        $this->startTime = time();
     }
     /**
      * Sets the current indicator message.
@@ -72,7 +72,7 @@ class ProgressIndicator
         }
         $this->message = $message;
         $this->started = \true;
-        $this->startTime = \time();
+        $this->startTime = time();
         $this->indicatorUpdateTime = $this->getCurrentTimeInMilliseconds() + $this->indicatorChangeInterval;
         $this->indicatorCurrent = 0;
         $this->display();
@@ -147,7 +147,7 @@ class ProgressIndicator
         if (OutputInterface::VERBOSITY_QUIET === $this->output->getVerbosity()) {
             return;
         }
-        $this->overwrite(\preg_replace_callback("{%([a-z\\-_]+)(?:\\:([^%]+))?%}i", function ($matches) {
+        $this->overwrite(preg_replace_callback("{%([a-z\\-_]+)(?:\\:([^%]+))?%}i", function ($matches) {
             if ($formatter = self::getPlaceholderFormatterDefinition($matches[1])) {
                 return $formatter($this);
             }
@@ -181,7 +181,7 @@ class ProgressIndicator
     }
     private function getCurrentTimeInMilliseconds(): float
     {
-        return \round(\microtime(\true) * 1000);
+        return round(microtime(\true) * 1000);
     }
     private static function initPlaceholderFormatters(): array
     {
@@ -190,9 +190,9 @@ class ProgressIndicator
         }, 'message' => function (self $indicator) {
             return $indicator->message;
         }, 'elapsed' => function (self $indicator) {
-            return Helper::formatTime(\time() - $indicator->startTime);
+            return Helper::formatTime(time() - $indicator->startTime);
         }, 'memory' => function () {
-            return Helper::formatMemory(\memory_get_usage(\true));
+            return Helper::formatMemory(memory_get_usage(\true));
         }];
     }
 }

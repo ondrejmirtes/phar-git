@@ -13,7 +13,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayPointerFunctionsDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     /** @var string[] */

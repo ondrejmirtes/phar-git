@@ -8,7 +8,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Node\ReturnStatementsNode;
 use PHPStan\Type\NeverType;
 use PHPStan\Type\Type;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class NeverRuleHelper
 {
     /**

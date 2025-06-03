@@ -31,4 +31,4 @@ class InterpolatedString extends Scalar
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\Scalar\InterpolatedString::class, \PhpParser\Node\Scalar\Encapsed::class);
+class_alias(\PhpParser\Node\Scalar\InterpolatedString::class, \PhpParser\Node\Scalar\Encapsed::class);

@@ -22,7 +22,7 @@ use function count;
 use function gettype;
 use function min;
 use function strtotime;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrtotimeFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

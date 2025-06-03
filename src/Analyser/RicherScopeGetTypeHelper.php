@@ -12,7 +12,7 @@ use PHPStan\Type\BooleanType;
 use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\TypeResult;
 use function is_string;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RicherScopeGetTypeHelper
 {
     private InitializerExprTypeResolver $initializerExprTypeResolver;

@@ -8,7 +8,7 @@ declare (strict_types=1);
 namespace _PHPStan_checksum\Nette\DI\Attributes;
 
 use Attribute;
-#[\Attribute(Attribute::TARGET_PROPERTY)]
+#[Attribute(Attribute::TARGET_PROPERTY)]
 class Inject
 {
 }

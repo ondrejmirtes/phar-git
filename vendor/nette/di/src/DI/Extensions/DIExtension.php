@@ -25,7 +25,7 @@ final class DIExtension extends Nette\DI\CompilerExtension
     public function __construct(bool $debugMode = \false)
     {
         $this->debugMode = $debugMode;
-        $this->time = \microtime(\true);
+        $this->time = microtime(\true);
         $this->config = new class
         {
             /** @var ?bool */
@@ -77,7 +77,7 @@ final class DIExtension extends Nette\DI\CompilerExtension
         } elseif ($option === \false) {
             $class->removeProperty('tags');
         } elseif ($prop = $class->getProperties()['tags'] ?? null) {
-            $prop->setValue(\array_intersect_key($prop->getValue(), $this->exportedTags + \array_flip((array) $option)));
+            $prop->setValue(array_intersect_key($prop->getValue(), $this->exportedTags + array_flip((array) $option)));
         }
     }
     private function restrictTypes(Nette\PhpGenerator\ClassType $class): void
@@ -87,7 +87,7 @@ final class DIExtension extends Nette\DI\CompilerExtension
             return;
         }
         $prop = $class->getProperty('wiring');
-        $prop->setValue(\array_intersect_key($prop->getValue(), $this->exportedTypes + (\is_array($option) ? \array_flip($option) : [])));
+        $prop->setValue(array_intersect_key($prop->getValue(), $this->exportedTypes + (is_array($option) ? array_flip($option) : [])));
     }
     private function enableTracyIntegration(): void
     {

@@ -172,7 +172,7 @@ final class ReflectionParameter extends CoreReflectionParameter
     {
         return $this->betterReflectionParameter->isDefaultValueAvailable();
     }
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDefaultValue()
     {
         return $this->betterReflectionParameter->getDefaultValue();

@@ -16,7 +16,7 @@ use function strtolower;
 /**
  * @implements Rule<Node\Expr\FuncCall>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DumpTypeRule implements Rule
 {
     private ReflectionProvider $reflectionProvider;

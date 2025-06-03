@@ -22,7 +22,7 @@ use function array_key_exists;
 use function array_map;
 use function array_unique;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MbFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

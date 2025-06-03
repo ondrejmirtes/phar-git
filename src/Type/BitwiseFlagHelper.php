@@ -12,7 +12,7 @@ use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\TrinaryLogic;
 use PHPStan\Type\Constant\ConstantIntegerType;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class BitwiseFlagHelper
 {
     private ReflectionProvider $reflectionProvider;

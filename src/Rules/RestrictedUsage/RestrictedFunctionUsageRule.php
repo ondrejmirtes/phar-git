@@ -14,7 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<Node\Expr\FuncCall>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedFunctionUsageRule implements Rule
 {
     private Container $container;

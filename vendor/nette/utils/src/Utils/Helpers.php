@@ -15,13 +15,13 @@ class Helpers
      */
     public static function capture(callable $func): string
     {
-        \ob_start(function () {
+        ob_start(function () {
         });
         try {
             $func();
-            return \ob_get_clean();
+            return ob_get_clean();
         } catch (\Throwable $e) {
-            \ob_end_clean();
+            ob_end_clean();
             throw $e;
         }
     }
@@ -31,9 +31,9 @@ class Helpers
      */
     public static function getLastError(): string
     {
-        $message = \error_get_last()['message'] ?? '';
-        $message = \ini_get('html_errors') ? Html::htmlToText($message) : $message;
-        $message = \preg_replace('#^\w+\(.*?\): #', '', $message);
+        $message = error_get_last()['message'] ?? '';
+        $message = ini_get('html_errors') ? Html::htmlToText($message) : $message;
+        $message = preg_replace('#^\w+\(.*?\): #', '', $message);
         return $message;
     }
     /**
@@ -57,7 +57,7 @@ class Helpers
         if ($min > $max) {
             throw new Nette\InvalidArgumentException("Minimum ({$min}) is not less than maximum ({$max}).");
         }
-        return \min(\max($value, $min), $max);
+        return min(max($value, $min), $max);
     }
     /**
      * Looks for a string from possibilities that is most similar to value, but not the same (for 8-bit encoding).
@@ -66,9 +66,9 @@ class Helpers
     public static function getSuggestion(array $possibilities, string $value): ?string
     {
         $best = null;
-        $min = (\strlen($value) / 4 + 1) * 10 + 0.1;
-        foreach (\array_unique($possibilities) as $item) {
-            if ($item !== $value && ($len = \levenshtein($item, $value, 10, 11, 10)) < $min) {
+        $min = (strlen($value) / 4 + 1) * 10 + 0.1;
+        foreach (array_unique($possibilities) as $item) {
+            if ($item !== $value && ($len = levenshtein($item, $value, 10, 11, 10)) < $min) {
                 $min = $len;
                 $best = $item;
             }

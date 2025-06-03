@@ -77,7 +77,7 @@ class JsonDescriptor extends Descriptor
         if ($describedNamespace) {
             $data['namespace'] = $describedNamespace;
         } else {
-            $data['namespaces'] = \array_values($description->getNamespaces());
+            $data['namespaces'] = array_values($description->getNamespaces());
         }
         $this->writeData($data, $options);
     }
@@ -87,15 +87,15 @@ class JsonDescriptor extends Descriptor
     private function writeData(array $data, array $options)
     {
         $flags = $options['json_encoding'] ?? 0;
-        $this->write(\json_encode($data, $flags));
+        $this->write(json_encode($data, $flags));
     }
     private function getInputArgumentData(InputArgument $argument): array
     {
-        return ['name' => $argument->getName(), 'is_required' => $argument->isRequired(), 'is_array' => $argument->isArray(), 'description' => \preg_replace('/\s*[\r\n]\s*/', ' ', $argument->getDescription()), 'default' => \INF === $argument->getDefault() ? 'INF' : $argument->getDefault()];
+        return ['name' => $argument->getName(), 'is_required' => $argument->isRequired(), 'is_array' => $argument->isArray(), 'description' => preg_replace('/\s*[\r\n]\s*/', ' ', $argument->getDescription()), 'default' => \INF === $argument->getDefault() ? 'INF' : $argument->getDefault()];
     }
     private function getInputOptionData(InputOption $option, bool $negated = \false): array
     {
-        return $negated ? ['name' => '--no-' . $option->getName(), 'shortcut' => '', 'accept_value' => \false, 'is_value_required' => \false, 'is_multiple' => \false, 'description' => 'Negate the "--' . $option->getName() . '" option', 'default' => \false] : ['name' => '--' . $option->getName(), 'shortcut' => $option->getShortcut() ? '-' . \str_replace('|', '|-', $option->getShortcut()) : '', 'accept_value' => $option->acceptValue(), 'is_value_required' => $option->isValueRequired(), 'is_multiple' => $option->isArray(), 'description' => \preg_replace('/\s*[\r\n]\s*/', ' ', $option->getDescription()), 'default' => \INF === $option->getDefault() ? 'INF' : $option->getDefault()];
+        return $negated ? ['name' => '--no-' . $option->getName(), 'shortcut' => '', 'accept_value' => \false, 'is_value_required' => \false, 'is_multiple' => \false, 'description' => 'Negate the "--' . $option->getName() . '" option', 'default' => \false] : ['name' => '--' . $option->getName(), 'shortcut' => $option->getShortcut() ? '-' . str_replace('|', '|-', $option->getShortcut()) : '', 'accept_value' => $option->acceptValue(), 'is_value_required' => $option->isValueRequired(), 'is_multiple' => $option->isArray(), 'description' => preg_replace('/\s*[\r\n]\s*/', ' ', $option->getDescription()), 'default' => \INF === $option->getDefault() ? 'INF' : $option->getDefault()];
     }
     private function getInputDefinitionData(InputDefinition $definition): array
     {
@@ -119,7 +119,7 @@ class JsonDescriptor extends Descriptor
             $data += ['usage' => $command->getAliases()];
         } else {
             $command->mergeApplicationDefinition(\false);
-            $data += ['usage' => \array_merge([$command->getSynopsis()], $command->getUsages(), $command->getAliases()), 'help' => $command->getProcessedHelp(), 'definition' => $this->getInputDefinitionData($command->getDefinition())];
+            $data += ['usage' => array_merge([$command->getSynopsis()], $command->getUsages(), $command->getAliases()), 'help' => $command->getProcessedHelp(), 'definition' => $this->getInputDefinitionData($command->getDefinition())];
         }
         $data['hidden'] = $command->isHidden();
         return $data;

@@ -14,7 +14,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeUtils;
 use PHPStan\Type\VerbosityLevel;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class FunctionReturnTypeCheck
 {
     private \PHPStan\Rules\RuleLevelHelper $ruleLevelHelper;

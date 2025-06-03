@@ -127,7 +127,7 @@ final class ExportedPropertiesNode implements JsonSerializable, ExportedNode
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['names' => $this->names, 'phpDoc' => $this->phpDoc, 'type' => $this->type, 'public' => $this->public, 'private' => $this->private, 'static' => $this->static, 'readonly' => $this->readonly, 'abstract' => $this->abstract, 'final' => $this->final, 'publicSet' => $this->publicSet, 'protectedSet' => $this->protectedSet, 'privateSet' => $this->privateSet, 'virtual' => $this->virtual, 'attributes' => $this->attributes, 'hooks' => $this->hooks]];

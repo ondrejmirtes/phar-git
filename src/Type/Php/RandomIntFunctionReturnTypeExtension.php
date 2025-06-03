@@ -18,7 +18,7 @@ use function count;
 use function in_array;
 use function max;
 use function min;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RandomIntFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

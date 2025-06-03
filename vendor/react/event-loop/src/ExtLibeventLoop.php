@@ -52,7 +52,7 @@ final class ExtLibeventLoop implements LoopInterface
     private $signalEvents = array();
     public function __construct()
     {
-        if (!\function_exists('event_base_new')) {
+        if (!\function_exists('event_base_new') && !\function_exists('_PHPStan_checksum\event_base_new')) {
             throw new BadMethodCallException('Cannot create ExtLibeventLoop, ext-libevent extension missing');
         }
         $this->eventBase = \event_base_new();

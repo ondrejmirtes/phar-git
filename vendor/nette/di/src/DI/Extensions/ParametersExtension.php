@@ -35,7 +35,7 @@ final class ParametersExtension extends Nette\DI\CompilerExtension
         }
         $builder->parameters = Nette\DI\Helpers::expand($params, $params, \true);
         // expand all except 'services'
-        $slice = \array_diff_key($this->compilerConfig, ['services' => 1]);
+        $slice = array_diff_key($this->compilerConfig, ['services' => 1]);
         $slice = Nette\DI\Helpers::expand($slice, $builder->parameters);
         $this->compilerConfig = $slice + $this->compilerConfig;
     }
@@ -43,7 +43,7 @@ final class ParametersExtension extends Nette\DI\CompilerExtension
     {
         $builder = $this->getContainerBuilder();
         $dynamicParams = $this->collectDynamicParams($builder->parameters);
-        $method = Method::from([Container::class, 'getStaticParameters'])->addBody('return ?;', [\array_diff_key($builder->parameters, \array_flip($dynamicParams))]);
+        $method = Method::from([Container::class, 'getStaticParameters'])->addBody('return ?;', [array_diff_key($builder->parameters, array_flip($dynamicParams))]);
         $class->addMember($method);
         if (!$dynamicParams) {
             return;
@@ -61,7 +61,7 @@ final class ParametersExtension extends Nette\DI\CompilerExtension
         $method->addBody("\tdefault: return parent::getDynamicParameter(\$key);\n};");
         $method = Method::from([Container::class, 'getParameters']);
         $class->addMember($method);
-        $method->addBody('array_map(function ($key) { $this->getParameter($key); }, ?);', [\array_values($dynamicParams)]);
+        $method->addBody('array_map(function ($key) { $this->getParameter($key); }, ?);', [array_values($dynamicParams)]);
         $method->addBody('return parent::getParameters();');
         foreach ($this->dynamicValidators as [$param, $expected]) {
             if (!$param instanceof Nette\DI\Definitions\Statement) {
@@ -74,12 +74,12 @@ final class ParametersExtension extends Nette\DI\CompilerExtension
         $keys = $this->dynamicParams;
         foreach ($params as $key => $value) {
             $tmp = [$value];
-            \array_walk_recursive($tmp, function ($val) use (&$keys, $key): void {
+            array_walk_recursive($tmp, function ($val) use (&$keys, $key): void {
                 if ($val instanceof DynamicParameter || $val instanceof Nette\DI\Definitions\Statement) {
                     $keys[] = $key;
                 }
             });
         }
-        return \array_unique($keys);
+        return array_unique($keys);
     }
 }

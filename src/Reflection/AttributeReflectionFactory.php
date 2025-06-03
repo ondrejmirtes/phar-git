@@ -13,7 +13,7 @@ use PHPStan\Type\TypeCombinator;
 use function array_key_exists;
 use function count;
 use function is_int;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class AttributeReflectionFactory
 {
     private \PHPStan\Reflection\InitializerExprTypeResolver $initializerExprTypeResolver;

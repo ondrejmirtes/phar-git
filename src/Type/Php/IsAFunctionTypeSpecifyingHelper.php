@@ -17,7 +17,7 @@ use PHPStan\Type\TypeTraverser;
 use PHPStan\Type\UnionType;
 use function array_unique;
 use function array_values;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IsAFunctionTypeSpecifyingHelper
 {
     public function determineType(Type $objectOrClassType, Type $classType, bool $allowString, bool $allowSameClass): Type

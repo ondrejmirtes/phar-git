@@ -93,10 +93,10 @@ class Protocol extends \Hoa\Protocol\Node
      */
     protected function initialize()
     {
-        $root = \dirname(\dirname(__DIR__));
-        $cwd = 'cli' === \PHP_SAPI ? \dirname(\realpath($_SERVER['argv'][0])) : \getcwd();
+        $root = dirname(dirname(__DIR__));
+        $cwd = 'cli' === \PHP_SAPI ? dirname(realpath($_SERVER['argv'][0])) : getcwd();
         $this[] = new \Hoa\Protocol\Node('Application', $cwd . DS, [new \Hoa\Protocol\Node('Public', 'Public' . DS)]);
-        $this[] = new \Hoa\Protocol\Node('Data', \dirname($cwd) . DS, [new \Hoa\Protocol\Node('Etc', 'Etc' . DS, [new \Hoa\Protocol\Node('Configuration', 'Configuration' . DS), new \Hoa\Protocol\Node('Locale', 'Locale' . DS)]), new \Hoa\Protocol\Node('Lost+found', 'Lost+found' . DS), new \Hoa\Protocol\Node('Temporary', 'Temporary' . DS), new \Hoa\Protocol\Node('Variable', 'Variable' . DS, [new \Hoa\Protocol\Node('Cache', 'Cache' . DS), new \Hoa\Protocol\Node('Database', 'Database' . DS), new \Hoa\Protocol\Node('Log', 'Log' . DS), new \Hoa\Protocol\Node('Private', 'Private' . DS), new \Hoa\Protocol\Node('Run', 'Run' . DS), new \Hoa\Protocol\Node('Test', 'Test' . DS)])]);
+        $this[] = new \Hoa\Protocol\Node('Data', dirname($cwd) . DS, [new \Hoa\Protocol\Node('Etc', 'Etc' . DS, [new \Hoa\Protocol\Node('Configuration', 'Configuration' . DS), new \Hoa\Protocol\Node('Locale', 'Locale' . DS)]), new \Hoa\Protocol\Node('Lost+found', 'Lost+found' . DS), new \Hoa\Protocol\Node('Temporary', 'Temporary' . DS), new \Hoa\Protocol\Node('Variable', 'Variable' . DS, [new \Hoa\Protocol\Node('Cache', 'Cache' . DS), new \Hoa\Protocol\Node('Database', 'Database' . DS), new \Hoa\Protocol\Node('Log', 'Log' . DS), new \Hoa\Protocol\Node('Private', 'Private' . DS), new \Hoa\Protocol\Node('Run', 'Run' . DS), new \Hoa\Protocol\Node('Test', 'Test' . DS)])]);
         $this[] = new \Hoa\Protocol\Node\Library('Library', $root . DS . 'Hoathis' . DS . RS . $root . DS . 'Hoa' . DS);
         return;
     }
@@ -111,10 +111,10 @@ class Protocol extends \Hoa\Protocol\Node
      */
     public function resolve($path, $exists = \true, $unfold = \false)
     {
-        if (\substr($path, 0, 6) !== 'hoa://') {
-            if (\true === \is_dir($path)) {
-                $path = \rtrim($path, '/\\');
-                if (0 === \strlen($path)) {
+        if (substr($path, 0, 6) !== 'hoa://') {
+            if (\true === is_dir($path)) {
+                $path = rtrim($path, '/\\');
+                if (0 === strlen($path)) {
                     $path = '/';
                 }
             }
@@ -125,14 +125,14 @@ class Protocol extends \Hoa\Protocol\Node
         } else {
             $out = $this->_resolve($path, $handle);
             // Not a path but a resource.
-            if (!\is_array($handle)) {
+            if (!is_array($handle)) {
                 return $out;
             }
-            $handle = \array_values(\array_unique($handle, \SORT_REGULAR));
+            $handle = array_values(array_unique($handle, \SORT_REGULAR));
             foreach ($handle as &$entry) {
-                if (\true === \is_dir($entry)) {
-                    $entry = \rtrim($entry, '/\\');
-                    if (0 === \strlen($entry)) {
+                if (\true === is_dir($entry)) {
+                    $entry = rtrim($entry, '/\\');
+                    if (0 === strlen($entry)) {
                         $entry = '/';
                     }
                 }
@@ -145,7 +145,7 @@ class Protocol extends \Hoa\Protocol\Node
             }
             $out = [];
             foreach ($handle as $solution) {
-                if (\file_exists($solution)) {
+                if (file_exists($solution)) {
                     $out[] = $solution;
                 }
             }
@@ -155,7 +155,7 @@ class Protocol extends \Hoa\Protocol\Node
             return $handle[0];
         }
         foreach ($handle as $solution) {
-            if (\file_exists($solution)) {
+            if (file_exists($solution)) {
                 return $solution;
             }
         }

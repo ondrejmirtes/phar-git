@@ -39,16 +39,16 @@ final class Encoder
             return $node;
         } elseif ($val instanceof Entity) {
             return new Node\EntityNode($this->valueToNode($val->value), $this->arrayToNodes((array) $val->attributes));
-        } elseif (\is_object($val) || \is_array($val)) {
+        } elseif (is_object($val) || is_array($val)) {
             if ($blockMode) {
                 $node = new Node\BlockArrayNode();
             } else {
-                $isList = \is_array($val) && (!$val || \array_keys($val) === \range(0, \count($val) - 1));
+                $isList = is_array($val) && (!$val || array_keys($val) === range(0, count($val) - 1));
                 $node = new Node\InlineArrayNode($isList ? '[' : '{');
             }
             $node->items = $this->arrayToNodes($val, $blockMode);
             return $node;
-        } elseif (\is_string($val) && Lexer::requiresDelimiters($val)) {
+        } elseif (is_string($val) && Lexer::requiresDelimiters($val)) {
             return new Node\StringNode($val);
         } else {
             return new Node\LiteralNode($val);
@@ -67,9 +67,9 @@ final class Encoder
             if ($item->value instanceof Node\BlockArrayNode) {
                 $item->value->indentation = $this->indentation;
             }
-            if ($hide && \is_int($k)) {
+            if ($hide && is_int($k)) {
                 $hide = $k === $counter;
-                $counter = \max($k + 1, $counter);
+                $counter = max($k + 1, $counter);
             }
         }
         return $res;

@@ -8,7 +8,7 @@ use PHPStan\Analyser\Error;
 use PHPStan\DependencyInjection\AutowiredService;
 use function implode;
 use const PREG_SET_ORDER;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class IgnoreLexer
 {
     public const TOKEN_WHITESPACE = 1;

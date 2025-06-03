@@ -62,10 +62,10 @@ class Wrapper
         if (\true === self::isRegistered($protocol)) {
             throw new \Hoa\Stream\Wrapper\Exception('The protocol %s is already registered.', 0, $protocol);
         }
-        if (\false === \class_exists($className)) {
+        if (\false === class_exists($className)) {
             throw new \Hoa\Stream\Wrapper\Exception('Cannot use the %s class for the implementation of ' . 'the %s protocol because it is not found.', 1, [$className, $protocol]);
         }
-        return \stream_wrapper_register($protocol, $className, $flags);
+        return stream_wrapper_register($protocol, $className, $flags);
     }
     /**
      * Unregister a wrapper.
@@ -78,7 +78,7 @@ class Wrapper
         // Silent errors if `$protocol` does not exist. This function already
         // returns `false` in this case, which is the strict expected
         // behaviour.
-        return @\stream_wrapper_unregister($protocol);
+        return @stream_wrapper_unregister($protocol);
     }
     /**
      * Restore a previously unregistered build-in wrapper.
@@ -91,7 +91,7 @@ class Wrapper
         // Silent errors if `$protocol` does not exist. This function already
         // returns `false` in this case, which is the strict expected
         // behaviour.
-        return @\stream_wrapper_restore($protocol);
+        return @stream_wrapper_restore($protocol);
     }
     /**
      * Check if a protocol is registered or not.
@@ -101,7 +101,7 @@ class Wrapper
      */
     public static function isRegistered($protocol)
     {
-        return \in_array($protocol, self::getRegistered());
+        return in_array($protocol, self::getRegistered());
     }
     /**
      * Get all registered wrapper.
@@ -110,7 +110,7 @@ class Wrapper
      */
     public static function getRegistered()
     {
-        return \stream_get_wrappers();
+        return stream_get_wrappers();
     }
 }
 /**

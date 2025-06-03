@@ -14,7 +14,7 @@ use PHPStan\Type\NullType;
 use PHPStan\Type\Type;
 use function count;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayValuesFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

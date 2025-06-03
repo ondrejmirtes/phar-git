@@ -65,7 +65,7 @@ final class ReflectionObject extends CoreReflectionObject
      * {@inheritDoc}
      * @return non-empty-string|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getFileName()
     {
         $fileName = $this->betterReflectionObject->getFileName();
@@ -75,7 +75,7 @@ final class ReflectionObject extends CoreReflectionObject
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStartLine()
     {
         return $this->betterReflectionObject->getStartLine();
@@ -84,7 +84,7 @@ final class ReflectionObject extends CoreReflectionObject
      * {@inheritDoc}
      * @psalm-mutation-free
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getEndLine()
     {
         return $this->betterReflectionObject->getEndLine();
@@ -92,7 +92,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterReflectionObject->getDocComment() ?? \false;
@@ -198,7 +198,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getConstant($name)
     {
         if ($name === '') {
@@ -214,7 +214,7 @@ final class ReflectionObject extends CoreReflectionObject
      * @param string $name
      * @return ReflectionClassConstant|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getReflectionConstant($name)
     {
         if ($name === '') {
@@ -300,7 +300,7 @@ final class ReflectionObject extends CoreReflectionObject
      *
      * @return object
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function newInstance($arg = null, ...$args)
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
@@ -308,7 +308,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function newInstanceWithoutConstructor()
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
@@ -316,7 +316,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function newInstanceArgs(?array $args = null)
     {
         throw \PHPStan\BetterReflection\Reflection\Adapter\Exception\NotImplementedBecauseItTriggersAutoloading::create();
@@ -373,7 +373,7 @@ final class ReflectionObject extends CoreReflectionObject
      * @psalm-mutation-free
      * @return ReflectionClass|false
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getParentClass()
     {
         $parentClass = $this->betterReflectionObject->getParentClass();
@@ -406,7 +406,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getStaticPropertyValue($name, $default = null)
     {
         $betterReflectionProperty = $name !== '' ? $this->betterReflectionObject->getProperty($name) : null;
@@ -469,7 +469,7 @@ final class ReflectionObject extends CoreReflectionObject
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getExtensionName()
     {
         return $this->betterReflectionObject->getExtensionName() ?? \false;

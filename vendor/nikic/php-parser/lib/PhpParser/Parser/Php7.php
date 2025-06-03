@@ -224,9 +224,9 @@ class Php7 extends \PhpParser\ParserAbstract
         }, 93 => static function ($self, $stackPos) {
             $self->semValue = new Name($self->semStack[$stackPos - (1 - 1)], $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 94 => null, 95 => static function ($self, $stackPos) {
-            $self->semValue = new Name(\substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
+            $self->semValue = new Name(substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 96 => static function ($self, $stackPos) {
-            $self->semValue = new Expr\Variable(\substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
+            $self->semValue = new Expr\Variable(substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 97 => static function ($self, $stackPos) {
             /* nothing */
         }, 98 => static function ($self, $stackPos) {
@@ -804,7 +804,7 @@ class Php7 extends \PhpParser\ParserAbstract
             $self->semStack[$stackPos - (3 - 1)][] = $self->semStack[$stackPos - (3 - 3)];
             $self->semValue = $self->semStack[$stackPos - (3 - 1)];
         }, 387 => static function ($self, $stackPos) {
-            $self->semValue = new Node\VarLikeIdentifier(\substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
+            $self->semValue = new Node\VarLikeIdentifier(substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 388 => static function ($self, $stackPos) {
             $self->semValue = new Node\PropertyItem($self->semStack[$stackPos - (1 - 1)], null, $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 389 => static function ($self, $stackPos) {
@@ -1063,9 +1063,9 @@ class Php7 extends \PhpParser\ParserAbstract
         }, 520 => static function ($self, $stackPos) {
             $self->semValue = new Name($self->semStack[$stackPos - (1 - 1)], $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 521 => static function ($self, $stackPos) {
-            $self->semValue = new Name\FullyQualified(\substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
+            $self->semValue = new Name\FullyQualified(substr($self->semStack[$stackPos - (1 - 1)], 1), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 522 => static function ($self, $stackPos) {
-            $self->semValue = new Name\Relative(\substr($self->semStack[$stackPos - (1 - 1)], 10), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
+            $self->semValue = new Name\Relative(substr($self->semStack[$stackPos - (1 - 1)], 10), $self->getAttributes($self->tokenStartStack[$stackPos - (1 - 1)], $self->tokenEndStack[$stackPos]));
         }, 523 => null, 524 => null, 525 => static function ($self, $stackPos) {
             $self->semValue = $self->semStack[$stackPos - (3 - 2)];
         }, 526 => static function ($self, $stackPos) {
@@ -1206,9 +1206,9 @@ class Php7 extends \PhpParser\ParserAbstract
             $self->postprocessList($self->semValue);
         }, 606 => static function ($self, $stackPos) {
             $self->semValue = $self->semStack[$stackPos - (1 - 1)];
-            $end = \count($self->semValue) - 1;
+            $end = count($self->semValue) - 1;
             if ($self->semValue[$end]->value instanceof Expr\Error) {
-                \array_pop($self->semValue);
+                array_pop($self->semValue);
             }
         }, 607 => null, 608 => static function ($self, $stackPos) {
             /* do nothing -- prevent default action of $$=$self->semStack[$1]. See $551. */

@@ -25,7 +25,7 @@ use PHPStan\Type\Type;
 use function count;
 use function str_repeat;
 use function strlen;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrRepeatFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

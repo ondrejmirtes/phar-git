@@ -17,7 +17,7 @@ use PHPStan\Type\StringType;
 use PHPStan\Type\Type;
 use function count;
 use function ltrim;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LtrimFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

@@ -41,10 +41,10 @@ trait TesterTrait
         if (null === $this->output) {
             throw new \RuntimeException('Output not initialized, did you execute the command before requesting the display?');
         }
-        \rewind($this->output->getStream());
-        $display = \stream_get_contents($this->output->getStream());
+        rewind($this->output->getStream());
+        $display = stream_get_contents($this->output->getStream());
         if ($normalize) {
-            $display = \str_replace(\PHP_EOL, "\n", $display);
+            $display = str_replace(\PHP_EOL, "\n", $display);
         }
         return $display;
     }
@@ -60,10 +60,10 @@ trait TesterTrait
         if (!$this->captureStreamsIndependently) {
             throw new \LogicException('The error output is not available when the tester is run without "capture_stderr_separately" option set.');
         }
-        \rewind($this->output->getErrorOutput()->getStream());
-        $display = \stream_get_contents($this->output->getErrorOutput()->getStream());
+        rewind($this->output->getErrorOutput()->getStream());
+        $display = stream_get_contents($this->output->getErrorOutput()->getStream());
         if ($normalize) {
-            $display = \str_replace(\PHP_EOL, "\n", $display);
+            $display = str_replace(\PHP_EOL, "\n", $display);
         }
         return $display;
     }
@@ -129,7 +129,7 @@ trait TesterTrait
     {
         $this->captureStreamsIndependently = \array_key_exists('capture_stderr_separately', $options) && $options['capture_stderr_separately'];
         if (!$this->captureStreamsIndependently) {
-            $this->output = new StreamOutput(\fopen('php://memory', 'w', \false));
+            $this->output = new StreamOutput(fopen('php://memory', 'w', \false));
             if (isset($options['decorated'])) {
                 $this->output->setDecorated($options['decorated']);
             }
@@ -138,7 +138,7 @@ trait TesterTrait
             }
         } else {
             $this->output = new ConsoleOutput($options['verbosity'] ?? ConsoleOutput::VERBOSITY_NORMAL, $options['decorated'] ?? null);
-            $errorOutput = new StreamOutput(\fopen('php://memory', 'w', \false));
+            $errorOutput = new StreamOutput(fopen('php://memory', 'w', \false));
             $errorOutput->setFormatter($this->output->getFormatter());
             $errorOutput->setVerbosity($this->output->getVerbosity());
             $errorOutput->setDecorated($this->output->isDecorated());
@@ -149,7 +149,7 @@ trait TesterTrait
             $reflectedParent = $reflectedOutput->getParentClass();
             $streamProperty = $reflectedParent->getProperty('stream');
             $streamProperty->setAccessible(\true);
-            $streamProperty->setValue($this->output, \fopen('php://memory', 'w', \false));
+            $streamProperty->setValue($this->output, fopen('php://memory', 'w', \false));
         }
     }
     /**
@@ -157,11 +157,11 @@ trait TesterTrait
      */
     private static function createStream(array $inputs)
     {
-        $stream = \fopen('php://memory', 'r+', \false);
+        $stream = fopen('php://memory', 'r+', \false);
         foreach ($inputs as $input) {
-            \fwrite($stream, $input . \PHP_EOL);
+            fwrite($stream, $input . \PHP_EOL);
         }
-        \rewind($stream);
+        rewind($stream);
         return $stream;
     }
 }

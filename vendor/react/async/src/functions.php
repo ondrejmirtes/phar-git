@@ -82,7 +82,7 @@ function await(PromiseInterface $promise)
     if ($rejected) {
         // promise is rejected with an unexpected value (Promise API v1 or v2 only)
         if (!$exception instanceof \Throwable) {
-            $exception = new \UnexpectedValueException('Promise rejected with unexpected value of type ' . (\is_object($exception) ? \get_class($exception) : \gettype($exception)));
+            $exception = new \UnexpectedValueException('Promise rejected with unexpected value of type ' . (is_object($exception) ? get_class($exception) : gettype($exception)));
         }
         throw $exception;
     }
@@ -326,11 +326,11 @@ function coroutine(callable $function, ...$args): PromiseInterface
         $promise = $generator->current();
         if (!$promise instanceof PromiseInterface) {
             $next = null;
-            $deferred->reject(new \UnexpectedValueException('Expected coroutine to yield ' . PromiseInterface::class . ', but got ' . (\is_object($promise) ? \get_class($promise) : \gettype($promise))));
+            $deferred->reject(new \UnexpectedValueException('Expected coroutine to yield ' . PromiseInterface::class . ', but got ' . (is_object($promise) ? get_class($promise) : gettype($promise))));
             return;
         }
         /** @var PromiseInterface<TYield> $promise */
-        \assert($next instanceof \Closure);
+        assert($next instanceof \Closure);
         $promise->then(function ($value) use ($generator, $next) {
             $generator->send($value);
             $next();
@@ -383,7 +383,7 @@ function parallel(iterable $tasks): PromiseInterface
             }
         };
         $promise = \call_user_func($task);
-        \assert($promise instanceof PromiseInterface);
+        assert($promise instanceof PromiseInterface);
         $pending[$i] = $promise;
         $promise->then($taskCallback, $taskErrback);
         if (!$continue) {
@@ -414,7 +414,7 @@ function series(iterable $tasks): PromiseInterface
     $results = [];
     if ($tasks instanceof \IteratorAggregate) {
         $tasks = $tasks->getIterator();
-        \assert($tasks instanceof \Iterator);
+        assert($tasks instanceof \Iterator);
     }
     $taskCallback = function ($result) use (&$results, &$next) {
         $results[] = $result;
@@ -430,12 +430,12 @@ function series(iterable $tasks): PromiseInterface
             $task = $tasks->current();
             $tasks->next();
         } else {
-            \assert(\is_array($tasks));
+            assert(\is_array($tasks));
             $task = \array_shift($tasks);
         }
-        \assert(\is_callable($task));
+        assert(\is_callable($task));
         $promise = \call_user_func($task);
-        \assert($promise instanceof PromiseInterface);
+        assert($promise instanceof PromiseInterface);
         $pending = $promise;
         $promise->then($taskCallback, array($deferred, 'reject'));
     };
@@ -459,7 +459,7 @@ function waterfall(iterable $tasks): PromiseInterface
     });
     if ($tasks instanceof \IteratorAggregate) {
         $tasks = $tasks->getIterator();
-        \assert($tasks instanceof \Iterator);
+        assert($tasks instanceof \Iterator);
     }
     /** @var callable $next */
     $next = function ($value = null) use (&$tasks, &$next, $deferred, &$pending) {
@@ -471,12 +471,12 @@ function waterfall(iterable $tasks): PromiseInterface
             $task = $tasks->current();
             $tasks->next();
         } else {
-            \assert(\is_array($tasks));
+            assert(\is_array($tasks));
             $task = \array_shift($tasks);
         }
-        \assert(\is_callable($task));
-        $promise = \call_user_func_array($task, \func_get_args());
-        \assert($promise instanceof PromiseInterface);
+        assert(\is_callable($task));
+        $promise = \call_user_func_array($task, func_get_args());
+        assert($promise instanceof PromiseInterface);
         $pending = $promise;
         $promise->then($next, array($deferred, 'reject'));
     };

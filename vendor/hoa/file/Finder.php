@@ -112,12 +112,12 @@ class Finder implements Iterator\Aggregate
      */
     public function in($paths)
     {
-        if (!\is_array($paths)) {
+        if (!is_array($paths)) {
             $paths = [$paths];
         }
         foreach ($paths as $path) {
-            if (1 === \preg_match('/[\*\?\[\]]/', $path)) {
-                $iterator = new Iterator\CallbackFilter(new Iterator\Glob(\rtrim($path, DS)), function ($current) {
+            if (1 === preg_match('/[\*\?\[\]]/', $path)) {
+                $iterator = new Iterator\CallbackFilter(new Iterator\Glob(rtrim($path, DS)), function ($current) {
                     return $current->isDir();
                 });
                 foreach ($iterator as $fileInfo) {
@@ -196,7 +196,7 @@ class Finder implements Iterator\Aggregate
     public function name($regex)
     {
         $this->_filters[] = function (\SplFileInfo $current) use ($regex) {
-            return 0 !== \preg_match($regex, $current->getBasename());
+            return 0 !== preg_match($regex, $current->getBasename());
         };
         return $this;
     }
@@ -211,8 +211,8 @@ class Finder implements Iterator\Aggregate
     public function notIn($regex)
     {
         $this->_filters[] = function (\SplFileInfo $current) use ($regex) {
-            foreach (\explode(DS, $current->getPathname()) as $part) {
-                if (0 !== \preg_match($regex, $part)) {
+            foreach (explode(DS, $current->getPathname()) as $part) {
+                if (0 !== preg_match($regex, $part)) {
                     return \false;
                 }
             }
@@ -236,10 +236,10 @@ class Finder implements Iterator\Aggregate
      */
     public function size($size)
     {
-        if (0 === \preg_match('#^(<|<=|>|>=|=)\s*(\d+)\s*((?:[KMGTPEZY])b)?$#', $size, $matches)) {
+        if (0 === preg_match('#^(<|<=|>|>=|=)\s*(\d+)\s*((?:[KMGTPEZY])b)?$#', $size, $matches)) {
             return $this;
         }
-        $number = \floatval($matches[2]);
+        $number = floatval($matches[2]);
         $unit = isset($matches[3]) ? $matches[3] : 'b';
         $operator = $matches[1];
         switch ($unit) {
@@ -263,19 +263,19 @@ class Finder implements Iterator\Aggregate
                 break;
             // peta.
             case 'Pb':
-                $number *= \pow(1024, 5);
+                $number *= pow(1024, 5);
                 break;
             // exa.
             case 'Eb':
-                $number *= \pow(1024, 6);
+                $number *= pow(1024, 6);
                 break;
             // zetta.
             case 'Zb':
-                $number *= \pow(1024, 7);
+                $number *= pow(1024, 7);
                 break;
             // yota.
             case 'Yb':
-                $number *= \pow(1024, 8);
+                $number *= pow(1024, 8);
                 break;
         }
         $filter = null;
@@ -354,16 +354,16 @@ class Finder implements Iterator\Aggregate
     protected function formatDate($date, &$operator)
     {
         $operator = -1;
-        if (0 === \preg_match('#\bago\b#', $date)) {
+        if (0 === preg_match('#\bago\b#', $date)) {
             $date .= ' ago';
         }
-        if (0 !== \preg_match('#^(since|until)\b(.+)$#', $date, $matches)) {
-            $time = \strtotime($matches[2]);
+        if (0 !== preg_match('#^(since|until)\b(.+)$#', $date, $matches)) {
+            $time = strtotime($matches[2]);
             if ('until' === $matches[1]) {
                 $operator = 1;
             }
         } else {
-            $time = \strtotime($date);
+            $time = strtotime($date);
         }
         return $time;
     }
@@ -441,14 +441,14 @@ class Finder implements Iterator\Aggregate
      */
     public function sortByName($locale = 'root')
     {
-        if (\true === \class_exists('Collator', \false)) {
+        if (\true === class_exists('Collator', \false)) {
             $collator = new \Collator($locale);
             $this->_sorts[] = function (\SplFileInfo $a, \SplFileInfo $b) use ($collator) {
                 return $collator->compare($a->getPathname(), $b->getPathname());
             };
         } else {
             $this->_sorts[] = function (\SplFileInfo $a, \SplFileInfo $b) {
-                return \strcmp($a->getPathname(), $b->getPathname());
+                return strcmp($a->getPathname(), $b->getPathname());
             };
         }
         return $this;
@@ -506,7 +506,7 @@ class Finder implements Iterator\Aggregate
         $types = $this->getTypes();
         if (!empty($types)) {
             $this->_filters[] = function (\SplFileInfo $current) use ($types) {
-                return \in_array($current->getType(), $types);
+                return in_array($current->getType(), $types);
             };
         }
         $maxDepth = $this->getMaxDepth();
@@ -529,9 +529,9 @@ class Finder implements Iterator\Aggregate
         if (empty($sorts)) {
             return $_iterator;
         }
-        $array = \iterator_to_array($_iterator);
+        $array = iterator_to_array($_iterator);
         foreach ($sorts as $sort) {
-            \uasort($array, $sort);
+            uasort($array, $sort);
         }
         return new Iterator\Map($array);
     }

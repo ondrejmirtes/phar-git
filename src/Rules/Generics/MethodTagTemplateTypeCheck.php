@@ -16,7 +16,7 @@ use PHPStan\Type\VerbosityLevel;
 use function array_keys;
 use function array_merge;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class MethodTagTemplateTypeCheck
 {
     private FileTypeMapper $fileTypeMapper;

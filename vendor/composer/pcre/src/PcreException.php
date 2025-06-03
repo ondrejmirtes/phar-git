@@ -19,9 +19,9 @@ class PcreException extends \RuntimeException
      */
     public static function fromFunction($function, $pattern)
     {
-        $code = \preg_last_error();
-        if (\is_array($pattern)) {
-            $pattern = \implode(', ', $pattern);
+        $code = preg_last_error();
+        if (is_array($pattern)) {
+            $pattern = implode(', ', $pattern);
         }
         return new PcreException($function . '(): failed executing "' . $pattern . '": ' . self::pcreLastErrorMessage($code), $code);
     }
@@ -31,19 +31,19 @@ class PcreException extends \RuntimeException
      */
     private static function pcreLastErrorMessage($code)
     {
-        if (\function_exists('preg_last_error_msg')) {
-            return \preg_last_error_msg();
+        if (function_exists('preg_last_error_msg')) {
+            return preg_last_error_msg();
         }
         // older php versions did not set the code properly in all cases
         if (\PHP_VERSION_ID < 70201 && $code === 0) {
             return 'UNDEFINED_ERROR';
         }
-        $constants = \get_defined_constants(\true);
+        $constants = get_defined_constants(\true);
         if (!isset($constants['pcre'])) {
             return 'UNDEFINED_ERROR';
         }
         foreach ($constants['pcre'] as $const => $val) {
-            if ($val === $code && \substr($const, -6) === '_ERROR') {
+            if ($val === $code && substr($const, -6) === '_ERROR') {
                 return $const;
             }
         }

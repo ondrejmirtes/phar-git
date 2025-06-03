@@ -75,12 +75,12 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
     public function raise($previous = \false)
     {
         $out = parent::raise($previous);
-        if (0 >= \count($this)) {
+        if (0 >= count($this)) {
             return $out;
         }
         $out .= "\n\n" . 'Contains the following exceptions:';
         foreach ($this as $exception) {
-            $out .= "\n\n" . '  • ' . \str_replace("\n", "\n" . '    ', $exception->raise($previous));
+            $out .= "\n\n" . '  • ' . str_replace("\n", "\n" . '    ', $exception->raise($previous));
         }
         return $out;
     }
@@ -101,7 +101,7 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
      */
     public function rollbackTransaction()
     {
-        if (1 >= \count($this->_group)) {
+        if (1 >= count($this->_group)) {
             return $this;
         }
         $this->_group->pop();
@@ -130,7 +130,7 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
      */
     public function hasUncommittedExceptions()
     {
-        return 1 < \count($this->_group) && 0 < \count($this->_group->top());
+        return 1 < count($this->_group) && 0 < count($this->_group->top());
     }
     /**
      * Check if an index in the group exists.
@@ -175,7 +175,7 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
             return null;
         }
         $group = $this->_group->top();
-        if (null === $index || \true === \is_int($index)) {
+        if (null === $index || \true === is_int($index)) {
             $group[] = $exception;
         } else {
             $group[$index] = $exception;
@@ -222,7 +222,7 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
      */
     public function count()
     {
-        return \count($this->getExceptions());
+        return count($this->getExceptions());
     }
     /**
      * Count the stack size, i.e. the number of opened transactions.
@@ -231,6 +231,6 @@ class Group extends \Hoa\Exception\Exception implements \ArrayAccess, \IteratorA
      */
     public function getStackSize()
     {
-        return \count($this->_group);
+        return count($this->_group);
     }
 }

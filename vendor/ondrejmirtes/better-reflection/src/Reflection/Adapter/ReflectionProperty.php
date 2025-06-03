@@ -79,7 +79,7 @@ final class ReflectionProperty extends CoreReflectionProperty
      * {@inheritDoc}
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getValue($object = null)
     {
         try {
@@ -197,7 +197,7 @@ final class ReflectionProperty extends CoreReflectionProperty
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDocComment()
     {
         return $this->betterReflectionProperty->getDocComment() ?? \false;
@@ -217,7 +217,7 @@ final class ReflectionProperty extends CoreReflectionProperty
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function getDefaultValue()
     {
         return $this->betterReflectionProperty->getDefaultValue();
@@ -229,7 +229,7 @@ final class ReflectionProperty extends CoreReflectionProperty
     /**
      * {@inheritDoc}
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function isInitialized($object = null)
     {
         try {

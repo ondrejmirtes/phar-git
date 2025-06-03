@@ -7,7 +7,7 @@ use PhpParser\Lexer;
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\Php\PhpVersion;
 use const PHP_VERSION_ID;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LexerFactory
 {
     private PhpVersion $phpVersion;

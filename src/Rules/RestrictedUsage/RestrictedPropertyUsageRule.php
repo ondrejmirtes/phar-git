@@ -14,7 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<Node\Expr\PropertyFetch>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedPropertyUsageRule implements Rule
 {
     private Container $container;

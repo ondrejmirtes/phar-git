@@ -14,7 +14,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\UnionType;
 use ReflectionClass;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReflectionClassConstructorThrowTypeExtension implements DynamicStaticMethodThrowTypeExtension
 {
     public function isStaticMethodSupported(MethodReflection $methodReflection): bool

@@ -16,26 +16,26 @@ final class SignalRegistry
     public function __construct()
     {
         if (\function_exists('pcntl_async_signals')) {
-            \pcntl_async_signals(\true);
+            pcntl_async_signals(\true);
         }
     }
     public function register(int $signal, callable $signalHandler): void
     {
         if (!isset($this->signalHandlers[$signal])) {
-            $previousCallback = \pcntl_signal_get_handler($signal);
+            $previousCallback = pcntl_signal_get_handler($signal);
             if (\is_callable($previousCallback)) {
                 $this->signalHandlers[$signal][] = $previousCallback;
             }
         }
         $this->signalHandlers[$signal][] = $signalHandler;
-        \pcntl_signal($signal, [$this, 'handle']);
+        pcntl_signal($signal, [$this, 'handle']);
     }
     public static function isSupported(): bool
     {
-        if (!\function_exists('pcntl_signal')) {
+        if (!\function_exists('pcntl_signal') && !\function_exists('_PHPStan_checksum\pcntl_signal')) {
             return \false;
         }
-        if (\in_array('pcntl_signal', \explode(',', \ini_get('disable_functions')))) {
+        if (\in_array('pcntl_signal', explode(',', \ini_get('disable_functions')))) {
             return \false;
         }
         return \true;

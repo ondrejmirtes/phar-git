@@ -52,7 +52,7 @@ class Identifier extends NodeAbstract
      */
     public function toLowerString(): string
     {
-        return \strtolower($this->name);
+        return strtolower($this->name);
     }
     /**
      * Checks whether the identifier is a special class name (self, parent or static).
@@ -61,7 +61,7 @@ class Identifier extends NodeAbstract
      */
     public function isSpecialClassName(): bool
     {
-        return isset(self::$specialClassNames[\strtolower($this->name)]);
+        return isset(self::$specialClassNames[strtolower($this->name)]);
     }
     /**
      * Get identifier as string.

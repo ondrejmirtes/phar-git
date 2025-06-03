@@ -24,7 +24,7 @@ final class Extractor
     private $printer;
     public function __construct(string $code)
     {
-        if (!\class_exists(ParserFactory::class)) {
+        if (!class_exists(ParserFactory::class)) {
             throw new Nette\NotSupportedException("PHP-Parser is required to load method bodies, install package 'nikic/php-parser' 4.7 or newer.");
         }
         $this->printer = new PhpParser\PrettyPrinter\Standard();
@@ -32,10 +32,10 @@ final class Extractor
     }
     private function parseCode(string $code): void
     {
-        if (\substr($code, 0, 5) !== '<?php') {
+        if (substr($code, 0, 5) !== '<?php') {
             throw new Nette\InvalidStateException('The input string is not a PHP code.');
         }
-        $this->code = \str_replace("\r\n", "\n", $code);
+        $this->code = str_replace("\r\n", "\n", $code);
         $lexer = new PhpParser\Lexer\Emulative(['usedAttributes' => ['startFilePos', 'endFilePos', 'comments']]);
         $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7, $lexer);
         $stmts = $parser->parse($this->code);
@@ -87,15 +87,15 @@ final class Extractor
             } elseif ($node instanceof Node\Scalar\String_ || $node instanceof Node\Scalar\EncapsedStringPart) {
                 // multi-line strings => singleline
                 $token = $this->getNodeContents($node);
-                if (\strpos($token, "\n") !== \false) {
+                if (strpos($token, "\n") !== \false) {
                     $quote = $node instanceof Node\Scalar\String_ ? '"' : '';
-                    $replacements[] = [$node->getStartFilePos() - $start, $node->getEndFilePos() - $start, $quote . \addcslashes($node->value, "\x00..\x1f") . $quote];
+                    $replacements[] = [$node->getStartFilePos() - $start, $node->getEndFilePos() - $start, $quote . addcslashes($node->value, "\x00..\x1f") . $quote];
                 }
             } elseif ($node instanceof Node\Scalar\Encapsed) {
                 // HEREDOC => "string"
                 if ($node->getAttribute('kind') === Node\Scalar\String_::KIND_HEREDOC) {
                     $replacements[] = [$node->getStartFilePos() - $start, $node->parts[0]->getStartFilePos() - $start - 1, '"'];
-                    $replacements[] = [\end($node->parts)->getEndFilePos() - $start + 1, $node->getEndFilePos() - $start, '"'];
+                    $replacements[] = [end($node->parts)->getEndFilePos() - $start + 1, $node->getEndFilePos() - $start, '"'];
                 }
             }
         });
@@ -103,12 +103,12 @@ final class Extractor
     }
     private function performReplacements(string $s, array $replacements): string
     {
-        \usort($replacements, function ($a, $b) {
+        usort($replacements, function ($a, $b) {
             // sort by position in file
             return $b[0] <=> $a[0];
         });
         foreach ($replacements as [$start, $end, $replacement]) {
-            $s = \substr_replace($s, $replacement, $start, $end - $start + 1);
+            $s = substr_replace($s, $replacement, $start, $end - $start + 1);
         }
         return $s;
     }
@@ -223,7 +223,7 @@ final class Extractor
             $trait = $class->addTrait($item->toString(), \true);
         }
         foreach ($node->adaptations as $item) {
-            $trait->addResolution(\trim($this->toPhp($item), ';'));
+            $trait->addResolution(trim($this->toPhp($item), ';'));
         }
         $this->addCommentAndAttributes($trait, $node);
     }
@@ -237,7 +237,7 @@ final class Extractor
             if ($item->default) {
                 $prop->setValue(new Literal($this->getReformattedContents([$item->default], 1)));
             }
-            $prop->setReadOnly(\method_exists($node, 'isReadonly') && $node->isReadonly());
+            $prop->setReadOnly(method_exists($node, 'isReadonly') && $node->isReadonly());
             $this->addCommentAndAttributes($prop, $node);
         }
     }
@@ -256,7 +256,7 @@ final class Extractor
             $value = $this->getReformattedContents([$item->value], 1);
             $const = $class->addConstant($item->name->toString(), new Literal($value));
             $const->setVisibility($this->toVisibility($node->flags));
-            $const->setFinal(\method_exists($node, 'isFinal') && $node->isFinal());
+            $const->setFinal(method_exists($node, 'isFinal') && $node->isFinal());
             $this->addCommentAndAttributes($const, $node);
         }
     }
@@ -330,7 +330,7 @@ final class Extractor
     private function getNodeContents(Node ...$nodes): string
     {
         $start = $this->getNodeStartPos($nodes[0]);
-        return \substr($this->code, $start, \end($nodes)->getEndFilePos() - $start + 1);
+        return substr($this->code, $start, end($nodes)->getEndFilePos() - $start + 1);
     }
     private function getNodeStartPos(Node $node): int
     {

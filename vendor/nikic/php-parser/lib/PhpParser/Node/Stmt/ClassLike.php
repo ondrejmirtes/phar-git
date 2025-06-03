@@ -98,7 +98,7 @@ abstract class ClassLike extends Node\Stmt
      */
     public function getMethod(string $name): ?\PhpParser\Node\Stmt\ClassMethod
     {
-        $lowerName = \strtolower($name);
+        $lowerName = strtolower($name);
         foreach ($this->stmts as $stmt) {
             if ($stmt instanceof \PhpParser\Node\Stmt\ClassMethod && $lowerName === $stmt->name->toLowerString()) {
                 return $stmt;

@@ -83,7 +83,7 @@ class Temporary extends File
      */
     protected function &_open($streamName, Stream\Context $context = null)
     {
-        if (\false === $out = @\tmpfile()) {
+        if (\false === $out = @tmpfile()) {
             throw new File\Exception('Failed to open a temporary stream.', 0);
         }
         return $out;
@@ -103,10 +103,10 @@ class Temporary extends File
      */
     public static function create($directory = null, $prefix = '__hoa_')
     {
-        if (null === $directory || \false === \is_dir($directory)) {
+        if (null === $directory || \false === is_dir($directory)) {
             $directory = static::getTemporaryDirectory();
         }
-        return \tempnam($directory, $prefix);
+        return tempnam($directory, $prefix);
     }
     /**
      * Get the directory path used for temporary files.
@@ -115,7 +115,7 @@ class Temporary extends File
      */
     public static function getTemporaryDirectory()
     {
-        return \sys_get_temp_dir();
+        return sys_get_temp_dir();
     }
 }
 /**

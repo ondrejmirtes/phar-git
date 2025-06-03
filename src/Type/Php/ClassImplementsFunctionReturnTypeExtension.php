@@ -19,7 +19,7 @@ use PHPStan\Type\TypeUtils;
 use PHPStan\Type\UnionType;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClassImplementsFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection): bool

@@ -20,15 +20,15 @@ class ExtensionsExtension extends Nette\DI\CompilerExtension
     public function loadConfiguration()
     {
         foreach ($this->getConfig() as $name => $class) {
-            if (\is_int($name)) {
+            if (is_int($name)) {
                 $name = null;
             }
             $args = [];
             if ($class instanceof Nette\DI\Definitions\Statement) {
                 [$class, $args] = [$class->getEntity(), $class->arguments];
             }
-            if (!\is_a($class, Nette\DI\CompilerExtension::class, \true)) {
-                throw new Nette\DI\InvalidConfigurationException(\sprintf("Extension '%s' not found or is not Nette\\DI\\CompilerExtension descendant.", $class));
+            if (!is_a($class, Nette\DI\CompilerExtension::class, \true)) {
+                throw new Nette\DI\InvalidConfigurationException(sprintf("Extension '%s' not found or is not Nette\\DI\\CompilerExtension descendant.", $class));
             }
             $this->compiler->addExtension($name, (new \ReflectionClass($class))->newInstanceArgs($args));
         }

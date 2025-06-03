@@ -36,7 +36,7 @@ final class CancellationQueue
     {
         for ($i = \key($this->queue); isset($this->queue[$i]); $i++) {
             $cancellable = $this->queue[$i];
-            \assert(\method_exists($cancellable, 'cancel'));
+            assert(\method_exists($cancellable, 'cancel'));
             $exception = null;
             try {
                 $cancellable->cancel();

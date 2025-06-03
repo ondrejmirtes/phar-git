@@ -131,55 +131,55 @@ final class Helpers
     }
     public static function formatDocComment(string $content): string
     {
-        $s = \trim($content);
-        $s = \str_replace('*/', '* /', $s);
+        $s = trim($content);
+        $s = str_replace('*/', '* /', $s);
         if ($s === '') {
             return '';
-        } elseif (\strpos($content, "\n") === \false) {
+        } elseif (strpos($content, "\n") === \false) {
             return "/** {$s} */\n";
         } else {
-            return \str_replace("\n", "\n * ", "/**\n{$s}") . "\n */\n";
+            return str_replace("\n", "\n * ", "/**\n{$s}") . "\n */\n";
         }
     }
     public static function tagName(string $name, string $of = PhpNamespace::NameNormal): string
     {
-        return isset(self::Keywords[\strtolower($name)]) ? $name : "/*({$of}*/{$name}";
+        return isset(self::Keywords[strtolower($name)]) ? $name : "/*({$of}*/{$name}";
     }
     public static function simplifyTaggedNames(string $code, ?PhpNamespace $namespace): string
     {
-        return \preg_replace_callback('~/\*\(([ncf])\*/([\w\x7f-\xff\\\\]++)~', function ($m) use ($namespace) {
+        return preg_replace_callback('~/\*\(([ncf])\*/([\w\x7f-\xff\\\\]++)~', function ($m) use ($namespace) {
             [, $of, $name] = $m;
             return $namespace ? $namespace->simplifyType($name, $of) : $name;
         }, $code);
     }
     public static function unformatDocComment(string $comment): string
     {
-        return \preg_replace('#^\s*\* ?#m', '', \trim(\trim(\trim($comment), '/*')));
+        return preg_replace('#^\s*\* ?#m', '', trim(trim(trim($comment), '/*')));
     }
     public static function unindent(string $s, int $level = 1): string
     {
-        return $level ? \preg_replace('#^(\t| {4}){1,' . $level . '}#m', '', $s) : $s;
+        return $level ? preg_replace('#^(\t| {4}){1,' . $level . '}#m', '', $s) : $s;
     }
     public static function isIdentifier($value): bool
     {
-        return \is_string($value) && \preg_match('#^' . self::ReIdentifier . '$#D', $value);
+        return is_string($value) && preg_match('#^' . self::ReIdentifier . '$#D', $value);
     }
     public static function isNamespaceIdentifier($value, bool $allowLeadingSlash = \false): bool
     {
         $re = '#^' . ($allowLeadingSlash ? '\\\\?' : '') . self::ReIdentifier . '(\\\\' . self::ReIdentifier . ')*$#D';
-        return \is_string($value) && \preg_match($re, $value);
+        return is_string($value) && preg_match($re, $value);
     }
     public static function extractNamespace(string $name): string
     {
-        return ($pos = \strrpos($name, '\\')) ? \substr($name, 0, $pos) : '';
+        return ($pos = strrpos($name, '\\')) ? substr($name, 0, $pos) : '';
     }
     public static function extractShortName(string $name): string
     {
-        return ($pos = \strrpos($name, '\\')) === \false ? $name : \substr($name, $pos + 1);
+        return ($pos = strrpos($name, '\\')) === \false ? $name : substr($name, $pos + 1);
     }
     public static function tabsToSpaces(string $s, int $count = 4): string
     {
-        return \str_replace("\t", \str_repeat(' ', $count), $s);
+        return str_replace("\t", str_repeat(' ', $count), $s);
     }
     /** @internal */
     public static function createObject(string $class, array $props): object
@@ -191,7 +191,7 @@ final class Helpers
         if ($type === '' || $type === null) {
             return null;
         }
-        if (!\preg_match('#(?:
+        if (!preg_match('#(?:
 			\?[\w\\\\]+|
 			[\w\\\\]+ (?: (&[\w\\\\]+)* | (\|[\w\\\\]+)* )
 		)()$#xAD', $type)) {
@@ -199,7 +199,7 @@ final class Helpers
         }
         if ($type[0] === '?') {
             $nullable = \true;
-            return \substr($type, 1);
+            return substr($type, 1);
         }
         return $type;
     }

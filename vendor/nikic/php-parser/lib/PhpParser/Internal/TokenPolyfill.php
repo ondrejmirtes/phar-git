@@ -49,7 +49,7 @@ class TokenPolyfill
         if ($this->id < 256) {
             return \chr($this->id);
         }
-        $name = \token_name($this->id);
+        $name = token_name($this->id);
         return $name === 'UNKNOWN' ? null : $name;
     }
     /**
@@ -78,12 +78,12 @@ class TokenPolyfill
                         return \true;
                     }
                 } else {
-                    throw new \TypeError('Argument #1 ($kind) must only have elements of type string|int, ' . \gettype($entry) . ' given');
+                    throw new \TypeError('Argument #1 ($kind) must only have elements of type string|int, ' . gettype($entry) . ' given');
                 }
             }
             return \false;
         }
-        throw new \TypeError('Argument #1 ($kind) must be of type string|int|array, ' . \gettype($kind) . ' given');
+        throw new \TypeError('Argument #1 ($kind) must be of type string|int|array, ' . gettype($kind) . ' given');
     }
     /**
      * Check whether this token would be ignored by the PHP parser. Returns true for T_WHITESPACE,

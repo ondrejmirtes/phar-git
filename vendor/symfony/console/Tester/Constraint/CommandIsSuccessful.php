@@ -41,6 +41,6 @@ final class CommandIsSuccessful extends Constraint
     protected function additionalFailureDescription($other): string
     {
         $mapping = [Command::FAILURE => 'Command failed.', Command::INVALID => 'Command was invalid.'];
-        return $mapping[$other] ?? \sprintf('Command returned exit status %d.', $other);
+        return $mapping[$other] ?? sprintf('Command returned exit status %d.', $other);
     }
 }

@@ -8,7 +8,7 @@ use PHPStan\Reflection\AllowedSubTypesClassReflectionExtension;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\Enum\EnumCaseObjectType;
 use function array_keys;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class EnumAllowedSubTypesClassReflectionExtension implements AllowedSubTypesClassReflectionExtension
 {
     public function supports(ClassReflection $classReflection): bool

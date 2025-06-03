@@ -14,7 +14,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 /**
  * @implements Rule<Cast\String_>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedUsageOfDeprecatedStringCastRule implements Rule
 {
     private Container $container;

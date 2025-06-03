@@ -136,14 +136,14 @@ class Question
     public function setAutocompleterValues(?iterable $values)
     {
         if (\is_array($values)) {
-            $values = $this->isAssoc($values) ? \array_merge(\array_keys($values), \array_values($values)) : \array_values($values);
+            $values = $this->isAssoc($values) ? array_merge(array_keys($values), array_values($values)) : array_values($values);
             $callback = static function () use ($values) {
                 return $values;
             };
         } elseif ($values instanceof \Traversable) {
             $valueCache = null;
             $callback = static function () use ($values, &$valueCache) {
-                return $valueCache ?? $valueCache = \iterator_to_array($values, \false);
+                return $valueCache ?? $valueCache = iterator_to_array($values, \false);
             };
         } else {
             $callback = null;
@@ -244,7 +244,7 @@ class Question
     }
     protected function isAssoc(array $array)
     {
-        return (bool) \count(\array_filter(\array_keys($array), 'is_string'));
+        return (bool) \count(array_filter(array_keys($array), 'is_string'));
     }
     public function isTrimmable(): bool
     {

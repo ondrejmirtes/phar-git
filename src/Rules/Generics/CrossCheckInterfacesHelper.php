@@ -10,7 +10,7 @@ use PHPStan\Rules\RuleErrorBuilder;
 use PHPStan\Type\VerbosityLevel;
 use function array_key_exists;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class CrossCheckInterfacesHelper
 {
     /**

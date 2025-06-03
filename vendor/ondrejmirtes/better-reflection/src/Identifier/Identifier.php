@@ -19,7 +19,7 @@ class Identifier
     public function __construct(string $name, \PHPStan\BetterReflection\Identifier\IdentifierType $type)
     {
         $this->type = $type;
-        if ($name === self::WILDCARD || $name === ReflectionFunction::CLOSURE_NAME || \strncmp($name, ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX, \strlen(ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX)) === 0) {
+        if ($name === self::WILDCARD || $name === ReflectionFunction::CLOSURE_NAME || strncmp($name, ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX, strlen(ReflectionClass::ANONYMOUS_CLASS_NAME_PREFIX)) === 0) {
             $this->name = $name;
             return;
         }

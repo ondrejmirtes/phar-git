@@ -7,7 +7,7 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PHPStan\DependencyInjection\AutowiredService;
 use function str_starts_with;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DeclarePositionVisitor extends NodeVisitorAbstract
 {
     private bool $isFirstStatement = \true;

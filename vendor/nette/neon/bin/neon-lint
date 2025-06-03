@@ -3,12 +3,12 @@
 declare (strict_types=1);
 namespace _PHPStan_checksum;
 
-if (!(\is_file($file = __DIR__ . '/../vendor/autoload.php') && (include $file)) && !(\is_file($file = __DIR__ . '/../../../autoload.php') && (include $file))) {
+if (!(\is_file($file = __DIR__ . '/../vendor/autoload.php') && include $file) && !(\is_file($file = __DIR__ . '/../../../autoload.php') && include $file)) {
     \fwrite(\STDERR, "Install packages using Composer.\n");
     exit(1);
 }
 if (\function_exists('pcntl_signal')) {
-    \pcntl_signal(\SIGINT, function () : void {
+    \pcntl_signal(\SIGINT, function (): void {
         \pcntl_signal(\SIGINT, \SIG_DFL);
         echo "Terminated\n";
         exit(1);
@@ -30,12 +30,12 @@ if ($argc < 2) {
 }
 $ok = scanPath($argv[1]);
 exit($ok ? 0 : 1);
-function scanPath(string $path) : bool
+function scanPath(string $path): bool
 {
     echo "Scanning {$path}\n";
     $it = new \RecursiveDirectoryIterator($path);
     $it = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::LEAVES_ONLY);
-    $it = new \RegexIterator($it, '~\\.neon$~');
+    $it = new \RegexIterator($it, '~\.neon$~');
     $counter = 0;
     $success = \true;
     foreach ($it as $file) {
@@ -46,9 +46,9 @@ function scanPath(string $path) : bool
     echo "Done.\n";
     return $success;
 }
-function lintFile(string $file) : bool
+function lintFile(string $file): bool
 {
-    \set_error_handler(function (int $severity, string $message) use($file) {
+    \set_error_handler(function (int $severity, string $message) use ($file) {
         if ($severity === \E_USER_DEPRECATED) {
             \fwrite(\STDERR, "[DEPRECATED] {$file}    {$message}\n");
             return null;

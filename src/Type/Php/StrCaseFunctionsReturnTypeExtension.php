@@ -27,7 +27,7 @@ use function is_callable;
 use function mb_check_encoding;
 use const MB_CASE_LOWER;
 use const MB_CASE_UPPER;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrCaseFunctionsReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     /**

@@ -66,6 +66,6 @@ final class OnlyOnOSFamilyFinder implements CpuCoreFinder
     }
     private function skip(): bool
     {
-        return !\in_array(PHP_OS_FAMILY, $this->skippedOSFamilies, \true);
+        return !in_array(PHP_OS_FAMILY, $this->skippedOSFamilies, \true);
     }
 }

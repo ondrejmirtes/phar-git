@@ -70,8 +70,8 @@ class Repetition extends \Hoa\Compiler\Llk\Rule\Rule
     public function __construct($name, $min, $max, $children, $nodeId)
     {
         parent::__construct($name, $children, $nodeId);
-        $min = \max(0, (int) $min);
-        $max = \max(-1, (int) $max);
+        $min = max(0, (int) $min);
+        $max = max(-1, (int) $max);
         if (-1 !== $max && $min > $max) {
             throw new Compiler\Exception\Rule('Cannot repeat with a min (%d) greater than max (%d).', 0, [$min, $max]);
         }

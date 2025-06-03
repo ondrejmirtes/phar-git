@@ -15,7 +15,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DateTimeSubMethodThrowTypeExtension implements DynamicMethodThrowTypeExtension
 {
     private PhpVersion $phpVersion;

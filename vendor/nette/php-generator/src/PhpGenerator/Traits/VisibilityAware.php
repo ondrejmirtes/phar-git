@@ -22,7 +22,7 @@ trait VisibilityAware
      */
     public function setVisibility(?string $val): self
     {
-        if (!\in_array($val, [ClassType::VisibilityPublic, ClassType::VisibilityProtected, ClassType::VisibilityPrivate, null], \true)) {
+        if (!in_array($val, [ClassType::VisibilityPublic, ClassType::VisibilityProtected, ClassType::VisibilityPrivate, null], \true)) {
             throw new Nette\InvalidArgumentException('Argument must be public|protected|private.');
         }
         $this->visibility = $val;

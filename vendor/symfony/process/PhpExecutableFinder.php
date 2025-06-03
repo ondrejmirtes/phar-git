@@ -30,40 +30,40 @@ class PhpExecutableFinder
      */
     public function find(bool $includeArgs = \true)
     {
-        if ($php = \getenv('PHP_BINARY')) {
-            if (!\is_executable($php)) {
+        if ($php = getenv('PHP_BINARY')) {
+            if (!is_executable($php)) {
                 $command = '\\' === \DIRECTORY_SEPARATOR ? 'where' : 'command -v --';
-                if ($php = \strtok(\exec($command . ' ' . \escapeshellarg($php)), \PHP_EOL)) {
-                    if (!\is_executable($php)) {
+                if ($php = strtok(exec($command . ' ' . escapeshellarg($php)), \PHP_EOL)) {
+                    if (!is_executable($php)) {
                         return \false;
                     }
                 } else {
                     return \false;
                 }
             }
-            if (@\is_dir($php)) {
+            if (@is_dir($php)) {
                 return \false;
             }
             return $php;
         }
         $args = $this->findArguments();
-        $args = $includeArgs && $args ? ' ' . \implode(' ', $args) : '';
+        $args = $includeArgs && $args ? ' ' . implode(' ', $args) : '';
         // PHP_BINARY return the current sapi executable
         if (\PHP_BINARY && \in_array(\PHP_SAPI, ['cli', 'cli-server', 'phpdbg'], \true)) {
             return \PHP_BINARY . $args;
         }
-        if ($php = \getenv('PHP_PATH')) {
-            if (!@\is_executable($php) || @\is_dir($php)) {
+        if ($php = getenv('PHP_PATH')) {
+            if (!@is_executable($php) || @is_dir($php)) {
                 return \false;
             }
             return $php;
         }
-        if ($php = \getenv('PHP_PEAR_PHP_BIN')) {
-            if (@\is_executable($php) && !@\is_dir($php)) {
+        if ($php = getenv('PHP_PEAR_PHP_BIN')) {
+            if (@is_executable($php) && !@is_dir($php)) {
                 return $php;
             }
         }
-        if (@\is_executable($php = \PHP_BINDIR . ('\\' === \DIRECTORY_SEPARATOR ? '\php.exe' : '/php')) && !@\is_dir($php)) {
+        if (@is_executable($php = \PHP_BINDIR . ('\\' === \DIRECTORY_SEPARATOR ? '\php.exe' : '/php')) && !@is_dir($php)) {
             return $php;
         }
         $dirs = [\PHP_BINDIR];

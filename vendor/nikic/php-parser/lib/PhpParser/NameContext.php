@@ -51,11 +51,11 @@ class NameContext
         if ($type === Stmt\Use_::TYPE_CONSTANT) {
             $aliasLookupName = $aliasName;
         } else {
-            $aliasLookupName = \strtolower($aliasName);
+            $aliasLookupName = strtolower($aliasName);
         }
         if (isset($this->aliases[$type][$aliasLookupName])) {
             $typeStringMap = [Stmt\Use_::TYPE_NORMAL => '', Stmt\Use_::TYPE_FUNCTION => 'function ', Stmt\Use_::TYPE_CONSTANT => 'const '];
-            $this->errorHandler->handleError(new \PhpParser\Error(\sprintf('Cannot use %s%s as %s because the name is already in use', $typeStringMap[$type], $name, $aliasName), $errorAttrs));
+            $this->errorHandler->handleError(new \PhpParser\Error(sprintf('Cannot use %s%s as %s because the name is already in use', $typeStringMap[$type], $name, $aliasName), $errorAttrs));
             return;
         }
         $this->aliases[$type][$aliasLookupName] = $name;
@@ -83,7 +83,7 @@ class NameContext
         // don't resolve special class names
         if ($type === Stmt\Use_::TYPE_NORMAL && $name->isSpecialClassName()) {
             if (!$name->isUnqualified()) {
-                $this->errorHandler->handleError(new \PhpParser\Error(\sprintf("'\\%s' is an invalid class name", $name->toString()), $name->getAttributes()));
+                $this->errorHandler->handleError(new \PhpParser\Error(sprintf("'\\%s' is an invalid class name", $name->toString()), $name->getAttributes()));
             }
             return $name;
         }
@@ -127,7 +127,7 @@ class NameContext
      */
     public function getPossibleNames(string $name, int $type): array
     {
-        $lcName = \strtolower($name);
+        $lcName = strtolower($name);
         if ($type === Stmt\Use_::TYPE_NORMAL) {
             // self, parent and static must always be unqualified
             if ($lcName === "self" || $lcName === "parent" || $lcName === "static") {
@@ -146,8 +146,8 @@ class NameContext
         // Check for relevant namespace use statements
         foreach ($this->origAliases[Stmt\Use_::TYPE_NORMAL] as $alias => $orig) {
             $lcOrig = $orig->toLowerString();
-            if (0 === \strpos($lcName, $lcOrig . '\\')) {
-                $possibleNames[] = new Name($alias . \substr($name, \strlen($lcOrig)));
+            if (0 === strpos($lcName, $lcOrig . '\\')) {
+                $possibleNames[] = new Name($alias . substr($name, strlen($lcOrig)));
             }
         }
         // Check for relevant type-specific use statements
@@ -179,7 +179,7 @@ class NameContext
         $shortestName = null;
         $shortestLength = \INF;
         foreach ($possibleNames as $possibleName) {
-            $length = \strlen($possibleName->toCodeString());
+            $length = strlen($possibleName->toCodeString());
             if ($length < $shortestLength) {
                 $shortestName = $possibleName;
                 $shortestLength = $length;
@@ -192,14 +192,14 @@ class NameContext
         $firstPart = $name->getFirst();
         if ($name->isQualified()) {
             // resolve aliases for qualified names, always against class alias table
-            $checkName = \strtolower($firstPart);
+            $checkName = strtolower($firstPart);
             if (isset($this->aliases[Stmt\Use_::TYPE_NORMAL][$checkName])) {
                 $alias = $this->aliases[Stmt\Use_::TYPE_NORMAL][$checkName];
                 return FullyQualified::concat($alias, $name->slice(1), $name->getAttributes());
             }
         } elseif ($name->isUnqualified()) {
             // constant aliases are case-sensitive, function aliases case-insensitive
-            $checkName = $type === Stmt\Use_::TYPE_CONSTANT ? $firstPart : \strtolower($firstPart);
+            $checkName = $type === Stmt\Use_::TYPE_CONSTANT ? $firstPart : strtolower($firstPart);
             if (isset($this->aliases[$type][$checkName])) {
                 // resolve unqualified aliases
                 return new FullyQualified($this->aliases[$type][$checkName], $name->getAttributes());
@@ -220,21 +220,21 @@ class NameContext
                 return new Name($name);
             }
         }
-        $namespacePrefix = \strtolower($this->namespace . '\\');
-        if (0 === \strpos($lcName, $namespacePrefix)) {
-            return new Name(\substr($name, \strlen($namespacePrefix)));
+        $namespacePrefix = strtolower($this->namespace . '\\');
+        if (0 === strpos($lcName, $namespacePrefix)) {
+            return new Name(substr($name, strlen($namespacePrefix)));
         }
         return null;
     }
     private function normalizeConstName(string $name): string
     {
-        $nsSep = \strrpos($name, '\\');
+        $nsSep = strrpos($name, '\\');
         if (\false === $nsSep) {
             return $name;
         }
         // Constants have case-insensitive namespace and case-sensitive short-name
-        $ns = \substr($name, 0, $nsSep);
-        $shortName = \substr($name, $nsSep + 1);
-        return \strtolower($ns) . '\\' . $shortName;
+        $ns = substr($name, 0, $nsSep);
+        $shortName = substr($name, $nsSep + 1);
+        return strtolower($ns) . '\\' . $shortName;
     }
 }

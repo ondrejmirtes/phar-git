@@ -30,20 +30,20 @@ final class LiteralNode extends Node
     /** @return mixed */
     public static function parse(string $value, bool $isKey = \false)
     {
-        if (!$isKey && \array_key_exists($value, self::SimpleTypes)) {
+        if (!$isKey && array_key_exists($value, self::SimpleTypes)) {
             if (isset(self::DeprecatedTypes[$value])) {
-                \trigger_error("Neon: keyword '{$value}' is deprecated, use true/yes or false/no.", \E_USER_DEPRECATED);
+                trigger_error("Neon: keyword '{$value}' is deprecated, use true/yes or false/no.", \E_USER_DEPRECATED);
             }
             return self::SimpleTypes[$value];
-        } elseif (\is_numeric($value)) {
+        } elseif (is_numeric($value)) {
             return $value * 1;
-        } elseif (\preg_match(self::PatternHex, $value)) {
-            return \hexdec($value);
-        } elseif (\preg_match(self::PatternOctal, $value)) {
-            return \octdec($value);
-        } elseif (\preg_match(self::PatternBinary, $value)) {
-            return \bindec($value);
-        } elseif (!$isKey && \preg_match(self::PatternDatetime, $value)) {
+        } elseif (preg_match(self::PatternHex, $value)) {
+            return hexdec($value);
+        } elseif (preg_match(self::PatternOctal, $value)) {
+            return octdec($value);
+        } elseif (preg_match(self::PatternBinary, $value)) {
+            return bindec($value);
+        } elseif (!$isKey && preg_match(self::PatternDatetime, $value)) {
             return new \DateTimeImmutable($value);
         } else {
             return $value;
@@ -53,13 +53,13 @@ final class LiteralNode extends Node
     {
         if ($this->value instanceof \DateTimeInterface) {
             return $this->value->format('Y-m-d H:i:s O');
-        } elseif (\is_string($this->value)) {
+        } elseif (is_string($this->value)) {
             return $this->value;
-        } elseif (\is_float($this->value)) {
-            $res = \json_encode($this->value);
-            return \strpos($res, '.') === \false ? $res . '.0' : $res;
-        } elseif (\is_int($this->value) || \is_bool($this->value) || $this->value === null) {
-            return \json_encode($this->value);
+        } elseif (is_float($this->value)) {
+            $res = json_encode($this->value);
+            return strpos($res, '.') === \false ? $res . '.0' : $res;
+        } elseif (is_int($this->value) || is_bool($this->value) || $this->value === null) {
+            return json_encode($this->value);
         } else {
             throw new \LogicException();
         }

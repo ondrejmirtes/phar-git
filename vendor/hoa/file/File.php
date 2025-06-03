@@ -136,7 +136,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
                 $streamName = 'php://stderr';
                 break;
             default:
-                if (\true === \ctype_digit($streamName)) {
+                if (\true === ctype_digit($streamName)) {
                     if (\PHP_VERSION_ID >= 50306) {
                         $streamName = 'php://fd/' . $streamName;
                     } else {
@@ -158,16 +158,16 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     protected function &_open($streamName, ?Stream\Context $context = null)
     {
-        if (\substr($streamName, 0, 4) == 'file' && \false === \is_dir(\dirname($streamName))) {
-            throw new \Hoa\File\Exception('Directory %s does not exist. Could not open file %s.', 1, [\dirname($streamName), \basename($streamName)]);
+        if (substr($streamName, 0, 4) == 'file' && \false === is_dir(dirname($streamName))) {
+            throw new \Hoa\File\Exception('Directory %s does not exist. Could not open file %s.', 1, [dirname($streamName), basename($streamName)]);
         }
         if (null === $context) {
-            if (\false === $out = @\fopen($streamName, $this->getMode(), \true)) {
+            if (\false === $out = @fopen($streamName, $this->getMode(), \true)) {
                 throw new \Hoa\File\Exception('Failed to open stream %s.', 2, $streamName);
             }
             return $out;
         }
-        $out = @\fopen($streamName, $this->getMode(), \true, $context->getContext());
+        $out = @fopen($streamName, $this->getMode(), \true, $context->getContext());
         if (\false === $out) {
             throw new \Hoa\File\Exception('Failed to open stream %s.', 3, $streamName);
         }
@@ -180,7 +180,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     protected function _close()
     {
-        return @\fclose($this->getStream());
+        return @fclose($this->getStream());
     }
     /**
      * Start a new buffer.
@@ -203,7 +203,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     public function flush()
     {
-        return \fflush($this->getStream());
+        return fflush($this->getStream());
     }
     /**
      * Delete buffer.
@@ -241,7 +241,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     public function lock($operation)
     {
-        return \flock($this->getStream(), $operation);
+        return flock($this->getStream(), $operation);
     }
     /**
      * Rewind the position of a stream pointer.
@@ -250,7 +250,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     public function rewind()
     {
-        return \rewind($this->getStream());
+        return rewind($this->getStream());
     }
     /**
      * Seek on a stream pointer.
@@ -262,7 +262,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     public function seek($offset, $whence = Stream\IStream\Pointable::SEEK_SET)
     {
-        return \fseek($this->getStream(), $offset, $whence);
+        return fseek($this->getStream(), $offset, $whence);
     }
     /**
      * Get the current position of the stream pointer.
@@ -275,7 +275,7 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
         if (null === $stream) {
             return 0;
         }
-        return \ftell($stream);
+        return ftell($stream);
     }
     /**
      * Create a file.
@@ -286,10 +286,10 @@ abstract class File extends \Hoa\File\Generic implements Stream\IStream\Bufferab
      */
     public static function create($name, $dummy)
     {
-        if (\file_exists($name)) {
+        if (file_exists($name)) {
             return \true;
         }
-        return \touch($name);
+        return touch($name);
     }
 }
 /**

@@ -35,7 +35,7 @@ class ContainerCommandLoader implements CommandLoaderInterface
     public function get(string $name)
     {
         if (!$this->has($name)) {
-            throw new CommandNotFoundException(\sprintf('Command "%s" does not exist.', $name));
+            throw new CommandNotFoundException(sprintf('Command "%s" does not exist.', $name));
         }
         return $this->container->get($this->commandMap[$name]);
     }
@@ -51,6 +51,6 @@ class ContainerCommandLoader implements CommandLoaderInterface
      */
     public function getNames()
     {
-        return \array_keys($this->commandMap);
+        return array_keys($this->commandMap);
     }
 }

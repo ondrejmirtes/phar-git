@@ -129,7 +129,7 @@ class Name extends NodeAbstract
      */
     public function toLowerString(): string
     {
-        return \strtolower($this->name);
+        return strtolower($this->name);
     }
     /**
      * Checks whether the identifier is a special class name (self, parent or static).
@@ -138,7 +138,7 @@ class Name extends NodeAbstract
      */
     public function isSpecialClassName(): bool
     {
-        return isset(self::$specialClassNames[\strtolower($this->name)]);
+        return isset(self::$specialClassNames[strtolower($this->name)]);
     }
     /**
      * Returns a string representation of the name by imploding the namespace parts with the
@@ -180,21 +180,21 @@ class Name extends NodeAbstract
         $numParts = \count($parts);
         $realOffset = $offset < 0 ? $offset + $numParts : $offset;
         if ($realOffset < 0 || $realOffset > $numParts) {
-            throw new \OutOfBoundsException(\sprintf('Offset %d is out of bounds', $offset));
+            throw new \OutOfBoundsException(sprintf('Offset %d is out of bounds', $offset));
         }
         if (null === $length) {
             $realLength = $numParts - $realOffset;
         } else {
             $realLength = $length < 0 ? $length + $numParts - $realOffset : $length;
             if ($realLength < 0 || $realLength > $numParts - $realOffset) {
-                throw new \OutOfBoundsException(\sprintf('Length %d is out of bounds', $length));
+                throw new \OutOfBoundsException(sprintf('Length %d is out of bounds', $length));
             }
         }
         if ($realLength === 0) {
             // Empty slice is represented as null
             return null;
         }
-        return new static(\array_slice($parts, $realOffset, $realLength), $this->attributes);
+        return new static(array_slice($parts, $realOffset, $realLength), $this->attributes);
     }
     /**
      * Concatenate two names, yielding a new Name instance.
@@ -248,7 +248,7 @@ class Name extends NodeAbstract
             if (empty($name)) {
                 throw new \InvalidArgumentException('Name cannot be empty');
             }
-            return \implode('\\', $name);
+            return implode('\\', $name);
         }
         if ($name instanceof self) {
             return $name->name;

@@ -91,7 +91,7 @@ class Bucket
         if (self::IS_A_BRIGADE === $this->getType()) {
             $this->setBrigade($brigade);
         } else {
-            $this->setBucket(\stream_bucket_new($brigade, $buffer));
+            $this->setBucket(stream_bucket_new($brigade, $buffer));
             $bucket = $this->getBucket();
             $this->setBrigade($bucket);
         }
@@ -116,7 +116,7 @@ class Bucket
      */
     public function append(\Hoa\Stream\Bucket $bucket)
     {
-        \stream_bucket_append($this->getBrigade(), $bucket->getBucket());
+        stream_bucket_append($this->getBrigade(), $bucket->getBucket());
         return;
     }
     /**
@@ -127,7 +127,7 @@ class Bucket
      */
     public function prepend(\Hoa\Stream\Bucket $bucket)
     {
-        \stream_bucket_prepend($this->getBrigade(), $bucket->getBucket());
+        stream_bucket_prepend($this->getBrigade(), $bucket->getBucket());
         return;
     }
     /**
@@ -161,7 +161,7 @@ class Bucket
     {
         $old = $this->getBucket()->data;
         $this->getBucket()->data = $data;
-        $this->getBucket()->datalen = \strlen($this->getBucket()->data);
+        $this->getBucket()->datalen = strlen($this->getBucket()->data);
         return $old;
     }
     /**
@@ -229,7 +229,7 @@ class Bucket
     protected function getBucket()
     {
         if (null === $this->_bucket && self::IS_A_BRIGADE === $this->getType()) {
-            $this->_bucket = \stream_bucket_make_writeable($this->getBrigade());
+            $this->_bucket = stream_bucket_make_writeable($this->getBrigade());
         }
         return $this->_bucket;
     }

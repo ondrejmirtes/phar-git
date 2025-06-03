@@ -15,7 +15,7 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Generic\TemplateTypeVarianceMap;
 use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ClosureFromCallableDynamicReturnTypeExtension implements DynamicStaticMethodReturnTypeExtension
 {
     public function getClass(): string

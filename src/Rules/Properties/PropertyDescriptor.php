@@ -10,7 +10,7 @@ use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\VerbosityLevel;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PropertyDescriptor
 {
     /**

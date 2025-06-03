@@ -18,7 +18,7 @@ use PHPStan\Type\Type;
 /**
  * @implements Rule<Node\Expr\StaticPropertyFetch>
  */
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class RestrictedStaticPropertyUsageRule implements Rule
 {
     private Container $container;

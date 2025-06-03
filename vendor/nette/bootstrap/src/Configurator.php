@@ -12,6 +12,6 @@ if (\false) {
     class Configurator extends Bootstrap\Configurator
     {
     }
-} elseif (!\class_exists(Configurator::class)) {
-    \class_alias(Bootstrap\Configurator::class, Configurator::class);
+} elseif (!class_exists(Configurator::class)) {
+    class_alias(Bootstrap\Configurator::class, Configurator::class);
 }

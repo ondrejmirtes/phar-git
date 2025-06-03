@@ -12,7 +12,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function array_map;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayFindFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private \PHPStan\Type\Php\ArrayFilterFunctionReturnTypeHelper $arrayFilterFunctionReturnTypeHelper;

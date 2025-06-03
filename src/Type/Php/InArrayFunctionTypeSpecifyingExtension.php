@@ -22,7 +22,7 @@ use PHPStan\Type\MixedType;
 use PHPStan\Type\TypeCombinator;
 use function count;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class InArrayFunctionTypeSpecifyingExtension implements FunctionTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

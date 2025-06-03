@@ -27,18 +27,18 @@ class CachingIterator extends \CachingIterator implements \Countable
     private $counter = 0;
     public function __construct($iterator)
     {
-        if (\is_array($iterator) || $iterator instanceof \stdClass) {
+        if (is_array($iterator) || $iterator instanceof \stdClass) {
             $iterator = new \ArrayIterator($iterator);
         } elseif ($iterator instanceof \IteratorAggregate) {
             do {
                 $iterator = $iterator->getIterator();
             } while ($iterator instanceof \IteratorAggregate);
-            \assert($iterator instanceof \Iterator);
+            assert($iterator instanceof \Iterator);
         } elseif ($iterator instanceof \Iterator) {
         } elseif ($iterator instanceof \Traversable) {
             $iterator = new \IteratorIterator($iterator);
         } else {
-            throw new Nette\InvalidArgumentException(\sprintf('Invalid argument passed to %s; array or Traversable expected, %s given.', self::class, \is_object($iterator) ? \get_class($iterator) : \gettype($iterator)));
+            throw new Nette\InvalidArgumentException(sprintf('Invalid argument passed to %s; array or Traversable expected, %s given.', self::class, is_object($iterator) ? get_class($iterator) : gettype($iterator)));
         }
         parent::__construct($iterator, 0);
     }

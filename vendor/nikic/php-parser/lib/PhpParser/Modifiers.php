@@ -39,7 +39,7 @@ final class Modifiers
      */
     public static function verifyClassModifier(int $a, int $b): void
     {
-        \assert(self::isValidModifier($b));
+        assert(self::isValidModifier($b));
         if (($a & $b) != 0) {
             throw new \PhpParser\Error('Multiple ' . self::toString($b) . ' modifiers are not allowed');
         }
@@ -52,7 +52,7 @@ final class Modifiers
      */
     public static function verifyModifier(int $a, int $b): void
     {
-        \assert(self::isValidModifier($b));
+        assert(self::isValidModifier($b));
         if ($a & \PhpParser\Modifiers::VISIBILITY_MASK && $b & \PhpParser\Modifiers::VISIBILITY_MASK || $a & \PhpParser\Modifiers::VISIBILITY_SET_MASK && $b & \PhpParser\Modifiers::VISIBILITY_SET_MASK) {
             throw new \PhpParser\Error('Multiple access type modifiers are not allowed');
         }

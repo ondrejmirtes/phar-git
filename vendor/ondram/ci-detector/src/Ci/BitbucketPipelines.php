@@ -26,7 +26,7 @@ class BitbucketPipelines extends AbstractCi
     }
     public function getBuildUrl(): string
     {
-        return \sprintf('%s/addon/pipelines/home#!/results/%s', $this->env->get('BITBUCKET_GIT_HTTP_ORIGIN'), $this->env->get('BITBUCKET_BUILD_NUMBER'));
+        return sprintf('%s/addon/pipelines/home#!/results/%s', $this->env->get('BITBUCKET_GIT_HTTP_ORIGIN'), $this->env->get('BITBUCKET_BUILD_NUMBER'));
     }
     public function getGitCommit(): string
     {
@@ -42,6 +42,6 @@ class BitbucketPipelines extends AbstractCi
     }
     public function getRepositoryUrl(): string
     {
-        return \sprintf('ssh://%s', $this->env->get('BITBUCKET_GIT_SSH_ORIGIN'));
+        return sprintf('ssh://%s', $this->env->get('BITBUCKET_GIT_SSH_ORIGIN'));
     }
 }

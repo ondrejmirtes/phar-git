@@ -46,7 +46,7 @@ class Standard extends PrettyPrinterAbstract
             }
             $types[] = $this->p($typeNode);
         }
-        return \implode('|', $types);
+        return implode('|', $types);
     }
     protected function pIntersectionType(Node\IntersectionType $node): string
     {
@@ -121,7 +121,7 @@ class Standard extends PrettyPrinterAbstract
     // Scalars
     private function indentString(string $str): string
     {
-        return \str_replace("\n", $this->nl, $str);
+        return str_replace("\n", $this->nl, $str);
     }
     protected function pScalar_String(Scalar\String_ $node): string
     {
@@ -136,7 +136,7 @@ class Standard extends PrettyPrinterAbstract
                         return "<<<'{$label}'{$nl}{$label}{$this->docStringEndToken}";
                     }
                     // Make sure trailing \r is not combined with following \n into CRLF.
-                    if ($node->value[\strlen($node->value) - 1] !== "\r") {
+                    if ($node->value[strlen($node->value) - 1] !== "\r") {
                         $value = $shouldIdent ? $this->indentString($node->value) : $node->value;
                         return "<<<'{$label}'{$nl}{$value}{$nl}{$label}{$this->docStringEndToken}";
                     }
@@ -168,7 +168,7 @@ class Standard extends PrettyPrinterAbstract
             $label = $node->getAttribute('docLabel');
             if ($label && !$this->encapsedContainsEndLabel($node->parts, $label)) {
                 $nl = $this->phpVersion->supportsFlexibleHeredoc() ? $this->nl : $this->newline;
-                if (\count($node->parts) === 1 && $node->parts[0] instanceof Node\InterpolatedStringPart && $node->parts[0]->value === '') {
+                if (count($node->parts) === 1 && $node->parts[0] instanceof Node\InterpolatedStringPart && $node->parts[0]->value === '') {
                     return "<<<{$label}{$nl}{$label}{$this->docStringEndToken}";
                 }
                 return "<<<{$label}{$nl}" . $this->pEncapsList($node->parts, null) . "{$nl}{$label}{$this->docStringEndToken}";
@@ -196,17 +196,17 @@ class Standard extends PrettyPrinterAbstract
         }
         switch ($kind) {
             case Scalar\Int_::KIND_BIN:
-                return $sign . '0b' . \base_convert($str, 10, 2);
+                return $sign . '0b' . base_convert($str, 10, 2);
             case Scalar\Int_::KIND_OCT:
-                return $sign . '0' . \base_convert($str, 10, 8);
+                return $sign . '0' . base_convert($str, 10, 8);
             case Scalar\Int_::KIND_HEX:
-                return $sign . '0x' . \base_convert($str, 10, 16);
+                return $sign . '0x' . base_convert($str, 10, 16);
         }
         throw new \Exception('Invalid number kind');
     }
     protected function pScalar_Float(Scalar\Float_ $node): string
     {
-        if (!\is_finite($node->value)) {
+        if (!is_finite($node->value)) {
             if ($node->value === \INF) {
                 return '1.0E+1000';
             }
@@ -217,16 +217,16 @@ class Standard extends PrettyPrinterAbstract
             }
         }
         // Try to find a short full-precision representation
-        $stringValue = \sprintf('%.16G', $node->value);
+        $stringValue = sprintf('%.16G', $node->value);
         if ($node->value !== (float) $stringValue) {
-            $stringValue = \sprintf('%.17G', $node->value);
+            $stringValue = sprintf('%.17G', $node->value);
         }
         // %G is locale dependent and there exists no locale-independent alternative. We don't want
         // mess with switching locales here, so let's assume that a comma is the only non-standard
         // decimal separator we may encounter...
-        $stringValue = \str_replace(',', '.', $stringValue);
+        $stringValue = str_replace(',', '.', $stringValue);
         // ensure that number is really printed as float
-        return \preg_match('/^-?[0-9]+$/', $stringValue) ? $stringValue . '.0' : $stringValue;
+        return preg_match('/^-?[0-9]+$/', $stringValue) ? $stringValue . '.0' : $stringValue;
     }
     // Assignments
     protected function pExpr_Assign(Expr\Assign $node, int $precedence, int $lhsPrecedence): string
@@ -460,7 +460,7 @@ class Standard extends PrettyPrinterAbstract
         } elseif ($kind === Cast\Double::KIND_FLOAT) {
             $cast = '(float)';
         } else {
-            \assert($kind === Cast\Double::KIND_REAL);
+            assert($kind === Cast\Double::KIND_REAL);
             $cast = '(real)';
         }
         return $this->pPrefixOp(Cast\Double::class, $cast . ' ', $node->expr, $precedence, $lhsPrecedence);
@@ -719,7 +719,7 @@ class Standard extends PrettyPrinterAbstract
     }
     protected function pStmt_TraitUseAdaptation_Alias(Stmt\TraitUseAdaptation\Alias $node): string
     {
-        return (null !== $node->trait ? $this->p($node->trait) . '::' : '') . $node->method . ' as' . (null !== $node->newModifier ? ' ' . \rtrim($this->pModifiers($node->newModifier), ' ') : '') . (null !== $node->newName ? ' ' . $node->newName : '') . ';';
+        return (null !== $node->trait ? $this->p($node->trait) . '::' : '') . $node->method . ' as' . (null !== $node->newModifier ? ' ' . rtrim($this->pModifiers($node->newModifier), ' ') : '') . (null !== $node->newName ? ' ' . $node->newName : '') . ';';
     }
     protected function pStmt_Property(Stmt\Property $node): string
     {
@@ -882,7 +882,7 @@ class Standard extends PrettyPrinterAbstract
         if ($node instanceof Expr) {
             return '{' . $this->p($node) . '}';
         } else {
-            \assert($node instanceof Node\Identifier);
+            assert($node instanceof Node\Identifier);
             return $node->name;
         }
     }
@@ -906,21 +906,21 @@ class Standard extends PrettyPrinterAbstract
         // produce an odd number of backslashes, so '\\\\a' should not get rendered as '\\\a', even
         // though that would be legal.
         $regex = '/\'|\\\\(?=[\'\\\\]|$)|(?<=\\\\)\\\\/';
-        return '\'' . \preg_replace($regex, '\\\\$0', $string) . '\'';
+        return '\'' . preg_replace($regex, '\\\\$0', $string) . '\'';
     }
     protected function escapeString(string $string, ?string $quote): string
     {
         if (null === $quote) {
             // For doc strings, don't escape newlines
-            $escaped = \addcslashes($string, "\t\f\v\$\\");
+            $escaped = addcslashes($string, "\t\f\v\$\\");
             // But do escape isolated \r. Combined with the terminating newline, it might get
             // interpreted as \r\n and dropped from the string contents.
-            $escaped = \preg_replace('/\r(?!\n)/', '\r', $escaped);
+            $escaped = preg_replace('/\r(?!\n)/', '\r', $escaped);
             if ($this->phpVersion->supportsFlexibleHeredoc()) {
                 $escaped = $this->indentString($escaped);
             }
         } else {
-            $escaped = \addcslashes($string, "\n\r\t\f\v\$" . $quote . "\\");
+            $escaped = addcslashes($string, "\n\r\t\f\v\$" . $quote . "\\");
         }
         // Escape control characters and non-UTF-8 characters.
         // Regex based on https://stackoverflow.com/a/11709412/385378.
@@ -939,16 +939,16 @@ class Standard extends PrettyPrinterAbstract
             | (?<=[\xF0-\xF4])[\x80-\xBF](?![\x80-\xBF]{2}) # Short 4 byte sequence
             | (?<=[\xF0-\xF4][\x80-\xBF])[\x80-\xBF](?![\x80-\xBF]) # Short 4 byte sequence (2)
         )/x';
-        return \preg_replace_callback($regex, function ($matches): string {
-            \assert(\strlen($matches[0]) === 1);
-            $hex = \dechex(\ord($matches[0]));
-            return '\x' . \str_pad($hex, 2, '0', \STR_PAD_LEFT);
+        return preg_replace_callback($regex, function ($matches): string {
+            assert(strlen($matches[0]) === 1);
+            $hex = dechex(ord($matches[0]));
+            return '\x' . str_pad($hex, 2, '0', \STR_PAD_LEFT);
         }, $escaped);
     }
     protected function containsEndLabel(string $string, string $label, bool $atStart = \true): bool
     {
         $start = $atStart ? '(?:^|[\r\n])[ \t]*' : '[\r\n][ \t]*';
-        return \false !== \strpos($string, $label) && \preg_match('/' . $start . $label . '(?:$|[^_A-Za-z0-9\x80-\xff])/', $string);
+        return \false !== strpos($string, $label) && preg_match('/' . $start . $label . '(?:$|[^_A-Za-z0-9\x80-\xff])/', $string);
     }
     /** @param (Expr|Node\InterpolatedStringPart)[] $parts */
     protected function encapsedContainsEndLabel(array $parts, string $label): bool

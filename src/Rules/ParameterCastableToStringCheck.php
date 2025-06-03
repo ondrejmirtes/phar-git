@@ -12,7 +12,7 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\Type;
 use PHPStan\Type\VerbosityLevel;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ParameterCastableToStringCheck
 {
     private \PHPStan\Rules\RuleLevelHelper $ruleLevelHelper;

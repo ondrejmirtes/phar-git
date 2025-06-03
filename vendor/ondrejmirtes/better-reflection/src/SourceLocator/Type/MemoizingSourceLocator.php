@@ -40,7 +40,7 @@ final class MemoizingSourceLocator implements \PHPStan\BetterReflection\SourceLo
     }
     private function reflectorCacheKey(Reflector $reflector): string
     {
-        return sprintf('type:%s#oid:%d', \get_class($reflector), spl_object_id($reflector));
+        return sprintf('type:%s#oid:%d', get_class($reflector), spl_object_id($reflector));
     }
     private function identifierToCacheKey(Identifier $identifier): string
     {

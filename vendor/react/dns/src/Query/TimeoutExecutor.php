@@ -19,7 +19,7 @@ final class TimeoutExecutor implements ExecutorInterface
     {
         if ($loop !== null && !$loop instanceof LoopInterface) {
             // manual type check to support legacy PHP < 7.1
-            throw new \InvalidArgumentException('_PHPStan_checksum\Argument #3 ($loop) expected null|React\EventLoop\LoopInterface');
+            throw new \InvalidArgumentException('Argument #3 ($loop) expected null|React\EventLoop\LoopInterface');
         }
         $this->executor = $executor;
         $this->loop = $loop ?: Loop::get();
@@ -54,14 +54,14 @@ final class TimeoutExecutor implements ExecutorInterface
                 $reject(new TimeoutException('DNS query for ' . $query->describe() . ' timed out'));
                 // Cancel pending query to clean up any underlying resources and references.
                 // Avoid garbage references in call stack by passing pending promise by reference.
-                \assert(\method_exists($promise, 'cancel'));
+                assert(\method_exists($promise, 'cancel'));
                 $promise->cancel();
                 $promise = null;
             });
         }, function () use (&$promise) {
             // Cancelling this promise will cancel the pending query, thus triggering the rejection logic above.
             // Avoid garbage references in call stack by passing pending promise by reference.
-            \assert(\method_exists($promise, 'cancel'));
+            assert(\method_exists($promise, 'cancel'));
             $promise->cancel();
             $promise = null;
         });

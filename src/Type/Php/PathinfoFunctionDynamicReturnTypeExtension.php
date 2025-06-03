@@ -18,7 +18,7 @@ use PHPStan\Type\Type;
 use PHPStan\Type\TypeCombinator;
 use function count;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PathinfoFunctionDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private ReflectionProvider $reflectionProvider;

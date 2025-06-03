@@ -25,7 +25,7 @@ class FormatterHelper extends Helper
      */
     public function formatSection(string $section, string $message, string $style = 'info')
     {
-        return \sprintf('<%s>[%s]</%s> %s', $style, $section, $style, $message);
+        return sprintf('<%s>[%s]</%s> %s', $style, $section, $style, $message);
     }
     /**
      * Formats a message as a block of text.
@@ -43,20 +43,20 @@ class FormatterHelper extends Helper
         $lines = [];
         foreach ($messages as $message) {
             $message = OutputFormatter::escape($message);
-            $lines[] = \sprintf($large ? '  %s  ' : ' %s ', $message);
-            $len = \max(self::width($message) + ($large ? 4 : 2), $len);
+            $lines[] = sprintf($large ? '  %s  ' : ' %s ', $message);
+            $len = max(self::width($message) + ($large ? 4 : 2), $len);
         }
-        $messages = $large ? [\str_repeat(' ', $len)] : [];
+        $messages = $large ? [str_repeat(' ', $len)] : [];
         for ($i = 0; isset($lines[$i]); ++$i) {
-            $messages[] = $lines[$i] . \str_repeat(' ', $len - self::width($lines[$i]));
+            $messages[] = $lines[$i] . str_repeat(' ', $len - self::width($lines[$i]));
         }
         if ($large) {
-            $messages[] = \str_repeat(' ', $len);
+            $messages[] = str_repeat(' ', $len);
         }
         for ($i = 0; isset($messages[$i]); ++$i) {
-            $messages[$i] = \sprintf('<%s>%s</%s>', $style, $messages[$i], $style);
+            $messages[$i] = sprintf('<%s>%s</%s>', $style, $messages[$i], $style);
         }
-        return \implode("\n", $messages);
+        return implode("\n", $messages);
     }
     /**
      * Truncates a message to the given length.

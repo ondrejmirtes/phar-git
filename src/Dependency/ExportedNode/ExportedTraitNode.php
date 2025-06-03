@@ -99,7 +99,7 @@ final class ExportedTraitNode implements RootExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'phpDoc' => $this->phpDoc, 'usedTraits' => $this->usedTraits, 'traitUseAdaptations' => $this->traitUseAdaptations, 'statements' => $this->statements, 'attributes' => $this->attributes]];

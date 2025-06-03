@@ -33,7 +33,7 @@ use PHPStan\Type\FileTypeMapper;
 use function array_map;
 use function is_string;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ExportedNodeResolver
 {
     private ReflectionProvider $reflectionProvider;

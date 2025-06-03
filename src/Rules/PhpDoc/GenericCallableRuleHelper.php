@@ -19,7 +19,7 @@ use PHPStan\Type\TypeTraverser;
 use PHPStan\Type\VerbosityLevel;
 use function array_keys;
 use function sprintf;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class GenericCallableRuleHelper
 {
     private TemplateTypeCheck $templateTypeCheck;

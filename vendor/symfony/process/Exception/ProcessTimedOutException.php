@@ -26,7 +26,7 @@ class ProcessTimedOutException extends RuntimeException
     {
         $this->process = $process;
         $this->timeoutType = $timeoutType;
-        parent::__construct(\sprintf('The process "%s" exceeded the timeout of %s seconds.', $process->getCommandLine(), $this->getExceededTimeout()));
+        parent::__construct(sprintf('The process "%s" exceeded the timeout of %s seconds.', $process->getCommandLine(), $this->getExceededTimeout()));
     }
     public function getProcess()
     {
@@ -48,7 +48,7 @@ class ProcessTimedOutException extends RuntimeException
             case self::TYPE_IDLE:
                 return $this->process->getIdleTimeout();
             default:
-                throw new \LogicException(\sprintf('Unknown timeout type "%d".', $this->timeoutType));
+                throw new \LogicException(sprintf('Unknown timeout type "%d".', $this->timeoutType));
         }
     }
 }

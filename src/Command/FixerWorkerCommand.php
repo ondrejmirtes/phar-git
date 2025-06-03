@@ -89,7 +89,7 @@ final class FixerWorkerCommand extends Command
         $tcpConnector = new TcpConnector($loop);
         $tcpConnector->connect(sprintf('127.0.0.1:%d', $serverPort))->then(function (ConnectionInterface $connection) use ($container, $inceptionResult, $configuration, $input, $ignoredErrorHelperResult, $loop): void {
             // phpcs:disable SlevomatCodingStandard.Namespaces.ReferenceUsedNamesOnly
-            $jsonInvalidUtf8Ignore = \defined('JSON_INVALID_UTF8_IGNORE') ? JSON_INVALID_UTF8_IGNORE : 0;
+            $jsonInvalidUtf8Ignore = defined('JSON_INVALID_UTF8_IGNORE') ? JSON_INVALID_UTF8_IGNORE : 0;
             // phpcs:enable
             $out = new Encoder($connection, $jsonInvalidUtf8Ignore);
             //$in = new Decoder($connection, true, 512, $jsonInvalidUtf8Ignore, 128 * 1024 * 1024);

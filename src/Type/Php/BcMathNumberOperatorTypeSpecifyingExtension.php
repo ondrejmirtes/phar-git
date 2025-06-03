@@ -11,7 +11,7 @@ use PHPStan\Type\ObjectType;
 use PHPStan\Type\OperatorTypeSpecifyingExtension;
 use PHPStan\Type\Type;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class BcMathNumberOperatorTypeSpecifyingExtension implements OperatorTypeSpecifyingExtension
 {
     private PhpVersion $phpVersion;
@@ -24,12 +24,12 @@ final class BcMathNumberOperatorTypeSpecifyingExtension implements OperatorTypeS
         if (!$this->phpVersion->supportsBcMathNumberOperatorOverloading() || $leftSide instanceof NeverType || $rightSide instanceof NeverType) {
             return \false;
         }
-        $bcMathNumberType = new ObjectType('BcMath\Number');
+        $bcMathNumberType = new ObjectType('_PHPStan_checksum\BcMath\Number');
         return in_array($operatorSigil, ['-', '+', '*', '/', '**', '%'], \true) && ($bcMathNumberType->isSuperTypeOf($leftSide)->yes() || $bcMathNumberType->isSuperTypeOf($rightSide)->yes());
     }
     public function specifyType(string $operatorSigil, Type $leftSide, Type $rightSide): Type
     {
-        $bcMathNumberType = new ObjectType('BcMath\Number');
+        $bcMathNumberType = new ObjectType('_PHPStan_checksum\BcMath\Number');
         $otherSide = $bcMathNumberType->isSuperTypeOf($leftSide)->yes() ? $rightSide : $leftSide;
         if ($otherSide->isInteger()->yes() || $otherSide->isNumericString()->yes() || $bcMathNumberType->isSuperTypeOf($otherSide)->yes()) {
             return $bcMathNumberType;

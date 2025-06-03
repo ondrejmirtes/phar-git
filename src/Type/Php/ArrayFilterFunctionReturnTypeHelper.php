@@ -39,7 +39,7 @@ use function in_array;
 use function is_string;
 use function sprintf;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ArrayFilterFunctionReturnTypeHelper
 {
     private ReflectionProvider $reflectionProvider;

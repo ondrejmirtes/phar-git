@@ -5,7 +5,7 @@ namespace PHPStan\Rules\Methods;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use PHPStan\DependencyInjection\Container;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class LazyAlwaysUsedMethodExtensionProvider implements \PHPStan\Rules\Methods\AlwaysUsedMethodExtensionProvider
 {
     private Container $container;

@@ -11,7 +11,7 @@ use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Type\BenevolentUnionType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\ObjectType;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class SimpleXMLElementClassPropertyReflectionExtension implements PropertiesClassReflectionExtension
 {
     public function hasProperty(ClassReflection $classReflection, string $propertyName): bool

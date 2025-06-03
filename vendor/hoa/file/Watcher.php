@@ -80,7 +80,7 @@ class Watcher extends \Hoa\File\Finder implements Event\Listenable
     public function run()
     {
         $iterator = $this->getIterator();
-        $previous = \iterator_to_array($iterator);
+        $previous = iterator_to_array($iterator);
         $current = $previous;
         while (\true) {
             foreach ($current as $name => $c) {
@@ -100,9 +100,9 @@ class Watcher extends \Hoa\File\Finder implements Event\Listenable
             foreach ($previous as $p) {
                 $this->getListener()->fire('move', new Event\Bucket(['file' => $p]));
             }
-            \usleep($this->getLatency() * 1000000);
+            usleep($this->getLatency() * 1000000);
             $previous = $current;
-            $current = \iterator_to_array($iterator);
+            $current = iterator_to_array($iterator);
         }
         return;
     }

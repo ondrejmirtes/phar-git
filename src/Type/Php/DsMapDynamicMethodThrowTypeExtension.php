@@ -11,7 +11,7 @@ use PHPStan\Type\DynamicMethodThrowTypeExtension;
 use PHPStan\Type\Type;
 use PHPStan\Type\VoidType;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DsMapDynamicMethodThrowTypeExtension implements DynamicMethodThrowTypeExtension
 {
     public function isMethodSupported(MethodReflection $methodReflection): bool

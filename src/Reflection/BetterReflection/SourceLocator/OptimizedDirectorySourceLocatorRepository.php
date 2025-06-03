@@ -5,7 +5,7 @@ namespace PHPStan\Reflection\BetterReflection\SourceLocator;
 
 use PHPStan\DependencyInjection\AutowiredService;
 use function array_key_exists;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class OptimizedDirectorySourceLocatorRepository
 {
     private \PHPStan\Reflection\BetterReflection\SourceLocator\OptimizedDirectorySourceLocatorFactory $factory;

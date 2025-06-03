@@ -18,7 +18,7 @@ use function in_array;
 use function openssl_get_cipher_methods;
 use function strtolower;
 use function substr;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class OpenSslEncryptParameterOutTypeExtension implements FunctionParameterOutTypeExtension
 {
     public function isFunctionSupported(FunctionReflection $functionReflection, ParameterReflection $parameter): bool

@@ -29,7 +29,7 @@ function resolve($promiseOrValue): PromiseInterface
         $canceller = null;
         if (\method_exists($promiseOrValue, 'cancel')) {
             $canceller = [$promiseOrValue, 'cancel'];
-            \assert(\is_callable($canceller));
+            assert(\is_callable($canceller));
         }
         /** @var Promise<T> */
         return new Promise(function (callable $resolve, callable $reject) use ($promiseOrValue): void {
@@ -229,7 +229,7 @@ function _checkTypehint(callable $callback, \Throwable $reason): bool
     } elseif (\is_object($callback) && !$callback instanceof \Closure) {
         $callbackReflection = new \ReflectionMethod($callback, '__invoke');
     } else {
-        \assert($callback instanceof \Closure || \is_string($callback));
+        assert($callback instanceof \Closure || \is_string($callback));
         $callbackReflection = new \ReflectionFunction($callback);
     }
     $parameters = $callbackReflection->getParameters();
@@ -262,15 +262,15 @@ function _checkTypehint(callable $callback, \Throwable $reason): bool
     foreach ($types as $type) {
         if ($type instanceof \ReflectionIntersectionType) {
             foreach ($type->getTypes() as $typeToMatch) {
-                \assert($typeToMatch instanceof \ReflectionNamedType);
+                assert($typeToMatch instanceof \ReflectionNamedType);
                 $name = $typeToMatch->getName();
                 if (!$matches = !$typeToMatch->isBuiltin() && $reason instanceof $name) {
                     break;
                 }
             }
-            \assert(isset($matches));
+            assert(isset($matches));
         } else {
-            \assert($type instanceof \ReflectionNamedType);
+            assert($type instanceof \ReflectionNamedType);
             $name = $type->getName();
             $matches = !$type->isBuiltin() && $reason instanceof $name;
         }

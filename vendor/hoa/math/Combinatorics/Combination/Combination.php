@@ -66,10 +66,10 @@ class Combination
         $out = [];
         $tmp = null;
         $i = 0;
-        $o = \array_fill(0, $n, 0);
+        $o = array_fill(0, $n, 0);
         $o[0] = $k;
         while ($k != $o[$i = $n - 1]) {
-            if (\false === $withoutZero || !\in_array(0, $o)) {
+            if (\false === $withoutZero || !in_array(0, $o)) {
                 $out[] = $o;
             }
             $tmp = $o[$i];
@@ -80,7 +80,7 @@ class Combination
             --$o[$i];
             $o[$i + 1] = $tmp + 1;
         }
-        if (\false === $withoutZero || !\in_array(0, $o)) {
+        if (\false === $withoutZero || !in_array(0, $o)) {
             $out[] = $o;
         }
         return $out;

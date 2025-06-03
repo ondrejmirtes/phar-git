@@ -44,7 +44,7 @@ class Transaction
     {
         $transaction = clone $this;
         foreach ($options as $name => $value) {
-            if (\property_exists($transaction, $name)) {
+            if (property_exists($transaction, $name)) {
                 // restore default value if null is given
                 if ($value === null) {
                     $default = new self($this->sender, $this->loop);
@@ -65,7 +65,7 @@ class Transaction
             }
         });
         // use timeout from options or default to PHP's default_socket_timeout (60)
-        $timeout = (float) ($this->timeout !== null ? $this->timeout : \ini_get("default_socket_timeout"));
+        $timeout = (float) ($this->timeout !== null ? $this->timeout : ini_get("default_socket_timeout"));
         $loop = $this->loop;
         $this->next($request, $deferred, $state)->then(function (ResponseInterface $response) use ($state, $deferred, $loop, &$timeout) {
             if ($state->timeout !== null) {
@@ -160,7 +160,7 @@ class Transaction
                 // close stream and reject promise if limit is exceeded
                 if (isset($buffer[$maximumSize])) {
                     $buffer = '';
-                    \assert($closer instanceof \Closure);
+                    assert($closer instanceof \Closure);
                     $body->removeListener('close', $closer);
                     $body->close();
                     $reject(new \OverflowException('Response body size exceeds maximum of ' . $maximumSize . ' bytes', \defined('SOCKET_EMSGSIZE') ? \SOCKET_EMSGSIZE : 90));
@@ -172,7 +172,7 @@ class Transaction
             });
         }, function () use ($body, &$closer) {
             // cancelled buffering: remove close handler to avoid resolving, then close and reject
-            \assert($closer instanceof \Closure);
+            assert($closer instanceof \Closure);
             $body->removeListener('close', $closer);
             $body->close();
             throw new \RuntimeException('Cancelled buffering response body');

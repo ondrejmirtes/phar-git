@@ -33,7 +33,7 @@ use function is_int;
 use function is_numeric;
 use function preg_split;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class PregSplitDynamicReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     /**

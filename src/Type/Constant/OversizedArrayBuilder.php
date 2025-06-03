@@ -20,7 +20,7 @@ use PHPStan\Type\VerbosityLevel;
 use function array_splice;
 use function array_values;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class OversizedArrayBuilder
 {
     /**

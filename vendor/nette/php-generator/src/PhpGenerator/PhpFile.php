@@ -49,13 +49,13 @@ final class PhpFile
     {
         if ($namespace instanceof PhpNamespace) {
             $res = $this->namespaces[$namespace->getName()] = $namespace;
-        } elseif (\is_string($namespace)) {
+        } elseif (is_string($namespace)) {
             $res = $this->namespaces[$namespace] = $this->namespaces[$namespace] ?? new PhpNamespace($namespace);
         } else {
             throw new Nette\InvalidArgumentException('Argument must be string|PhpNamespace.');
         }
         foreach ($this->namespaces as $namespace) {
-            $namespace->setBracketedSyntax(\count($this->namespaces) > 1 && isset($this->namespaces['']));
+            $namespace->setBracketedSyntax(count($this->namespaces) > 1 && isset($this->namespaces['']));
         }
         return $res;
     }
@@ -124,7 +124,7 @@ final class PhpFile
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
-            \trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
+            trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
             return '';
         }
     }

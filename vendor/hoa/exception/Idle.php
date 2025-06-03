@@ -93,7 +93,7 @@ class Idle extends \Exception
         $this->_tmpArguments = $arguments;
         parent::__construct($message, $code, $previous);
         $this->_rawMessage = $message;
-        $this->message = @\vsprintf($message, $this->getArguments());
+        $this->message = @vsprintf($message, $this->getArguments());
         return;
     }
     /**
@@ -131,7 +131,7 @@ class Idle extends \Exception
     {
         if (null === $this->_arguments) {
             $arguments = $this->_tmpArguments;
-            if (!\is_array($arguments)) {
+            if (!is_array($arguments)) {
                 $arguments = [$arguments];
             }
             foreach ($arguments as &$value) {
@@ -207,7 +207,7 @@ class Idle extends \Exception
             $out = $pre . '(' . $this->getCode() . ') ' . $message . "\n" . 'in ' . $file . ' around line ' . $line . '.';
         }
         if (\true === $previous && null !== $previous = $this->getPreviousThrow()) {
-            $out .= "\n\n" . '    ⬇' . "\n\n" . 'Nested exception (' . \get_class($previous) . '):' . "\n" . ($previous instanceof self ? $previous->raise(\true) : $previous->getMessage());
+            $out .= "\n\n" . '    ⬇' . "\n\n" . 'Nested exception (' . get_class($previous) . '):' . "\n" . ($previous instanceof self ? $previous->raise(\true) : $previous->getMessage());
         }
         return $out;
     }
@@ -223,10 +223,10 @@ class Idle extends \Exception
         if (!$exception instanceof self) {
             throw $exception;
         }
-        while (0 < \ob_get_level()) {
-            \ob_end_flush();
+        while (0 < ob_get_level()) {
+            ob_end_flush();
         }
-        echo 'Uncaught exception (' . \get_class($exception) . '):' . "\n" . $exception->raise(\true);
+        echo 'Uncaught exception (' . get_class($exception) . '):' . "\n" . $exception->raise(\true);
         return;
     }
     /**
@@ -248,9 +248,9 @@ class Idle extends \Exception
     public static function enableUncaughtHandler($enable = \true)
     {
         if (\false === $enable) {
-            return \restore_exception_handler();
+            return restore_exception_handler();
         }
-        return \set_exception_handler(function ($exception) {
+        return set_exception_handler(function ($exception) {
             return self::uncaught($exception);
         });
     }

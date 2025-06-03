@@ -40,7 +40,7 @@ class DefinitionSchema implements Schema
             }
         }
         $def = $this->expandParameters($def);
-        $type = $this->sniffType(\end($context->path), $def);
+        $type = $this->sniffType(end($context->path), $def);
         $def = $this->getSchema($type)->complete($def, $context);
         if ($def) {
             $def->defType = $type;
@@ -61,21 +61,21 @@ class DefinitionSchema implements Schema
     {
         if ($def === null || $def === \false) {
             return (array) $def;
-        } elseif (\is_string($def) && \interface_exists($def)) {
+        } elseif (is_string($def) && interface_exists($def)) {
             return ['implement' => $def];
-        } elseif ($def instanceof Statement && \is_string($def->getEntity()) && \interface_exists($def->getEntity())) {
+        } elseif ($def instanceof Statement && is_string($def->getEntity()) && interface_exists($def->getEntity())) {
             $res = ['implement' => $def->getEntity()];
-            if (\array_keys($def->arguments) === ['tagged']) {
+            if (array_keys($def->arguments) === ['tagged']) {
                 $res += $def->arguments;
-            } elseif (\array_keys($def->arguments) === [0]) {
+            } elseif (array_keys($def->arguments) === [0]) {
                 $res['create'] = $def->arguments[0];
             } elseif ($def->arguments) {
                 $res['references'] = $def->arguments;
             }
             return $res;
-        } elseif (!\is_array($def) || isset($def[0], $def[1])) {
+        } elseif (!is_array($def) || isset($def[0], $def[1])) {
             return ['create' => $def];
-        } elseif (\is_array($def)) {
+        } elseif (is_array($def)) {
             // back compatibility
             if (isset($def['factory']) && !isset($def['create'])) {
                 $def['create'] = $def['factory'];
@@ -86,11 +86,11 @@ class DefinitionSchema implements Schema
                 unset($def['class']);
             }
             foreach (['class' => 'type', 'dynamic' => 'imported'] as $alias => $original) {
-                if (\array_key_exists($alias, $def)) {
-                    if (\array_key_exists($original, $def)) {
-                        throw new Nette\DI\InvalidConfigurationException(\sprintf("Options '%s' and '%s' are aliases, use only '%s'.", $alias, $original, $original));
+                if (array_key_exists($alias, $def)) {
+                    if (array_key_exists($original, $def)) {
+                        throw new Nette\DI\InvalidConfigurationException(sprintf("Options '%s' and '%s' are aliases, use only '%s'.", $alias, $original, $original));
                     }
-                    \trigger_error(\sprintf("Service '%s': option '{$alias}' should be changed to '{$original}'.", \end($context->path)), \E_USER_DEPRECATED);
+                    trigger_error(sprintf("Service '%s': option '{$alias}' should be changed to '{$original}'.", end($context->path)), \E_USER_DEPRECATED);
                     $def[$original] = $def[$alias];
                     unset($def[$alias]);
                 }
@@ -105,16 +105,16 @@ class DefinitionSchema implements Schema
     }
     private function sniffType($key, array $def): string
     {
-        if (\is_string($key)) {
-            $name = \preg_match('#^@[\w\\\\]+$#D', $key) ? $this->builder->getByType(\substr($key, 1), \false) : $key;
+        if (is_string($key)) {
+            $name = preg_match('#^@[\w\\\\]+$#D', $key) ? $this->builder->getByType(substr($key, 1), \false) : $key;
             if ($name && $this->builder->hasDefinition($name)) {
-                return \get_class($this->builder->getDefinition($name));
+                return get_class($this->builder->getDefinition($name));
             }
         }
         if (isset($def['implement'], $def['references']) || isset($def['implement'], $def['tagged'])) {
             return Definitions\LocatorDefinition::class;
         } elseif (isset($def['implement'])) {
-            return \method_exists($def['implement'], 'create') ? Definitions\FactoryDefinition::class : Definitions\AccessorDefinition::class;
+            return method_exists($def['implement'], 'create') ? Definitions\FactoryDefinition::class : Definitions\AccessorDefinition::class;
         } elseif (isset($def['imported'])) {
             return Definitions\ImportedDefinition::class;
         } elseif (!$def) {
@@ -128,8 +128,8 @@ class DefinitionSchema implements Schema
         $params = $this->builder->parameters;
         if (isset($config['parameters'])) {
             foreach ((array) $config['parameters'] as $k => $v) {
-                $v = \explode(' ', \is_int($k) ? $v : $k);
-                $params[\end($v)] = $this->builder::literal('$' . \end($v));
+                $v = explode(' ', is_int($k) ? $v : $k);
+                $params[end($v)] = $this->builder::literal('$' . end($v));
             }
         }
         return Nette\DI\Helpers::expand($config, $params);

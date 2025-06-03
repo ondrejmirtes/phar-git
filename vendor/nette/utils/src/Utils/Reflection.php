@@ -107,7 +107,7 @@ final class Reflection
     {
         if ($param->isDefaultValueConstant()) {
             $const = $orig = $param->getDefaultValueConstantName();
-            $pair = \explode('::', $const);
+            $pair = explode('::', $const);
             if (isset($pair[1])) {
                 $pair[0] = Type::resolve($pair[0], $param);
                 try {
@@ -117,14 +117,14 @@ final class Reflection
                     throw new \ReflectionException("Unable to resolve constant {$orig} used as default value of {$name}.", 0, $e);
                 }
                 return $rcc->getValue();
-            } elseif (!\defined($const)) {
-                $const = \substr((string) \strrchr($const, '\\'), 1);
-                if (!\defined($const)) {
+            } elseif (!defined($const)) {
+                $const = substr((string) strrchr($const, '\\'), 1);
+                if (!defined($const)) {
                     $name = self::toString($param);
                     throw new \ReflectionException("Unable to resolve constant {$orig} used as default value of {$name}.");
                 }
             }
-            return \constant($const);
+            return constant($const);
         }
         return $param->getDefaultValue();
     }
@@ -193,7 +193,7 @@ final class Reflection
      */
     public static function expandClassName(string $name, \ReflectionClass $context): string
     {
-        $lower = \strtolower($name);
+        $lower = strtolower($name);
         if (empty($name)) {
             throw new Nette\InvalidArgumentException('Class name must not be empty.');
         } elseif (Validators::isBuiltinType($lower)) {
@@ -204,13 +204,13 @@ final class Reflection
             return $context->getParentClass() ? $context->getParentClass()->name : 'parent';
         } elseif ($name[0] === '\\') {
             // fully qualified name
-            return \ltrim($name, '\\');
+            return ltrim($name, '\\');
         }
         $uses = self::getUseStatements($context);
-        $parts = \explode('\\', $name, 2);
+        $parts = explode('\\', $name, 2);
         if (isset($uses[$parts[0]])) {
             $parts[0] = $uses[$parts[0]];
-            return \implode('\\', $parts);
+            return implode('\\', $parts);
         } elseif ($context->inNamespace()) {
             return $context->getNamespaceName() . '\\' . $name;
         } else {
@@ -228,7 +228,7 @@ final class Reflection
             if ($class->isInternal()) {
                 $cache[$name] = [];
             } else {
-                $code = \file_get_contents($class->getFileName());
+                $code = file_get_contents($class->getFileName());
                 $cache = self::parseUseStatements($code, $name) + $cache;
             }
         }
@@ -240,20 +240,20 @@ final class Reflection
     private static function parseUseStatements(string $code, ?string $forClass = null): array
     {
         try {
-            $tokens = \token_get_all($code, \TOKEN_PARSE);
+            $tokens = token_get_all($code, \TOKEN_PARSE);
         } catch (\ParseError $e) {
-            \trigger_error($e->getMessage(), \E_USER_NOTICE);
+            trigger_error($e->getMessage(), \E_USER_NOTICE);
             $tokens = [];
         }
         $namespace = $class = null;
         $classLevel = $level = 0;
         $res = $uses = [];
         $nameTokens = \PHP_VERSION_ID < 80000 ? [\T_STRING, \T_NS_SEPARATOR] : [\T_STRING, \T_NS_SEPARATOR, \T_NAME_QUALIFIED, \T_NAME_FULLY_QUALIFIED];
-        while ($token = \current($tokens)) {
-            \next($tokens);
-            switch (\is_array($token) ? $token[0] : $token) {
+        while ($token = current($tokens)) {
+            next($tokens);
+            switch (is_array($token) ? $token[0] : $token) {
                 case \T_NAMESPACE:
-                    $namespace = \ltrim(self::fetch($tokens, $nameTokens) . '\\', '\\');
+                    $namespace = ltrim(self::fetch($tokens, $nameTokens) . '\\', '\\');
                     $uses = [];
                     break;
                 case \T_CLASS:
@@ -271,14 +271,14 @@ final class Reflection
                     break;
                 case \T_USE:
                     while (!$class && $name = self::fetch($tokens, $nameTokens)) {
-                        $name = \ltrim($name, '\\');
+                        $name = ltrim($name, '\\');
                         if (self::fetch($tokens, '{')) {
                             while ($suffix = self::fetch($tokens, $nameTokens)) {
                                 if (self::fetch($tokens, \T_AS)) {
                                     $uses[self::fetch($tokens, \T_STRING)] = $name . $suffix;
                                 } else {
-                                    $tmp = \explode('\\', $suffix);
-                                    $uses[\end($tmp)] = $name . $suffix;
+                                    $tmp = explode('\\', $suffix);
+                                    $uses[end($tmp)] = $name . $suffix;
                                 }
                                 if (!self::fetch($tokens, ',')) {
                                     break;
@@ -287,8 +287,8 @@ final class Reflection
                         } elseif (self::fetch($tokens, \T_AS)) {
                             $uses[self::fetch($tokens, \T_STRING)] = $name;
                         } else {
-                            $tmp = \explode('\\', $name);
-                            $uses[\end($tmp)] = $name;
+                            $tmp = explode('\\', $name);
+                            $uses[end($tmp)] = $name;
                         }
                         if (!self::fetch($tokens, ',')) {
                             break;
@@ -312,14 +312,14 @@ final class Reflection
     private static function fetch(array &$tokens, $take): ?string
     {
         $res = null;
-        while ($token = \current($tokens)) {
-            [$token, $s] = \is_array($token) ? $token : [$token, $token];
-            if (\in_array($token, (array) $take, \true)) {
+        while ($token = current($tokens)) {
+            [$token, $s] = is_array($token) ? $token : [$token, $token];
+            if (in_array($token, (array) $take, \true)) {
                 $res .= $s;
-            } elseif (!\in_array($token, [\T_DOC_COMMENT, \T_WHITESPACE, \T_COMMENT], \true)) {
+            } elseif (!in_array($token, [\T_DOC_COMMENT, \T_WHITESPACE, \T_COMMENT], \true)) {
                 break;
             }
-            \next($tokens);
+            next($tokens);
         }
         return $res;
     }

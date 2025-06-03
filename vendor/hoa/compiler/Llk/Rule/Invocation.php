@@ -90,7 +90,7 @@ abstract class Invocation
         $this->_data = $data;
         $this->_todo = $todo;
         $this->_depth = $depth;
-        $this->_transitional = \is_int($rule);
+        $this->_transitional = is_int($rule);
         return;
     }
     /**

@@ -34,4 +34,4 @@ class DeclareItem extends NodeAbstract
     }
 }
 // @deprecated compatibility alias
-\class_alias(\PhpParser\Node\DeclareItem::class, \PhpParser\Node\Stmt\DeclareDeclare::class);
+class_alias(\PhpParser\Node\DeclareItem::class, \PhpParser\Node\Stmt\DeclareDeclare::class);

@@ -64,7 +64,7 @@ final class IgnoredError
             // normalize newlines to allow working with ignore-patterns independent of used OS newline-format
             $errorMessage = $error->getMessage();
             $errorMessage = str_replace(['\r\n', '\r'], '\n', $errorMessage);
-            $ignoredErrorPattern = str_replace([preg_quote('\r\n'), preg_quote('\r')], preg_quote('\n'), $ignoredErrorPattern);
+            $ignoredErrorPattern = str_replace([preg_quote('_PHPStan_checksum\r\n'), preg_quote('\r')], preg_quote('\n'), $ignoredErrorPattern);
             if (Strings::match($errorMessage, $ignoredErrorPattern) === null) {
                 return \false;
             }

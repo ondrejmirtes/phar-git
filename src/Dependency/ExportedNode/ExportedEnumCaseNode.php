@@ -52,7 +52,7 @@ final class ExportedEnumCaseNode implements ExportedNode, JsonSerializable
     /**
      * @return mixed
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return ['type' => self::class, 'data' => ['name' => $this->name, 'value' => $this->value, 'phpDoc' => $this->phpDoc]];

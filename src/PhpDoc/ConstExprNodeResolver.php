@@ -27,7 +27,7 @@ use PHPStan\Type\ErrorType;
 use PHPStan\Type\NullType;
 use PHPStan\Type\Type;
 use function strtolower;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ConstExprNodeResolver
 {
     private ReflectionProvider\ReflectionProviderProvider $reflectionProviderProvider;

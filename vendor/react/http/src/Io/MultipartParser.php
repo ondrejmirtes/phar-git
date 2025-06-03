@@ -132,7 +132,7 @@ final class MultipartParser
         if ($pos === \false) {
             return;
         }
-        $headers = $this->parseHeaders((string) \substr($chunk, 0, $pos));
+        $headers = $this->parseHeaders((string) substr($chunk, 0, $pos));
         $body = (string) \substr($chunk, $pos + 4);
         if (!isset($headers['content-disposition'])) {
             return;
@@ -203,7 +203,7 @@ final class MultipartParser
             if (!isset($parts[1])) {
                 continue;
             }
-            $key = \strtolower(\trim($parts[0]));
+            $key = \strtolower(trim($parts[0]));
             $values = \explode(';', $parts[1]);
             $values = \array_map('trim', $values);
             $headers[$key] = $values;

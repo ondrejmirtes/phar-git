@@ -12,7 +12,7 @@ use Attribute;
  * Works thanks to https://github.com/ondrejmirtes/composer-attribute-collector
  * and AutowiredAttributeServicesExtension.
  */
-#[\Attribute(Attribute::TARGET_CLASS)]
+#[Attribute(Attribute::TARGET_CLASS)]
 final class AutowiredService
 {
     public ?string $name;

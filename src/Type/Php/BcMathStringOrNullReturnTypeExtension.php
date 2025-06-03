@@ -22,7 +22,7 @@ use PHPStan\Type\TypeCombinator;
 use PHPStan\Type\UnionType;
 use function in_array;
 use function is_numeric;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class BcMathStringOrNullReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private PhpVersion $phpVersion;

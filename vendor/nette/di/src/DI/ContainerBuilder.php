@@ -51,17 +51,17 @@ class ContainerBuilder
             }
             $name = '0' . $i;
             // prevents converting to integer in array key
-        } elseif (\is_int(\key([$name => 1])) || !\preg_match('#^\w+(\.\w+)*$#D', $name)) {
-            throw new Nette\InvalidArgumentException(\sprintf("Service name must be a alpha-numeric string and not a number, '%s' given.", $name));
+        } elseif (is_int(key([$name => 1])) || !preg_match('#^\w+(\.\w+)*$#D', $name)) {
+            throw new Nette\InvalidArgumentException(sprintf("Service name must be a alpha-numeric string and not a number, '%s' given.", $name));
         } else {
             $name = $this->aliases[$name] ?? $name;
             if (isset($this->definitions[$name])) {
-                throw new Nette\InvalidStateException(\sprintf("Service '%s' has already been added.", $name));
+                throw new Nette\InvalidStateException(sprintf("Service '%s' has already been added.", $name));
             }
-            $lname = \strtolower($name);
+            $lname = strtolower($name);
             foreach ($this->definitions as $nm => $foo) {
-                if ($lname === \strtolower($nm)) {
-                    throw new Nette\InvalidStateException(\sprintf("Service '%s' has the same name as '%s' in a case-insensitive manner.", $name, $nm));
+                if ($lname === strtolower($nm)) {
+                    throw new Nette\InvalidStateException(sprintf("Service '%s' has the same name as '%s' in a case-insensitive manner.", $name, $nm));
                 }
             }
         }
@@ -104,7 +104,7 @@ class ContainerBuilder
     {
         $service = $this->aliases[$name] ?? $name;
         if (!isset($this->definitions[$service])) {
-            throw new MissingServiceException(\sprintf("Service '%s' not found.", $name));
+            throw new MissingServiceException(sprintf("Service '%s' not found.", $name));
         }
         return $this->definitions[$service];
     }
@@ -128,14 +128,14 @@ class ContainerBuilder
     {
         if (!$alias) {
             // builder is not ready for falsy names such as '0'
-            throw new Nette\InvalidArgumentException(\sprintf("Alias name must be a non-empty string, '%s' given.", $alias));
+            throw new Nette\InvalidArgumentException(sprintf("Alias name must be a non-empty string, '%s' given.", $alias));
         } elseif (!$service) {
             // builder is not ready for falsy names such as '0'
-            throw new Nette\InvalidArgumentException(\sprintf("Service name must be a non-empty string, '%s' given.", $service));
+            throw new Nette\InvalidArgumentException(sprintf("Service name must be a non-empty string, '%s' given.", $service));
         } elseif (isset($this->aliases[$alias])) {
-            throw new Nette\InvalidStateException(\sprintf("Alias '%s' has already been added.", $alias));
+            throw new Nette\InvalidStateException(sprintf("Alias '%s' has already been added.", $alias));
         } elseif (isset($this->definitions[$alias])) {
-            throw new Nette\InvalidStateException(\sprintf("Service '%s' has already been added.", $alias));
+            throw new Nette\InvalidStateException(sprintf("Service '%s' has already been added.", $alias));
         }
         $this->aliases[$alias] = $service;
     }
@@ -200,7 +200,7 @@ class ContainerBuilder
         $this->needResolved();
         $found = [];
         foreach ($this->definitions as $name => $def) {
-            if (\is_a($def->getType(), $type, \true)) {
+            if (is_a($def->getType(), $type, \true)) {
                 $found[$name] = $def;
             }
         }
@@ -278,7 +278,7 @@ class ContainerBuilder
     public function exportMeta(): array
     {
         $defs = $this->definitions;
-        \ksort($defs);
+        ksort($defs);
         foreach ($defs as $name => $def) {
             if ($def instanceof Definitions\ImportedDefinition) {
                 $meta['types'][$name] = $def->getType();
@@ -288,18 +288,18 @@ class ContainerBuilder
             }
         }
         $meta['aliases'] = $this->aliases;
-        \ksort($meta['aliases']);
+        ksort($meta['aliases']);
         $all = [];
         foreach ($this->definitions as $name => $def) {
             if ($type = $def->getType()) {
-                foreach (\class_parents($type) + \class_implements($type) + [$type] as $class) {
+                foreach (class_parents($type) + class_implements($type) + [$type] as $class) {
                     $all[$class][] = $name;
                 }
             }
         }
         [$low, $high] = $this->autowiring->getClassList();
         foreach ($all as $class => $names) {
-            $meta['wiring'][$class] = \array_filter([$high[$class] ?? [], $low[$class] ?? [], \array_diff($names, $low[$class] ?? [], $high[$class] ?? [])]);
+            $meta['wiring'][$class] = array_filter([$high[$class] ?? [], $low[$class] ?? [], array_diff($names, $low[$class] ?? [], $high[$class] ?? [])]);
         }
         return $meta;
     }
@@ -310,7 +310,7 @@ class ContainerBuilder
     /** @deprecated */
     public function formatPhp(string $statement, array $args): string
     {
-        \array_walk_recursive($args, function (&$val): void {
+        array_walk_recursive($args, function (&$val): void {
             if ($val instanceof Nette\DI\Definitions\Statement) {
                 $val = (new Resolver($this))->completeStatement($val);
             } elseif ($val instanceof Definition) {

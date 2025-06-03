@@ -29,7 +29,7 @@ use PHPStan\Type\FileTypeMapper;
 use PHPStan\Type\Type;
 use function array_merge;
 use function count;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class DependencyResolver
 {
     private FileHelper $fileHelper;

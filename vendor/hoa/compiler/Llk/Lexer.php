@@ -103,18 +103,18 @@ class Lexer
         $this->_tokens = $tokens;
         $this->_nsStack = null;
         $offset = 0;
-        $maxOffset = \strlen($this->_text);
+        $maxOffset = strlen($this->_text);
         $this->_lexerState = 'default';
         $stack = \false;
         foreach ($this->_tokens as &$tokens) {
             $_tokens = [];
             foreach ($tokens as $fullLexeme => $regex) {
-                if (\false === \strpos($fullLexeme, ':')) {
+                if (\false === strpos($fullLexeme, ':')) {
                     $_tokens[$fullLexeme] = [$regex, null];
                     continue;
                 }
-                list($lexeme, $namespace) = \explode(':', $fullLexeme, 2);
-                $stack |= '__shift__' === \substr($namespace, 0, 9);
+                list($lexeme, $namespace) = explode(':', $fullLexeme, 2);
+                $stack |= '__shift__' === substr($namespace, 0, 9);
                 unset($tokens[$fullLexeme]);
                 $_tokens[$lexeme] = [$regex, $namespace];
             }
@@ -126,13 +126,13 @@ class Lexer
         while ($offset < $maxOffset) {
             $nextToken = $this->nextToken($offset);
             if (null === $nextToken) {
-                throw new Compiler\Exception\UnrecognizedToken('Unrecognized token "%s" at line 1 and column %d:' . "\n" . '%s' . "\n" . \str_repeat(' ', \mb_strlen(\substr($text, 0, $offset))) . '↑', 0, [\mb_substr(\substr($text, $offset), 0, 1), $offset + 1, $text], 1, $offset);
+                throw new Compiler\Exception\UnrecognizedToken('Unrecognized token "%s" at line 1 and column %d:' . "\n" . '%s' . "\n" . str_repeat(' ', mb_strlen(substr($text, 0, $offset))) . '↑', 0, [mb_substr(substr($text, $offset), 0, 1), $offset + 1, $text], 1, $offset);
             }
             if (\true === $nextToken['keep']) {
                 $nextToken['offset'] = $offset;
                 yield $nextToken;
             }
-            $offset += \strlen($nextToken['value']);
+            $offset += strlen($nextToken['value']);
         }
         yield ['token' => 'EOF', 'value' => 'EOF', 'length' => 0, 'namespace' => 'default', 'keep' => \true, 'offset' => $offset];
     }
@@ -157,9 +157,9 @@ class Lexer
                 $out['keep'] = 'skip' !== $lexeme;
                 if ($nextState !== $this->_lexerState) {
                     $shift = \false;
-                    if (null !== $this->_nsStack && 0 !== \preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
-                        $i = isset($matches[1]) ? \intval($matches[1]) : 1;
-                        if ($i > $c = \count($this->_nsStack)) {
+                    if (null !== $this->_nsStack && 0 !== preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
+                        $i = isset($matches[1]) ? intval($matches[1]) : 1;
+                        if ($i > $c = count($this->_nsStack)) {
                             throw new Compiler\Exception\Lexer('Cannot shift namespace %d-times, from token ' . '%s in namespace %s, because the stack ' . 'contains only %d namespaces.', 1, [$i, $lexeme, $this->_lexerState, $c]);
                         }
                         while (1 <= $i--) {
@@ -192,14 +192,14 @@ class Lexer
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
-        $_regex = \str_replace('#', '\#', $regex);
-        $preg = \preg_match('#\G(?|' . $_regex . ')#' . $this->_pcreOptions, $this->_text, $matches, 0, $offset);
+        $_regex = str_replace('#', '\#', $regex);
+        $preg = preg_match('#\G(?|' . $_regex . ')#' . $this->_pcreOptions, $this->_text, $matches, 0, $offset);
         if (0 === $preg || $preg === \false) {
             return null;
         }
         if ('' === $matches[0]) {
             throw new Compiler\Exception\Lexer('A lexeme must not match an empty value, which is the ' . 'case of "%s" (%s).', 3, [$lexeme, $regex]);
         }
-        return ['token' => $lexeme, 'value' => $matches[0], 'length' => \mb_strlen($matches[0])];
+        return ['token' => $lexeme, 'value' => $matches[0], 'length' => mb_strlen($matches[0])];
     }
 }

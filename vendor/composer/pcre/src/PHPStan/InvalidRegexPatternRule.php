@@ -92,8 +92,8 @@ class InvalidRegexPatternRule implements Rule
     {
         try {
             $msg = null;
-            $prev = \set_error_handler(function (int $severity, string $message, string $file) use (&$msg): bool {
-                $msg = \preg_replace("#^preg_match(_all)?\\(.*?\\): #", '', $message);
+            $prev = set_error_handler(function (int $severity, string $message, string $file) use (&$msg): bool {
+                $msg = preg_replace("#^preg_match(_all)?\\(.*?\\): #", '', $message);
                 return \true;
             });
             if ($pattern === '') {
@@ -107,9 +107,9 @@ class InvalidRegexPatternRule implements Rule
             if ($e->getCode() === \PREG_INTERNAL_ERROR && $msg !== null) {
                 return $msg;
             }
-            return \preg_replace('{.*? failed executing ".*": }', '', $e->getMessage());
+            return preg_replace('{.*? failed executing ".*": }', '', $e->getMessage());
         } finally {
-            \restore_error_handler();
+            restore_error_handler();
         }
         return null;
     }

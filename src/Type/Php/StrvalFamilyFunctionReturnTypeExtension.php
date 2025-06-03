@@ -16,7 +16,7 @@ use PHPStan\Type\NullType;
 use PHPStan\Type\Type;
 use function count;
 use function in_array;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class StrvalFamilyFunctionReturnTypeExtension implements DynamicFunctionReturnTypeExtension
 {
     private const FUNCTIONS = ['strval', 'intval', 'boolval', 'floatval', 'doubleval'];

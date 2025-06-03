@@ -27,7 +27,7 @@ trait ServiceSubscriberTrait
      */
     public static function getSubscribedServices(): array
     {
-        $services = \method_exists(\get_parent_class(self::class) ?: '', __FUNCTION__) ? parent::getSubscribedServices() : [];
+        $services = method_exists(get_parent_class(self::class) ?: '', __FUNCTION__) ? parent::getSubscribedServices() : [];
         $attributeOptIn = \false;
         if (\PHP_VERSION_ID >= 80000) {
             foreach ((new \ReflectionClass(self::class))->getMethods() as $method) {
@@ -38,10 +38,10 @@ trait ServiceSubscriberTrait
                     continue;
                 }
                 if ($method->isStatic() || $method->isAbstract() || $method->isGenerator() || $method->isInternal() || $method->getNumberOfRequiredParameters()) {
-                    throw new \LogicException(\sprintf('Cannot use "%s" on method "%s::%s()" (can only be used on non-static, non-abstract methods with no parameters).', SubscribedService::class, self::class, $method->name));
+                    throw new \LogicException(sprintf('Cannot use "%s" on method "%s::%s()" (can only be used on non-static, non-abstract methods with no parameters).', SubscribedService::class, self::class, $method->name));
                 }
                 if (!$returnType = $method->getReturnType()) {
-                    throw new \LogicException(\sprintf('Cannot use "%s" on methods without a return type in "%s::%s()".', SubscribedService::class, $method->name, self::class));
+                    throw new \LogicException(sprintf('Cannot use "%s" on methods without a return type in "%s::%s()".', SubscribedService::class, $method->name, self::class));
                 }
                 $serviceId = $returnType instanceof \ReflectionNamedType ? $returnType->getName() : (string) $returnType;
                 if ($returnType->allowsNull()) {
@@ -81,7 +81,7 @@ trait ServiceSubscriberTrait
     public function setContainer(ContainerInterface $container)
     {
         $ret = null;
-        if (\method_exists(\get_parent_class(self::class) ?: '', __FUNCTION__)) {
+        if (method_exists(get_parent_class(self::class) ?: '', __FUNCTION__)) {
             $ret = parent::setContainer($container);
         }
         $this->container = $container;

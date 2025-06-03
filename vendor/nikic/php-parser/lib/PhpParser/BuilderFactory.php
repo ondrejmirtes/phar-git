@@ -326,7 +326,7 @@ class BuilderFactory
      */
     public function concat(...$exprs): Concat
     {
-        $numExprs = \count($exprs);
+        $numExprs = count($exprs);
         if ($numExprs < 2) {
             throw new \LogicException('Expected at least two expressions');
         }

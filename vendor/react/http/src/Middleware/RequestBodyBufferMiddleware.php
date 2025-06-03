@@ -54,7 +54,7 @@ final class RequestBodyBufferMiddleware
                 // but ignore the contents and wait for the close event
                 // before passing the request on to the next middleware.
                 if (isset($buffer[$sizeLimit])) {
-                    \assert($bufferer instanceof \Closure);
+                    assert($bufferer instanceof \Closure);
                     $body->removeListener('data', $bufferer);
                     $bufferer = null;
                     $buffer = '';
@@ -77,14 +77,14 @@ final class RequestBodyBufferMiddleware
             // reject buffering if body emits error
             $body->on('error', function (\Exception $e) use ($reject, $body, $closer) {
                 // remove close handler to avoid resolving, then close and reject
-                \assert($closer instanceof \Closure);
+                assert($closer instanceof \Closure);
                 $body->removeListener('close', $closer);
                 $body->close();
                 $reject(new \RuntimeException('Error while buffering request body: ' . $e->getMessage(), $e->getCode(), $e));
             });
         }, function () use ($body, &$closer) {
             // cancelled buffering: remove close handler to avoid resolving, then close and reject
-            \assert($closer instanceof \Closure);
+            assert($closer instanceof \Closure);
             $body->removeListener('close', $closer);
             $body->close();
             throw new \RuntimeException('Cancelled buffering request body');

@@ -82,7 +82,7 @@ class Calc extends Console\Dispatcher\Kit
             return;
         }
         $readline = new Console\Readline();
-        $readline->setAutocompleter(new Console\Readline\Autocompleter\Word(\array_merge(\array_keys($visitor->getConstants()->getArrayCopy()), \array_keys($visitor->getFunctions()->getArrayCopy()))));
+        $readline->setAutocompleter(new Console\Readline\Autocompleter\Word(array_merge(array_keys($visitor->getConstants()->getArrayCopy()), array_keys($visitor->getFunctions()->getArrayCopy()))));
         $handle = null;
         $expression = 'h';
         do {
@@ -93,11 +93,11 @@ class Calc extends Console\Dispatcher\Kit
                     break;
                 case 'c':
                 case 'constants':
-                    echo \implode(', ', \array_keys($visitor->getConstants()->getArrayCopy())), "\n";
+                    echo implode(', ', array_keys($visitor->getConstants()->getArrayCopy())), "\n";
                     break;
                 case 'f':
                 case 'functions':
-                    echo \implode(', ', \array_keys($visitor->getFunctions()->getArrayCopy())), "\n";
+                    echo implode(', ', array_keys($visitor->getFunctions()->getArrayCopy())), "\n";
                     break;
                 case 'e':
                 case 'expression':

@@ -40,7 +40,7 @@ final class CompletionInput extends ArgvInput
      */
     public static function fromString(string $inputStr, int $currentIndex): self
     {
-        \preg_match_all('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $inputStr, $tokens);
+        preg_match_all('/(?<=^|\s)([\'"]?)(.+?)(?<!\\\\)\1(?=$|\s)/', $inputStr, $tokens);
         return self::fromTokens($tokens[0], $currentIndex);
     }
     /**
@@ -65,7 +65,7 @@ final class CompletionInput extends ArgvInput
         $relevantToken = $this->getRelevantToken();
         if ('-' === $relevantToken[0]) {
             // the current token is an input option: complete either option name or option value
-            [$optionToken, $optionValue] = \explode('=', $relevantToken, 2) + ['', ''];
+            [$optionToken, $optionValue] = explode('=', $relevantToken, 2) + ['', ''];
             $option = $this->getOptionFromToken($optionToken);
             if (null === $option && !$this->isCursorFree()) {
                 $this->completionType = self::TYPE_OPTION_NAME;
@@ -75,12 +75,12 @@ final class CompletionInput extends ArgvInput
             if (null !== $option && $option->acceptValue()) {
                 $this->completionType = self::TYPE_OPTION_VALUE;
                 $this->completionName = $option->getName();
-                $this->completionValue = $optionValue ?: (!\str_starts_with($optionToken, '--') ? \substr($optionToken, 2) : '');
+                $this->completionValue = $optionValue ?: (!str_starts_with($optionToken, '--') ? substr($optionToken, 2) : '');
                 return;
             }
         }
         $previousToken = $this->tokens[$this->currentIndex - 1];
-        if ('-' === $previousToken[0] && '' !== \trim($previousToken, '-')) {
+        if ('-' === $previousToken[0] && '' !== trim($previousToken, '-')) {
             // check if previous option accepted a value
             $previousOption = $this->getOptionFromToken($previousToken);
             if (null !== $previousOption && $previousOption->acceptValue()) {
@@ -99,7 +99,7 @@ final class CompletionInput extends ArgvInput
             $argumentValue = $this->arguments[$argumentName];
             $this->completionName = $argumentName;
             if (\is_array($argumentValue)) {
-                $this->completionValue = $argumentValue ? $argumentValue[\array_key_last($argumentValue)] : null;
+                $this->completionValue = $argumentValue ? $argumentValue[array_key_last($argumentValue)] : null;
             } else {
                 $this->completionValue = $argumentValue;
             }
@@ -165,7 +165,7 @@ final class CompletionInput extends ArgvInput
     }
     private function getOptionFromToken(string $optionToken): ?InputOption
     {
-        $optionName = \ltrim($optionToken, '-');
+        $optionName = ltrim($optionToken, '-');
         if (!$optionName) {
             return null;
         }
@@ -207,6 +207,6 @@ final class CompletionInput extends ArgvInput
         if ($this->currentIndex > $i) {
             $str .= '|';
         }
-        return \rtrim($str);
+        return rtrim($str);
     }
 }

@@ -18,10 +18,10 @@ final class BlockArrayNode extends ArrayNode
     }
     public function toString(): string
     {
-        if (\count($this->items) === 0) {
+        if (count($this->items) === 0) {
             return '[]';
         }
         $res = ArrayItemNode::itemsToBlockString($this->items);
-        return \preg_replace('#^(?=.)#m', $this->indentation, $res);
+        return preg_replace('#^(?=.)#m', $this->indentation, $res);
     }
 }

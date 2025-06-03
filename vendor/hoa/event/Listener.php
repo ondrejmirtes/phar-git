@@ -131,7 +131,7 @@ class Listener
      */
     public function listenerExists($listenerId)
     {
-        return \array_key_exists($listenerId, $this->_callables);
+        return array_key_exists($listenerId, $this->_callables);
     }
     /**
      * Send/fire a bucket to a listener.

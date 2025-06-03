@@ -68,7 +68,7 @@ class Pp extends Console\Dispatcher\Kit
         while (\false !== $c = $this->getOption($v)) {
             switch ($c) {
                 case 'v':
-                    switch (\strtolower($v)) {
+                    switch (strtolower($v)) {
                         case 'dump':
                             $visitor = 'Hoa\Compiler\Visitor\Dump';
                             break;
@@ -77,7 +77,7 @@ class Pp extends Console\Dispatcher\Kit
                     }
                     break;
                 case 'c':
-                    $visitor = \str_replace('.', '\\', $v);
+                    $visitor = str_replace('.', '\\', $v);
                     break;
                 case 's':
                     $tokenSequence = \true;
@@ -138,15 +138,15 @@ class Pp extends Console\Dispatcher\Kit
             if ($element instanceof Compiler\Llk\Rule\Entry) {
                 $ruleName = $element->getRule();
                 $rule = $compiler->getRule($ruleName);
-                echo \str_repeat('>  ', ++$i), 'enter ', $ruleName;
+                echo str_repeat('>  ', ++$i), 'enter ', $ruleName;
                 if (null !== $id = $rule->getNodeId()) {
                     echo ' (', $id, ')';
                 }
                 echo "\n";
             } elseif ($element instanceof Compiler\Llk\Rule\Token) {
-                echo \str_repeat('   ', $i + 1), 'token ', $element->getTokenName(), ', consumed ', $element->getValue(), "\n";
+                echo str_repeat('   ', $i + 1), 'token ', $element->getTokenName(), ', consumed ', $element->getValue(), "\n";
             } else {
-                echo \str_repeat('<  ', $i--), 'ekzit ', $element->getRule(), "\n";
+                echo str_repeat('<  ', $i--), 'ekzit ', $element->getRule(), "\n";
             }
         }
         return;
@@ -162,11 +162,11 @@ class Pp extends Console\Dispatcher\Kit
     {
         $lexer = new Compiler\Llk\Lexer();
         $sequence = $lexer->lexMe($data, $compiler->getTokens());
-        $format = '%' . (\strlen((string) \count($sequence)) + 1) . 's  ' . '%-13s %-20s  %s  %6s' . "\n";
-        $header = \sprintf($format, '#', 'namespace', 'token name', 'token value                   ', 'offset');
-        echo $header, \str_repeat('-', \strlen($header)), "\n";
+        $format = '%' . (strlen((string) count($sequence)) + 1) . 's  ' . '%-13s %-20s  %s  %6s' . "\n";
+        $header = sprintf($format, '#', 'namespace', 'token name', 'token value                   ', 'offset');
+        echo $header, str_repeat('-', strlen($header)), "\n";
         foreach ($sequence as $i => $token) {
-            \printf($format, $i, $token['namespace'], $token['token'], (30 < $token['length'] ? \mb_substr($token['value'], 0, 29) . '…' : 'EOF' === $token['token']) ? \str_repeat(' ', 30) : $token['value'] . \str_repeat(' ', 30 - $token['length']), $token['offset']);
+            printf($format, $i, $token['namespace'], $token['token'], (30 < $token['length'] ? mb_substr($token['value'], 0, 29) . '…' : 'EOF' === $token['token']) ? str_repeat(' ', 30) : $token['value'] . str_repeat(' ', 30 - $token['length']), $token['offset']);
         }
         return;
     }
@@ -183,5 +183,4 @@ class Pp extends Console\Dispatcher\Kit
 }
 __halt_compiler();
 Compile and visit languages with grammars.
-
 

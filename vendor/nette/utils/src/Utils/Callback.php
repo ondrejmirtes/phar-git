@@ -21,7 +21,7 @@ final class Callback
      */
     public static function closure($callable, ?string $method = null): \Closure
     {
-        \trigger_error(__METHOD__ . '() is deprecated, use Closure::fromCallable().', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() is deprecated, use Closure::fromCallable().', \E_USER_DEPRECATED);
         try {
             return \Closure::fromCallable($method === null ? $callable : [$callable, $method]);
         } catch (\TypeError $e) {
@@ -35,7 +35,7 @@ final class Callback
      */
     public static function invoke($callable, ...$args)
     {
-        \trigger_error(__METHOD__ . '() is deprecated, use native invoking.', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() is deprecated, use native invoking.', \E_USER_DEPRECATED);
         self::check($callable);
         return $callable(...$args);
     }
@@ -46,7 +46,7 @@ final class Callback
      */
     public static function invokeArgs($callable, array $args = [])
     {
-        \trigger_error(__METHOD__ . '() is deprecated, use native invoking.', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() is deprecated, use native invoking.', \E_USER_DEPRECATED);
         self::check($callable);
         return $callable(...$args);
     }
@@ -56,20 +56,20 @@ final class Callback
      */
     public static function invokeSafe(string $function, array $args, callable $onError)
     {
-        $prev = \set_error_handler(function ($severity, $message, $file) use ($onError, &$prev, $function): ?bool {
+        $prev = set_error_handler(function ($severity, $message, $file) use ($onError, &$prev, $function): ?bool {
             if ($file === __FILE__) {
-                $msg = \ini_get('html_errors') ? Html::htmlToText($message) : $message;
-                $msg = \preg_replace("#^{$function}\\(.*?\\): #", '', $msg);
+                $msg = ini_get('html_errors') ? Html::htmlToText($message) : $message;
+                $msg = preg_replace("#^{$function}\\(.*?\\): #", '', $msg);
                 if ($onError($msg, $severity) !== \false) {
                     return null;
                 }
             }
-            return $prev ? $prev(...\func_get_args()) : \false;
+            return $prev ? $prev(...func_get_args()) : \false;
         });
         try {
             return $function(...$args);
         } finally {
-            \restore_error_handler();
+            restore_error_handler();
         }
     }
     /**
@@ -81,8 +81,8 @@ final class Callback
      */
     public static function check($callable, bool $syntax = \false)
     {
-        if (!\is_callable($callable, $syntax)) {
-            throw new Nette\InvalidArgumentException($syntax ? 'Given value is not a callable type.' : \sprintf("Callback '%s' is not callable.", self::toString($callable)));
+        if (!is_callable($callable, $syntax)) {
+            throw new Nette\InvalidArgumentException($syntax ? 'Given value is not a callable type.' : sprintf("Callback '%s' is not callable.", self::toString($callable)));
         }
         return $callable;
     }
@@ -98,7 +98,7 @@ final class Callback
         } elseif (is_string($callable) && $callable[0] === "\x00") {
             return '{lambda}';
         } else {
-            \is_callable(is_object($callable) ? [$callable, '__invoke'] : $callable, \true, $textual);
+            is_callable(is_object($callable) ? [$callable, '__invoke'] : $callable, \true, $textual);
             return $textual;
         }
     }
@@ -113,7 +113,7 @@ final class Callback
         if ($callable instanceof \Closure) {
             $callable = self::unwrap($callable);
         }
-        if (is_string($callable) && \strpos($callable, '::')) {
+        if (is_string($callable) && strpos($callable, '::')) {
             return new \ReflectionMethod($callable);
         } elseif (is_array($callable)) {
             return new \ReflectionMethod($callable[0], $callable[1]);
@@ -138,9 +138,9 @@ final class Callback
     {
         $r = new \ReflectionFunction($closure);
         $class = $r->getClosureScopeClass();
-        if (\substr($r->name, -1) === '}') {
+        if (substr($r->name, -1) === '}') {
             return $closure;
-        } elseif (($obj = $r->getClosureThis()) && $class && \get_class($obj) === $class->name) {
+        } elseif (($obj = $r->getClosureThis()) && $class && get_class($obj) === $class->name) {
             return [$obj, $r->name];
         } elseif ($class) {
             return [$class->name, $r->name];

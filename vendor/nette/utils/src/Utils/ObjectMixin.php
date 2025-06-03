@@ -18,15 +18,15 @@ final class ObjectMixin
     /** @deprecated  use ObjectHelpers::getSuggestion() */
     public static function getSuggestion(array $possibilities, string $value): ?string
     {
-        \trigger_error(__METHOD__ . '() has been renamed to Nette\Utils\ObjectHelpers::getSuggestion()', \E_USER_DEPRECATED);
+        trigger_error(__METHOD__ . '() has been renamed to Nette\Utils\ObjectHelpers::getSuggestion()', \E_USER_DEPRECATED);
         return ObjectHelpers::getSuggestion($possibilities, $value);
     }
     public static function setExtensionMethod(): void
     {
-        \trigger_error('Class Nette\Utils\ObjectMixin is deprecated', \E_USER_DEPRECATED);
+        trigger_error('Class Nette\Utils\ObjectMixin is deprecated', \E_USER_DEPRECATED);
     }
     public static function getExtensionMethod(): void
     {
-        \trigger_error('Class Nette\Utils\ObjectMixin is deprecated', \E_USER_DEPRECATED);
+        trigger_error('Class Nette\Utils\ObjectMixin is deprecated', \E_USER_DEPRECATED);
     }
 }

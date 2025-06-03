@@ -130,7 +130,7 @@ class Error extends \RuntimeException
      */
     public function getMessageWithColumnInfo(string $code): string
     {
-        return \sprintf('%s from %d:%d to %d:%d', $this->getRawMessage(), $this->getStartLine(), $this->getStartColumn($code), $this->getEndLine(), $this->getEndColumn($code));
+        return sprintf('%s from %d:%d to %d:%d', $this->getRawMessage(), $this->getStartLine(), $this->getStartColumn($code), $this->getEndLine(), $this->getEndColumn($code));
     }
     /**
      * Converts a file offset into a column.
@@ -142,10 +142,10 @@ class Error extends \RuntimeException
      */
     private function toColumn(string $code, int $pos): int
     {
-        if ($pos > \strlen($code)) {
+        if ($pos > strlen($code)) {
             throw new \RuntimeException('Invalid position information');
         }
-        $lineStartPos = \strrpos($code, "\n", $pos - \strlen($code));
+        $lineStartPos = strrpos($code, "\n", $pos - strlen($code));
         if (\false === $lineStartPos) {
             $lineStartPos = -1;
         }

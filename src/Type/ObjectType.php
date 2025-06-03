@@ -72,21 +72,21 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     private const EXTRA_OFFSET_CLASSES = [
         'DOMNamedNodeMap',
         // Only read and existence
-        'Dom\NamedNodeMap',
+        '_PHPStan_checksum\Dom\NamedNodeMap',
         // Only read and existence
         'DOMNodeList',
         // Only read and existence
-        'Dom\NodeList',
+        '_PHPStan_checksum\Dom\NodeList',
         // Only read and existence
-        'Dom\HTMLCollection',
+        '_PHPStan_checksum\Dom\HTMLCollection',
         // Only read and existence
-        'Dom\DtdNamedNodeMap',
+        '_PHPStan_checksum\Dom\DtdNamedNodeMap',
         // Only read and existence
         'PDORow',
         // Only read and existence
         'ResourceBundle',
         // Only read
-        'FFI\CData',
+        '_PHPStan_checksum\FFI\CData',
         // Very funky and weird
         'SimpleXMLElement',
         'Threaded',
@@ -496,7 +496,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     }
     public function toString(): \PHPStan\Type\Type
     {
-        if ($this->isInstanceOf('BcMath\Number')->yes()) {
+        if ($this->isInstanceOf('_PHPStan_checksum\BcMath\Number')->yes()) {
             return new \PHPStan\Type\IntersectionType([new \PHPStan\Type\StringType(), new AccessoryNumericStringType(), new AccessoryNonEmptyStringType()]);
         }
         $classReflection = $this->getClassReflection();
@@ -561,7 +561,7 @@ class ObjectType implements \PHPStan\Type\TypeWithClassName, \PHPStan\Type\Subtr
     }
     public function toBoolean(): \PHPStan\Type\BooleanType
     {
-        if ($this->isInstanceOf('SimpleXMLElement')->yes() || $this->isInstanceOf('BcMath\Number')->yes()) {
+        if ($this->isInstanceOf('SimpleXMLElement')->yes() || $this->isInstanceOf('_PHPStan_checksum\BcMath\Number')->yes()) {
             return new \PHPStan\Type\BooleanType();
         }
         return new ConstantBooleanType(\true);

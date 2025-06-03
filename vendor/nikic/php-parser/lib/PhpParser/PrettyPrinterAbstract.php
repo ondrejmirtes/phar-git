@@ -201,7 +201,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
             throw new \LogicException('Option "newline" must be one of "\n" or "\r\n"');
         }
         $this->shortArraySyntax = $options['shortArraySyntax'] ?? $this->phpVersion->supportsShortArraySyntax();
-        $this->docStringEndToken = $this->phpVersion->supportsFlexibleHeredoc() ? null : '_DOC_STRING_END_' . \mt_rand();
+        $this->docStringEndToken = $this->phpVersion->supportsFlexibleHeredoc() ? null : '_DOC_STRING_END_' . mt_rand();
         $this->indent = $indent = $options['indent'] ?? '    ';
         if ($indent === "\t") {
             $this->useTabs = \true;
@@ -251,7 +251,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
      */
     protected function outdent(): void
     {
-        \assert($this->indentLevel >= $this->indentWidth);
+        assert($this->indentLevel >= $this->indentWidth);
         $this->setIndentLevel($this->indentLevel - $this->indentWidth);
     }
     /**
@@ -265,7 +265,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
     {
         $this->resetState();
         $this->preprocessNodes($stmts);
-        return \ltrim($this->handleMagicTokens($this->pStmts($stmts, \false)));
+        return ltrim($this->handleMagicTokens($this->pStmts($stmts, \false)));
     }
     /**
      * Pretty prints an expression.
@@ -293,10 +293,10 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
         }
         $p = "<?php" . $this->newline . $this->newline . $this->prettyPrint($stmts);
         if ($stmts[0] instanceof Stmt\InlineHTML) {
-            $p = \preg_replace('/^<\?php\s+\?>\r?\n?/', '', $p);
+            $p = preg_replace('/^<\?php\s+\?>\r?\n?/', '', $p);
         }
-        if ($stmts[\count($stmts) - 1] instanceof Stmt\InlineHTML) {
-            $p = \preg_replace('/<\?php$/', '', \rtrim($p));
+        if ($stmts[count($stmts) - 1] instanceof Stmt\InlineHTML) {
+            $p = preg_replace('/<\?php$/', '', rtrim($p));
         }
         return $p;
     }
@@ -323,8 +323,8 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
     {
         if ($this->docStringEndToken !== null) {
             // Replace doc-string-end tokens with nothing or a newline
-            $str = \str_replace($this->docStringEndToken . ';' . $this->newline, ';' . $this->newline, $str);
-            $str = \str_replace($this->docStringEndToken, $this->newline, $str);
+            $str = str_replace($this->docStringEndToken . ';' . $this->newline, ';' . $this->newline, $str);
+            $str = str_replace($this->docStringEndToken, $this->newline, $str);
         }
         return $str;
     }
@@ -453,7 +453,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
                 $pNodes[] = $this->p($node);
             }
         }
-        return \implode($glue, $pNodes);
+        return implode($glue, $pNodes);
     }
     /**
      * Pretty prints an array of nodes and implodes the printed values with commas.
@@ -480,7 +480,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
     {
         $this->indent();
         $result = '';
-        $lastIdx = \count($nodes) - 1;
+        $lastIdx = count($nodes) - 1;
         foreach ($nodes as $idx => $node) {
             if ($node !== null) {
                 $comments = $node->getComments();
@@ -509,9 +509,9 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
     {
         $formattedComments = [];
         foreach ($comments as $comment) {
-            $formattedComments[] = \str_replace("\n", $this->nl, $comment->getReformattedText());
+            $formattedComments[] = str_replace("\n", $this->nl, $comment->getReformattedText());
         }
-        return \implode($this->nl, $formattedComments);
+        return implode($this->nl, $formattedComments);
     }
     /**
      * Perform a format-preserving pretty print of an AST.
@@ -544,7 +544,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
         $pos = 0;
         $result = $this->pArray($stmts, $origStmts, $pos, 0, 'File', 'stmts', null);
         if (null !== $result) {
-            $result .= $this->origTokens->getTokenCode($pos, \count($origTokens) - 1, 0);
+            $result .= $this->origTokens->getTokenCode($pos, count($origTokens) - 1, 0);
         } else {
             // Fallback
             // TODO Add <?php properly
@@ -587,7 +587,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
         $fallbackNode = $node;
         if ($node instanceof Expr\New_ && $node->class instanceof Stmt\Class_) {
             // Normalize node structure of anonymous classes
-            \assert($origNode instanceof Expr\New_);
+            assert($origNode instanceof Expr\New_);
             $node = PrintableNewAnonClassNode::fromNewNode($node);
             $origNode = PrintableNewAnonClassNode::fromNewNode($origNode);
             $class = PrintableNewAnonClassNode::class;
@@ -611,7 +611,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
                     // Unchanged, can reuse old code
                     continue;
                 }
-                if (\is_array($subNode) && \is_array($origSubNode)) {
+                if (is_array($subNode) && is_array($origSubNode)) {
                     // Array subnode changed, we might be able to reconstruct it
                     $listResult = $this->pArray($subNode, $origSubNode, $pos, $indentAdjustment, $class, $subNodeName, $fixupInfo[$subNodeName] ?? null);
                     if (null === $listResult) {
@@ -677,7 +677,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
             if (null !== $subNode) {
                 $result .= $extraLeft;
                 $origIndentLevel = $this->indentLevel;
-                $this->setIndentLevel(\max($this->origTokens->getIndentationBefore($subStartPos) + $indentAdjustment, 0));
+                $this->setIndentLevel(max($this->origTokens->getIndentationBefore($subStartPos) + $indentAdjustment, 0));
                 // If it's the same node that was previously in this position, it certainly doesn't
                 // need fixup. It's important to check this here, because our fixup checks are more
                 // conservative than strictly necessary.
@@ -760,7 +760,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
                 $itemEndPos = $origArrItem->getEndTokenPos();
                 \assert($itemStartPos >= 0 && $itemEndPos >= 0 && $itemStartPos >= $pos);
                 $origIndentLevel = $this->indentLevel;
-                $lastElemIndentLevel = \max($this->origTokens->getIndentationBefore($itemStartPos) + $indentAdjustment, 0);
+                $lastElemIndentLevel = max($this->origTokens->getIndentationBefore($itemStartPos) + $indentAdjustment, 0);
                 $this->setIndentLevel($lastElemIndentLevel);
                 $comments = $arrItem->getComments();
                 $origComments = $origArrItem->getComments();
@@ -1093,7 +1093,7 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
             $endPos = $node->getEndTokenPos() + 1;
             if ($pos >= 0) {
                 $text = $this->origTokens->getTokenCode($pos, $endPos, 0);
-                if (\false === \strpos($text, "\n")) {
+                if (\false === strpos($text, "\n")) {
                     // We require that a newline is present between *every* item. If the formatting
                     // is inconsistent, with only some items having newlines, we don't consider it
                     // as multiline
@@ -1116,8 +1116,8 @@ abstract class PrettyPrinterAbstract implements \PhpParser\PrettyPrinter
         }
         $this->labelCharMap = [];
         for ($i = 0; $i < 256; $i++) {
-            $chr = \chr($i);
-            $this->labelCharMap[$chr] = $i >= 0x80 || \ctype_alnum($chr);
+            $chr = chr($i);
+            $this->labelCharMap[$chr] = $i >= 0x80 || ctype_alnum($chr);
         }
         if ($this->phpVersion->allowsDelInIdentifiers()) {
             $this->labelCharMap[""] = \true;

@@ -16,7 +16,7 @@ use PHPStan\Type\MethodTypeSpecifyingExtension;
 use PHPStan\Type\ObjectWithoutClassType;
 use PHPStan\Type\TypeCombinator;
 use ReflectionClass;
-#[\PHPStan\DependencyInjection\AutowiredService]
+#[AutowiredService]
 final class ReflectionClassIsSubclassOfTypeSpecifyingExtension implements MethodTypeSpecifyingExtension, TypeSpecifierAwareExtension
 {
     private TypeSpecifier $typeSpecifier;

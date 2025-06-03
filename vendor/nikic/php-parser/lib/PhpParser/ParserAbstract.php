@@ -144,7 +144,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
         $this->phpVersion = $phpVersion ?? \PhpParser\PhpVersion::getNewestSupported();
         $this->initReduceCallbacks();
         $this->phpTokenToSymbol = $this->createTokenMap();
-        $this->dropTokens = \array_fill_keys([\T_WHITESPACE, \T_OPEN_TAG, \T_COMMENT, \T_DOC_COMMENT, \T_BAD_CHARACTER], \true);
+        $this->dropTokens = array_fill_keys([\T_WHITESPACE, \T_OPEN_TAG, \T_COMMENT, \T_DOC_COMMENT, \T_BAD_CHARACTER], \true);
     }
     /**
      * Parses PHP code into a node tree.
@@ -223,7 +223,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
                     // Map the lexer token id to the internally used symbols.
                     $tokenValue = $token->text;
                     if (!isset($this->phpTokenToSymbol[$tokenId])) {
-                        throw new \RangeException(\sprintf('The lexer returned an invalid token (id=%d, value=%s)', $tokenId, $tokenValue));
+                        throw new \RangeException(sprintf('The lexer returned an invalid token (id=%d, value=%s)', $tokenId, $tokenValue));
                     }
                     $symbol = $this->phpTokenToSymbol[$tokenId];
                     //$this->traceRead($symbol);
@@ -367,7 +367,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     {
         $expectedString = '';
         if ($expected = $this->getExpectedTokens($state)) {
-            $expectedString = ', expecting ' . \implode(' or ', $expected);
+            $expectedString = ', expecting ' . implode(' or ', $expected);
         }
         return 'Syntax error, unexpected ' . $this->symbolToName[$symbol] . $expectedString;
     }
@@ -386,7 +386,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
             $idx = $base + $symbol;
             if ($idx >= 0 && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $symbol || $state < $this->YY2TBLSTATE && ($idx = $this->actionBase[$state + $this->numNonLeafStates] + $symbol) >= 0 && $idx < $this->actionTableSize && $this->actionCheck[$idx] === $symbol) {
                 if ($this->action[$idx] !== $this->unexpectedTokenRule && $this->action[$idx] !== $this->defaultAction && $symbol !== $this->errorSymbol) {
-                    if (\count($expected) === 4) {
+                    if (count($expected) === 4) {
                         /* Too many expected tokens */
                         return [];
                     }
@@ -529,7 +529,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
         // We only move the builtin end attributes here. This is the best we can do with the
         // knowledge we have.
         $endAttributes = ['endLine', 'endFilePos', 'endTokenPos'];
-        $lastStmt = $stmt->stmts[\count($stmt->stmts) - 1];
+        $lastStmt = $stmt->stmts[count($stmt->stmts) - 1];
         foreach ($endAttributes as $endAttribute) {
             if ($lastStmt->hasAttribute($endAttribute)) {
                 $stmt->setAttribute($endAttribute, $lastStmt->getAttribute($endAttribute));
@@ -583,7 +583,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
                 continue;
             }
             /* There may be a hashbang line at the very start of the file */
-            if ($i === 0 && $stmt instanceof \PhpParser\Node\Stmt\InlineHTML && \preg_match('/\A#!.*\r?\n\z/', $stmt->value)) {
+            if ($i === 0 && $stmt instanceof \PhpParser\Node\Stmt\InlineHTML && preg_match('/\A#!.*\r?\n\z/', $stmt->value)) {
                 continue;
             }
             /* Everything else if forbidden before namespace declarations */
@@ -616,11 +616,11 @@ abstract class ParserAbstract implements \PhpParser\Parser
     }
     protected function getFloatCastKind(string $cast): int
     {
-        $cast = \strtolower($cast);
-        if (\strpos($cast, 'float') !== \false) {
+        $cast = strtolower($cast);
+        if (strpos($cast, 'float') !== \false) {
             return Double::KIND_FLOAT;
         }
-        if (\strpos($cast, 'real') !== \false) {
+        if (strpos($cast, 'real') !== \false) {
             return Double::KIND_REAL;
         }
         return Double::KIND_DOUBLE;
@@ -646,11 +646,11 @@ abstract class ParserAbstract implements \PhpParser\Parser
      */
     protected function parseNumString(string $str, array $attributes)
     {
-        if (!\preg_match('/^(?:0|-?[1-9][0-9]*)$/', $str)) {
+        if (!preg_match('/^(?:0|-?[1-9][0-9]*)$/', $str)) {
             return new String_($str, $attributes);
         }
         $num = +$str;
-        if (!\is_int($num)) {
+        if (!is_int($num)) {
             return new String_($str, $attributes);
         }
         return new Int_($num, $attributes);
@@ -664,14 +664,14 @@ abstract class ParserAbstract implements \PhpParser\Parser
         $start = $newlineAtStart ? '(?:(?<=\n)|\A)' : '(?<=\n)';
         $end = $newlineAtEnd ? '(?:(?=[\r\n])|\z)' : '(?=[\r\n])';
         $regex = '/' . $start . '([ \t]*)(' . $end . ')?/';
-        return \preg_replace_callback($regex, function ($matches) use ($indentLen, $indentChar, $attributes) {
-            $prefix = \substr($matches[1], 0, $indentLen);
-            if (\false !== \strpos($prefix, $indentChar === " " ? "\t" : " ")) {
+        return preg_replace_callback($regex, function ($matches) use ($indentLen, $indentChar, $attributes) {
+            $prefix = substr($matches[1], 0, $indentLen);
+            if (\false !== strpos($prefix, $indentChar === " " ? "\t" : " ")) {
                 $this->emitError(new \PhpParser\Error('Invalid indentation - tabs and spaces cannot be mixed', $attributes));
-            } elseif (\strlen($prefix) < $indentLen && !isset($matches[2])) {
+            } elseif (strlen($prefix) < $indentLen && !isset($matches[2])) {
                 $this->emitError(new \PhpParser\Error('Invalid body indentation level ' . '(expecting an indentation level of at least ' . $indentLen . ')', $attributes));
             }
-            return \substr($matches[0], \strlen($prefix));
+            return substr($matches[0], strlen($prefix));
         }, $string);
     }
     /**
@@ -681,19 +681,19 @@ abstract class ParserAbstract implements \PhpParser\Parser
      */
     protected function parseDocString(string $startToken, $contents, string $endToken, array $attributes, array $endTokenAttributes, bool $parseUnicodeEscape): Expr
     {
-        $kind = \strpos($startToken, "'") === \false ? String_::KIND_HEREDOC : String_::KIND_NOWDOC;
+        $kind = strpos($startToken, "'") === \false ? String_::KIND_HEREDOC : String_::KIND_NOWDOC;
         $regex = '/\A[bB]?<<<[ \t]*[\'"]?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)[\'"]?(?:\r\n|\n|\r)\z/';
-        $result = \preg_match($regex, $startToken, $matches);
-        \assert($result === 1);
+        $result = preg_match($regex, $startToken, $matches);
+        assert($result === 1);
         $label = $matches[1];
-        $result = \preg_match('/\A[ \t]*/', $endToken, $matches);
-        \assert($result === 1);
+        $result = preg_match('/\A[ \t]*/', $endToken, $matches);
+        assert($result === 1);
         $indentation = $matches[0];
         $attributes['kind'] = $kind;
         $attributes['docLabel'] = $label;
         $attributes['docIndentation'] = $indentation;
-        $indentHasSpaces = \false !== \strpos($indentation, " ");
-        $indentHasTabs = \false !== \strpos($indentation, "\t");
+        $indentHasSpaces = \false !== strpos($indentation, " ");
+        $indentHasTabs = \false !== strpos($indentation, "\t");
         if ($indentHasSpaces && $indentHasTabs) {
             $this->emitError(new \PhpParser\Error('Invalid indentation - tabs and spaces cannot be mixed', $endTokenAttributes));
             // Proceed processing as if this doc string is not indented
@@ -707,14 +707,14 @@ abstract class ParserAbstract implements \PhpParser\Parser
                 return new String_('', $attributes);
             }
             $contents = $this->stripIndentation($contents, $indentLen, $indentChar, \true, \true, $attributes);
-            $contents = \preg_replace('~(\r\n|\n|\r)\z~', '', $contents);
+            $contents = preg_replace('~(\r\n|\n|\r)\z~', '', $contents);
             $attributes['rawValue'] = $contents;
             if ($kind === String_::KIND_HEREDOC) {
                 $contents = String_::parseEscapeSequences($contents, null, $parseUnicodeEscape);
             }
             return new String_($contents, $attributes);
         } else {
-            \assert(\count($contents) > 0);
+            assert(count($contents) > 0);
             if (!$contents[0] instanceof \PhpParser\Node\InterpolatedStringPart) {
                 // If there is no leading encapsed string part, pretend there is an empty one
                 $this->stripIndentation('', $indentLen, $indentChar, \true, \false, $contents[0]->getAttributes());
@@ -725,7 +725,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
                     $isLast = $i === \count($contents) - 1;
                     $part->value = $this->stripIndentation($part->value, $indentLen, $indentChar, $i === 0, $isLast, $part->getAttributes());
                     if ($isLast) {
-                        $part->value = \preg_replace('~(\r\n|\n|\r)\z~', '', $part->value);
+                        $part->value = preg_replace('~(\r\n|\n|\r)\z~', '', $part->value);
                     }
                     $part->setAttribute('rawValue', $part->value);
                     $part->value = String_::parseEscapeSequences($part->value, null, $parseUnicodeEscape);
@@ -740,7 +740,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     }
     protected function createCommentFromToken(\PhpParser\Token $token, int $tokenPos): \PhpParser\Comment
     {
-        \assert($token->id === \T_COMMENT || $token->id == \T_DOC_COMMENT);
+        assert($token->id === \T_COMMENT || $token->id == \T_DOC_COMMENT);
         return \T_DOC_COMMENT === $token->id ? new \PhpParser\Comment\Doc($token->text, $token->line, $token->pos, $tokenPos, $token->getEndLine(), $token->getEndPos() - 1, $tokenPos) : new \PhpParser\Comment($token->text, $token->line, $token->pos, $tokenPos, $token->getEndLine(), $token->getEndPos() - 1, $tokenPos);
     }
     /**
@@ -793,11 +793,11 @@ abstract class ParserAbstract implements \PhpParser\Parser
     {
         $tokenPos = $this->tokenStartStack[$stackPos];
         $token = $this->tokens[$tokenPos];
-        \assert($token->id == \T_INLINE_HTML);
+        assert($token->id == \T_INLINE_HTML);
         if ($tokenPos > 0) {
             $prevToken = $this->tokens[$tokenPos - 1];
-            \assert($prevToken->id == \T_CLOSE_TAG);
-            return \false !== \strpos($prevToken->text, "\n") || \false !== \strpos($prevToken->text, "\r");
+            assert($prevToken->id == \T_CLOSE_TAG);
+            return \false !== strpos($prevToken->text, "\n") || \false !== strpos($prevToken->text, "\r");
         }
         return \true;
     }
@@ -811,7 +811,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     protected function fixupArrayDestructuring(Array_ $node): Expr\List_
     {
         $this->createdArrays->detach($node);
-        return new Expr\List_(\array_map(function (\PhpParser\Node\ArrayItem $item) {
+        return new Expr\List_(array_map(function (\PhpParser\Node\ArrayItem $item) {
             if ($item->value instanceof Expr\Error) {
                 // We used Error as a placeholder for empty elements, which are legal for destructuring.
                 return null;
@@ -893,7 +893,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     private function checkClassName(?Identifier $name, int $namePos): void
     {
         if (null !== $name && $name->isSpecialClassName()) {
-            $this->emitError(new \PhpParser\Error(\sprintf('Cannot use \'%s\' as class name as it is reserved', $name), $this->getAttributesAt($namePos)));
+            $this->emitError(new \PhpParser\Error(sprintf('Cannot use \'%s\' as class name as it is reserved', $name), $this->getAttributesAt($namePos)));
         }
     }
     /** @param Name[] $interfaces */
@@ -901,7 +901,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     {
         foreach ($interfaces as $interface) {
             if ($interface->isSpecialClassName()) {
-                $this->emitError(new \PhpParser\Error(\sprintf('Cannot use \'%s\' as interface name as it is reserved', $interface), $interface->getAttributes()));
+                $this->emitError(new \PhpParser\Error(sprintf('Cannot use \'%s\' as interface name as it is reserved', $interface), $interface->getAttributes()));
             }
         }
     }
@@ -909,7 +909,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     {
         $this->checkClassName($node->name, $namePos);
         if ($node->extends && $node->extends->isSpecialClassName()) {
-            $this->emitError(new \PhpParser\Error(\sprintf('Cannot use \'%s\' as class name as it is reserved', $node->extends), $node->extends->getAttributes()));
+            $this->emitError(new \PhpParser\Error(sprintf('Cannot use \'%s\' as class name as it is reserved', $node->extends), $node->extends->getAttributes()));
         }
         $this->checkImplementedInterfaces($node->implements);
     }
@@ -928,18 +928,18 @@ abstract class ParserAbstract implements \PhpParser\Parser
         if ($node->flags & \PhpParser\Modifiers::STATIC) {
             switch ($node->name->toLowerString()) {
                 case '__construct':
-                    $this->emitError(new \PhpParser\Error(\sprintf('Constructor %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
+                    $this->emitError(new \PhpParser\Error(sprintf('Constructor %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
                     break;
                 case '__destruct':
-                    $this->emitError(new \PhpParser\Error(\sprintf('Destructor %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
+                    $this->emitError(new \PhpParser\Error(sprintf('Destructor %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
                     break;
                 case '__clone':
-                    $this->emitError(new \PhpParser\Error(\sprintf('Clone method %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
+                    $this->emitError(new \PhpParser\Error(sprintf('Clone method %s() cannot be static', $node->name), $this->getAttributesAt($modifierPos)));
                     break;
             }
         }
         if ($node->flags & \PhpParser\Modifiers::READONLY) {
-            $this->emitError(new \PhpParser\Error(\sprintf('Method %s() cannot be readonly', $node->name), $this->getAttributesAt($modifierPos)));
+            $this->emitError(new \PhpParser\Error(sprintf('Method %s() cannot be readonly', $node->name), $this->getAttributesAt($modifierPos)));
         }
     }
     protected function checkClassConst(ClassConst $node, int $modifierPos): void
@@ -953,12 +953,12 @@ abstract class ParserAbstract implements \PhpParser\Parser
     protected function checkUseUse(UseItem $node, int $namePos): void
     {
         if ($node->alias && $node->alias->isSpecialClassName()) {
-            $this->emitError(new \PhpParser\Error(\sprintf('Cannot use %s as %s because \'%2$s\' is a special class name', $node->name, $node->alias), $this->getAttributesAt($namePos)));
+            $this->emitError(new \PhpParser\Error(sprintf('Cannot use %s as %s because \'%2$s\' is a special class name', $node->name, $node->alias), $this->getAttributesAt($namePos)));
         }
     }
     protected function checkPropertyHooksForMultiProperty(Property $property, int $hookPos): void
     {
-        if (\count($property->props) > 1) {
+        if (count($property->props) > 1) {
             $this->emitError(new \PhpParser\Error('Cannot use hooks when declaring multiple properties', $this->getAttributesAt($hookPos)));
         }
     }
@@ -1025,7 +1025,7 @@ abstract class ParserAbstract implements \PhpParser\Parser
     {
         if ($this->isSimpleExit($args)) {
             // Create Exit node for backwards compatibility.
-            $attrs['kind'] = \strtolower($name) === 'exit' ? Expr\Exit_::KIND_EXIT : Expr\Exit_::KIND_DIE;
+            $attrs['kind'] = strtolower($name) === 'exit' ? Expr\Exit_::KIND_EXIT : Expr\Exit_::KIND_DIE;
             return new Expr\Exit_(\count($args) === 1 ? $args[0]->value : null, $attrs);
         }
         return new Expr\FuncCall(new Name($name, $this->getAttributesAt($namePos)), $args, $attrs);
@@ -1048,13 +1048,13 @@ abstract class ParserAbstract implements \PhpParser\Parser
         }
         foreach ($this->symbolToName as $name) {
             if ($name[0] === 'T') {
-                $tokenMap[\constant($name)] = \constant(static::class . '::' . $name);
+                $tokenMap[\constant($name)] = constant(static::class . '::' . $name);
             }
         }
         // T_OPEN_TAG_WITH_ECHO with dropped T_OPEN_TAG results in T_ECHO
         $tokenMap[\T_OPEN_TAG_WITH_ECHO] = static::T_ECHO;
         // T_CLOSE_TAG is equivalent to ';'
-        $tokenMap[\T_CLOSE_TAG] = \ord(';');
+        $tokenMap[\T_CLOSE_TAG] = ord(';');
         // We have created a map from PHP token IDs to external symbol IDs.
         // Now map them to the internal symbol ID.
         $fullTokenMap = [];

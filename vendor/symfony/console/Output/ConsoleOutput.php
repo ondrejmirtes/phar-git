@@ -119,8 +119,8 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
      */
     private function isRunningOS400(): bool
     {
-        $checks = [\function_exists('php_uname') ? \php_uname('s') : '', \getenv('OSTYPE'), \PHP_OS];
-        return \false !== \stripos(\implode(';', $checks), 'OS400');
+        $checks = [\function_exists('php_uname') ? php_uname('s') : '', getenv('OSTYPE'), \PHP_OS];
+        return \false !== stripos(implode(';', $checks), 'OS400');
     }
     /**
      * @return resource
@@ -128,10 +128,10 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     private function openOutputStream()
     {
         if (!$this->hasStdoutSupport()) {
-            return \fopen('php://output', 'w');
+            return fopen('php://output', 'w');
         }
         // Use STDOUT when possible to prevent from opening too many file descriptors
-        return \defined('STDOUT') ? \STDOUT : (@\fopen('php://stdout', 'w') ?: \fopen('php://output', 'w'));
+        return \defined('STDOUT') ? \STDOUT : (@fopen('php://stdout', 'w') ?: fopen('php://output', 'w'));
     }
     /**
      * @return resource
@@ -139,9 +139,9 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     private function openErrorStream()
     {
         if (!$this->hasStderrSupport()) {
-            return \fopen('php://output', 'w');
+            return fopen('php://output', 'w');
         }
         // Use STDERR when possible to prevent from opening too many file descriptors
-        return \defined('STDERR') ? \STDERR : (@\fopen('php://stderr', 'w') ?: \fopen('php://output', 'w'));
+        return \defined('STDERR') ? \STDERR : (@fopen('php://stderr', 'w') ?: fopen('php://output', 'w'));
     }
 }

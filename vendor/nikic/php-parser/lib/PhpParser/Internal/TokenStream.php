@@ -221,9 +221,9 @@ class TokenStream
             if ($id === \T_CONSTANT_ENCAPSED_STRING || $id === \T_ENCAPSED_AND_WHITESPACE) {
                 $result .= $text;
             } else if ($indent < 0) {
-                $result .= \str_replace("\n" . \str_repeat(" ", -$indent), "\n", $text);
+                $result .= str_replace("\n" . str_repeat(" ", -$indent), "\n", $text);
             } elseif ($indent > 0) {
-                $result .= \str_replace("\n", "\n" . \str_repeat(" ", $indent), $text);
+                $result .= str_replace("\n", "\n" . str_repeat(" ", $indent), $text);
             } else {
                 $result .= $text;
             }
@@ -260,7 +260,7 @@ class TokenStream
     {
         $spaces = \substr_count($ws, " ");
         $tabs = \substr_count($ws, "\t");
-        \assert(\strlen($ws) === $spaces + $tabs);
+        assert(\strlen($ws) === $spaces + $tabs);
         return $spaces + $tabs * $tabWidth;
     }
 }

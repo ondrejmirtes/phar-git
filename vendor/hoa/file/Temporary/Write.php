@@ -73,11 +73,11 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
     protected function &_open($streamName, Stream\Context $context = null)
     {
         static $createModes = [parent::MODE_TRUNCATE_WRITE, parent::MODE_APPEND_WRITE, parent::MODE_CREATE_WRITE];
-        if (!\in_array($this->getMode(), $createModes)) {
-            throw new File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), \implode(', ', $createModes)]);
+        if (!in_array($this->getMode(), $createModes)) {
+            throw new File\Exception('Open mode are not supported; given %d. Only %s are supported.', 0, [$this->getMode(), implode(', ', $createModes)]);
         }
-        \preg_match('#^(\w+)://#', $streamName, $match);
-        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !\file_exists($streamName)) {
+        preg_match('#^(\w+)://#', $streamName, $match);
+        if ((isset($match[1]) && $match[1] == 'file' || !isset($match[1])) && !file_exists($streamName)) {
             throw new File\Exception\FileDoesNotExist('File %s does not exist.', 1, $streamName);
         }
         $out = parent::_open($streamName, $context);
@@ -96,7 +96,7 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
         if (0 > $length) {
             throw new File\Exception('Length must be greater than 0, given %d.', 2, $length);
         }
-        return \fwrite($this->getStream(), $string, $length);
+        return fwrite($this->getStream(), $string, $length);
     }
     /**
      * Write a string.
@@ -107,7 +107,7 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
     public function writeString($string)
     {
         $string = (string) $string;
-        return $this->write($string, \strlen($string));
+        return $this->write($string, strlen($string));
     }
     /**
      * Write a character.
@@ -138,7 +138,7 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
     public function writeInteger($integer)
     {
         $integer = (string) (int) $integer;
-        return $this->write($integer, \strlen($integer));
+        return $this->write($integer, strlen($integer));
     }
     /**
      * Write a float.
@@ -149,7 +149,7 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
     public function writeFloat($float)
     {
         $float = (string) (float) $float;
-        return $this->write($float, \strlen($float));
+        return $this->write($float, strlen($float));
     }
     /**
      * Write an array.
@@ -159,8 +159,8 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
      */
     public function writeArray(array $array)
     {
-        $array = \var_export($array, \true);
-        return $this->write($array, \strlen($array));
+        $array = var_export($array, \true);
+        return $this->write($array, strlen($array));
     }
     /**
      * Write a line.
@@ -170,11 +170,11 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
      */
     public function writeLine($line)
     {
-        if (\false === $n = \strpos($line, "\n")) {
-            return $this->write($line . "\n", \strlen($line) + 1);
+        if (\false === $n = strpos($line, "\n")) {
+            return $this->write($line . "\n", strlen($line) + 1);
         }
         ++$n;
-        return $this->write(\substr($line, 0, $n), $n);
+        return $this->write(substr($line, 0, $n), $n);
     }
     /**
      * Write all, i.e. as much as possible.
@@ -184,7 +184,7 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
      */
     public function writeAll($string)
     {
-        return $this->write($string, \strlen($string));
+        return $this->write($string, strlen($string));
     }
     /**
      * Truncate a file to a given length.
@@ -194,6 +194,6 @@ class Write extends \Hoa\File\Temporary\Temporary implements Stream\IStream\Out
      */
     public function truncate($size)
     {
-        return \ftruncate($this->getStream(), $size);
+        return ftruncate($this->getStream(), $size);
     }
 }

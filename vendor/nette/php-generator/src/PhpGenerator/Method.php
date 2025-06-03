@@ -44,7 +44,7 @@ final class Method
             if (\PHP_VERSION_ID >= 70400) {
                 throw $e;
             }
-            \trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
+            trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", \E_USER_ERROR);
             return '';
         }
     }
@@ -94,7 +94,7 @@ final class Method
     public function addPromotedParameter(string $name, $defaultValue = null): PromotedParameter
     {
         $param = new PromotedParameter($name);
-        if (\func_num_args() > 1) {
+        if (func_num_args() > 1) {
             $param->setDefaultValue($defaultValue);
         }
         return $this->parameters[$name] = $param;

@@ -41,11 +41,11 @@ final class CompleteCommand extends Command
     }
     protected function configure(): void
     {
-        $this->addOption('shell', 's', InputOption::VALUE_REQUIRED, 'The shell type ("' . \implode('", "', \array_keys($this->completionOutputs)) . '")')->addOption('input', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'An array of input tokens (e.g. COMP_WORDS or argv)')->addOption('current', 'c', InputOption::VALUE_REQUIRED, 'The index of the "input" array that the cursor is in (e.g. COMP_CWORD)')->addOption('symfony', 'S', InputOption::VALUE_REQUIRED, 'The version of the completion script');
+        $this->addOption('shell', 's', InputOption::VALUE_REQUIRED, 'The shell type ("' . implode('", "', array_keys($this->completionOutputs)) . '")')->addOption('input', 'i', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'An array of input tokens (e.g. COMP_WORDS or argv)')->addOption('current', 'c', InputOption::VALUE_REQUIRED, 'The index of the "input" array that the cursor is in (e.g. COMP_CWORD)')->addOption('symfony', 'S', InputOption::VALUE_REQUIRED, 'The version of the completion script');
     }
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        $this->isDebug = \filter_var(\getenv('SYMFONY_COMPLETION_DEBUG'), \FILTER_VALIDATE_BOOLEAN);
+        $this->isDebug = filter_var(getenv('SYMFONY_COMPLETION_DEBUG'), \FILTER_VALIDATE_BOOLEAN);
     }
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -63,11 +63,11 @@ final class CompleteCommand extends Command
                 throw new \RuntimeException('The "--shell" option must be set.');
             }
             if (!$completionOutput = $this->completionOutputs[$shell] ?? \false) {
-                throw new \RuntimeException(\sprintf('Shell completion is not supported for your shell: "%s" (supported: "%s").', $shell, \implode('", "', \array_keys($this->completionOutputs))));
+                throw new \RuntimeException(sprintf('Shell completion is not supported for your shell: "%s" (supported: "%s").', $shell, implode('", "', array_keys($this->completionOutputs))));
             }
             $completionInput = $this->createCompletionInput($input);
             $suggestions = new CompletionSuggestions();
-            $this->log(['', '<comment>' . \date('Y-m-d H:i:s') . '</>', '<info>Input:</> <comment>("|" indicates the cursor position)</>', '  ' . (string) $completionInput, '<info>Command:</>', '  ' . (string) \implode(' ', $_SERVER['argv']), '<info>Messages:</>']);
+            $this->log(['', '<comment>' . date('Y-m-d H:i:s') . '</>', '<info>Input:</> <comment>("|" indicates the cursor position)</>', '  ' . (string) $completionInput, '<info>Command:</>', '  ' . (string) implode(' ', $_SERVER['argv']), '<info>Messages:</>']);
             $command = $this->findCommand($completionInput, $output);
             if (null === $command) {
                 $this->log('  No command found, completing using the Application class.');
@@ -75,7 +75,7 @@ final class CompleteCommand extends Command
             } elseif ($completionInput->mustSuggestArgumentValuesFor('command') && $command->getName() !== $completionInput->getCompletionValue() && !\in_array($completionInput->getCompletionValue(), $command->getAliases(), \true)) {
                 $this->log('  No command found, completing using the Application class.');
                 // expand shortcut names ("cache:cl<TAB>") into their full name ("cache:clear")
-                $suggestions->suggestValues(\array_filter(\array_merge([$command->getName()], $command->getAliases())));
+                $suggestions->suggestValues(array_filter(array_merge([$command->getName()], $command->getAliases())));
             } else {
                 $command->mergeApplicationDefinition();
                 $completionInput->bind($command->getDefinition());
@@ -94,11 +94,11 @@ final class CompleteCommand extends Command
             $completionOutput = new $completionOutput();
             $this->log('<info>Suggestions:</>');
             if ($options = $suggestions->getOptionSuggestions()) {
-                $this->log('  --' . \implode(' --', \array_map(function ($o) {
+                $this->log('  --' . implode(' --', array_map(function ($o) {
                     return $o->getName();
                 }, $options)));
             } elseif ($values = $suggestions->getValueSuggestions()) {
-                $this->log('  ' . \implode(' ', $values));
+                $this->log('  ' . implode(' ', $values));
             } else {
                 $this->log('  <comment>No suggestions were provided</>');
             }
@@ -115,7 +115,7 @@ final class CompleteCommand extends Command
     private function createCompletionInput(InputInterface $input): CompletionInput
     {
         $currentIndex = $input->getOption('current');
-        if (!$currentIndex || !\ctype_digit($currentIndex)) {
+        if (!$currentIndex || !ctype_digit($currentIndex)) {
             throw new \RuntimeException('The "--current" option must be set and it must be an integer.');
         }
         $completionInput = CompletionInput::fromTokens($input->getOption('input'), (int) $currentIndex);
@@ -142,7 +142,7 @@ final class CompleteCommand extends Command
         if (!$this->isDebug) {
             return;
         }
-        $commandName = \basename($_SERVER['argv'][0]);
-        \file_put_contents(\sys_get_temp_dir() . '/sf_' . $commandName . '.log', \implode(\PHP_EOL, (array) $messages) . \PHP_EOL, \FILE_APPEND);
+        $commandName = basename($_SERVER['argv'][0]);
+        file_put_contents(sys_get_temp_dir() . '/sf_' . $commandName . '.log', implode(\PHP_EOL, (array) $messages) . \PHP_EOL, \FILE_APPEND);
     }
 }
