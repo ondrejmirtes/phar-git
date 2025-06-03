@@ -1,0 +1,10 @@
+parameters:
+	featureToggles:
+		bleedingEdge: true
+		checkParameterCastableToNumberFunctions: true
+		skipCheckGenericClasses!: []
+		stricterFunctionMap: true
+		reportPreciseLineForUnusedFunctionParameter: true
+		internalTag: true
+		newStaticInAbstractClassStaticMethod: true
+

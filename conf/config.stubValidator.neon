@@ -1,0 +1,52 @@
+parameters:
+	checkThisOnly: false
+	checkClassCaseSensitivity: true
+	checkMissingTypehints: true
+	checkMissingCallableSignature: false
+	__validate: false
+
+services:
+	-
+		class: PHPStan\PhpDoc\StubSourceLocatorFactory
+		arguments:
+			php8Parser: @php8PhpParser
+
+	defaultAnalysisParser!:
+		factory: @stubParser
+
+	nodeScopeResolverReflector:
+		factory: @stubReflector
+
+	stubBetterReflectionProvider:
+		class: PHPStan\Reflection\BetterReflection\BetterReflectionProvider
+		arguments:
+			reflector: @stubReflector
+			universalObjectCratesClasses: %universalObjectCratesClasses%
+
+		autowired: false
+
+	stubReflector:
+		class: PHPStan\BetterReflection\Reflector\DefaultReflector
+		arguments:
+			sourceLocator: @stubSourceLocator
+
+		autowired: false
+
+	stubSourceLocator:
+		class: PHPStan\BetterReflection\SourceLocator\Type\SourceLocator
+		factory: @PHPStan\PhpDoc\StubSourceLocatorFactory::create()
+		autowired: false
+
+	reflectionProvider:
+		factory: @stubBetterReflectionProvider
+		autowired:
+			- PHPStan\Reflection\ReflectionProvider
+
+	currentPhpVersionLexer:
+		factory: @php8Lexer
+		autowired: false
+
+	currentPhpVersionPhpParser:
+		factory: @php8PhpParser
+		autowired: false
+

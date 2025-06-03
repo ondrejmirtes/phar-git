@@ -1,0 +1,180 @@
+services:
+	-
+		class: PhpParser\BuilderFactory
+
+	-
+		class: PhpParser\NodeVisitor\NameResolver
+		arguments:
+			options:
+				preserveOriginalNames: true
+
+	-
+		class: PHPStan\PhpDocParser\ParserConfig
+		arguments:
+			usedAttributes:
+				lines: true
+
+	-
+		class: PHPStan\PhpDocParser\Lexer\Lexer
+
+	-
+		class: PHPStan\PhpDocParser\Parser\TypeParser
+
+	-
+		class: PHPStan\PhpDocParser\Parser\ConstExprParser
+
+	-
+		class: PHPStan\PhpDocParser\Parser\PhpDocParser
+
+	-
+		class: PHPStan\PhpDocParser\Printer\Printer
+
+	-
+		class: PHPStan\Dependency\ExportedNodeVisitor
+
+	-
+		class: PHPStan\Reflection\BetterReflection\SourceLocator\CachingVisitor
+
+	-
+		class: PHPStan\Reflection\Php\PhpClassReflectionExtension
+		arguments:
+			parser: @defaultAnalysisParser
+			inferPrivatePropertyTypeFromConstructor: %inferPrivatePropertyTypeFromConstructor%
+
+	-
+		class: PHPStan\Reflection\Annotations\AnnotationsMethodsClassReflectionExtension
+
+	-
+		class: PHPStan\Reflection\Annotations\AnnotationsPropertiesClassReflectionExtension
+
+	-
+		class: PHPStan\Reflection\Mixin\MixinMethodsClassReflectionExtension
+		arguments:
+			mixinExcludeClasses: %mixinExcludeClasses%
+
+	-
+		class: PHPStan\Reflection\Mixin\MixinPropertiesClassReflectionExtension
+		arguments:
+			mixinExcludeClasses: %mixinExcludeClasses%
+
+	-
+		class: PHPStan\Reflection\Php\Soap\SoapClientMethodsClassReflectionExtension
+
+	-
+		class: PHPStan\Reflection\RequireExtension\RequireExtendsMethodsClassReflectionExtension
+
+	-
+		class: PHPStan\Reflection\RequireExtension\RequireExtendsPropertiesClassReflectionExtension
+
+	-
+		class: PHPStan\Type\Php\ReflectionGetAttributesMethodReturnTypeExtension
+		arguments:
+			className: ReflectionClass
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\ReflectionGetAttributesMethodReturnTypeExtension
+		arguments:
+			className: ReflectionClassConstant
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\ReflectionGetAttributesMethodReturnTypeExtension
+		arguments:
+			className: ReflectionFunctionAbstract
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\ReflectionGetAttributesMethodReturnTypeExtension
+		arguments:
+			className: ReflectionParameter
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\ReflectionGetAttributesMethodReturnTypeExtension
+		arguments:
+			className: ReflectionProperty
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\DateTimeModifyReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+		arguments:
+			dateTimeClass: DateTime
+
+	-
+		class: PHPStan\Reflection\PHPStan\NativeReflectionEnumReturnDynamicReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+		arguments:
+			className: PHPStan\Reflection\ClassReflection
+			methodName: getNativeReflection
+
+	-
+		class: PHPStan\Reflection\PHPStan\NativeReflectionEnumReturnDynamicReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+		arguments:
+			className: PHPStan\Reflection\Php\BuiltinMethodReflection
+			methodName: getDeclaringClass
+
+	-
+		class: PHPStan\Reflection\BetterReflection\Type\AdapterReflectionEnumCaseDynamicReturnTypeExtension
+		arguments:
+			class: PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumBackedCase
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Reflection\BetterReflection\Type\AdapterReflectionEnumCaseDynamicReturnTypeExtension
+		arguments:
+			class: PHPStan\BetterReflection\Reflection\Adapter\ReflectionEnumUnitCase
+
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+	-
+		class: PHPStan\Type\Php\DateTimeModifyReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+
+		arguments:
+			dateTimeClass: DateTimeImmutable
+
+	-
+		class: PHPStan\Rules\Exceptions\MissingCheckedExceptionInFunctionThrowsRule
+
+	-
+		class: PHPStan\Rules\Exceptions\MissingCheckedExceptionInMethodThrowsRule
+
+	-
+		class: PHPStan\Rules\Exceptions\MissingCheckedExceptionInPropertyHookThrowsRule
+
+	-
+		class: PHPStan\Rules\Properties\UninitializedPropertyRule
+
+	betterReflectionSourceLocator:
+		class: PHPStan\BetterReflection\SourceLocator\Type\SourceLocator
+		factory: @PHPStan\Reflection\BetterReflection\BetterReflectionSourceLocatorFactory::create
+		autowired: false
+
+	originalBetterReflectionReflector:
+		class: PHPStan\BetterReflection\Reflector\DefaultReflector
+		arguments:
+			sourceLocator: @betterReflectionSourceLocator
+

@@ -1,0 +1,20 @@
+services:
+	-
+		class: _PHPStan_checksum\Composer\Pcre\PHPStan\PregMatchParameterOutTypeExtension
+		tags:
+			- phpstan.staticMethodParameterOutTypeExtension
+
+	-
+		class: _PHPStan_checksum\Composer\Pcre\PHPStan\PregMatchTypeSpecifyingExtension
+		tags:
+			- phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
+
+	-
+		class: _PHPStan_checksum\Composer\Pcre\PHPStan\PregReplaceCallbackClosureTypeExtension
+		tags:
+			- phpstan.staticMethodParameterClosureTypeExtension
+
+rules:
+	- Composer\Pcre\PHPStan\UnsafeStrictGroupsCallRule
+	- Composer\Pcre\PHPStan\InvalidRegexPatternRule
+

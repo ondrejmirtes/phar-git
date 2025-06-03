@@ -1,0 +1,6 @@
+includes:
+	- config.level9.neon
+
+parameters:
+	checkImplicitMixed: true
+
